@@ -1,0 +1,189 @@
+[
+    {
+        "caption": "Tools",
+        "id": "tools",
+        "mnemonic": "T",
+        "children": [
+            {
+                "caption": "Formatter",
+                "id": "formatter",
+                "children": [
+                    {
+                        "caption": "Beautysh",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "beautysh"
+                        }
+                    },
+                    {
+                        "caption": "Black",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "black"
+                        }
+                    },
+                    {
+                        "caption": "ClangFormat",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "clangformat"
+                        }
+                    },
+                    {
+                        "caption": "CSScomb",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "csscomb"
+                        }
+                    },
+                    {
+                        "caption": "ESLint",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "eslint"
+                        }
+                    },
+                    {
+                        "caption": "HTML Tidy",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "htmltidy"
+                        }
+                    },
+                    {
+                        "caption": "JS Beautifier",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "jsbeautifier"
+                        }
+                    },
+                    {
+                        "caption": "JSONMax",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "jsonmax"
+                        }
+                    },
+                    {
+                        "caption": "Perltidy",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "perltidy"
+                        }
+                    },
+                    {
+                        "caption": "PHP CS Fixer",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "phpcsfixer"
+                        }
+                    },
+                    {
+                        "caption": "Prettier",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "prettier"
+                        }
+                    },
+                    {
+                        "caption": "RuboCop",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "rubocop"
+                        }
+                    },
+                    {
+                        "caption": "Stylelint",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "stylelint"
+                        }
+                    },
+                    {
+                        "caption": "Uncrustify",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "uncrustify"
+                        }
+                    },
+                    {
+                        "caption": "YAPF",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "yapf"
+                        }
+                    },
+                    {
+                        "caption": "-"
+                    },
+                    {
+                        "caption": "Clean CSS (minify)",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "cleancss"
+                        }
+                    },
+                    {
+                        "caption": "HTMLMinifier (minify)",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "htmlminifier"
+                        }
+                    },
+                    {
+                        "caption": "JSONMin (minify)",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "jsonmin"
+                        }
+                    },
+                    {
+                        "caption": "Terser (minify)",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "terser"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "caption": "Preferences",
+        "id": "preferences",
+        "mnemonic": "n",
+        "children": [
+            {
+                "caption": "Package Settings",
+                "id": "package-settings",
+                "mnemonic": "P",
+                "children": [
+                    {
+                        "caption": "Formatter",
+                        "children": [
+                            {
+                                "caption": "Settings",
+                                "command": "edit_settings",
+                                "args": {
+                                    "base_file": "${packages}/Formatter/Formatter.sublime-settings",
+                                    "default": "// Do NOT edit anything in the left-hand pane.\n// Copy the whole tree from there to here.\n{\n\t$0\n}\n"
+                                }
+                            },
+                            {
+                                "caption": "Open Config Files",
+                                "command": "open_config_files"
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "caption": "Version Info",
+                                "command": "show_version"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

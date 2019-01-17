@@ -1,0 +1,100 @@
+{
+    "compatibility": {
+        // Accepted option: "ie7", "ie8", "ie9" or "*"; default ie10+: "*"
+        "*": {
+            "colors.opacity": true,
+            "properties.backgroundClipMerging": true,
+            "properties.backgroundOriginMerging": true,
+            "properties.backgroundSizeMerging": true,
+            "properties.colors": true,
+            "properties.ieBangHack": false,
+            "properties.ieFilters": false,
+            "properties.iePrefixHack": false,
+            "properties.ieSuffixHack": false,
+            "properties.merging": true,
+            "properties.shorterLengthUnits": false,
+            "properties.spaceAfterClosingBrace": true,
+            "properties.urlQuotes": false,
+            "properties.zeroUnits": true,
+            "selectors.adjacentSpace": false,
+            "selectors.ie7Hack": false,
+            "selectors.multiplePseudoMerging": true,
+            "units.ch": true,
+            "units.in": true,
+            "units.pc": true,
+            "units.pt": true,
+            "units.rem": true,
+            "units.vh": true,
+            "units.vm": true,
+            "units.vmax": true,
+            "units.vmin": true,
+            "units.vw": true
+        }
+    },
+    "format": {
+        // Accepted option: "beautify", "keep-breaks" or ""; default: ""
+        "": {
+            "breaks:afterAtRule": false,
+            "breaks:afterBlockBegins": false,
+            "breaks:afterBlockEnds": false,
+            "breaks:afterComment": false,
+            "breaks:afterProperty": false,
+            "breaks:afterRuleBegins": false,
+            "breaks:afterRuleEnds": false,
+            "breaks:beforeBlockEnds": false,
+            "breaks:betweenSelectors": false,
+            "breakWith": "lf",
+            "indentBy": 0,
+            "indentWith": "space",
+            "spaces:aroundSelectorRelation": false,
+            "spaces:beforeBlockBegins": false,
+            "spaces:beforeValue": false,
+            "wrapAt": false
+        }
+    },
+    "inline": ["local"],
+    "inline-timeout": 5,
+    "skip-rebase": false,
+    "optimization": {
+        // Accepted level: "0", "1", "2"; default: "1"
+        "level": ["1"],
+        "1": {
+            "cleanupCharsets": true,
+            "normalizeUrls": true,
+            "optimizeBackground": true,
+            "optimizeBorderRadius": true,
+            "optimizeFilter": true,
+            "optimizeFontWeight": true,
+            "optimizeOutline": true,
+            "removeEmpty": true,
+            "removeNegativePaddings": true,
+            "removeQuotes": true,
+            "removeWhitespace": true,
+            "replaceMultipleZeros": true,
+            "replaceTimeUnits": true,
+            "replaceZeroUnits": true,
+            "roundingPrecision": false,
+            "selectorsSortingMethod": "standard",
+            "specialComments": "all",
+            "tidyAtRules": true,
+            "tidyBlockScopes": true,
+            "tidySelectors": true
+        },
+        "2": {
+            "mergeAdjacentRules": true,
+            "mergeIntoShorthands": true,
+            "mergeMedia": true,
+            "mergeNonAdjacentRules": true,
+            "mergeSemantically": false,
+            "overrideProperties": true,
+            "removeEmpty": true,
+            "reduceNonAdjacentRules": true,
+            "removeDuplicateFontRules": true,
+            "removeDuplicateMediaBlocks": true,
+            "removeDuplicateRules": true,
+            "removeUnusedAtRules": false,
+            "restructureRules": false,
+            "skipProperties": []
+        }
+    }
+}

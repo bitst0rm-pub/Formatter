@@ -1,0 +1,143 @@
+[
+    {
+        "caption": "Formatter: Show Version Info",
+        "command": "show_version"
+    },
+    {
+        "caption": "Formatter: Open Config Files",
+        "command": "open_config_files"
+    },
+    {
+        "caption": "Formatter: Beautify With Beautysh",
+        "command": "run_format",
+        "args": {
+            "identifier": "beautysh"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With Black",
+        "command": "run_format",
+        "args": {
+            "identifier": "black"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With ClangFormat",
+        "command": "run_format",
+        "args": {
+            "identifier": "clangformat"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With CSScomb",
+        "command": "run_format",
+        "args": {
+            "identifier": "csscomb"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With ESLint",
+        "command": "run_format",
+        "args": {
+            "identifier": "eslint"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With HTML Tidy",
+        "command": "run_format",
+        "args": {
+            "identifier": "htmltidy"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With JS Beautifier",
+        "command": "run_format",
+        "args": {
+            "identifier": "jsbeautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With JSONMax",
+        "command": "run_format",
+        "args": {
+            "identifier": "jsonmax"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With Perltidy",
+        "command": "run_format",
+        "args": {
+            "identifier": "perltidy"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With PHP CS Fixer",
+        "command": "run_format",
+        "args": {
+            "identifier": "phpcsfixer"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With Prettier",
+        "command": "run_format",
+        "args": {
+            "identifier": "prettier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With RuboCop",
+        "command": "run_format",
+        "args": {
+            "identifier": "rubocop"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With Stylelint",
+        "command": "run_format",
+        "args": {
+            "identifier": "stylelint"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With Uncrustify",
+        "command": "run_format",
+        "args": {
+            "identifier": "uncrustify"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify With YAPF",
+        "command": "run_format",
+        "args": {
+            "identifier": "yapf"
+        }
+    },
+    {
+        "caption": "Formatter: Minify With Clean CSS",
+        "command": "run_format",
+        "args": {
+            "identifier": "cleancss"
+        }
+    },
+    {
+        "caption": "Formatter: Minify With HTMLMinifier",
+        "command": "run_format",
+        "args": {
+            "identifier": "htmlminifier"
+        }
+    },
+    {
+        "caption": "Formatter: Minify With JSONMin",
+        "command": "run_format",
+        "args": {
+            "identifier": "jsonmin"
+        }
+    },
+    {
+        "caption": "Formatter: Minify With Terser",
+        "command": "run_format",
+        "args": {
+            "identifier": "terser"
+        }
+    }
+]
