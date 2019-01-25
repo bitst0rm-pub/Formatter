@@ -58,7 +58,7 @@ class HtmltidyFormatter:
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
-            if errno > 0:
+            if errno > 1:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
                 return stdout.decode('utf-8')
