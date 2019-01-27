@@ -65,10 +65,10 @@ def reload_modules():
 
 
 def update_environ():
-    env = settings().get('environ', None)
-    if env and isinstance(env, dict):
-        try:
-            environ = os.environ.copy()
+    try:
+        environ = os.environ.copy()
+        env = settings().get('environ', None)
+        if env and isinstance(env, dict):
             for key, value in env.items():
                 if value and isinstance(value, list):
                     pathstring = environ.get(key, None)
@@ -87,11 +87,9 @@ def update_environ():
                             environ[key] = pathsep.join(paths)
                         else:
                             environ[key] = pathsep.join(map(normpath, items))
-            return environ
-        except Exception as error:
-            log.warning('Could not clone system environment: %s', error)
-            return None
-    log.warning('Setting key "environ" is empty or not of type dict: %s', env)
+        return environ
+    except Exception as error:
+        log.warning('Could not clone system environment: %s', error)
     return None
 
 
@@ -185,7 +183,6 @@ def is_exe(path):
             return True
         log.warning('File exists but is not executable: %s', path)
         return False
-    log.warning('File does not exist or path is not of type string: %s', path)
     return False
 
 
@@ -215,6 +212,7 @@ def get_environ_path(fnames):
 def get_interpreter_path(fnames):
     global_file = get_environ_path(fnames)
     if global_file:
+        log.debug('Interpreter: %s', global_file)
         return global_file
     log.error('Could not find interpreter: %s', fnames)
     return None
@@ -222,7 +220,10 @@ def get_interpreter_path(fnames):
 
 def get_executable_path(identifier, fnames):
     local_file = expand_path(gets(settings(), 'formatters', identifier, 'executable_path'))
+    if local_file and not isfile(local_file):
+        log.warning('File does not exist: %s', local_file)
     if is_exe(local_file):
+        log.debug('Executable: %s', local_file)
         return local_file
     global_file = get_environ_path(fnames)
     if global_file:

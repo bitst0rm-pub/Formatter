@@ -17,6 +17,7 @@
     // Non-existent directories and files are silently ignored.
     // This customization is temporary and will only take effect
     // for the current formatting process.
+    // This option can be ommitted.
     "environ": {
         "PATH": [],
         "GEM_PATH": ["${packages}/User/formatter.assets/ruby"],
@@ -56,6 +57,11 @@
             // Array of additional arguments for the command line; [type:list]
             "args": []
         },
+
+        // Lets go!
+        // Please replace the following "executable_path" with yours.
+        // It stays here as placeholder just for reference/how-to purpose.
+
         "beautysh": {
             "disable": false,
             "format_on_save": false,
