@@ -96,7 +96,7 @@ def update_environ():
 
 
 def setup_config():
-    src = join('Packages', PLUGIN_NAME, 'config')
+    src = 'Packages/' + PLUGIN_NAME + '/config'
     dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
     os.makedirs(dst, exist_ok=True)
     if not isdir(dst):
