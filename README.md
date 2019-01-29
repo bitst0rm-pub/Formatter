@@ -358,11 +358,3 @@ Formatting actions can be triggered in different ways:
 ## License
 
 Formatter is licensed under the [MIT license](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE).
-
-
-<!--
-@id           $Id$
-@rev          $Format:%H$ ($Format:%h$)
-@date         $Format:%ci$
-@author       $Format:%an$
--->
