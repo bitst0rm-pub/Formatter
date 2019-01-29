@@ -60,7 +60,7 @@ Formatter requires special plugins in order to format code. It is currently exte
 
         Sublime Text: Packages > User > formatter.assets > config > eslintrc.json
 
-        Example (eslintrc.json): { "extends": [ "eslint-config-standard", "eslint-config-prettier" ], "plugins": [ "eslint-plugin-standard", "eslint-plugin-prettier" ], "rules": { "prettier/prettier": [ "error", { "bracketSpacing": true, "jsxSingleQuote": true, "parser": "babylon", "printWidth": 120, "singleQuote": true, "tabWidth": 4 } ] } }
+        Example (eslintrc.json): { "extends": [ "eslint-config-standard", "eslint-config-prettier" ], "plugins": [ "eslint-plugin-standard", "eslint-plugin-prettier" ], "rules": { "prettier/prettier": [ "error", { "bracketSpacing": true, "jsxSingleQuote": true, "parser": "babel", "printWidth": 120, "singleQuote": true, "tabWidth": 4 } ] } }
 
 
 ## Installation
