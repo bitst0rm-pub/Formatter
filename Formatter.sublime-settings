@@ -20,8 +20,8 @@
     // This option can be ommitted.
     "environ": {
         "PATH": [],
-        "GEM_PATH": ["${packages}/User/formatter.assets/ruby"],
-        "PYTHONPATH": ["${packages}/User/formatter.assets/python/lib/python3.7/site-packages"]
+        "GEM_PATH": [],
+        "PYTHONPATH": []
     },
 
     // Formatter specific settings
@@ -57,16 +57,11 @@
             // Array of additional arguments for the command line; [type:list]
             "args": []
         },
-
-        // Lets go!
-        // Please replace the following "executable_path" with yours.
-        // It stays here as placeholder just for reference/how-to purpose.
-
         "beautysh": {
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["bash"],
-            "executable_path": "${packages}/User/formatter.assets/python/bin/beautysh",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/beautyshrc.json"
             }
@@ -75,7 +70,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["python"],
-            "executable_path": "${packages}/User/formatter.assets/python/bin/black",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/blackrc.toml"
             }
@@ -84,7 +79,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["c", "c++", "objc", "objc++", "js", "java", "proto"],
-            "executable_path": "${packages}/User/formatter.assets/bin/clang-format",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/clangformatrc.yaml"
             }
@@ -93,7 +88,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["css", "scss", "sass", "less"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/csscomb",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/csscombrc.json"
             }
@@ -102,7 +97,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["js"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/eslint",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/eslintrc.json"
             }
@@ -111,7 +106,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["html", "xml"],
-            "executable_path": "${packages}/User/formatter.assets/bin/tidy",
+            "executable_path": "",
             "config_path": {
                 "html": "${packages}/User/formatter.assets/config/htmltidyrc_html.cfg",
                 "xml": "${packages}/User/formatter.assets/config/htmltidyrc_xml.cfg"
@@ -121,7 +116,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["js", "css", "html", "json"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/js-beautify",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/jsbeautifyrc.json"
             }
@@ -130,6 +125,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["json"],
+            /* build-in, no executable */
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/jsonmaxrc.json"
             }
@@ -138,7 +134,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["perl"],
-            "executable_path": "${packages}/User/formatter.assets/bin/perltidy",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/perltidyrc.cfg"
             }
@@ -147,7 +143,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["php"],
-            "executable_path": "${packages}/User/formatter.assets/bin/php-cs-fixer-v2.phar",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/phpcsfixerrc.php"
             }
@@ -156,7 +152,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/prettier",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/prettierrc.json"
             }
@@ -165,7 +161,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["ruby"],
-            "executable_path": "${packages}/User/formatter.assets/ruby/bin/rubocop",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/rubocoprc.yml"
             }
@@ -174,8 +170,8 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/stylelint",
-            "args": ["--config-basedir", "${packages}/User/formatter.assets/javascript/node_modules"],
+            "executable_path": "",
+            "args": ["--config-basedir", "/path/to/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylelintrc.json"
             }
@@ -184,7 +180,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
-            "executable_path": "${packages}/User/formatter.assets/bin/uncrustify",
+            "executable_path": "",
             "config_path": {
                 "objc": "${packages}/User/formatter.assets/config/uncrustifyrc_objc.cfg",
                 "default": "${packages}/User/formatter.assets/config/uncrustifyrc.cfg"
@@ -194,7 +190,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["python"],
-            "executable_path": "${packages}/User/formatter.assets/python/bin/yapf",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/yapfrc.yapf"
             }
@@ -203,7 +199,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["css", "scss", "sass", "less"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/cleancss",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/cleancssrc.json"
             }
@@ -212,7 +208,7 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["html", "xml"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/html-minifier",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/htmlminifierrc.json"
             }
@@ -221,13 +217,13 @@
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["json"]
-            /* no config */
+            /* build-in, no config */
         },
         "terser": {
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["js"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/terser",
+            "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/terserrc.json"
             }
