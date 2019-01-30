@@ -105,11 +105,12 @@ The left-hand pane contains all of the default settings. The right-hand pane is 
 Make sure that you wrap all the configurations into a single root object and copy them from the left-hand to the right-hand pane.<br/>
 Do **not** edit the Default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
-By default, the following settings are used. You might want to adjust them to use in your system:
+The following settings example should give you direction, how to setup Formatter:
 
 ```
 {
     // Output debugging information in the console; [type:bool]
+    // Any changes will need a restart to get applied.
     "debug": false,
 
     // Display result report in status bar; [type:bool]
@@ -126,6 +127,7 @@ By default, the following settings are used. You might want to adjust them to us
     // Non-existent directories and files are silently ignored.
     // This customization is temporary and will only take effect
     // for the current formatting process.
+    // This option can be ommitted.
     "environ": {
         "PATH": [],
         "GEM_PATH": ["${packages}/User/formatter.assets/ruby"],
