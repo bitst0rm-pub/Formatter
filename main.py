@@ -133,7 +133,7 @@ class RunFormatEventListener(sublime_plugin.EventListener):
         formatter = common.settings().get('formatters', {})
         if formatter and isinstance(formatter, dict):
             for key, value in formatter.items():
-                if value.get('format_on_save', False):
+                if value.get('format_on_save', False) and self.view.settings().get('syntax') in value.get('syntaxes', []):
                     view.run_command('run_format', {'identifier': key})
 
     @classmethod
