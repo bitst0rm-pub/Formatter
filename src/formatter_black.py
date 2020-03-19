@@ -35,6 +35,10 @@ class BlackFormatter:
         if not interpreter or not executable:
             return None
 
+        # black required python 3, warning if interpreter version is unknown
+        if "python3" not in interpreter:
+            log.warning("Using %s as interpreter, make sure it is symlink to python 3", interpreter)
+
         cmd = [interpreter, executable]
 
         args = common.get_args(self.identifier)
