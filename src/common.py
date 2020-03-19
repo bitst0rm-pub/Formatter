@@ -191,8 +191,8 @@ def get_environ_path(fnames):
         environ = update_environ()
         if environ and isinstance(environ, dict):
             paths = environ.get('PATH', '').split(pathsep)
-            for path in paths:
-                for fname in fnames:
+            for fname in fnames:
+                for path in paths:
                     file = join(path, fname)
                     if IS_WINDOWS and not splitext(file)[1]:
                         for extension in ('.exe', '.cmd', '.bat'):
