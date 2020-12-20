@@ -128,17 +128,18 @@ class SubstituteCommand(sublime_plugin.TextCommand):
 
 
 class RunFormatEventListener(sublime_plugin.EventListener):
-    @classmethod
+    @classmethod 
     def on_pre_save_async(cls, view):
         formatter = common.settings().get('formatters', {})
+        scopes = view.scope_name(0).strip().lower().split(' ')
+        
         if formatter and isinstance(formatter, dict):
             for key, value in formatter.items():
+                syntaxes = value.get('syntaxes', False)
                 if value.get('format_on_save', False):
-                    view.run_command('run_format', {'identifier': key})
-
-    @classmethod
-    def on_post_save_async(cls, view):
-        _unused = view
-        if common.settings().get('debug', False):
-            # For debug and development only
-            common.reload_modules()
+                    for syntax in syntaxes:
+                        for scope in scopes:
+                            if scope.split('.').pop() == syntax :
+                                view.run_command('run_format', {'identifier': key})
+                                log.debug('Formatter ID: ' + key)
+                                break
