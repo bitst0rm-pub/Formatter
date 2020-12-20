@@ -112,7 +112,7 @@ class RunFormatThread(threading.Thread):
     def print_status(self, is_success):
         if is_success:
             self.success += 1
-            log.debug('Formatting successful yaya. 🎉😃🍰')
+            log.debug('Formatting successful. 🎉😃🍰')
         else:
             self.failure += 1
             log.debug('Formatting failed. 💣💥😢')
