@@ -26,7 +26,7 @@ def plugin_loaded():
     log.disabled = not common.settings().get('debug', False)
     log.info('%s version: %s', common.PLUGIN_NAME, common.VERSION)
     common.setup_config()
-    log.error('Plugin initialized.')
+    log.debug('Plugin initialized.')
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
