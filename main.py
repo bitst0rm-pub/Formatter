@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# @id           $Id$
-# @rev          $Format:%H$ ($Format:%h$)
-# @tree         $Format:%T$ ($Format:%t$)
-# @date         $Format:%ci$
-# @author       $Format:%an$ <$Format:%ae$>
+# @id           $Id: 964644aae9ba655283accd730bb6278ee4c27399 $
+# @rev          beeee3b838e181ffc737c301ea30258d26c6186b (beeee3b)
+# @tree         112ecf1d9bc033da8d224a03e00ff055734bc802 (112ecf1)
+# @date         2019-01-27 07:19:07 +0100
+# @author       bitst0rm <bitst0rm@users.noreply.github.com>
 # @copyright    Copyright (c) 2019-present, Duc Ng. (bitst0rm)
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
@@ -26,7 +26,7 @@ def plugin_loaded():
     log.disabled = not common.settings().get('debug', False)
     log.info('%s version: %s', common.PLUGIN_NAME, common.VERSION)
     common.setup_config()
-    log.debug('Plugin initialized.')
+    log.error('Plugin initialized.')
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
@@ -112,7 +112,7 @@ class RunFormatThread(threading.Thread):
     def print_status(self, is_success):
         if is_success:
             self.success += 1
-            log.debug('Formatting successful. 🎉😃🍰')
+            log.debug('Formatting successful yaya. 🎉😃🍰')
         else:
             self.failure += 1
             log.debug('Formatting failed. 💣💥😢')
@@ -132,14 +132,20 @@ class RunFormatEventListener(sublime_plugin.EventListener):
     def on_pre_save_async(cls, view):
         formatter = common.settings().get('formatters', {})
         scopes = view.scope_name(0).strip().lower().split(' ')
-        
         if formatter and isinstance(formatter, dict):
             for key, value in formatter.items():
-                syntaxes = value.get('syntaxes', False)
+                syntaxes = value.get('syntaxes', [])
                 if value.get('format_on_save', False):
                     for syntax in syntaxes:
                         for scope in scopes:
                             if scope.split('.').pop() == syntax :
-                                view.run_command('run_format', {'identifier': key})
                                 log.debug('Formatter ID: ' + key)
+                                view.run_command('run_format', {'identifier': key})
                                 break
+                
+    @classmethod
+    def on_post_save_async(cls, view):
+        _unused = view
+        if common.settings().get('debug', False):
+            # For debug and development only
+            common.reload_modules()
