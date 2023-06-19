@@ -11,6 +11,7 @@
 # @license      The MIT License (MIT)
 
 import logging
+from distutils.version import StrictVersion
 from . import common
 
 
@@ -26,6 +27,24 @@ class BlackFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
+
+
+    def is_compat(self):
+        try:
+            python = common.get_interpreter_path(INTERPRETER_NAMES)
+            if python:
+                proc = common.exec_cmd([python, '-V'], self.pathinfo[0])
+                stdout = proc.communicate()[0]
+                string = stdout.decode('utf-8')
+                version = string.splitlines()[0].split(' ')[1]
+                if StrictVersion(version) >= StrictVersion('3.7.0'):
+                    return True
+                common.show_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.identifier)
+            return None
+        except OSError:
+            log.error('Error occurred while validating Python compatibility.')
+
+        return None
 
 
     def get_cmd(self):
@@ -52,7 +71,7 @@ class BlackFormatter:
 
     def format(self, text):
         cmd = self.get_cmd()
-        if not cmd:
+        if not cmd or not self.is_compat():
             return None
 
         try:
