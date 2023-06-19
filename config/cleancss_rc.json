@@ -2,7 +2,9 @@
     "compatibility": {
         // Accepted option: "ie7", "ie8", "ie9" or "*"; default ie10+: "*"
         "*": {
+            "colors.hexAlpha": false,
             "colors.opacity": true,
+            "customUnits.rpx": false,
             "properties.backgroundClipMerging": true,
             "properties.backgroundOriginMerging": true,
             "properties.backgroundSizeMerging": true,
@@ -14,10 +16,11 @@
             "properties.merging": true,
             "properties.shorterLengthUnits": false,
             "properties.spaceAfterClosingBrace": true,
-            "properties.urlQuotes": false,
+            "properties.urlQuotes": true,
             "properties.zeroUnits": true,
             "selectors.adjacentSpace": false,
             "selectors.ie7Hack": false,
+            "mergeLimit": 8191,
             "selectors.multiplePseudoMerging": true,
             "units.ch": true,
             "units.in": true,
@@ -32,8 +35,8 @@
         }
     },
     "format": {
-        // Accepted option: "beautify", "keep-breaks" or ""; default: ""
-        "": {
+        // Accepted option: "beautify", "keep-breaks" or "default"; default: "default"
+        "default": {
             "breaks:afterAtRule": false,
             "breaks:afterBlockBegins": false,
             "breaks:afterBlockEnds": false,
@@ -49,7 +52,8 @@
             "spaces:aroundSelectorRelation": false,
             "spaces:beforeBlockBegins": false,
             "spaces:beforeValue": false,
-            "wrapAt": false
+            "wrapAt": false,
+            "semicolonAfterLastProperty": false
         }
     },
     "inline": ["local"],
@@ -64,6 +68,7 @@
             "optimizeBackground": true,
             "optimizeBorderRadius": true,
             "optimizeFilter": true,
+            "optimizeFont": true,
             "optimizeFontWeight": true,
             "optimizeOutline": true,
             "removeEmpty": true,
@@ -78,7 +83,8 @@
             "specialComments": "all",
             "tidyAtRules": true,
             "tidyBlockScopes": true,
-            "tidySelectors": true
+            "tidySelectors": true,
+            "variableValueOptimizers": []
         },
         "2": {
             "mergeAdjacentRules": true,

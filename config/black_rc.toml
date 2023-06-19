@@ -1,0 +1,5 @@
+[tool.black]
+line-length = 88
+skip-source-first-line = false
+skip-string-normalization = false
+skip-magic-trailing-comma = true
