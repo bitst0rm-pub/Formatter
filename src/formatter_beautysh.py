@@ -46,7 +46,7 @@ class BeautyshFormatter:
         if config:
             cmd.extend(self.get_config(config))
 
-        cmd.extend(['--files', '-'])
+        cmd.extend(['-'])
 
         return cmd
 
