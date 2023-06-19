@@ -19,7 +19,7 @@ from . import common
 
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['php']
-EXECUTABLE_NAMES = ['php-cs-fixer', 'php-cs-fixer.phar', 'php-cs-fixer-v2', 'php-cs-fixer-v2.phar', 'phpcsfixer', 'phpcsfixer.phar']
+EXECUTABLE_NAMES = ['php-cs-fixer', 'php-cs-fixer.phar', 'php-cs-fixer-v2', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v3', 'php-cs-fixer-v3.phar', 'phpcsfixer', 'phpcsfixer.phar']
 
 
 class PhpcsfixerFormatter:
@@ -39,9 +39,9 @@ class PhpcsfixerFormatter:
                 stdout = proc.communicate()[0]
                 string = stdout.decode('utf-8')
                 version = string.splitlines()[0].split(' ')[1]
-                if StrictVersion(version) >= StrictVersion('5.6.0'):
+                if StrictVersion(version) >= StrictVersion('7.4.0'):
                     return True
-                common.show_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 5.6.0.' % version, 'ID:' + self.identifier)
+                common.show_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.identifier)
             return None
         except OSError:
             log.error('Error occurred while validating PHP compatibility.')
