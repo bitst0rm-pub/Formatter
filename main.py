@@ -115,10 +115,10 @@ class RunFormatThread(threading.Thread):
             log.debug('Formatting successful. 🎉😃🍰')
         else:
             self.failure += 1
-            log.debug('Formatting failed. 💣💥😢')
+            log.debug('Formatting failed. 💔😢💔')
 
         if common.settings().get('show_statusbar', False):
-            self.view.set_status('@' + common.PLUGIN_NAME.lower(), common.PLUGIN_NAME + '(ok:' + str(self.success) + '|fail:' + str(self.failure) + ')')
+            self.view.set_status('@' + common.PLUGIN_NAME.lower(), common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
 
 
 class SubstituteCommand(sublime_plugin.TextCommand):
