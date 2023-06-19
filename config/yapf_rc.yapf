@@ -17,12 +17,39 @@ allow_multiline_dictionary_keys=False
 # Allow lambdas to be formatted on more than one line.
 allow_multiline_lambdas=False
 
+# Allow splitting before a default / named assignment in an argument list.
+allow_split_before_default_or_named_assigns=True
+
 # Allow splits before the dictionary value.
 allow_split_before_dict_value=True
+
+#   Let spacing indicate operator precedence. For example:
+#
+#     a = 1 * 2 + 3 / 4
+#     b = 1 / 2 - 3 * 4
+#     c = (1 + 2) * (3 - 4)
+#     d = (1 - 2) / (3 + 4)
+#     e = 1 * 2 - 3
+#     f = 1 + 2 + 3 + 4
+#
+# will be formatted as follows to indicate precedence:
+#
+#     a = 1*2 + 3/4
+#     b = 1/2 - 3*4
+#     c = (1+2) * (3-4)
+#     d = (1-2) / (3+4)
+#     e = 1*2 - 3
+#     f = 1 + 2 + 3 + 4
+#
+arithmetic_precedence_indication=False
 
 # Number of blank lines surrounding top-level function and class
 # definitions.
 blank_lines_around_top_level_definition=2
+
+# Number of blank lines between top-level imports and variable
+# definitions.
+blank_lines_between_top_level_imports_and_variables=1
 
 # Insert a blank line before a class-level docstring.
 blank_line_before_class_docstring=False
@@ -37,7 +64,7 @@ blank_line_before_module_docstring=False
 #                      # <------ this blank line
 #     def method():
 #       ...
-blank_line_before_nested_class_or_def=False
+blank_line_before_nested_class_or_def=True
 
 # Do not split consecutive brackets. Only relevant when
 # dedent_closing_brackets is set. For example:
@@ -64,16 +91,11 @@ column_limit=79
 #
 # - SPACE: Use spaces for continuation alignment. This is default behavior.
 # - FIXED: Use fixed number (CONTINUATION_INDENT_WIDTH) of columns
-#   (ie: CONTINUATION_INDENT_WIDTH/INDENT_WIDTH tabs) for continuation
-#   alignment.
-# - LESS: Slightly left if cannot vertically align continuation lines with
-#   indent characters.
-# - VALIGN-RIGHT: Vertically align continuation lines with indent
-#   characters. Slightly right (one more indent character) if cannot
-#   vertically align continuation lines with indent characters.
-#
-# For options FIXED, and VALIGN-RIGHT are only available when USE_TABS is
-# enabled.
+#   (ie: CONTINUATION_INDENT_WIDTH/INDENT_WIDTH tabs or
+#   CONTINUATION_INDENT_WIDTH spaces) for continuation alignment.
+# - VALIGN-RIGHT: Vertically align continuation lines to multiple of
+#   INDENT_WIDTH columns. Slightly right (one tab or a few spaces) if
+#   cannot vertically align continuation lines with indent characters.
 continuation_align_style=SPACE
 
 # Indent width used for line continuations.
@@ -104,6 +126,14 @@ disable_ending_comma_heuristic=False
 # Place each dictionary entry onto its own line.
 each_dict_entry_on_separate_line=True
 
+# Require multiline dictionary even if it would normally fit on one line.
+# For example:
+#
+#   config = {
+#       'key1': 'value1'
+#   }
+force_multiline_dict=False
+
 # The regex for an i18n comment. The presence of this comment stops
 # reformatting of that line, because the comments are required to be
 # next to the string they translate.
@@ -116,6 +146,24 @@ i18n_function_call=
 
 # Indent blank lines.
 indent_blank_lines=False
+
+# Put closing brackets on a separate line, indented, if the bracketed
+# expression can't fit in a single line. Applies to all kinds of brackets,
+# including function definitions and calls. For example:
+#
+#   config = {
+#       'key1': 'value1',
+#       'key2': 'value2',
+#       }        # <--- this bracket is indented and on a separate line
+#
+#   time_series = self.remote_client.query_entity_counters(
+#       entity='dev3246.region1',
+#       key='dns.query_latency_tcp',
+#       transform=Transformation.AVERAGE(window=timedelta(seconds=60)),
+#       start_ts=now()-timedelta(days=3),
+#       end_ts=now(),
+#       )        # <--- this bracket is indented and on a separate line
+indent_closing_brackets=False
 
 # Indent the dictionary value if it cannot fit on the same line as the
 # dictionary key. For example:
@@ -141,28 +189,116 @@ join_multiple_lines=True
 # will be formatted as follows when configured with "*,/":
 #
 #   1 + 2*3 - 4/5
-#
 no_spaces_around_selected_binary_operators=
 
 # Use spaces around default or named assigns.
 spaces_around_default_or_named_assign=False
 
+# Adds a space after the opening '{' and before the ending '}' dict
+# delimiters.
+#
+#   {1: 2}
+#
+# will be formatted as:
+#
+#   { 1: 2 }
+spaces_around_dict_delimiters=False
+
+# Adds a space after the opening '[' and before the ending ']' list
+# delimiters.
+#
+#   [1, 2]
+#
+# will be formatted as:
+#
+#   [ 1, 2 ]
+spaces_around_list_delimiters=False
+
 # Use spaces around the power operator.
 spaces_around_power_operator=False
 
+# Use spaces around the subscript / slice operator.  For example:
+#
+#   my_list[1 : 10 : 2]
+spaces_around_subscript_colon=False
+
+# Adds a space after the opening '(' and before the ending ')' tuple
+# delimiters.
+#
+#   (1, 2, 3)
+#
+# will be formatted as:
+#
+#   ( 1, 2, 3 )
+spaces_around_tuple_delimiters=False
+
 # The number of spaces required before a trailing comment.
+# This can be a single value (representing the number of spaces
+# before each trailing comment) or list of values (representing
+# alignment column values; trailing comments within a block will
+# be aligned to the first column value that is greater than the maximum
+# line length within the block). For example:
+#
+# With spaces_before_comment=5:
+#
+#   1 + 1 # Adding values
+#
+# will be formatted as:
+#
+#   1 + 1     # Adding values <-- 5 spaces between the end of the
+#             # statement and comment
+#
+# With spaces_before_comment=15, 20:
+#
+#   1 + 1 # Adding values
+#   two + two # More adding
+#
+#   longer_statement # This is a longer statement
+#   short # This is a shorter statement
+#
+#   a_very_long_statement_that_extends_beyond_the_final_column # Comment
+#   short # This is a shorter statement
+#
+# will be formatted as:
+#
+#   1 + 1          # Adding values <-- end of line comments in block
+#                  # aligned to col 15
+#   two + two      # More adding
+#
+#   longer_statement    # This is a longer statement <-- end of line
+#                       # comments in block aligned to col 20
+#   short               # This is a shorter statement
+#
+#   a_very_long_statement_that_extends_beyond_the_final_column  # Comment <-- the end of line comments are aligned based on the line length
+#   short                                                       # This is a shorter statement
+#
 spaces_before_comment=2
 
 # Insert a space between the ending comma and closing bracket of a list,
 # etc.
 space_between_ending_comma_and_closing_bracket=True
 
+# Use spaces inside brackets, braces, and parentheses.  For example:
+#
+#   method_call( 1 )
+#   my_dict[ 3 ][ 1 ][ get_index( *args, **kwargs ) ]
+#   my_set = { 1, 2, 3 }
+space_inside_brackets=False
+
 # Split before arguments
 split_all_comma_separated_values=False
+
+# Split before arguments, but do not split all subexpressions recursively
+# (unless needed).
+split_all_top_level_comma_separated_values=False
 
 # Split before arguments if the argument list is terminated by a
 # comma.
 split_arguments_when_comma_terminated=False
+
+# Set to True to prefer splitting before '+', '-', '*', '/', '//', or '@'
+# rather than after.
+split_before_arithmetic_operator=False
 
 # Set to True to prefer splitting before '&', '|' or '^' rather than
 # after.
@@ -223,10 +359,14 @@ split_before_named_assigns=True
 split_complex_comprehension=False
 
 # The penalty for splitting right after the opening bracket.
-split_penalty_after_opening_bracket=30
+split_penalty_after_opening_bracket=300
 
 # The penalty for splitting the line after a unary operator.
 split_penalty_after_unary_operator=10000
+
+# The penalty of splitting the line around the '+', '-', '*', '/', '//',
+# ``%``, and '@' operators.
+split_penalty_arithmetic_operator=300
 
 # The penalty for splitting right before an if expression.
 split_penalty_before_if_expr=0
@@ -242,7 +382,7 @@ split_penalty_comprehension=80
 # The penalty for characters over the column limit.
 split_penalty_excess_character=7000
 
-# The penalty incurred by adding a line split to the unwrapped line. The
+# The penalty incurred by adding a line split to the logical line. The
 # more line splits added the higher the penalty.
 split_penalty_for_added_line_split=30
 

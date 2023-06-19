@@ -1,61 +1,65 @@
 {
-    // Output debugging information in the console; [type:bool]
+    // Enable debug mode to view errors in the console; [type: bool]
     // Any changes will need a restart to get applied.
     "debug": false,
 
-    // Display result report in status bar; [type:bool]
+    // Display results on status bar; [type: bool]
     "show_statusbar": true,
 
-    // Augment the default search path for executables,
-    // module directories, python zipfiles etc...; [type:dict:list]
-    // Environment variables can be almost any dynamic-named values:
-    // PATH, PYTHONPATH, GEM_PATH, TMPDIR etc... can be added here.
-    // Standard variables usually contain a list of absolute paths
-    // to _directories_ in which to search for files. An exception
-    // makes PYTHONPATH, it may refer to zipfiles containing pure
-    // Python modules (in either source or compiled form).
-    // Non-existent directories and files are silently ignored.
-    // This customization is temporary and will only take effect
-    // for the current formatting process.
-    // This option can be ommitted.
+    // A set of directories where executable programs are located; [type: list]
+    // It can be absolute paths to module directories, python zipfiles.
+    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR
+    // can be added here.
+    // This option is similar to 'export PYTHONPATH="/path/to/my/site-packages"'
+    // from terminal. But it is only temporary and will take effect
+    // for the current formatting session only.
+    // Non-existent environment directories and files are silently ignored.
+    // This option can be ommitted, but for python and ruby you probably need
+    // to add it, either permanently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     "environ": {
         "PATH": [],
         "GEM_PATH": [],
         "PYTHONPATH": []
     },
 
-    // Formatter specific settings
+    // Plugins settings
     "formatters": {
-        "name_id": {
-            // Disable and remove plugin from being shown in the menu; [type:bool]
+        "example_name": {
+            // Disable and remove plugin from being shown in the menu; [type: bool]
             // Any changes will need a restart to get applied.
             "disable": false,
 
-            // Auto formatting whenever file is being saved; [type:bool]
+            // Auto formatting whenever the current file is being saved; [type: bool]
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes the first plugin will be taken.
+            // For plugins with the same syntaxes then the first plugin will be processed.
             // Disable the others in favor of desired plugins to avoid conflicts.
             "format_on_save": false,
 
-            // Syntax support based on the scope name, not file extension; [type:list]
+            // Syntax support based on the scope name, not file extension; [type: list]
             // Syntax name is part of scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             "syntaxes": ["css", "js", "php"],
 
-            // Path to the plugin executable to be used; [type:string]
-            "executable_path": "",
+            // Path to the plugin executable to be used; [type: string]
+            // System variable expansion like ${HOME} also Sublime Text
+            // ${packages}, ${file_path} etc. can be used to assign paths. More:
+            // https://www.sublimetext.com/docs/build_systems.html#variables
+            "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
 
-            // Path to the config file for each individual syntaxes; [type:dict]
+            // Path to the config file for each individual syntaxes; [type: dict]
             // Syntax keys must match those in "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
+            // Formatter provides a set of default config files under
+            // "formatter.assets/config" folder for personal use.
             "config_path": {
-                "css": "/path/to/config/___only_css_rc.json",
-                "default": "/path/to/config/___combo_js_plus_php_rc.json"
+                "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
+                "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
+                "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // Array of additional arguments for the command line; [type:list]
-            "args": []
+            // Array of additional arguments for the command line; [type: list]
+            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"]
         },
         "beautysh": {
             "disable": false,
@@ -63,7 +67,7 @@
             "syntaxes": ["bash"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/beautyshrc.json"
+                "default": "${packages}/User/formatter.assets/config/beautysh_rc.json"
             }
         },
         "black": {
@@ -72,7 +76,7 @@
             "syntaxes": ["python"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/blackrc.toml"
+                "default": "${packages}/User/formatter.assets/config/black_rc.toml"
             }
         },
         "clangformat": {
@@ -81,7 +85,7 @@
             "syntaxes": ["c", "c++", "objc", "objc++", "js", "java", "proto"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/clangformatrc.yaml"
+                "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"
             }
         },
         "csscomb": {
@@ -90,7 +94,7 @@
             "syntaxes": ["css", "scss", "sass", "less"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/csscombrc.json"
+                "default": "${packages}/User/formatter.assets/config/csscomb_rc.json"
             }
         },
         "eslint": {
@@ -99,7 +103,7 @@
             "syntaxes": ["js"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/eslintrc.json"
+                "default": "${packages}/User/formatter.assets/config/eslint_rc.json"
             }
         },
         "htmltidy": {
@@ -108,8 +112,8 @@
             "syntaxes": ["html", "xml"],
             "executable_path": "",
             "config_path": {
-                "html": "${packages}/User/formatter.assets/config/htmltidyrc_html.cfg",
-                "xml": "${packages}/User/formatter.assets/config/htmltidyrc_xml.cfg"
+                "html": "${packages}/User/formatter.assets/config/htmltidy_html_rc.cfg",
+                "xml": "${packages}/User/formatter.assets/config/htmltidy_xml_rc.cfg"
             }
         },
         "jsbeautifier": {
@@ -118,7 +122,7 @@
             "syntaxes": ["js", "css", "html", "json"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/jsbeautifyrc.json"
+                "default": "${packages}/User/formatter.assets/config/jsbeautify_rc.json"
             }
         },
         "jsonmax": {
@@ -127,7 +131,7 @@
             "syntaxes": ["json"],
             /* build-in, no executable */
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/jsonmaxrc.json"
+                "default": "${packages}/User/formatter.assets/config/jsonmax_rc.json"
             }
         },
         "perltidy": {
@@ -136,7 +140,7 @@
             "syntaxes": ["perl"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/perltidyrc.cfg"
+                "default": "${packages}/User/formatter.assets/config/perltidy_rc.cfg"
             }
         },
         "phpcsfixer": {
@@ -145,7 +149,7 @@
             "syntaxes": ["php"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/phpcsfixerrc.php"
+                "default": "${packages}/User/formatter.assets/config/php_cs_fixer_rc.php"
             }
         },
         "prettier": {
@@ -154,7 +158,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/prettierrc.json"
+                "default": "${packages}/User/formatter.assets/config/prettier_rc.json"
             }
         },
         "rubocop": {
@@ -163,7 +167,7 @@
             "syntaxes": ["ruby"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/rubocoprc.yml"
+                "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
         },
         "stylelint": {
@@ -173,7 +177,7 @@
             "executable_path": "",
             "args": ["--config-basedir", "/path/to/node_modules"],
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/stylelintrc.json"
+                "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
         "uncrustify": {
@@ -182,8 +186,10 @@
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
             "executable_path": "",
             "config_path": {
-                "objc": "${packages}/User/formatter.assets/config/uncrustifyrc_objc.cfg",
-                "default": "${packages}/User/formatter.assets/config/uncrustifyrc.cfg"
+                "objc": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
+                "objc++": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
+                "java": "${packages}/User/formatter.assets/config/uncrustify_sun_java_rc.cfg",
+                "default": "${packages}/User/formatter.assets/config/uncrustify_rc.cfg"
             }
         },
         "yapf": {
@@ -192,7 +198,7 @@
             "syntaxes": ["python"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/yapfrc.yapf"
+                "default": "${packages}/User/formatter.assets/config/yapf_rc.yapf"
             }
         },
         "cleancss": {
@@ -201,7 +207,7 @@
             "syntaxes": ["css", "scss", "sass", "less"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/cleancssrc.json"
+                "default": "${packages}/User/formatter.assets/config/cleancss_rc.json"
             }
         },
         "htmlminifier": {
@@ -210,7 +216,7 @@
             "syntaxes": ["html", "xml"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/htmlminifierrc.json"
+                "default": "${packages}/User/formatter.assets/config/htmlminifier_rc.json"
             }
         },
         "jsonmin": {
@@ -225,7 +231,7 @@
             "syntaxes": ["js"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/terserrc.json"
+                "default": "${packages}/User/formatter.assets/config/terser_rc.json"
             }
         }
     }

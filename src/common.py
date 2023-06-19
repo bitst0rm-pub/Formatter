@@ -11,7 +11,7 @@
 # @license      The MIT License (MIT)
 
 import os
-from os.path import (abspath, basename, expanduser, expandvars, isdir,
+from os.path import (basename, expanduser, expandvars, isdir,
                      isfile, join, normpath, pathsep, split, splitext)
 import sys
 from imp import reload
@@ -167,7 +167,9 @@ def expand_path(path):
     if path and isinstance(path, str):
         variables = sublime.active_window().extract_variables()
         path = sublime.expand_variables(path, variables)
-        return abspath(expanduser(expandvars(path)))
+        p = normpath(expanduser(expandvars(path)))
+        log.debug('Normalized path: %s', p)
+        return p
     return path
 
 

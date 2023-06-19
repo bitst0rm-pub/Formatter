@@ -27,7 +27,7 @@ class JsonminFormatter:
     def format(cls, text):
         try:
             obj = sublime.decode_value(text)
-            result = json.dumps(obj, separators=(',', ':'), indent=None)
+            result = json.dumps(obj, ensure_ascii=False, separators=(',', ':'), indent=None)
             return result
         except ValueError as err:
             log.error('File not formatted due to ValueError: "%s"', err)

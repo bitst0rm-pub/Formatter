@@ -1,6 +1,6 @@
 # Formatter
 
-Formatter is a Sublime Text 3 plugin to beautify and minify source code.
+Formatter is a Sublime Text 3/4 plugin to beautify and minify source code.
 
 Features:
 
@@ -9,58 +9,63 @@ Features:
 - Config files available for each 3rd party plugins
 - Work offline
 
-Todo:
-
-- Add support for more languages
-
-Formatter has been tested under Sublime Text `3` and it _should_ work fine on all platforms.<br/>
+Formatter has been tested under Sublime Text `3 and 4` on MacOSX and it _should_ work fine on other platforms (not tested).<br/>
 A backport to Sublime Text `2` was never intended.
 
 
-## Donation
-If this project help you reduce time to develop, you can give me a cup of coffee :)
+## Guides
 
-[![paypal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WMZN4QESLS6GW&source=url)
+- Table of Contents
+  - [Plugins](#Plugins)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Usage](#usage)
+  - [Troubleshooting](#troubleshooting)
+  - [Todo](#todo)
+  - [License](#license)
 
 
 ## Plugins
 
-Formatter requires special plugins in order to format code. It is currently extended to work with the following plugins. These plugins need to be installed separately and can be easily disabled in settings. Instructions on how to install them are linked below. After you've finished, keep in mind to pass the correct path to the plugin executable and adjust their environment variables in the Formatter settings.
+Formatter is useless without third-party plugins. It relies on external plugins in order to format code. Such plugins need to be installed separately and can be easily disabled in settings. Instructions on how to install them are linked below. To setup plugins please keep in mind to:
+- check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black Python >=3.7.0 !!!
+- pass the correct path to the plugin executable and
+- adjust their environment variables (PATH, PYTHONPATH etc.) in the `Formatter.sublime-settings`.
+
+Plugins that work with Formatter:
 
 | Languages | Beautify | Minify | Requirements | cfg-Online |
 | ------ | :------: | :------: | :------: | :------: |
-| CSS, SCSS, Sass,<br/>Less, SugarSS | [Stylelint](https://github.com/stylelint/stylelint), [JS Beautifier](https://github.com/beautify-web/js-beautify),<br/>[Prettier](https://github.com/prettier/prettier), [CSScomb](https://github.com/csscomb/csscomb.js) | [CleanCSS CLI](https://github.com/jakubpawlowicz/clean-css-cli) | [Node.js](https://www.nodejs.org) | -- |
-| HTML, XML | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier),<br/>[`HTML Tidy`](https://github.com/htacg/tidy-html5) | [HTMLMinifier](https://github.com/kangax/html-minifier) | [Node.js](https://www.nodejs.org)<br/>`Binary:` [W](http://binaries.html-tidy.org), [M](https://bintray.com/homebrew/bottles/tidy-html5#files), [L](http://binaries.html-tidy.org) | -- |
-| JavaScript | [ESLint](https://github.com/eslint/eslint), [JS Beautifier](https://github.com/beautify-web/js-beautify),<br/>[Prettier](https://github.com/prettier/prettier), [`ClangFormat`](https://clang.llvm.org/docs/ClangFormat.html) | [Terser](https://github.com/terser-js/terser) | [Node.js](https://www.nodejs.org)<br/>`Binary:` [W](https://llvm.org/builds), [M](https://bintray.com/homebrew/bottles/clang-format#files), [L](https://pkgs.org/download/clang-format) | [`[1]`](https://github.com/adamyanalunas/clangformat.com) [`[2]`](https://github.com/zed0/clang-format-configurator) |
-| JSON | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier),<br/>JSONMax (build-in) | JSONMin (build-in) | [Node.js](https://www.nodejs.org) | -- |
-| GraphQL | [Prettier](https://github.com/prettier/prettier) | -- | [Node.js](https://www.nodejs.org) | -- |
-| Markdown | [Prettier](https://github.com/prettier/prettier) | -- | [Node.js](https://www.nodejs.org) | -- |
-| TypeScript | [Prettier](https://github.com/prettier/prettier) | -- | [Node.js](https://www.nodejs.org) | -- |
-| Vue | [Prettier](https://github.com/prettier/prettier) | -- | [Node.js](https://www.nodejs.org) | -- |
-| YAML | [Prettier](https://github.com/prettier/prettier) | -- | [Node.js](https://www.nodejs.org) | -- |
-| Perl | [Perltidy](https://github.com/perltidy/perltidy) | -- | [Perl](https://www.perl.org), Binary: [W](https://perltidy.github.io/perltidy/INSTALL.html), [M](https://perltidy.github.io/perltidy/INSTALL.html), [L](https://perltidy.github.io/perltidy/INSTALL.html) | -- |
-| PHP | [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) | -- | [PHP 5.6.0+](https://www.php.net) | [\[1\]](https://github.com/mlocati/php-cs-fixer-configurator) |
-| Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | -- | [Python `3.6.0+`](https://www.python.org) | -- |
-| Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | [Ruby](https://www.ruby-lang.org) | -- |
-| Bash, Shell | [Beautysh](https://github.com/bemeurer/beautysh) | -- | [Python](https://www.python.org) | -- |
-| C, C++, C#, ObjectiveC,<br/>D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | Binary: [W](https://sourceforge.net/projects/uncrustify/files/uncrustify/), [M](https://bintray.com/homebrew/bottles/uncrustify#files), [L](https://pkgs.org/download/uncrustify) | [\[1\]](https://github.com/CDanU/uncrustify_config) |
-| C, C++, Objective-C,<br/>Java, Protobuf | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | Binary: [W](https://llvm.org/builds), [M](https://bintray.com/homebrew/bottles/clang-format#files), [L](https://pkgs.org/download/clang-format) | [\[1\]](https://github.com/adamyanalunas/clangformat.com) [\[2\]](https://github.com/zed0/clang-format-configurator) |
+| CSS, SCSS, Sass,<br/>Less, SugarSS | [Stylelint](https://github.com/stylelint/stylelint), [JS Beautifier](https://github.com/beautify-web/js-beautify),<br/>[Prettier](https://github.com/prettier/prettier), [CSScomb](https://github.com/csscomb/csscomb.js) | [CleanCSS CLI](https://github.com/jakubpawlowicz/clean-css-cli) | Node.js | -- |
+| HTML, XML | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier),<br/>[HTML Tidy](https://github.com/htacg/tidy-html5) | [HTMLMinifier](https://github.com/kangax/html-minifier) | Node.js | -- |
+| JavaScript | [ESLint](https://github.com/eslint/eslint), [JS Beautifier](https://github.com/beautify-web/js-beautify),<br/>[Prettier](https://github.com/prettier/prettier), [`ClangFormat`](https://clang.llvm.org/docs/ClangFormat.html) | [Terser](https://github.com/terser-js/terser) | Node.js | [`Yes`](https://zed0.co.uk/clang-format-configurator) |
+| JSON | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier),<br/>JSONMax (build-in) | JSONMin (build-in) | Node.js | -- |
+| GraphQL | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Markdown | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| TypeScript | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Vue | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| YAML | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Perl | [Perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
+| PHP | [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) | -- | PHP >=`7.4.0` | [Yes](https://mlocati.github.io/php-cs-fixer-configurator) |
+| Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | -- | Python `>=3.7.0` | -- |
+| Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
+| Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
+| C, C++, C#, ObjectiveC,<br/>D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| C, C++, Objective-C,<br/>Java, Protobuf | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
 
-💕**Hint**:
+💡 **Hint**:
 
-- [Stylelint](https://github.com/stylelint/stylelint) and [Prettier](https://github.com/prettier/prettier) can cooperate together using [stylelint-plugin-prettier](https://github.com/prettier/stylelint-prettier). Configuration can be done with:
+- [Prettier](https://github.com/prettier/prettier) and [Stylelint](https://github.com/stylelint/stylelint) and can cooperate together to format CSS. Config example:
 
-        Sublime Text: Packages > User > formatter.assets > config > stylelintrc.json
+        stylelint_rc.json:
+        {"extends":["stylelint-config-recommended","stylelint-config-standard"],"plugins":["stylelint-group-selectors","stylelint-no-indistinguishable-colors","@double-great/stylelint-a11y","stylelint-prettier"],"rules":{"plugin/stylelint-group-selectors":true,"plugin/stylelint-no-indistinguishable-colors":true,"a11y/content-property-no-static-value":false,"a11y/font-size-is-readable":false,"a11y/line-height-is-vertical-rhythmed":[true,{"severity":"warning"}],"a11y/media-prefers-color-scheme":false,"a11y/media-prefers-reduced-motion":false,"a11y/no-display-none":false,"a11y/no-obsolete-attribute":[true,{"severity":"warning"}],"a11y/no-obsolete-element":[true,{"severity":"warning"}],"a11y/no-outline-none":false,"a11y/no-spread-text":false,"a11y/no-text-align-justify":false,"a11y/selector-pseudo-class-focus":false,"prettier/prettier":[true,{"parser":"css","printWidth":120,"semi":true,"singleQuote":false,"tabWidth":4,"useTabs":false}]}}
 
-        Example (stylelintrc.json): { "extends": [ "stylelint-config-standard", "stylelint-config-prettier" ], "plugins": [ "stylelint-prettier" ], "rules": { "prettier/prettier": [ true, { "parser": "css", "singleQuote": false, "tabWidth": 4 } ] } }
+        Then in Formatter settings > "stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }
 
-        Then in Formatter settings > "stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/node_modules"] ... }
+- [Prettier](https://github.com/prettier/prettier) and [ESLint](https://github.com/eslint/eslint) can cooperate together to format JS. Config example:
 
-- [ESLint](https://github.com/eslint/eslint) and [Prettier](https://github.com/prettier/prettier) can cooperate together using [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier). Configuration can be done with:
-
-        Sublime Text: Packages > User > formatter.assets > config > eslintrc.json
-
-        Example (eslintrc.json): { "extends": [ "eslint-config-standard", "eslint-config-prettier" ], "plugins": [ "eslint-plugin-standard", "eslint-plugin-prettier" ], "rules": { "prettier/prettier": [ "error", { "bracketSpacing": true, "jsxSingleQuote": true, "parser": "babel", "printWidth": 120, "singleQuote": true, "tabWidth": 4 } ] } }
+        eslint_rc.json:
+        {"env":{"es2022":true,"node":true,"browser":true},"parserOptions":{"ecmaVersion":13,"sourceType":"module","ecmaFeatures":{"jsx":true}},"extends":["../javascript/node_modules/eslint-config-prettier","../javascript/node_modules/eslint-config-airbnb-base"],"plugins":["eslint-plugin-prettier"],"rules":{"prettier/prettier":["error",{"bracketSpacing":true,"jsxSingleQuote":true,"parser":"babel","printWidth":120,"semi":true,"singleQuote":true,"tabWidth":4,"useTabs":false},{"usePrettierrc":false}],"indent":["error",4]}}
 
 
 ## Installation
@@ -86,22 +91,19 @@ The `Packages` directory is located differently in:
 
 ## Configuration
 
-Formatter stores configuration data in 2 different locations:
+Formatter stores config files in 2 different locations:
 
-- Specific [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and acceptable values can be found on plugins dev websites. Formatter provides only the basic foundation to demonstrate how it works. You might want to tweak and refine them to fit your needs:
+- Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs:
 
-        Sublime Text: Preferences > Package Settings > Formatter > Open Config Files
-
-        Location:
-        Sublime Text: Packages > User > formatter.assets > config
+        Sublime Text > Packages > User > formatter.assets > config
 
 - Default and User config files that control Formatter:
 
-        Sublime Text: Packages > User > Formatter.sublime-settings
+        Sublime Text > Packages > User > Formatter.sublime-settings
 
-Formatter settings are accessed via the Preferences > Package Settings > Formatter > Settings.
+Formatter settings can be accessed from: Preferences > Package Settings > Formatter > Settings.
 
-The left-hand pane contains all of the default settings. The right-hand pane is where customization can be saved.<br/>
+The left-hand pane contains all of the default settings. The right-hand pane is where personal customization can be made.<br/>
 Make sure that you wrap all the configurations into a single root object and copy them from the left-hand to the right-hand pane.<br/>
 Do **not** edit the Default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
@@ -109,107 +111,75 @@ The following settings example should give you direction, how to setup Formatter
 
 ```
 {
-    // Output debugging information in the console; [type:bool]
+    // Enable debug mode to view errors in the console; [type: bool]
     // Any changes will need a restart to get applied.
     "debug": false,
 
-    // Display result report in status bar; [type:bool]
+    // Display results on status bar; [type: bool]
     "show_statusbar": true,
 
-    // Augment the default search path for executables,
-    // module directories, python zipfiles etc...; [type:dict:list]
-    // Environment variables can be almost any dynamic-named values:
-    // PATH, PYTHONPATH, GEM_PATH, TMPDIR etc... can be added here.
-    // Standard variables usually contain a list of absolute paths
-    // to _directories_ in which to search for files. An exception
-    // makes PYTHONPATH, it may refer to zipfiles containing pure
-    // Python modules (in either source or compiled form).
-    // Non-existent directories and files are silently ignored.
-    // This customization is temporary and will only take effect
-    // for the current formatting process.
-    // This option can be ommitted.
+    // A set of directories where executable programs are located; [type: list]
+    // It can be absolute paths to module directories, python zipfiles.
+    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR
+    // can be added here.
+    // This option is similar to 'export PYTHONPATH="/path/to/my/site-packages"'
+    // from terminal. But it is only temporary and will take effect
+    // for the current formatting session only.
+    // Non-existent environment directories and files are silently ignored.
+    // This option can be ommitted, but for python and ruby you probably need
+    // to add it, either permanently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     "environ": {
         "PATH": [],
-        "GEM_PATH": ["${packages}/User/formatter.assets/ruby"],
-        "PYTHONPATH": ["${packages}/User/formatter.assets/python/lib/python3.7/site-packages"]
+        "GEM_PATH": ["${HOME}/to/my/ruby"],
+        "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"]
     },
 
-    // Formatter specific settings
+    // Plugins settings
     "formatters": {
-        "name_id": {
-            // Disable and remove plugin from being shown in the menu; [type:bool]
+        "example_name": {
+            // Disable and remove plugin from being shown in the menu; [type: bool]
             // Any changes will need a restart to get applied.
             "disable": false,
 
-            // Auto formatting whenever file is being saved; [type:bool]
+            // Auto formatting whenever the current file is being saved; [type: bool]
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes the first plugin will be taken.
+            // For plugins with the same syntaxes then the first plugin will be processed.
             // Disable the others in favor of desired plugins to avoid conflicts.
             "format_on_save": false,
 
-            // Syntax support based on the scope name, not file extension; [type:list]
+            // Syntax support based on the scope name, not file extension; [type: list]
             // Syntax name is part of scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             "syntaxes": ["css", "js", "php"],
 
-            // Path to the plugin executable to be used; [type:string]
-            "executable_path": "",
+            // Path to the plugin executable to be used; [type: string]
+            // System variable expansion like ${HOME} also Sublime Text
+            // ${packages}, ${file_path} etc. can be used to assign paths. More:
+            // https://www.sublimetext.com/docs/build_systems.html#variables
+            "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
 
-            // Path to the config file for each individual syntaxes; [type:dict]
+            // Path to the config file for each individual syntaxes; [type: dict]
             // Syntax keys must match those in "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
+            // Formatter provides a set of default config files under
+            // "formatter.assets/config" folder for personal use.
             "config_path": {
-                "css": "/path/to/config/___only_css_rc.json",
-                "default": "/path/to/config/___combo_js_plus_php_rc.json"
+                "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
+                "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
+                "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // Array of additional arguments for the command line; [type:list]
-            "args": []
+            // Array of additional arguments for the command line; [type: list]
+            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"]
         },
         "beautysh": {
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["bash"],
-            "executable_path": "${packages}/User/formatter.assets/python/bin/beautysh",
+            "executable_path": "${packages}/User/MyFolder/python/bin/beautysh",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/beautyshrc.json"
-            }
-        },
-        "black": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["python"],
-            "executable_path": "${packages}/User/formatter.assets/python/bin/black",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/blackrc.toml"
-            }
-        },
-        "clangformat": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["c", "c++", "objc", "objc++", "js", "java", "proto"],
-            "executable_path": "${packages}/User/formatter.assets/bin/clang-format",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/clangformatrc.yaml"
-            }
-        },
-        "csscomb": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["css", "scss", "sass", "less"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/csscomb",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/csscombrc.json"
-            }
-        },
-        "eslint": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["js"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/eslint",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/eslintrc.json"
+                "default": "${packages}/User/formatter.assets/config/beautysh_rc.json"
             }
         },
         "htmltidy": {
@@ -218,123 +188,30 @@ The following settings example should give you direction, how to setup Formatter
             "syntaxes": ["html", "xml"],
             "executable_path": "${packages}/User/formatter.assets/bin/tidy",
             "config_path": {
-                "html": "${packages}/User/formatter.assets/config/htmltidyrc_html.cfg",
-                "xml": "${packages}/User/formatter.assets/config/htmltidyrc_xml.cfg"
-            }
-        },
-        "jsbeautifier": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["js", "css", "html", "json"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/js-beautify",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/jsbeautifyrc.json"
-            }
-        },
-        "jsonmax": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["json"],
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/jsonmaxrc.json"
-            }
-        },
-        "perltidy": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["perl"],
-            "executable_path": "${packages}/User/formatter.assets/bin/perltidy",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/perltidyrc.cfg"
-            }
-        },
-        "phpcsfixer": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["php"],
-            "executable_path": "${packages}/User/formatter.assets/bin/php-cs-fixer-v2.phar",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/phpcsfixerrc.php"
-            }
-        },
-        "prettier": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/prettier",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/prettierrc.json"
-            }
-        },
-        "rubocop": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["ruby"],
-            "executable_path": "${packages}/User/formatter.assets/ruby/bin/rubocop",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/rubocoprc.yml"
+                "html": "${packages}/User/formatter.assets/config/htmltidy_html_rc.cfg",
+                "xml": "${packages}/User/formatter.assets/config/htmltidy_xml_rc.cfg"
             }
         },
         "stylelint": {
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/stylelint",
-            "args": ["--config-basedir", "${packages}/User/formatter.assets/javascript/node_modules"],
+            "executable_path": "${packages}/User/MyFolder/javascript/node_modules/.bin/stylelint",
+            "args": ["--config-basedir", "/path/to/javascript/node_modules"],
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/stylelintrc.json"
+                "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
         "uncrustify": {
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
-            "executable_path": "${packages}/User/formatter.assets/bin/uncrustify",
+            "executable_path": "${HOME}/path/to/bin/uncrustify",
             "config_path": {
-                "objc": "${packages}/User/formatter.assets/config/uncrustifyrc_objc.cfg",
-                "default": "${packages}/User/formatter.assets/config/uncrustifyrc.cfg"
-            }
-        },
-        "yapf": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["python"],
-            "executable_path": "${packages}/User/formatter.assets/python/bin/yapf",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/yapfrc.yapf"
-            }
-        },
-        "cleancss": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["css", "scss", "sass", "less"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/cleancss",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/cleancssrc.json"
-            }
-        },
-        "htmlminifier": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["html", "xml"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/html-minifier",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/htmlminifierrc.json"
-            }
-        },
-        "jsonmin": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["json"]
-            /* no config */
-        },
-        "terser": {
-            "disable": false,
-            "format_on_save": false,
-            "syntaxes": ["js"],
-            "executable_path": "${packages}/User/formatter.assets/javascript/node_modules/.bin/terser",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/terserrc.json"
+                "objc": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
+                "objc++": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
+                "java": "${packages}/User/formatter.assets/config/uncrustify_sun_java_rc.cfg",
+                "default": "${packages}/User/formatter.assets/config/uncrustify_rc.cfg"
             }
         }
     }
@@ -344,7 +221,7 @@ The following settings example should give you direction, how to setup Formatter
 
 ## Usage
 
-Formatter has been designed to detect the syntax of files according to file scopes. In the most cases Sublime Text already does this job for you when you open a file. For the rest you must explicit assign syntax via the syntax menu on the righ-hand bottom corner or via:
+Formatter has been designed to detect the syntax of files according to file scopes, not file extension. In the most cases Sublime Text already does this job for you when you open a file. For the rest you must explicit assign syntax via the syntax menu on the righ-hand bottom corner or via:
 
         Sublime Text > View > Syntax
 
@@ -355,6 +232,15 @@ Formatting actions can be triggered in different ways:
 - Tools > Command Palette (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and type `Formatter`.
 - Tools > Formatter
 - Right-click > Context-Menu > Formatter
+
+
+## Troubleshooting
+Please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can come from upstream plugin dev, from your transcoding code text also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
+
+
+## Todo:
+
+- Maybe add support for more languages, but which one? More is not always better.
 
 
 ## License

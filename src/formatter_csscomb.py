@@ -42,12 +42,11 @@ class CsscombFormatter:
         if args:
             cmd.extend(args)
 
-        syntax = common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
-        cmd.extend([syntax if syntax else 'css'])
-
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
-            cmd.extend([sublime.encode_value(config, False), '-'])
+            cmd.extend(['--config', config, '-'])
+        else:
+            cmd.extend(['-'])
 
         return cmd
 
