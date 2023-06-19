@@ -46,7 +46,7 @@ class CleancssFormatter:
 
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
-            cmd.extend([self.get_config(config)])
+            cmd.extend(self.get_config(config))
 
         cmd.extend([filename, '--output', filename])
 
@@ -103,9 +103,9 @@ class CleancssFormatter:
         for key, value in json.items():
             typ = type(value)
             if typ == list:
-                result.append('--' + key + ' \'' + ','.join(value) + '\'')
+                result.extend(['--' + key, ','.join(value)])
             if typ == int:
-                result.append('--' + key + ' %d' % value)
+                result.extend(['--' + key, '%d' % value])
             if typ == bool:
                 if value:
                     result.append('--' + key)
@@ -118,12 +118,11 @@ class CleancssFormatter:
                             if typ == bool:
                                 string += (('+' if valuelv2 else '-') + keylv2 + ',')
                         if string:
-                            string = '--compatibility \'' + keylv1 + ',' + string[:-1] + '\''
-                            result.append(string)
+                            result.extend(['--compatibility', keylv1 + ',' + string[:-1]])
                 if key == 'format':
                     for keylv1, valuelv1 in value.items():
                         if keylv1 in ('beautify', 'keep-breaks'):
-                            result.append('--format ' + keylv1)
+                            result.extend(['--format', keylv1])
                         else:
                             string = ''
                             for keylv2, valuelv2 in valuelv1.items():
@@ -135,8 +134,7 @@ class CleancssFormatter:
                                 if typ == int:
                                     string += (keylv2 + ':' + '%d' % valuelv2 + ';')
                             if string:
-                                string = '--format \'' + string[:-1] + '\''
-                                result.append(string)
+                                result.extend(['--format', string[:-1]])
                 if key == 'optimization':
                     if '0' in str(value['level']):
                         result.append('-O0')
@@ -155,6 +153,5 @@ class CleancssFormatter:
                                     if typ == int:
                                         string += (keylv2 + ':' + '%d' % valuelv2 + ';')
                                 if string:
-                                    string = '-O' + keylv1 + ' \'' + string[:-1] + '\''
-                                    result.append(string)
-        return ' '.join(result)
+                                    result.extend(['-O' + keylv1, string[:-1]])
+        return result
