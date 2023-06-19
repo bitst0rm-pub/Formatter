@@ -37,6 +37,10 @@ class JsonmaxFormatter:
             obj = sublime.decode_value(text)
             result = json.dumps(
                 obj,
+                skipkeys=cfg.get('skipkeys', False),
+                ensure_ascii=cfg.get('ensure_ascii', False),
+                check_circular=cfg.get('check_circular', True),
+                allow_nan=cfg.get('allow_nan', True),
                 indent=cfg.get('indent', 4),
                 sort_keys=cfg.get('sort_keys', False),
                 separators=cfg.get('separators', None))
