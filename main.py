@@ -113,6 +113,9 @@ class RunFormatThread(threading.Thread):
         if is_success:
             self.success += 1
             log.debug('Formatting successful. 🎉😃🍰')
+            self.view.settings().set("formatter_modified", True)
+            self.view.run_command("save")
+            self.view.settings().erase("formatter_modified")
         else:
             self.failure += 1
             log.debug('Formatting failed. 💔😢💔')
@@ -130,24 +133,27 @@ class SubstituteCommand(sublime_plugin.TextCommand):
 class RunFormatEventListener(sublime_plugin.EventListener):
     @classmethod
     def on_pre_save_async(cls, view):
-        is_selected = any(not sel.empty() for sel in view.sel())
-        formatter = common.settings().get('formatters', {})
-        if formatter and isinstance(formatter, dict):
-            for key, value in formatter.items():
-                regio = None
-                if not is_selected:
-                    # entire file
-                    regio = sublime.Region(0, view.size())
-                else:
-                    # selections
-                    for region in view.sel():
-                        if region.empty():
-                            continue
-                        regio = region
-                syntax = common.get_assign_syntax(view, key, regio, is_selected)
-                if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
-                    log.debug('Format-On-Save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
-                    view.run_command('run_format', {'identifier': key})
+        if view.is_dirty():
+            if not view.settings().get("formatter_modified"):
+                is_selected = any(not sel.empty() for sel in view.sel())
+                formatter = common.settings().get('formatters', {})
+                if formatter and isinstance(formatter, dict):
+                    for key, value in formatter.items():
+                        regio = None
+                        if not is_selected:
+                            # entire file
+                            regio = sublime.Region(0, view.size())
+                        else:
+                            # selections
+                            for region in view.sel():
+                                if region.empty():
+                                    continue
+                                regio = region
+                        syntax = common.get_assign_syntax(view, key, regio, is_selected)
+                        if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
+                            log.debug('Format-On-Save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
+                            view.run_command('run_format', {'identifier': key})
+
 
     @classmethod
     def on_post_save_async(cls, view):
