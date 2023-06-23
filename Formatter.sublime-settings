@@ -29,11 +29,21 @@
             // Any changes will need a restart to get applied.
             "disable": false,
 
-            // Auto formatting whenever the current file is being saved; [type: bool]
+            // Auto formatting whenever the current raw file is being saved; [type: bool]
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes then the first plugin will be processed.
             // Disable the others in favor of desired plugins to avoid conflicts.
             "format_on_save": false,
+
+            // Create a new file containing formatted codes [type: string]
+            // The value of this option is the suffix of the new file being renamed.
+            // Suffix must be of type string. =false, =true and all other types imply =false
+            // Note: It will overwrite any existing file that has the same new name in
+            // the same location.
+            // For example:
+            // "new_file_on_format": "min", will create a new file:
+            // myfile.raw.js -> myfile.raw.min.js
+            "new_file_on_format": false,
 
             // Syntax support based on the scope name, not file extension; [type: list]
             // Syntax name is part of scope name and can be retrieved from:
@@ -64,6 +74,7 @@
         "beautysh": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["bash"],
             "executable_path": "",
             "config_path": {
@@ -73,6 +84,7 @@
         "black": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["python"],
             "executable_path": "",
             "config_path": {
@@ -82,6 +94,7 @@
         "clangformat": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["c", "c++", "objc", "objc++", "js", "java", "proto"],
             "executable_path": "",
             "config_path": {
@@ -91,6 +104,7 @@
         "csscomb": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["css", "scss", "sass", "less"],
             "executable_path": "",
             "config_path": {
@@ -100,6 +114,7 @@
         "eslint": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["js"],
             "executable_path": "",
             "config_path": {
@@ -109,6 +124,7 @@
         "htmltidy": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["html", "xml"],
             "executable_path": "",
             "config_path": {
@@ -119,6 +135,7 @@
         "jsbeautifier": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["js", "css", "html", "json"],
             "executable_path": "",
             "config_path": {
@@ -128,6 +145,7 @@
         "jsonmax": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["json"],
             /* build-in, no executable */
             "config_path": {
@@ -137,6 +155,7 @@
         "perltidy": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["perl"],
             "executable_path": "",
             "config_path": {
@@ -146,6 +165,7 @@
         "phpcsfixer": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["php"],
             "executable_path": "",
             "config_path": {
@@ -155,6 +175,7 @@
         "prettier": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
             "executable_path": "",
             "config_path": {
@@ -164,6 +185,7 @@
         "rubocop": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["ruby"],
             "executable_path": "",
             "config_path": {
@@ -173,6 +195,7 @@
         "stylelint": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
             "executable_path": "",
             "args": ["--config-basedir", "/path/to/node_modules"],
@@ -183,6 +206,7 @@
         "uncrustify": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
             "executable_path": "",
             "config_path": {
@@ -195,6 +219,7 @@
         "yapf": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["python"],
             "executable_path": "",
             "config_path": {
@@ -204,6 +229,7 @@
         "cleancss": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["css", "scss", "sass", "less"],
             "executable_path": "",
             "config_path": {
@@ -213,6 +239,7 @@
         "htmlminifier": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["html", "xml"],
             "executable_path": "",
             "config_path": {
@@ -222,12 +249,14 @@
         "jsonmin": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["json"]
             /* build-in, no config */
         },
         "terser": {
             "disable": false,
             "format_on_save": false,
+            "new_file_on_format": false,
             "syntaxes": ["js"],
             "executable_path": "",
             "config_path": {
