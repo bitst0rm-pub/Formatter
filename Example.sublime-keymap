@@ -1,0 +1,21 @@
+[
+    {"keys": ["ctrl+super+0"], "command": "run_format", "args": {"identifier": "beautysh"}},
+    {"keys": ["ctrl+super+1"], "command": "run_format", "args": {"identifier": "black"}},
+    {"keys": ["ctrl+super+2"], "command": "run_format", "args": {"identifier": "clangformat"}},
+    {"keys": ["ctrl+super+3"], "command": "run_format", "args": {"identifier": "csscomb"}},
+    {"keys": ["ctrl+super+4"], "command": "run_format", "args": {"identifier": "eslint"}},
+    {"keys": ["ctrl+super+5"], "command": "run_format", "args": {"identifier": "htmltidy"}},
+    {"keys": ["ctrl+super+6"], "command": "run_format", "args": {"identifier": "jsbeautifier"}},
+    {"keys": ["ctrl+super+7"], "command": "run_format", "args": {"identifier": "jsonmax"}},
+    {"keys": ["ctrl+super+8"], "command": "run_format", "args": {"identifier": "perltidy"}},
+    {"keys": ["ctrl+super+9"], "command": "run_format", "args": {"identifier": "phpcsfixer"}},
+    {"keys": ["ctrl+alt+0"], "command": "run_format", "args": {"identifier": "prettier"}},
+    {"keys": ["ctrl+alt+1"], "command": "run_format", "args": {"identifier": "rubocop"}},
+    {"keys": ["ctrl+alt+2"], "command": "run_format", "args": {"identifier": "stylelint"}},
+    {"keys": ["ctrl+alt+3"], "command": "run_format", "args": {"identifier": "uncrustify"}},
+    {"keys": ["ctrl+alt+4"], "command": "run_format", "args": {"identifier": "yapf"}},
+    {"keys": ["ctrl+alt+5"], "command": "run_format", "args": {"identifier": "cleancss"}},
+    {"keys": ["ctrl+alt+6"], "command": "run_format", "args": {"identifier": "htmlminifier"}},
+    {"keys": ["ctrl+alt+7"], "command": "run_format", "args": {"identifier": "jsonmin"}},
+    {"keys": ["ctrl+alt+8"], "command": "run_format", "args": {"identifier": "terser"}}
+]
