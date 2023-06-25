@@ -182,6 +182,26 @@
                 "default": "${packages}/User/formatter.assets/config/prettier_rc.json"
             }
         },
+        "prettydiffmax": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
+            }
+        },
+        "prettydiffmin": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
+            }
+        },
         "rubocop": {
             "disable": false,
             "format_on_save": false,

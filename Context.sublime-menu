@@ -81,6 +81,13 @@
                 }
             },
             {
+                "caption": "Pretty Diff",
+                "command": "run_format",
+                "args": {
+                    "identifier": "prettydiffmax"
+                }
+            },
+            {
                 "caption": "RuboCop",
                 "command": "run_format",
                 "args": {
@@ -123,6 +130,13 @@
                 "command": "run_format",
                 "args": {
                     "identifier": "htmlminifier"
+                }
+            },
+            {
+                "caption": "Pretty Diff (minify)",
+                "command": "run_format",
+                "args": {
+                    "identifier": "prettydiffmin"
                 }
             },
             {

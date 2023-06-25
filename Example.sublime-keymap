@@ -1,21 +1,39 @@
+// This example is not ready to use.
+// End-users are free to remap any key combination, but keep in mind:
+// 1. Ctrl+Alt+<alphanum> should never be used in any Windows key bindings.
+// 2. Option+<alphanum> should never be used in any macOS key bindings.
+// In both cases, the user's ability to insert non-ASCII characters
+// would be compromised otherwise.
+//
+// Modifiers:
+// shift
+// ctrl or control
+// alt
+// super (Windows: Windows key, MacOS: Command Key)
+// primary (Windows: Control key, MacOS: Command Key)
+// command (MacOS only)
+// option (MacOS only: same as alt)
+
 [
-    {"keys": ["ctrl+super+0"], "command": "run_format", "args": {"identifier": "beautysh"}},
-    {"keys": ["ctrl+super+1"], "command": "run_format", "args": {"identifier": "black"}},
-    {"keys": ["ctrl+super+2"], "command": "run_format", "args": {"identifier": "clangformat"}},
-    {"keys": ["ctrl+super+3"], "command": "run_format", "args": {"identifier": "csscomb"}},
-    {"keys": ["ctrl+super+4"], "command": "run_format", "args": {"identifier": "eslint"}},
-    {"keys": ["ctrl+super+5"], "command": "run_format", "args": {"identifier": "htmltidy"}},
-    {"keys": ["ctrl+super+6"], "command": "run_format", "args": {"identifier": "jsbeautifier"}},
-    {"keys": ["ctrl+super+7"], "command": "run_format", "args": {"identifier": "jsonmax"}},
-    {"keys": ["ctrl+super+8"], "command": "run_format", "args": {"identifier": "perltidy"}},
-    {"keys": ["ctrl+super+9"], "command": "run_format", "args": {"identifier": "phpcsfixer"}},
-    {"keys": ["ctrl+alt+0"], "command": "run_format", "args": {"identifier": "prettier"}},
-    {"keys": ["ctrl+alt+1"], "command": "run_format", "args": {"identifier": "rubocop"}},
-    {"keys": ["ctrl+alt+2"], "command": "run_format", "args": {"identifier": "stylelint"}},
-    {"keys": ["ctrl+alt+3"], "command": "run_format", "args": {"identifier": "uncrustify"}},
-    {"keys": ["ctrl+alt+4"], "command": "run_format", "args": {"identifier": "yapf"}},
-    {"keys": ["ctrl+alt+5"], "command": "run_format", "args": {"identifier": "cleancss"}},
-    {"keys": ["ctrl+alt+6"], "command": "run_format", "args": {"identifier": "htmlminifier"}},
-    {"keys": ["ctrl+alt+7"], "command": "run_format", "args": {"identifier": "jsonmin"}},
-    {"keys": ["ctrl+alt+8"], "command": "run_format", "args": {"identifier": "terser"}}
+    { "keys": ["ctrl+super+a"], "command": "run_format", "args": { "identifier": "beautysh" }},
+    { "keys": ["ctrl+super+b"], "command": "run_format", "args": { "identifier": "black" }},
+    { "keys": ["ctrl+super+c"], "command": "run_format", "args": { "identifier": "clangformat" }},
+    { "keys": ["ctrl+super+d"], "command": "run_format", "args": { "identifier": "csscomb" }},
+    { "keys": ["ctrl+super+e"], "command": "run_format", "args": { "identifier": "eslint" }},
+    { "keys": ["ctrl+super+f"], "command": "run_format", "args": { "identifier": "htmltidy" }},
+    { "keys": ["ctrl+super+g"], "command": "run_format", "args": { "identifier": "jsbeautifier" }},
+    { "keys": ["ctrl+super+h"], "command": "run_format", "args": { "identifier": "jsonmax" }},
+    { "keys": ["ctrl+super+i"], "command": "run_format", "args": { "identifier": "perltidy" }},
+    { "keys": ["ctrl+super+j"], "command": "run_format", "args": { "identifier": "phpcsfixer" }},
+    { "keys": ["ctrl+super+k"], "command": "run_format", "args": { "identifier": "prettier" }},
+    { "keys": ["ctrl+super+l"], "command": "run_format", "args": { "identifier": "prettydiffmax" }},
+    { "keys": ["ctrl+super+m"], "command": "run_format", "args": { "identifier": "rubocop" }},
+    { "keys": ["ctrl+super+n"], "command": "run_format", "args": { "identifier": "stylelint" }},
+    { "keys": ["ctrl+super+o"], "command": "run_format", "args": { "identifier": "uncrustify" }},
+    { "keys": ["ctrl+super+p"], "command": "run_format", "args": { "identifier": "yapf" }},
+    { "keys": ["ctrl+super+q"], "command": "run_format", "args": { "identifier": "cleancss" }},
+    { "keys": ["ctrl+super+r"], "command": "run_format", "args": { "identifier": "htmlminifier" }},
+    { "keys": ["ctrl+super+s"], "command": "run_format", "args": { "identifier": "prettydiffmin" }},
+    { "keys": ["ctrl+super+t"], "command": "run_format", "args": { "identifier": "jsonmin" }},
+    { "keys": ["ctrl+super+u"], "command": "run_format", "args": { "identifier": "terser" }}
 ]

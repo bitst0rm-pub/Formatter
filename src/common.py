@@ -41,6 +41,8 @@ LOAD_ORDER = [
     '.src.formatter_perltidy',
     '.src.formatter_phpcsfixer',
     '.src.formatter_prettier',
+    '.src.formatter_prettydiffmax',
+    '.src.formatter_prettydiffmin',
     '.src.formatter_rubocop',
     '.src.formatter_stylelint',
     '.src.formatter_terser',
