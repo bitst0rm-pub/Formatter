@@ -1,0 +1,17 @@
+Formatter
+
+0.1.7
+    NEW: Add new plugin: Pretty Diff
+    NEW: Add new option "new_file_on_format"
+    NEW: Add key bindings
+    NEW: Update and rename the whole config files
+    NEW: Add python version check for Black
+    FIX: Add syntax comparison to fix format_on_save
+    FIX: Improve path manipulation
+    FIX: Fix csscomb cmd for ignoring user config file
+    FIX: Fix cleancss invalid config parameters
+    FIX: Remove --files parameter for beautysh >= 5.0.0
+    FIX: Update PHP version check to >= 7.4.0 for php-cs-fixer v3
+    FIX: Add ensure_ascii parameter for jsonmax to fix characters transcoding
+    FIX: Add ensure_ascii parameter for jsonmin to fix characters transcoding
+    FIX: Rewrite Prettier
