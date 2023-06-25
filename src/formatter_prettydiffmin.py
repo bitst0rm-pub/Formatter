@@ -81,6 +81,9 @@ class PrettydiffminFormatter:
             else:
                 return stdout.decode('utf-8')
         except OSError:
+            if tmp_file and os.path.isfile(tmp_file):
+                os.unlink(tmp_file)
+
             log.error('Error occurred when running: %s', ' '.join(cmd))
 
         return None
