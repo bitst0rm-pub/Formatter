@@ -13,6 +13,7 @@
 import threading
 import logging
 from pprint import pformat
+from os.path import (splitext, isfile)
 import sublime
 import sublime_plugin
 from .src import common
@@ -74,6 +75,7 @@ class RunFormatThread(threading.Thread):
         self.kwargs = kwargs
         self.success = 0
         self.failure = 0
+        self.cycles = []
         threading.Thread.__init__(self)
         self.lock = threading.Lock()
 
@@ -88,6 +90,7 @@ class RunFormatThread(threading.Thread):
                     region = sublime.Region(0, self.view.size())
                     text = self.view.substr(region)
                     is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
+                    self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
                     # Format selections
@@ -96,7 +99,10 @@ class RunFormatThread(threading.Thread):
                             continue
                         text = self.view.substr(region)
                         is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
+                        self.cycles.append(is_success)
                         self.print_status(is_success)
+                if True in self.cycles:
+                    self.new_file_on_format()
         except Exception as error:
             import traceback
             log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
@@ -118,13 +124,76 @@ class RunFormatThread(threading.Thread):
             log.debug('Formatting failed. 💔😢💔')
 
         if common.settings().get('show_statusbar', False):
-            self.view.set_status('@' + common.PLUGIN_NAME.lower(), common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
+            self.view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
+
+    def new_file_on_format(self):
+        formatter = common.settings().get('formatters', {})
+        if formatter and isinstance(formatter, dict):
+            for key, value in formatter.items():
+                suffix = value.get('new_file_on_format', False)
+                if suffix and isinstance(suffix, str):
+                    file_path = self.view.file_name()
+                    if file_path and isfile(file_path):
+                        new_path = '{0}.{2}{1}'.format(*splitext(file_path) + (suffix,))
+                        self.view.run_command('clone_view', {'path': new_path})
+                    else:
+                        self.view.run_command('clone_view', {'path': None})
+                    sublime.set_timeout(self.undo_history, 1500)
+
+    def undo_history(self):
+        c = self.cycles.count(True)
+        attempts = 0
+        while c > 0:
+            self.view.run_command('undo')
+            c -= 1
+            attempts += 1
+            if attempts > 1000:
+                log.warning('Seems like undo cycle is endless.')
+                raise Exception()
 
 
 class SubstituteCommand(sublime_plugin.TextCommand):
     def run(self, edit, result, region):
         log.debug('Replacing text ...')
         self.view.replace(edit, sublime.Region(region[0], region[1]), result)
+
+
+class CloneView(sublime_plugin.TextCommand):
+    def run(self, edit, path):
+        view = sublime.active_window().new_file()
+        view.insert(edit, 0, self.view.substr(sublime.Region(0, self.view.size())))
+        view.set_syntax_file(self.view.settings().get('syntax'))
+
+        selections = []
+        for selection in self.view.sel():
+          selections.append(selection)
+
+        view.sel().clear()
+        view.sel().add_all(selections)
+
+        if path:
+            view.retarget(path)
+            view.set_scratch(True)
+            self.save_clone(view, path)
+        else:
+            view.set_scratch(False)
+        self.show_status_on_new_file(view)
+
+    def save_clone(self, view, path):
+        allcontent = view.substr(sublime.Region(0, view.size()))
+        try:
+            with open(path, 'w', encoding='utf-8') as file:
+                file.write(allcontent)
+        except OSError as e:
+            log.error('Could not save file: %s\n%s', path, e)
+            common.show_error('Error: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
+
+    def show_status_on_new_file(self, view):
+        if view.is_loading():
+            sublime.set_timeout(lambda: self.show_status_on_new_file(view), 250)
+        else:
+            if common.settings().get('show_statusbar', False):
+                view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
 
 class RunFormatEventListener(sublime_plugin.EventListener):

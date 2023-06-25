@@ -24,6 +24,7 @@ IS_WINDOWS = sublime.platform() == 'windows'
 VERSION = '0.1.6'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
+STATUS_KEY = '@!' + PLUGIN_NAME.lower()
 
 LOAD_ORDER = [
     '.src.formatter_beautysh',

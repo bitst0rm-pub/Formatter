@@ -141,11 +141,21 @@ The following settings example should give you direction, how to setup Formatter
             // Any changes will need a restart to get applied.
             "disable": false,
 
-            // Auto formatting whenever the current file is being saved; [type: bool]
+            // Auto formatting whenever the current raw file is being saved; [type: bool]
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes then the first plugin will be processed.
             // Disable the others in favor of desired plugins to avoid conflicts.
             "format_on_save": false,
+
+            // Create a new file containing formatted codes [type: string]
+            // The value of this option is the suffix of the new file being renamed.
+            // Suffix must be of type string. =false, =true and all other types imply =false
+            // Note: It will overwrite any existing file that has the same new name in
+            // the same location.
+            // For example:
+            // "new_file_on_format": "min", will create a new file:
+            // myfile.raw.js -> myfile.raw.min.js
+            "new_file_on_format": false,
 
             // Syntax support based on the scope name, not file extension; [type: list]
             // Syntax name is part of scope name and can be retrieved from:

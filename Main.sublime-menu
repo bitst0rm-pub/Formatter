@@ -177,6 +177,23 @@
                                 "caption": "-"
                             },
                             {
+                                "caption": "Example Key Bindings",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/Formatter/Example.sublime-keymap"
+                                }
+                            },
+                            {
+                                "caption": "Key Bindings – User",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/User/Default (${platform}).sublime-keymap"
+                                }
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
                                 "caption": "Version Info",
                                 "command": "show_version"
                             }
