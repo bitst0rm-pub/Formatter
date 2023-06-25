@@ -43,7 +43,7 @@ class Formatter:
 
     @classmethod
     def run_formatter(cls, view, text, region, is_selected, **kwargs):
-        if view.is_read_only() or view.window() is None:
+        if view.is_read_only() or view.window() is None or view.size () == 0:
             log.error('View is not formattable.')
             return None
 
