@@ -1,7 +1,7 @@
-✨✨✨ ==================== ✨✨✨
-🎉😃🍰 Welcome to Formatter 🍰😃🎉
-✨✨✨ ==================== ✨✨✨
+✨✨✨ =====✨=====✨=====✨===== ✨✨✨
+🎉😃🍰     Welcome to Formatter    🍰😃🎉
+✨✨✨ =====✨=====✨=====✨===== ✨✨✨
 
 Formatter does not have Wiki.
-Also, check the README.md for more information:
+Check out the README.md for guides and more information:
 https://github.com/bitst0rm-pub/Formatter
