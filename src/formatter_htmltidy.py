@@ -61,6 +61,8 @@ class HtmltidyFormatter:
             if errno > 1:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
+                if errno == 1:
+                    log.warning('File formatted but has warnings (errno=%d): "%s"', errno, stderr.decode('utf-8'))
                 return stdout.decode('utf-8')
         except OSError:
             log.error('Error occurred when running: %s', ' '.join(cmd))
