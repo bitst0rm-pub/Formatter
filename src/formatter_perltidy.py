@@ -45,7 +45,7 @@ class PerltidyFormatter:
         if config:
             cmd.extend(['--profile=' + config])
 
-        cmd.extend(['--standard-output', '--standard-error-output', '--quiet'])
+        cmd.extend(['--standard-output', '--standard-error-output', '--warning-output'])
 
         return cmd
 
