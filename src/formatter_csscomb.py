@@ -44,9 +44,9 @@ class CsscombFormatter:
 
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config', config, '-'])
-        else:
-            cmd.extend(['-'])
+            cmd.extend(['--config', config])
+
+        cmd.extend(['-'])
 
         return cmd
 
