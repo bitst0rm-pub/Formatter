@@ -56,9 +56,9 @@ class PrettydiffminFormatter:
             suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
             with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
                 file.write(text)
+                file.close()
                 tmp_file = file.name
                 cmd.extend(['source', tmp_file])
-                file.close()
 
         return cmd, tmp_file
 
@@ -66,11 +66,13 @@ class PrettydiffminFormatter:
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)
         if not cmd:
+            if tmp_file and os.path.isfile(tmp_file):
+                os.unlink(tmp_file)
             return None
 
         try:
             proc = common.exec_cmd(cmd, self.pathinfo[0])
-            stdout, stderr = proc.communicate(text.encode('utf-8'))
+            stdout, stderr = proc.communicate()
 
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)
