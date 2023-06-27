@@ -25,6 +25,8 @@ from .formatter_jsonmin import JsonminFormatter
 from .formatter_perltidy import PerltidyFormatter
 from .formatter_phpcsfixer import PhpcsfixerFormatter
 from .formatter_prettier import PrettierFormatter
+from .formatter_prettydiffmax import PrettydiffmaxFormatter
+from .formatter_prettydiffmin import PrettydiffminFormatter
 from .formatter_rubocop import RubocopFormatter
 from .formatter_stylelint import StylelintFormatter
 from .formatter_terser import TerserFormatter
@@ -65,6 +67,8 @@ class Formatter:
             ('perltidy', PerltidyFormatter),
             ('phpcsfixer', PhpcsfixerFormatter),
             ('prettier', PrettierFormatter),
+            ('prettydiffmax', PrettydiffmaxFormatter),
+            ('prettydiffmin', PrettydiffminFormatter),
             ('rubocop', RubocopFormatter),
             ('stylelint', StylelintFormatter),
             ('terser', TerserFormatter),

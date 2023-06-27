@@ -85,6 +85,13 @@
         }
     },
     {
+        "caption": "Formatter: Beautify With Pretty Diff",
+        "command": "run_format",
+        "args": {
+            "identifier": "prettydiffmax"
+        }
+    },
+    {
         "caption": "Formatter: Beautify With RuboCop",
         "command": "run_format",
         "args": {
@@ -124,6 +131,13 @@
         "command": "run_format",
         "args": {
             "identifier": "htmlminifier"
+        }
+    },
+    {
+        "caption": "Formatter: Minify With Pretty Diff",
+        "command": "run_format",
+        "args": {
+            "identifier": "prettydiffmin"
         }
     },
     {

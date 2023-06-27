@@ -21,7 +21,7 @@ import sublime
 
 log = logging.getLogger('root')
 IS_WINDOWS = sublime.platform() == 'windows'
-VERSION = '0.1.6'
+VERSION = '0.1.7'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 STATUS_KEY = '@!' + PLUGIN_NAME.lower()
@@ -41,6 +41,8 @@ LOAD_ORDER = [
     '.src.formatter_perltidy',
     '.src.formatter_phpcsfixer',
     '.src.formatter_prettier',
+    '.src.formatter_prettydiffmax',
+    '.src.formatter_prettydiffmin',
     '.src.formatter_rubocop',
     '.src.formatter_stylelint',
     '.src.formatter_terser',

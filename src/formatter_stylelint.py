@@ -30,7 +30,7 @@ class StylelintFormatter:
         self.pathinfo = common.get_pathinfo(view.file_name())
 
 
-    def get_cmd(self, filename):
+    def get_cmd(self, text):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
         executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
 
@@ -47,46 +47,43 @@ class StylelintFormatter:
         if config:
             cmd.extend(['--config', config])
 
-        cmd.extend(['--fix', filename])
+        tmp_file = None
 
-        return cmd
-
-
-    def format(self, text):
         # Stylelint automatically infers syntax to use based on the file extension.
         suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
 
-        try:
-            with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
-                file.write(text)
-                file.close()
-                result = self._format(file.name)
-        finally:
-            if os.path.isfile(file.name):
-                os.unlink(file.name)
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
+            file.write(text)
+            file.close()
+            tmp_file = file.name
+            cmd.extend(['--fix', tmp_file])
 
-        return result
+        return cmd, tmp_file
 
 
-    def _format(self, filename):
-        cmd = self.get_cmd(filename)
+    def format(self, text):
+        cmd, tmp_file = self.get_cmd(text)
         if not cmd:
+            if tmp_file and os.path.isfile(tmp_file):
+                os.unlink(tmp_file)
             return None
 
         try:
             proc = common.exec_cmd(cmd, self.pathinfo[0])
-            stderr = proc.communicate()[1]
+            stdout, stderr = proc.communicate()
 
+            result = None
             errno = proc.returncode
-            if errno in (0, 2):
-                if errno == 2:
-                    log.error('File not formatted due to an error (errno=%d): "At least one rule with an "error"-level severity triggered at least one violations."', errno)
-                with open(filename, 'r', encoding='utf-8') as file:
-                    result = file.read()
-                    return result
+            if errno > 0:
+                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stdout.decode('utf-8'))
             else:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+                with open(tmp_file, 'r', encoding='utf-8') as file:
+                    result = file.read()
+                    file.close()
         except OSError:
             log.error('Error occurred when running: %s', ' '.join(cmd))
 
-        return None
+        if tmp_file and os.path.isfile(tmp_file):
+            os.unlink(tmp_file)
+
+        return result

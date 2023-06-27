@@ -49,7 +49,7 @@ class PhpcsfixerFormatter:
         return None
 
 
-    def get_cmd(self, filename):
+    def get_cmd(self, text):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
         executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
 
@@ -67,46 +67,47 @@ class PhpcsfixerFormatter:
             cmd.extend(['--config=' + config])
             cmd.extend(['--allow-risky=yes'])
 
-        cmd.extend(['fix', filename])
+        tmp_file = None
 
-        return cmd
+        suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
+            file.write(text)
+            file.close()
+            tmp_file = file.name
+            cmd.extend(['fix', tmp_file])
+
+        return cmd, tmp_file
 
 
     def format(self, text):
         if not self.is_compat():
             return None
 
-        suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
-
-        try:
-            with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
-                file.write(text)
-                file.close()
-                result = self._format(file.name)
-        finally:
-            if os.path.isfile(file.name):
-                os.unlink(file.name)
-
-        return result
-
-
-    def _format(self, filename):
-        cmd = self.get_cmd(filename)
+        cmd, tmp_file = self.get_cmd(text)
         if not cmd:
+            if tmp_file and os.path.isfile(tmp_file):
+                os.unlink(tmp_file)
             return None
 
         try:
             proc = common.exec_cmd(cmd, self.pathinfo[0])
-            stderr = proc.communicate()[1]
+            stdout, stderr = proc.communicate()
 
+            result = None
             errno = proc.returncode
-            if errno > 0:
+            out = stdout.decode('utf-8')
+
+            if errno > 0 or not out:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                with open(filename, 'r', encoding='utf-8') as file:
+                with open(tmp_file, 'r', encoding='utf-8') as file:
                     result = file.read()
-                    return result
+                    file.close()
         except OSError:
             log.error('Error occurred when running: %s', ' '.join(cmd))
 
-        return None
+        if tmp_file and os.path.isfile(tmp_file):
+            os.unlink(tmp_file)
+
+        return result
