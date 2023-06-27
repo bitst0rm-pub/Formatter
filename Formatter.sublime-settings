@@ -24,15 +24,22 @@
 
     // Plugins settings
     "formatters": {
-        "example_name": {
+        "example_name_id": {
             // Disable and remove plugin from being shown in the menu; [type: bool]
             // Any changes will need a restart to get applied.
             "disable": false,
 
-            // Auto formatting whenever the current raw file is being saved; [type: bool]
+            // Auto formatting whenever the current file/view is being saved; [type: bool]
+            // Means: Newly formatted codes will be finally saved within time frame starting
+            // from the 2. press on "format_on_save".
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes then the first plugin will be processed.
-            // Disable the others in favor of desired plugins to avoid conflicts.
+            // Remove the identical syntaxes from one of both plugins to avoid conflicts.
+            // For example:
+            // Plugin A (enabled): syntaxes ["css", "js"]
+            // Plugin B (enabled): syntaxes ["html", "css"]
+            // In the case you want to use Plugin B with "css", then you should remove the "css"
+            // from plugin A, because plugin A will run first in range of this/yours setting file.
             "format_on_save": false,
 
             // Create a new file containing formatted codes [type: string]
@@ -61,7 +68,7 @@
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
             // Formatter provides a set of default config files under
-            // "formatter.assets/config" folder for personal use.
+            // "formatter.assets/config" folder for your personal use.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
@@ -117,6 +124,7 @@
             "new_file_on_format": false,
             "syntaxes": ["js"],
             "executable_path": "",
+            "args": ["--resolve-plugins-relative-to", "/path/to/javascript/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/eslint_rc.json"
             }
@@ -218,7 +226,7 @@
             "new_file_on_format": false,
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
             "executable_path": "",
-            "args": ["--config-basedir", "/path/to/node_modules"],
+            "args": ["--config-basedir", "/path/to/javascript/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
