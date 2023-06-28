@@ -19,7 +19,7 @@ from . import common
 
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['php']
-EXECUTABLE_NAMES = ['php-cs-fixer', 'php-cs-fixer.phar', 'php-cs-fixer-v2', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v3', 'php-cs-fixer-v3.phar', 'phpcsfixer', 'phpcsfixer.phar']
+EXECUTABLE_NAMES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
 
 
 class PhpcsfixerFormatter:
