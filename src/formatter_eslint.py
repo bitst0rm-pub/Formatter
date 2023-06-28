@@ -53,6 +53,7 @@ class EslintFormatter:
 
     def format(self, text):
         cmd = self.get_cmd()
+        log.debug('Current executing arguments: %s', cmd)
         if not cmd:
             return None
 
@@ -64,10 +65,12 @@ class EslintFormatter:
             if errno > 1:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                obj = sublime.decode_value(stdout.decode('utf-8'))
-                if 'output' in obj[0]:
-                    return obj[0].get('output', None)
-                log.error('"output" not found in JSON object (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+                obj = sublime.decode_value(stdout.decode('utf-8'))[0]
+                if 'output' in obj:
+                    return obj.get('output', None)
+                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+                for i in obj.get('messages', []):
+                    print(i)
         except OSError:
             log.error('Error occurred when running: %s', ' '.join(cmd))
 

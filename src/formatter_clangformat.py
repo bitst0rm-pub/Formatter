@@ -45,29 +45,45 @@ class ClangformatFormatter:
         if config:
             with open(config, 'r', encoding='utf-8') as file:
                 cfg_dict = yaml.load(file)
-            cmd.extend(['-style', json.dumps(cfg_dict)])
+            cmd.extend(['--style', json.dumps(cfg_dict)])
 
         extmap = {
+            # (sublime, clang)
             ('c', 'c'),
+            ('cs', 'cs'),
             ('c++', 'cpp'),
             ('objc', 'm'),
             ('objc++', 'mm'),
             ('js', 'js'),
+            ('tsx', 'ts'),
+            ('jsx', 'mjs'),
+            ('json', 'json'),
             ('java', 'java'),
-            ('proto', 'proto')
+            ('proto', 'proto'),
+            ('protodevel', 'protodevel'),
+            ('td', 'td'),
+            ('textpb', 'textpb'),
+            ('pb.txt', 'pb.txt'),
+            ('textproto', 'textproto'),
+            ('asciipb', 'asciipb'),
+            ('sv', 'sv'),
+            ('svh', 'svh'),
+            ('v', 'v'),
+            ('vh', 'vh')
         }
         syntax = common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
         for key, value in extmap:
             if key == syntax:
                 syntax = value
 
-        cmd.extend(['-assume-filename', 'dummy.' + syntax])
+        cmd.extend(['--assume-filename', 'dummy.' + syntax])
 
         return cmd
 
 
     def format(self, text):
         cmd = self.get_cmd()
+        log.debug('Current executing arguments: %s', cmd)
         if not cmd:
             return None
 

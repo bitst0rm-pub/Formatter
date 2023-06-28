@@ -71,6 +71,7 @@ class BlackFormatter:
 
     def format(self, text):
         cmd = self.get_cmd()
+        log.debug('Current executing arguments: %s', cmd)
         if not cmd or not self.is_compat():
             return None
 

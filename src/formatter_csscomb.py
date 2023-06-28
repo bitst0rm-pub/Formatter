@@ -44,15 +44,16 @@ class CsscombFormatter:
 
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config', config, '-'])
-        else:
-            cmd.extend(['-'])
+            cmd.extend(['--config', config])
+
+        cmd.extend(['-'])
 
         return cmd
 
 
     def format(self, text):
         cmd = self.get_cmd()
+        log.debug('Current executing arguments: %s', cmd)
         if not cmd:
             return None
 

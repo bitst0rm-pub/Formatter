@@ -54,6 +54,7 @@ class YapfFormatter:
 
     def format(self, text):
         cmd = self.get_cmd()
+        log.debug('Current executing arguments: %s', cmd)
         if not cmd:
             return None
 
