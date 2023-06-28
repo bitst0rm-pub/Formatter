@@ -16,7 +16,6 @@ import tempfile
 from distutils.version import StrictVersion
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['php']
 EXECUTABLE_NAMES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
@@ -29,7 +28,6 @@ class PhpcsfixerFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def is_compat(self):
         try:
@@ -47,7 +45,6 @@ class PhpcsfixerFormatter:
             log.error('Error occurred while validating PHP compatibility.')
 
         return None
-
 
     def get_cmd(self, text):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -78,7 +75,6 @@ class PhpcsfixerFormatter:
             cmd.extend(['fix', tmp_file])
 
         return cmd, tmp_file
-
 
     def format(self, text):
         if not self.is_compat():

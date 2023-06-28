@@ -19,7 +19,6 @@ import sublime_plugin
 from .src import common
 from .src.formatter import Formatter
 
-
 log = logging.getLogger('root')
 
 

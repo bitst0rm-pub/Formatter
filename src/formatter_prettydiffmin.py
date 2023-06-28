@@ -15,7 +15,6 @@ import logging
 import tempfile
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['node']
 EXECUTABLE_NAMES = ['prettydiff']
@@ -28,7 +27,6 @@ class PrettydiffminFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self, text):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -61,7 +59,6 @@ class PrettydiffminFormatter:
                 cmd.extend(['source', tmp_file])
 
         return cmd, tmp_file
-
 
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)

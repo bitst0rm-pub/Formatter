@@ -15,7 +15,6 @@ import json
 from ..lib3 import yaml
 from . import common
 
-
 log = logging.getLogger('root')
 EXECUTABLE_NAMES = ['clang-format']
 
@@ -27,7 +26,6 @@ class ClangformatFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
@@ -79,7 +77,6 @@ class ClangformatFormatter:
         cmd.extend(['--assume-filename', 'dummy.' + syntax])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()

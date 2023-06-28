@@ -14,7 +14,6 @@ import logging
 import sublime
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['node']
 EXECUTABLE_NAMES = ['csscomb']
@@ -27,7 +26,6 @@ class CsscombFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -49,7 +47,6 @@ class CsscombFormatter:
         cmd.extend(['-'])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()

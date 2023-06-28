@@ -34,14 +34,12 @@ from .formatter_uncrustify import UncrustifyFormatter
 from .formatter_yapf import YapfFormatter
 from . import common
 
-
 log = logging.getLogger('root')
 
 
 class Formatter:
     def __init__(self, view):
         pass
-
 
     @classmethod
     def run_formatter(cls, view, text, region, is_selected, **kwargs):

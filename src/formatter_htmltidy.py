@@ -13,7 +13,6 @@
 import logging
 from . import common
 
-
 log = logging.getLogger('root')
 EXECUTABLE_NAMES = ['tidy']
 
@@ -25,7 +24,6 @@ class HtmltidyFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
@@ -46,7 +44,6 @@ class HtmltidyFormatter:
         cmd.extend(['-'])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()

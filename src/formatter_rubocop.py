@@ -13,7 +13,6 @@
 import logging
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['ruby']
 EXECUTABLE_NAMES = ['rubocop']
@@ -26,7 +25,6 @@ class RubocopFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -48,7 +46,6 @@ class RubocopFormatter:
         cmd.extend(['--stdin', '-', '--auto-correct'])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()

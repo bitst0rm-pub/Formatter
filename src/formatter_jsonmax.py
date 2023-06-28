@@ -15,7 +15,6 @@ import json
 import sublime
 from . import common
 
-
 log = logging.getLogger('root')
 
 
@@ -25,7 +24,6 @@ class JsonmaxFormatter:
         self.identifier = identifier
         self.region = region
         self.is_selected = is_selected
-
 
     def format(self, text):
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)

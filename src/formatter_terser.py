@@ -13,7 +13,6 @@
 import logging
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['node']
 EXECUTABLE_NAMES = ['terser']
@@ -26,7 +25,6 @@ class TerserFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -48,7 +46,6 @@ class TerserFormatter:
         cmd.extend(['--compress', '--mangle', '--'])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()

@@ -19,7 +19,6 @@ import shutil
 import logging
 import sublime
 
-
 log = logging.getLogger('root')
 IS_WINDOWS = sublime.platform() == 'windows'
 VERSION = '0.1.7'
@@ -67,7 +66,6 @@ def reload_modules():
             log.debug('Reloading: %s', module)
             reload(sys.modules[module])
 
-
 def update_environ():
     try:
         environ = os.environ.copy()
@@ -96,7 +94,6 @@ def update_environ():
         log.warning('Could not clone system environment: %s', error)
     return None
 
-
 def setup_config():
     src = 'Packages/' + PLUGIN_NAME + '/config'
     dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
@@ -119,7 +116,6 @@ def setup_config():
                     log.warning('Setup config skipped due to UnicodeDecodeError: %s', path)
     return True
 
-
 def get_pathinfo(path):
     # Fallback to ${HOME} for unsaved buffer
     cwd = expanduser('~')
@@ -130,7 +126,6 @@ def get_pathinfo(path):
         cwd, base = split(path)
         root, ext = splitext(base)
     return (path, cwd, base, root, ext)
-
 
 def exec_cmd(cmd, path):
     from subprocess import Popen, PIPE
@@ -147,7 +142,6 @@ def exec_cmd(cmd, path):
                     env=update_environ(), shell=IS_WINDOWS, startupinfo=info)
     return process
 
-
 def settings():
     base_name = PLUGIN_NAME + '.sublime-settings'
     prefs = sublime.load_settings(base_name)
@@ -155,7 +149,6 @@ def settings():
         return prefs
     log.error('Could not load settings file: %s', base_name)
     return None
-
 
 def gets(dct, *keys):
     for key in keys:
@@ -166,7 +159,6 @@ def gets(dct, *keys):
             return None
     return dct
 
-
 def expand_path(path):
     if path and isinstance(path, str):
         variables = sublime.active_window().extract_variables()
@@ -175,7 +167,6 @@ def expand_path(path):
         log.debug('Normalized path: %s', p)
         return p
     return path
-
 
 def is_exe(path):
     if path and isinstance(path, str) and isfile(path):
@@ -190,7 +181,6 @@ def is_exe(path):
         log.warning('File exists but is not executable: %s', path)
         return False
     return False
-
 
 def get_environ_path(fnames):
     if fnames and isinstance(fnames, list):
@@ -222,7 +212,6 @@ def get_environ_path(fnames):
     log.error('File names variable is empty or not of type list: %s', fnames)
     return None
 
-
 def get_interpreter_path(fnames):
     global_file = get_environ_path(fnames)
     if global_file:
@@ -230,7 +219,6 @@ def get_interpreter_path(fnames):
         return global_file
     log.error('Could not find interpreter: %s', fnames)
     return None
-
 
 def get_executable_path(identifier, fnames):
     local_file = expand_path(gets(settings(), 'formatters', identifier, 'executable_path'))
@@ -244,7 +232,6 @@ def get_executable_path(identifier, fnames):
         return global_file
     log.error('Could not find executable: %s', fnames)
     return None
-
 
 def get_config_path(view, identifier, region, is_selected):
     config = gets(settings(), 'formatters', identifier, 'config_path')
@@ -269,7 +256,6 @@ def get_config_path(view, identifier, region, is_selected):
     log.warning('Default config will be used instead.')
     return None
 
-
 def get_assign_syntax(view, identifier, region, is_selected):
     syntaxes = gets(settings(), 'formatters', identifier, 'syntaxes')
     if syntaxes and isinstance(syntaxes, list):
@@ -293,13 +279,11 @@ def get_assign_syntax(view, identifier, region, is_selected):
     log.error('Setting key "syntaxes" may not be empty and must be of type list: %s', syntaxes)
     return None
 
-
 def get_args(identifier):
     args = gets(settings(), 'formatters', identifier, 'args')
     if args and isinstance(args, list):
         return map(expand_path, args)
     return None
-
 
 def show_error(text, name=None):
     if name:
@@ -307,7 +291,6 @@ def show_error(text, name=None):
     else:
         string = u'%s:\n\n%s' % (PLUGIN_NAME, text)
     sublime.error_message(string)
-
 
 def setup_logger(name):
     formatter = logging.Formatter(fmt='▋[' + PLUGIN_NAME + '](%(threadName)s:%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')

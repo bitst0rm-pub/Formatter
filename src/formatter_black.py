@@ -14,7 +14,6 @@ import logging
 from distutils.version import StrictVersion
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['python3', 'python']
 EXECUTABLE_NAMES = ['black']
@@ -27,7 +26,6 @@ class BlackFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def is_compat(self):
         try:
@@ -45,7 +43,6 @@ class BlackFormatter:
             log.error('Error occurred while validating Python compatibility.')
 
         return None
-
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -67,7 +64,6 @@ class BlackFormatter:
         cmd.extend(['-'])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()

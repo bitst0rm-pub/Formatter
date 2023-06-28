@@ -14,7 +14,6 @@ import logging
 import sublime
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['python3', 'python']
 EXECUTABLE_NAMES = ['beautysh']
@@ -27,7 +26,6 @@ class BeautyshFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -50,7 +48,6 @@ class BeautyshFormatter:
 
         return cmd
 
-
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current executing arguments: %s', cmd)
@@ -70,7 +67,6 @@ class BeautyshFormatter:
             log.error('Error occurred when running: %s', ' '.join(cmd))
 
         return None
-
 
     @classmethod
     def get_config(cls, path):

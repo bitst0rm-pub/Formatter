@@ -15,7 +15,6 @@ import logging
 import tempfile
 from . import common
 
-
 log = logging.getLogger('root')
 INTERPRETER_NAMES = ['python3', 'python']
 EXECUTABLE_NAMES = ['yapf']
@@ -28,7 +27,6 @@ class YapfFormatter:
         self.region = region
         self.is_selected = is_selected
         self.pathinfo = common.get_pathinfo(view.file_name())
-
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -50,7 +48,6 @@ class YapfFormatter:
         cmd.extend(['--'])
 
         return cmd
-
 
     def format(self, text):
         cmd = self.get_cmd()
