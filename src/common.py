@@ -196,6 +196,7 @@ def get_environ_path(fnames):
     if fnames and isinstance(fnames, list):
         for fname in fnames:
             # Try to search path using shutil.which() first
+            # https://hg.python.org/cpython/file/tip/Lib/shutil.py#l1093
             file = shutil.which(fname)
             if file:
                 return file

@@ -3,5 +3,5 @@
 ✨✨✨ =====✨=====✨=====✨===== ✨✨✨
 
 Formatter does not have Wiki.
-Check out the README.md for guides and more information:
+Check out the README.md for guides and more:
 https://github.com/bitst0rm-pub/Formatter
