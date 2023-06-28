@@ -15,6 +15,7 @@ from os.path import (basename, expanduser, expandvars, isdir,
                      isfile, join, normpath, pathsep, split, splitext)
 import sys
 from imp import reload
+import shutil
 import logging
 import sublime
 
@@ -193,6 +194,13 @@ def is_exe(path):
 
 def get_environ_path(fnames):
     if fnames and isinstance(fnames, list):
+        for fname in fnames:
+            # Try to search path using shutil.which() first
+            file = shutil.which(fname)
+            if file:
+                return file
+
+        # For the case shutil.which() returns None
         environ = update_environ()
         if environ and isinstance(environ, dict):
             paths = environ.get('PATH', '').split(pathsep)
