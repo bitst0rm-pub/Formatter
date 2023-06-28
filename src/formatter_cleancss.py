@@ -31,7 +31,7 @@ class CleancssFormatter:
         self.pathinfo = common.get_pathinfo(view.file_name())
 
 
-    def get_cmd(self, filename):
+    def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
         executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
 
@@ -48,42 +48,25 @@ class CleancssFormatter:
         if config:
             cmd.extend(self.get_config(config))
 
-        cmd.extend([filename, '--output', filename])
+        cmd.extend(['--'])
 
         return cmd
 
 
     def format(self, text):
-        suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
-
-        try:
-            with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
-                file.write(text)
-                file.close()
-                result = self._format(file.name)
-        finally:
-            if os.path.isfile(file.name):
-                os.unlink(file.name)
-
-        return result
-
-
-    def _format(self, filename):
-        cmd = self.get_cmd(filename)
+        cmd = self.get_cmd()
         if not cmd:
             return None
 
         try:
             proc = common.exec_cmd(cmd, self.pathinfo[0])
-            stderr = proc.communicate()[1]
+            stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
             if errno > 0:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                with open(filename, 'r', encoding='utf-8') as file:
-                    result = file.read()
-                    return result
+                return stdout.decode('utf-8')
         except OSError:
             log.error('Error occurred when running: %s', ' '.join(cmd))
 
