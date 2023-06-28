@@ -65,6 +65,7 @@ class PrettydiffmaxFormatter:
 
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)
+        log.debug('Current executing arguments: %s', cmd)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)
