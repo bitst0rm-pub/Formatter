@@ -1,6 +1,6 @@
 # Formatter
 
-Formatter is a Sublime Text 3/4 plugin to beautify and minify source code.
+Formatter is a Sublime Text 3 & 4 plugin to beautify and minify source code.
 
 Features:
 
@@ -28,7 +28,8 @@ A backport to Sublime Text `2` was never intended.
 ## Plugins
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. Such plugins need to be installed separately and can be easily disabled in settings. Instructions on how to install them are linked below. To setup plugins please keep in mind to:
-- check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black Python >=3.7.0 !!!
+
+- check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black requires Python >=3.7.0
 - pass the correct path to the plugin executable and
 - adjust their environment variables (PATH, PYTHONPATH etc.) in the `Formatter.sublime-settings`.
 
@@ -256,15 +257,16 @@ Formatting actions can be triggered in different ways:
 - Tools > Command Palette (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and type `Formatter`.
 - Tools > Formatter
 - Right-click > Context-Menu > Formatter
+- Settings > Key Bindings
 
 
 ## Troubleshooting
-Please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can come from upstream plugin dev, from your transcoding code text also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
+Please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can come from upstream plugin, from your transcoding code text also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
 
 
 ## Todo:
 
-- Maybe add support for more languages, but which one? More is not always better.
+- Maybe add support for more languages.
 
 
 ## License
