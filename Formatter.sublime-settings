@@ -102,7 +102,7 @@
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
-            "syntaxes": ["c", "c++", "objc", "objc++", "js", "java", "proto"],
+            "syntaxes": ["c", "cs", "c++", "objc", "objc++", "js", "tsx", "jsx", "json", "java", "proto", "protodevel", "td", "sv", "svh", "v", "vh"],
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"

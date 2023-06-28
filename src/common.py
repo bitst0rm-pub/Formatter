@@ -133,14 +133,14 @@ def get_pathinfo(path):
 
 def exec_cmd(cmd, path):
     from subprocess import Popen, PIPE
+    info = None
     if IS_WINDOWS:
         from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, SW_HIDE
-        # Hide the console window
+        # Hide the console window to avoid flashing an
+        # ugly cmd prompt on Windows when invoking plugin.
         info = STARTUPINFO()
         info.dwFlags |= STARTF_USESHOWWINDOW
         info.wShowWindow = SW_HIDE
-    else:
-        info = None
 
     process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=get_pathinfo(path)[1],
                     env=update_environ(), shell=IS_WINDOWS, startupinfo=info)
