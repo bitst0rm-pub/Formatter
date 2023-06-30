@@ -11,8 +11,8 @@
 # @license      The MIT License (MIT)
 
 import os
-from os.path import (basename, expanduser, expandvars, isdir,
-                     isfile, join, normpath, pathsep, split, splitext)
+from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
+                    exists, normpath, normcase, pathsep, split, splitext)
 import sys
 from imp import reload
 import shutil
@@ -188,8 +188,6 @@ def get_environ_path(fnames):
         if environ and isinstance(environ, dict):
             path = environ.get('PATH', os.defpath)
             if path:
-                # See shutil.which()
-                # https://hg.python.org/cpython/file/tip/Lib/shutil.py#l1093
                 dirs = path.split(pathsep)
                 if IS_WINDOWS:
                     pathext = os.environ.get('PATHEXT', '').split(pathsep)
