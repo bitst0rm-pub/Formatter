@@ -43,7 +43,7 @@ class RubocopFormatter:
         if config:
             cmd.extend(['--config', config])
 
-        cmd.extend(['--stdin', '-', '--auto-correct'])
+        cmd.extend(['--autocorrect', '--stdin', self.pathinfo[2] if self.pathinfo[2] else 'untitled', '--stderr'])
 
         return cmd
 
@@ -58,19 +58,11 @@ class RubocopFormatter:
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
-            if errno > 1:
+            if errno > 0:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                if errno == 1:
-                    log.warning('Inconsistencies occurred (errno=%d): "%s"', errno, stderr.decode('utf-8'))
-
-                string = stdout.decode('utf-8')
-                result = string.split('====================\n')
-                if len(result) == 2:
-                    return result[1]
-                result = string.split('====================\r\n')
-                if len(result) == 2:
-                    return result[1]
+                log.debug('Success (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+                return stdout.decode('utf-8')
         except OSError:
             log.error('Error occurred when running: %s', ' '.join(cmd))
 
