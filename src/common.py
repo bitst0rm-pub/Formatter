@@ -85,7 +85,7 @@ def update_environ():
                                     if path == item:
                                         ismatch = True
                                 if not ismatch:
-                                    paths.append(item)
+                                    paths.insert(0, item)
                             environ[key] = pathsep.join(paths)
                         else:
                             environ[key] = pathsep.join(map(normpath, items))
@@ -168,49 +168,56 @@ def expand_path(path):
         return p
     return path
 
-def is_exe(path):
-    if path and isinstance(path, str) and isfile(path):
-        if os.access(path, os.X_OK):
+def is_exe(file):
+    if file and isinstance(file, str) and exists(file) and isfile(file):
+        if os.access(file, os.F_OK | os.X_OK):
             return True
         if not IS_WINDOWS:
             import stat
-            sta = os.stat(path)
-            os.chmod(path, sta.st_mode | stat.S_IEXEC)
-            log.debug('Set executable permission for: %s', path)
+            sta = os.stat(file)
+            os.chmod(file, sta.st_mode | stat.S_IEXEC)
+            log.debug('Set executable permission for: %s', file)
             return True
-        log.warning('File exists but is not executable: %s', path)
+        log.warning('File exists but is not executable: %s', file)
         return False
     return False
 
 def get_environ_path(fnames):
     if fnames and isinstance(fnames, list):
-        for fname in fnames:
-            # Try to search path using shutil.which() first
-            # https://hg.python.org/cpython/file/tip/Lib/shutil.py#l1093
-            file = shutil.which(fname)
-            if file:
-                return file
-
-        # For the case shutil.which() returns None
         environ = update_environ()
         if environ and isinstance(environ, dict):
-            paths = environ.get('PATH', '').split(pathsep)
-            for path in paths:
-                for fname in fnames:
-                    file = join(path, fname)
-                    if IS_WINDOWS and not splitext(file)[1]:
-                        for extension in ('.exe', '.cmd', '.bat'):
-                            file_ext = file + extension
-                            if is_exe(file_ext):
-                                return file_ext
-                    if is_exe(file):
-                        return file
-            log.error('Could not locate file in PATH environment: %s', fnames)
+            path = environ.get('PATH', os.defpath)
+            if path:
+                # See shutil.which()
+                # https://hg.python.org/cpython/file/tip/Lib/shutil.py#l1093
+                dirs = path.split(pathsep)
+                if IS_WINDOWS:
+                    pathext = os.environ.get('PATHEXT', '').split(pathsep)
+                    final = [[fn, ext] for fn in fnames for ext in pathext if any([fn.lower().endswith(ext.lower())])]
+                    if final:
+                        files = [final[0][0]]
+                    else:
+                        files = [fn + ext for fn in fnames for ext in pathext]
+                else:
+                    files = fnames
+                seen = set()
+                for dir in dirs:
+                    normdir = normcase(dir)
+                    if not normdir in seen:
+                        seen.add(normdir)
+                        for thefile in files:
+                            file = join(dir, thefile)
+                            if is_exe(file):
+                                return file
+            else:
+                log.error('"PATH" or default search path does not exist: %s', path)
+                return None
+        else:
+            log.error('System environment is empty or not of type dict: %s', environ)
             return None
-        log.error('System environment is empty or not of type dict: %s', environ)
+    else:
+        log.error('File names variable is empty or not of type list: %s', fnames)
         return None
-    log.error('File names variable is empty or not of type list: %s', fnames)
-    return None
 
 def get_interpreter_path(fnames):
     global_file = get_environ_path(fnames)

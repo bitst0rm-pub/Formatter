@@ -124,7 +124,7 @@ The following settings example should give you direction, how to setup Formatter
 
     // A set of directories where executable programs are located; [type: list]
     // It can be absolute paths to module directories, python zipfiles.
-    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR
+    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
     // This option is similar to 'export PYTHONPATH="/path/to/my/site-packages"'
     // from terminal. But it is only temporary and will take effect
@@ -149,7 +149,7 @@ The following settings example should give you direction, how to setup Formatter
             // Means: Newly formatted codes will be finally saved within time frame starting
             // from the 2. press on "format_on_save".
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes then the first plugin will be processed.
+            // For plugins with the same syntaxes then the first plugin takes precedence.
             // Remove the identical syntaxes from one of both plugins to avoid conflicts.
             // For example:
             // Plugin A (enabled): syntaxes ["css", "js"]
