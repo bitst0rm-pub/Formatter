@@ -1,5 +1,11 @@
 Formatter
 
+0.1.8
+    NEW: Add new option "open_console_on_failure"
+    FIX: Fix PATH search path logic
+    FIX: Fix deprecated args for rubocop
+    FIX: Minor bug fixes
+
 0.1.7
     NEW: Add new plugin: Pretty Diff
     NEW: Add new option "new_file_on_format"
