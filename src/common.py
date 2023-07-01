@@ -15,7 +15,6 @@ from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     exists, normpath, normcase, pathsep, split, splitext)
 import sys
 from imp import reload
-import shutil
 import logging
 import sublime
 
