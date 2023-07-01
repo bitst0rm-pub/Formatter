@@ -125,6 +125,7 @@ class RunFormatThread(threading.Thread):
             log.debug('Formatting failed. 💔😢💔')
 
         if common.settings().get('show_statusbar', False):
+            self.view.window().set_status_bar_visible(True)
             self.view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
 
     def open_console_on_failure(self):
@@ -198,6 +199,7 @@ class CloneView(sublime_plugin.TextCommand):
             sublime.set_timeout(lambda: self.show_status_on_new_file(view), 250)
         else:
             if common.settings().get('show_statusbar', False):
+                view.window().set_status_bar_visible(True)
                 view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
 
