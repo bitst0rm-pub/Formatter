@@ -3,12 +3,16 @@
     // Any changes will need a restart to get applied.
     "debug": false,
 
+    // Auto open console panel whenever formatting failed; [type: bool]
+    // This is especially useful when combined with "debug": true,
+    "open_console_on_failure": false,
+
     // Display results on status bar; [type: bool]
     "show_statusbar": true,
 
     // A set of directories where executable programs are located; [type: list]
     // It can be absolute paths to module directories, python zipfiles.
-    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR
+    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
     // This option is similar to 'export PYTHONPATH="/path/to/my/site-packages"'
     // from terminal. But it is only temporary and will take effect

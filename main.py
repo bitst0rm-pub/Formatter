@@ -102,6 +102,8 @@ class RunFormatThread(threading.Thread):
                         self.print_status(is_success)
                 if True in self.cycles:
                     self.new_file_on_format()
+                else:
+                    self.open_console_on_failure()
         except Exception as error:
             import traceback
             log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
@@ -124,6 +126,10 @@ class RunFormatThread(threading.Thread):
 
         if common.settings().get('show_statusbar', False):
             self.view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
+
+    def open_console_on_failure(self):
+        if common.settings().get('open_console_on_failure', False):
+            self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def new_file_on_format(self):
         formatter = common.settings().get('formatters', {})

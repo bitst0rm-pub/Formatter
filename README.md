@@ -119,6 +119,10 @@ The following settings example should give you direction, how to setup Formatter
     // Any changes will need a restart to get applied.
     "debug": false,
 
+    // Auto open console panel whenever formatting failed; [type: bool]
+    // This is especially useful when combined with "debug": true,
+    "open_console_on_failure": false,
+
     // Display results on status bar; [type: bool]
     "show_statusbar": true,
 
