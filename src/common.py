@@ -78,14 +78,7 @@ def update_environ():
                     if items:
                         if pathstring:
                             paths = pathstring.split(pathsep)
-                            for item in items:
-                                item = normpath(item)
-                                ismatch = False
-                                for path in paths:
-                                    if path == item:
-                                        ismatch = True
-                                if not ismatch:
-                                    paths.insert(0, item)
+                            [i if normpath(i) in paths else paths.insert(0, normpath(i)) for i in reversed(items)]
                             environ[key] = pathsep.join(paths)
                         else:
                             environ[key] = pathsep.join(map(normpath, items))
