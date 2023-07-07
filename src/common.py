@@ -156,9 +156,8 @@ def expand_path(path):
     if path and isinstance(path, str):
         variables = sublime.active_window().extract_variables()
         path = sublime.expand_variables(path, variables)
-        p = normpath(expanduser(expandvars(path)))
-        log.debug('Normalized path: %s', p)
-        return p
+        path = normpath(expanduser(expandvars(path)))
+        log.debug('Normalized path: %s', path)
     return path
 
 def is_exe(file):
@@ -280,7 +279,7 @@ def get_assign_syntax(view, identifier, region, is_selected):
 def get_args(identifier):
     args = gets(settings(), 'formatters', identifier, 'args')
     if args and isinstance(args, list):
-        return map(expand_path, args)
+        return map(expand_path, map(str, args))
     return None
 
 def set_fix_cmds(cmd, identifier):

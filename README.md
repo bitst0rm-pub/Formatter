@@ -55,7 +55,7 @@ For example, Pretty Diff support 45 languages, that would blow up the frame of t
 | Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
 | Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
 | C, C++, C#, ObjectiveC, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| C, C++, CSharp, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
+| C, C++, C#, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
 
 💡 **Hint**:
 
