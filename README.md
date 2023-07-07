@@ -126,7 +126,7 @@ The following settings example should give you direction, how to setup Formatter
     // Display results on status bar; [type: bool]
     "show_statusbar": true,
 
-    // A set of directories where executable programs are located; [type: list]
+    // A set of directories where executable programs are located; [type: dict{str:list[str]}]
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
@@ -162,9 +162,9 @@ The following settings example should give you direction, how to setup Formatter
             // from plugin A, because plugin A will run first in range of this/yours setting file.
             "format_on_save": false,
 
-            // Create a new file containing formatted codes [type: string]
+            // Create a new file containing formatted codes [type: str]
             // The value of this option is the suffix of the new file being renamed.
-            // Suffix must be of type string. =false, =true and all other types imply =false
+            // Suffix must be of type string. =true, =false and all other types imply =false
             // Note: It will overwrite any existing file that has the same new name in
             // the same location.
             // For example:
@@ -172,18 +172,18 @@ The following settings example should give you direction, how to setup Formatter
             // myfile.raw.js -> myfile.raw.min.js
             "new_file_on_format": false,
 
-            // Syntax support based on the scope name, not file extension; [type: list]
+            // Syntax support based on the scope name, not file extension; [type: list[str]]
             // Syntax name is part of scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             "syntaxes": ["css", "js", "php"],
 
-            // Path to the plugin executable to be used; [type: string]
+            // Path to the plugin executable to be used; [type: str]
             // System variable expansion like ${HOME} also Sublime Text
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
             // https://www.sublimetext.com/docs/build_systems.html#variables
             "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
 
-            // Path to the config file for each individual syntaxes; [type: dict]
+            // Path to the config file for each individual syntaxes; [type: dict{str:str}]
             // Syntax keys must match those in "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
@@ -195,10 +195,10 @@ The following settings example should give you direction, how to setup Formatter
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // Array of additional arguments for the command line; [type: list]
+            // Array of additional arguments for the command line; [type: list[str]]
             "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
 
-            // Manipulate hardcoded command line arguments; [type: list]
+            // Manipulate hardcoded command line arguments; [type: list[list[str]]]
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the src code.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
