@@ -196,7 +196,28 @@ The following settings example should give you direction, how to setup Formatter
             },
 
             // Array of additional arguments for the command line; [type: list]
-            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"]
+            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
+
+            // Manipulate hardcoded command line arguments; [type: list]
+            // This option allow you to modify hardcoded parameters, values and
+            // their positions without digging into the src code.
+            // Note: Hardcoded args can be changed (rarely) by any release updates.
+            // Enable debug mode will help to find all current hardcoded args.
+            // [search, [replace, [index, count, new position]]], where:
+            // - search: type:string (regex)
+            // - replace: type:string
+            // - index: type:int (the number is known as a list index); required!
+            // - count: type:int (the matching occurrences per index, 0 = all); required!
+            // - position: type:int (move old index pos. to new/old one, -1 = delete index); required!
+            "fix_commands": [
+                ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change
+                ["^.*?auto.*$", "--with", 4, 1, 5], // using regex, move index 4 to pos 5
+                ["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion
+                ["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7
+                [3, 0 , 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
+                [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
+                ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
+            ]
         },
         "beautysh": {
             "disable": false,

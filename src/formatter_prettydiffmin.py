@@ -62,7 +62,8 @@ class PrettydiffminFormatter:
 
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)
-        log.debug('Current executing arguments: %s', cmd)
+        log.debug('Current arguments: %s', cmd)
+        common.set_fix_cmds(cmd, self.identifier)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)

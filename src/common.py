@@ -15,6 +15,7 @@ from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     exists, normpath, normcase, pathsep, split, splitext)
 import sys
 from imp import reload
+import re
 import logging
 import sublime
 
@@ -281,6 +282,41 @@ def get_args(identifier):
     if args and isinstance(args, list):
         return map(expand_path, args)
     return None
+
+def set_fix_cmds(cmd, identifier):
+    fix_cmds = gets(settings(), 'formatters', identifier, 'fix_commands')
+    if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
+        for x in fix_cmds:
+            if isinstance(x, list):
+                l = len(x)
+                if 3 <= l <= 5:
+                    x = list(map(expand_path, x))
+                    search = str(x[l-5])
+                    replace = str(x[l-4])
+                    index = x[l-3]
+                    count = x[l-2]
+                    position = x[l-1]
+                    if isinstance(index, int) and isinstance(count, int) and isinstance(position, int):
+                        for i, item in enumerate(cmd):
+                            item = str(item)
+                            if index == i:
+                                if l == 5:
+                                    if search == item and position < 0:
+                                        cmd.pop(i)
+                                    else:
+                                        cmd[i] = re.sub(r'%s' % search, replace, item, count)
+                                if l == 4:
+                                    cmd[i] = replace
+                                if l == 3 and position < 0:
+                                    cmd.pop(i)
+                                if position > -1:
+                                    cmd.insert(position, cmd.pop(i))
+                        log.debug('Changed arguments: %s', cmd)
+                    else:
+                        log.error('index, count and position of "fix_commands" must be of type int.')
+            else:
+                log.error('Items of "fix_commands" must be of type list.')
+    return cmd
 
 def show_error(text, name=None):
     if name:
