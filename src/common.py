@@ -16,6 +16,7 @@ from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
 import sys
 from imp import reload
 import re
+from subprocess import Popen, PIPE
 import logging
 import sublime
 
@@ -121,7 +122,6 @@ def get_pathinfo(path):
     return (path, cwd, base, root, ext)
 
 def exec_cmd(cmd, path):
-    from subprocess import Popen, PIPE
     info = None
     if IS_WINDOWS:
         from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, SW_HIDE
@@ -171,7 +171,6 @@ def is_exe(file):
             log.debug('Set executable permission for: %s', file)
             return True
         log.warning('File exists but is not executable: %s', file)
-        return False
     return False
 
 def get_environ_path(fnames):
@@ -201,13 +200,11 @@ def get_environ_path(fnames):
                                 return file
             else:
                 log.error('"PATH" or default search path does not exist: %s', path)
-                return None
         else:
             log.error('System environment is empty or not of type dict: %s', environ)
-            return None
     else:
         log.error('File names variable is empty or not of type list: %s', fnames)
-        return None
+    return None
 
 def get_interpreter_path(fnames):
     global_file = get_environ_path(fnames)
@@ -313,11 +310,13 @@ def set_fix_cmds(cmd, identifier):
                         log.debug('Changed arguments: %s', cmd)
                     else:
                         log.error('index, count and position of "fix_commands" must be of type int.')
+                        return None
             else:
                 log.error('Items of "fix_commands" must be of type list.')
+                return None
     return cmd
 
-def show_error(text, name=None):
+def prompt_error(text, name=None):
     if name:
         string = u'%s (%s):\n\n%s' % (PLUGIN_NAME, name, text)
     else:

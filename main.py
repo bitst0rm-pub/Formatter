@@ -192,7 +192,7 @@ class CloneView(sublime_plugin.TextCommand):
                 file.write(allcontent)
         except OSError as e:
             log.error('Could not save file: %s\n%s', path, e)
-            common.show_error('Error: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
+            common.prompt_error('Error: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
 
     def show_status_on_new_file(self, view):
         if view.is_loading():

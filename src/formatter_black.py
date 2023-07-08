@@ -37,7 +37,7 @@ class BlackFormatter:
                 version = string.splitlines()[0].split(' ')[1]
                 if StrictVersion(version) >= StrictVersion('3.7.0'):
                     return True
-                common.show_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.identifier)
+                common.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.identifier)
             return None
         except OSError:
             log.error('Error occurred while validating Python compatibility.')
@@ -68,7 +68,7 @@ class BlackFormatter:
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
-        common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.identifier)
         if not cmd or not self.is_compat():
             return None
 

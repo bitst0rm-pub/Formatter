@@ -79,7 +79,7 @@ class Formatter:
             if name == kwargs.get('identifier', None):
                 syntax = common.get_assign_syntax(view, name, region, is_selected)
                 if not syntax:
-                    common.show_error('Syntax out of the scope.', 'ID:' + name)
+                    common.prompt_error('Syntax out of the scope.', 'ID:' + name)
                 else:
                     file = view.file_name()
                     log.debug('Target: %s', file if file else '(view)')
