@@ -121,7 +121,7 @@ def get_pathinfo(path):
         root, ext = splitext(base)
     return (path, cwd, base, root, ext)
 
-def exec_cmd(cmd, path):
+def exec_cmd(cmd, cwd):
     info = None
     if IS_WINDOWS:
         from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, SW_HIDE
@@ -131,7 +131,8 @@ def exec_cmd(cmd, path):
         info.dwFlags |= STARTF_USESHOWWINDOW
         info.wShowWindow = SW_HIDE
 
-    process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=get_pathinfo(path)[1],
+    # Input cmd must be a list of strings
+    process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=cwd,
                     env=update_environ(), shell=IS_WINDOWS, startupinfo=info)
     return process
 

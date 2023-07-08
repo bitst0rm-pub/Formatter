@@ -56,7 +56,7 @@ class BeautyshFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[0])
+            proc = common.exec_cmd(cmd, self.pathinfo[1])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode

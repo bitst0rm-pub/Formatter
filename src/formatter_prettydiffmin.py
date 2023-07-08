@@ -70,7 +70,7 @@ class PrettydiffminFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[0])
+            proc = common.exec_cmd(cmd, self.pathinfo[1])
             stdout, stderr = proc.communicate()
 
             if tmp_file and os.path.isfile(tmp_file):
