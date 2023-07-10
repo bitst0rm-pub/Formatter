@@ -42,7 +42,7 @@ import textwrap
 from html import escape
 from html.parser import HTMLParser
 
-import wcwidth  # type: ignore
+from .. import wcwidth  # type: ignore
 
 __version__ = "3.8.0"
 
