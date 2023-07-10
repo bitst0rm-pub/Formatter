@@ -1,0 +1,17 @@
+{
+    "language": "sql",
+    "dialect": "sql",
+    "tabWidth": 4,
+    "useTabs": false,
+    "keywordCase": "upper",
+    "indentStyle": "standard",
+    "logicalOperatorNewline": "before",
+    "tabulateAlias": false,
+    "commaPosition": "after",
+    "expressionWidth": 50,
+    "linesBetweenQueries": 1,
+    "denseOperators": false,
+    "newlineBeforeSemicolon": false,
+    "params": {},
+    "paramTypes": {}
+}

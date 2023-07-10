@@ -255,6 +255,16 @@
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
         },
+        "sqlformatter": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["sql"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/sql_formatter_rc.json"
+            }
+        },
         "stylelint": {
             "disable": false,
             "format_on_save": false,

@@ -102,6 +102,13 @@
                 }
             },
             {
+                "caption": "SQL Formatter",
+                "command": "run_format",
+                "args": {
+                    "identifier": "sqlformatter"
+                }
+            },
+            {
                 "caption": "Stylelint",
                 "command": "run_format",
                 "args": {

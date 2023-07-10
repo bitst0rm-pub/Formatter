@@ -29,6 +29,7 @@ from .formatter_prettydiffmax import PrettydiffmaxFormatter
 from .formatter_prettydiffmin import PrettydiffminFormatter
 from .formatter_prettytable import PrettytableFormatter
 from .formatter_rubocop import RubocopFormatter
+from .formatter_sqlformatter import SqlformatterFormatter
 from .formatter_stylelint import StylelintFormatter
 from .formatter_terser import TerserFormatter
 from .formatter_uncrustify import UncrustifyFormatter
@@ -70,6 +71,7 @@ class Formatter:
             ('prettydiffmin', PrettydiffminFormatter),
             ('prettytable', PrettytableFormatter),
             ('rubocop', RubocopFormatter),
+            ('sqlformatter', SqlformatterFormatter),
             ('stylelint', StylelintFormatter),
             ('terser', TerserFormatter),
             ('uncrustify', UncrustifyFormatter),
