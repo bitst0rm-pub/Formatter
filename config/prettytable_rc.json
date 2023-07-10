@@ -6,10 +6,10 @@
             "PLAIN_COLUMNS", "RANDOM", "SINGLE_BORDER"
         ],
         "supported align": ["l", "c", "r"],
-        "supported out_format": ["text", "html", "json", "csv", "latex"]
+        "supported output_format": ["text", "html", "json", "csv", "latex"]
     },
     "style": "DEFAULT",
     "separator": ";",
     "align": "l",
-    "out_format": "text"
+    "output_format": "text"
 }

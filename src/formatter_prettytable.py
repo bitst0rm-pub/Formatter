@@ -54,7 +54,7 @@ class PrettytableFormatter:
         style = cmd.get('style', None)
         separator = cmd.get('separator', None)
         align = cmd.get('align', None)
-        out_format = cmd.get('out_format', 'text')
+        output_format = cmd.get('output_format', 'text')
 
         stylemap = [
             ('ALL', prettytable.ALL),
@@ -82,7 +82,7 @@ class PrettytableFormatter:
         table.set_style(sty)
         table.align = align
 
-        out = table.get_formatted_string(out_format)
+        out = table.get_formatted_string(output_format)
         if out:
             return out
         else:
