@@ -11,7 +11,6 @@
 # @license      The MIT License (MIT)
 
 import logging
-import sublime
 from . import common
 
 log = logging.getLogger('root')

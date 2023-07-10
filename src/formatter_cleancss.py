@@ -10,9 +10,7 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import os
 import logging
-import tempfile
 import sublime
 from . import common
 

@@ -12,8 +12,9 @@
 
 import logging
 import json
-from ..lib3 import yaml
 from . import common
+
+from ..lib3 import yaml
 
 log = logging.getLogger('root')
 EXECUTABLE_NAMES = ['clang-format']
