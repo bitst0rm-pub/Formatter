@@ -27,13 +27,14 @@
     { "keys": ["ctrl+super+j"], "command": "run_format", "args": { "identifier": "phpcsfixer" }},
     { "keys": ["ctrl+super+k"], "command": "run_format", "args": { "identifier": "prettier" }},
     { "keys": ["ctrl+super+l"], "command": "run_format", "args": { "identifier": "prettydiffmax" }},
-    { "keys": ["ctrl+super+m"], "command": "run_format", "args": { "identifier": "rubocop" }},
-    { "keys": ["ctrl+super+n"], "command": "run_format", "args": { "identifier": "stylelint" }},
-    { "keys": ["ctrl+super+o"], "command": "run_format", "args": { "identifier": "uncrustify" }},
-    { "keys": ["ctrl+super+p"], "command": "run_format", "args": { "identifier": "yapf" }},
-    { "keys": ["ctrl+super+q"], "command": "run_format", "args": { "identifier": "cleancss" }},
-    { "keys": ["ctrl+super+r"], "command": "run_format", "args": { "identifier": "htmlminifier" }},
-    { "keys": ["ctrl+super+s"], "command": "run_format", "args": { "identifier": "prettydiffmin" }},
-    { "keys": ["ctrl+super+t"], "command": "run_format", "args": { "identifier": "jsonmin" }},
-    { "keys": ["ctrl+super+u"], "command": "run_format", "args": { "identifier": "terser" }}
+    { "keys": ["ctrl+super+m"], "command": "run_format", "args": { "identifier": "prettytable" }},
+    { "keys": ["ctrl+super+n"], "command": "run_format", "args": { "identifier": "rubocop" }},
+    { "keys": ["ctrl+super+o"], "command": "run_format", "args": { "identifier": "stylelint" }},
+    { "keys": ["ctrl+super+p"], "command": "run_format", "args": { "identifier": "uncrustify" }},
+    { "keys": ["ctrl+super+q"], "command": "run_format", "args": { "identifier": "yapf" }},
+    { "keys": ["ctrl+super+r"], "command": "run_format", "args": { "identifier": "cleancss" }},
+    { "keys": ["ctrl+super+s"], "command": "run_format", "args": { "identifier": "htmlminifier" }},
+    { "keys": ["ctrl+super+t"], "command": "run_format", "args": { "identifier": "prettydiffmin" }},
+    { "keys": ["ctrl+super+u"], "command": "run_format", "args": { "identifier": "jsonmin" }},
+    { "keys": ["ctrl+super+v"], "command": "run_format", "args": { "identifier": "terser" }}
 ]

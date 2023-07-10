@@ -235,6 +235,16 @@
                 "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
             }
         },
+        "prettytable": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["csv"],
+            /* build-in, no executable */
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/prettytable_rc.json"
+            }
+        },
         "rubocop": {
             "disable": false,
             "format_on_save": false,

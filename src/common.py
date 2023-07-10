@@ -44,6 +44,7 @@ LOAD_ORDER = [
     '.src.formatter_prettier',
     '.src.formatter_prettydiffmax',
     '.src.formatter_prettydiffmin',
+    '.src.formatter_prettytable',
     '.src.formatter_rubocop',
     '.src.formatter_stylelint',
     '.src.formatter_terser',

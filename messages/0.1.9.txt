@@ -2,6 +2,7 @@ Formatter
 
 0.1.9
     NEW: Add new option "fix_commands"
+    NEW: Add new plugin: PrettyTable
     FIX: Casting str for option "args" according to subprocess specs
     FIX: Various minor bug fixes and improvements
 

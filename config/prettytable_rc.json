@@ -1,0 +1,15 @@
+{
+    "__comments__": {
+        "supported styles": [
+            "ALL", "DEFAULT", "DOUBLE_BORDER", "FRAME", "HEADER",
+            "MARKDOWN", "MSWORD_FRIENDLY", "NONE", "ORGMODE",
+            "PLAIN_COLUMNS", "RANDOM", "SINGLE_BORDER"
+        ],
+        "supported align": ["l", "c", "r"],
+        "supported out_format": ["text", "html", "json", "csv", "latex"]
+    },
+    "style": "DEFAULT",
+    "separator": ";",
+    "align": "l",
+    "out_format": "text"
+}

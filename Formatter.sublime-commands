@@ -92,6 +92,13 @@
         }
     },
     {
+        "caption": "Formatter: Beautify With PrettyTable",
+        "command": "run_format",
+        "args": {
+            "identifier": "prettytable"
+        }
+    },
+    {
         "caption": "Formatter: Beautify With RuboCop",
         "command": "run_format",
         "args": {

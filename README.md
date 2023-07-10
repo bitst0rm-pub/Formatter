@@ -36,7 +36,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 **Plugins that work with Formatter:**
 
 Note: This list does not contain the complete languages that each plugin does support.
-For example, Pretty Diff support 45 languages, that would blow up the frame of the list here.
+For example, Pretty Diff supports 45 languages, that would blow up the frame of the list here.
 
 | Languages | Beautify | Minify | Requirements | cfg-Online |
 | ------ | :------: | :------: | :------: | :------: |
@@ -54,6 +54,7 @@ For example, Pretty Diff support 45 languages, that would blow up the frame of t
 | Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | -- | Python `>=3.7.0` | -- |
 | Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
 | Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
+| CSV | [PrettyTable](https://github.com/jazzband/prettytable) (build-in) | -- | Python | -- |
 | C, C++, C#, ObjectiveC, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | C, C++, C#, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
 
