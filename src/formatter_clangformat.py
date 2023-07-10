@@ -43,7 +43,7 @@ class ClangformatFormatter:
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
             with open(config, 'r', encoding='utf-8') as file:
-                cfg_dict = yaml.load(file)
+                cfg_dict = yaml.safe_load(file)
             cmd.extend(['--style', json.dumps(cfg_dict)])
 
         extmap = {
