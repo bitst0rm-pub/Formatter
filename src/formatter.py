@@ -27,6 +27,7 @@ from .formatter_phpcsfixer import PhpcsfixerFormatter
 from .formatter_prettier import PrettierFormatter
 from .formatter_prettydiffmax import PrettydiffmaxFormatter
 from .formatter_prettydiffmin import PrettydiffminFormatter
+from .formatter_prettytable import PrettytableFormatter
 from .formatter_rubocop import RubocopFormatter
 from .formatter_stylelint import StylelintFormatter
 from .formatter_terser import TerserFormatter
@@ -67,6 +68,7 @@ class Formatter:
             ('prettier', PrettierFormatter),
             ('prettydiffmax', PrettydiffmaxFormatter),
             ('prettydiffmin', PrettydiffminFormatter),
+            ('prettytable', PrettytableFormatter),
             ('rubocop', RubocopFormatter),
             ('stylelint', StylelintFormatter),
             ('terser', TerserFormatter),
@@ -79,7 +81,7 @@ class Formatter:
             if name == kwargs.get('identifier', None):
                 syntax = common.get_assign_syntax(view, name, region, is_selected)
                 if not syntax:
-                    common.show_error('Syntax out of the scope.', 'ID:' + name)
+                    common.prompt_error('Syntax out of the scope.', 'ID:' + name)
                 else:
                     file = view.file_name()
                     log.debug('Target: %s', file if file else '(view)')

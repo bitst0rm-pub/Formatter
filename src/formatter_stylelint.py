@@ -60,14 +60,15 @@ class StylelintFormatter:
 
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)
-        log.debug('Current executing arguments: %s', cmd)
+        log.debug('Current arguments: %s', cmd)
+        cmd = common.set_fix_cmds(cmd, self.identifier)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[0])
+            proc = common.exec_cmd(cmd, self.pathinfo[1])
             stdout, stderr = proc.communicate()
 
             result = None

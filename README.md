@@ -36,7 +36,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 **Plugins that work with Formatter:**
 
 Note: This list does not contain the complete languages that each plugin does support.
-For example, Pretty Diff support 45 languages, that would blow up the frame of the list here.
+For example, Pretty Diff supports 45 languages, that would blow up the frame of the list here.
 
 | Languages | Beautify | Minify | Requirements | cfg-Online |
 | ------ | :------: | :------: | :------: | :------: |
@@ -54,8 +54,9 @@ For example, Pretty Diff support 45 languages, that would blow up the frame of t
 | Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | -- | Python `>=3.7.0` | -- |
 | Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
 | Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
+| CSV | [PrettyTable](https://github.com/jazzband/prettytable) (build-in) | -- | Python | -- |
 | C, C++, C#, ObjectiveC, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| C, C++, CSharp, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
+| C, C++, C#, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
 
 💡 **Hint**:
 
@@ -126,7 +127,7 @@ The following settings example should give you direction, how to setup Formatter
     // Display results on status bar; [type: bool]
     "show_statusbar": true,
 
-    // A set of directories where executable programs are located; [type: list]
+    // A set of directories where executable programs are located; [type: dict{str:list[str]}]
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
@@ -162,9 +163,9 @@ The following settings example should give you direction, how to setup Formatter
             // from plugin A, because plugin A will run first in range of this/yours setting file.
             "format_on_save": false,
 
-            // Create a new file containing formatted codes [type: string]
+            // Create a new file containing formatted codes [type: str]
             // The value of this option is the suffix of the new file being renamed.
-            // Suffix must be of type string. =false, =true and all other types imply =false
+            // Suffix must be of type string. =true, =false and all other types imply =false
             // Note: It will overwrite any existing file that has the same new name in
             // the same location.
             // For example:
@@ -172,18 +173,18 @@ The following settings example should give you direction, how to setup Formatter
             // myfile.raw.js -> myfile.raw.min.js
             "new_file_on_format": false,
 
-            // Syntax support based on the scope name, not file extension; [type: list]
+            // Syntax support based on the scope name, not file extension; [type: list[str]]
             // Syntax name is part of scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             "syntaxes": ["css", "js", "php"],
 
-            // Path to the plugin executable to be used; [type: string]
+            // Path to the plugin executable to be used; [type: str]
             // System variable expansion like ${HOME} also Sublime Text
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
             // https://www.sublimetext.com/docs/build_systems.html#variables
             "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
 
-            // Path to the config file for each individual syntaxes; [type: dict]
+            // Path to the config file for each individual syntaxes; [type: dict{str:str}]
             // Syntax keys must match those in "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
@@ -195,8 +196,29 @@ The following settings example should give you direction, how to setup Formatter
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // Array of additional arguments for the command line; [type: list]
-            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"]
+            // Array of additional arguments for the command line; [type: list[str]]
+            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
+
+            // Manipulate hardcoded command line arguments; [type: list[list[str]]]
+            // This option allow you to modify hardcoded parameters, values and
+            // their positions without digging into the src code.
+            // Note: Hardcoded args can be changed (rarely) by any release updates.
+            // Enable debug mode will help to find all current hardcoded args.
+            // [search, [replace, [index, count, new position]]], where:
+            // - search: type:string (regex)
+            // - replace: type:string
+            // - index: type:int (the number is known as a list index); required!
+            // - count: type:int (the matching occurrences per index, 0 = all); required!
+            // - position: type:int (move old index pos. to new/old one, -1 = delete index); required!
+            "fix_commands": [
+                ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change
+                ["^.*?auto.*$", "--with", 4, 1, 5], // using regex, move index 4 to pos 5
+                ["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion
+                ["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7
+                [3, 0 , 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
+                [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
+                ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
+            ]
         },
         "beautysh": {
             "disable": false,

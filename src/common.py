@@ -15,12 +15,14 @@ from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     exists, normpath, normcase, pathsep, split, splitext)
 import sys
 from imp import reload
+import re
+from subprocess import Popen, PIPE
 import logging
 import sublime
 
 log = logging.getLogger('root')
 IS_WINDOWS = sublime.platform() == 'windows'
-VERSION = '0.1.8'
+VERSION = '0.1.9'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 STATUS_KEY = '@!' + PLUGIN_NAME.lower()
@@ -42,6 +44,7 @@ LOAD_ORDER = [
     '.src.formatter_prettier',
     '.src.formatter_prettydiffmax',
     '.src.formatter_prettydiffmin',
+    '.src.formatter_prettytable',
     '.src.formatter_rubocop',
     '.src.formatter_stylelint',
     '.src.formatter_terser',
@@ -119,8 +122,7 @@ def get_pathinfo(path):
         root, ext = splitext(base)
     return (path, cwd, base, root, ext)
 
-def exec_cmd(cmd, path):
-    from subprocess import Popen, PIPE
+def exec_cmd(cmd, cwd):
     info = None
     if IS_WINDOWS:
         from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, SW_HIDE
@@ -130,7 +132,8 @@ def exec_cmd(cmd, path):
         info.dwFlags |= STARTF_USESHOWWINDOW
         info.wShowWindow = SW_HIDE
 
-    process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=get_pathinfo(path)[1],
+    # Input cmd must be a list of strings
+    process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=cwd,
                     env=update_environ(), shell=IS_WINDOWS, startupinfo=info)
     return process
 
@@ -155,9 +158,8 @@ def expand_path(path):
     if path and isinstance(path, str):
         variables = sublime.active_window().extract_variables()
         path = sublime.expand_variables(path, variables)
-        p = normpath(expanduser(expandvars(path)))
-        log.debug('Normalized path: %s', p)
-        return p
+        path = normpath(expanduser(expandvars(path)))
+        log.debug('Normalized path: %s', path)
     return path
 
 def is_exe(file):
@@ -171,7 +173,6 @@ def is_exe(file):
             log.debug('Set executable permission for: %s', file)
             return True
         log.warning('File exists but is not executable: %s', file)
-        return False
     return False
 
 def get_environ_path(fnames):
@@ -201,13 +202,11 @@ def get_environ_path(fnames):
                                 return file
             else:
                 log.error('"PATH" or default search path does not exist: %s', path)
-                return None
         else:
             log.error('System environment is empty or not of type dict: %s', environ)
-            return None
     else:
         log.error('File names variable is empty or not of type list: %s', fnames)
-        return None
+    return None
 
 def get_interpreter_path(fnames):
     global_file = get_environ_path(fnames)
@@ -279,10 +278,47 @@ def get_assign_syntax(view, identifier, region, is_selected):
 def get_args(identifier):
     args = gets(settings(), 'formatters', identifier, 'args')
     if args and isinstance(args, list):
-        return map(expand_path, args)
+        return map(expand_path, map(str, args))
     return None
 
-def show_error(text, name=None):
+def set_fix_cmds(cmd, identifier):
+    fix_cmds = gets(settings(), 'formatters', identifier, 'fix_commands')
+    if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
+        for x in fix_cmds:
+            if isinstance(x, list):
+                l = len(x)
+                if 3 <= l <= 5:
+                    x = list(map(expand_path, x))
+                    search = str(x[l-5])
+                    replace = str(x[l-4])
+                    index = x[l-3]
+                    count = x[l-2]
+                    position = x[l-1]
+                    if isinstance(index, int) and isinstance(count, int) and isinstance(position, int):
+                        for i, item in enumerate(cmd):
+                            item = str(item)
+                            if index == i:
+                                if l == 5:
+                                    if search == item and position < 0:
+                                        cmd.pop(i)
+                                    else:
+                                        cmd[i] = re.sub(r'%s' % search, replace, item, count)
+                                if l == 4:
+                                    cmd[i] = replace
+                                if l == 3 and position < 0:
+                                    cmd.pop(i)
+                                if position > -1:
+                                    cmd.insert(position, cmd.pop(i))
+                        log.debug('Changed arguments: %s', cmd)
+                    else:
+                        log.error('index, count and position of "fix_commands" must be of type int.')
+                        return None
+            else:
+                log.error('Items of "fix_commands" must be of type list.')
+                return None
+    return cmd
+
+def prompt_error(text, name=None):
     if name:
         string = u'%s (%s):\n\n%s' % (PLUGIN_NAME, name, text)
     else:

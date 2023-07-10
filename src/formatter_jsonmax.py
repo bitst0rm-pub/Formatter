@@ -29,19 +29,12 @@ class JsonmaxFormatter:
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
             with open(config, 'r', encoding='utf-8') as file:
-                cfg = json.load(file)
+                cmd = json.load(file)
+            log.debug('Current arguments: %s', cmd)
 
         try:
             obj = sublime.decode_value(text)
-            result = json.dumps(
-                obj,
-                skipkeys=cfg.get('skipkeys', False),
-                ensure_ascii=cfg.get('ensure_ascii', False),
-                check_circular=cfg.get('check_circular', True),
-                allow_nan=cfg.get('allow_nan', True),
-                indent=cfg.get('indent', 4),
-                sort_keys=cfg.get('sort_keys', False),
-                separators=cfg.get('separators', None))
+            result = json.dumps(obj, **cmd)
             return result
         except ValueError as err:
             log.error('File not formatted due to ValueError: "%s"', err)

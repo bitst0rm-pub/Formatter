@@ -39,7 +39,7 @@ class PhpcsfixerFormatter:
                 version = string.splitlines()[0].split(' ')[1]
                 if StrictVersion(version) >= StrictVersion('7.4.0'):
                     return True
-                common.show_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.identifier)
+                common.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.identifier)
             return None
         except OSError:
             log.error('Error occurred while validating PHP compatibility.')
@@ -81,14 +81,15 @@ class PhpcsfixerFormatter:
             return None
 
         cmd, tmp_file = self.get_cmd(text)
-        log.debug('Current executing arguments: %s', cmd)
+        log.debug('Current arguments: %s', cmd)
+        cmd = common.set_fix_cmds(cmd, self.identifier)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[0])
+            proc = common.exec_cmd(cmd, self.pathinfo[1])
             stdout, stderr = proc.communicate()
 
             result = None

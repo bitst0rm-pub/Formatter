@@ -10,9 +10,7 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import os
 import logging
-import tempfile
 import sublime
 from . import common
 
@@ -52,12 +50,13 @@ class CleancssFormatter:
 
     def format(self, text):
         cmd = self.get_cmd()
-        log.debug('Current executing arguments: %s', cmd)
+        log.debug('Current arguments: %s', cmd)
+        cmd = common.set_fix_cmds(cmd, self.identifier)
         if not cmd:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[0])
+            proc = common.exec_cmd(cmd, self.pathinfo[1])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode

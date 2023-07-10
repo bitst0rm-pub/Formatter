@@ -93,6 +93,13 @@
                         }
                     },
                     {
+                        "caption": "PrettyTable",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "prettytable"
+                        }
+                    },
+                    {
                         "caption": "RuboCop",
                         "command": "run_format",
                         "args": {

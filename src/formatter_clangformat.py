@@ -12,8 +12,9 @@
 
 import logging
 import json
-from ..lib3 import yaml
 from . import common
+
+from ..lib3 import yaml
 
 log = logging.getLogger('root')
 EXECUTABLE_NAMES = ['clang-format']
@@ -80,12 +81,13 @@ class ClangformatFormatter:
 
     def format(self, text):
         cmd = self.get_cmd()
-        log.debug('Current executing arguments: %s', cmd)
+        log.debug('Current arguments: %s', cmd)
+        cmd = common.set_fix_cmds(cmd, self.identifier)
         if not cmd:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[0])
+            proc = common.exec_cmd(cmd, self.pathinfo[1])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
