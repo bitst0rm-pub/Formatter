@@ -87,5 +87,4 @@ class BeautyshFormatter:
             if typ == str:
                 result.extend(['--' + key, '%s' % value])
 
-
         return result

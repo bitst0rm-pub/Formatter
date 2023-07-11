@@ -133,4 +133,5 @@ class CleancssFormatter:
                                         string += (keylv2 + ':' + '%d' % valuelv2 + ';')
                                 if string:
                                     result.extend(['-O' + keylv1, string[:-1]])
+
         return result
