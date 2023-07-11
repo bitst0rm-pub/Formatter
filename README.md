@@ -177,6 +177,7 @@ The following settings example should give you direction on how to setup Formatt
             // Syntax support based on the scope name, not file extension; [type: list[str]]
             // Syntax name is part of scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
+            // End-users should consult plugin documentation to add more supported syntaxes
             "syntaxes": ["css", "js", "php"],
 
             // Path to the plugin executable to be used; [type: str]
