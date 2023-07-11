@@ -273,6 +273,10 @@ def get_assign_syntax(view, identifier, region, is_selected):
             for scope in scopes:
                 if '.' + syntax + '.' in scope:
                     return syntax
+        for syntax in syntaxes:
+            for scope in scopes:
+                if scope.startswith(syntax + '.'):
+                    return syntax
         return None
     log.error('Setting key "syntaxes" may not be empty and must be of type list: %s', syntaxes)
     return None
