@@ -222,7 +222,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
+                "default": "${packages}/User/formatter.assets/config/prettydiffmax_rc.json"
             }
         },
         "prettytable": {
@@ -323,7 +323,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
             "executable_path": "",
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
+                "default": "${packages}/User/formatter.assets/config/prettydiffmin_rc.json"
             }
         },
         "pythonminifier": {
