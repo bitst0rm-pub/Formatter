@@ -35,7 +35,8 @@
     { "keys": ["ctrl+super+r"], "command": "run_format", "args": { "identifier": "yapf" }},
     { "keys": ["ctrl+super+s"], "command": "run_format", "args": { "identifier": "cleancss" }},
     { "keys": ["ctrl+super+t"], "command": "run_format", "args": { "identifier": "htmlminifier" }},
-    { "keys": ["ctrl+super+u"], "command": "run_format", "args": { "identifier": "prettydiffmin" }},
-    { "keys": ["ctrl+super+v"], "command": "run_format", "args": { "identifier": "jsonmin" }},
-    { "keys": ["ctrl+super+w"], "command": "run_format", "args": { "identifier": "terser" }}
+    { "keys": ["ctrl+super+u"], "command": "run_format", "args": { "identifier": "jsonmin" }},
+    { "keys": ["ctrl+super+v"], "command": "run_format", "args": { "identifier": "prettydiffmin" }},
+    { "keys": ["ctrl+super+w"], "command": "run_format", "args": { "identifier": "pythonminifier" }},
+    { "keys": ["ctrl+super+y"], "command": "run_format", "args": { "identifier": "terser" }}
 ]

@@ -51,7 +51,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | YAML | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Perl | [Perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
 | PHP | [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) | -- | PHP >=`7.4.0` | [Yes](https://mlocati.github.io/php-cs-fixer-configurator) |
-| Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | -- | Python `>=3.7.0` | -- |
+| Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | [Python Minifier](https://github.com/dflook/python-minifier) | Python `>=3.7.0` | [Yes](https://python-minifier.com) |
 | Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
 | Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
 | SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | -- | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |

@@ -1,0 +1,17 @@
+{
+    "combine_imports": true,
+    "remove_pass": true,
+    "remove_literal_statements": true,
+    "remove_annotations": true,
+    "hoist_literals": true,
+    "rename_locals": true,
+    "preserve_locals": [],
+    "rename_globals": true,
+    "preserve_globals": ["handler"],
+    "remove_object_base": true,
+    "convert_posargs_to_args": true,
+    "preserve_shebang": true,
+    "remove_asserts": true,
+    "remove_debug": true,
+    "remove_explicit_return_none": true
+}

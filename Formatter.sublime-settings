@@ -225,16 +225,6 @@
                 "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
             }
         },
-        "prettydiffmin": {
-            "disable": false,
-            "format_on_save": false,
-            "new_file_on_format": false,
-            "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
-            "executable_path": "",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
-            }
-        },
         "prettytable": {
             "disable": false,
             "format_on_save": false,
@@ -325,6 +315,26 @@
             "new_file_on_format": false,
             "syntaxes": ["json"]
             /* build-in, no config */
+        },
+        "prettydiffmin": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/prettydiff_rc.json"
+            }
+        },
+        "pythonminifier": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["python"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/python_minifier_rc.json"
+            }
         },
         "terser": {
             "disable": false,

@@ -152,6 +152,13 @@
                         }
                     },
                     {
+                        "caption": "JSONMin (minify)",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "jsonmin"
+                        }
+                    },
+                    {
                         "caption": "Pretty Diff (minify)",
                         "command": "run_format",
                         "args": {
@@ -159,10 +166,10 @@
                         }
                     },
                     {
-                        "caption": "JSONMin (minify)",
+                        "caption": "Python Minifier (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "jsonmin"
+                            "identifier": "pythonminifier"
                         }
                     },
                     {

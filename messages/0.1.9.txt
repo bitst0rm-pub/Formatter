@@ -4,6 +4,7 @@ Formatter
     NEW: Add new option "fix_commands"
     NEW: Add new plugin: PrettyTable
     NEW: Add new plugin: SQL Formatter
+    NEW: Add new plugin: Python Minifier
     FIX: Casting str for option "args" according to subprocess specs
     FIX: Various minor bug fixes and improvements
 

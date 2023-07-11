@@ -148,6 +148,13 @@
         }
     },
     {
+        "caption": "Formatter: Minify With JSONMin",
+        "command": "run_format",
+        "args": {
+            "identifier": "jsonmin"
+        }
+    },
+    {
         "caption": "Formatter: Minify With Pretty Diff",
         "command": "run_format",
         "args": {
@@ -155,10 +162,10 @@
         }
     },
     {
-        "caption": "Formatter: Minify With JSONMin",
+        "caption": "Formatter: Minify With Python Minifier",
         "command": "run_format",
         "args": {
-            "identifier": "jsonmin"
+            "identifier": "pythonminifier"
         }
     },
     {
