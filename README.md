@@ -113,12 +113,12 @@ The left-hand pane contains all of the default settings. The right-hand pane is 
 Make sure that you wrap all the configurations into a single root object and copy them from the left-hand to the right-hand pane.<br/>
 Do **not** edit the Default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
-The following settings example should give you direction, how to setup Formatter:
+The following settings example should give you direction on how to setup Formatter:
 
 ```
 {
     // Enable debug mode to view errors in the console; [type: bool]
-    // Any changes will need a restart to get applied.
+    // Any changes might need a restart to get applied.
     "debug": false,
 
     // Auto open console panel whenever formatting failed; [type: bool]
@@ -148,12 +148,12 @@ The following settings example should give you direction, how to setup Formatter
     "formatters": {
         "example_name_id": {
             // Disable and remove plugin from being shown in the menu; [type: bool]
-            // Any changes will need a restart to get applied.
+            // Any changes might need a restart to get applied.
             "disable": false,
 
             // Auto formatting whenever the current file/view is being saved; [type: bool]
-            // Means: Newly formatted codes will be finally saved within time frame starting
-            // from the 2. press on "format_on_save".
+            // For safety reasons, newly formatted codes will be finally saved
+            // after the next save demand.
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes then the first plugin takes precedence.
             // Remove the identical syntaxes from one of both plugins to avoid conflicts.
