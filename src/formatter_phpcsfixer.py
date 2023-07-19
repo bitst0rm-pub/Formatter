@@ -33,7 +33,7 @@ class PhpcsfixerFormatter:
         try:
             php = common.get_interpreter_path(INTERPRETER_NAMES)
             if php:
-                proc = common.exec_cmd([php, '-v'], self.pathinfo[0])
+                proc = common.exec_cmd([php, '-v'], self.pathinfo[1])
                 stdout = proc.communicate()[0]
                 string = stdout.decode('utf-8')
                 version = string.splitlines()[0].split(' ')[1]
