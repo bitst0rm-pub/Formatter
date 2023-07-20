@@ -15,7 +15,7 @@
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
     // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
-    // from terminal. But it is only temporary and will only apply
+    // from terminal. But it is only temporary in the memory and will only apply
     // for the current formatting session.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
@@ -88,9 +88,10 @@
             // their positions without digging into the source code.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
+            // Use "args" option above to add, this option to remove or manipulate.
             // [search, [replace, [index, count, new position]]], where:
-            // - search: type:string (regex)
-            // - replace: type:string
+            // - search: type:str (regex)
+            // - replace: type:str
             // - index: type:int (the number is known as a list index); required!
             // - count: type:int (the matching occurrences per index, 0 = all); required!
             // - position: type:int (move old index pos. to new/old one, -1 = delete index); required!

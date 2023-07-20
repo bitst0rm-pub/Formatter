@@ -9,7 +9,7 @@ Features:
 - Config files available for each 3rd-party plugin
 - Offline functionality
 
-Formatter has been thoroughly tested on MacOSX with Sublime Text `3 and 4` and it _should_ work fine on other platforms (not tested).<br/>
+Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).<br/>
 A backport to Sublime Text `2` was never intended.
 
 
@@ -37,7 +37,8 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 **Plugins that work with Formatter:**
 
 Note: This list does not contain the complete languages that each plugin does support.
-For example, Pretty Diff supports 45 languages, that would blow up the frame of the list here.
+For example, Pretty Diff supports 45 languages, that would blow up the frame of the list here.<br/>
+`build-in` plugins are integrated plugins that do not need to install by end-users.
 
 | Languages | Beautify | Minify | Requirements | cfg-Online |
 | ------ | :------: | :------: | :------: | :------: |
@@ -134,7 +135,7 @@ The following settings example should give you direction on how to setup Formatt
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
     // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
-    // from terminal. But it is only temporary and will only apply
+    // from terminal. But it is only temporary in the memory and will only apply
     // for the current formatting session.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
@@ -207,9 +208,10 @@ The following settings example should give you direction on how to setup Formatt
             // their positions without digging into the source code.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
+            // Use "args" option above to add, this option to remove or manipulate.
             // [search, [replace, [index, count, new position]]], where:
-            // - search: type:string (regex)
-            // - replace: type:string
+            // - search: type:str (regex)
+            // - replace: type:str
             // - index: type:int (the number is known as a list index); required!
             // - count: type:int (the matching occurrences per index, 0 = all); required!
             // - position: type:int (move old index pos. to new/old one, -1 = delete index); required!
@@ -296,7 +298,7 @@ If you encounter issues, please activate the key `"debug": true` in `Formatter.s
 
 ## Limitations
 
-Although Formatter itself does not have any limitations, compute-intensive operations like formatting large data, such as SQL, might cause third-party plugins to malfunction. Therefore, it is recommended to make a copy of the data and split it into smaller chunks.
+Although Formatter itself does not have any limitations, compute-intensive operations like formatting large data, such as huge SQL, might cause third-party plugins to malfunction. Therefore, it is recommended to make a copy of the data and split it into smaller chunks.
 
 
 ## Todo:
