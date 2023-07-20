@@ -1,15 +1,15 @@
 # Formatter
 
-Formatter is a Sublime Text 3 & 4 plugin to beautify and minify source code.
+Formatter is a plugin for Sublime Text 3 & 4 to beautify and minify source code.
 
 Features:
 
-- Support more than 20 major languages
-- Format whole file, single or multi selections
-- Config files available for each 3rd party plugins
-- Work offline
+- Support for more than 20 major programming languages
+- Ability to format entire file, single or multi selections
+- Config files available for each 3rd-party plugin
+- Offline functionality
 
-Formatter has been tested under Sublime Text `3 and 4` on MacOSX and it _should_ work fine on other platforms (not tested).<br/>
+Formatter has been thoroughly tested on MacOSX with Sublime Text `3 and 4` and it _should_ work fine on other platforms (not tested).<br/>
 A backport to Sublime Text `2` was never intended.
 
 
@@ -21,17 +21,18 @@ A backport to Sublime Text `2` was never intended.
   - [Configuration](#configuration)
   - [Usage](#usage)
   - [Troubleshooting](#troubleshooting)
+  - [Limitations](#limitations)
   - [Todo](#todo)
   - [License](#license)
 
 
 ## Plugins
 
-Formatter is useless without third-party plugins. It relies on external plugins in order to format code. Such plugins need to be installed separately and can be easily disabled in settings. Instructions on how to install them are linked below. To setup plugins please keep in mind to:
+Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed separately and can be easily disabled in the settings. To install third-party plugins, follow the instructions provided in the linked list below. To set up the plugins correctly, please consider the following:
 
-- check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black requires Python >=3.7.0
-- pass the correct path to the plugin executable and
-- adjust their environment variables (PATH, PYTHONPATH etc.) in the `Formatter.sublime-settings`.
+- Check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black requires Python >=3.7.0
+- Ensure to pass the correct path to the plugin executable and
+- Adjust their environment variables (PATH, PYTHONPATH etc.) in the `Formatter.sublime-settings`.
 
 **Plugins that work with Formatter:**
 
@@ -56,7 +57,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
 | SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | -- | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |
 | CSV, TSV, DSV, Text | [PrettyTable](https://github.com/jazzband/prettytable) (build-in) | -- | Python | -- |
-| C, C++, C#, ObjectiveC, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| C, C++, C#, Objective-C, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | C, C++, C#, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
 
 💡 **Hint**:
@@ -118,24 +119,24 @@ The following settings example should give you direction on how to setup Formatt
 ```
 {
     // Enable debug mode to view errors in the console; [type: bool]
-    // Any changes might need a restart to get applied.
+    // Any changes might require a restart to take effect.
     "debug": false,
 
-    // Auto open console panel whenever formatting failed; [type: bool]
+    // Auto open the console panel whenever formatting failed; [type: bool]
     // This is especially useful when combined with "debug": true,
     "open_console_on_failure": false,
 
-    // Display results on status bar; [type: bool]
+    // Display results on the status bar; [type: bool]
     "show_statusbar": true,
 
     // A set of directories where executable programs are located; [type: dict{str:list[str]}]
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
-    // This option is similar to 'export PYTHONPATH="/path/to/my/site-packages"'
-    // from terminal. But it is only temporary and will take effect
-    // for the current formatting session only.
-    // Non-existent environment directories and files are silently ignored.
+    // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
+    // from terminal. But it is only temporary and will only apply
+    // for the current formatting session.
+    // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
     // to add it, either permanently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     "environ": {
@@ -148,15 +149,15 @@ The following settings example should give you direction on how to setup Formatt
     "formatters": {
         "example_name_id": {
             // Disable and remove plugin from being shown in the menu; [type: bool]
-            // Any changes might need a restart to get applied.
+            // Any changes might require a restart to take effect.
             "disable": false,
 
             // Auto formatting whenever the current file/view is being saved; [type: bool]
             // For safety reasons, newly formatted codes will be finally saved
             // after the next save demand.
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes then the first plugin takes precedence.
-            // Remove the identical syntaxes from one of both plugins to avoid conflicts.
+            // For plugins with the same syntaxes, the first plugin takes precedence.
+            // Remove the identical syntaxes from one of the plugins to avoid conflicts.
             // For example:
             // Plugin A (enabled): syntaxes ["css", "js"]
             // Plugin B (enabled): syntaxes ["html", "css"]
@@ -175,9 +176,9 @@ The following settings example should give you direction on how to setup Formatt
             "new_file_on_format": false,
 
             // Syntax support based on the scope name, not file extension; [type: list[str]]
-            // Syntax name is part of scope name and can be retrieved from:
+            // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
-            // End-users should consult plugin documentation to add more supported syntaxes
+            // End-users should consult plugin documentation to add more supported syntaxes.
             "syntaxes": ["css", "js", "php"],
 
             // Path to the plugin executable to be used; [type: str]
@@ -187,7 +188,7 @@ The following settings example should give you direction on how to setup Formatt
             "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
 
             // Path to the config file for each individual syntaxes; [type: dict{str:str}]
-            // Syntax keys must match those in "syntaxes" option above.
+            // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
             // Formatter provides a set of default config files under
@@ -201,9 +202,9 @@ The following settings example should give you direction on how to setup Formatt
             // Array of additional arguments for the command line; [type: list[str]]
             "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
 
-            // Manipulate hardcoded command line arguments; [type: list[list[str]]]
+            // Manipulate hardcoded command-line arguments; [type: list[list[str]]]
             // This option allow you to modify hardcoded parameters, values and
-            // their positions without digging into the src code.
+            // their positions without digging into the source code.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
             // [search, [replace, [index, count, new position]]], where:
@@ -274,11 +275,11 @@ The following settings example should give you direction on how to setup Formatt
 
 ## Usage
 
-Formatter has been designed to detect the syntax of files according to file scopes, not file extension. In the most cases Sublime Text already does this job for you when you open a file. For the rest you must explicit assign syntax via the syntax menu on the righ-hand bottom corner or via:
+Formatter has been designed to detect the syntax of files according to file scopes, not file extension. In the most cases, Sublime Text already does this job for you when you open a file. For the rest, you must explicit assign the syntax via the syntax menu in the righ-hand bottom corner or via:
 
         Sublime Text > View > Syntax
 
-Setting wrong syntax when format code will cause error: _`Syntax out of the scope.`_
+Setting wrong syntax when formatting code will cause error: _`Syntax out of the scope.`_
 
 Formatting actions can be triggered in different ways:
 
@@ -289,7 +290,13 @@ Formatting actions can be triggered in different ways:
 
 
 ## Troubleshooting
-Please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can come from upstream plugin, from your transcoding code text also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
+
+If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can arise from upstream plugins, from your transcoding codebase also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
+
+
+## Limitations
+
+Although Formatter itself does not have any limitations, compute-intensive operations like formatting large data, such as SQL, might cause third-party plugins to malfunction. Therefore, it is recommended to make a copy of the data and split it into smaller chunks.
 
 
 ## Todo:

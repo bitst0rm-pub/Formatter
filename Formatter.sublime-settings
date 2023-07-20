@@ -1,23 +1,23 @@
 {
     // Enable debug mode to view errors in the console; [type: bool]
-    // Any changes might need a restart to get applied.
+    // Any changes might require a restart to take effect.
     "debug": false,
 
-    // Auto open console panel whenever formatting failed; [type: bool]
+    // Auto open the console panel whenever formatting failed; [type: bool]
     // This is especially useful when combined with "debug": true,
     "open_console_on_failure": false,
 
-    // Display results on status bar; [type: bool]
+    // Display results on the status bar; [type: bool]
     "show_statusbar": true,
 
     // A set of directories where executable programs are located; [type: dict{str:list[str]}]
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
-    // This option is similar to 'export PYTHONPATH="/path/to/my/site-packages"'
-    // from terminal. But it is only temporary and will take effect
-    // for the current formatting session only.
-    // Non-existent environment directories and files are silently ignored.
+    // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
+    // from terminal. But it is only temporary and will only apply
+    // for the current formatting session.
+    // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
     // to add it, either permanently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     "environ": {
@@ -30,15 +30,15 @@
     "formatters": {
         "example_name_id": {
             // Disable and remove plugin from being shown in the menu; [type: bool]
-            // Any changes might need a restart to get applied.
+            // Any changes might require a restart to take effect.
             "disable": false,
 
             // Auto formatting whenever the current file/view is being saved; [type: bool]
             // For safety reasons, newly formatted codes will be finally saved
             // after the next save demand.
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes then the first plugin will be processed.
-            // Remove the identical syntaxes from one of both plugins to avoid conflicts.
+            // For plugins with the same syntaxes, the first plugin takes precedence.
+            // Remove the identical syntaxes from one of the plugins to avoid conflicts.
             // For example:
             // Plugin A (enabled): syntaxes ["css", "js"]
             // Plugin B (enabled): syntaxes ["html", "css"]
@@ -57,9 +57,9 @@
             "new_file_on_format": false,
 
             // Syntax support based on the scope name, not file extension; [type: list[str]]
-            // Syntax name is part of scope name and can be retrieved from:
+            // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
-            // End-users should consult plugin documentation to add more supported syntaxes
+            // End-users should consult plugin documentation to add more supported syntaxes.
             "syntaxes": ["css", "js", "php"],
 
             // Path to the plugin executable to be used; [type: str]
@@ -69,7 +69,7 @@
             "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
 
             // Path to the config file for each individual syntaxes; [type: dict{str:str}]
-            // Syntax keys must match those in "syntaxes" option above.
+            // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
             // Formatter provides a set of default config files under
@@ -83,9 +83,9 @@
             // Array of additional arguments for the command line; [type: list[str]]
             "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
 
-            // Manipulate hardcoded command line arguments; [type: list[list[str]]]
+            // Manipulate hardcoded command-line arguments; [type: list[list[str]]]
             // This option allow you to modify hardcoded parameters, values and
-            // their positions without digging into the src code.
+            // their positions without digging into the source code.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
             // [search, [replace, [index, count, new position]]], where:
