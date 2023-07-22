@@ -38,5 +38,6 @@
     { "keys": ["ctrl+super+u"], "command": "run_format", "args": { "identifier": "jsonmin" }},
     { "keys": ["ctrl+super+v"], "command": "run_format", "args": { "identifier": "prettydiffmin" }},
     { "keys": ["ctrl+super+w"], "command": "run_format", "args": { "identifier": "pythonminifier" }},
+    { "keys": ["ctrl+super+x"], "command": "run_format", "args": { "identifier": "sqlmin" }},
     { "keys": ["ctrl+super+y"], "command": "run_format", "args": { "identifier": "terser" }}
 ]

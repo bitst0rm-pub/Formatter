@@ -338,6 +338,16 @@
                 "default": "${packages}/User/formatter.assets/config/python_minifier_rc.json"
             }
         },
+        "sqlmin": {
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "syntaxes": ["sql"],
+            /* build-in, no executable */
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/sqlmin_rc.json"
+            }
+        },
         "terser": {
             "disable": false,
             "format_on_save": false,

@@ -21,7 +21,6 @@ A backport to Sublime Text `2` was never intended.
   - [Configuration](#configuration)
   - [Usage](#usage)
   - [Troubleshooting](#troubleshooting)
-  - [Limitations](#limitations)
   - [Todo](#todo)
   - [License](#license)
 
@@ -40,7 +39,7 @@ Note: This list does not contain the complete languages that each plugin does su
 For example, Pretty Diff supports 45 languages, that would blow up the frame of the list here.<br/>
 `build-in` plugins are integrated plugins that do not need to install by end-users.
 
-| Languages | Beautify | Minify | Requirements | cfg-Online |
+| Languages | Beautify | Minify | Requirements | Config-Online |
 | ------ | :------: | :------: | :------: | :------: |
 | CSS, SCSS, Sass, Less, SugarSS | [Stylelint](https://github.com/stylelint/stylelint), [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [CSScomb](https://github.com/csscomb/csscomb.js) | [CleanCSS CLI](https://github.com/jakubpawlowicz/clean-css-cli), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
 | HTML, XML | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [HTML Tidy](https://github.com/htacg/tidy-html5) | [HTMLMinifier](https://github.com/kangax/html-minifier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
@@ -56,7 +55,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black) | [Python Minifier](https://github.com/dflook/python-minifier) | Python `>=3.7.0` | [Yes](https://python-minifier.com) |
 | Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
 | Bash, Shell | [Beautysh](https://github.com/lovesegfault/beautysh) | -- | Python | -- |
-| SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | -- | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |
+| SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | SQLMin (build-in) | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |
 | CSV, TSV, DSV, Text | [PrettyTable](https://github.com/jazzband/prettytable) (build-in) | -- | Python | -- |
 | C, C++, C#, Objective-C, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | C, C++, C#, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
@@ -294,11 +293,6 @@ Formatting actions can be triggered in different ways:
 ## Troubleshooting
 
 If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can arise from upstream plugins, from your transcoding codebase also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
-
-
-## Limitations
-
-Although Formatter itself does not have any limitations, compute-intensive operations like formatting large data, such as huge SQL, might cause third-party plugins to malfunction. Therefore, it is recommended to make a copy of the data and split it into smaller chunks.
 
 
 ## Todo:

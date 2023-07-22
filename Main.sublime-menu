@@ -173,6 +173,13 @@
                         }
                     },
                     {
+                        "caption": "SQLMin (minify)",
+                        "command": "run_format",
+                        "args": {
+                            "identifier": "sqlmin"
+                        }
+                    },
+                    {
                         "caption": "Terser (minify)",
                         "command": "run_format",
                         "args": {

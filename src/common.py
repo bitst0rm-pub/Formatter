@@ -22,7 +22,7 @@ import sublime
 
 log = logging.getLogger('root')
 IS_WINDOWS = sublime.platform() == 'windows'
-VERSION = '0.1.10'
+VERSION = '0.1.11'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 STATUS_KEY = '@!' + PLUGIN_NAME.lower()
@@ -48,6 +48,7 @@ LOAD_ORDER = [
     '.src.formatter_pythonminifier',
     '.src.formatter_rubocop',
     '.src.formatter_sqlformatter',
+    '.src.formatter_sqlmin',
     '.src.formatter_stylelint',
     '.src.formatter_terser',
     '.src.formatter_uncrustify',
