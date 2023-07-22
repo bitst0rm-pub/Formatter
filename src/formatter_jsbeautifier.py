@@ -68,6 +68,6 @@ class JsbeautifierFormatter:
             else:
                 return stdout.decode('utf-8')
         except OSError:
-            log.error('Error occurred when running: %s', ' '.join(cmd))
+            log.error('Error occurred while running: %s', ' '.join(cmd))
 
         return None
