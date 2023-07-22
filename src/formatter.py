@@ -31,6 +31,7 @@ from .formatter_prettytable import PrettytableFormatter
 from .formatter_pythonminifier import PythonminifierFormatter
 from .formatter_rubocop import RubocopFormatter
 from .formatter_sqlformatter import SqlformatterFormatter
+from .formatter_sqlmin import SqlminFormatter
 from .formatter_stylelint import StylelintFormatter
 from .formatter_terser import TerserFormatter
 from .formatter_uncrustify import UncrustifyFormatter
@@ -74,6 +75,7 @@ class Formatter:
             ('pythonminifier', PythonminifierFormatter),
             ('rubocop', RubocopFormatter),
             ('sqlformatter', SqlformatterFormatter),
+            ('sqlmin', SqlminFormatter),
             ('stylelint', StylelintFormatter),
             ('terser', TerserFormatter),
             ('uncrustify', UncrustifyFormatter),

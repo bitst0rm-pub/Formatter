@@ -48,6 +48,7 @@ LOAD_ORDER = [
     '.src.formatter_pythonminifier',
     '.src.formatter_rubocop',
     '.src.formatter_sqlformatter',
+    '.src.formatter_sqlmin',
     '.src.formatter_stylelint',
     '.src.formatter_terser',
     '.src.formatter_uncrustify',
