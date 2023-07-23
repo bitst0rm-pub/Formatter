@@ -2,6 +2,8 @@ Formatter
 
 0.1.11
     NEW: Add new plugin: SQLMin
+    FIX: Change "Open Config Files" to "Open Config Folders"
+    FIX: Minor enhancements
 
 0.1.10
     FIX: Fix cmd to use cwd instead of file path for PHP CS Fixer

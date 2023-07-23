@@ -4,8 +4,8 @@
         "command": "show_version"
     },
     {
-        "caption": "Formatter: Open Config Files",
-        "command": "open_config_files"
+        "caption": "Formatter: Open Config Folders",
+        "command": "open_config_folders"
     },
     {
         "caption": "Formatter: Beautify With Beautysh",

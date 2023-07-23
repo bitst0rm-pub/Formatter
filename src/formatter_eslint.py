@@ -70,6 +70,6 @@ class EslintFormatter:
                 for i in obj.get('messages', []):
                     print(i)
         except OSError:
-            log.error('Error occurred when running: %s', ' '.join(cmd))
+            log.error('Error occurred while running: %s', ' '.join(cmd))
 
         return None

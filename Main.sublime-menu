@@ -212,8 +212,8 @@
                                 }
                             },
                             {
-                                "caption": "Open Config Files",
-                                "command": "open_config_files"
+                                "caption": "Open Config Folders",
+                                "command": "open_config_folders"
                             },
                             {
                                 "caption": "-"

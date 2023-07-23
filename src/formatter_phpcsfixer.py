@@ -103,7 +103,7 @@ class PhpcsfixerFormatter:
                     result = file.read()
                     file.close()
         except OSError:
-            log.error('Error occurred when running: %s', ' '.join(cmd))
+            log.error('Error occurred while running: %s', ' '.join(cmd))
 
         if tmp_file and os.path.isfile(tmp_file):
             os.unlink(tmp_file)
