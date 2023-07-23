@@ -35,14 +35,18 @@ class ShowVersionCommand(sublime_plugin.WindowCommand):
         sublime.message_dialog(common.PLUGIN_NAME + '\nVersion: ' + common.VERSION)
 
 
-class OpenConfigFilesCommand(sublime_plugin.WindowCommand):
+class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
     def run(self):
+        configdir = common.expand_path('${packages}/User/' + common.ASSETS_DIRECTORY + '/config')
+        if common.isdir(configdir):
+            self.window.run_command('open_dir', {'dir': configdir})
+
         for obj in common.settings().get('formatters', {}).values():
             for path in obj.get('config_path', {}).values():
                 if path and isinstance(path, str):
-                    path = common.expand_path(path)
-                    if common.isfile(path):
-                        self.window.open_file(path)
+                    dirpath = common.get_pathinfo(common.expand_path(path))[1]
+                    if common.isdir(dirpath):
+                        self.window.run_command('open_dir', {'dir': dirpath})
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
