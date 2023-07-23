@@ -148,7 +148,7 @@ def settings():
     log.error('Could not load settings file: %s', base_name)
     return None
 
-def gets(dct, *keys):
+def query(dct, *keys):
     for key in keys:
         try:
             dct = dct.get(key)
@@ -220,7 +220,7 @@ def get_interpreter_path(fnames):
     return None
 
 def get_executable_path(identifier, fnames):
-    local_file = expand_path(gets(settings(), 'formatters', identifier, 'executable_path'))
+    local_file = expand_path(query(settings(), 'formatters', identifier, 'executable_path'))
     if local_file and not isfile(local_file):
         log.warning('File does not exist: %s', local_file)
     if is_exe(local_file):
@@ -233,7 +233,7 @@ def get_executable_path(identifier, fnames):
     return None
 
 def get_config_path(view, identifier, region, is_selected):
-    config = gets(settings(), 'formatters', identifier, 'config_path')
+    config = query(settings(), 'formatters', identifier, 'config_path')
     if config and isinstance(config, dict):
         syntax = get_assign_syntax(view, identifier, region, is_selected)
         for key, value in config.items():
@@ -256,7 +256,7 @@ def get_config_path(view, identifier, region, is_selected):
     return None
 
 def get_assign_syntax(view, identifier, region, is_selected):
-    syntaxes = gets(settings(), 'formatters', identifier, 'syntaxes')
+    syntaxes = query(settings(), 'formatters', identifier, 'syntaxes')
     if syntaxes and isinstance(syntaxes, list):
         syntaxes = list(map(str.lower, filter(None, syntaxes)))
         scopes = view.scope_name(0 if not is_selected else region.a).strip().lower().split(' ')
@@ -283,13 +283,13 @@ def get_assign_syntax(view, identifier, region, is_selected):
     return None
 
 def get_args(identifier):
-    args = gets(settings(), 'formatters', identifier, 'args')
+    args = query(settings(), 'formatters', identifier, 'args')
     if args and isinstance(args, list):
         return map(expand_path, map(str, args))
     return None
 
 def set_fix_cmds(cmd, identifier):
-    fix_cmds = gets(settings(), 'formatters', identifier, 'fix_commands')
+    fix_cmds = query(settings(), 'formatters', identifier, 'fix_commands')
     if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
         for x in fix_cmds:
             if isinstance(x, list):
