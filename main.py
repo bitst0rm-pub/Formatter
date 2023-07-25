@@ -222,9 +222,11 @@ class RunFormatEventListener(sublime_plugin.EventListener):
                     regio = region
             syntax = common.get_assigned_syntax(view, key, regio, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
+                if syntax in used:
+                    break
                 log.debug('format_on_save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
-                break if syntax in used else used.append(syntax)
+                used.append(syntax)
 
     @classmethod
     def on_post_save_async(cls, view):
