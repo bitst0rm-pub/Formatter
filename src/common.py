@@ -16,6 +16,7 @@ from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
 import sys
 from imp import reload
 import re
+import hashlib
 from subprocess import Popen, PIPE
 import logging
 import sublime
@@ -126,7 +127,14 @@ def update_environ():
 def setup_shared_config():
     src = 'Packages/' + PLUGIN_NAME + '/config'
     dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
-    os.makedirs(dst, exist_ok=True)
+
+    try:
+        os.makedirs(dst, exist_ok=True)
+    except OSError as e:
+        if e.errno != os.errno.EEXIST:
+            log.warning('Could not create directory: %s', dst)
+        return None
+
     if not isdir(dst):
         log.warning('Could not create directory: %s', dst)
         return None
@@ -135,15 +143,36 @@ def setup_shared_config():
         if resource.startswith(src):
             file = basename(resource)
             path = join(dst, file)
-            if not isfile(path):
+            if isfile(path):
                 try:
-                    content = sublime.load_resource(resource)
-                    with open(path, 'w+', encoding='utf-8') as fil:
-                        fil.write(content)
-                    log.debug('Setup config: %s', path)
-                except UnicodeDecodeError:
-                    log.warning('Setup config skipped due to UnicodeDecodeError: %s', path)
+                    res = sublime.load_binary_resource(resource)
+                    hash_src = hashlib.md5(res).hexdigest()
+                    hash_dst = md5(path)
+                    master_path = '{0}.{2}{1}'.format(*splitext(path) + ('master',))
+                    hash_dst_master = md5(master_path) if isfile(master_path) else None
+
+                    if not hash_dst_master or (hash_dst_master and hash_src != hash_dst_master):
+                        with open(master_path, 'wb') as f:
+                            f.write(res)
+                        log.debug('Setup shared master config: %s', master_path)
+                except Exception as e:
+                    log.warning('Could not setup shared master config: %s %s', master_path, e)
+            else:
+                try:
+                    res = sublime.load_binary_resource(resource)
+                    with open(path, 'wb') as f:
+                        f.write(res)
+                    log.debug('Setup shared config: %s', path)
+                except Exception as e:
+                    log.warning('Could not setup shared config: %s %s', path, e)
     return True
+
+def md5(fname):
+    hash_md5 = hashlib.md5()
+    with open(fname, 'rb') as f:
+        for chunk in iter(lambda: f.read(4096), b''):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
 def get_pathinfo(path):
     # Fallback to ${HOME} for unsaved buffer

@@ -100,7 +100,8 @@ The `Packages` directory is located differently in:
 
 Formatter stores config files in 2 different locations:
 
-- Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs:
+- Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
+Note: Do **not** use config files with suffix `.master.`. This is the latest reference files and will be updated with any package updates.
 
         Sublime Text > Packages > User > formatter.assets > config
 
@@ -110,9 +111,9 @@ Formatter stores config files in 2 different locations:
 
 Formatter settings can be accessed from: Preferences > Package Settings > Formatter > Settings.
 
-The left-hand pane contains all of the default settings. The right-hand pane is where personal customization can be made.<br/>
-Make sure that you wrap all the configurations into a single root object and copy them from the left-hand to the right-hand pane.<br/>
-Do **not** edit the Default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
+The left-hand pane contains all the default settings, while right-hand pane is where personal customizations can be made.<br/>
+Ensure to retain the default config structure in the right-hand pane.<br/>
+Do **not** edit the default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
 The following settings example should give you direction on how to setup Formatter:
 
@@ -191,6 +192,8 @@ The following settings example should give you direction on how to setup Formatt
             // In this case the key must be named: "default"
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
+            // Do not use the reference files with suffix '.master.' directly.
+            // These files could be updated by any release updates.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
