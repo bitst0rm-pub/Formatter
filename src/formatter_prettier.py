@@ -49,7 +49,7 @@ class PrettierFormatter:
             cmd.extend(['--stdin-filepath', self.pathinfo[0]])
         else:
             # Prettier automatically infers which parser to use based on the file extension.
-            extension = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+            extension = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
             cmd.extend(['--stdin-filepath', 'dummy' + extension])
 
         return cmd

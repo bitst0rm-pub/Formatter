@@ -1,6 +1,5 @@
 {
     // Enable debug mode to view errors in the console; [type: bool]
-    // Any changes might require a restart to take effect.
     "debug": false,
 
     // Auto open the console panel whenever formatting failed; [type: bool]
@@ -28,9 +27,8 @@
 
     // Plugins settings
     "formatters": {
-        "example_name_id": {
+        "example": {
             // Disable and remove plugin from being shown in the menu; [type: bool]
-            // Any changes might require a restart to take effect.
             "disable": false,
 
             // Auto formatting whenever the current file/view is being saved; [type: bool]
@@ -74,6 +72,8 @@
             // In this case the key must be named: "default"
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
+            // Do not use the reference files with suffix '.master.' directly.
+            // These files could be updated by any release updates.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",

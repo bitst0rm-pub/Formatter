@@ -41,7 +41,7 @@ class UncrustifyFormatter:
         if config:
             cmd.extend(['-c', config])
 
-        syntax = common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+        syntax = common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
         if syntax == 'c++':
             language = 'cpp'
         elif syntax == 'objc':

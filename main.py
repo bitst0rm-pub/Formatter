@@ -13,7 +13,6 @@
 import threading
 import logging
 from pprint import pformat
-from os.path import (splitext, isfile)
 import sublime
 import sublime_plugin
 from .src import common
@@ -23,9 +22,10 @@ log = logging.getLogger('root')
 
 
 def plugin_loaded():
-    log.disabled = not common.settings().get('debug', False)
+    common.get_config()
+    log.disabled = not common.config.get('debug')
     log.info('%s version: %s', common.PLUGIN_NAME, common.VERSION)
-    common.setup_config()
+    common.setup_shared_config()
     log.debug('Plugin initialized.')
 
 
@@ -41,10 +41,10 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
         if common.isdir(configdir):
             self.window.run_command('open_dir', {'dir': configdir})
 
-        for obj in common.settings().get('formatters', {}).values():
+        for obj in common.config.get('formatters', {}).values():
             for path in obj.get('config_path', {}).values():
                 if path and isinstance(path, str):
-                    dirpath = common.get_pathinfo(common.expand_path(path))[1]
+                    dirpath = common.get_pathinfo(path)[1]
                     if common.isdir(dirpath):
                         self.window.run_command('open_dir', {'dir': dirpath})
 
@@ -59,17 +59,14 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         runformat_thread.start()
 
     def is_enabled(self):
-        if self.view.settings().get('is_widget'):
-            return False
-        return True
+        return not bool(self.view.settings().get('is_widget', False))
 
     @classmethod
     def is_visible(cls, **kwargs):
+        log.disabled = not common.config.get('debug')
         identifier = kwargs.get('identifier', None)
-        is_disabled = common.settings().get('formatters', {}).get(identifier, {}).get('disable', True)
-        if is_disabled:
-            return False
-        return True
+        is_disabled = common.config.get('formatters', {}).get(identifier, {}).get('disable', True)
+        return not is_disabled
 
 
 class RunFormatThread(threading.Thread):
@@ -117,7 +114,7 @@ class RunFormatThread(threading.Thread):
 
     @classmethod
     def print_environ(cls):
-        if common.settings().get('debug', False):
+        if common.config.get('debug'):
             log.debug('Environment: %s', pformat(common.update_environ()))
 
     def print_status(self, is_success):
@@ -128,27 +125,26 @@ class RunFormatThread(threading.Thread):
             self.failure += 1
             log.debug('Formatting failed. 💔😢💔')
 
-        if common.settings().get('show_statusbar', False):
+        if common.config.get('show_statusbar'):
             self.view.window().set_status_bar_visible(True)
             self.view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
 
     def open_console_on_failure(self):
-        if common.settings().get('open_console_on_failure', False):
+        if common.config.get('open_console_on_failure'):
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def new_file_on_format(self):
-        formatter = common.settings().get('formatters', {})
-        if formatter and isinstance(formatter, dict):
-            for key, value in formatter.items():
-                suffix = value.get('new_file_on_format', False)
-                if suffix and isinstance(suffix, str):
-                    file_path = self.view.file_name()
-                    if file_path and isfile(file_path):
-                        new_path = '{0}.{2}{1}'.format(*splitext(file_path) + (suffix,))
-                        self.view.run_command('clone_view', {'path': new_path})
-                    else:
-                        self.view.run_command('clone_view', {'path': None})
-                    sublime.set_timeout(self.undo_history, 1500)
+        formatters = common.config.get('formatters')
+        for key, value in formatters.items():
+            suffix = value.get('new_file_on_format', False)
+            if suffix and isinstance(suffix, str):
+                file_path = self.view.file_name()
+                if file_path and common.isfile(file_path):
+                    new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,))
+                    self.view.run_command('clone_view', {'path': new_path})
+                else:
+                    self.view.run_command('clone_view', {'path': None})
+                sublime.set_timeout(self.undo_history, 1500)
 
     def undo_history(self):
         c = self.cycles.count(True)
@@ -202,7 +198,7 @@ class CloneView(sublime_plugin.TextCommand):
         if view.is_loading():
             sublime.set_timeout(lambda: self.show_status_on_new_file(view), 250)
         else:
-            if common.settings().get('show_statusbar', False):
+            if common.config.get('show_statusbar'):
                 view.window().set_status_bar_visible(True)
                 view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
@@ -210,28 +206,29 @@ class CloneView(sublime_plugin.TextCommand):
 class RunFormatEventListener(sublime_plugin.EventListener):
     @classmethod
     def on_pre_save_async(cls, view):
+        used = []
         is_selected = any(not sel.empty() for sel in view.sel())
-        formatter = common.settings().get('formatters', {})
-        if formatter and isinstance(formatter, dict):
-            for key, value in formatter.items():
-                regio = None
-                if not is_selected:
-                    # entire file
-                    regio = sublime.Region(0, view.size())
-                else:
-                    # selections
-                    for region in view.sel():
-                        if region.empty():
-                            continue
-                        regio = region
-                syntax = common.get_assign_syntax(view, key, regio, is_selected)
-                if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
-                    log.debug('Format-On-Save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
-                    view.run_command('run_format', {'identifier': key})
+        formatters = common.config.get('formatters')
+        for key, value in formatters.items():
+            regio = None
+            if not is_selected:
+                # entire file
+                regio = sublime.Region(0, view.size())
+            else:
+                # selections
+                for region in view.sel():
+                    if region.empty():
+                        continue
+                    regio = region
+            syntax = common.get_assigned_syntax(view, key, regio, is_selected)
+            if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
+                log.debug('format_on_save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
+                view.run_command('run_format', {'identifier': key})
+                break if syntax in used else used.append(syntax)
 
     @classmethod
     def on_post_save_async(cls, view):
         _unused = view
-        if common.settings().get('debug', False):
+        if common.config.get('debug'):
             # For debug and development only
             common.reload_modules()

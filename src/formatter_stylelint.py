@@ -48,7 +48,7 @@ class StylelintFormatter:
         tmp_file = None
 
         # Stylelint automatically infers syntax to use based on the file extension.
-        suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+        suffix = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
 
         with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
             file.write(text)
