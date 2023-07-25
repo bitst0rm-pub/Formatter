@@ -70,7 +70,7 @@ class ClangformatFormatter:
             ('v', 'v'),
             ('vh', 'vh')
         }
-        syntax = common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+        syntax = common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
         for key, value in extmap:
             if key == syntax:
                 syntax = value

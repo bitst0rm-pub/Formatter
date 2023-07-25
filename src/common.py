@@ -71,28 +71,59 @@ def reload_modules():
             log.debug('Reloading: %s', module)
             reload(sys.modules[module])
 
+def config_file():
+    return PLUGIN_NAME + '.sublime-settings'
+
+def get_config():
+    settings = sublime.load_settings(config_file())
+    settings.add_on_change('@reload@', load_config)
+    build_config(settings)
+
+def load_config():
+    settings = sublime.load_settings(config_file())
+    build_config(settings)
+
+def build_config(settings):
+    global config
+
+    # Sublime settings dict is immutable and unordered
+    config = {}
+    config['debug'] = settings.get('debug', False)
+    config['open_console_on_failure'] = settings.get('open_console_on_failure', False)
+    config['show_statusbar'] = settings.get('show_statusbar', True)
+    config['environ'] = settings.get('environ', {})
+    config['formatters'] = settings.get('formatters', {})
+    config.get('formatters', {}).pop('example', None)
+    config = recursive_map(expand_path, config)
+
+def recursive_map(func, data):
+    if isinstance(data, dict):
+        return dict(map(lambda item: (item[0], recursive_map(func, item[1])), data.items()))
+    elif isinstance(data, list):
+        return list(map(lambda x: recursive_map(func, x), data))
+    else:
+        return func(data)
+
 def update_environ():
     try:
         environ = os.environ.copy()
-        env = settings().get('environ', None)
-        if env and isinstance(env, dict):
-            for key, value in env.items():
-                if value and isinstance(value, list):
-                    pathstring = environ.get(key, None)
-                    items = list(filter(None, map(expand_path, value)))
-                    if items:
-                        if pathstring:
-                            paths = pathstring.split(pathsep)
-                            [i if normpath(i) in paths else paths.insert(0, normpath(i)) for i in reversed(items)]
-                            environ[key] = pathsep.join(paths)
-                        else:
-                            environ[key] = pathsep.join(map(normpath, items))
+        for key, value in config.get('environ').items():
+            if value and isinstance(value, list):
+                pathstring = environ.get(key, None)
+                items = list(filter(None, value))
+                if items:
+                    if pathstring:
+                        paths = pathstring.split(pathsep)
+                        [i if normpath(i) in paths else paths.insert(0, normpath(i)) for i in reversed(items)]
+                        environ[key] = pathsep.join(paths)
+                    else:
+                        environ[key] = pathsep.join(map(normpath, items))
         return environ
     except Exception as error:
         log.warning('Could not clone system environment: %s', error)
     return None
 
-def setup_config():
+def setup_shared_config():
     src = 'Packages/' + PLUGIN_NAME + '/config'
     dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
     os.makedirs(dst, exist_ok=True)
@@ -140,20 +171,12 @@ def exec_cmd(cmd, cwd):
                     env=update_environ(), shell=IS_WINDOWS, startupinfo=info)
     return process
 
-def settings():
-    base_name = PLUGIN_NAME + '.sublime-settings'
-    prefs = sublime.load_settings(base_name)
-    if prefs:
-        return prefs
-    log.error('Could not load settings file: %s', base_name)
-    return None
-
 def query(dct, *keys):
     for key in keys:
-        try:
+        if isinstance(dct, dict):
             dct = dct.get(key)
-        except AttributeError:
-            log.error('Key assignment failed to: %s', key)
+        else:
+            log.error('Key not found for: %s from %s', key, keys)
             return None
     return dct
 
@@ -162,7 +185,7 @@ def expand_path(path):
         variables = sublime.active_window().extract_variables()
         path = sublime.expand_variables(path, variables)
         path = normpath(expanduser(expandvars(path)))
-        log.debug('Normalized path: %s', path)
+        # log.debug('Normalized path: %s', path)
     return path
 
 def is_exe(file):
@@ -220,7 +243,7 @@ def get_interpreter_path(fnames):
     return None
 
 def get_executable_path(identifier, fnames):
-    local_file = expand_path(query(settings(), 'formatters', identifier, 'executable_path'))
+    local_file = query(config, 'formatters', identifier, 'executable_path')
     if local_file and not isfile(local_file):
         log.warning('File does not exist: %s', local_file)
     if is_exe(local_file):
@@ -233,30 +256,26 @@ def get_executable_path(identifier, fnames):
     return None
 
 def get_config_path(view, identifier, region, is_selected):
-    config = query(settings(), 'formatters', identifier, 'config_path')
-    if config and isinstance(config, dict):
-        syntax = get_assign_syntax(view, identifier, region, is_selected)
-        for key, value in config.items():
-            if key.strip().lower() == syntax and value and isinstance(value, str):
-                path = expand_path(value)
-                if isfile(path) and os.access(path, os.R_OK):
-                    log.debug('Config [%s]: %s', syntax, path)
-                    return path
-        default = config.get('default', None)
-        if default and isinstance(default, str):
-            path = expand_path(default)
-            if isfile(path) and os.access(path, os.R_OK):
-                log.debug('Config [default]: %s', path)
+    shared_config = query(config, 'formatters', identifier, 'config_path')
+    if shared_config and isinstance(shared_config, dict):
+        syntax = get_assigned_syntax(view, identifier, region, is_selected)
+        for key, path in shared_config.items():
+            if key.strip().lower() == syntax and path and isinstance(path, str) and isfile(path) and os.access(path, os.R_OK):
+                log.debug('Config [%s]: %s', syntax, path)
                 return path
+        default_path = shared_config.get('default', None)
+        if default_path and isinstance(default_path, str) and isfile(default_path) and os.access(default_path, os.R_OK):
+            log.debug('Config [default]: %s', default_path)
+            return default_path
         log.warning('Could not obtain config file for syntax: %s', syntax)
-        log.warning('Default config will be used instead.')
+        log.warning('Default core config will be used instead if any.')
         return None
-    log.warning('Setting key "config_path" is empty or not of type dict: %s', config)
-    log.warning('Default config will be used instead.')
+    log.warning('Setting key "config_path" is empty or not of type dict: %s', shared_config)
+    log.warning('Default core config will be used instead if any.')
     return None
 
-def get_assign_syntax(view, identifier, region, is_selected):
-    syntaxes = query(settings(), 'formatters', identifier, 'syntaxes')
+def get_assigned_syntax(view, identifier, region, is_selected):
+    syntaxes = query(config, 'formatters', identifier, 'syntaxes')
     if syntaxes and isinstance(syntaxes, list):
         syntaxes = list(map(str.lower, filter(None, syntaxes)))
         scopes = view.scope_name(0 if not is_selected else region.a).strip().lower().split(' ')
@@ -283,24 +302,23 @@ def get_assign_syntax(view, identifier, region, is_selected):
     return None
 
 def get_args(identifier):
-    args = query(settings(), 'formatters', identifier, 'args')
+    args = query(config, 'formatters', identifier, 'args')
     if args and isinstance(args, list):
-        return map(expand_path, map(str, args))
+        return map(str, args)
     return None
 
 def set_fix_cmds(cmd, identifier):
-    fix_cmds = query(settings(), 'formatters', identifier, 'fix_commands')
+    fix_cmds = query(config, 'formatters', identifier, 'fix_commands')
     if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
         for x in fix_cmds:
             if isinstance(x, list):
                 l = len(x)
                 if 3 <= l <= 5:
-                    x = list(map(expand_path, x))
                     search = str(x[l-5])
                     replace = str(x[l-4])
-                    index = x[l-3]
-                    count = x[l-2]
-                    position = x[l-1]
+                    index = int(x[l-3])
+                    count = int(x[l-2])
+                    position = int(x[l-1])
                     if isinstance(index, int) and isinstance(count, int) and isinstance(position, int):
                         for i, item in enumerate(cmd):
                             item = str(item)

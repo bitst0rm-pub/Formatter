@@ -119,7 +119,6 @@ The following settings example should give you direction on how to setup Formatt
 ```
 {
     // Enable debug mode to view errors in the console; [type: bool]
-    // Any changes might require a restart to take effect.
     "debug": false,
 
     // Auto open the console panel whenever formatting failed; [type: bool]
@@ -147,9 +146,8 @@ The following settings example should give you direction on how to setup Formatt
 
     // Plugins settings
     "formatters": {
-        "example_name_id": {
+        "example": {
             // Disable and remove plugin from being shown in the menu; [type: bool]
-            // Any changes might require a restart to take effect.
             "disable": false,
 
             // Auto formatting whenever the current file/view is being saved; [type: bool]

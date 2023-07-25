@@ -51,7 +51,7 @@ class PrettydiffminFormatter:
         if self.pathinfo[0]:
             cmd.extend(['source', self.pathinfo[0]])
         else:
-            suffix = '.' + common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+            suffix = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
             with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
                 file.write(text)
                 file.close()

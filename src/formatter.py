@@ -85,7 +85,7 @@ class Formatter:
         result = None
         for name, class_ in classmap:
             if name == kwargs.get('identifier', None):
-                syntax = common.get_assign_syntax(view, name, region, is_selected)
+                syntax = common.get_assigned_syntax(view, name, region, is_selected)
                 if not syntax:
                     common.prompt_error('Syntax out of the scope.', 'ID:' + name)
                 else:

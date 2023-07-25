@@ -43,7 +43,7 @@ class HtmlminifierFormatter:
         if config:
             cmd.extend(['--config-file', config])
 
-        ext = common.get_assign_syntax(self.view, self.identifier, self.region, self.is_selected)
+        ext = common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
         cmd.extend(['--file-ext', ext])
 
         return cmd
