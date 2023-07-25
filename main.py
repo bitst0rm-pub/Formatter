@@ -206,6 +206,7 @@ class CloneView(sublime_plugin.TextCommand):
 class RunFormatEventListener(sublime_plugin.EventListener):
     @classmethod
     def on_pre_save_async(cls, view):
+        used = []
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
@@ -223,6 +224,7 @@ class RunFormatEventListener(sublime_plugin.EventListener):
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
                 log.debug('format_on_save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
+                break if syntax in used else used.append(syntax)
 
     @classmethod
     def on_post_save_async(cls, view):
