@@ -156,7 +156,7 @@ def setup_shared_config():
                             f.write(res)
                         log.debug('Setup shared master config: %s', master_path)
                 except Exception as e:
-                    log.warning('Could not setup shared master config: %s %s', master_path, e)
+                    log.warning('Could not setup shared master config: %s\n%s', master_path, e)
             else:
                 try:
                     res = sublime.load_binary_resource(resource)
@@ -164,7 +164,7 @@ def setup_shared_config():
                         f.write(res)
                     log.debug('Setup shared config: %s', path)
                 except Exception as e:
-                    log.warning('Could not setup shared config: %s %s', path, e)
+                    log.warning('Could not setup shared config: %s\n%s', path, e)
     return True
 
 def md5(fname):
