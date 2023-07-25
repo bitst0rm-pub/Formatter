@@ -79,7 +79,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 
 There are 3 ways to install Formatter:
 
-- **With the Package Control plugin:** The easiest way to install `Formatter` is through [Package Control](https://packagecontrol.io/).
+- **With the Package Control plugin:** The easiest way to install `Formatter` is through [Package Control](https://packagecontrol.io/packages/Formatter).
 
 > Once you install Package Control, restart Sublime Text and bring up the Command Palette (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on MacOSX, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on Linux/Windows). Select "Package Control: Install Package", wait while Package Control fetches the latest package list, then select `Formatter` when the list appears. The advantage of using this method is that Package Control will automatically keep Formatter up to date with the latest version.
 
@@ -101,7 +101,7 @@ The `Packages` directory is located differently in:
 Formatter stores config files in 2 different locations:
 
 - Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
-Note: Do **not** use config files with suffix `.master.`. This is the latest reference files and will be updated with any package updates.
+Note: Do **not** use config files with suffix `.master.`. This is the latest reference files and will be updated by any package updates.
 
         Sublime Text > Packages > User > formatter.assets > config
 
