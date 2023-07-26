@@ -112,7 +112,7 @@ class FormatThread(threading.Thread):
                         self.print_status(is_success)
 
                 if True in self.cycles:
-                    self.new_file_on_format()
+                    self.new_file_on_format(self.kwargs.get('identifier', None))
                 else:
                     self.open_console_on_failure()
         except Exception as e:
@@ -142,18 +142,16 @@ class FormatThread(threading.Thread):
         if common.config.get('open_console_on_failure'):
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
-    def new_file_on_format(self):
-        formatters = common.config.get('formatters')
-        for key, value in formatters.items():
-            suffix = value.get('new_file_on_format', False)
-            if suffix and isinstance(suffix, str):
-                file_path = self.view.file_name()
-                if file_path and common.isfile(file_path):
-                    new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,))
-                    self.view.run_command('clone_view', {'path': new_path})
-                else:
-                    self.view.run_command('clone_view', {'path': None})
-                sublime.set_timeout(self.undo_history, 1500)
+    def new_file_on_format(self, identifier):
+        suffix = common.config.get('formatters', {}).get(identifier,{}).get('new_file_on_format', False)
+        if suffix and isinstance(suffix, str):
+            file_path = self.view.file_name()
+            if file_path and common.isfile(file_path):
+                new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,))
+                self.view.run_command('clone_view', {'path': new_path})
+            else:
+                self.view.run_command('clone_view', {'path': None})
+            sublime.set_timeout(self.undo_history, 1500)
 
     def undo_history(self):
         c = self.cycles.count(True)
@@ -212,6 +210,7 @@ class CloneView(sublime_plugin.TextCommand):
             self.save_clone(view, path)
         else:
             view.set_scratch(False)
+            log.debug('Cloned view cannot be saved as file.')
         self.show_status_on_new_file(view)
 
     def save_clone(self, view, path):
@@ -250,9 +249,7 @@ class Listener(sublime_plugin.EventListener):
                         continue
                     regio = region
             syntax = common.get_assigned_syntax(view, key, regio, is_selected)
-            if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
-                if syntax in used:
-                    break
+            if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
                 log.debug('format_on_save for Formatter ID: %s, using syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
                 used.append(syntax)
