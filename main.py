@@ -12,6 +12,7 @@
 
 import threading
 import logging
+import traceback
 from pprint import pformat
 import sublime
 import sublime_plugin
@@ -54,9 +55,9 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
         _unused = edit
-        log.debug('Starting a new thread ...')
-        runformat_thread = RunFormatThread(self, **kwargs)
-        runformat_thread.start()
+        log.debug('Starting a new main thread ...')
+        format_thread = FormatThread(self, **kwargs)
+        format_thread.start()
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
@@ -69,7 +70,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         return not is_disabled
 
 
-class RunFormatThread(threading.Thread):
+class FormatThread(threading.Thread):
     def __init__(self, cmd, **kwargs):
         self.view = cmd.view
         self.kwargs = kwargs
@@ -85,29 +86,37 @@ class RunFormatThread(threading.Thread):
             with self.lock:
                 formatter = Formatter(self.view)
                 is_selected = self.has_selection()
+
                 if not is_selected:
-                    # Format entire file
+                    # Format entire file using separate threads
                     region = sublime.Region(0, self.view.size())
                     text = self.view.substr(region)
                     is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
                     self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
-                    # Format selections
+                    # Format selections in parallel using separate threads
+                    threads = []
                     for region in self.view.sel():
                         if region.empty():
                             continue
-                        text = self.view.substr(region)
-                        is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
+                        log.debug('Starting a new selection thread ...')
+                        thread = SelectionFormatThread(self.view, formatter, region, is_selected, **self.kwargs)
+                        threads.append(thread)
+                        thread.start()
+
+                    for thread in threads:
+                        thread.join()
+                        is_success = thread.is_success
                         self.cycles.append(is_success)
                         self.print_status(is_success)
+
                 if True in self.cycles:
                     self.new_file_on_format()
                 else:
                     self.open_console_on_failure()
-        except Exception as error:
-            import traceback
-            log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
+        except Exception as e:
+            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
     def has_selection(self):
         return any(not sel.empty() for sel in self.view.sel())
@@ -115,7 +124,7 @@ class RunFormatThread(threading.Thread):
     @classmethod
     def print_environ(cls):
         if common.config.get('debug'):
-            log.debug('Environment: %s', pformat(common.update_environ()))
+            log.debug('System environments:\n%s', pformat(common.update_environ()))
 
     def print_status(self, is_success):
         if is_success:
@@ -156,6 +165,26 @@ class RunFormatThread(threading.Thread):
             if attempts > 1000:
                 log.warning('Seems like undo cycle is endless.')
                 raise Exception()
+
+
+class SelectionFormatThread(threading.Thread):
+    def __init__(self, view, formatter, region, is_selected, **kwargs):
+        self.view = view
+        self.formatter = formatter
+        self.region = region
+        self.is_selected = is_selected
+        self.kwargs = kwargs
+        self.is_success = False
+        threading.Thread.__init__(self)
+        self.lock = threading.Lock()
+
+    def run(self):
+        try:
+            with self.lock:
+                text = self.view.substr(self.region)
+                self.is_success = self.formatter.run_formatter(self.view, text, self.region, self.is_selected, **self.kwargs)
+        except Exception as e:
+            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
 
 class SubstituteCommand(sublime_plugin.TextCommand):
@@ -203,7 +232,7 @@ class CloneView(sublime_plugin.TextCommand):
                 view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
 
-class RunFormatEventListener(sublime_plugin.EventListener):
+class Listener(sublime_plugin.EventListener):
     @classmethod
     def on_pre_save_async(cls, view):
         used = []
@@ -224,7 +253,7 @@ class RunFormatEventListener(sublime_plugin.EventListener):
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []):
                 if syntax in used:
                     break
-                log.debug('format_on_save applied to Formatter ID: %s, with assigned syntax: %s', key, syntax)
+                log.debug('format_on_save for Formatter ID: %s, using syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
                 used.append(syntax)
 
