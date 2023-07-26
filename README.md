@@ -193,7 +193,7 @@ The following settings example should give you direction on how to setup Formatt
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
             // Do not use the reference files with suffix '.master.' directly.
-            // These files could be updated by any release updates.
+            // These files could be overwritten by any release updates.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",

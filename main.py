@@ -210,7 +210,7 @@ class CloneView(sublime_plugin.TextCommand):
             self.save_clone(view, path)
         else:
             view.set_scratch(False)
-            log.debug('Cloned view cannot be saved as file.')
+            log.debug('View cannot be saved as file.')
         self.show_status_on_new_file(view)
 
     def save_clone(self, view, path):
