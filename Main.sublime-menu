@@ -208,7 +208,7 @@
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/Formatter/Formatter.sublime-settings",
-                                    "default": "// Do NOT edit anything in the left-hand pane.\n// Copy the whole tree from there to here.\n{\n\t$0\n}\n"
+                                    "default": "// Do NOT edit anything in the left-hand pane.\n// Pick up things you need there, but ensure to remain the structure.\n{\n\t$0\n}\n"
                                 }
                             },
                             {
