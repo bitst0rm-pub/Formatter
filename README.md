@@ -36,7 +36,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 **Plugins that work with Formatter:**
 
 Note: This list does not contain the complete languages that each plugin does support.
-For example, Pretty Diff supports 45 languages, that would blow up the frame of the list here.<br/>
+For example, Pretty Diff supports 45 languages, that would blow up the frame of this list here.<br/>
 `build-in` plugins are integrated plugins that do not need to install by end-users.
 
 | Languages | Beautify | Minify | Requirements | Config-Online |
@@ -101,7 +101,7 @@ The `Packages` directory is located differently in:
 Formatter stores config files in 2 different locations:
 
 - Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
-Note: Do **not** use config files with suffix `.master.`. This is the latest reference files and will be updated by any package updates.
+Note: Do **not** use config files with suffix `.master.` This is the latest reference files and will be updated by any package updates.
 
         Sublime Text > Packages > User > formatter.assets > config
 
@@ -293,7 +293,7 @@ Formatting actions can be triggered in different ways:
 
 ## Troubleshooting
 
-If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can arise from upstream plugins, from your transcoding codebase also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
+If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can arise from upstream plugins, from your transcoding codebase, also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
 
 
 ## Todo:
