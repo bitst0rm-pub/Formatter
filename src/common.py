@@ -23,7 +23,7 @@ import sublime
 
 log = logging.getLogger('root')
 IS_WINDOWS = sublime.platform() == 'windows'
-VERSION = '0.1.12'
+VERSION = '0.1.13'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 STATUS_KEY = '@!' + PLUGIN_NAME.lower()
