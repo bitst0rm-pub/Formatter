@@ -193,7 +193,7 @@ class SubstituteCommand(sublime_plugin.TextCommand):
 
 class CloneView(sublime_plugin.TextCommand):
     def run(self, edit, path):
-        view = sublime.active_window().new_file()
+        view = self.view.window().new_file()
         view.insert(edit, 0, self.view.substr(sublime.Region(0, self.view.size())))
         view.set_syntax_file(self.view.settings().get('syntax'))
 
