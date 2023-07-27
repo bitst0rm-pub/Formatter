@@ -209,6 +209,14 @@ def query(dct, *keys):
             return None
     return dct
 
+def is_text_file(file):
+    try:
+        with open(file, 'r', encoding='utf-8') as f:
+            _ = f.readlines(1)
+        return True
+    except UnicodeDecodeError:
+        return False
+
 def expand_path(path):
     if path and isinstance(path, str):
         variables = sublime.active_window().extract_variables()
