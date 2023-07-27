@@ -177,13 +177,12 @@ def md5(fname):
 def get_pathinfo(path):
     # Fallback to ${HOME} for unsaved buffer
     cwd = expanduser('~')
-    base = None
-    root = None
-    ext = None
+    base = stem = suffix = ext = None
     if path:
         cwd, base = split(path)
-        root, ext = splitext(base)
-    return (path, cwd, base, root, ext)
+        stem, suffix = splitext(base)
+        ext = suffix[1:]
+    return (path, cwd, base, stem, suffix, ext)
 
 def exec_cmd(cmd, cwd):
     info = None
