@@ -256,7 +256,6 @@ class OpenNextFileCommand(sublime_plugin.TextCommand):
         view = self.view.window().open_file(RECURSIVE_TARGET['target_filelist'][index])
         # open_file() is asynchronous. Use EventListener on_load() to catch
         # the returned view when the file is finished loading.
-        # https://forum.sublimetext.com/t/view-object-returned-by-window-open-file-solved/3461
         if not view.is_loading():
             next_sequence(view)
         else:
