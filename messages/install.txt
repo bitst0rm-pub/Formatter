@@ -1,6 +1,8 @@
-✨✨✨ =====✨=====✨=====✨===== ✨✨✨
-🎉😃🍰     Welcome to Formatter    🍰😃🎉
-✨✨✨ =====✨=====✨=====✨===== ✨✨✨
+                        ✨✨✨ =====✨=====✨=====✨===== ✨✨✨
+                        🎉😃🍰     Welcome to Formatter    🍰😃🎉
+                        ✨✨✨ =====✨=====✨=====✨===== ✨✨✨
 
-Check out the README.md for guides and more:
-https://github.com/bitst0rm-pub/Formatter
+                Did you know that Formatter can now format folders recursively?
+
+                        Check out the README.md for guides and more:
+                        https://github.com/bitst0rm-pub/Formatter
