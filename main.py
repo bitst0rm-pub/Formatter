@@ -211,7 +211,8 @@ class SubstituteCommand(sublime_plugin.TextCommand):
 
 
 class CloneView(sublime_plugin.TextCommand):
-    def run(self, edit, path):
+    def run(self, edit, **kwargs):
+        path = kwargs.get('path', None)
         view = self.view.window().new_file()
         view.insert(edit, 0, self.view.substr(sublime.Region(0, self.view.size())))
         view.assign_syntax(self.view.settings().get('syntax', None))
@@ -344,7 +345,7 @@ def post_recursive_format(view, is_success):
         common.os.makedirs(cwd, exist_ok=True)
         region = sublime.Region(0, view.size())
         text = view.substr(region)
-        with open(new_file_path, 'w+', encoding='utf-8') as f:
+        with open(new_file_path, 'w', encoding='utf-8') as f:
             f.write(text)
     except OSError as e:
         if e.errno != common.os.errno.EEXIST:

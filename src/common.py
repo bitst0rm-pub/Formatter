@@ -205,7 +205,6 @@ def exec_cmd(cmd, cwd):
 def query(data_dict, default=None, *keys):
     for key in keys:
         if not isinstance(data_dict, dict):
-            log.error('%s is not of type dict. Key %s cannot be accessed from %s', data_dict, key, keys)
             return default
         data_dict = data_dict.get(key, default)
     return data_dict
