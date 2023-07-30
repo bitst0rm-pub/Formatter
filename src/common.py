@@ -22,10 +22,13 @@ import logging
 import sublime
 
 log = logging.getLogger('root')
+
 IS_WINDOWS = sublime.platform() == 'windows'
 VERSION = '0.1.13'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
+RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
+RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
 STATUS_KEY = '@!' + PLUGIN_NAME.lower()
 
 LOAD_ORDER = [
@@ -208,13 +211,28 @@ def query(dct, *keys):
             return None
     return dct
 
-def is_text_file(file):
+def is_text_file(file_path):
     try:
-        with open(file, 'r', encoding='utf-8') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             _ = f.readlines(1)
         return True
     except UnicodeDecodeError:
         return False
+
+def get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
+    text_files = []
+    for root, dirs, files in os.walk(dir):
+        dirs[:] = [d for d in dirs if not any(re.match(pattern, d) for pattern in exclude_dirs_regex) and d != RECURSIVE_SUCCESS_DIRECTORY and d != RECURSIVE_FAILURE_DIRECTORY]
+        for file in files:
+            p = get_pathinfo(file)
+            if p[5] in exclude_extensions or not p[5] and p[2] == p[3] and p[3] in exclude_extensions:
+                continue
+            if any(re.match(pattern, file) for pattern in exclude_files_regex):
+                continue
+            file_path = join(root, file)
+            if is_text_file(file_path):
+                text_files.append(file_path)
+    return text_files
 
 def expand_path(path):
     if path and isinstance(path, str):

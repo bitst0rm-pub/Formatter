@@ -6,6 +6,7 @@ Features:
 
 - Support for more than 20 major programming languages
 - Ability to format entire file, single or multi selections
+- Ability to format entire folder recursively
 - Config files available for each 3rd-party plugin
 - Offline functionality
 
@@ -174,17 +175,43 @@ The following settings example should give you direction on how to setup Formatt
             // myfile.raw.js -> myfile.raw.min.js
             "new_file_on_format": false,
 
+            // Recursively format the entire folder with unlimited depth. [type: dict{str:(bool|list[str])}]
+            // This option requires an existing and currently opened file
+            // to serve as the starting point.
+            // For the sake of convenience, two new folders will be created at
+            // the same level as the file, which will contain all failed and
+            // successfully formatted files. The "new_file_on_format" option
+            // might be useful for renaming if needed.
+            // The "format_on_save" option above, which applies only to
+            // single files, does not take effect here.
+            // All none-text files (binary) will be automatically ignored.
+            // Note: Placing files directly on the Desktop or elsewhere without
+            // enclosing them within a folder can lead to accidental formatting.
+            // Any literal "$" must be escaped to "\\$" to distinguish it from
+            // the variable expansion "${...}". This important rule applies
+            // to the entire content of this settings file!
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
+                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
+                "exclude_syntaxes": []
+            },
+
             // Syntax support based on the scope name, not file extension; [type: list[str]]
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
-            // End-users should consult plugin documentation to add more supported syntaxes.
+            // End-users are advised to consult plugin documentation to add more syntaxes.
             "syntaxes": ["css", "js", "php"],
 
             // Path to the plugin executable to be used; [type: str]
-            // System variable expansion like ${HOME} also Sublime Text
+            // System variable expansions like ${HOME} and Sublime Text specific
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
             // https://www.sublimetext.com/docs/build_systems.html#variables
-            "executable_path": "${HOME}/example/path/to/php-cs-fixer.phar",
+            // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
+            // it from the variable expansion "${...}". This important rule applies
+            // to the entire content of this settings file!
+            "executable_path": "${HOME}/example/path/to\\$my/php-cs-fixer.phar",
 
             // Path to the config file for each individual syntaxes; [type: dict{str:str}]
             // Syntax keys must match those in the "syntaxes" option above.
@@ -209,6 +236,8 @@ The following settings example should give you direction on how to setup Formatt
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
             // Use "args" option above to add, this option to remove or manipulate.
+            // Using regex: Again, any literal "$" must be escaped to "\\$" to
+            // distinguish it from the variable expansion "${...}". Accepted args:
             // [search, [replace, [index, count, new position]]], where:
             // - search: type:str (regex)
             // - replace: type:str
@@ -217,8 +246,8 @@ The following settings example should give you direction on how to setup Formatt
             // - position: type:int (move old index pos. to new/old one, -1 = delete index); required!
             "fix_commands": [
                 ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change
-                ["^.*?auto.*$", "--with", 4, 1, 5], // using regex, move index 4 to pos 5
-                ["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion
+                ["^.*?auto.*\\$", "--with", 4, 1, 5], // using escaped "\\$" regex, move index 4 to pos 5
+                ["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion, no escaped "$"
                 ["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7
                 [3, 0 , 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
                 [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
@@ -229,6 +258,13 @@ The following settings example should give you direction on how to setup Formatt
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
+                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
+                "exclude_syntaxes": []
+            },
             "syntaxes": ["bash"],
             "executable_path": "${packages}/User/MyFolder/python/bin/beautysh",
             "config_path": {
@@ -239,6 +275,13 @@ The following settings example should give you direction on how to setup Formatt
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
+                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
+                "exclude_syntaxes": []
+            },
             "syntaxes": ["html", "xml"],
             "executable_path": "${packages}/User/formatter.assets/bin/tidy",
             "config_path": {
@@ -250,6 +293,13 @@ The following settings example should give you direction on how to setup Formatt
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
+                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
+                "exclude_syntaxes": []
+            },
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
             "executable_path": "${packages}/User/MyFolder/javascript/node_modules/.bin/stylelint",
             "args": ["--config-basedir", "/path/to/javascript/node_modules"],
@@ -261,6 +311,13 @@ The following settings example should give you direction on how to setup Formatt
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
+                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
+                "exclude_syntaxes": []
+            },
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
             "executable_path": "${HOME}/path/to/bin/uncrustify",
             "config_path": {

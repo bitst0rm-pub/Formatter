@@ -21,6 +21,17 @@ from .src.formatter import Formatter
 
 log = logging.getLogger('root')
 
+RECURSIVE_TARGET = {
+    'target_view': None,
+    'target_kwargs': None,
+    'target_cwd': None,
+    'target_filelist': [],
+    'target_filelist_length': 0,
+    'target_current_index': 0,
+    'target_success': 0,
+    'target_failure': 0
+}
+
 
 def plugin_loaded():
     common.get_config()
@@ -55,9 +66,22 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
         _unused = edit
-        log.debug('Starting a new main thread ...')
-        format_thread = FormatThread(self, **kwargs)
-        format_thread.start()
+        identifier = kwargs.get('identifier', None)
+
+        if common.config.get('formatters', {}).get(identifier, {}).get('recursive_folder_format', {}).get('enable', False):
+            if self.view.file_name():
+                if self.view.is_dirty():
+                    common.prompt_error('Error: File is dirty. Please save it first before performing recursive folder formatting.')
+                else:
+                    log.debug('Starting a new main thread for recursive folder formattting ...')
+                    recursive_format_thread = RecursiveFormatThread(self.view, **kwargs)
+                    recursive_format_thread.start()
+            else:
+                common.prompt_error('Error: Failed due to unsaved view. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
+        else:
+            log.debug('Starting a new main thread for single file formatting ...')
+            format_thread = FormatThread(self.view, **kwargs)
+            format_thread.start()
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
@@ -71,8 +95,8 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
 
 class FormatThread(threading.Thread):
-    def __init__(self, cmd, **kwargs):
-        self.view = cmd.view
+    def __init__(self, view, **kwargs):
+        self.view = view
         self.kwargs = kwargs
         self.success = 0
         self.failure = 0
@@ -81,7 +105,7 @@ class FormatThread(threading.Thread):
         self.lock = threading.Lock()
 
     def run(self):
-        self.print_environ()
+        log.debug('System environments:\n%s', pformat(common.update_environ()))
         try:
             with self.lock:
                 formatter = Formatter(self.view)
@@ -95,12 +119,12 @@ class FormatThread(threading.Thread):
                     self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
-                    # Format selections in parallel using separate threads
+                    # Format selections using separate threads
                     threads = []
                     for region in self.view.sel():
                         if region.empty():
                             continue
-                        log.debug('Starting a new selection thread ...')
+                        log.debug('Starting a new thread for selections formatting ...')
                         thread = SelectionFormatThread(self.view, formatter, region, is_selected, **self.kwargs)
                         threads.append(thread)
                         thread.start()
@@ -120,11 +144,6 @@ class FormatThread(threading.Thread):
 
     def has_selection(self):
         return any(not sel.empty() for sel in self.view.sel())
-
-    @classmethod
-    def print_environ(cls):
-        if common.config.get('debug'):
-            log.debug('System environments:\n%s', pformat(common.update_environ()))
 
     def print_status(self, is_success):
         if is_success:
@@ -231,7 +250,158 @@ class CloneView(sublime_plugin.TextCommand):
                 view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
 
-class Listener(sublime_plugin.EventListener):
+class OpenNextFileCommand(sublime_plugin.TextCommand):
+    def run(self, edit, **kwargs):
+        index = kwargs.get('index', None)
+        view = self.view.window().open_file(RECURSIVE_TARGET['target_filelist'][index])
+        # open_file() is asynchronous. Use EventListener on_load() to catch
+        # the returned view when the file is finished loading.
+        # https://forum.sublimetext.com/t/view-object-returned-by-window-open-file-solved/3461
+        if not view.is_loading():
+            next_sequence(view)
+        else:
+            RECURSIVE_TARGET['target_view'] = view
+
+
+class RecursiveFormatThread(threading.Thread):
+    def __init__(self, view, **kwargs):
+        self.view = view
+        self.kwargs = kwargs
+        threading.Thread.__init__(self)
+        self.lock = threading.Lock()
+
+    def run(self):
+        log.debug('System environments:\n%s', pformat(common.update_environ()))
+        try:
+            with self.lock:
+                target_cwd = common.get_pathinfo(self.view.file_name())[1]
+                identifier = self.kwargs.get('identifier', None)
+                x = common.config.get('formatters', {}).get(identifier, {}).get('recursive_folder_format', {})
+                exclude_dirs_regex = x.get('exclude_folders_regex', [])
+                exclude_files_regex = x.get('exclude_files_regex', [])
+                exclude_extensions = x.get('exclude_extensions', [])
+                target_filelist = common.get_recursive_filelist(target_cwd, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
+
+                RECURSIVE_TARGET['target_kwargs'] = self.kwargs
+                RECURSIVE_TARGET['target_cwd'] = target_cwd
+                RECURSIVE_TARGET['target_filelist'] = target_filelist
+                RECURSIVE_TARGET['target_filelist_length'] = len(target_filelist)
+                RECURSIVE_TARGET['target_current_index'] = 1
+                self.view.run_command('open_next_file', {'index': 0})
+        except Exception as e:
+            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+
+
+class SequenceFormatThread(threading.Thread):
+    def __init__(self, view, callback, **kwargs):
+        self.view = view
+        self.callback = callback
+        self.kwargs = kwargs
+        self.is_success = False
+        threading.Thread.__init__(self)
+        self.lock = threading.Lock()
+
+    def run(self):
+        try:
+            with self.lock:
+                region = sublime.Region(0, self.view.size())
+                identifier = self.kwargs.get('identifier', None)
+                syntax = common.get_assigned_syntax(self.view, identifier, region, False)
+                exclude_syntaxes = common.config.get('formatters', {}).get(identifier, {}).get('recursive_folder_format', {}).get('exclude_syntaxes', [])
+                if not syntax or syntax in exclude_syntaxes:
+                    if not syntax:
+                        scope = common.config.get('formatters', {}).get(identifier, {}).get('syntaxes', [])
+                        log.warning('Syntax out of the scope. Plugin scope: %s, ID: %s, File syntax: %s, File: %s', scope, identifier, syntax, self.view.file_name())
+                    self.callback(False)
+                else:
+                    formatter = Formatter(self.view)
+                    text = self.view.substr(region)
+                    self.is_success = formatter.run_formatter(self.view, text, region, False, **self.kwargs)
+                    self.callback(self.is_success)
+        except Exception as e:
+            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+
+
+def post_recursive_format(view, is_success):
+    if is_success:
+        new_target_cwd = common.join(RECURSIVE_TARGET['target_cwd'], common.RECURSIVE_SUCCESS_DIRECTORY)
+        RECURSIVE_TARGET['target_success'] += 1
+        log.debug('Formatting successful. 🎉😃🍰')
+    else:
+        new_target_cwd = common.join(RECURSIVE_TARGET['target_cwd'], common.RECURSIVE_FAILURE_DIRECTORY)
+        RECURSIVE_TARGET['target_failure'] += 1
+        log.debug('Formatting failed. 💔😢💔')
+
+    file_path = RECURSIVE_TARGET['target_filelist'][RECURSIVE_TARGET['target_current_index'] - 1]
+    new_file_path = file_path.replace(RECURSIVE_TARGET['target_cwd'], new_target_cwd, 1)
+
+    identifier = RECURSIVE_TARGET['target_kwargs'].get('identifier', None)
+    suffix = common.config.get('formatters', {}).get(identifier,{}).get('new_file_on_format', False)
+    if suffix and isinstance(suffix, str) and is_success:
+        new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
+
+    cwd = common.get_pathinfo(new_file_path)[1]
+    try:
+        common.os.makedirs(cwd, exist_ok=True)
+        region = sublime.Region(0, view.size())
+        text = view.substr(region)
+        with open(new_file_path, 'w+', encoding='utf-8') as f:
+            f.write(text)
+    except OSError as e:
+        if e.errno != common.os.errno.EEXIST:
+            log.error('Could not create directory: %s', cwd)
+            common.prompt_error('Error: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
+        else:
+            log.error('Could not save file: %s', new_file_path)
+            common.prompt_error('Error: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', new_file_path)
+
+        view.set_scratch(True)
+        view.close()
+        common.sys.exit(1)
+
+
+def next_sequence(view):
+    def format_completed(is_success):
+        post_recursive_format(view, is_success)
+
+        if RECURSIVE_TARGET['target_current_index'] < RECURSIVE_TARGET['target_filelist_length']:
+            view.run_command('open_next_file', {'index': RECURSIVE_TARGET['target_current_index']})
+            RECURSIVE_TARGET['target_current_index'] += 1
+
+            view.set_scratch(True)
+            view.close()
+        else:
+            view.set_scratch(True)
+            view.close()
+
+            if common.config.get('show_statusbar'):
+                current_view = sublime.active_window().active_view()
+                current_view.window().set_status_bar_visible(True)
+                current_view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [total:' + str(RECURSIVE_TARGET['target_filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['target_success']) + '|ko:' + str(RECURSIVE_TARGET['target_failure']) + ']')
+
+            if common.config.get('open_console_on_failure'):
+                current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
+
+            sublime.message_dialog('Formatting completed!\n\nPlease check for the results:\n%s' % RECURSIVE_TARGET['target_cwd'])
+            RECURSIVE_TARGET['target_view'] = None
+            RECURSIVE_TARGET['target_kwargs'] = None
+            RECURSIVE_TARGET['target_cwd'] = None
+            RECURSIVE_TARGET['target_filelist'] = []
+            RECURSIVE_TARGET['target_filelist_length'] = 0
+            RECURSIVE_TARGET['target_current_index'] = 0
+            RECURSIVE_TARGET['target_success'] = 0
+            RECURSIVE_TARGET['target_failure'] = 0
+            # Reset and end
+
+    thread = SequenceFormatThread(view, callback=format_completed, **RECURSIVE_TARGET['target_kwargs'])
+    thread.start()
+
+
+class Listeners(sublime_plugin.EventListener):
+    def on_load(self, view):
+        if view == RECURSIVE_TARGET['target_view']:
+            next_sequence(view)
+
     @classmethod
     def on_pre_save_async(cls, view):
         used = []
