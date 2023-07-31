@@ -24,7 +24,7 @@ import sublime
 log = logging.getLogger('root')
 
 IS_WINDOWS = sublime.platform() == 'windows'
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 PLUGIN_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
@@ -202,14 +202,12 @@ def exec_cmd(cmd, cwd):
                     env=update_environ(), shell=IS_WINDOWS, startupinfo=info)
     return process
 
-def query(dct, *keys):
+def query(data_dict, default=None, *keys):
     for key in keys:
-        if isinstance(dct, dict):
-            dct = dct.get(key)
-        else:
-            log.error('Key not found for: %s from %s', key, keys)
-            return None
-    return dct
+        if not isinstance(data_dict, dict):
+            return default
+        data_dict = data_dict.get(key, default)
+    return data_dict
 
 def is_text_file(file_path):
     try:
@@ -297,7 +295,7 @@ def get_interpreter_path(fnames):
     return None
 
 def get_executable_path(identifier, fnames):
-    local_file = query(config, 'formatters', identifier, 'executable_path')
+    local_file = query(config, None, 'formatters', identifier, 'executable_path')
     if local_file and not isfile(local_file):
         log.warning('File does not exist: %s', local_file)
     if is_exe(local_file):
@@ -310,7 +308,7 @@ def get_executable_path(identifier, fnames):
     return None
 
 def get_config_path(view, identifier, region, is_selected):
-    shared_config = query(config, 'formatters', identifier, 'config_path')
+    shared_config = query(config, None, 'formatters', identifier, 'config_path')
     if shared_config and isinstance(shared_config, dict):
         syntax = get_assigned_syntax(view, identifier, region, is_selected)
         for key, path in shared_config.items():
@@ -329,7 +327,7 @@ def get_config_path(view, identifier, region, is_selected):
     return None
 
 def get_assigned_syntax(view, identifier, region, is_selected):
-    syntaxes = query(config, 'formatters', identifier, 'syntaxes')
+    syntaxes = query(config, None, 'formatters', identifier, 'syntaxes')
     if syntaxes and isinstance(syntaxes, list):
         syntaxes = list(map(str.lower, filter(None, syntaxes)))
         scopes = view.scope_name(0 if not is_selected else region.a).strip().lower().split(' ')
@@ -356,13 +354,13 @@ def get_assigned_syntax(view, identifier, region, is_selected):
     return None
 
 def get_args(identifier):
-    args = query(config, 'formatters', identifier, 'args')
+    args = query(config, None, 'formatters', identifier, 'args')
     if args and isinstance(args, list):
         return map(str, args)
     return None
 
 def set_fix_cmds(cmd, identifier):
-    fix_cmds = query(config, 'formatters', identifier, 'fix_commands')
+    fix_cmds = query(config, None, 'formatters', identifier, 'fix_commands')
     if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
         for x in fix_cmds:
             if isinstance(x, list):

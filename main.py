@@ -68,7 +68,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         _unused = edit
         identifier = kwargs.get('identifier', None)
 
-        if common.config.get('formatters', {}).get(identifier, {}).get('recursive_folder_format', {}).get('enable', False):
+        if common.query(common.config, False, 'formatters', identifier, 'recursive_folder_format', 'enable'):
             if self.view.file_name():
                 if self.view.is_dirty():
                     common.prompt_error('Error: File is dirty. Please save it first before performing recursive folder formatting.')
@@ -90,7 +90,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
     def is_visible(cls, **kwargs):
         log.disabled = not common.config.get('debug')
         identifier = kwargs.get('identifier', None)
-        is_disabled = common.config.get('formatters', {}).get(identifier, {}).get('disable', True)
+        is_disabled = common.query(common.config, True, 'formatters', identifier, 'disable')
         return not is_disabled
 
 
@@ -112,30 +112,26 @@ class FormatThread(threading.Thread):
                 is_selected = self.has_selection()
 
                 if not is_selected:
-                    # Format entire file using separate threads
+                    # Format entire file using the main thread
                     region = sublime.Region(0, self.view.size())
                     text = self.view.substr(region)
                     is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
                     self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
-                    # Format selections using separate threads
-                    threads = []
+                    # Format selections using separate threads sequentially
                     for region in self.view.sel():
                         if region.empty():
                             continue
                         log.debug('Starting a new thread for selections formatting ...')
                         thread = SelectionFormatThread(self.view, formatter, region, is_selected, **self.kwargs)
-                        threads.append(thread)
                         thread.start()
-
-                    for thread in threads:
                         thread.join()
                         is_success = thread.is_success
                         self.cycles.append(is_success)
                         self.print_status(is_success)
 
-                if True in self.cycles:
+                if any(self.cycles):
                     self.new_file_on_format(self.kwargs.get('identifier', None))
                 else:
                     self.open_console_on_failure()
@@ -162,7 +158,7 @@ class FormatThread(threading.Thread):
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def new_file_on_format(self, identifier):
-        suffix = common.config.get('formatters', {}).get(identifier,{}).get('new_file_on_format', False)
+        suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
         if suffix and isinstance(suffix, str):
             file_path = self.view.file_name()
             if file_path and common.isfile(file_path):
@@ -211,10 +207,11 @@ class SubstituteCommand(sublime_plugin.TextCommand):
 
 
 class CloneView(sublime_plugin.TextCommand):
-    def run(self, edit, path):
+    def run(self, edit, **kwargs):
+        path = kwargs.get('path', None)
         view = self.view.window().new_file()
         view.insert(edit, 0, self.view.substr(sublime.Region(0, self.view.size())))
-        view.set_syntax_file(self.view.settings().get('syntax'))
+        view.assign_syntax(self.view.settings().get('syntax', None))
 
         selections = []
         for selection in self.view.sel():
@@ -275,7 +272,7 @@ class RecursiveFormatThread(threading.Thread):
             with self.lock:
                 target_cwd = common.get_pathinfo(self.view.file_name())[1]
                 identifier = self.kwargs.get('identifier', None)
-                x = common.config.get('formatters', {}).get(identifier, {}).get('recursive_folder_format', {})
+                x = common.query(common.config, {}, 'formatters', identifier, 'recursive_folder_format')
                 exclude_dirs_regex = x.get('exclude_folders_regex', [])
                 exclude_files_regex = x.get('exclude_files_regex', [])
                 exclude_extensions = x.get('exclude_extensions', [])
@@ -306,10 +303,10 @@ class SequenceFormatThread(threading.Thread):
                 region = sublime.Region(0, self.view.size())
                 identifier = self.kwargs.get('identifier', None)
                 syntax = common.get_assigned_syntax(self.view, identifier, region, False)
-                exclude_syntaxes = common.config.get('formatters', {}).get(identifier, {}).get('recursive_folder_format', {}).get('exclude_syntaxes', [])
+                exclude_syntaxes = common.query(common.config, [], 'formatters', identifier, 'recursive_folder_format', 'exclude_syntaxes')
                 if not syntax or syntax in exclude_syntaxes:
                     if not syntax:
-                        scope = common.config.get('formatters', {}).get(identifier, {}).get('syntaxes', [])
+                        scope = common.query(common.config, [], 'formatters', identifier, 'syntaxes')
                         log.warning('Syntax out of the scope. Plugin scope: %s, ID: %s, File syntax: %s, File: %s', scope, identifier, syntax, self.view.file_name())
                     self.callback(False)
                 else:
@@ -335,7 +332,7 @@ def post_recursive_format(view, is_success):
     new_file_path = file_path.replace(RECURSIVE_TARGET['target_cwd'], new_target_cwd, 1)
 
     identifier = RECURSIVE_TARGET['target_kwargs'].get('identifier', None)
-    suffix = common.config.get('formatters', {}).get(identifier,{}).get('new_file_on_format', False)
+    suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
     if suffix and isinstance(suffix, str) and is_success:
         new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
 
@@ -344,7 +341,7 @@ def post_recursive_format(view, is_success):
         common.os.makedirs(cwd, exist_ok=True)
         region = sublime.Region(0, view.size())
         text = view.substr(region)
-        with open(new_file_path, 'w+', encoding='utf-8') as f:
+        with open(new_file_path, 'w', encoding='utf-8') as f:
             f.write(text)
     except OSError as e:
         if e.errno != common.os.errno.EEXIST:
@@ -407,17 +404,13 @@ class Listeners(sublime_plugin.EventListener):
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
-            regio = None
             if not is_selected:
                 # entire file
-                regio = sublime.Region(0, view.size())
+                region = sublime.Region(0, view.size())
             else:
-                # selections
-                for region in view.sel():
-                    if region.empty():
-                        continue
-                    regio = region
-            syntax = common.get_assigned_syntax(view, key, regio, is_selected)
+                # selections find the first non-empty region or use the first region if all are empty
+                region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
+            syntax = common.get_assigned_syntax(view, key, region, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
                 log.debug('format_on_save for Formatter ID: %s, using syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
