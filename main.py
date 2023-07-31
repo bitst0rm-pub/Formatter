@@ -404,17 +404,13 @@ class Listeners(sublime_plugin.EventListener):
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
-            regio = None
             if not is_selected:
                 # entire file
-                regio = sublime.Region(0, view.size())
+                region = sublime.Region(0, view.size())
             else:
-                # selections
-                for region in view.sel():
-                    if region.empty():
-                        continue
-                    regio = region
-            syntax = common.get_assigned_syntax(view, key, regio, is_selected)
+                # selections find the first non-empty region or use the first region if all are empty
+                region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
+            syntax = common.get_assigned_syntax(view, key, region, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
                 log.debug('format_on_save for Formatter ID: %s, using syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
