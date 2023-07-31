@@ -112,30 +112,26 @@ class FormatThread(threading.Thread):
                 is_selected = self.has_selection()
 
                 if not is_selected:
-                    # Format entire file using separate threads
+                    # Format entire file using the main thread
                     region = sublime.Region(0, self.view.size())
                     text = self.view.substr(region)
                     is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
                     self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
-                    # Format selections using separate threads
-                    threads = []
+                    # Format selections using separate threads sequentially
                     for region in self.view.sel():
                         if region.empty():
                             continue
                         log.debug('Starting a new thread for selections formatting ...')
                         thread = SelectionFormatThread(self.view, formatter, region, is_selected, **self.kwargs)
-                        threads.append(thread)
                         thread.start()
-
-                    for thread in threads:
                         thread.join()
                         is_success = thread.is_success
                         self.cycles.append(is_success)
                         self.print_status(is_success)
 
-                if True in self.cycles:
+                if any(self.cycles):
                     self.new_file_on_format(self.kwargs.get('identifier', None))
                 else:
                     self.open_console_on_failure()
