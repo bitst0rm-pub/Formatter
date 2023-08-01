@@ -69,8 +69,7 @@ class CleancssFormatter:
 
         return None
 
-    @classmethod
-    def get_config(cls, path):
+    def get_config(self, path):
         # Cleancss CLI does not have an option to
         # read external config file. We build one.
         with open(path, 'r', encoding='utf-8') as file:

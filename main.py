@@ -42,8 +42,7 @@ def plugin_loaded():
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
-    @classmethod
-    def run(cls):
+    def run(self):
         sublime.message_dialog(common.PLUGIN_NAME + '\nVersion: ' + common.VERSION)
 
 
@@ -86,8 +85,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
 
-    @classmethod
-    def is_visible(cls, **kwargs):
+    def is_visible(self, **kwargs):
         log.disabled = not common.config.get('debug')
         identifier = kwargs.get('identifier', None)
         is_disabled = common.query(common.config, True, 'formatters', identifier, 'disable')
@@ -398,8 +396,7 @@ class Listeners(sublime_plugin.EventListener):
         if view == RECURSIVE_TARGET['target_view']:
             next_sequence(view)
 
-    @classmethod
-    def on_pre_save_async(cls, view):
+    def on_pre_save_async(self, view):
         used = []
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
@@ -416,8 +413,7 @@ class Listeners(sublime_plugin.EventListener):
                 view.run_command('run_format', {'identifier': key})
                 used.append(syntax)
 
-    @classmethod
-    def on_post_save_async(cls, view):
+    def on_post_save_async(self, view):
         _unused = view
         if common.config.get('debug'):
             # For debug and development only
