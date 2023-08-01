@@ -18,7 +18,7 @@ log = logging.getLogger('root')
 
 
 class JsonminFormatter:
-    def __init__(self, view, identifier, region, is_selected):
+    def __init__(self, *args, **kwargs):
         pass
 
     def format(self, text):

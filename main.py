@@ -112,12 +112,17 @@ class FormatThread(threading.Thread):
             with self.lock:
                 formatter = Formatter(self.view)
                 is_selected = self.has_selection()
+                self.kwargs['view'] = self.view
+                self.kwargs['formatter'] = formatter
+                self.kwargs['is_selected'] = is_selected
 
                 if not is_selected:
                     # Format entire file using the main thread
                     region = sublime.Region(0, self.view.size())
                     text = self.view.substr(region)
-                    is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
+                    self.kwargs['text'] = text
+                    self.kwargs['region'] = region
+                    is_success = formatter.run_formatter(**self.kwargs)
                     self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
@@ -125,8 +130,9 @@ class FormatThread(threading.Thread):
                     for region in self.view.sel():
                         if region.empty():
                             continue
+                        self.kwargs['region'] = region
                         log.debug('Starting a new thread for selections formatting ...')
-                        thread = SelectionFormatThread(self.view, formatter, region, is_selected, **self.kwargs)
+                        thread = SelectionFormatThread(**self.kwargs)
                         thread.start()
                         thread.join()
                         is_success = thread.is_success
@@ -183,11 +189,10 @@ class FormatThread(threading.Thread):
 
 
 class SelectionFormatThread(threading.Thread):
-    def __init__(self, view, formatter, region, is_selected, **kwargs):
-        self.view = view
-        self.formatter = formatter
-        self.region = region
-        self.is_selected = is_selected
+    def __init__(self, **kwargs):
+        self.view = kwargs.get('view', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.region = kwargs.get('region', None)
         self.kwargs = kwargs
         self.is_success = False
         threading.Thread.__init__(self)
@@ -197,7 +202,8 @@ class SelectionFormatThread(threading.Thread):
         try:
             with self.lock:
                 text = self.view.substr(self.region)
-                self.is_success = self.formatter.run_formatter(self.view, text, self.region, self.is_selected, **self.kwargs)
+                self.kwargs['text'] = text
+                self.is_success = self.formatter.run_formatter(**self.kwargs)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
@@ -314,7 +320,11 @@ class SequenceFormatThread(threading.Thread):
                 else:
                     formatter = Formatter(self.view)
                     text = self.view.substr(region)
-                    self.is_success = formatter.run_formatter(self.view, text, region, False, **self.kwargs)
+                    self.kwargs['view'] = self.view
+                    self.kwargs['text'] = text
+                    self.kwargs['region'] = region
+                    self.kwargs['is_selected'] = False
+                    self.is_success = formatter.run_formatter(**self.kwargs)
                     self.callback(self.is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))

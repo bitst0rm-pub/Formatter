@@ -45,8 +45,14 @@ class Formatter:
     def __init__(self, view):
         pass
 
-    def run_formatter(self, view, text, region, is_selected, **kwargs):
-        if view.is_read_only() or view.window() is None or view.size () == 0:
+    def run_formatter(self, *args, **kwargs):
+        view = kwargs.get('view', None)
+        identifier = kwargs.get('identifier', None)
+        region = kwargs.get('region', None)
+        is_selected = kwargs.get('is_selected', False)
+        text = kwargs.get('text', None)
+
+        if view.is_read_only() or not view.window() or view.size () == 0:
             log.error('View is not formattable.')
             return None
 
@@ -83,7 +89,7 @@ class Formatter:
 
         result = None
         for name, class_ in classmap:
-            if name == kwargs.get('identifier', None):
+            if name == identifier:
                 syntax = common.get_assigned_syntax(view, name, region, is_selected)
                 if not syntax:
                     common.prompt_error('Syntax out of the scope.', 'ID:' + name)
@@ -93,7 +99,7 @@ class Formatter:
                     log.debug('Scope: %s', view.scope_name(0 if not is_selected else region.a))
                     log.debug('Syntax: %s', syntax)
                     log.debug('Formatter ID: %s', name)
-                    worker = class_(view, name, region, is_selected)
+                    worker = class_(*args, **kwargs)
                     result = worker.format(text)
                 break
 

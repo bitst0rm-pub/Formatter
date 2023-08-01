@@ -22,12 +22,12 @@ EXECUTABLE_NAMES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar'
 
 
 class PhpcsfixerFormatter:
-    def __init__(self, view, identifier, region, is_selected):
-        self.view = view
-        self.identifier = identifier
-        self.region = region
-        self.is_selected = is_selected
-        self.pathinfo = common.get_pathinfo(view.file_name())
+    def __init__(self, *args, **kwargs):
+        self.view = kwargs.get('view', None)
+        self.identifier = kwargs.get('identifier', None)
+        self.region = kwargs.get('region', None)
+        self.is_selected = kwargs.get('is_selected', False)
+        self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def is_compat(self):
         try:
