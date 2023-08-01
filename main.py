@@ -13,7 +13,7 @@
 import threading
 import logging
 import traceback
-from pprint import pformat
+import json
 import sublime
 import sublime_plugin
 from .src import common
@@ -107,7 +107,7 @@ class FormatThread(threading.Thread):
         self.lock = threading.Lock()
 
     def run(self):
-        log.debug('System environments:\n%s', pformat(common.update_environ()))
+        log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
             with self.lock:
                 formatter = Formatter(self.view)
@@ -269,7 +269,7 @@ class RecursiveFormatThread(threading.Thread):
         self.lock = threading.Lock()
 
     def run(self):
-        log.debug('System environments:\n%s', pformat(common.update_environ()))
+        log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
             with self.lock:
                 target_cwd = common.get_pathinfo(self.view.file_name())[1]
