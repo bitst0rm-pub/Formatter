@@ -48,16 +48,20 @@ class ShowVersionCommand(sublime_plugin.WindowCommand):
 
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
     def run(self):
+        opened_dirs = set()
+
         configdir = common.expand_path('${packages}/User/' + common.ASSETS_DIRECTORY + '/config')
         if common.isdir(configdir):
             self.window.run_command('open_dir', {'dir': configdir})
+            opened_dirs.add(configdir)
 
         for obj in common.config.get('formatters', {}).values():
             for path in obj.get('config_path', {}).values():
                 if path and isinstance(path, str):
                     dirpath = common.get_pathinfo(path)[1]
-                    if common.isdir(dirpath):
+                    if common.isdir(dirpath) and dirpath not in opened_dirs:
                         self.window.run_command('open_dir', {'dir': dirpath})
+                        opened_dirs.add(dirpath)
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
