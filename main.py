@@ -164,7 +164,7 @@ class FormatThread(threading.Thread):
                 self.view.run_command('clone_view', {'path': new_path})
             else:
                 self.view.run_command('clone_view', {'path': None})
-            sublime.set_timeout(self.undo_history, 1500)
+            sublime.set_timeout(self.undo_history, 500)
 
     def undo_history(self):
         c = self.cycles.count(True)
