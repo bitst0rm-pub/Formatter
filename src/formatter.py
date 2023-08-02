@@ -38,7 +38,7 @@ from .formatter_uncrustify import UncrustifyFormatter
 from .formatter_yapf import YapfFormatter
 from . import common
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 
 class Formatter:

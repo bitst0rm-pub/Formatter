@@ -19,7 +19,7 @@ import sublime_plugin
 from .src import common
 from .src.formatter import Formatter
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 RECURSIVE_TARGET = {
     'target_view': None,

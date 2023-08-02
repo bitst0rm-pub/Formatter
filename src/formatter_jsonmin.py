@@ -14,7 +14,7 @@ import logging
 import json
 import sublime
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 
 class JsonminFormatter:

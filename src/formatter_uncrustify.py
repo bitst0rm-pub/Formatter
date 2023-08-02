@@ -13,7 +13,7 @@
 import logging
 from . import common
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 EXECUTABLE_NAMES = ['uncrustify']
 
 

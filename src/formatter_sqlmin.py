@@ -16,7 +16,7 @@ from . import common
 
 from ..lib3.sqlmin import sqlmin
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 
 class SqlminFormatter:

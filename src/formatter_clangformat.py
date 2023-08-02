@@ -16,7 +16,7 @@ from . import common
 
 from ..lib3 import yaml
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 EXECUTABLE_NAMES = ['clang-format']
 
 

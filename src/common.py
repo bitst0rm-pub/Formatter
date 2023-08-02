@@ -21,7 +21,7 @@ from subprocess import Popen, PIPE
 import logging
 import sublime
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 IS_WINDOWS = sublime.platform() == 'windows'
 VERSION = '1.0.1'

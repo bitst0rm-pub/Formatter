@@ -16,7 +16,7 @@ from . import common
 
 from ..lib3.prettytable import prettytable
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 
 class PrettytableFormatter:

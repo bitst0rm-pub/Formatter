@@ -14,7 +14,7 @@ import logging
 import sublime
 from . import common
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 INTERPRETER_NAMES = ['node']
 EXECUTABLE_NAMES = ['cleancss']
 
