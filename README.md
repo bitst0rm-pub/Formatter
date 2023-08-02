@@ -118,7 +118,7 @@ Do **not** edit the default settings in the left-hand pane. Any modifications th
 
 The following settings example should give you direction on how to setup Formatter:
 
-```
+```jsonc
 {
     // Enable debug mode to view errors in the console; [type: bool]
     "debug": false,
