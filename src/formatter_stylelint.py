@@ -15,18 +15,18 @@ import logging
 import tempfile
 from . import common
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 INTERPRETER_NAMES = ['node']
 EXECUTABLE_NAMES = ['stylelint']
 
 
 class StylelintFormatter:
-    def __init__(self, view, identifier, region, is_selected):
-        self.view = view
-        self.identifier = identifier
-        self.region = region
-        self.is_selected = is_selected
-        self.pathinfo = common.get_pathinfo(view.file_name())
+    def __init__(self, *args, **kwargs):
+        self.view = kwargs.get('view', None)
+        self.identifier = kwargs.get('identifier', None)
+        self.region = kwargs.get('region', None)
+        self.is_selected = kwargs.get('is_selected', False)
+        self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self, text):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)

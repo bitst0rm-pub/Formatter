@@ -13,13 +13,13 @@
 import threading
 import logging
 import traceback
-from pprint import pformat
+import json
 import sublime
 import sublime_plugin
 from .src import common
 from .src.formatter import Formatter
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 RECURSIVE_TARGET = {
     'target_view': None,
@@ -42,23 +42,26 @@ def plugin_loaded():
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
-    @classmethod
-    def run(cls):
+    def run(self):
         sublime.message_dialog(common.PLUGIN_NAME + '\nVersion: ' + common.VERSION)
 
 
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
     def run(self):
+        opened_dirs = set()
+
         configdir = common.expand_path('${packages}/User/' + common.ASSETS_DIRECTORY + '/config')
         if common.isdir(configdir):
             self.window.run_command('open_dir', {'dir': configdir})
+            opened_dirs.add(configdir)
 
         for obj in common.config.get('formatters', {}).values():
             for path in obj.get('config_path', {}).values():
                 if path and isinstance(path, str):
                     dirpath = common.get_pathinfo(path)[1]
-                    if common.isdir(dirpath):
+                    if common.isdir(dirpath) and dirpath not in opened_dirs:
                         self.window.run_command('open_dir', {'dir': dirpath})
+                        opened_dirs.add(dirpath)
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
@@ -86,8 +89,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
 
-    @classmethod
-    def is_visible(cls, **kwargs):
+    def is_visible(self, **kwargs):
         log.disabled = not common.config.get('debug')
         identifier = kwargs.get('identifier', None)
         is_disabled = common.query(common.config, True, 'formatters', identifier, 'disable')
@@ -105,17 +107,22 @@ class FormatThread(threading.Thread):
         self.lock = threading.Lock()
 
     def run(self):
-        log.debug('System environments:\n%s', pformat(common.update_environ()))
+        log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
             with self.lock:
                 formatter = Formatter(self.view)
                 is_selected = self.has_selection()
+                self.kwargs['view'] = self.view
+                self.kwargs['formatter'] = formatter
+                self.kwargs['is_selected'] = is_selected
 
                 if not is_selected:
                     # Format entire file using the main thread
                     region = sublime.Region(0, self.view.size())
                     text = self.view.substr(region)
-                    is_success = formatter.run_formatter(self.view, text, region, is_selected, **self.kwargs)
+                    self.kwargs['text'] = text
+                    self.kwargs['region'] = region
+                    is_success = formatter.run_formatter(**self.kwargs)
                     self.cycles.append(is_success)
                     self.print_status(is_success)
                 else:
@@ -123,8 +130,9 @@ class FormatThread(threading.Thread):
                     for region in self.view.sel():
                         if region.empty():
                             continue
+                        self.kwargs['region'] = region
                         log.debug('Starting a new thread for selections formatting ...')
-                        thread = SelectionFormatThread(self.view, formatter, region, is_selected, **self.kwargs)
+                        thread = SelectionFormatThread(**self.kwargs)
                         thread.start()
                         thread.join()
                         is_success = thread.is_success
@@ -166,7 +174,7 @@ class FormatThread(threading.Thread):
                 self.view.run_command('clone_view', {'path': new_path})
             else:
                 self.view.run_command('clone_view', {'path': None})
-            sublime.set_timeout(self.undo_history, 1500)
+            sublime.set_timeout(self.undo_history, 500)
 
     def undo_history(self):
         c = self.cycles.count(True)
@@ -181,11 +189,10 @@ class FormatThread(threading.Thread):
 
 
 class SelectionFormatThread(threading.Thread):
-    def __init__(self, view, formatter, region, is_selected, **kwargs):
-        self.view = view
-        self.formatter = formatter
-        self.region = region
-        self.is_selected = is_selected
+    def __init__(self, **kwargs):
+        self.view = kwargs.get('view', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.region = kwargs.get('region', None)
         self.kwargs = kwargs
         self.is_success = False
         threading.Thread.__init__(self)
@@ -195,7 +202,8 @@ class SelectionFormatThread(threading.Thread):
         try:
             with self.lock:
                 text = self.view.substr(self.region)
-                self.is_success = self.formatter.run_formatter(self.view, text, self.region, self.is_selected, **self.kwargs)
+                self.kwargs['text'] = text
+                self.is_success = self.formatter.run_formatter(**self.kwargs)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
@@ -267,7 +275,7 @@ class RecursiveFormatThread(threading.Thread):
         self.lock = threading.Lock()
 
     def run(self):
-        log.debug('System environments:\n%s', pformat(common.update_environ()))
+        log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
             with self.lock:
                 target_cwd = common.get_pathinfo(self.view.file_name())[1]
@@ -312,7 +320,11 @@ class SequenceFormatThread(threading.Thread):
                 else:
                     formatter = Formatter(self.view)
                     text = self.view.substr(region)
-                    self.is_success = formatter.run_formatter(self.view, text, region, False, **self.kwargs)
+                    self.kwargs['view'] = self.view
+                    self.kwargs['text'] = text
+                    self.kwargs['region'] = region
+                    self.kwargs['is_selected'] = False
+                    self.is_success = formatter.run_formatter(**self.kwargs)
                     self.callback(self.is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
@@ -398,8 +410,7 @@ class Listeners(sublime_plugin.EventListener):
         if view == RECURSIVE_TARGET['target_view']:
             next_sequence(view)
 
-    @classmethod
-    def on_pre_save_async(cls, view):
+    def on_pre_save_async(self, view):
         used = []
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
@@ -416,8 +427,7 @@ class Listeners(sublime_plugin.EventListener):
                 view.run_command('run_format', {'identifier': key})
                 used.append(syntax)
 
-    @classmethod
-    def on_post_save_async(cls, view):
+    def on_post_save_async(self, view):
         _unused = view
         if common.config.get('debug'):
             # For debug and development only

@@ -14,18 +14,18 @@ import logging
 import sublime
 from . import common
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 INTERPRETER_NAMES = ['python3', 'python']
 EXECUTABLE_NAMES = ['beautysh']
 
 
 class BeautyshFormatter:
-    def __init__(self, view, identifier, region, is_selected):
-        self.view = view
-        self.identifier = identifier
-        self.region = region
-        self.is_selected = is_selected
-        self.pathinfo = common.get_pathinfo(view.file_name())
+    def __init__(self, *args, **kwargs):
+        self.view = kwargs.get('view', None)
+        self.identifier = kwargs.get('identifier', None)
+        self.region = kwargs.get('region', None)
+        self.is_selected = kwargs.get('is_selected', False)
+        self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
         interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
@@ -69,8 +69,7 @@ class BeautyshFormatter:
 
         return None
 
-    @classmethod
-    def get_config(cls, path):
+    def get_config(self, path):
         # Beautysh CLI does not have an option to
         # read external config file. We build one.
         with open(path, 'r', encoding='utf-8') as file:

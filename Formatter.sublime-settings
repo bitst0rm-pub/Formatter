@@ -248,7 +248,7 @@
                 "exclude_extensions": [],
                 "exclude_syntaxes": []
             },
-            "syntaxes": ["js", "css", "html", "json"],
+            "syntaxes": ["js", "css", "html", "json", "tsx", "vue"],
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/jsbeautify_rc.json"

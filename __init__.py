@@ -13,4 +13,4 @@
 from .src import common
 
 
-common.setup_logger('root')
+common.setup_logger('__name__')

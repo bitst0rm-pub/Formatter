@@ -14,15 +14,14 @@ import logging
 import json
 import sublime
 
-log = logging.getLogger('root')
+log = logging.getLogger('__name__')
 
 
 class JsonminFormatter:
-    def __init__(self, view, identifier, region, is_selected):
+    def __init__(self, *args, **kwargs):
         pass
 
-    @classmethod
-    def format(cls, text):
+    def format(self, text):
         try:
             obj = sublime.decode_value(text)
             result = json.dumps(obj, ensure_ascii=False, separators=(',', ':'), indent=None)

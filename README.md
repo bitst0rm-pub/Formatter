@@ -48,8 +48,8 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | JSON | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), JSONMax (build-in) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff), JSONMin (build-in) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
 | GraphQL | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Markdown | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
-| TypeScript | [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
-| Vue | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| TypeScript | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
+| Vue | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
 | YAML | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Perl | [Perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
 | PHP | [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) | -- | PHP >=`7.4.0` | [Yes](https://mlocati.github.io/php-cs-fixer-configurator) |
@@ -118,7 +118,7 @@ Do **not** edit the default settings in the left-hand pane. Any modifications th
 
 The following settings example should give you direction on how to setup Formatter:
 
-```
+```jsonc
 {
     // Enable debug mode to view errors in the console; [type: bool]
     "debug": false,
