@@ -31,7 +31,7 @@ class PhpcsfixerFormatter:
 
     def is_compat(self):
         try:
-            php = common.get_interpreter_path(INTERPRETERS)
+            php = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
             if php:
                 proc = common.exec_cmd([php, '-v'], self.pathinfo[1])
                 stdout = proc.communicate()[0]

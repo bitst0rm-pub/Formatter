@@ -29,8 +29,8 @@ class PrettydiffminFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self, text):
-        interpreter = common.get_interpreter_path(INTERPRETERS)
-        executable = common.get_executable_path(self.identifier, EXECUTABLES)
+        interpreter = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
+        executable = common.get_intr_exec_path(self.identifier, EXECUTABLES, 'executable')
 
         if not interpreter or not executable:
             return None

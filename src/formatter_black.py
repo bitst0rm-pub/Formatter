@@ -29,7 +29,7 @@ class BlackFormatter:
 
     def is_compat(self):
         try:
-            python = common.get_interpreter_path(INTERPRETERS)
+            python = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
             if python:
                 proc = common.exec_cmd([python, '-V'], self.pathinfo[1])
                 stdout = proc.communicate()[0]
