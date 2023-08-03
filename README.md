@@ -10,8 +10,7 @@ Features:
 - Config files available for each 3rd-party plugin
 - Offline functionality
 
-Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).<br/>
-A backport to Sublime Text `2` was never intended.
+Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
 
 
 ## Guides
@@ -118,7 +117,7 @@ Do **not** edit the default settings in the left-hand pane. Any modifications th
 
 The following settings example should give you direction on how to setup Formatter:
 
-```jsonc
+```js
 {
     // Enable debug mode to view errors in the console; [type: bool]
     "debug": false,
@@ -203,6 +202,16 @@ The following settings example should give you direction on how to setup Formatt
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.
             "syntaxes": ["css", "js", "php"],
+
+            // Path to the interpreter to be used; [type: str]
+            // Just for the sake of completeness, but it is unlikely that you will
+            // ever need to use this option. Most programs you install are usually set
+            // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
+            // However, this option might be useful when you have several versions
+            // of the same programs installed on your system. Even in such cases,
+            // it is still recommended to use the "environ" option mentioned above,
+            // along with the PATH variable, to handle this situation.
+            "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
 
             // Path to the plugin executable to be used; [type: str]
             // System variable expansions like ${HOME} and Sublime Text specific

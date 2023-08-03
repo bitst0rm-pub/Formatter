@@ -16,8 +16,8 @@ import tempfile
 from . import common
 
 log = logging.getLogger('__name__')
-INTERPRETER_NAMES = ['node']
-EXECUTABLE_NAMES = ['prettydiff']
+INTERPRETERS = ['node']
+EXECUTABLES = ['prettydiff']
 
 
 class PrettydiffminFormatter:
@@ -29,8 +29,8 @@ class PrettydiffminFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self, text):
-        interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
-        executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
+        interpreter = common.get_interpreter_path(INTERPRETERS)
+        executable = common.get_executable_path(self.identifier, EXECUTABLES)
 
         if not interpreter or not executable:
             return None

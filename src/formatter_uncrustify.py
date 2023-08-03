@@ -14,7 +14,7 @@ import logging
 from . import common
 
 log = logging.getLogger('__name__')
-EXECUTABLE_NAMES = ['uncrustify']
+EXECUTABLES = ['uncrustify']
 
 
 class UncrustifyFormatter:
@@ -26,7 +26,7 @@ class UncrustifyFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
+        executable = common.get_executable_path(self.identifier, EXECUTABLES)
 
         if not executable:
             return None

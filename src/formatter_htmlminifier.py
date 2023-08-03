@@ -14,8 +14,8 @@ import logging
 from . import common
 
 log = logging.getLogger('__name__')
-INTERPRETER_NAMES = ['node']
-EXECUTABLE_NAMES = ['html-minifier']
+INTERPRETERS = ['node']
+EXECUTABLES = ['html-minifier']
 
 
 class HtmlminifierFormatter:
@@ -27,17 +27,9 @@ class HtmlminifierFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
-        executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
-
-        if not interpreter or not executable:
+        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        if not cmd:
             return None
-
-        cmd = [interpreter, executable]
-
-        args = common.get_args(self.identifier)
-        if args:
-            cmd.extend(args)
 
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:

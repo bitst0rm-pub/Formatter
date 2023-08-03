@@ -17,7 +17,7 @@ from . import common
 from ..lib3 import yaml
 
 log = logging.getLogger('__name__')
-EXECUTABLE_NAMES = ['clang-format']
+EXECUTABLES = ['clang-format']
 
 
 class ClangformatFormatter:
@@ -29,7 +29,7 @@ class ClangformatFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
+        executable = common.get_executable_path(self.identifier, EXECUTABLES)
 
         if not executable:
             return None

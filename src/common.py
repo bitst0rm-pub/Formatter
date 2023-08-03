@@ -286,25 +286,33 @@ def get_environ_path(fnames):
         log.error('File names variable is empty or not of type list: %s', fnames)
     return None
 
-def get_interpreter_path(fnames):
-    global_file = get_environ_path(fnames)
-    if global_file:
-        log.debug('Interpreter: %s', global_file)
-        return global_file
-    log.error('Could not find interpreter: %s', fnames)
-    return None
+def get_head_cmd(identifier, intr_names, exec_names):
+    interpreter = get_intr_exec_path(identifier, intr_names, 'interpreter')
+    executable = get_intr_exec_path(identifier, exec_names, 'executable')
+    if not interpreter or not executable:
+        return None
+    cmd = [interpreter, executable]
+    args = get_args(identifier)
+    if args:
+        cmd.extend(args)
+    return cmd
 
-def get_executable_path(identifier, fnames):
-    local_file = query(config, None, 'formatters', identifier, 'executable_path')
+def get_intr_exec_path(identifier, fnames, path_type):
+    if path_type not in ['interpreter', 'executable']:
+        log.error('Invalid "path_type". Use "interpreter" or "executable".')
+        return None
+
+    local_file = query(config, None, 'formatters', identifier, path_type + '_path')
     if local_file and not isfile(local_file):
-        log.warning('File does not exist: %s', local_file)
+        log.error('File does not exist: %s', local_file)
+        return None
     if is_exe(local_file):
-        log.debug('Executable: %s', local_file)
+        log.debug('%s: %s', path_type.capitalize(), local_file)
         return local_file
     global_file = get_environ_path(fnames)
     if global_file:
         return global_file
-    log.error('Could not find executable: %s', fnames)
+    log.error('Could not find %s: %s', path_type, fnames)
     return None
 
 def get_config_path(view, identifier, region, is_selected):

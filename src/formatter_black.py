@@ -15,8 +15,8 @@ from distutils.version import StrictVersion
 from . import common
 
 log = logging.getLogger('__name__')
-INTERPRETER_NAMES = ['python3', 'python']
-EXECUTABLE_NAMES = ['black']
+INTERPRETERS = ['python3', 'python']
+EXECUTABLES = ['black']
 
 
 class BlackFormatter:
@@ -29,7 +29,7 @@ class BlackFormatter:
 
     def is_compat(self):
         try:
-            python = common.get_interpreter_path(INTERPRETER_NAMES)
+            python = common.get_interpreter_path(INTERPRETERS)
             if python:
                 proc = common.exec_cmd([python, '-V'], self.pathinfo[1])
                 stdout = proc.communicate()[0]
@@ -45,17 +45,9 @@ class BlackFormatter:
         return None
 
     def get_cmd(self):
-        interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
-        executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
-
-        if not interpreter or not executable:
+        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        if not cmd:
             return None
-
-        cmd = [interpreter, executable]
-
-        args = common.get_args(self.identifier)
-        if args:
-            cmd.extend(args)
 
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:

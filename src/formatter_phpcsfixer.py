@@ -17,8 +17,8 @@ from distutils.version import StrictVersion
 from . import common
 
 log = logging.getLogger('__name__')
-INTERPRETER_NAMES = ['php']
-EXECUTABLE_NAMES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
+INTERPRETERS = ['php']
+EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
 
 
 class PhpcsfixerFormatter:
@@ -31,7 +31,7 @@ class PhpcsfixerFormatter:
 
     def is_compat(self):
         try:
-            php = common.get_interpreter_path(INTERPRETER_NAMES)
+            php = common.get_interpreter_path(INTERPRETERS)
             if php:
                 proc = common.exec_cmd([php, '-v'], self.pathinfo[1])
                 stdout = proc.communicate()[0]
@@ -47,17 +47,9 @@ class PhpcsfixerFormatter:
         return None
 
     def get_cmd(self, text):
-        interpreter = common.get_interpreter_path(INTERPRETER_NAMES)
-        executable = common.get_executable_path(self.identifier, EXECUTABLE_NAMES)
-
-        if not interpreter or not executable:
+        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        if not cmd:
             return None
-
-        cmd = [interpreter, executable]
-
-        args = common.get_args(self.identifier)
-        if args:
-            cmd.extend(args)
 
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
         if config:
