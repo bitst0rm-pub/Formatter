@@ -150,9 +150,9 @@ def setup_shared_config():
                 try:
                     res = sublime.load_binary_resource(resource)
                     hash_src = hashlib.md5(res).hexdigest()
-                    hash_dst = md5(path)
+                    hash_dst = md5f(path)
                     master_path = '{0}.{2}{1}'.format(*splitext(path) + ('master',))
-                    hash_dst_master = md5(master_path) if isfile(master_path) else None
+                    hash_dst_master = md5f(master_path) if isfile(master_path) else None
 
                     if not hash_dst_master or (hash_dst_master and hash_src != hash_dst_master):
                         with open(master_path, 'wb') as f:
@@ -170,10 +170,10 @@ def setup_shared_config():
                     log.warning('Could not setup shared config: %s\n%s', path, e)
     return True
 
-def md5(fname):
+def md5f(fname):
     hash_md5 = hashlib.md5()
     with open(fname, 'rb') as f:
-        for chunk in iter(lambda: f.read(4096), b''):
+        for chunk in iter(lambda: f.read(8192), b''):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
@@ -208,6 +208,9 @@ def query(data_dict, default=None, *keys):
             return default
         data_dict = data_dict.get(key, default)
     return data_dict
+
+def is_view(file_or_view):
+    return (type(file_or_view) is sublime.View)
 
 def is_text_file(file_path):
     try:

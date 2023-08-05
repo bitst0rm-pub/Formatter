@@ -171,9 +171,9 @@ class FormatThread(threading.Thread):
             file_path = self.view.file_name()
             if file_path and common.isfile(file_path):
                 new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,))
-                self.view.run_command('clone_view', {'path': new_path})
+                self.view.run_command('transfer_content_view', {'path': new_path})
             else:
-                self.view.run_command('clone_view', {'path': None})
+                self.view.run_command('transfer_content_view', {'path': None})
             sublime.set_timeout(self.undo_history, 500)
 
     def undo_history(self):
@@ -214,30 +214,55 @@ class SubstituteCommand(sublime_plugin.TextCommand):
         self.view.replace(edit, sublime.Region(region[0], region[1]), result)
 
 
-class CloneView(sublime_plugin.TextCommand):
+class TransferContentViewCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         path = kwargs.get('path', None)
-        view = self.view.window().new_file()
-        view.insert(edit, 0, self.view.substr(sublime.Region(0, self.view.size())))
-        view.assign_syntax(self.view.settings().get('syntax', None))
-
-        selections = []
-        for selection in self.view.sel():
-          selections.append(selection)
-
-        view.sel().clear()
-        view.sel().add_all(selections)
+        src_view = self.view
 
         if path:
-            view.retarget(path)
-            view.set_scratch(True)
-            self.save_clone(view, path)
+            dst_view = src_view.window().find_open_file(path)
+            if dst_view:
+                dst_view.run_command('select_all')
+                dst_view.run_command('right_delete')
+            else:
+                dst_view = src_view.window().new_file()
         else:
-            view.set_scratch(False)
-            log.debug('View cannot be saved as file.')
-        self.show_status_on_new_file(view)
+            src_id = src_view.id()
+            dst_view = None
+            ref_name = 'untitled-%s' % src_id
+            for v in src_view.window().views():
+                if v.name() == ref_name:
+                    dst_view = v
+                    break
 
-    def save_clone(self, view, path):
+            if dst_view:
+                dst_view.run_command('select_all')
+                dst_view.run_command('right_delete')
+            else:
+                dst_view = src_view.window().new_file()
+                dst_view.set_name(ref_name)
+
+        dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
+        dst_view.assign_syntax(src_view.settings().get('syntax', None))
+        src_view.window().focus_view(dst_view)
+
+        selections = []
+        for selection in src_view.sel():
+          selections.append(selection)
+
+        dst_view.sel().clear()
+        dst_view.sel().add_all(selections)
+
+        if path:
+            dst_view.retarget(path)
+            dst_view.set_scratch(True)
+            self.save_dst_content(dst_view, path)
+        else:
+            dst_view.set_scratch(False)
+            log.debug('The view is an unsaved buffer and must be manually saved as a file.')
+        self.show_status_on_new_file(dst_view)
+
+    def save_dst_content(self, view, path):
         allcontent = view.substr(sublime.Region(0, view.size()))
         try:
             with open(path, 'w', encoding='utf-8') as file:
