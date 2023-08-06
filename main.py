@@ -449,6 +449,10 @@ class Listeners(sublime_plugin.EventListener):
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
+            if common.query(value, False, 'recursive_folder_format', 'enable'):
+                log.debug('The format_on_save setting of %s cannot be applied for recursive_folder_format mode.', key)
+                continue
+
             if not is_selected:
                 # entire file
                 region = sublime.Region(0, view.size())
