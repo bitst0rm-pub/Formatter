@@ -421,7 +421,7 @@ def next_sequence(view, is_opened):
                 current_view.window().set_status_bar_visible(True)
                 current_view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [total:' + str(RECURSIVE_TARGET['target_filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['target_success']) + '|ko:' + str(RECURSIVE_TARGET['target_failure']) + ']')
 
-            if common.config.get('open_console_on_failure'):
+            if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['target_failure'] > 0:
                 current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
             sublime.message_dialog('Formatting completed!\n\nPlease check the following folder for the results:\n\n%s' % RECURSIVE_TARGET['target_cwd'])
