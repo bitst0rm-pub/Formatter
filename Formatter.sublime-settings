@@ -88,7 +88,7 @@
             // ever need to use this option. Most programs you install are usually set
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
             // However, this option might be useful when you have several versions
-            // of the same programs installed on your system. Even in such cases,
+            // of the same program installed on your system. Even in such cases,
             // it is still recommended to use the "environ" option mentioned above,
             // along with the PATH variable, to handle this situation.
             "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",

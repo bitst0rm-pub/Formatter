@@ -138,7 +138,7 @@ Note: Do **not** use config files with suffix `.master.` This is the latest refe
 Formatter settings can be accessed from: Preferences > Package Settings > Formatter > Settings.
 
 The left-hand pane contains all the default settings, while right-hand pane is where personal customizations can be made.<br/>
-Ensure to retain the default config structure in the right-hand pane.<br/>
+Ensure to maintain the config structure in the right-hand pane.<br/>
 Do **not** edit the default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
 The following settings example should give you direction on how to setup Formatter:
@@ -234,7 +234,7 @@ The following settings example should give you direction on how to setup Formatt
             // ever need to use this option. Most programs you install are usually set
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
             // However, this option might be useful when you have several versions
-            // of the same programs installed on your system. Even in such cases,
+            // of the same program installed on your system. Even in such cases,
             // it is still recommended to use the "environ" option mentioned above,
             // along with the PATH variable, to handle this situation.
             "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
