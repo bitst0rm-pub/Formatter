@@ -73,14 +73,11 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
         if common.query(common.config, False, 'formatters', identifier, 'recursive_folder_format', 'enable'):
             if self.view.file_name():
-                if self.view.is_dirty():
-                    common.prompt_error('Error: File is dirty. Please save it first before performing recursive folder formatting.')
-                else:
-                    log.debug('Starting a new main thread for recursive folder formattting ...')
-                    recursive_format_thread = RecursiveFormatThread(self.view, **kwargs)
-                    recursive_format_thread.start()
+                log.debug('Starting a new main thread for recursive folder formattting ...')
+                recursive_format_thread = RecursiveFormatThread(self.view, **kwargs)
+                recursive_format_thread.start()
             else:
-                common.prompt_error('Error: Failed due to unsaved view. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
+                common.prompt_error('ERROR: Failed due to unsaved view. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
         else:
             log.debug('Starting a new main thread for single file formatting ...')
             format_thread = FormatThread(self.view, **kwargs)
@@ -231,6 +228,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
             dst_view = None
             ref_name = 'untitled-%s' % src_id
             for v in src_view.window().views():
+                # Reuse the same view
                 if v.name() == ref_name:
                     dst_view = v
                     break
@@ -269,7 +267,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 file.write(allcontent)
         except OSError as e:
             log.error('Could not save file: %s\n%s', path, e)
-            common.prompt_error('Error: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
+            common.prompt_error('ERROR: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
 
     def show_status_on_new_file(self, view):
         if view.is_loading():
@@ -287,7 +285,8 @@ class OpenNextFileCommand(sublime_plugin.TextCommand):
         # open_file() is asynchronous. Use EventListener on_load() to catch
         # the returned view when the file is finished loading.
         if not view.is_loading():
-            next_sequence(view)
+            # True = file is already opened as view
+            next_sequence(view, True)
         else:
             RECURSIVE_TARGET['target_view'] = view
 
@@ -383,29 +382,39 @@ def post_recursive_format(view, is_success):
     except OSError as e:
         if e.errno != common.os.errno.EEXIST:
             log.error('Could not create directory: %s', cwd)
-            common.prompt_error('Error: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
+            common.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
         else:
             log.error('Could not save file: %s', new_file_path)
-            common.prompt_error('Error: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', new_file_path)
+            common.prompt_error('ERROR: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', new_file_path)
 
         view.set_scratch(True)
         view.close()
         common.sys.exit(1)
 
 
-def next_sequence(view):
+def next_sequence(view, is_opened):
     def format_completed(is_success):
         post_recursive_format(view, is_success)
 
+        # Loop files sequentially
         if RECURSIVE_TARGET['target_current_index'] < RECURSIVE_TARGET['target_filelist_length']:
             view.run_command('open_next_file', {'index': RECURSIVE_TARGET['target_current_index']})
             RECURSIVE_TARGET['target_current_index'] += 1
 
-            view.set_scratch(True)
-            view.close()
+            if is_opened:
+                if is_success:
+                    view.run_command('undo')
+            else:
+                view.set_scratch(True)
+                view.close()
         else:
-            view.set_scratch(True)
-            view.close()
+            # Handle the last file
+            if is_opened:
+                if is_success:
+                    view.run_command('undo')
+            else:
+                view.set_scratch(True)
+                view.close()
 
             if common.config.get('show_statusbar'):
                 current_view = sublime.active_window().active_view()
@@ -415,7 +424,7 @@ def next_sequence(view):
             if common.config.get('open_console_on_failure'):
                 current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
-            sublime.message_dialog('Formatting completed!\n\nPlease check for the results:\n%s' % RECURSIVE_TARGET['target_cwd'])
+            sublime.message_dialog('Formatting completed!\n\nPlease check the following folder for the results:\n\n%s' % RECURSIVE_TARGET['target_cwd'])
             RECURSIVE_TARGET['target_view'] = None
             RECURSIVE_TARGET['target_kwargs'] = None
             RECURSIVE_TARGET['target_cwd'] = None
@@ -433,7 +442,7 @@ def next_sequence(view):
 class Listeners(sublime_plugin.EventListener):
     def on_load(self, view):
         if view == RECURSIVE_TARGET['target_view']:
-            next_sequence(view)
+            next_sequence(view, False)
 
     def on_pre_save_async(self, view):
         used = []
