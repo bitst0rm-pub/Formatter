@@ -155,6 +155,14 @@ The following settings example should give you direction on how to setup Formatt
     // Display results on the status bar; [type: bool]
     "show_statusbar": true,
 
+    // Specify the layout when opening new files; [type: str]
+    // This setting will be applied when the "new_file_on_format" option is enabled.
+    // You have the choice between a 2-columns, 2-rows or single layout.
+    // To revert to the Sublime default layout:
+    // View > Layout > Single or use the keyboard shortcut: Command+Alt+1
+    // Accepted values: "2cols", "2rows", "single" or false
+    "layout": "2cols",
+
     // A set of directories where executable programs are located; [type: dict{str:list[str]}]
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
@@ -190,7 +198,7 @@ The following settings example should give you direction on how to setup Formatt
             // from plugin A, because plugin A will run first in range of this/yours setting file.
             "format_on_save": false,
 
-            // Create a new file containing formatted codes [type: str]
+            // Create a new file containing formatted codes; [type: str]
             // The value of this option is the suffix of the new file being renamed.
             // Suffix must be of type string. =true, =false and all other types imply =false
             // Note: It will overwrite any existing file that has the same new name in
@@ -200,7 +208,7 @@ The following settings example should give you direction on how to setup Formatt
             // myfile.raw.js -> myfile.raw.min.js
             "new_file_on_format": false,
 
-            // Recursively format the entire folder with unlimited depth. [type: dict{str:(bool|list[str])}]
+            // Recursively format the entire folder with unlimited depth; [type: dict{str:(bool|list[str])}]
             // This option requires an existing and currently opened file
             // to serve as the starting point.
             // For the sake of convenience, two new folders will be created at

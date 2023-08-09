@@ -95,10 +95,41 @@ def build_config(settings):
     config['debug'] = settings.get('debug', False)
     config['open_console_on_failure'] = settings.get('open_console_on_failure', False)
     config['show_statusbar'] = settings.get('show_statusbar', True)
+    config['layout'] = settings.get('layout', '2cols')
     config['environ'] = settings.get('environ', {})
     config['formatters'] = settings.get('formatters', {})
     config.get('formatters', {}).pop('example', None)
     config = recursive_map(expand_path, config)
+
+def assign_layout(layout):
+    x = {
+        'single': {
+            'cols': [0.0, 1.0],
+            'rows': [0.0, 1.0],
+            'cells': [[0, 0, 1, 1]]
+        },
+        '2cols': {
+            'cols': [0.0, 0.5, 1.0],
+            'rows': [0.0, 1.0],
+            'cells': [[0, 0, 1, 1], [1, 0, 2, 1]]
+        },
+        '2rows': {
+            'cols': [0.0, 1.0],
+            'rows': [0.0, 0.5, 1.0],
+            'cells': [[0, 0, 1, 1], [0, 1, 1, 2]]
+        }
+    }
+    return x.get(layout, None)
+
+def setup_layout(view):
+    value = config.get('layout')
+    if value in ['single', '2cols', '2rows']:
+        view.window().set_layout(assign_layout(value))
+        return True
+    return False
+
+def is_use_layout():
+    return config.get('layout') in ['single', '2cols', '2rows']
 
 def recursive_map(func, data):
     if isinstance(data, dict):

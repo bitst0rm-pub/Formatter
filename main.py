@@ -165,6 +165,10 @@ class FormatThread(threading.Thread):
     def new_file_on_format(self, identifier):
         suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
         if suffix and isinstance(suffix, str):
+            if common.is_use_layout():
+                common.setup_layout(self.view)
+                self.view.window().focus_group(0)
+
             file_path = self.view.file_name()
             if file_path and common.isfile(file_path):
                 new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,))
@@ -217,11 +221,14 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
         src_view = self.view
 
         if path:
+            # Reuse the same file
             dst_view = src_view.window().find_open_file(path)
             if dst_view:
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
+                if common.is_use_layout():
+                    src_view.window().focus_group(1)
                 dst_view = src_view.window().new_file()
         else:
             src_id = src_view.id()
@@ -237,6 +244,8 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
+                if common.is_use_layout():
+                    src_view.window().focus_group(1)
                 dst_view = src_view.window().new_file()
                 dst_view.set_name(ref_name)
 
@@ -250,6 +259,9 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
 
         dst_view.sel().clear()
         dst_view.sel().add_all(selections)
+
+        dst_view.set_viewport_position(src_view.viewport_position(), False)
+        src_view.window().focus_view(dst_view)
 
         if path:
             dst_view.retarget(path)
@@ -443,6 +455,13 @@ class Listeners(sublime_plugin.EventListener):
     def on_load(self, view):
         if view == RECURSIVE_TARGET['target_view']:
             next_sequence(view, False)
+
+    def on_pre_close(self, view):
+        window = view.window()
+        if window and common.is_use_layout():
+            group, _ = window.get_view_index(view)
+            if window.num_groups() == 2 and len(window.views_in_group(group)) == 1:
+                sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
     def on_pre_save_async(self, view):
         used = []
