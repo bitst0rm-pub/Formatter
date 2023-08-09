@@ -121,15 +121,15 @@ def assign_layout(layout):
     }
     return x.get(layout, None)
 
+def is_use_layout():
+    return config.get('layout') in ['single', '2cols', '2rows']
+
 def setup_layout(view):
     value = config.get('layout')
     if value in ['single', '2cols', '2rows']:
         view.window().set_layout(assign_layout(value))
         return True
     return False
-
-def is_use_layout():
-    return config.get('layout') in ['single', '2cols', '2rows']
 
 def recursive_map(func, data):
     if isinstance(data, dict):
@@ -242,6 +242,13 @@ def query(data_dict, default=None, *keys):
 
 def is_view(file_or_view):
     return (type(file_or_view) is sublime.View)
+
+def is_text_data(data):
+    try:
+        data = data.decode('utf-8')
+        return data
+    except (UnicodeDecodeError, AttributeError):
+        return False
 
 def is_text_file(file_path):
     try:
