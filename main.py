@@ -251,7 +251,6 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
 
         dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
         dst_view.assign_syntax(src_view.settings().get('syntax', None))
-        src_view.window().focus_view(dst_view)
 
         selections = []
         for selection in src_view.sel():
