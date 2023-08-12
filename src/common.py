@@ -121,7 +121,7 @@ def assign_layout(layout):
     }
     return x.get(layout, None)
 
-def is_use_layout():
+def want_layout():
     return config.get('layout') in ['single', '2cols', '2rows']
 
 def setup_layout(view):

@@ -22,14 +22,14 @@ from .src.formatter import Formatter
 log = logging.getLogger('__name__')
 
 RECURSIVE_TARGET = {
-    'target_view': None,
-    'target_kwargs': None,
-    'target_cwd': None,
-    'target_filelist': [],
-    'target_filelist_length': 0,
-    'target_current_index': 0,
-    'target_success': 0,
-    'target_failure': 0
+    'view': None,
+    'kwargs': None,
+    'cwd': None,
+    'filelist': [],
+    'filelist_length': 0,
+    'current_index': 0,
+    'success_count': 0,
+    'failure_count': 0
 }
 
 
@@ -165,7 +165,7 @@ class FormatThread(threading.Thread):
     def new_file_on_format(self, identifier):
         suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
         if suffix and isinstance(suffix, str):
-            if common.is_use_layout():
+            if common.want_layout():
                 common.setup_layout(self.view)
                 self.view.window().focus_group(0)
 
@@ -184,7 +184,7 @@ class FormatThread(threading.Thread):
             self.view.run_command('undo')
             c -= 1
             attempts += 1
-            if attempts > 1000:
+            if attempts > 500:
                 log.warning('Seems like undo cycle is endless.')
                 raise Exception()
 
@@ -227,9 +227,9 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
-                if common.is_use_layout():
+                if common.want_layout():
                     src_view.window().focus_group(1)
-                dst_view = src_view.window().new_file()
+                dst_view = src_view.window().new_file(syntax=src_view.settings().get('syntax', None))
         else:
             src_id = src_view.id()
             dst_view = None
@@ -244,13 +244,12 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
-                if common.is_use_layout():
+                if common.want_layout():
                     src_view.window().focus_group(1)
-                dst_view = src_view.window().new_file()
+                dst_view = src_view.window().new_file(syntax=src_view.settings().get('syntax', None))
                 dst_view.set_name(ref_name)
 
         dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
-        dst_view.assign_syntax(src_view.settings().get('syntax', None))
 
         selections = []
         for selection in src_view.sel():
@@ -292,14 +291,14 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
 class OpenNextFileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         index = kwargs.get('index', None)
-        view = self.view.window().open_file(RECURSIVE_TARGET['target_filelist'][index])
+        view = self.view.window().open_file(RECURSIVE_TARGET['filelist'][index])
         # open_file() is asynchronous. Use EventListener on_load() to catch
         # the returned view when the file is finished loading.
         if not view.is_loading():
             # True = file is already opened as view
             next_sequence(view, True)
         else:
-            RECURSIVE_TARGET['target_view'] = view
+            RECURSIVE_TARGET['view'] = view
 
 
 class RecursiveFormatThread(threading.Thread):
@@ -313,19 +312,19 @@ class RecursiveFormatThread(threading.Thread):
         log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
             with self.lock:
-                target_cwd = common.get_pathinfo(self.view.file_name())[1]
+                cwd = common.get_pathinfo(self.view.file_name())[1]
                 identifier = self.kwargs.get('identifier', None)
                 x = common.query(common.config, {}, 'formatters', identifier, 'recursive_folder_format')
                 exclude_dirs_regex = x.get('exclude_folders_regex', [])
                 exclude_files_regex = x.get('exclude_files_regex', [])
                 exclude_extensions = x.get('exclude_extensions', [])
-                target_filelist = common.get_recursive_filelist(target_cwd, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
+                filelist = common.get_recursive_filelist(cwd, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
 
-                RECURSIVE_TARGET['target_kwargs'] = self.kwargs
-                RECURSIVE_TARGET['target_cwd'] = target_cwd
-                RECURSIVE_TARGET['target_filelist'] = target_filelist
-                RECURSIVE_TARGET['target_filelist_length'] = len(target_filelist)
-                RECURSIVE_TARGET['target_current_index'] = 1
+                RECURSIVE_TARGET['kwargs'] = self.kwargs
+                RECURSIVE_TARGET['cwd'] = cwd
+                RECURSIVE_TARGET['filelist'] = filelist
+                RECURSIVE_TARGET['filelist_length'] = len(filelist)
+                RECURSIVE_TARGET['current_index'] = 1
                 self.view.run_command('open_next_file', {'index': 0})
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
@@ -367,18 +366,18 @@ class SequenceFormatThread(threading.Thread):
 
 def post_recursive_format(view, is_success):
     if is_success:
-        new_target_cwd = common.join(RECURSIVE_TARGET['target_cwd'], common.RECURSIVE_SUCCESS_DIRECTORY)
-        RECURSIVE_TARGET['target_success'] += 1
+        new_cwd = common.join(RECURSIVE_TARGET['cwd'], common.RECURSIVE_SUCCESS_DIRECTORY)
+        RECURSIVE_TARGET['success_count'] += 1
         log.debug('Formatting successful. 🎉😃🍰')
     else:
-        new_target_cwd = common.join(RECURSIVE_TARGET['target_cwd'], common.RECURSIVE_FAILURE_DIRECTORY)
-        RECURSIVE_TARGET['target_failure'] += 1
+        new_cwd = common.join(RECURSIVE_TARGET['cwd'], common.RECURSIVE_FAILURE_DIRECTORY)
+        RECURSIVE_TARGET['failure_count'] += 1
         log.debug('Formatting failed. 💔😢💔')
 
-    file_path = RECURSIVE_TARGET['target_filelist'][RECURSIVE_TARGET['target_current_index'] - 1]
-    new_file_path = file_path.replace(RECURSIVE_TARGET['target_cwd'], new_target_cwd, 1)
+    file_path = RECURSIVE_TARGET['filelist'][RECURSIVE_TARGET['current_index'] - 1]
+    new_file_path = file_path.replace(RECURSIVE_TARGET['cwd'], new_cwd, 1)
 
-    identifier = RECURSIVE_TARGET['target_kwargs'].get('identifier', None)
+    identifier = RECURSIVE_TARGET['kwargs'].get('identifier', None)
     suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
     if suffix and isinstance(suffix, str) and is_success:
         new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
@@ -408,9 +407,9 @@ def next_sequence(view, is_opened):
         post_recursive_format(view, is_success)
 
         # Loop files sequentially
-        if RECURSIVE_TARGET['target_current_index'] < RECURSIVE_TARGET['target_filelist_length']:
-            view.run_command('open_next_file', {'index': RECURSIVE_TARGET['target_current_index']})
-            RECURSIVE_TARGET['target_current_index'] += 1
+        if RECURSIVE_TARGET['current_index'] < RECURSIVE_TARGET['filelist_length']:
+            view.run_command('open_next_file', {'index': RECURSIVE_TARGET['current_index']})
+            RECURSIVE_TARGET['current_index'] += 1
 
             if is_opened:
                 if is_success:
@@ -430,36 +429,36 @@ def next_sequence(view, is_opened):
             if common.config.get('show_statusbar'):
                 current_view = sublime.active_window().active_view()
                 current_view.window().set_status_bar_visible(True)
-                current_view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [total:' + str(RECURSIVE_TARGET['target_filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['target_success']) + '|ko:' + str(RECURSIVE_TARGET['target_failure']) + ']')
+                current_view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [total:' + str(RECURSIVE_TARGET['filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['success_count']) + '|ko:' + str(RECURSIVE_TARGET['failure_count']) + ']')
 
-            if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['target_failure'] > 0:
+            if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['failure_count'] > 0:
                 current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
-            sublime.message_dialog('Formatting completed!\n\nPlease check the following folder for the results:\n\n%s' % RECURSIVE_TARGET['target_cwd'])
-            RECURSIVE_TARGET['target_view'] = None
-            RECURSIVE_TARGET['target_kwargs'] = None
-            RECURSIVE_TARGET['target_cwd'] = None
-            RECURSIVE_TARGET['target_filelist'] = []
-            RECURSIVE_TARGET['target_filelist_length'] = 0
-            RECURSIVE_TARGET['target_current_index'] = 0
-            RECURSIVE_TARGET['target_success'] = 0
-            RECURSIVE_TARGET['target_failure'] = 0
+            sublime.message_dialog('Formatting completed!\n\nPlease check the following folder for the results:\n\n%s' % RECURSIVE_TARGET['cwd'])
+            RECURSIVE_TARGET['view'] = None
+            RECURSIVE_TARGET['kwargs'] = None
+            RECURSIVE_TARGET['cwd'] = None
+            RECURSIVE_TARGET['filelist'] = []
+            RECURSIVE_TARGET['filelist_length'] = 0
+            RECURSIVE_TARGET['current_index'] = 0
+            RECURSIVE_TARGET['success_count'] = 0
+            RECURSIVE_TARGET['failure_count'] = 0
             # Reset and end
 
-    thread = SequenceFormatThread(view, callback=format_completed, **RECURSIVE_TARGET['target_kwargs'])
+    thread = SequenceFormatThread(view, callback=format_completed, **RECURSIVE_TARGET['kwargs'])
     thread.start()
 
 
 class Listeners(sublime_plugin.EventListener):
     def on_load(self, view):
-        if view == RECURSIVE_TARGET['target_view']:
+        if view == RECURSIVE_TARGET['view']:
             next_sequence(view, False)
 
     def on_pre_close(self, view):
         window = view.window()
-        if window and common.is_use_layout():
+        if window and common.want_layout() and window.num_groups() == 2:
             group, _ = window.get_view_index(view)
-            if window.num_groups() == 2 and len(window.views_in_group(group)) == 1:
+            if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
     def on_pre_save_async(self, view):
