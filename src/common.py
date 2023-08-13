@@ -95,14 +95,16 @@ def build_config(settings):
     config['debug'] = settings.get('debug', False)
     config['open_console_on_failure'] = settings.get('open_console_on_failure', False)
     config['show_statusbar'] = settings.get('show_statusbar', True)
-    config['layout'] = settings.get('layout', '2cols')
+    config['layout'] = settings.get('layout', {})
+    config['layout']['enable'] = query(settings, False, 'layout', 'enable')
+    config['layout']['sync_scroll'] = query(settings, False, 'layout', 'sync_scroll')
     config['environ'] = settings.get('environ', {})
     config['formatters'] = settings.get('formatters', {})
     config.get('formatters', {}).pop('example', None)
     config = recursive_map(expand_path, config)
 
 def assign_layout(layout):
-    x = {
+    layouts = {
         'single': {
             'cols': [0.0, 1.0],
             'rows': [0.0, 1.0],
@@ -119,15 +121,15 @@ def assign_layout(layout):
             'cells': [[0, 0, 1, 1], [0, 1, 1, 2]]
         }
     }
-    return x.get(layout, None)
+    return layouts.get(layout, None)
 
 def want_layout():
-    return config.get('layout') in ['single', '2cols', '2rows']
+    return query(config, False, 'layout', 'enable') in ['single', '2cols', '2rows']
 
 def setup_layout(view):
-    value = config.get('layout')
-    if value in ['single', '2cols', '2rows']:
-        view.window().set_layout(assign_layout(value))
+    layout = query(config, False, 'layout', 'enable')
+    if layout in ['single', '2cols', '2rows']:
+        view.window().set_layout(assign_layout(layout))
         return True
     return False
 
@@ -235,7 +237,7 @@ def exec_cmd(cmd, cwd):
 
 def query(data_dict, default=None, *keys):
     for key in keys:
-        if not isinstance(data_dict, dict):
+        if not isinstance(data_dict, (dict, sublime.Settings)):
             return default
         data_dict = data_dict.get(key, default)
     return data_dict
@@ -257,6 +259,34 @@ def is_text_file(file_path):
         return True
     except UnicodeDecodeError:
         return False
+
+def run_once(func):
+    def wrapper(*args, **kwargs):
+        if not wrapper.has_run:
+            wrapper.has_run = True
+            return func(*args, **kwargs)
+    wrapper.has_run = False
+    return wrapper
+
+def get_unique(input_data):
+    if isinstance(input_data, list):
+        unique_items = []
+        for item in input_data:
+            if item not in unique_items:
+                unique_items.append(item)
+        return unique_items
+    elif isinstance(input_data, dict):
+        unique_keys = []
+        unique_values = []
+        result_dict = {}
+        for key, value in input_data.items():
+            if key not in unique_keys and value not in unique_values:
+                unique_keys.append(key)
+                unique_values.append(value)
+                result_dict[key] = value
+        return result_dict
+    else:
+        raise ValueError('Input data type not supported')
 
 def get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
     text_files = []

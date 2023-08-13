@@ -155,13 +155,16 @@ The following settings example should give you direction on how to setup Formatt
     // Display results on the status bar; [type: bool]
     "show_statusbar": true,
 
-    // Specify the layout when opening new files; [type: str]
-    // This setting will be applied when the "new_file_on_format" option is enabled.
-    // You have the choice between a 2-columns, 2-rows or single layout.
+    // Configure the layout when opening new files; [type: dict{str:(str|bool)}]
+    // This setting takes effect when the "new_file_on_format" option is enabled.
+    // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
     // View > Layout > Single or use the keyboard shortcut: Command+Alt+1
     // Accepted values: "2cols", "2rows", "single" or false
-    "layout": "2cols",
+    "layout": {
+        "enable": "2cols",
+        "sync_scroll": true
+    },
 
     // A set of directories where executable programs are located; [type: dict{str:list[str]}]
     // It can be absolute paths to module directories, python zipfiles.

@@ -11,15 +11,25 @@
 # @license      The MIT License (MIT)
 
 import threading
+from threading import Event
 import logging
 import traceback
 import json
+import time
 import sublime
 import sublime_plugin
 from .src import common
 from .src.formatter import Formatter
 
 log = logging.getLogger('__name__')
+
+SYNC_SCROLL = {
+    'view_pairs': [],
+    'view_src': None,
+    'view_dst': None,
+    'view_active': None,
+    'abort': False
+}
 
 RECURSIVE_TARGET = {
     'view': None,
@@ -261,13 +271,16 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
         dst_view.set_viewport_position(src_view.viewport_position(), False)
         src_view.window().focus_view(dst_view)
 
+        SYNC_SCROLL['view_pairs'].append([src_view, dst_view])
+        SYNC_SCROLL['view_pairs'] = common.get_unique(SYNC_SCROLL['view_pairs'])
+
         if path:
             dst_view.retarget(path)
             dst_view.set_scratch(True)
             self.save_dst_content(dst_view, path)
         else:
             dst_view.set_scratch(False)
-            log.debug('The view is an unsaved buffer and must be manually saved as a file.')
+            log.debug('The view is an unsaved buffer and must be manually saved as file.')
         self.show_status_on_new_file(dst_view)
 
     def save_dst_content(self, view, path):
@@ -450,40 +463,88 @@ def next_sequence(view, is_opened):
 
 
 class Listeners(sublime_plugin.EventListener):
+    def __init__(self, *args, **kwargs):
+        self.running = threading.Event()
+        self.sync_thread = None
+
     def on_load(self, view):
         if view == RECURSIVE_TARGET['view']:
             next_sequence(view, False)
 
+    def on_activated_async(self, view):
+        window = view.window()
+        if common.query(common.config, False, 'layout', 'sync_scroll'):
+            start_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
+            self.running.set() if start_run else self.running.clear() # control pause/resume
+
+            if window and common.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
+                for view_pair in SYNC_SCROLL['view_pairs']:
+                    if view in view_pair:
+                        SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'] = view_pair
+                        SYNC_SCROLL['view_active'] = 'src' if view == SYNC_SCROLL['view_src'] else 'dst'
+                        break
+                self.start_scroll_thread()
+
+    def start_scroll_thread(self):
+        if not self.sync_thread or not self.sync_thread.is_alive():
+            self.sync_thread = threading.Thread(target=self.sync_scroll)
+            self.sync_thread.start()
+            log.debug('Starting a thread for scroll synchronization.')
+
+    @common.run_once
+    def sync_scroll(self, *args, **kwargs):
+        self.running.set() # start running
+        while not SYNC_SCROLL['abort']:
+            if not self.running.is_set():
+                log.debug('Scroll synchronization paused.')
+                self.running.wait() # pause/resume
+            if SYNC_SCROLL['view_active'] == 'src':
+                SYNC_SCROLL['view_dst'].set_viewport_position(SYNC_SCROLL['view_src'].viewport_position(), False)
+            else:
+                SYNC_SCROLL['view_src'].set_viewport_position(SYNC_SCROLL['view_dst'].viewport_position(), False)
+            # log.debug('Time: %s, view_src: %s, view_dst: %s', time.strftime('%H:%M:%S'), SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'])
+            time.sleep(0.25)
+
+    def set_abort_sync_scroll(self):
+        SYNC_SCROLL['abort'] = True
+
     def on_pre_close(self, view):
         window = view.window()
-        if window and common.want_layout() and window.num_groups() == 2:
+        if window and common.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
+            if common.query(common.config, False, 'layout', 'sync_scroll'):
+                for view_pair in SYNC_SCROLL['view_pairs']:
+                    if view in view_pair:
+                        # Remove pair for sync scroll
+                        SYNC_SCROLL['view_pairs'].remove(view_pair)
+                        break
+
             group, _ = window.get_view_index(view)
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
     def on_pre_save_async(self, view):
-        used = []
+        used = set()
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
             if common.query(value, False, 'recursive_folder_format', 'enable'):
-                log.debug('The format_on_save setting of %s cannot be applied for recursive_folder_format mode.', key)
+                log.debug('The format_on_save setting of %s cannot be applied in recursive_folder_format mode.', key)
                 continue
 
             if not is_selected:
-                # entire file
+                # Entire file
                 region = sublime.Region(0, view.size())
             else:
-                # selections find the first non-empty region or use the first region if all are empty
+                # Selections: find the first non-empty region or use the first region if all are empty
                 region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
             syntax = common.get_assigned_syntax(view, key, region, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
                 log.debug('format_on_save for Formatter ID: %s, using syntax: %s', key, syntax)
                 view.run_command('run_format', {'identifier': key})
-                used.append(syntax)
+                used.add(syntax)
 
     def on_post_save_async(self, view):
         _unused = view
-        if common.config.get('debug'):
+        if common.config.get('debug') and not common.query(common.config, False, 'layout', 'sync_scroll'):
             # For debug and development only
             common.reload_modules()
