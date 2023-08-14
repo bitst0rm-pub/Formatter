@@ -10,16 +10,17 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import os
-from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
-                    exists, normpath, normcase, pathsep, split, splitext)
-import sys
-from imp import reload
-import re
 import hashlib
-from subprocess import Popen, PIPE
 import logging
+import os
+import re
+import sys
+import tempfile
 import sublime
+from imp import reload
+from subprocess import Popen, PIPE
+from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
+                    exists, normcase, normpath, pathsep, split, splitext)
 
 log = logging.getLogger('__name__')
 
@@ -30,6 +31,24 @@ ASSETS_DIRECTORY = 'formatter.assets'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
 RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
 STATUS_KEY = '@!' + PLUGIN_NAME.lower()
+
+LAYOUTS = {
+    'single': {
+        'cols': [0.0, 1.0],
+        'rows': [0.0, 1.0],
+        'cells': [[0, 0, 1, 1]]
+    },
+    '2cols': {
+        'cols': [0.0, 0.5, 1.0],
+        'rows': [0.0, 1.0],
+        'cells': [[0, 0, 1, 1], [1, 0, 2, 1]]
+    },
+    '2rows': {
+        'cols': [0.0, 1.0],
+        'rows': [0.0, 0.5, 1.0],
+        'cells': [[0, 0, 1, 1], [0, 1, 1, 2]]
+    }
+}
 
 LOAD_ORDER = [
     '.src.formatter_beautysh',
@@ -91,44 +110,31 @@ def build_config(settings):
     global config
 
     # Sublime settings dict is immutable and unordered
-    config = {}
-    config['debug'] = settings.get('debug', False)
-    config['open_console_on_failure'] = settings.get('open_console_on_failure', False)
-    config['show_statusbar'] = settings.get('show_statusbar', True)
-    config['layout'] = settings.get('layout', {})
-    config['layout']['enable'] = query(settings, False, 'layout', 'enable')
-    config['layout']['sync_scroll'] = query(settings, False, 'layout', 'sync_scroll')
-    config['environ'] = settings.get('environ', {})
-    config['formatters'] = settings.get('formatters', {})
-    config.get('formatters', {}).pop('example', None)
+    config = {
+        'debug': settings.get('debug', False),
+        'dev': settings.get('dev', False),
+        'open_console_on_failure': settings.get('open_console_on_failure', False),
+        'show_statusbar': settings.get('show_statusbar', True),
+        'layout': {
+            'enable': query(settings, False, 'layout', 'enable'),
+            'sync_scroll': query(settings, False, 'layout', 'sync_scroll')
+        },
+        'environ': settings.get('environ', {}),
+        'formatters': settings.get('formatters', {})
+    }
+    config['formatters'].pop('example', None)
     config = recursive_map(expand_path, config)
+    return config
 
 def assign_layout(layout):
-    layouts = {
-        'single': {
-            'cols': [0.0, 1.0],
-            'rows': [0.0, 1.0],
-            'cells': [[0, 0, 1, 1]]
-        },
-        '2cols': {
-            'cols': [0.0, 0.5, 1.0],
-            'rows': [0.0, 1.0],
-            'cells': [[0, 0, 1, 1], [1, 0, 2, 1]]
-        },
-        '2rows': {
-            'cols': [0.0, 1.0],
-            'rows': [0.0, 0.5, 1.0],
-            'cells': [[0, 0, 1, 1], [0, 1, 1, 2]]
-        }
-    }
-    return layouts.get(layout, None)
+    return LAYOUTS.get(layout, None)
 
 def want_layout():
-    return query(config, False, 'layout', 'enable') in ['single', '2cols', '2rows']
+    return query(config, False, 'layout', 'enable') in LAYOUTS
 
 def setup_layout(view):
     layout = query(config, False, 'layout', 'enable')
-    if layout in ['single', '2cols', '2rows']:
+    if layout in LAYOUTS:
         view.window().set_layout(assign_layout(layout))
         return True
     return False
@@ -212,7 +218,8 @@ def md5f(fname):
 
 def get_pathinfo(path):
     # Fallback to ${HOME} for unsaved buffer
-    cwd = expanduser('~')
+    # cwd = expanduser('~')
+    cwd = tempfile.gettempdir()
     base = stem = suffix = ext = None
     if path:
         cwd, base = split(path)
@@ -255,7 +262,7 @@ def is_text_data(data):
 def is_text_file(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            _ = f.readlines(1)
+            next(f)
         return True
     except UnicodeDecodeError:
         return False
@@ -268,23 +275,23 @@ def run_once(func):
     wrapper.has_run = False
     return wrapper
 
-def get_unique(input_data):
-    if isinstance(input_data, list):
-        unique_items = []
-        for item in input_data:
-            if item not in unique_items:
-                unique_items.append(item)
-        return unique_items
-    elif isinstance(input_data, dict):
+def get_unique(data):
+    if isinstance(data, list):
+        unique_list = []
+        for item in data:
+            if item not in unique_list:
+                unique_list.append(item)
+        return unique_list
+    elif isinstance(data, dict):
         unique_keys = []
         unique_values = []
-        result_dict = {}
-        for key, value in input_data.items():
+        unique_dict = {}
+        for key, value in data.items():
             if key not in unique_keys and value not in unique_values:
                 unique_keys.append(key)
                 unique_values.append(value)
-                result_dict[key] = value
-        return result_dict
+                unique_dict[key] = value
+        return unique_dict
     else:
         raise ValueError('Input data type not supported')
 
@@ -317,11 +324,10 @@ def is_exe(file):
             return True
         if not IS_WINDOWS:
             import stat
-            sta = os.stat(file)
-            os.chmod(file, sta.st_mode | stat.S_IEXEC)
+            os.chmod(file, os.stat(file).st_mode | stat.S_IEXEC)
             log.debug('Set executable permission for: %s', file)
             return True
-        log.warning('File exists but is not executable: %s', file)
+        log.warning('File exists but cannot be executed: %s', file)
     return False
 
 def get_environ_path(fnames):

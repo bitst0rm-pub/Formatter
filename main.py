@@ -10,14 +10,14 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import threading
-from threading import Event
 import logging
 import traceback
 import json
 import time
+import threading
 import sublime
 import sublime_plugin
+from threading import Event
 from .src import common
 from .src.formatter import Formatter
 
@@ -308,7 +308,7 @@ class OpenNextFileCommand(sublime_plugin.TextCommand):
         # open_file() is asynchronous. Use EventListener on_load() to catch
         # the returned view when the file is finished loading.
         if not view.is_loading():
-            # True = file is already opened as view
+            # True = file is already and currently opened as view
             next_sequence(view, True)
         else:
             RECURSIVE_TARGET['view'] = view
@@ -465,8 +465,8 @@ def next_sequence(view, is_opened):
 class Listeners(sublime_plugin.EventListener):
     def __init__(self, *args, **kwargs):
         self.running = threading.Event()
-        self.sync_lock = threading.Lock()
-        self.sync_thread = None
+        self.lock = threading.Lock()
+        self.scroll_thread = None
 
     def on_load(self, view):
         if view == RECURSIVE_TARGET['view']:
@@ -475,8 +475,8 @@ class Listeners(sublime_plugin.EventListener):
     def on_activated_async(self, view):
         window = view.window()
         if common.query(common.config, False, 'layout', 'sync_scroll'):
-            start_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
-            self.running.set() if start_run else self.running.clear() # control pause/resume
+            do_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
+            self.running.set() if do_run else self.running.clear() # control pause/resume scrolling
 
             if window and common.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
                 for view_pair in SYNC_SCROLL['view_pairs']:
@@ -487,14 +487,14 @@ class Listeners(sublime_plugin.EventListener):
                 self.start_scroll_thread()
 
     def start_scroll_thread(self):
-        if not self.sync_thread or not self.sync_thread.is_alive():
-            self.sync_thread = threading.Thread(target=self.sync_scroll)
-            self.sync_thread.start()
+        if not self.scroll_thread or not self.scroll_thread.is_alive():
+            self.scroll_thread = threading.Thread(target=self.sync_scroll)
+            self.scroll_thread.start()
             log.debug('Starting a thread for scroll synchronization.')
 
     @common.run_once
     def sync_scroll(self, *args, **kwargs):
-        with self.sync_lock:
+        with self.lock:
             self.running.set() # start running
             while not SYNC_SCROLL['abort']:
                 if not self.running.is_set():
@@ -509,6 +509,7 @@ class Listeners(sublime_plugin.EventListener):
 
     def set_abort_sync_scroll(self):
         SYNC_SCROLL['abort'] = True
+        self.running.clear()
 
     def on_pre_close(self, view):
         window = view.window()
@@ -520,6 +521,7 @@ class Listeners(sublime_plugin.EventListener):
                         SYNC_SCROLL['view_pairs'].remove(view_pair)
                         break
 
+            # Auto switching to single layout upon closing the latest view
             group, _ = window.get_view_index(view)
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
@@ -546,7 +548,6 @@ class Listeners(sublime_plugin.EventListener):
                 used.add(syntax)
 
     def on_post_save_async(self, view):
-        _unused = view
-        if common.config.get('debug') and not common.query(common.config, False, 'layout', 'sync_scroll'):
-            # For debug and development only
+        if common.config.get('debug') and common.config.get('dev') and not common.query(common.config, False, 'layout', 'sync_scroll'):
+            # For development only
             common.reload_modules()

@@ -59,53 +59,53 @@ class Formatter:
         if not text:
             return None
 
-        classmap = [
-            ('beautysh', BeautyshFormatter),
-            ('black', BlackFormatter),
-            ('clangformat', ClangformatFormatter),
-            ('cleancss', CleancssFormatter),
-            ('csscomb', CsscombFormatter),
-            ('eslint', EslintFormatter),
-            ('htmlminifier', HtmlminifierFormatter),
-            ('htmltidy', HtmltidyFormatter),
-            ('jsbeautifier', JsbeautifierFormatter),
-            ('jsonmax', JsonmaxFormatter),
-            ('jsonmin', JsonminFormatter),
-            ('perltidy', PerltidyFormatter),
-            ('phpcsfixer', PhpcsfixerFormatter),
-            ('prettier', PrettierFormatter),
-            ('prettydiffmax', PrettydiffmaxFormatter),
-            ('prettydiffmin', PrettydiffminFormatter),
-            ('prettytable', PrettytableFormatter),
-            ('pythonminifier', PythonminifierFormatter),
-            ('rubocop', RubocopFormatter),
-            ('sqlformatter', SqlformatterFormatter),
-            ('sqlmin', SqlminFormatter),
-            ('stylelint', StylelintFormatter),
-            ('terser', TerserFormatter),
-            ('uncrustify', UncrustifyFormatter),
-            ('yapf', YapfFormatter)
-        ]
+        formatter_map = {
+            'beautysh': BeautyshFormatter,
+            'black': BlackFormatter,
+            'clangformat': ClangformatFormatter,
+            'cleancss': CleancssFormatter,
+            'csscomb': CsscombFormatter,
+            'eslint': EslintFormatter,
+            'htmlminifier': HtmlminifierFormatter,
+            'htmltidy': HtmltidyFormatter,
+            'jsbeautifier': JsbeautifierFormatter,
+            'jsonmax': JsonmaxFormatter,
+            'jsonmin': JsonminFormatter,
+            'perltidy': PerltidyFormatter,
+            'phpcsfixer': PhpcsfixerFormatter,
+            'prettier': PrettierFormatter,
+            'prettydiffmax': PrettydiffmaxFormatter,
+            'prettydiffmin': PrettydiffminFormatter,
+            'prettytable': PrettytableFormatter,
+            'pythonminifier': PythonminifierFormatter,
+            'rubocop': RubocopFormatter,
+            'sqlformatter': SqlformatterFormatter,
+            'sqlmin': SqlminFormatter,
+            'stylelint': StylelintFormatter,
+            'terser': TerserFormatter,
+            'uncrustify': UncrustifyFormatter,
+            'yapf': YapfFormatter
+        }
 
-        result = None
-        for name, class_ in classmap:
-            if name == identifier:
-                syntax = common.get_assigned_syntax(view, name, region, is_selected)
-                if not syntax:
-                    common.prompt_error('Syntax out of the scope.', 'ID:' + name)
-                else:
-                    file = view.file_name()
-                    log.debug('Target: %s', file if file else '(view)')
-                    log.debug('Scope: %s', view.scope_name(0 if not is_selected else region.a))
-                    log.debug('Syntax: %s', syntax)
-                    log.debug('Formatter ID: %s', name)
-                    worker = class_(*args, **kwargs)
-                    result = worker.format(text)
-                break
+        formatter_class = formatter_map.get(identifier)
+        if formatter_class:
+            syntax = common.get_assigned_syntax(view, identifier, region, is_selected)
+            if not syntax:
+                common.prompt_error('Syntax out of the scope.', 'ID:' + identifier)
+            else:
+                file = view.file_name()
+                log.debug('Target: %s', file if file else '(view)')
+                log.debug('Scope: %s', view.scope_name(0 if not is_selected else region.a))
+                log.debug('Syntax: %s', syntax)
+                log.debug('Formatter ID: %s', identifier)
+                worker = formatter_class(*args, **kwargs)
+                result = worker.format(text)
+                if result:
+                    # Pass the result back to the main thread.
+                    args = {'result': result, 'region': [region.a, region.b]}
+                    view.run_command('substitute', args)
+                    return True
+        else:
+            log.error('Formatter ID not found: %s', identifier)
 
-        if result:
-            # Pass the result back to the main thread.
-            args = {'result': result, 'region': [region.a, region.b]}
-            view.run_command('substitute', args)
-            return True
         return False
