@@ -465,14 +465,14 @@ def next_sequence(view, is_opened):
 class Listeners(sublime_plugin.EventListener):
     def __init__(self, *args, **kwargs):
         self.running = threading.Event()
-        self.lock = threading.Lock()
+        self.scroll_lock = threading.Lock()
         self.scroll_thread = None
 
     def on_load(self, view):
         if view == RECURSIVE_TARGET['view']:
             next_sequence(view, False)
 
-    def on_activated_async(self, view):
+    def on_activated(self, view):
         window = view.window()
         if common.query(common.config, False, 'layout', 'sync_scroll'):
             do_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
@@ -482,7 +482,7 @@ class Listeners(sublime_plugin.EventListener):
                 for view_pair in SYNC_SCROLL['view_pairs']:
                     if view in view_pair:
                         SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'] = view_pair
-                        SYNC_SCROLL['view_active'] = 'src' if view == SYNC_SCROLL['view_src'] else 'dst'
+                        SYNC_SCROLL['view_active'] = 'src' if view == SYNC_SCROLL['view_src'] else None
                         break
                 self.start_scroll_thread()
 
@@ -494,22 +494,25 @@ class Listeners(sublime_plugin.EventListener):
 
     @common.run_once
     def sync_scroll(self, *args, **kwargs):
-        with self.lock:
+        with self.scroll_lock:
             self.running.set() # start running
             while not SYNC_SCROLL['abort']:
                 if not self.running.is_set():
                     log.debug('Scroll synchronization paused.')
                     self.running.wait() # pause/resume
-                if SYNC_SCROLL['view_active'] == 'src':
-                    SYNC_SCROLL['view_dst'].set_viewport_position(SYNC_SCROLL['view_src'].viewport_position(), False)
-                else:
-                    SYNC_SCROLL['view_src'].set_viewport_position(SYNC_SCROLL['view_dst'].viewport_position(), False)
-                # log.debug('Time: %s, view_src: %s, view_dst: %s', time.strftime('%H:%M:%S'), SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'])
+                if SYNC_SCROLL['view_active'] and SYNC_SCROLL['view_dst'] and SYNC_SCROLL['view_src']:
+                    if SYNC_SCROLL['view_active'] == 'src':
+                        SYNC_SCROLL['view_dst'].set_viewport_position(SYNC_SCROLL['view_src'].viewport_position(), False)
+                    else:
+                        SYNC_SCROLL['view_src'].set_viewport_position(SYNC_SCROLL['view_dst'].viewport_position(), False)
+                    # log.debug('Time: %s, view_src: %s, view_dst: %s', time.strftime('%H:%M:%S'), SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'])
                 time.sleep(0.25)
 
     def set_abort_sync_scroll(self):
         SYNC_SCROLL['abort'] = True
-        self.running.clear()
+        if self.scroll_thread and self.scroll_thread.is_alive():
+            self.running.clear()
+            self.scroll_thread = None
 
     def on_pre_close(self, view):
         window = view.window()
@@ -550,4 +553,6 @@ class Listeners(sublime_plugin.EventListener):
     def on_post_save(self, view):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
+            self.set_abort_sync_scroll()
             common.reload_modules()
+            self.sync_scroll.reset_run()

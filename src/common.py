@@ -273,6 +273,10 @@ def run_once(func):
             wrapper.has_run = True
             return func(*args, **kwargs)
     wrapper.has_run = False
+
+    def reset_run():
+        wrapper.has_run = False
+    wrapper.reset_run = reset_run
     return wrapper
 
 def get_unique(data):
