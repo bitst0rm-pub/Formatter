@@ -482,7 +482,7 @@ class Listeners(sublime_plugin.EventListener):
                 for view_pair in SYNC_SCROLL['view_pairs']:
                     if view in view_pair:
                         SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'] = view_pair
-                        SYNC_SCROLL['view_active'] = 'src' if view == SYNC_SCROLL['view_src'] else None
+                        SYNC_SCROLL['view_active'] = 'src' if view == SYNC_SCROLL['view_src'] else 'dst'
                         break
                 self.start_scroll_thread()
 
