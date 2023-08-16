@@ -526,13 +526,13 @@ class Listeners(sublime_plugin.EventListener):
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
-    def on_pre_save_async(self, view):
+    def on_pre_save(self, view):
         used = set()
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
             if common.query(value, False, 'recursive_folder_format', 'enable'):
-                log.debug('The format_on_save setting of %s cannot be applied in recursive_folder_format mode.', key)
+                log.debug('The "format_on_save option" for %s is currently active and cannot be applied in "recursive_folder_format" mode.', key)
                 continue
 
             if not is_selected:
@@ -547,7 +547,7 @@ class Listeners(sublime_plugin.EventListener):
                 view.run_command('run_format', {'identifier': key})
                 used.add(syntax)
 
-    def on_post_save_async(self, view):
-        if common.config.get('debug') and common.config.get('dev') and not common.query(common.config, False, 'layout', 'sync_scroll'):
+    def on_post_save(self, view):
+        if common.config.get('debug') and common.config.get('dev'):
             # For development only
             common.reload_modules()
