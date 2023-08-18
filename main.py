@@ -83,9 +83,12 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
         if common.query(common.config, False, 'formatters', identifier, 'recursive_folder_format', 'enable'):
             if self.view.file_name():
-                log.debug('Starting the main thread for recursive folder formattting ...')
-                recursive_format_thread = RecursiveFormatThread(self.view, **kwargs)
-                recursive_format_thread.start()
+                recursive_format_lock = threading.Lock()
+                with recursive_format_lock:
+                    log.debug('Starting the main thread for recursive folder formattting ...')
+                    recursive_format = RecursiveFormat(self.view, **kwargs)
+                    recursive_format_thread = threading.Thread(target=recursive_format.run)
+                    recursive_format_thread.start()
             else:
                 common.prompt_error('ERROR: Failed due to unsaved view. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
         else:
@@ -182,7 +185,7 @@ class SingleFormat:
                 self.view.run_command('transfer_content_view', {'path': new_path})
             else:
                 self.view.run_command('transfer_content_view', {'path': None})
-            sublime.set_timeout(self.undo_history, 500)
+            sublime.set_timeout(self.undo_history, 250)
 
     def undo_history(self):
         c = self.cycles.count(True)
@@ -291,31 +294,28 @@ class OpenNextFileCommand(sublime_plugin.TextCommand):
             RECURSIVE_TARGET['view'] = view
 
 
-class RecursiveFormatThread(threading.Thread):
+class RecursiveFormat:
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
-        threading.Thread.__init__(self)
-        self.lock = threading.Lock()
 
     def run(self):
         log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
-            with self.lock:
-                cwd = common.get_pathinfo(self.view.file_name())[1]
-                identifier = self.kwargs.get('identifier', None)
-                x = common.query(common.config, {}, 'formatters', identifier, 'recursive_folder_format')
-                exclude_dirs_regex = x.get('exclude_folders_regex', [])
-                exclude_files_regex = x.get('exclude_files_regex', [])
-                exclude_extensions = x.get('exclude_extensions', [])
-                filelist = common.get_recursive_filelist(cwd, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
+            cwd = common.get_pathinfo(self.view.file_name())[1]
+            identifier = self.kwargs.get('identifier', None)
+            x = common.query(common.config, {}, 'formatters', identifier, 'recursive_folder_format')
+            exclude_dirs_regex = x.get('exclude_folders_regex', [])
+            exclude_files_regex = x.get('exclude_files_regex', [])
+            exclude_extensions = x.get('exclude_extensions', [])
+            filelist = common.get_recursive_filelist(cwd, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
 
-                RECURSIVE_TARGET['kwargs'] = self.kwargs
-                RECURSIVE_TARGET['cwd'] = cwd
-                RECURSIVE_TARGET['filelist'] = filelist
-                RECURSIVE_TARGET['filelist_length'] = len(filelist)
-                RECURSIVE_TARGET['current_index'] = 1
-                self.view.run_command('open_next_file', {'index': 0})
+            RECURSIVE_TARGET['kwargs'] = self.kwargs
+            RECURSIVE_TARGET['cwd'] = cwd
+            RECURSIVE_TARGET['filelist'] = filelist
+            RECURSIVE_TARGET['filelist_length'] = len(filelist)
+            RECURSIVE_TARGET['current_index'] = 1
+            self.view.run_command('open_next_file', {'index': 0})
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
@@ -512,7 +512,7 @@ class Listeners(sublime_plugin.EventListener):
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
             if common.query(value, False, 'recursive_folder_format', 'enable'):
-                log.debug('The "format_on_save option" for %s is currently enabled and cannot be applied in "recursive_folder_format" mode.', key)
+                log.debug('The "format_on_save" option for %s is currently enabled and cannot be applied in "recursive_folder_format" mode.', key)
                 continue
 
             if not is_selected:
