@@ -189,16 +189,15 @@ The following settings example should give you direction on how to setup Formatt
             "disable": false,
 
             // Auto formatting whenever the current file/view is being saved; [type: bool]
-            // For safety reasons, newly formatted codes will be finally saved
-            // after the next save demand.
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes, the first plugin takes precedence.
             // Remove the identical syntaxes from one of the plugins to avoid conflicts.
             // For example:
             // Plugin A (enabled): syntaxes ["css", "js"]
             // Plugin B (enabled): syntaxes ["html", "css"]
-            // In the case you want to use Plugin B with "css", then you should remove the "css"
-            // from plugin A, because plugin A will run first in range of this/yours setting file.
+            // In the case you want to use Plugin B with "css", then you should remove
+            // the "css" from plugin A or just disable it, as there is no guarantee of the
+            // execution order between the two, and determining your favorist is not possible.
             "format_on_save": false,
 
             // Create a new file containing formatted codes; [type: str]

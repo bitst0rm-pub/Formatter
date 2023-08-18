@@ -83,15 +83,18 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
         if common.query(common.config, False, 'formatters', identifier, 'recursive_folder_format', 'enable'):
             if self.view.file_name():
-                log.debug('Starting a new main thread for recursive folder formattting ...')
+                log.debug('Starting the main thread for recursive folder formattting ...')
                 recursive_format_thread = RecursiveFormatThread(self.view, **kwargs)
                 recursive_format_thread.start()
             else:
                 common.prompt_error('ERROR: Failed due to unsaved view. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
         else:
-            log.debug('Starting a new main thread for single file formatting ...')
-            format_thread = FormatThread(self.view, **kwargs)
-            format_thread.start()
+            single_format_lock = threading.Lock()
+            with single_format_lock:
+                log.debug('Starting the main thread for single file formatting ...')
+                single_format = SingleFormat(self.view, **kwargs)
+                single_format_thread = threading.Thread(target=single_format.run)
+                single_format_thread.start()
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
@@ -103,53 +106,47 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         return not is_disabled
 
 
-class FormatThread(threading.Thread):
+class SingleFormat:
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
         self.success = 0
         self.failure = 0
         self.cycles = []
-        threading.Thread.__init__(self)
-        self.lock = threading.Lock()
 
     def run(self):
         log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
-            with self.lock:
-                formatter = Formatter(self.view)
-                is_selected = self.has_selection()
-                self.kwargs['view'] = self.view
-                self.kwargs['formatter'] = formatter
-                self.kwargs['is_selected'] = is_selected
+            formatter = Formatter(self.view)
+            is_selected = self.has_selection()
+            self.kwargs['view'] = self.view
+            self.kwargs['is_selected'] = is_selected
 
-                if not is_selected:
-                    # Format entire file using the main thread
-                    region = sublime.Region(0, self.view.size())
+            if not is_selected:
+                # Format entire file
+                region = sublime.Region(0, self.view.size())
+                text = self.view.substr(region)
+                self.kwargs['text'] = text
+                self.kwargs['region'] = region
+                is_success = formatter.run_formatter(**self.kwargs)
+                self.cycles.append(is_success)
+                self.print_status(is_success)
+            else:
+                # Format selections
+                for region in self.view.sel():
+                    if region.empty():
+                        continue
                     text = self.view.substr(region)
                     self.kwargs['text'] = text
                     self.kwargs['region'] = region
                     is_success = formatter.run_formatter(**self.kwargs)
                     self.cycles.append(is_success)
                     self.print_status(is_success)
-                else:
-                    # Format selections using separate threads sequentially
-                    for region in self.view.sel():
-                        if region.empty():
-                            continue
-                        self.kwargs['region'] = region
-                        log.debug('Starting a new thread for selections formatting ...')
-                        thread = SelectionFormatThread(**self.kwargs)
-                        thread.start()
-                        thread.join()
-                        is_success = thread.is_success
-                        self.cycles.append(is_success)
-                        self.print_status(is_success)
 
-                if any(self.cycles):
-                    self.new_file_on_format(self.kwargs.get('identifier', None))
-                else:
-                    self.open_console_on_failure()
+            if any(self.cycles):
+                self.new_file_on_format(self.kwargs.get('identifier', None))
+            else:
+                self.open_console_on_failure()
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
@@ -197,26 +194,6 @@ class FormatThread(threading.Thread):
             if attempts > 500:
                 log.warning('Seems like undo cycle is endless.')
                 raise Exception()
-
-
-class SelectionFormatThread(threading.Thread):
-    def __init__(self, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.formatter = kwargs.get('formatter', None)
-        self.region = kwargs.get('region', None)
-        self.kwargs = kwargs
-        self.is_success = False
-        threading.Thread.__init__(self)
-        self.lock = threading.Lock()
-
-    def run(self):
-        try:
-            with self.lock:
-                text = self.view.substr(self.region)
-                self.kwargs['text'] = text
-                self.is_success = self.formatter.run_formatter(**self.kwargs)
-        except Exception as e:
-            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
 
 class SubstituteCommand(sublime_plugin.TextCommand):
@@ -535,7 +512,7 @@ class Listeners(sublime_plugin.EventListener):
         formatters = common.config.get('formatters')
         for key, value in formatters.items():
             if common.query(value, False, 'recursive_folder_format', 'enable'):
-                log.debug('The "format_on_save option" for %s is currently active and cannot be applied in "recursive_folder_format" mode.', key)
+                log.debug('The "format_on_save option" for %s is currently enabled and cannot be applied in "recursive_folder_format" mode.', key)
                 continue
 
             if not is_selected:
@@ -546,8 +523,8 @@ class Listeners(sublime_plugin.EventListener):
                 region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
             syntax = common.get_assigned_syntax(view, key, region, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
-                log.debug('format_on_save for Formatter ID: %s, using syntax: %s', key, syntax)
-                view.run_command('run_format', {'identifier': key})
+                log.debug('"format_on_save" enabled for ID: %s, using syntax: %s', key, syntax)
+                SingleFormat(view, **{'identifier': key}).run()
                 used.add(syntax)
 
     def on_post_save(self, view):
