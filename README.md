@@ -1,14 +1,20 @@
 # Formatter
 
-Formatter is a plugin for Sublime Text 3 & 4 to beautify and minify source code.
+Formatter is a config-file-driven plugin for Sublime Text 3 & 4 to beautify and minify source code.
 
-Features:
+Key features:
 
 - Support for more than 20 major programming languages
-- Ability to format entire file, single or multi selections
-- Ability to format entire folder recursively
-- Config files available for each 3rd-party plugin
-- Offline functionality
+- Capability to format entire file, single or multi selections
+- Capability to format entire folder recursively
+- Shared config files available for each 3rd-party plugin
+- Works offline
+
+Notable Advantages:
+
+- Flexibility: Users benefit from a wide range of flexible config options.
+- Freedom: 3rd-party plugin updates are not tied to the Formatter itself.
+- Extensibility: Designed for seamless integration with a variety of additional plugins.
 
 Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
 
@@ -400,7 +406,7 @@ If you encounter issues, please activate the key `"debug": true` in `Formatter.s
 
 ## Todo:
 
-- Maybe add support for more languages.
+- Maybe add support for more languages. Make suggestions.
 
 
 ## License
