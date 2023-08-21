@@ -10,11 +10,12 @@ Key features:
 - Shared config files available for each 3rd-party plugin
 - Works offline
 
-Notable Advantages:
+Formatter aims to achieve:
 
 - Flexibility: Users benefit from a wide range of flexible config options.
 - Freedom: 3rd-party plugin updates are not tied to the Formatter itself.
 - Extensibility: Designed for seamless integration with a variety of additional plugins.
+- Convenience: An all-in-one tool for beautifying and minifying code.
 
 Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
 
