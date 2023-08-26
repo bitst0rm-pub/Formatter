@@ -36,10 +36,7 @@ class JsbeautifierFormatter:
             cmd.extend(['--config', config])
 
         syntax = common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
-        typ = 'js' # default
-        if syntax in ('js', 'css', 'html'):
-            typ = syntax
-        cmd.extend(['--type', typ])
+        cmd.extend(['--type', syntax if syntax in ('js', 'css', 'html') else 'js'])
 
         return cmd
 
