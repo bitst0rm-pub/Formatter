@@ -11,7 +11,7 @@
 # @license      The MIT License (MIT)
 
 import logging
-import json
+import sublime
 from . import common
 
 from ..lib3.prettytable import prettytable
@@ -45,16 +45,17 @@ class PrettytableFormatter:
 
     def format(self, text):
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
-        cmd = {}
+        json = {}
         if config:
             with open(config, 'r', encoding='utf-8') as file:
-                cmd = json.load(file)
-            log.debug('Current arguments: %s', cmd)
+                data = file.read()
+            json = sublime.decode_value(data)
+            log.debug('Current arguments: %s', json)
 
-        style = cmd.get('style', None)
-        separator = cmd.get('separator', None)
-        align = cmd.get('align', None)
-        output_format = cmd.get('output_format', 'text')
+        style = json.get('style', None)
+        separator = json.get('separator', None)
+        align = json.get('align', None)
+        output_format = json.get('output_format', 'text')
 
         stylemap = [
             ('ALL', prettytable.ALL),

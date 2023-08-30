@@ -1,11 +1,6 @@
 {
-    "__comments_to_help__": {
-        "supported styles": "ALL, DEFAULT, DOUBLE_BORDER, FRAME, HEADER, MARKDOWN, MSWORD_FRIENDLY, NONE, ORGMODE, PLAIN_COLUMNS, RANDOM, SINGLE_BORDER",
-        "supported align": "l, c, r",
-        "supported output_format": "text, html, json, csv, latex"
-    },
-    "style": "DEFAULT",
-    "separator": ";",
-    "align": "l",
-    "output_format": "text"
+    "style": "DEFAULT",         // sets the table style: ALL, DEFAULT, DOUBLE_BORDER, FRAME, HEADER, MARKDOWN, MSWORD_FRIENDLY, NONE, ORGMODE, PLAIN_COLUMNS, RANDOM, SINGLE_BORDER
+    "separator": ";",           // separator symbol
+    "align": "l",               // sets the alignment of columns: l, c, r
+    "output_format": "text"     // generates output format: text, html, json, csv, latex
 }
