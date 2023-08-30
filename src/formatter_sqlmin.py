@@ -11,7 +11,7 @@
 # @license      The MIT License (MIT)
 
 import logging
-import json
+import sublime
 from . import common
 
 from ..lib3.sqlmin import sqlmin
@@ -29,14 +29,15 @@ class SqlminFormatter:
 
     def format(self, text):
         config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
-        cmd = {}
+        json = {}
         if config:
             with open(config, 'r', encoding='utf-8') as file:
-                cmd = json.load(file)
-            log.debug('Current arguments: %s', cmd)
+                data = file.read()
+            json = sublime.decode_value(data)
+            log.debug('Current arguments: %s', json)
 
         try:
-            output = sqlmin.minify(text, cmd)
+            output = sqlmin.minify(text, json)
             errno = output['code']
             result = output['result']
 
@@ -45,6 +46,6 @@ class SqlminFormatter:
             else:
                 return result
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('Error occurred while running: %s', ' '.join(json))
 
         return None

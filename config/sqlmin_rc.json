@@ -1,10 +1,5 @@
 {
-    "__comments_to_help__": {
-        "preserve_special_comments": "Retain special/copyright multi-line comments (/*! ... */); [Type: bool]",
-        "newlines_before_special_comments": "Add newlines before special comments, e.g. '\r\n\r\n'; [Type: str]",
-        "newlines_after_special_comments": "Add newlines after special comments, e.g. '\r\n\r\n'; [Type: str]"
-    },
-    "preserve_special_comments": false,
-    "newlines_before_special_comments": "",
-    "newlines_after_special_comments": "\n"
+    "preserve_special_comments": false,         // retain special/copyright multi-line comments (/*! ... */)
+    "newlines_before_special_comments": "",     // add newlines before special comments, e.g. '\r\n\r\n'
+    "newlines_after_special_comments": "\n"     // add newlines after special comments, e.g. '\r\n\r\n'
 }
