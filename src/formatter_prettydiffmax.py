@@ -31,7 +31,6 @@ class PrettydiffmaxFormatter:
     def get_cmd(self, text):
         interpreter = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
         executable = common.get_intr_exec_path(self.identifier, EXECUTABLES, 'executable')
-
         if not interpreter or not executable:
             return None
 
