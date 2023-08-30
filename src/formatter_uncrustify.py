@@ -27,7 +27,6 @@ class UncrustifyFormatter:
 
     def get_cmd(self):
         executable = common.get_intr_exec_path(self.identifier, EXECUTABLES, 'executable')
-
         if not executable:
             return None
 
