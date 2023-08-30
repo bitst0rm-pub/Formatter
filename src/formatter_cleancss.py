@@ -40,6 +40,67 @@ class CleancssFormatter:
 
         return cmd
 
+    def get_config(self, path):
+        # Cleancss CLI does not have an option to
+        # read external config file. We build one.
+        with open(path, 'r', encoding='utf-8') as file:
+            data = file.read()
+        json = sublime.decode_value(data)
+
+        result = []
+
+        for key, value in json.items():
+            if type(value) == list:
+                result.extend(['--' + key, ','.join(value)])
+            elif type(value) == int:
+                result.extend(['--' + key, '%d' % value])
+            elif type(value) == bool and value:
+                result.append('--' + key)
+            elif type(value) == dict:
+                if key == 'compatibility':
+                    for keylv1, valuelv1 in value.items():
+                        string = ''
+                        for keylv2, valuelv2 in valuelv1.items():
+                            if type(valuelv2) == bool:
+                                string += (('+' if valuelv2 else '-') + keylv2 + ',')
+                        if string:
+                            result.extend(['--compatibility', keylv1 + ',' + string[:-1]])
+                if key == 'format':
+                    for keylv1, valuelv1 in value.items():
+                        if keylv1 in ('beautify', 'keep-breaks'):
+                            result.extend(['--format', keylv1])
+                        else:
+                            string = ''
+                            for keylv2, valuelv2 in valuelv1.items():
+                                if type(valuelv2) == bool:
+                                    string += (keylv2 + '=' + ('on' if valuelv2 else 'off') + ';')
+                                elif type(valuelv2) == str:
+                                    string += (keylv2 + ':' + valuelv2 + ';')
+                                elif type(valuelv2) == int:
+                                    string += (keylv2 + ':' + '%d' % valuelv2 + ';')
+                            if string:
+                                result.extend(['--format', string[:-1]])
+                if key == 'optimization':
+                    if '0' in str(value['level']):
+                        result.append('-O0')
+                    else:
+                        for keylv1, valuelv1 in value.items():
+                            if keylv1 in str(value['level']):
+                                string = ''
+                                for keylv2, valuelv2 in valuelv1.items():
+                                    if type(valuelv2) == bool:
+                                        string += (keylv2 + ':' + ('on' if valuelv2 else 'off') + ';')
+                                    elif type(valuelv2) == list and valuelv2:
+                                        string += (keylv2 + ':' + ','.join(valuelv2) + ';')
+                                    elif type(valuelv2) == str:
+                                        string += (keylv2 + ':' + valuelv2 + ';')
+                                    elif type(valuelv2) == int:
+                                        string += (keylv2 + ':' + '%d' % valuelv2 + ';')
+                                if string:
+                                    result.extend(['-O' + keylv1, string[:-1]])
+
+        return result
+
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
@@ -60,69 +121,3 @@ class CleancssFormatter:
             log.error('Error occurred while running: %s', ' '.join(cmd))
 
         return None
-
-    def get_config(self, path):
-        # Cleancss CLI does not have an option to
-        # read external config file. We build one.
-        with open(path, 'r', encoding='utf-8') as file:
-            string = file.read()
-        json = sublime.decode_value(string)
-
-        result = []
-
-        for key, value in json.items():
-            typ = type(value)
-            if typ == list:
-                result.extend(['--' + key, ','.join(value)])
-            if typ == int:
-                result.extend(['--' + key, '%d' % value])
-            if typ == bool:
-                if value:
-                    result.append('--' + key)
-            if typ == dict:
-                if key == 'compatibility':
-                    for keylv1, valuelv1 in value.items():
-                        string = ''
-                        for keylv2, valuelv2 in valuelv1.items():
-                            typ = type(valuelv2)
-                            if typ == bool:
-                                string += (('+' if valuelv2 else '-') + keylv2 + ',')
-                        if string:
-                            result.extend(['--compatibility', keylv1 + ',' + string[:-1]])
-                if key == 'format':
-                    for keylv1, valuelv1 in value.items():
-                        if keylv1 in ('beautify', 'keep-breaks'):
-                            result.extend(['--format', keylv1])
-                        else:
-                            string = ''
-                            for keylv2, valuelv2 in valuelv1.items():
-                                typ = type(valuelv2)
-                                if typ == bool:
-                                    string += (keylv2 + '=' + ('on' if valuelv2 else 'off') + ';')
-                                if typ == str:
-                                    string += (keylv2 + ':' + valuelv2 + ';')
-                                if typ == int:
-                                    string += (keylv2 + ':' + '%d' % valuelv2 + ';')
-                            if string:
-                                result.extend(['--format', string[:-1]])
-                if key == 'optimization':
-                    if '0' in str(value['level']):
-                        result.append('-O0')
-                    else:
-                        for keylv1, valuelv1 in value.items():
-                            if keylv1 in str(value['level']):
-                                string = ''
-                                for keylv2, valuelv2 in valuelv1.items():
-                                    typ = type(valuelv2)
-                                    if typ == bool:
-                                        string += (keylv2 + ':' + ('on' if valuelv2 else 'off') + ';')
-                                    if typ == list and valuelv2:
-                                        string += (keylv2 + ':' + ','.join(valuelv2) + ';')
-                                    if typ == str:
-                                        string += (keylv2 + ':' + valuelv2 + ';')
-                                    if typ == int:
-                                        string += (keylv2 + ':' + '%d' % valuelv2 + ';')
-                                if string:
-                                    result.extend(['-O' + keylv1, string[:-1]])
-
-        return result
