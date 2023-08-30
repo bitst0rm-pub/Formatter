@@ -1,5 +1,8 @@
 {
-    "indent-size": 4,
-    "tab": false,
-    "backup": false
-}
+    "indent-size": 4,               // sets the number of spaces to be used in indentation
+    "tab": false,                   // sets indentation to tabs instead of spaces
+    "backup": false,                // create a backup file in the same path as the original
+    "force-function-style": false   // force a specific Bash function formatting:
+}                                   // fnpar: function keyword, open/closed parentheses, e.g.      function foo()
+                                    // fnonly: function keyword, no open/closed parentheses, e.g.  function foo
+                                    // paronly: no function keyword, open/closed parentheses, e.g. foo()

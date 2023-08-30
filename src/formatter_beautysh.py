@@ -40,6 +40,24 @@ class BeautyshFormatter:
 
         return cmd
 
+    def get_config(self, path):
+        # Beautysh CLI does not have an option to
+        # read external config file. We build one.
+        with open(path, 'r', encoding='utf-8') as file:
+            data = file.read()
+        json = sublime.decode_value(data)
+
+        result = []
+        for key, value in json.items():
+            if type(value) == int:
+                result.extend(['--' + key, '%d' % value])
+            elif type(value) == bool and value:
+                result.extend(['--' + key])
+            elif type(value) == str:
+                result.extend(['--' + key, '%s' % value])
+
+        return result
+
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
@@ -60,22 +78,3 @@ class BeautyshFormatter:
             log.error('Error occurred while running: %s', ' '.join(cmd))
 
         return None
-
-    def get_config(self, path):
-        # Beautysh CLI does not have an option to
-        # read external config file. We build one.
-        with open(path, 'r', encoding='utf-8') as file:
-            string = file.read()
-        json = sublime.decode_value(string)
-
-        result = []
-        for key, value in json.items():
-            typ = type(value)
-            if typ == int:
-                result.extend(['--' + key, '%d' % value])
-            if typ == bool and value:
-                result.extend(['--' + key])
-            if typ == str:
-                result.extend(['--' + key, '%s' % value])
-
-        return result
