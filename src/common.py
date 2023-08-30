@@ -70,6 +70,8 @@ LOAD_ORDER = [
     '.src.formatter_prettytable',
     '.src.formatter_pythonminifier',
     '.src.formatter_rubocop',
+    '.src.formatter_shfmt',
+    '.src.formatter_shfmtmin',
     '.src.formatter_sqlformatter',
     '.src.formatter_sqlmin',
     '.src.formatter_stylelint',

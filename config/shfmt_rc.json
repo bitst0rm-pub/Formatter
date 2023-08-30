@@ -1,0 +1,9 @@
+{
+    "language-dialect": "auto",     // bash/posix/mksh/bats, default "auto"
+    "indent": 4,                    // 0 for tabs (default), >0 for number of spaces
+    "binary-next-line": false,      // binary ops like && and | may start a line
+    "case-indent": true,            // switch cases will be indented
+    "space-redirects": true,        // redirect operators will be followed by a space
+    "keep-padding": true,           // keep column alignment paddings
+    "func-next-line": true          // function opening braces are placed on a separate line
+}

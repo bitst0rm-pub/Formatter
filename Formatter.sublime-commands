@@ -106,6 +106,13 @@
         }
     },
     {
+        "caption": "Formatter: Beautify With Shfmt",
+        "command": "run_format",
+        "args": {
+            "identifier": "shfmt"
+        }
+    },
+    {
         "caption": "Formatter: Beautify With SQL Formatter",
         "command": "run_format",
         "args": {
@@ -166,6 +173,13 @@
         "command": "run_format",
         "args": {
             "identifier": "pythonminifier"
+        }
+    },
+    {
+        "caption": "Formatter: Minify With Shfmt",
+        "command": "run_format",
+        "args": {
+            "identifier": "shfmtmin"
         }
     },
     {

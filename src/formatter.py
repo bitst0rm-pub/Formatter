@@ -30,6 +30,8 @@ from .formatter_prettydiffmin import PrettydiffminFormatter
 from .formatter_prettytable import PrettytableFormatter
 from .formatter_pythonminifier import PythonminifierFormatter
 from .formatter_rubocop import RubocopFormatter
+from .formatter_shfmt import ShfmtFormatter
+from .formatter_shfmtmin import ShfmtminFormatter
 from .formatter_sqlformatter import SqlformatterFormatter
 from .formatter_sqlmin import SqlminFormatter
 from .formatter_stylelint import StylelintFormatter
@@ -79,6 +81,8 @@ class Formatter:
             'prettytable': PrettytableFormatter,
             'pythonminifier': PythonminifierFormatter,
             'rubocop': RubocopFormatter,
+            'shfmt': ShfmtFormatter,
+            'shfmtmin': ShfmtminFormatter,
             'sqlformatter': SqlformatterFormatter,
             'sqlmin': SqlminFormatter,
             'stylelint': StylelintFormatter,
