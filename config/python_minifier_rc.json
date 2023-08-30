@@ -1,17 +1,22 @@
 {
-    "combine_imports": true,
-    "remove_pass": true,
-    "remove_literal_statements": true,
-    "remove_annotations": true,
-    "hoist_literals": true,
-    "rename_locals": true,
-    "preserve_locals": [],
-    "rename_globals": true,
-    "preserve_globals": ["handler"],
-    "remove_object_base": true,
-    "convert_posargs_to_args": true,
-    "preserve_shebang": true,
-    "remove_asserts": true,
-    "remove_debug": true,
-    "remove_explicit_return_none": true
+    "combine-imports": true,                    // combining adjacent import statements
+    "remove-pass": true,                        // removing Pass statements
+    "remove-literal-statements": true,          // removing statements that are just a literal (including docstrings)
+    "remove-annotations": true,                 // removing all annotations
+    "remove-variable-annotations": true,        // removing variable annotations
+    "remove-return-annotations": true,          // removing function return annotations
+    "remove-argument-annotations": true,        // removing function argument annotations
+    "remove-class-attribute-annotations": true, // removing class attribute annotations
+    "hoist-literals": true,                     // replacing string and bytes literals with variables
+    "rename-locals": true,                      // shortening of local names
+    "preserve-locals": [],                      // comma separated list of local names that will not be shortened
+    "rename-globals": true,                     // shortening of global names
+    "preserve-globals": ["handler"],            // comma separated list of global names that will not be shortened
+    "remove-object-base": true,                 // removing object from base class list
+    "convert-posargs-to-args": true,            // converting positional only arguments to normal arguments
+    "preserve-shebang": true,                   // preserve any shebang line from the source
+    "remove-asserts": true,                     // remove assert statements
+    "remove-debug": true,                       // remove conditional statements that test __debug__ is True
+    "remove-explicit-return-none": true,        // replace explicit return None with a bare return
+    "remove-builtin-exception-brackets": true   // removing brackets when raising builtin exceptions with no arguments
 }

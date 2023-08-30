@@ -40,6 +40,10 @@ class PythonminifierFormatter:
                 '--no-remove-pass',
                 '--remove-literal-statements',
                 '--no-remove-annotations',
+                '--no-remove-variable-annotations',
+                '--no-remove-return-annotations',
+                '--no-remove-argument-annotations',
+                '--remove-class-attribute-annotations',
                 '--no-hoist-literals',
                 '--no-rename-locals',
                 '--preserve-locals',
@@ -48,8 +52,10 @@ class PythonminifierFormatter:
                 '--no-remove-object-base',
                 '--no-convert-posargs-to-args',
                 '--no-preserve-shebang',
+                '--remove-asserts',
                 '--remove-debug',
-                '--no-remove-explicit-return-none'
+                '--no-remove-explicit-return-none',
+                '--no-remove-builtin-exception-brackets'
             ]
 
             with open(config, 'r', encoding='utf-8') as file:
@@ -57,9 +63,8 @@ class PythonminifierFormatter:
             json = sublime.decode_value(data)
 
             for k, v in json.items():
-                x = k.replace('_', '-')
-                no_param = '--no-' + x
-                param = '--' + x
+                no_param = '--no-' + k
+                param = '--' + k
                 if no_param in params and isinstance(v, bool) and not v:
                         cmd.extend([no_param])
                 if param in params:
