@@ -477,7 +477,7 @@ def set_fix_cmds(cmd, identifier):
                                     cmd.pop(i)
                                 if position > -1:
                                     cmd.insert(position, cmd.pop(i))
-                        log.debug('Changed arguments: %s', cmd)
+                        log.debug('Fixed arguments: %s', cmd)
                     else:
                         log.error('index, count and position of "fix_commands" must be of type int.')
                         return None
