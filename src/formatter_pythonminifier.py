@@ -11,7 +11,7 @@
 # @license      The MIT License (MIT)
 
 import logging
-import json
+import sublime
 from . import common
 
 log = logging.getLogger('__name__')
@@ -53,9 +53,10 @@ class PythonminifierFormatter:
             ]
 
             with open(config, 'r', encoding='utf-8') as file:
-                content = json.load(file)
+                data = file.read()
+            json = sublime.decode_value(data)
 
-            for k, v in content.items():
+            for k, v in json.items():
                 x = k.replace('_', '-')
                 no_param = '--no-' + x
                 param = '--' + x
