@@ -20,7 +20,7 @@ import sublime
 from imp import reload
 from subprocess import Popen, PIPE
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
-                    exists, normcase, normpath, pathsep, split, splitext)
+                    exists, normcase, normpath, pathsep, split, splitext, dirname)
 
 log = logging.getLogger('__name__')
 
@@ -50,39 +50,15 @@ LAYOUTS = {
     }
 }
 
-LOAD_ORDER = [
-    '.src.formatter_beautysh',
-    '.src.formatter_black',
-    '.src.formatter_clangformat',
-    '.src.formatter_cleancss',
-    '.src.formatter_csscomb',
-    '.src.formatter_eslint',
-    '.src.formatter_htmlminifier',
-    '.src.formatter_htmltidy',
-    '.src.formatter_jsbeautifier',
-    '.src.formatter_jsonmax',
-    '.src.formatter_jsonmin',
-    '.src.formatter_perltidy',
-    '.src.formatter_phpcsfixer',
-    '.src.formatter_prettier',
-    '.src.formatter_prettydiffmax',
-    '.src.formatter_prettydiffmin',
-    '.src.formatter_prettytable',
-    '.src.formatter_pythonminifier',
-    '.src.formatter_rubocop',
-    '.src.formatter_shfmt',
-    '.src.formatter_shfmtmin',
-    '.src.formatter_sqlformatter',
-    '.src.formatter_sqlmin',
-    '.src.formatter_stylelint',
-    '.src.formatter_terser',
-    '.src.formatter_uncrustify',
-    '.src.formatter_yapf',
-    '.src.formatter',
-    '.src.common',
-    '.main'
-]
 
+def get_modules_list(directory):
+    module_names = []
+    for filename in os.listdir(directory):
+        if filename.endswith('.py') and filename != '__init__.py':
+            module_name = splitext(filename)[0]
+            module_names.append('.' + basename(directory) + '.' + module_name)
+    module_names.append('.main')
+    return module_names
 
 def reload_modules():
     modules = []
@@ -90,7 +66,7 @@ def reload_modules():
         if module.startswith(PLUGIN_NAME + '.') and sys.modules[module]:
             modules.append(module)
 
-    for module in LOAD_ORDER:
+    for module in get_modules_list(dirname(__file__)):
         module = PLUGIN_NAME + module
         if module in modules:
             log.debug('Reloading: %s', module)
