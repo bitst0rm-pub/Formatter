@@ -31,7 +31,7 @@ class Formatter:
         for f in files:
             module_name = os.path.splitext(f)[0]
             module = importlib.import_module('.' + module_name, package=__package__)
-            module_formatter = getattr(module, module_name[formatter_prefix_len:].capitalize() + 'Formatter', None)
+            module_formatter = getattr(module, module_name[formatter_prefix_len:].capitalize() + common.PLUGIN_NAME, None)
 
             if module_formatter:
                 formatter_identifier = module_name[formatter_prefix_len:]

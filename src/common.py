@@ -17,7 +17,10 @@ import re
 import sys
 import tempfile
 import sublime
-from imp import reload
+if sys.version_info < (3, 4):
+    from imp import reload
+else:
+    from importlib import reload
 from subprocess import Popen, PIPE
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     exists, normcase, normpath, pathsep, split, splitext, dirname)
@@ -52,25 +55,25 @@ LAYOUTS = {
 
 
 def get_modules_list(directory):
-    module_names = []
-    for filename in os.listdir(directory):
-        if filename.endswith('.py') and filename != '__init__.py':
-            module_name = splitext(filename)[0]
-            module_names.append('.' + basename(directory) + '.' + module_name)
+    module_names = [
+        '.' + basename(directory) + '.' + splitext(filename)[0]
+        for filename in os.listdir(directory)
+        if filename.endswith('.py') and filename != '__init__.py'
+    ]
     module_names.append('.main')
     return module_names
 
 def reload_modules():
     modules = []
-    for module in sys.modules:
-        if module.startswith(PLUGIN_NAME + '.') and sys.modules[module]:
-            modules.append(module)
+    for module_name, module in sys.modules.items():
+        if module_name.startswith(PLUGIN_NAME + '.') and module:
+            modules.append(module_name)
 
-    for module in get_modules_list(dirname(__file__)):
-        module = PLUGIN_NAME + module
-        if module in modules:
-            log.debug('Reloading: %s', module)
-            reload(sys.modules[module])
+    for module_name in get_modules_list(dirname(__file__)):
+        full_module_name = PLUGIN_NAME + module_name
+        if full_module_name in modules:
+            log.debug('Reloading: %s', full_module_name)
+            reload(sys.modules[full_module_name])
 
 def config_file():
     return PLUGIN_NAME + '.sublime-settings'
@@ -195,9 +198,11 @@ def md5f(fname):
     return hash_md5.hexdigest()
 
 def get_pathinfo(path):
-    # Fallback to ${HOME} for unsaved buffer
-    # cwd = expanduser('~')
-    cwd = tempfile.gettempdir()
+    try:
+        cwd = tempfile.gettempdir()
+    except AttributeError:
+        # Fallback to ${HOME} for unsaved buffer
+        cwd = expanduser('~')
     base = stem = suffix = ext = None
     if path:
         cwd, base = split(path)
