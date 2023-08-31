@@ -56,6 +56,8 @@ class CleancssFormatter:
                 result.extend(['--' + key, '%d' % value])
             elif type(value) == bool and value:
                 result.append('--' + key)
+            elif type(value) == str:
+                result.extend(['--' + key, '%s' % value])
             elif type(value) == dict:
                 if key == 'compatibility':
                     for keylv1, valuelv1 in value.items():
@@ -63,6 +65,8 @@ class CleancssFormatter:
                         for keylv2, valuelv2 in valuelv1.items():
                             if type(valuelv2) == bool:
                                 string += (('+' if valuelv2 else '-') + keylv2 + ',')
+                            elif type(valuelv2) == list and valuelv2:
+                                string += (('+' if valuelv2 else '-') + keylv2 + ':' + ','.join(valuelv2) + ';')
                         if string:
                             result.extend(['--compatibility', keylv1 + ',' + string[:-1]])
                 if key == 'format':

@@ -1,106 +1,145 @@
 {
+    "inline": ["local"],                                    // inline option whitelists which @import rules will be processed; defaults to "local" to enable local inlining only
+    "inline-timeout": 5,                                    // per connection timeout when fetching remote stylesheets (defaults to 5 seconds)
+    "with-rebase": false,                                   // enables URLs rebasing
+    "source-map-inline-sources": false,                     // enables inlining sources inside source maps
+    "source-map": false,                                    // enables building input's source map
+    "input-source-map": "",                                 // specifies the path of the input source map file
     "compatibility": {
         // Accepted option: "ie7", "ie8", "ie9" or "*"; default ie10+: "*"
         "*": {
-            "colors.hexAlpha": false,
-            "colors.opacity": true,
+            "colors.hexAlpha": false,                       // controls 4- and 8-character hex color support
+            "colors.opacity": true,                         // controls `rgba()` / `hsla()` color support
             "customUnits.rpx": false,
-            "properties.backgroundClipMerging": true,
-            "properties.backgroundOriginMerging": true,
-            "properties.backgroundSizeMerging": true,
-            "properties.colors": true,
-            "properties.ieBangHack": false,
-            "properties.ieFilters": false,
-            "properties.iePrefixHack": false,
-            "properties.ieSuffixHack": false,
-            "properties.merging": true,
-            "properties.shorterLengthUnits": false,
-            "properties.spaceAfterClosingBrace": true,
-            "properties.urlQuotes": true,
-            "properties.zeroUnits": true,
-            "selectors.adjacentSpace": false,
-            "selectors.ie7Hack": false,
-            "mergeLimit": 8191,
-            "selectors.multiplePseudoMerging": true,
-            "units.ch": true,
-            "units.in": true,
-            "units.pc": true,
-            "units.pt": true,
-            "units.rem": true,
-            "units.vh": true,
-            "units.vm": true,
-            "units.vmax": true,
-            "units.vmin": true,
-            "units.vw": true
+            "properties.backgroundClipMerging": true,       // background-clip to shorthand
+            "properties.backgroundOriginMerging": true,     // background-origin to shorthand
+            "properties.backgroundSizeMerging": true,       // background-size to shorthand
+            "properties.colors": true,                      // any kind of color transformations, like `#ff00ff` to `#f0f` or `#fff` into `red`
+            "properties.ieBangHack": false,                 // !ie suffix hacks on IE<8
+            "properties.ieFilters": false,                  // whether to preserve `filter` and `-ms-filter` properties
+            "properties.iePrefixHack": false,               // underscore / asterisk prefix hacks on IE
+            "properties.ieSuffixHack": false,               // \9 suffix hacks on IE6-9, \0 suffix hack on IE6-11
+            "properties.merging": true,                     // merging properties into one
+            "properties.shorterLengthUnits": false,         // controls shortening pixel units into `pc`, `pt`, or `in` units
+            "properties.spaceAfterClosingBrace": true,      // 'url() no-repeat' to 'url()no-repeat'
+            "properties.urlQuotes": true,                   // whether to wrap content of `url()` into quotes or not
+            "properties.zeroUnits": true,                   // controls removal of units 0[unit] -> 0
+            "selectors.adjacentSpace": false,               // controls extra space before `nav` element
+            "selectors.ie7Hack": false,                     // *+html hack
+            "mergeablePseudoClasses": [                     // selectors with these pseudo-classes can be merged as these are universally supported
+                ":active",
+                ":after",
+                ":before",
+                ":empty",
+                ":checked",
+                ":disabled",
+                ":empty",
+                ":enabled",
+                ":first-child",
+                ":first-letter",
+                ":first-line",
+                ":first-of-type",
+                ":focus",
+                ":hover",
+                ":lang",
+                ":last-child",
+                ":last-of-type",
+                ":link",
+                ":not",
+                ":nth-child",
+                ":nth-last-child",
+                ":nth-last-of-type",
+                ":nth-of-type",
+                ":only-child",
+                ":only-of-type",
+                ":root",
+                ":target",
+                ":visited"
+            ],
+            "mergeablePseudoElements": [                    // selectors with these pseudo-elements can be merged as these are universally supported
+                "::after",
+                "::before",
+                "::first-letter",
+                "::first-line"
+            ],
+            "mergeLimit": 8191,                             // controls maximum number of selectors safely merged in a single rule
+            "selectors.multiplePseudoMerging": true,        // controls merging of rules with multiple pseudo classes / elements
+            "units.ch": true,                               // controls treating `ch` as a supported unit
+            "units.in": true,                               // controls treating `in` as a supported unit
+            "units.pc": true,                               // controls treating `pc` as a supported unit
+            "units.pt": true,                               // controls treating `pt` as a supported unit
+            "units.rem": true,                              // controls treating `rem` as a supported unit
+            "units.vh": true,                               // controls treating `vh` as a supported unit
+            "units.vm": true,                               // vm is vmin on IE9+ see https://developer.mozilla.org/en-US/docs/Web/CSS/length
+            "units.vmax": true,                             // controls treating `vmax` as a supported unit
+            "units.vmin": true,                             // controls treating `vmin` as a supported unit
+            "units.vw": true                                // controls treating `vw` as a supported unit
         }
     },
     "format": {
         // Accepted option: "beautify", "keep-breaks" or "default"; default: "default"
         "default": {
-            "breaks:afterAtRule": false,
-            "breaks:afterBlockBegins": false,
-            "breaks:afterBlockEnds": false,
-            "breaks:afterComment": false,
-            "breaks:afterProperty": false,
-            "breaks:afterRuleBegins": false,
-            "breaks:afterRuleEnds": false,
-            "breaks:beforeBlockEnds": false,
-            "breaks:betweenSelectors": false,
-            "breakWith": "lf",
-            "indentBy": 0,
-            "indentWith": "space",
-            "spaces:aroundSelectorRelation": false,
-            "spaces:beforeBlockBegins": false,
-            "spaces:beforeValue": false,
-            "wrapAt": false,
-            "semicolonAfterLastProperty": false
+            "breaks:afterAtRule": false,                    // controls if a line break comes after an at-rule; e.g. `@charset`; defaults to `false`
+            "breaks:afterBlockBegins": false,               // controls if a line break comes after a block begins; e.g. `@media`; defaults to `false`
+            "breaks:afterBlockEnds": false,                 // controls if a line break comes after a block ends, defaults to `false`
+            "breaks:afterComment": false,                   // controls if a line break comes after a comment; defaults to `false`
+            "breaks:afterProperty": false,                  // controls if a line break comes after a property; defaults to `false`
+            "breaks:afterRuleBegins": false,                // controls if a line break comes after a rule begins; defaults to `false`
+            "breaks:afterRuleEnds": false,                  // controls if a line break comes after a rule ends; defaults to `false`
+            "breaks:beforeBlockEnds": false,                // controls if a line break comes before a block ends; defaults to `false`
+            "breaks:betweenSelectors": false,               // controls if a line break comes between selectors; defaults to `false`
+            "breakWith": "lf",                              // controls the new line character, can be `'\r\n'` or `'\n'` (aliased as `'windows'` and `'unix'` or `'crlf'` and `'lf'`); defaults to system one, so former on Windows and latter on Unix
+            "indentBy": 0,                                  // controls number of characters to indent with; defaults to `0`
+            "indentWith": "space",                          // controls a character to indent with, can be `'space'` or `'tab'`; defaults to `'space'`
+            "spaces:aroundSelectorRelation": false,         // controls if spaces come around selector relations; e.g. `div > a`; defaults to `false`
+            "spaces:beforeBlockBegins": false,              // controls if a space comes before a block begins; e.g. `.block {`; defaults to `false`
+            "spaces:beforeValue": false,                    // controls if a space comes before a value; e.g. `width: 1rem`; defaults to `false`
+            "wrapAt": false,                                // controls maximum line length; defaults to `false`
+            "semicolonAfterLastProperty": false             // controls removing trailing semicolons in rule; defaults to `false` - means remove
         }
     },
-    "inline": ["local"],
-    "inline-timeout": 5,
-    "skip-rebase": false,
     "optimization": {
         // Accepted level: "0", "1", "2"; default: "1"
         "level": ["1"],
         "1": {
-            "cleanupCharsets": true,
-            "normalizeUrls": true,
-            "optimizeBackground": true,
-            "optimizeBorderRadius": true,
-            "optimizeFilter": true,
-            "optimizeFont": true,
-            "optimizeFontWeight": true,
-            "optimizeOutline": true,
-            "removeEmpty": true,
-            "removeNegativePaddings": true,
-            "removeQuotes": true,
-            "removeWhitespace": true,
-            "replaceMultipleZeros": true,
-            "replaceTimeUnits": true,
-            "replaceZeroUnits": true,
-            "roundingPrecision": false,
-            "selectorsSortingMethod": "standard",
-            "specialComments": "all",
-            "tidyAtRules": true,
-            "tidyBlockScopes": true,
-            "tidySelectors": true,
-            "variableValueOptimizers": []
+            "cleanupCharsets": true,                        // controls `@charset` moving to the front of a stylesheet; defaults to `true`
+            "normalizeUrls": true,                          // controls URL normalization; defaults to `true`
+            "optimizeBackground": true,                     // controls `background` property optimizations; defaults to `true`
+            "optimizeBorderRadius": true,                   // controls `border-radius` property optimizations; defaults to `true`
+            "optimizeFilter": true,                         // controls `filter` property optimizations; defaults to `true`
+            "optimizeFont": true,                           // controls `font` property optimizations; defaults to `true`
+            "optimizeFontWeight": true,                     // controls `font-weight` property optimizations; defaults to `true`
+            "optimizeOutline": true,                        // controls `outline` property optimizations; defaults to `true`
+            "removeEmpty": true,                            // controls removing empty rules and nested blocks; defaults to `true`
+            "removeNegativePaddings": true,                 // controls removing negative paddings; defaults to `true`
+            "removeQuotes": true,                           // controls removing quotes when unnecessary; defaults to `true`
+            "removeWhitespace": true,                       // controls removing unused whitespace; defaults to `true`
+            "replaceMultipleZeros": true,                   // contols removing redundant zeros; defaults to `true`
+            "replaceTimeUnits": true,                       // controls replacing time units with shorter values; defaults to `true`
+            "replaceZeroUnits": true,                       // controls replacing zero values with units; defaults to `true`
+            "roundingPrecision": false,                     // rounds pixel values to `N` decimal places; `false` disables rounding; defaults to `false`
+            "selectorsSortingMethod": "standard",           // denotes selector sorting method; can be `'natural'` or `'standard'`, `'none'`, or false (the last two since 4.1.0); defaults to `'standard'`
+            "specialComments": "all",                       // denotes a number of /*! ... */ comments preserved; defaults to `all`
+            "tidyAtRules": true,                            // controls at-rules (e.g. `@charset`, `@import`) optimizing; defaults to `true`
+            "tidyBlockScopes": true,                        // controls block scopes (e.g. `@media`) optimizing; defaults to `true`
+            "tidySelectors": true,                          // controls selectors optimizing; defaults to `true`,
+            "variableValueOptimizers": []                   // controls value optimizers which are applied to variables
         },
         "2": {
-            "mergeAdjacentRules": true,
-            "mergeIntoShorthands": true,
-            "mergeMedia": true,
-            "mergeNonAdjacentRules": true,
-            "mergeSemantically": false,
-            "overrideProperties": true,
-            "removeEmpty": true,
-            "reduceNonAdjacentRules": true,
-            "removeDuplicateFontRules": true,
-            "removeDuplicateMediaBlocks": true,
-            "removeDuplicateRules": true,
-            "removeUnusedAtRules": false,
-            "restructureRules": false,
-            "skipProperties": []
+            "mergeAdjacentRules": true,                     // controls adjacent rules merging; defaults to true
+            "mergeIntoShorthands": true,                    // controls merging properties into shorthands; defaults to true
+            "mergeMedia": true,                             // controls `@media` merging; defaults to true
+            "mergeNonAdjacentRules": true,                  // controls non-adjacent rule merging; defaults to true
+            "mergeSemantically": false,                     // controls semantic merging; defaults to false
+            "overrideProperties": true,                     // controls property overriding based on understandability; defaults to true
+            "removeEmpty": true,                            // controls removing empty rules and nested blocks; defaults to `true`
+            "reduceNonAdjacentRules": true,                 // controls non-adjacent rule reducing; defaults to true
+            "removeDuplicateFontRules": true,               // controls duplicate `@font-face` removing; defaults to true
+            "removeDuplicateMediaBlocks": true,             // controls duplicate `@media` removing; defaults to true
+            "removeDuplicateRules": true,                   // controls duplicate rules removing; defaults to true
+            "removeUnusedAtRules": false,                   // controls unused at rule removing; defaults to false
+            "restructureRules": false,                      // controls rule restructuring; defaults to false
+            "skipProperties": []                            // controls which properties won't be optimized, defaults to `[]` which means all will be optimized
         }
     }
 }
