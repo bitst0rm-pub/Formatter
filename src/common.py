@@ -22,7 +22,7 @@ from subprocess import Popen, PIPE
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     exists, normcase, normpath, pathsep, split, splitext, dirname)
 
-log = logging.getLogger('__name__')
+log = logging.getLogger(__name__)
 
 IS_WINDOWS = sublime.platform() == 'windows'
 VERSION = '1.0.4'

@@ -21,7 +21,7 @@ from threading import Event
 from .src import common
 from .src.formatter import Formatter
 
-log = logging.getLogger('__name__')
+log = logging.getLogger(__name__)
 
 SYNC_SCROLL = {
     'view_pairs': [],

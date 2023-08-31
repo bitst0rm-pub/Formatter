@@ -14,7 +14,7 @@ import logging
 import sublime
 from . import common
 
-log = logging.getLogger('__name__')
+log = logging.getLogger(__name__)
 EXECUTABLES = ['shfmt']
 
 

@@ -15,7 +15,7 @@ import json
 import sublime
 from . import common
 
-log = logging.getLogger('__name__')
+log = logging.getLogger(__name__)
 
 
 class JsonmaxFormatter:

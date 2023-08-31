@@ -13,7 +13,7 @@
 import logging
 from . import common
 
-log = logging.getLogger('__name__')
+log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['yapf']
 
