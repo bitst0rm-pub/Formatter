@@ -10,34 +10,16 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import os
-import importlib
 import logging
 from . import common
+from .. import src as modules
 
 log = logging.getLogger(__name__)
 
 
 class Formatter:
     def __init__(self, view):
-        self.formatter_map = self.load_formatters()
-
-    def load_formatters(self):
-        formatter_map = {}
-        formatter_prefix = 'formatter_'
-        formatter_prefix_len = len(formatter_prefix)
-
-        files = [f for f in os.listdir(os.path.dirname(__file__)) if f.startswith(formatter_prefix) and f.endswith('.py')]
-        for f in files:
-            module_name = os.path.splitext(f)[0]
-            module = importlib.import_module('.' + module_name, package=__package__)
-            module_formatter = getattr(module, module_name[formatter_prefix_len:].capitalize() + common.PLUGIN_NAME, None)
-
-            if module_formatter:
-                formatter_identifier = module_name[formatter_prefix_len:]
-                formatter_map[formatter_identifier] = module_formatter
-
-        return formatter_map
+        pass
 
     def run_formatter(self, *args, **kwargs):
         view = kwargs.get('view', None)
@@ -53,7 +35,8 @@ class Formatter:
         if not text:
             return None
 
-        formatter_class = self.formatter_map.get(identifier)
+        formatter_map = modules.__all__
+        formatter_class = formatter_map.get(identifier)
         if formatter_class:
             syntax = common.get_assigned_syntax(view, identifier, region, is_selected)
             if not syntax:
