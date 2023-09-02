@@ -23,7 +23,7 @@ class Formatter:
 
     def run_formatter(self, *args, **kwargs):
         view = kwargs.get('view', None)
-        identifier = kwargs.get('identifier', None)
+        uid = kwargs.get('uid', None)
         region = kwargs.get('region', None)
         is_selected = kwargs.get('is_selected', False)
         text = kwargs.get('text', None)
@@ -36,17 +36,17 @@ class Formatter:
             return None
 
         formatter_map = modules.__all__
-        formatter_class = formatter_map.get(identifier)
+        formatter_class = formatter_map.get(uid)
         if formatter_class:
-            syntax = common.get_assigned_syntax(view, identifier, region, is_selected)
+            syntax = common.get_assigned_syntax(view, uid, region, is_selected)
             if not syntax:
-                common.prompt_error('Syntax out of the scope.', 'ID:' + identifier)
+                common.prompt_error('Syntax out of the scope.', 'ID:' + uid)
             else:
                 file = view.file_name()
                 log.debug('Target: %s', file if file else '(view)')
                 log.debug('Scope: %s', view.scope_name(0 if not is_selected else region.a))
                 log.debug('Syntax: %s', syntax)
-                log.debug('Formatter ID: %s', identifier)
+                log.debug('Formatter ID: %s', uid)
                 worker = formatter_class(*args, **kwargs)
                 result = worker.format(text)
                 if result:
@@ -55,6 +55,6 @@ class Formatter:
                     view.run_command('substitute', args)
                     return True
         else:
-            log.error('Formatter ID not found: %s', identifier)
+            log.error('Formatter ID not found: %s', uid)
 
         return False

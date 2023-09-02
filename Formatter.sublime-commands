@@ -11,189 +11,189 @@
         "caption": "Formatter: Beautify With Beautysh",
         "command": "run_format",
         "args": {
-            "identifier": "beautysh"
+            "uid": "beautysh"
         }
     },
     {
         "caption": "Formatter: Beautify With Black",
         "command": "run_format",
         "args": {
-            "identifier": "black"
+            "uid": "black"
         }
     },
     {
         "caption": "Formatter: Beautify With ClangFormat",
         "command": "run_format",
         "args": {
-            "identifier": "clangformat"
+            "uid": "clangformat"
         }
     },
     {
         "caption": "Formatter: Beautify With CSScomb",
         "command": "run_format",
         "args": {
-            "identifier": "csscomb"
+            "uid": "csscomb"
         }
     },
     {
         "caption": "Formatter: Beautify With ESLint",
         "command": "run_format",
         "args": {
-            "identifier": "eslint"
+            "uid": "eslint"
         }
     },
     {
         "caption": "Formatter: Beautify With HTML Tidy",
         "command": "run_format",
         "args": {
-            "identifier": "htmltidy"
+            "uid": "htmltidy"
         }
     },
     {
         "caption": "Formatter: Beautify With JS Beautifier",
         "command": "run_format",
         "args": {
-            "identifier": "jsbeautifier"
+            "uid": "jsbeautifier"
         }
     },
     {
         "caption": "Formatter: Beautify With JSONMax",
         "command": "run_format",
         "args": {
-            "identifier": "jsonmax"
+            "uid": "jsonmax"
         }
     },
     {
         "caption": "Formatter: Beautify With Perltidy",
         "command": "run_format",
         "args": {
-            "identifier": "perltidy"
+            "uid": "perltidy"
         }
     },
     {
         "caption": "Formatter: Beautify With PHP CS Fixer",
         "command": "run_format",
         "args": {
-            "identifier": "phpcsfixer"
+            "uid": "phpcsfixer"
         }
     },
     {
         "caption": "Formatter: Beautify With Prettier",
         "command": "run_format",
         "args": {
-            "identifier": "prettier"
+            "uid": "prettier"
         }
     },
     {
         "caption": "Formatter: Beautify With Pretty Diff",
         "command": "run_format",
         "args": {
-            "identifier": "prettydiffmax"
+            "uid": "prettydiffmax"
         }
     },
     {
         "caption": "Formatter: Beautify With PrettyTable",
         "command": "run_format",
         "args": {
-            "identifier": "prettytable"
+            "uid": "prettytable"
         }
     },
     {
         "caption": "Formatter: Beautify With RuboCop",
         "command": "run_format",
         "args": {
-            "identifier": "rubocop"
+            "uid": "rubocop"
         }
     },
     {
         "caption": "Formatter: Beautify With Shfmt",
         "command": "run_format",
         "args": {
-            "identifier": "shfmt"
+            "uid": "shfmt"
         }
     },
     {
         "caption": "Formatter: Beautify With SQL Formatter",
         "command": "run_format",
         "args": {
-            "identifier": "sqlformatter"
+            "uid": "sqlformatter"
         }
     },
     {
         "caption": "Formatter: Beautify With Stylelint",
         "command": "run_format",
         "args": {
-            "identifier": "stylelint"
+            "uid": "stylelint"
         }
     },
     {
         "caption": "Formatter: Beautify With Uncrustify",
         "command": "run_format",
         "args": {
-            "identifier": "uncrustify"
+            "uid": "uncrustify"
         }
     },
     {
         "caption": "Formatter: Beautify With YAPF",
         "command": "run_format",
         "args": {
-            "identifier": "yapf"
+            "uid": "yapf"
         }
     },
     {
         "caption": "Formatter: Minify With Clean CSS",
         "command": "run_format",
         "args": {
-            "identifier": "cleancss"
+            "uid": "cleancss"
         }
     },
     {
         "caption": "Formatter: Minify With HTMLMinifier",
         "command": "run_format",
         "args": {
-            "identifier": "htmlminifier"
+            "uid": "htmlminifier"
         }
     },
     {
         "caption": "Formatter: Minify With JSONMin",
         "command": "run_format",
         "args": {
-            "identifier": "jsonmin"
+            "uid": "jsonmin"
         }
     },
     {
         "caption": "Formatter: Minify With Pretty Diff",
         "command": "run_format",
         "args": {
-            "identifier": "prettydiffmin"
+            "uid": "prettydiffmin"
         }
     },
     {
         "caption": "Formatter: Minify With Python Minifier",
         "command": "run_format",
         "args": {
-            "identifier": "pythonminifier"
+            "uid": "pythonminifier"
         }
     },
     {
         "caption": "Formatter: Minify With Shfmt",
         "command": "run_format",
         "args": {
-            "identifier": "shfmtmin"
+            "uid": "shfmtmin"
         }
     },
     {
         "caption": "Formatter: Minify With SQLMin",
         "command": "run_format",
         "args": {
-            "identifier": "sqlmin"
+            "uid": "sqlmin"
         }
     },
     {
         "caption": "Formatter: Minify With Terser",
         "command": "run_format",
         "args": {
-            "identifier": "terser"
+            "uid": "terser"
         }
     }
 ]

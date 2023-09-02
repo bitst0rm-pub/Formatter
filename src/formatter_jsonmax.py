@@ -21,13 +21,13 @@ log = logging.getLogger(__name__)
 class JsonmaxFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def format(self, text):
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             with open(config, 'r', encoding='utf-8') as file:
                 cmd = json.load(file)

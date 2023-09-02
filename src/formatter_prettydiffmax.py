@@ -23,14 +23,14 @@ EXECUTABLES = ['prettydiff']
 class PrettydiffmaxFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self, text):
-        interpreter = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
-        executable = common.get_intr_exec_path(self.identifier, EXECUTABLES, 'executable')
+        interpreter = common.get_intr_exec_path(self.uid, INTERPRETERS, 'interpreter')
+        executable = common.get_intr_exec_path(self.uid, EXECUTABLES, 'executable')
         if not interpreter or not executable:
             return None
 
@@ -38,11 +38,11 @@ class PrettydiffmaxFormatter:
 
         cmd.extend(['beautify'])
 
-        args = common.get_args(self.identifier)
+        args = common.get_args(self.uid)
         if args:
             cmd.extend(args)
 
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             cmd.extend(['config', config])
 
@@ -50,7 +50,7 @@ class PrettydiffmaxFormatter:
         if self.pathinfo[0]:
             cmd.extend(['source', self.pathinfo[0]])
         else:
-            suffix = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
+            suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
             with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
                 file.write(text)
                 file.close()
@@ -62,7 +62,7 @@ class PrettydiffmaxFormatter:
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)
         log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)

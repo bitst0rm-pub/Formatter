@@ -24,14 +24,14 @@ EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'ph
 class PhpcsfixerFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def is_compat(self):
         try:
-            php = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
+            php = common.get_intr_exec_path(self.uid, INTERPRETERS, 'interpreter')
             if php:
                 proc = common.exec_cmd([php, '-v'], self.pathinfo[1])
                 stdout = proc.communicate()[0]
@@ -39,7 +39,7 @@ class PhpcsfixerFormatter:
                 version = string.splitlines()[0].split(' ')[1]
                 if StrictVersion(version) >= StrictVersion('7.4.0'):
                     return True
-                common.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.identifier)
+                common.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
             return None
         except OSError:
             log.error('Error occurred while validating PHP compatibility.')
@@ -47,18 +47,18 @@ class PhpcsfixerFormatter:
         return None
 
     def get_cmd(self, text):
-        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             cmd.extend(['--config=' + config])
             cmd.extend(['--allow-risky=yes'])
 
         tmp_file = None
 
-        suffix = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
+        suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
 
         with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
             file.write(text)
@@ -74,7 +74,7 @@ class PhpcsfixerFormatter:
 
         cmd, tmp_file = self.get_cmd(text)
         log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)

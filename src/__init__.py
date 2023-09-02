@@ -28,8 +28,8 @@ for module_name in module_names:
     formatter_class = getattr(module, module_name[formatter_prefix_len:].capitalize() + common.PLUGIN_NAME, None)
 
     if formatter_class:
-        formatter_identifier = module_name[formatter_prefix_len:]
-        formatter_map[formatter_identifier] = formatter_class
+        formatter_uid = module_name[formatter_prefix_len:]
+        formatter_map[formatter_uid] = formatter_class
     else:
         log.error('Either missing or misspelled formatter class in %s.py', module_name)
 

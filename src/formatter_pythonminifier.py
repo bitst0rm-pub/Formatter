@@ -22,17 +22,17 @@ EXECUTABLES = ['pyminify']
 class PythonminifierFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
 
         if config:
             params = [
@@ -80,7 +80,7 @@ class PythonminifierFormatter:
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd:
             return None
 

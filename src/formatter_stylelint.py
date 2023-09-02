@@ -23,24 +23,24 @@ EXECUTABLES = ['stylelint']
 class StylelintFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self, text):
-        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             cmd.extend(['--config', config])
 
         tmp_file = None
 
         # Stylelint automatically infers syntax to use based on the file extension.
-        suffix = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
+        suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
 
         with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
             file.write(text)
@@ -53,7 +53,7 @@ class StylelintFormatter:
     def format(self, text):
         cmd, tmp_file = self.get_cmd(text)
         log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)

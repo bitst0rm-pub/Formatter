@@ -21,17 +21,17 @@ EXECUTABLES = ['prettier']
 class PrettierFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             cmd.extend(['--config', config])
         else:
@@ -41,7 +41,7 @@ class PrettierFormatter:
             cmd.extend(['--stdin-filepath', self.pathinfo[0]])
         else:
             # Prettier automatically infers which parser to use based on the file extension.
-            extension = '.' + common.get_assigned_syntax(self.view, self.identifier, self.region, self.is_selected)
+            extension = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
             cmd.extend(['--stdin-filepath', 'dummy' + extension])
 
         return cmd
@@ -49,7 +49,7 @@ class PrettierFormatter:
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd:
             return None
 

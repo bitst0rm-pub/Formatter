@@ -12,133 +12,133 @@
                         "caption": "Beautysh",
                         "command": "run_format",
                         "args": {
-                            "identifier": "beautysh"
+                            "uid": "beautysh"
                         }
                     },
                     {
                         "caption": "Black",
                         "command": "run_format",
                         "args": {
-                            "identifier": "black"
+                            "uid": "black"
                         }
                     },
                     {
                         "caption": "ClangFormat",
                         "command": "run_format",
                         "args": {
-                            "identifier": "clangformat"
+                            "uid": "clangformat"
                         }
                     },
                     {
                         "caption": "CSScomb",
                         "command": "run_format",
                         "args": {
-                            "identifier": "csscomb"
+                            "uid": "csscomb"
                         }
                     },
                     {
                         "caption": "ESLint",
                         "command": "run_format",
                         "args": {
-                            "identifier": "eslint"
+                            "uid": "eslint"
                         }
                     },
                     {
                         "caption": "HTML Tidy",
                         "command": "run_format",
                         "args": {
-                            "identifier": "htmltidy"
+                            "uid": "htmltidy"
                         }
                     },
                     {
                         "caption": "JS Beautifier",
                         "command": "run_format",
                         "args": {
-                            "identifier": "jsbeautifier"
+                            "uid": "jsbeautifier"
                         }
                     },
                     {
                         "caption": "JSONMax",
                         "command": "run_format",
                         "args": {
-                            "identifier": "jsonmax"
+                            "uid": "jsonmax"
                         }
                     },
                     {
                         "caption": "Perltidy",
                         "command": "run_format",
                         "args": {
-                            "identifier": "perltidy"
+                            "uid": "perltidy"
                         }
                     },
                     {
                         "caption": "PHP CS Fixer",
                         "command": "run_format",
                         "args": {
-                            "identifier": "phpcsfixer"
+                            "uid": "phpcsfixer"
                         }
                     },
                     {
                         "caption": "Prettier",
                         "command": "run_format",
                         "args": {
-                            "identifier": "prettier"
+                            "uid": "prettier"
                         }
                     },
                     {
                         "caption": "Pretty Diff",
                         "command": "run_format",
                         "args": {
-                            "identifier": "prettydiffmax"
+                            "uid": "prettydiffmax"
                         }
                     },
                     {
                         "caption": "PrettyTable",
                         "command": "run_format",
                         "args": {
-                            "identifier": "prettytable"
+                            "uid": "prettytable"
                         }
                     },
                     {
                         "caption": "RuboCop",
                         "command": "run_format",
                         "args": {
-                            "identifier": "rubocop"
+                            "uid": "rubocop"
                         }
                     },
                     {
                         "caption": "Shfmt",
                         "command": "run_format",
                         "args": {
-                            "identifier": "shfmt"
+                            "uid": "shfmt"
                         }
                     },
                     {
                         "caption": "SQL Formatter",
                         "command": "run_format",
                         "args": {
-                            "identifier": "sqlformatter"
+                            "uid": "sqlformatter"
                         }
                     },
                     {
                         "caption": "Stylelint",
                         "command": "run_format",
                         "args": {
-                            "identifier": "stylelint"
+                            "uid": "stylelint"
                         }
                     },
                     {
                         "caption": "Uncrustify",
                         "command": "run_format",
                         "args": {
-                            "identifier": "uncrustify"
+                            "uid": "uncrustify"
                         }
                     },
                     {
                         "caption": "YAPF",
                         "command": "run_format",
                         "args": {
-                            "identifier": "yapf"
+                            "uid": "yapf"
                         }
                     },
                     {
@@ -148,56 +148,56 @@
                         "caption": "Clean CSS (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "cleancss"
+                            "uid": "cleancss"
                         }
                     },
                     {
                         "caption": "HTMLMinifier (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "htmlminifier"
+                            "uid": "htmlminifier"
                         }
                     },
                     {
                         "caption": "JSONMin (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "jsonmin"
+                            "uid": "jsonmin"
                         }
                     },
                     {
                         "caption": "Pretty Diff (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "prettydiffmin"
+                            "uid": "prettydiffmin"
                         }
                     },
                     {
                         "caption": "Python Minifier (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "pythonminifier"
+                            "uid": "pythonminifier"
                         }
                     },
                     {
                         "caption": "Shfmt (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "shfmtmin"
+                            "uid": "shfmtmin"
                         }
                     },
                     {
                         "caption": "SQLMin (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "sqlmin"
+                            "uid": "sqlmin"
                         }
                     },
                     {
                         "caption": "Terser (minify)",
                         "command": "run_format",
                         "args": {
-                            "identifier": "terser"
+                            "uid": "terser"
                         }
                     }
                 ]

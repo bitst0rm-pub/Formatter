@@ -22,14 +22,14 @@ EXECUTABLES = ['black']
 class BlackFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
-        self.identifier = kwargs.get('identifier', None)
+        self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def is_compat(self):
         try:
-            python = common.get_intr_exec_path(self.identifier, INTERPRETERS, 'interpreter')
+            python = common.get_intr_exec_path(self.uid, INTERPRETERS, 'interpreter')
             if python:
                 proc = common.exec_cmd([python, '-V'], self.pathinfo[1])
                 stdout = proc.communicate()[0]
@@ -37,7 +37,7 @@ class BlackFormatter:
                 version = string.splitlines()[0].split(' ')[1]
                 if StrictVersion(version) >= StrictVersion('3.7.0'):
                     return True
-                common.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.identifier)
+                common.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
             return None
         except OSError:
             log.error('Error occurred while validating Python compatibility.')
@@ -45,11 +45,11 @@ class BlackFormatter:
         return None
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.identifier, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.identifier, self.region, self.is_selected)
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             cmd.extend(['--config', config])
 
@@ -60,7 +60,7 @@ class BlackFormatter:
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.identifier)
+        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd or not self.is_compat():
             return None
 

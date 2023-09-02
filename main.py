@@ -79,9 +79,9 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
         _unused = edit
-        identifier = kwargs.get('identifier', None)
+        uid = kwargs.get('uid', None)
 
-        if common.query(common.config, False, 'formatters', identifier, 'recursive_folder_format', 'enable'):
+        if common.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable'):
             if self.view.file_name():
                 recursive_format_lock = threading.Lock()
                 with recursive_format_lock:
@@ -104,8 +104,8 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
     def is_visible(self, **kwargs):
         log.disabled = not common.config.get('debug')
-        identifier = kwargs.get('identifier', None)
-        is_disabled = common.query(common.config, True, 'formatters', identifier, 'disable')
+        uid = kwargs.get('uid', None)
+        is_disabled = common.query(common.config, True, 'formatters', uid, 'disable')
         return not is_disabled
 
 
@@ -147,7 +147,7 @@ class SingleFormat:
                     self.print_status(is_success)
 
             if any(self.cycles):
-                self.new_file_on_format(self.kwargs.get('identifier', None))
+                self.new_file_on_format(self.kwargs.get('uid', None))
             else:
                 self.open_console_on_failure()
         except Exception as e:
@@ -172,8 +172,8 @@ class SingleFormat:
         if common.config.get('open_console_on_failure'):
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
-    def new_file_on_format(self, identifier):
-        suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
+    def new_file_on_format(self, uid):
+        suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
         if suffix and isinstance(suffix, str):
             if common.want_layout():
                 common.setup_layout(self.view)
@@ -303,8 +303,8 @@ class RecursiveFormat:
         log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
             cwd = common.get_pathinfo(self.view.file_name())[1]
-            identifier = self.kwargs.get('identifier', None)
-            x = common.query(common.config, {}, 'formatters', identifier, 'recursive_folder_format')
+            uid = self.kwargs.get('uid', None)
+            x = common.query(common.config, {}, 'formatters', uid, 'recursive_folder_format')
             exclude_dirs_regex = x.get('exclude_folders_regex', [])
             exclude_files_regex = x.get('exclude_files_regex', [])
             exclude_extensions = x.get('exclude_extensions', [])
@@ -333,13 +333,13 @@ class SequenceFormatThread(threading.Thread):
         try:
             with self.lock:
                 region = sublime.Region(0, self.view.size())
-                identifier = self.kwargs.get('identifier', None)
-                syntax = common.get_assigned_syntax(self.view, identifier, region, False)
-                exclude_syntaxes = common.query(common.config, [], 'formatters', identifier, 'recursive_folder_format', 'exclude_syntaxes')
+                uid = self.kwargs.get('uid', None)
+                syntax = common.get_assigned_syntax(self.view, uid, region, False)
+                exclude_syntaxes = common.query(common.config, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
                 if not syntax or syntax in exclude_syntaxes:
                     if not syntax:
-                        scope = common.query(common.config, [], 'formatters', identifier, 'syntaxes')
-                        log.warning('Syntax out of the scope. Plugin scope: %s, ID: %s, File syntax: %s, File: %s', scope, identifier, syntax, self.view.file_name())
+                        scope = common.query(common.config, [], 'formatters', uid, 'syntaxes')
+                        log.warning('Syntax out of the scope. Plugin scope: %s, ID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
                     self.callback(False)
                 else:
                     formatter = Formatter(self.view)
@@ -367,8 +367,8 @@ def post_recursive_format(view, is_success):
     file_path = RECURSIVE_TARGET['filelist'][RECURSIVE_TARGET['current_index'] - 1]
     new_file_path = file_path.replace(RECURSIVE_TARGET['cwd'], new_cwd, 1)
 
-    identifier = RECURSIVE_TARGET['kwargs'].get('identifier', None)
-    suffix = common.query(common.config, False, 'formatters', identifier, 'new_file_on_format')
+    uid = RECURSIVE_TARGET['kwargs'].get('uid', None)
+    suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
     if suffix and isinstance(suffix, str) and is_success:
         new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
 
@@ -524,7 +524,7 @@ class Listeners(sublime_plugin.EventListener):
             syntax = common.get_assigned_syntax(view, key, region, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
                 log.debug('"format_on_save" enabled for ID: %s, using syntax: %s', key, syntax)
-                SingleFormat(view, **{'identifier': key}).run()
+                SingleFormat(view, **{'uid': key}).run()
                 used.add(syntax)
 
     def on_post_save(self, view):

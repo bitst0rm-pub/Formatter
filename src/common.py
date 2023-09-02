@@ -350,23 +350,23 @@ def get_environ_path(fnames):
         log.error('File names variable is empty or not of type list: %s', fnames)
     return None
 
-def get_head_cmd(identifier, intr_names, exec_names):
-    interpreter = get_intr_exec_path(identifier, intr_names, 'interpreter')
-    executable = get_intr_exec_path(identifier, exec_names, 'executable')
+def get_head_cmd(uid, intr_names, exec_names):
+    interpreter = get_intr_exec_path(uid, intr_names, 'interpreter')
+    executable = get_intr_exec_path(uid, exec_names, 'executable')
     if not interpreter or not executable:
         return None
     cmd = [interpreter, executable]
-    args = get_args(identifier)
+    args = get_args(uid)
     if args:
         cmd.extend(args)
     return cmd
 
-def get_intr_exec_path(identifier, fnames, path_type):
+def get_intr_exec_path(uid, fnames, path_type):
     if path_type not in ['interpreter', 'executable']:
         log.error('Invalid "path_type". Use "interpreter" or "executable".')
         return None
 
-    local_file = query(config, None, 'formatters', identifier, path_type + '_path')
+    local_file = query(config, None, 'formatters', uid, path_type + '_path')
     if local_file and not isfile(local_file):
         log.error('File does not exist: %s', local_file)
         return None
@@ -379,10 +379,10 @@ def get_intr_exec_path(identifier, fnames, path_type):
     log.error('Could not find %s: %s', path_type, fnames)
     return None
 
-def get_config_path(view, identifier, region, is_selected):
-    shared_config = query(config, None, 'formatters', identifier, 'config_path')
+def get_config_path(view, uid, region, is_selected):
+    shared_config = query(config, None, 'formatters', uid, 'config_path')
     if shared_config and isinstance(shared_config, dict):
-        syntax = get_assigned_syntax(view, identifier, region, is_selected)
+        syntax = get_assigned_syntax(view, uid, region, is_selected)
         for key, path in shared_config.items():
             if key.strip().lower() == syntax and path and isinstance(path, str) and isfile(path) and os.access(path, os.R_OK):
                 log.debug('Config [%s]: %s', syntax, path)
@@ -398,8 +398,8 @@ def get_config_path(view, identifier, region, is_selected):
     log.warning('Default core config will be used instead if any.')
     return None
 
-def get_assigned_syntax(view, identifier, region, is_selected):
-    syntaxes = query(config, None, 'formatters', identifier, 'syntaxes')
+def get_assigned_syntax(view, uid, region, is_selected):
+    syntaxes = query(config, None, 'formatters', uid, 'syntaxes')
     if syntaxes and isinstance(syntaxes, list):
         syntaxes = list(map(str.lower, filter(None, syntaxes)))
         scopes = view.scope_name(0 if not is_selected else region.a).strip().lower().split(' ')
@@ -425,14 +425,14 @@ def get_assigned_syntax(view, identifier, region, is_selected):
     log.error('Setting key "syntaxes" may not be empty and must be of type list: %s', syntaxes)
     return None
 
-def get_args(identifier):
-    args = query(config, None, 'formatters', identifier, 'args')
+def get_args(uid):
+    args = query(config, None, 'formatters', uid, 'args')
     if args and isinstance(args, list):
         return map(str, args)
     return None
 
-def set_fix_cmds(cmd, identifier):
-    fix_cmds = query(config, None, 'formatters', identifier, 'fix_commands')
+def set_fix_cmds(cmd, uid):
+    fix_cmds = query(config, None, 'formatters', uid, 'fix_commands')
     if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
         for x in fix_cmds:
             if isinstance(x, list):
