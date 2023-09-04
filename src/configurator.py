@@ -484,7 +484,7 @@ def strip_trailing(text):
     return cleaned_text
 
 def create_package_config_files():
-    directory = common.join(sublime.packages_path(), common.PLUGIN_NAME)
+    directory = common.join(sublime.packages_path(), common.PACKAGE_NAME)
 
     try:
         common.os.makedirs(directory, exist_ok=True)

@@ -29,11 +29,11 @@ log = logging.getLogger(__name__)
 
 IS_WINDOWS = sublime.platform() == 'windows'
 VERSION = '1.0.4'
-PLUGIN_NAME = 'Formatter'
+PACKAGE_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
 RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
-STATUS_KEY = '@!' + PLUGIN_NAME.lower()
+STATUS_KEY = '@!' + PACKAGE_NAME.lower()
 
 LAYOUTS = {
     'single': {
@@ -66,17 +66,17 @@ def get_modules_list(directory):
 def reload_modules():
     modules = []
     for module_name, module in sys.modules.items():
-        if module_name.startswith(PLUGIN_NAME + '.') and module:
+        if module_name.startswith(PACKAGE_NAME + '.') and module:
             modules.append(module_name)
 
     for module_name in get_modules_list(dirname(__file__)):
-        full_module_name = PLUGIN_NAME + module_name
+        full_module_name = PACKAGE_NAME + module_name
         if full_module_name in modules:
             log.debug('Reloading: %s', full_module_name)
             reload(sys.modules[full_module_name])
 
 def config_file():
-    return PLUGIN_NAME + '.sublime-settings'
+    return PACKAGE_NAME + '.sublime-settings'
 
 def get_config():
     settings = sublime.load_settings(config_file())
@@ -148,7 +148,7 @@ def update_environ():
     return None
 
 def setup_shared_config():
-    src = 'Packages/' + PLUGIN_NAME + '/config'
+    src = 'Packages/' + PACKAGE_NAME + '/config'
     dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
 
     try:
@@ -469,13 +469,13 @@ def set_fix_cmds(cmd, uid):
 
 def prompt_error(text, name=None):
     if name:
-        string = u'%s (%s):\n\n%s' % (PLUGIN_NAME, name, text)
+        string = u'%s (%s):\n\n%s' % (PACKAGE_NAME, name, text)
     else:
-        string = u'%s:\n\n%s' % (PLUGIN_NAME, text)
+        string = u'%s:\n\n%s' % (PACKAGE_NAME, text)
     sublime.error_message(string)
 
 def setup_logger(name):
-    formatter = logging.Formatter(fmt='▋[' + PLUGIN_NAME + '](%(threadName)s:%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
+    formatter = logging.Formatter(fmt='▋[' + PACKAGE_NAME + '](%(threadName)s:%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger = logging.getLogger(name)

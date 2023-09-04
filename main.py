@@ -48,14 +48,14 @@ def plugin_loaded():
     configurator.create_package_config_files()
     common.get_config()
     log.disabled = not common.config.get('debug')
-    log.info('%s version: %s', common.PLUGIN_NAME, common.VERSION)
+    log.info('%s version: %s', common.PACKAGE_NAME, common.VERSION)
     common.setup_shared_config()
     log.debug('Plugin initialized.')
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
     def run(self):
-        sublime.message_dialog(common.PLUGIN_NAME + '\nVersion: ' + common.VERSION)
+        sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + common.VERSION)
 
 
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
@@ -168,7 +168,7 @@ class SingleFormat:
 
         if common.config.get('show_statusbar'):
             self.view.window().set_status_bar_visible(True)
-            self.view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
+            self.view.set_status(common.STATUS_KEY, common.PACKAGE_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
 
     def open_console_on_failure(self):
         if common.config.get('open_console_on_failure'):
@@ -421,7 +421,7 @@ def next_sequence(view, is_opened):
             if common.config.get('show_statusbar'):
                 current_view = sublime.active_window().active_view()
                 current_view.window().set_status_bar_visible(True)
-                current_view.set_status(common.STATUS_KEY, common.PLUGIN_NAME + ' [total:' + str(RECURSIVE_TARGET['filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['success_count']) + '|ko:' + str(RECURSIVE_TARGET['failure_count']) + ']')
+                current_view.set_status(common.STATUS_KEY, common.PACKAGE_NAME + ' [total:' + str(RECURSIVE_TARGET['filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['success_count']) + '|ko:' + str(RECURSIVE_TARGET['failure_count']) + ']')
 
             if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['failure_count'] > 0:
                 current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})

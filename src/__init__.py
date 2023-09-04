@@ -25,7 +25,7 @@ formatter_prefix_len = len(formatter_prefix)
 module_names = [f[:-3] for f in os.listdir(os.path.dirname(__file__)) if f.startswith(formatter_prefix) and f.endswith('.py')]
 for module_name in module_names:
     module = importlib.import_module('.' + module_name, package=__name__)
-    formatter_class = getattr(module, module_name[formatter_prefix_len:].capitalize() + common.PLUGIN_NAME, None)
+    formatter_class = getattr(module, module_name[formatter_prefix_len:].capitalize() + common.PACKAGE_NAME, None)
 
     if formatter_class:
         formatter_uid = module_name[formatter_prefix_len:]
