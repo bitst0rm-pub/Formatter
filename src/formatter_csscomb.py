@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['csscomb']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/csscomb/csscomb.js',
+    'name': 'CSScomb',
+    'uid': 'csscomb',
+    'type': 'beautifier',
+    'syntaxes': ['css', 'scss', 'sass', 'less'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'csscomb_rc.json'
+    }
+}
 
 
 class CsscombFormatter:

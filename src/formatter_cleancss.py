@@ -17,6 +17,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['cleancss']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/jakubpawlowicz/clean-css-cli',
+    'name': 'Clean CSS',
+    'uid': 'cleancss',
+    'type': 'minifier',
+    'syntaxes': ['css', 'scss', 'sass', 'less'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'cleancss_rc.json'
+    }
+}
 
 
 class CleancssFormatter:

@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['yapf']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/google/yapf',
+    'name': 'YAPF',
+    'uid': 'yapf',
+    'type': 'beautifier',
+    'syntaxes': ['python'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'yapf_rc.yapf'
+    }
+}
 
 
 class YapfFormatter:

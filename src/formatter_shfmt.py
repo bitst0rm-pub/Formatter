@@ -16,6 +16,18 @@ from . import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['shfmt']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/mvdan/sh',
+    'name': 'Shfmt',
+    'uid': 'shfmt',
+    'type': 'beautifier',
+    'syntaxes': ['bash'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'shfmt_rc.json'
+    }
+}
 
 
 class ShfmtFormatter:

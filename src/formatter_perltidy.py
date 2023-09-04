@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['perl']
 EXECUTABLES = ['perltidy', 'perltidy.pl']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/perltidy/perltidy',
+    'name': 'Perltidy',
+    'uid': 'perltidy',
+    'type': 'beautifier',
+    'syntaxes': ['perl'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'perltidy_rc.cfg'
+    }
+}
 
 
 class PerltidyFormatter:

@@ -16,6 +16,19 @@ import sublime
 from . import common
 
 log = logging.getLogger(__name__)
+CONFIG_TEMPLATE = {
+    'source': 'build-in',
+    'name': 'JSONMax',
+    'uid': 'jsonmax',
+    'type': 'beautifier',
+    'syntaxes': ['json'],
+    "executable_path": None,
+    'args': None,
+    'config_path': {
+        'default': 'jsonmax_rc.json'
+    },
+    'comment': 'build-in, no executable'
+}
 
 
 class JsonmaxFormatter:

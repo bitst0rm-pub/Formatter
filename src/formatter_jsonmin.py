@@ -15,6 +15,17 @@ import json
 import sublime
 
 log = logging.getLogger(__name__)
+CONFIG_TEMPLATE = {
+    'source': 'build-in',
+    'name': 'JSONMin',
+    'uid': 'jsonmin',
+    'type': 'minifier',
+    'syntaxes': ['json'],
+    "executable_path": None,
+    'args': None,
+    'config_path': None,
+    'comment': 'build-in, no executable, no config'
+}
 
 
 class JsonminFormatter:

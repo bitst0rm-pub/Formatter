@@ -15,6 +15,17 @@ from . import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['shfmt']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/mvdan/sh',
+    'name': 'Shfmt',
+    'uid': 'shfmtmin',
+    'type': 'minifier',
+    'syntaxes': ['bash'],
+    "executable_path": "",
+    'args': None,
+    'config_path': None,
+    'comment': 'no config'
+}
 
 
 class ShfmtminFormatter:

@@ -19,6 +19,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['php']
 EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/FriendsOfPHP/PHP-CS-Fixer',
+    'name': 'PHP CS Fixer',
+    'uid': 'phpcsfixer',
+    'type': 'beautifier',
+    'syntaxes': ['php'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'php_cs_fixer_rc.php'
+    }
+}
 
 
 class PhpcsfixerFormatter:

@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['ruby']
 EXECUTABLES = ['rubocop']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/rubocop-hq/rubocop',
+    'name': 'RuboCop',
+    'uid': 'rubocop',
+    'type': 'beautifier',
+    'syntaxes': ['ruby'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'rubocop_rc.yml'
+    }
+}
 
 
 class RubocopFormatter:

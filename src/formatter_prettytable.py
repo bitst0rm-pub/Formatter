@@ -17,6 +17,19 @@ from . import common
 from ..lib3.prettytable import prettytable
 
 log = logging.getLogger(__name__)
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/jazzband/prettytable',
+    'name': 'PrettyTable',
+    'uid': 'prettytable',
+    'type': 'beautifier',
+    'syntaxes': ['csv', 'text'],
+    "executable_path": None,
+    'args': None,
+    'config_path': {
+        'default': 'prettytable_rc.json'
+    },
+    'comment': 'build-in, no executable'
+}
 
 
 class PrettytableFormatter:

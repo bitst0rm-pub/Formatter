@@ -15,6 +15,19 @@ from . import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['tidy']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/htacg/tidy-html5',
+    'name': 'HTML Tidy',
+    'uid': 'htmltidy',
+    'type': 'beautifier',
+    'syntaxes': ['html', 'xml'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'html': 'htmltidy_html_rc.cfg',
+        'xml': 'htmltidy_xml_rc.cfg'
+    }
+}
 
 
 class HtmltidyFormatter:

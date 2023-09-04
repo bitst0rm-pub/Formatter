@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['js-beautify']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/beautify-web/js-beautify',
+    'name': 'JS Beautifier',
+    'uid': 'jsbeautifier',
+    'type': 'beautifier',
+    'syntaxes': ['js', 'css', 'html', 'json', 'tsx', 'vue'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'jsbeautify_rc.json'
+    }
+}
 
 
 class JsbeautifierFormatter:

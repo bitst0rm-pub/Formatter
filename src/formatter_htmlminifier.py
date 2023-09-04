@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['html-minifier']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/kangax/html-minifier',
+    'name': 'HTMLMinifier',
+    'uid': 'htmlminifier',
+    'type': 'minifier',
+    'syntaxes': ['html', 'xml'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'htmlminifier_rc.json'
+    }
+}
 
 
 class HtmlminifierFormatter:

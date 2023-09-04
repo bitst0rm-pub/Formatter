@@ -17,6 +17,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['pyminify']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/dflook/python-minifier',
+    'name': 'Python Minifier',
+    'uid': 'pythonminifier',
+    'type': 'minifier',
+    'syntaxes': ['python'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'python_minifier_rc.json'
+    }
+}
 
 
 class PythonminifierFormatter:

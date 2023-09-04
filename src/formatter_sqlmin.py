@@ -17,6 +17,19 @@ from . import common
 from ..lib3.sqlmin import sqlmin
 
 log = logging.getLogger(__name__)
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/bitst0rm',
+    'name': 'SQLMin',
+    'uid': 'sqlmin',
+    'type': 'minifier',
+    'syntaxes': ['sql'],
+    "executable_path": None,
+    'args': None,
+    'config_path': {
+        'default': 'sqlmin_rc.json'
+    },
+    'comment': 'build-in, no executable'
+}
 
 
 class SqlminFormatter:

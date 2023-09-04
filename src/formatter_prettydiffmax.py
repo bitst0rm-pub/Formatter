@@ -18,6 +18,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettydiff']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/prettydiff/prettydiff',
+    'name': 'Pretty Diff',
+    'uid': 'prettydiffmax',
+    'type': 'beautifier',
+    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'prettydiffmax_rc.json'
+    }
+}
 
 
 class PrettydiffmaxFormatter:

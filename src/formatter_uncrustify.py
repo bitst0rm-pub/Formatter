@@ -15,6 +15,21 @@ from . import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['uncrustify']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/uncrustify/uncrustify',
+    'name': 'Uncrustify',
+    'uid': 'uncrustify',
+    'type': 'beautifier',
+    'syntaxes': ['c', 'c++', 'cs', 'objc', 'objc++', 'd', 'java', 'pawn', 'vala'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'objc': 'uncrustify_objc_rc.cfg',
+        'objc++': 'uncrustify_objc_rc.cfg',
+        'java': 'uncrustify_sun_java_rc.cfg',
+        'default': 'uncrustify_rc.cfg'
+    }
+}
 
 
 class UncrustifyFormatter:

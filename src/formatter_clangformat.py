@@ -18,6 +18,18 @@ from ..lib3 import yaml
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['clang-format']
+CONFIG_TEMPLATE = {
+    'source': 'https://clang.llvm.org/docs/ClangFormat.html',
+    'name': 'ClangFormat',
+    'uid': 'clangformat',
+    'type': 'beautifier',
+    'syntaxes': ['c', 'cs', 'c++', 'objc', 'objc++', 'js', 'tsx', 'jsx', 'json', 'java', 'proto', 'protodevel', 'td', 'sv', 'svh', 'v', 'vh'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'clang_format_llvm_rc.yaml'
+    }
+}
 
 
 class ClangformatFormatter:

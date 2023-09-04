@@ -16,6 +16,19 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['terser']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/terser-js/terser',
+    'name': 'Terser',
+    'uid': 'terser',
+    'type': 'minifier',
+    'syntaxes': ['js'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'terser_rc.json'
+    }
+}
+
 
 
 class TerserFormatter:

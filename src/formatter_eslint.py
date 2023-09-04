@@ -17,6 +17,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/eslint/eslint',
+    'name': 'ESLint',
+    'uid': 'eslint',
+    'type': 'beautifier',
+    'syntaxes': ['js'],
+    "executable_path": "",
+    'args': ['--resolve-plugins-relative-to', '/path/to/javascript/node_modules'],
+    'config_path': {
+        'default': 'eslint_rc.json'
+    }
+}
 
 
 class EslintFormatter:

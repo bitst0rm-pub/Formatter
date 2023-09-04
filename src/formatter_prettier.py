@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettier']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/prettier/prettier',
+    'name': 'Prettier',
+    'uid': 'prettier',
+    'type': 'beautifier',
+    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'prettier_rc.json'
+    }
+}
 
 
 class PrettierFormatter:

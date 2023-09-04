@@ -16,6 +16,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['sql-formatter']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/sql-formatter-org/sql-formatter',
+    'name': 'SQL Formatter',
+    'uid': 'sqlformatter',
+    'type': 'beautifier',
+    'syntaxes': ['sql'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'sql_formatter_rc.json'
+    }
+}
 
 
 class SqlformatterFormatter:

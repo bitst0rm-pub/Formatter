@@ -18,6 +18,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['stylelint']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/stylelint/stylelint',
+    'name': 'Stylelint',
+    'uid': 'stylelint',
+    'type': 'beautifier',
+    'syntaxes': ['css', 'scss', 'sass', 'less', 'sss', 'sugarss'],
+    "executable_path": "",
+    'args': ['--config-basedir', '/path/to/javascript/node_modules'],
+    'config_path': {
+        'default': 'stylelint_rc.json'
+    }
+}
 
 
 class StylelintFormatter:

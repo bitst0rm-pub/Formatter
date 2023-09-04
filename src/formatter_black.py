@@ -17,6 +17,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['black']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/ambv/black',
+    'name': 'Black',
+    'uid': 'black',
+    'type': 'beautifier',
+    'syntaxes': ['python'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'black_rc.toml'
+    }
+}
 
 
 class BlackFormatter:

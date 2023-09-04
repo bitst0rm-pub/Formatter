@@ -17,6 +17,18 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['beautysh']
+CONFIG_TEMPLATE = {
+    'source': 'https://github.com/lovesegfault/beautysh',
+    'name': 'Beautysh',
+    'uid': 'beautysh',
+    'type': 'beautifier',
+    'syntaxes': ['bash'],
+    "executable_path": "",
+    'args': None,
+    'config_path': {
+        'default': 'beautysh_rc.json'
+    }
+}
 
 
 class BeautyshFormatter:
