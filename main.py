@@ -19,6 +19,7 @@ import sublime
 import sublime_plugin
 from threading import Event
 from .src import common
+from .src import configurator
 from .src.formatter import Formatter
 
 log = logging.getLogger(__name__)
@@ -44,6 +45,7 @@ RECURSIVE_TARGET = {
 
 
 def plugin_loaded():
+    configurator.create_package_config_files()
     common.get_config()
     log.disabled = not common.config.get('debug')
     log.info('%s version: %s', common.PLUGIN_NAME, common.VERSION)

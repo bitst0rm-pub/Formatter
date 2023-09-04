@@ -12,7 +12,7 @@
 
 import logging
 from . import common
-from .. import src as modules
+from ..src import __all__ as formatter_map
 
 log = logging.getLogger(__name__)
 
@@ -35,7 +35,6 @@ class Formatter:
         if not text:
             return None
 
-        formatter_map = modules.__all__
         formatter_plugin = formatter_map.get(uid)
         if formatter_plugin:
             syntax = common.get_assigned_syntax(view, uid, region, is_selected)
