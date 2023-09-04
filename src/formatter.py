@@ -36,8 +36,8 @@ class Formatter:
             return None
 
         formatter_map = modules.__all__
-        formatter_class = formatter_map.get(uid)
-        if formatter_class:
+        formatter_plugin = formatter_map.get(uid)
+        if formatter_plugin:
             syntax = common.get_assigned_syntax(view, uid, region, is_selected)
             if not syntax:
                 common.prompt_error('Syntax out of the scope.', 'ID:' + uid)
@@ -47,7 +47,7 @@ class Formatter:
                 log.debug('Scope: %s', view.scope_name(0 if not is_selected else region.a))
                 log.debug('Syntax: %s', syntax)
                 log.debug('Formatter ID: %s', uid)
-                worker = formatter_class(*args, **kwargs)
+                worker = formatter_plugin['class'](*args, **kwargs)
                 result = worker.format(text)
                 if result:
                     # Pass the result back to the main thread.

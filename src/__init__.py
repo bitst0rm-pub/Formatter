@@ -29,7 +29,10 @@ for module_name in module_names:
 
     if formatter_class:
         formatter_uid = module_name[formatter_prefix_len:]
-        formatter_map[formatter_uid] = formatter_class
+        formatter_map[formatter_uid] = {
+            'class': formatter_class,
+            'module': module
+        }
     else:
         log.error('Either missing or misspelled formatter class in %s.py', module_name)
 
