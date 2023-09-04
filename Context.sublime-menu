@@ -1,0 +1,227 @@
+[
+    {
+        "caption": "Formatter",
+        "id": "formatter",
+        "children": [
+            {
+                "caption": "Beautysh",
+                "command": "run_format",
+                "args": {
+                    "uid": "beautysh",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Black",
+                "command": "run_format",
+                "args": {
+                    "uid": "black",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "ClangFormat",
+                "command": "run_format",
+                "args": {
+                    "uid": "clangformat",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "CSScomb",
+                "command": "run_format",
+                "args": {
+                    "uid": "csscomb",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "ESLint",
+                "command": "run_format",
+                "args": {
+                    "uid": "eslint",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "HTML Tidy",
+                "command": "run_format",
+                "args": {
+                    "uid": "htmltidy",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "JS Beautifier",
+                "command": "run_format",
+                "args": {
+                    "uid": "jsbeautifier",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "JSONMax",
+                "command": "run_format",
+                "args": {
+                    "uid": "jsonmax",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Perltidy",
+                "command": "run_format",
+                "args": {
+                    "uid": "perltidy",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "PHP CS Fixer",
+                "command": "run_format",
+                "args": {
+                    "uid": "phpcsfixer",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Prettier",
+                "command": "run_format",
+                "args": {
+                    "uid": "prettier",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Pretty Diff",
+                "command": "run_format",
+                "args": {
+                    "uid": "prettydiffmax",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "PrettyTable",
+                "command": "run_format",
+                "args": {
+                    "uid": "prettytable",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "RuboCop",
+                "command": "run_format",
+                "args": {
+                    "uid": "rubocop",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Shfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "shfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "SQL Formatter",
+                "command": "run_format",
+                "args": {
+                    "uid": "sqlformatter",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Stylelint",
+                "command": "run_format",
+                "args": {
+                    "uid": "stylelint",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Uncrustify",
+                "command": "run_format",
+                "args": {
+                    "uid": "uncrustify",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "YAPF",
+                "command": "run_format",
+                "args": {
+                    "uid": "yapf",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Clean CSS (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "cleancss",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "HTMLMinifier (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "htmlminifier",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "JSONMin (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "jsonmin",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "Pretty Diff (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "prettydiffmin",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "Python Minifier (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "pythonminifier",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "Shfmt (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "shfmtmin",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "SQLMin (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sqlmin",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "Terser (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "terser",
+                    "type": "minifier"
+                }
+            }
+        ]
+    }
+]

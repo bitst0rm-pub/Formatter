@@ -1,0 +1,45 @@
+// This example is not ready to use.
+// End-users are free to remap any key combination, but keep in mind:
+// 1. Ctrl+Alt+<alphanum> should never be used in any Windows key bindings.
+// 2. Option+<alphanum> should never be used in any macOS key bindings.
+// In both cases, the user's ability to insert non-ASCII characters
+// would be compromised otherwise.
+//
+// Modifiers:
+// shift
+// ctrl or control
+// alt
+// super (Windows: Windows key, MacOS: Command Key)
+// primary (Windows: Control key, MacOS: Command Key)
+// command (MacOS only)
+// option (MacOS only: same as alt)
+
+[
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "beautysh", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "black", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "clangformat", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "csscomb", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "eslint", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "htmltidy", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "jsbeautifier", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "jsonmax", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "perltidy", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "phpcsfixer", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettier", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettydiffmax", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettytable", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "rubocop", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "shfmt", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sqlformatter", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "stylelint", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "uncrustify", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yapf", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "cleancss", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "htmlminifier", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "jsonmin", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettydiffmin", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "pythonminifier", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "shfmtmin", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sqlmin", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}}
+]
