@@ -351,8 +351,8 @@ def get_environ_path(fnames):
     return None
 
 def get_head_cmd(uid, intr_names, exec_names):
-    interpreter = get_intr_exec_path(uid, intr_names, 'interpreter')
-    executable = get_intr_exec_path(uid, exec_names, 'executable')
+    interpreter = get_runtime_path(uid, intr_names, 'interpreter')
+    executable = get_runtime_path(uid, exec_names, 'executable')
     if not interpreter or not executable:
         return None
     cmd = [interpreter, executable]
@@ -361,9 +361,9 @@ def get_head_cmd(uid, intr_names, exec_names):
         cmd.extend(args)
     return cmd
 
-def get_intr_exec_path(uid, fnames, path_type):
+def get_runtime_path(uid, fnames, path_type):
     if path_type not in ['interpreter', 'executable']:
-        log.error('Invalid "path_type". Use "interpreter" or "executable".')
+        log.error('Invalid runtime type. Either use the keyword "interpreter" or "executable".')
         return None
 
     local_file = query(config, None, 'formatters', uid, path_type + '_path')

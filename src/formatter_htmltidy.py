@@ -39,7 +39,7 @@ class HtmltidyFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        executable = common.get_intr_exec_path(self.uid, EXECUTABLES, 'executable')
+        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
         if not executable:
             return None
 
