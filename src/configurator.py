@@ -452,7 +452,7 @@ def build_formatter_sublime_settings(formatter_map):
         json_text = json_text.replace(line, modified_line)
 
     s = [
-        r'"fix_commands": [[ "--autocorrect", "--autocorrect-all", 4, 0, 4],'
+        r'"fix_commands": [[ "--autocorrect", "--autocorrect-all", 4, 0, 4],',
         r'["^.*?auto.*\\$", "--with", 4, 1, 5],',
         r'["${packages}/to/old", "${packages}/to/new", 3, 0, 3],',
         r'["css", 5, 0, 7],',
@@ -462,7 +462,7 @@ def build_formatter_sublime_settings(formatter_map):
     ]
     r = [
         r'''"fix_commands": [
-                    ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change'''
+                    ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change''',
         r'["^.*?auto.*\\$", "--with", 4, 1, 5], // using escaped "\\$" regex, move index 4 to pos 5',
         r'["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion, no escaped "$"',
         r'["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7',
