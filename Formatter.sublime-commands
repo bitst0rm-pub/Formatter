@@ -8,7 +8,7 @@
         "command": "open_config_folders"
     },
     {
-        "caption": "Formatter: Beautify With Beautysh",
+        "caption": "Formatter: Beautify with Beautysh",
         "command": "run_format",
         "args": {
             "uid": "beautysh",
@@ -16,7 +16,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Black",
+        "caption": "Formatter: Beautify with Black",
         "command": "run_format",
         "args": {
             "uid": "black",
@@ -24,7 +24,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With ClangFormat",
+        "caption": "Formatter: Beautify with ClangFormat",
         "command": "run_format",
         "args": {
             "uid": "clangformat",
@@ -32,7 +32,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With CSScomb",
+        "caption": "Formatter: Beautify with CSScomb",
         "command": "run_format",
         "args": {
             "uid": "csscomb",
@@ -40,7 +40,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With ESLint",
+        "caption": "Formatter: Beautify with ESLint",
         "command": "run_format",
         "args": {
             "uid": "eslint",
@@ -48,7 +48,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With HTML Tidy",
+        "caption": "Formatter: Beautify with HTML Tidy",
         "command": "run_format",
         "args": {
             "uid": "htmltidy",
@@ -56,7 +56,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With JS Beautifier",
+        "caption": "Formatter: Beautify with JS Beautifier",
         "command": "run_format",
         "args": {
             "uid": "jsbeautifier",
@@ -64,7 +64,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With JSONMax",
+        "caption": "Formatter: Beautify with JSONMax",
         "command": "run_format",
         "args": {
             "uid": "jsonmax",
@@ -72,7 +72,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Perltidy",
+        "caption": "Formatter: Beautify with Perltidy",
         "command": "run_format",
         "args": {
             "uid": "perltidy",
@@ -80,7 +80,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With PHP CS Fixer",
+        "caption": "Formatter: Beautify with PHP CS Fixer",
         "command": "run_format",
         "args": {
             "uid": "phpcsfixer",
@@ -88,7 +88,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Prettier",
+        "caption": "Formatter: Beautify with Prettier",
         "command": "run_format",
         "args": {
             "uid": "prettier",
@@ -96,7 +96,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Pretty Diff",
+        "caption": "Formatter: Beautify with Pretty Diff",
         "command": "run_format",
         "args": {
             "uid": "prettydiffmax",
@@ -104,7 +104,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With PrettyTable",
+        "caption": "Formatter: Beautify with PrettyTable",
         "command": "run_format",
         "args": {
             "uid": "prettytable",
@@ -112,7 +112,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With RuboCop",
+        "caption": "Formatter: Beautify with RuboCop",
         "command": "run_format",
         "args": {
             "uid": "rubocop",
@@ -120,7 +120,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Shfmt",
+        "caption": "Formatter: Beautify with Shfmt",
         "command": "run_format",
         "args": {
             "uid": "shfmt",
@@ -128,7 +128,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With SQL Formatter",
+        "caption": "Formatter: Beautify with SQL Formatter",
         "command": "run_format",
         "args": {
             "uid": "sqlformatter",
@@ -136,7 +136,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Stylelint",
+        "caption": "Formatter: Beautify with Stylelint",
         "command": "run_format",
         "args": {
             "uid": "stylelint",
@@ -144,7 +144,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With Uncrustify",
+        "caption": "Formatter: Beautify with Uncrustify",
         "command": "run_format",
         "args": {
             "uid": "uncrustify",
@@ -152,7 +152,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify With YAPF",
+        "caption": "Formatter: Beautify with YAPF",
         "command": "run_format",
         "args": {
             "uid": "yapf",
@@ -160,7 +160,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With Clean CSS",
+        "caption": "Formatter: Minify with Clean CSS",
         "command": "run_format",
         "args": {
             "uid": "cleancss",
@@ -168,7 +168,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With HTMLMinifier",
+        "caption": "Formatter: Minify with HTMLMinifier",
         "command": "run_format",
         "args": {
             "uid": "htmlminifier",
@@ -176,7 +176,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With JSONMin",
+        "caption": "Formatter: Minify with JSONMin",
         "command": "run_format",
         "args": {
             "uid": "jsonmin",
@@ -184,7 +184,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With Pretty Diff",
+        "caption": "Formatter: Minify with Pretty Diff",
         "command": "run_format",
         "args": {
             "uid": "prettydiffmin",
@@ -192,7 +192,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With Python Minifier",
+        "caption": "Formatter: Minify with Python Minifier",
         "command": "run_format",
         "args": {
             "uid": "pythonminifier",
@@ -200,7 +200,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With Shfmt",
+        "caption": "Formatter: Minify with Shfmt",
         "command": "run_format",
         "args": {
             "uid": "shfmtmin",
@@ -208,7 +208,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With SQLMin",
+        "caption": "Formatter: Minify with SQLMin",
         "command": "run_format",
         "args": {
             "uid": "sqlmin",
@@ -216,7 +216,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify With Terser",
+        "caption": "Formatter: Minify with Terser",
         "command": "run_format",
         "args": {
             "uid": "terser",
