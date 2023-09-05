@@ -45,12 +45,12 @@ RECURSIVE_TARGET = {
 
 
 def plugin_loaded():
-    configurator.create_package_config_files()
+    ready = configurator.create_package_config_files()
     common.get_config()
     log.disabled = not common.config.get('debug')
     log.info('%s version: %s', common.PACKAGE_NAME, common.VERSION)
     common.setup_shared_config()
-    log.debug('Plugin initialized.')
+    log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
@@ -62,7 +62,7 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
     def run(self):
         opened_dirs = set()
 
-        configdir = common.expand_path('${packages}/User/' + common.ASSETS_DIRECTORY + '/config')
+        configdir = common.expand_path(common.join('${packages}', 'User', common.ASSETS_DIRECTORY, 'config'))
         if common.isdir(configdir):
             self.window.run_command('open_dir', {'dir': configdir})
             opened_dirs.add(configdir)
@@ -290,7 +290,7 @@ class OpenNextFileCommand(sublime_plugin.TextCommand):
         # open_file() is asynchronous. Use EventListener on_load() to catch
         # the returned view when the file is finished loading.
         if not view.is_loading():
-            # True = file is already and currently opened as view
+            # True = file is ready and currently opened as view
             next_sequence(view, True)
         else:
             RECURSIVE_TARGET['view'] = view

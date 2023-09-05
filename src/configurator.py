@@ -263,7 +263,7 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             comment = config.get('comment', None)
             if comment is not None and isinstance(comment, str) and len(comment) > 0:
-                child['__comment__child'] = '/* ' + config['comment'] + ' */' # '/* ' is marker for pattern_comma_before_comment
+                child['__comment__child'] = '/* ' + config['comment'].replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
 
             (beautifiers if config['type'] == 'beautifier' else minifiers).append({uid:child})
 
@@ -490,7 +490,7 @@ def create_package_config_files():
         common.os.makedirs(directory, exist_ok=True)
     except OSError as e:
         if e.errno != os.errno.EEXIST:
-            log.warning('Could not create directory: %s', directory)
+            log.error('Could not create directory: %s', directory)
         return False
 
     file_functions = {
