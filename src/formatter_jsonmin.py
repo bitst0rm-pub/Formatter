@@ -15,7 +15,7 @@ import json
 import sublime
 
 log = logging.getLogger(__name__)
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'build-in',
     'name': 'JSONMin',
     'uid': 'jsonmin',

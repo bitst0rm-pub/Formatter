@@ -26,7 +26,7 @@ def build_sublime_menu_children(formatter_map):
     minifiers = []
 
     for uid, module_info in formatter_map.items():
-        config = getattr(module_info['module'], 'CONFIG_TEMPLATE', None)
+        config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
                 ('caption', config['name'] + (' (min)' if config['type'] == 'minifier' else '')),
@@ -144,7 +144,7 @@ def build_formatter_sublime_commands_children(formatter_map):
     minifiers = []
 
     for uid, module_info in formatter_map.items():
-        config = getattr(module_info['module'], 'CONFIG_TEMPLATE', None)
+        config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
                 ('caption', 'Formatter: ' + ('Beautify' if config['type'] == 'beautifier' else 'Minify') + ' With ' + config['name']),
@@ -184,7 +184,7 @@ def build_example_sublime_keymap(formatter_map):
     minifiers = []
 
     for uid, module_info in formatter_map.items():
-        config = getattr(module_info['module'], 'CONFIG_TEMPLATE', None)
+        config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
                         ('keys', ['ctrl+super+?']),
@@ -227,7 +227,7 @@ def build_formatter_sublime_settings_children(formatter_map):
     minifiers = []
 
     for uid, module_info in formatter_map.items():
-        config = getattr(module_info['module'], 'CONFIG_TEMPLATE', None)
+        config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
                 ('info', config['source']),

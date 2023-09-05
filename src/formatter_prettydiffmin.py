@@ -18,7 +18,7 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettydiff']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/prettydiff/prettydiff',
     'name': 'Pretty Diff',
     'uid': 'prettydiffmin',
@@ -96,6 +96,6 @@ class PrettydiffminFormatter:
             if tmp_file and os.path.isfile(tmp_file):
                 os.unlink(tmp_file)
 
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

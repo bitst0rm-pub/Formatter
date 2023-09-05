@@ -17,7 +17,7 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['black']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/ambv/black',
     'name': 'Black',
     'uid': 'black',
@@ -86,6 +86,6 @@ class BlackFormatter:
             else:
                 return stdout.decode('utf-8')
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

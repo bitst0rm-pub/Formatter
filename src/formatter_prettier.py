@@ -16,7 +16,7 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettier']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/prettier/prettier',
     'name': 'Prettier',
     'uid': 'prettier',
@@ -75,6 +75,6 @@ class PrettierFormatter:
             else:
                 return stdout.decode('utf-8')
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

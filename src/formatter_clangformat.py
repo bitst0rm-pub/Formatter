@@ -18,7 +18,7 @@ from ..lib3 import yaml
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['clang-format']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://clang.llvm.org/docs/ClangFormat.html',
     'name': 'ClangFormat',
     'uid': 'clangformat',
@@ -107,6 +107,6 @@ class ClangformatFormatter:
             else:
                 return stdout.decode('utf-8')
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

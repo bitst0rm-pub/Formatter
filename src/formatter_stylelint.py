@@ -18,7 +18,7 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['stylelint']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/stylelint/stylelint',
     'name': 'Stylelint',
     'uid': 'stylelint',
@@ -84,7 +84,7 @@ class StylelintFormatter:
                     result = file.read()
                     file.close()
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         if tmp_file and os.path.isfile(tmp_file):
             os.unlink(tmp_file)

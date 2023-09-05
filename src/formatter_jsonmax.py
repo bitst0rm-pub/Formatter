@@ -16,7 +16,7 @@ import sublime
 from . import common
 
 log = logging.getLogger(__name__)
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'build-in',
     'name': 'JSONMax',
     'uid': 'jsonmax',

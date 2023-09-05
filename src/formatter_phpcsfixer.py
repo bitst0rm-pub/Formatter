@@ -19,7 +19,7 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['php']
 EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/FriendsOfPHP/PHP-CS-Fixer',
     'name': 'PHP CS Fixer',
     'uid': 'phpcsfixer',
@@ -107,7 +107,7 @@ class PhpcsfixerFormatter:
                     result = file.read()
                     file.close()
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         if tmp_file and os.path.isfile(tmp_file):
             os.unlink(tmp_file)

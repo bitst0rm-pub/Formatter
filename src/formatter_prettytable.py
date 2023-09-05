@@ -17,7 +17,7 @@ from . import common
 from ..lib3.prettytable import prettytable
 
 log = logging.getLogger(__name__)
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/jazzband/prettytable',
     'name': 'PrettyTable',
     'uid': 'prettytable',

@@ -15,7 +15,7 @@ from . import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['tidy']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/htacg/tidy-html5',
     'name': 'HTML Tidy',
     'uid': 'htmltidy',
@@ -76,6 +76,6 @@ class HtmltidyFormatter:
                     log.warning('File formatted but has warnings (errno=%d): "%s"', errno, stderr.decode('utf-8'))
                 return stdout.decode('utf-8')
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

@@ -17,7 +17,7 @@ from . import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint']
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/eslint/eslint',
     'name': 'ESLint',
     'uid': 'eslint',
@@ -74,6 +74,6 @@ class EslintFormatter:
                 for i in obj.get('messages', []):
                     print(i)
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

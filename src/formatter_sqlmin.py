@@ -17,7 +17,7 @@ from . import common
 from ..lib3.sqlmin import sqlmin
 
 log = logging.getLogger(__name__)
-CONFIG_TEMPLATE = {
+MODULE_CONFIG = {
     'source': 'https://github.com/bitst0rm',
     'name': 'SQLMin',
     'uid': 'sqlmin',
@@ -59,6 +59,6 @@ class SqlminFormatter:
             else:
                 return result
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(json))
+            log.error('An error occurred while executing the command: %s', ' '.join(json))
 
         return None
