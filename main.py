@@ -70,7 +70,7 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
         for obj in common.config.get('formatters', {}).values():
             for path in obj.get('config_path', {}).values():
                 if path and isinstance(path, str):
-                    dirpath = common.get_pathinfo(path)[1]
+                    dirpath = common.get_pathinfo(path)['cwd']
                     if common.isdir(dirpath) and dirpath not in opened_dirs:
                         self.window.run_command('open_dir', {'dir': dirpath})
                         opened_dirs.add(dirpath)
@@ -304,7 +304,7 @@ class RecursiveFormat:
     def run(self):
         log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
         try:
-            cwd = common.get_pathinfo(self.view.file_name())[1]
+            cwd = common.get_pathinfo(self.view.file_name())['cwd']
             uid = self.kwargs.get('uid', None)
             x = common.query(common.config, {}, 'formatters', uid, 'recursive_folder_format')
             exclude_dirs_regex = x.get('exclude_folders_regex', [])
@@ -374,7 +374,7 @@ def post_recursive_format(view, is_success):
     if suffix and isinstance(suffix, str) and is_success:
         new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
 
-    cwd = common.get_pathinfo(new_file_path)[1]
+    cwd = common.get_pathinfo(new_file_path)['cwd']
     try:
         common.os.makedirs(cwd, exist_ok=True)
         region = sublime.Region(0, view.size())

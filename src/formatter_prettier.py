@@ -49,8 +49,8 @@ class PrettierFormatter:
         else:
             cmd.extend(['--no-config'])
 
-        if self.pathinfo[0]:
-            cmd.extend(['--stdin-filepath', self.pathinfo[0]])
+        if self.pathinfo['path']:
+            cmd.extend(['--stdin-filepath', self.pathinfo['path']])
         else:
             # Prettier automatically infers which parser to use based on the file extension.
             extension = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
@@ -66,7 +66,7 @@ class PrettierFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
+            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode

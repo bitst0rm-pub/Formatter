@@ -208,7 +208,7 @@ def get_pathinfo(path):
         cwd, base = split(path)
         stem, suffix = splitext(base)
         ext = suffix[1:]
-    return (path, cwd, base, stem, suffix, ext)
+    return {'path': path, 'cwd': cwd, 'base': base, 'stem': stem, 'suffix': suffix, 'ext': ext}
 
 def exec_cmd(cmd, cwd):
     info = None
@@ -288,7 +288,7 @@ def get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude
         dirs[:] = [d for d in dirs if not any(re.match(pattern, d) for pattern in exclude_dirs_regex) and d not in [RECURSIVE_SUCCESS_DIRECTORY, RECURSIVE_FAILURE_DIRECTORY]]
         for file in files:
             p = get_pathinfo(file)
-            if p[5] in exclude_extensions or not p[5] and p[2] == p[3] and p[3] in exclude_extensions:
+            if p['ext'] in exclude_extensions or not p['ext'] and p['base'] == p['stem'] and p['stem'] in exclude_extensions:
                 continue
             if any(re.match(pattern, file) for pattern in exclude_files_regex):
                 continue

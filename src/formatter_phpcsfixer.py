@@ -45,7 +45,7 @@ class PhpcsfixerFormatter:
         try:
             php = common.get_intr_exec_path(self.uid, INTERPRETERS, 'interpreter')
             if php:
-                proc = common.exec_cmd([php, '-v'], self.pathinfo[1])
+                proc = common.exec_cmd([php, '-v'], self.pathinfo['cwd'])
                 stdout = proc.communicate()[0]
                 string = stdout.decode('utf-8')
                 version = string.splitlines()[0].split(' ')[1]
@@ -72,7 +72,7 @@ class PhpcsfixerFormatter:
 
         suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
 
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo['cwd'], encoding='utf-8') as file:
             file.write(text)
             file.close()
             tmp_file = file.name
@@ -93,7 +93,7 @@ class PhpcsfixerFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
+            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
             stdout, stderr = proc.communicate()
 
             result = None

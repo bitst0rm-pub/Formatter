@@ -54,7 +54,7 @@ class StylelintFormatter:
         # Stylelint automatically infers syntax to use based on the file extension.
         suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
 
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo[1], encoding='utf-8') as file:
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo['cwd'], encoding='utf-8') as file:
             file.write(text)
             file.close()
             tmp_file = file.name
@@ -72,7 +72,7 @@ class StylelintFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
+            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
             stdout, stderr = proc.communicate()
 
             result = None

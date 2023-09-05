@@ -47,7 +47,7 @@ class RubocopFormatter:
         if config:
             cmd.extend(['--config', config])
 
-        cmd.extend(['--autocorrect', '--stdin', self.pathinfo[2] if self.pathinfo[2] else 'untitled', '--stderr'])
+        cmd.extend(['--autocorrect', '--stdin', self.pathinfo['base'] if self.pathinfo['base'] else 'untitled', '--stderr'])
 
         return cmd
 
@@ -59,7 +59,7 @@ class RubocopFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
+            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode

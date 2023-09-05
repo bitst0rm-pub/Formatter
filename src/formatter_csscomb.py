@@ -59,7 +59,7 @@ class CsscombFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
+            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode

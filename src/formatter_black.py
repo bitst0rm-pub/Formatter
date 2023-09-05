@@ -43,7 +43,7 @@ class BlackFormatter:
         try:
             python = common.get_intr_exec_path(self.uid, INTERPRETERS, 'interpreter')
             if python:
-                proc = common.exec_cmd([python, '-V'], self.pathinfo[1])
+                proc = common.exec_cmd([python, '-V'], self.pathinfo['cwd'])
                 stdout = proc.communicate()[0]
                 string = stdout.decode('utf-8')
                 version = string.splitlines()[0].split(' ')[1]
@@ -77,7 +77,7 @@ class BlackFormatter:
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
+            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
