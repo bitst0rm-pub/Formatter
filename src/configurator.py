@@ -147,7 +147,7 @@ def build_formatter_sublime_commands_children(formatter_map):
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
-                ('caption', 'Formatter: ' + ('Beautify' if config['type'] == 'beautifier' else 'Minify') + ' With ' + config['name']),
+                ('caption', 'Formatter: ' + ('Beautify' if config['type'] == 'beautifier' else 'Minify') + ' with ' + config['name']),
                 ('command', 'run_format'),
                 ('args', OrderedDict([
                     ('uid', config['uid']),
@@ -285,7 +285,7 @@ def build_formatter_sublime_settings(formatter_map):
     // This setting takes effect when the "new_file_on_format" option is enabled.
     // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
-    // View > Layout > Single or use the keyboard shortcut: Command+Alt+1
+    // View > Layout > Single
     // Accepted values: "2cols", "2rows", "single" or false'''),
             ('layout', OrderedDict([
                 ('enable', '2cols'),
