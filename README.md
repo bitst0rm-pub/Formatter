@@ -167,7 +167,7 @@ The following settings example should give you direction on how to setup Formatt
     // This setting takes effect when the "new_file_on_format" option is enabled.
     // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
-    // View > Layout > Single or use the keyboard shortcut: Command+Alt+1
+    // View > Layout > Single
     // Accepted values: "2cols", "2rows", "single" or false
     "layout": {
         "enable": "2cols",
@@ -301,12 +301,13 @@ The following settings example should give you direction on how to setup Formatt
                 ["^.*?auto.*\\$", "--with", 4, 1, 5], // using escaped "\\$" regex, move index 4 to pos 5
                 ["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion, no escaped "$"
                 ["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7
-                [3, 0 , 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
+                [3, 0, 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
                 [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
                 ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
         "beautysh": {
+            "info": "https://github.com/lovesegfault/beautysh",
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
@@ -324,6 +325,7 @@ The following settings example should give you direction on how to setup Formatt
             }
         },
         "htmltidy": {
+            "info": "https://github.com/htacg/tidy-html5",
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
@@ -342,6 +344,7 @@ The following settings example should give you direction on how to setup Formatt
             }
         },
         "stylelint": {
+            "info": "https://github.com/stylelint/stylelint",
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
@@ -360,6 +363,7 @@ The following settings example should give you direction on how to setup Formatt
             }
         },
         "uncrustify": {
+            "info": "https://github.com/uncrustify/uncrustify",
             "disable": false,
             "format_on_save": false,
             "new_file_on_format": false,
