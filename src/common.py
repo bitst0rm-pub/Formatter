@@ -54,26 +54,33 @@ LAYOUTS = {
 }
 
 
-def get_modules_list(directory):
-    module_names = [
-        '.' + basename(directory) + '.' + splitext(filename)[0]
-        for filename in os.listdir(directory)
-        if filename.endswith('.py') and filename != '__init__.py'
-    ]
-    module_names.append('.main')
-    return module_names
+def generate_ascii_tree(reloaded_modules, package_name):
+    tree = {}
+
+    for module in reloaded_modules:
+        parts = module.split('.')
+        current_node = tree
+        for part in parts:
+            current_node = current_node.setdefault(part, {})
+
+    def print_tree(node, prefix):
+        sorted_keys = sorted(node.keys())
+        for i, key in enumerate(sorted_keys):
+            is_last = i == len(sorted_keys) - 1
+            print(prefix + ('└── ' if is_last else '├── ') + key)
+            print_tree(node[key], prefix + ('    ' if is_last else '│   '))
+
+    print(package_name)
+    print_tree(tree[package_name], '')
 
 def reload_modules():
-    modules = []
+    reloaded_modules = []
     for module_name, module in sys.modules.items():
         if module_name.startswith(PACKAGE_NAME + '.') and module:
-            modules.append(module_name)
-
-    for module_name in get_modules_list(dirname(__file__)):
-        full_module_name = PACKAGE_NAME + module_name
-        if full_module_name in modules:
-            log.debug('Reloading: %s', full_module_name)
-            reload(sys.modules[full_module_name])
+            reloaded_modules.append(module_name)
+            reload(module)
+    log.debug('Reloading modules (Python %s):', '.'.join(map(str, sys.version_info[:3])))
+    generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 
 def config_file():
     return PACKAGE_NAME + '.sublime-settings'
