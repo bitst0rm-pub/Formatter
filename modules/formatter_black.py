@@ -11,26 +11,27 @@
 # @license      The MIT License (MIT)
 
 import logging
-import sublime
-from . import common
+from distutils.version import StrictVersion
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-EXECUTABLES = ['shfmt']
+INTERPRETERS = ['python3', 'python']
+EXECUTABLES = ['black']
 MODULE_CONFIG = {
-    'source': 'https://github.com/mvdan/sh',
-    'name': 'Shfmt',
-    'uid': 'shfmt',
+    'source': 'https://github.com/ambv/black',
+    'name': 'Black',
+    'uid': 'black',
     'type': 'beautifier',
-    'syntaxes': ['bash'],
+    'syntaxes': ['python'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'shfmt_rc.json'
+        'default': 'black_rc.toml'
     }
 }
 
 
-class ShfmtFormatter:
+class BlackFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -38,48 +39,41 @@ class ShfmtFormatter:
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
-    def get_cmd(self):
-        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
-        if not executable:
+    def is_compat(self):
+        try:
+            python = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
+            if python:
+                proc = common.exec_cmd([python, '-V'], self.pathinfo['cwd'])
+                stdout = proc.communicate()[0]
+                string = stdout.decode('utf-8')
+                version = string.splitlines()[0].split(' ')[1]
+                if StrictVersion(version) >= StrictVersion('3.7.0'):
+                    return True
+                common.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
             return None
+        except OSError:
+            log.error('Error occurred while validating Python compatibility.')
 
-        cmd = [executable]
+        return None
 
-        args = common.get_args(self.uid)
-        if args:
-            cmd.extend(args)
+    def get_cmd(self):
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        if not cmd:
+            return None
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(self.get_config(config))
+            cmd.extend(['--config', config])
 
         cmd.extend(['-'])
 
         return cmd
 
-    def get_config(self, path):
-        # shfmt does not have an option to
-        # read external config file. We build one.
-        with open(path, 'r', encoding='utf-8') as file:
-            data = file.read()
-        json = sublime.decode_value(data)
-
-        result = []
-        for key, value in json.items():
-            if type(value) == int:
-                result.extend(['--' + key, '%d' % value])
-            elif type(value) == bool and value:
-                result.extend(['--' + key])
-            elif type(value) == str:
-                result.extend(['--' + key, '%s' % value])
-
-        return result
-
     def format(self, text):
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
         cmd = common.set_fix_cmds(cmd, self.uid)
-        if not cmd:
+        if not cmd or not self.is_compat():
             return None
 
         try:

@@ -11,26 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['html-minifier']
+INTERPRETERS = ['python3', 'python']
+EXECUTABLES = ['yapf']
 MODULE_CONFIG = {
-    'source': 'https://github.com/kangax/html-minifier',
-    'name': 'HTMLMinifier',
-    'uid': 'htmlminifier',
-    'type': 'minifier',
-    'syntaxes': ['html', 'xml'],
+    'source': 'https://github.com/google/yapf',
+    'name': 'YAPF',
+    'uid': 'yapf',
+    'type': 'beautifier',
+    'syntaxes': ['python'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'htmlminifier_rc.json'
+        'default': 'yapf_rc.yapf'
     }
 }
 
 
-class HtmlminifierFormatter:
+class YapfFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -45,10 +45,9 @@ class HtmlminifierFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config-file', config])
+            cmd.extend(['--style=' + config])
 
-        ext = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-        cmd.extend(['--file-ext', ext])
+        cmd.extend(['--'])
 
         return cmd
 

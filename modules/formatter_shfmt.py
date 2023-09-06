@@ -11,26 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+import sublime
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['sql-formatter']
+EXECUTABLES = ['shfmt']
 MODULE_CONFIG = {
-    'source': 'https://github.com/sql-formatter-org/sql-formatter',
-    'name': 'SQL Formatter',
-    'uid': 'sqlformatter',
+    'source': 'https://github.com/mvdan/sh',
+    'name': 'Shfmt',
+    'uid': 'shfmt',
     'type': 'beautifier',
-    'syntaxes': ['sql'],
+    'syntaxes': ['bash'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'sql_formatter_rc.json'
+        'default': 'shfmt_rc.json'
     }
 }
 
 
-class SqlformatterFormatter:
+class ShfmtFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -39,15 +39,41 @@ class SqlformatterFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
-        if not cmd:
+        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
+        if not executable:
             return None
+
+        cmd = [executable]
+
+        args = common.get_args(self.uid)
+        if args:
+            cmd.extend(args)
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config', config])
+            cmd.extend(self.get_config(config))
+
+        cmd.extend(['-'])
 
         return cmd
+
+    def get_config(self, path):
+        # shfmt does not have an option to
+        # read external config file. We build one.
+        with open(path, 'r', encoding='utf-8') as file:
+            data = file.read()
+        json = sublime.decode_value(data)
+
+        result = []
+        for key, value in json.items():
+            if type(value) == int:
+                result.extend(['--' + key, '%d' % value])
+            elif type(value) == bool and value:
+                result.extend(['--' + key])
+            elif type(value) == str:
+                result.extend(['--' + key, '%s' % value])
+
+        return result
 
     def format(self, text):
         cmd = self.get_cmd()

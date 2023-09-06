@@ -11,26 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['python3', 'python']
-EXECUTABLES = ['yapf']
+INTERPRETERS = ['ruby']
+EXECUTABLES = ['rubocop']
 MODULE_CONFIG = {
-    'source': 'https://github.com/google/yapf',
-    'name': 'YAPF',
-    'uid': 'yapf',
+    'source': 'https://github.com/rubocop-hq/rubocop',
+    'name': 'RuboCop',
+    'uid': 'rubocop',
     'type': 'beautifier',
-    'syntaxes': ['python'],
+    'syntaxes': ['ruby'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'yapf_rc.yapf'
+        'default': 'rubocop_rc.yml'
     }
 }
 
 
-class YapfFormatter:
+class RubocopFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -45,9 +45,9 @@ class YapfFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--style=' + config])
+            cmd.extend(['--config', config])
 
-        cmd.extend(['--'])
+        cmd.extend(['--autocorrect', '--stdin', self.pathinfo['base'] if self.pathinfo['base'] else 'untitled', '--stderr'])
 
         return cmd
 
@@ -66,6 +66,7 @@ class YapfFormatter:
             if errno > 0:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
+                log.debug('Success (errno=%d): "%s"', errno, stderr.decode('utf-8'))
                 return stdout.decode('utf-8')
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))

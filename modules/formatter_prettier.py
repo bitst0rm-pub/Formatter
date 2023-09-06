@@ -11,26 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['perl']
-EXECUTABLES = ['perltidy', 'perltidy.pl']
+INTERPRETERS = ['node']
+EXECUTABLES = ['prettier']
 MODULE_CONFIG = {
-    'source': 'https://github.com/perltidy/perltidy',
-    'name': 'Perltidy',
-    'uid': 'perltidy',
+    'source': 'https://github.com/prettier/prettier',
+    'name': 'Prettier',
+    'uid': 'prettier',
     'type': 'beautifier',
-    'syntaxes': ['perl'],
+    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'perltidy_rc.cfg'
+        'default': 'prettier_rc.json'
     }
 }
 
 
-class PerltidyFormatter:
+class PrettierFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -45,9 +45,16 @@ class PerltidyFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--profile=' + config])
+            cmd.extend(['--config', config])
+        else:
+            cmd.extend(['--no-config'])
 
-        cmd.extend(['--standard-output', '--standard-error-output', '--warning-output'])
+        if self.pathinfo['path']:
+            cmd.extend(['--stdin-filepath', self.pathinfo['path']])
+        else:
+            # Prettier automatically infers which parser to use based on the file extension.
+            extension = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
+            cmd.extend(['--stdin-filepath', 'dummy' + extension])
 
         return cmd
 

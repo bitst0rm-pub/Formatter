@@ -11,27 +11,27 @@
 # @license      The MIT License (MIT)
 
 import logging
-import sublime
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
-EXECUTABLES = ['eslint']
+EXECUTABLES = ['terser']
 MODULE_CONFIG = {
-    'source': 'https://github.com/eslint/eslint',
-    'name': 'ESLint',
-    'uid': 'eslint',
-    'type': 'beautifier',
+    'source': 'https://github.com/terser-js/terser',
+    'name': 'Terser',
+    'uid': 'terser',
+    'type': 'minifier',
     'syntaxes': ['js'],
     "executable_path": "",
-    'args': ['--resolve-plugins-relative-to', '/path/to/javascript/node_modules'],
+    'args': None,
     'config_path': {
-        'default': 'eslint_rc.json'
+        'default': 'terser_rc.json'
     }
 }
 
 
-class EslintFormatter:
+
+class TerserFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -46,9 +46,9 @@ class EslintFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config', config])
+            cmd.extend(['--config-file', config])
 
-        cmd.extend(['--stdin', '--fix-dry-run', '--format=json'])
+        cmd.extend(['--compress', '--mangle', '--'])
 
         return cmd
 
@@ -64,15 +64,10 @@ class EslintFormatter:
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
-            if errno > 1:
+            if errno > 0:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                obj = sublime.decode_value(stdout.decode('utf-8'))[0]
-                if 'output' in obj:
-                    return obj.get('output', None)
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
-                for i in obj.get('messages', []):
-                    print(i)
+                return stdout.decode('utf-8')
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 

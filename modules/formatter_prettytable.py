@@ -12,9 +12,8 @@
 
 import logging
 import sublime
-from . import common
-
-from ..lib3.prettytable import prettytable
+from Formatter.modules import common
+from Formatter.libs.prettytable import prettytable
 
 log = logging.getLogger(__name__)
 MODULE_CONFIG = {

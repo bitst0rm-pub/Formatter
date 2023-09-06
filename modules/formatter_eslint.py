@@ -11,26 +11,27 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+import sublime
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
-EXECUTABLES = ['prettier']
+EXECUTABLES = ['eslint']
 MODULE_CONFIG = {
-    'source': 'https://github.com/prettier/prettier',
-    'name': 'Prettier',
-    'uid': 'prettier',
+    'source': 'https://github.com/eslint/eslint',
+    'name': 'ESLint',
+    'uid': 'eslint',
     'type': 'beautifier',
-    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
+    'syntaxes': ['js'],
     "executable_path": "",
-    'args': None,
+    'args': ['--resolve-plugins-relative-to', '/path/to/javascript/node_modules'],
     'config_path': {
-        'default': 'prettier_rc.json'
+        'default': 'eslint_rc.json'
     }
 }
 
 
-class PrettierFormatter:
+class EslintFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -46,15 +47,8 @@ class PrettierFormatter:
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
             cmd.extend(['--config', config])
-        else:
-            cmd.extend(['--no-config'])
 
-        if self.pathinfo['path']:
-            cmd.extend(['--stdin-filepath', self.pathinfo['path']])
-        else:
-            # Prettier automatically infers which parser to use based on the file extension.
-            extension = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-            cmd.extend(['--stdin-filepath', 'dummy' + extension])
+        cmd.extend(['--stdin', '--fix-dry-run', '--format=json'])
 
         return cmd
 
@@ -70,10 +64,15 @@ class PrettierFormatter:
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
-            if errno > 0:
+            if errno > 1:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                return stdout.decode('utf-8')
+                obj = sublime.decode_value(stdout.decode('utf-8'))[0]
+                if 'output' in obj:
+                    return obj.get('output', None)
+                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+                for i in obj.get('messages', []):
+                    print(i)
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 

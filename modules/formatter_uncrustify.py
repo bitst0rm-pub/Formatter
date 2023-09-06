@@ -10,29 +10,29 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import os
 import logging
-import tempfile
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['prettydiff']
+EXECUTABLES = ['uncrustify']
 MODULE_CONFIG = {
-    'source': 'https://github.com/prettydiff/prettydiff',
-    'name': 'Pretty Diff',
-    'uid': 'prettydiffmax',
+    'source': 'https://github.com/uncrustify/uncrustify',
+    'name': 'Uncrustify',
+    'uid': 'uncrustify',
     'type': 'beautifier',
-    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx'],
+    'syntaxes': ['c', 'c++', 'cs', 'objc', 'objc++', 'd', 'java', 'pawn', 'vala'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'prettydiffmax_rc.json'
+        'objc': 'uncrustify_objc_rc.cfg',
+        'objc++': 'uncrustify_objc_rc.cfg',
+        'java': 'uncrustify_sun_java_rc.cfg',
+        'default': 'uncrustify_rc.cfg'
     }
 }
 
 
-class PrettydiffmaxFormatter:
+class UncrustifyFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -40,15 +40,12 @@ class PrettydiffmaxFormatter:
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
-    def get_cmd(self, text):
-        interpreter = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
+    def get_cmd(self):
         executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
-        if not interpreter or not executable:
+        if not executable:
             return None
 
-        cmd = [interpreter, executable]
-
-        cmd.extend(['beautify'])
+        cmd = [executable]
 
         args = common.get_args(self.uid)
         if args:
@@ -56,36 +53,32 @@ class PrettydiffmaxFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['config', config])
+            cmd.extend(['-c', config])
 
-        tmp_file = None
-        if self.pathinfo['path']:
-            cmd.extend(['source', self.pathinfo['path']])
+        syntax = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
+        if syntax == 'c++':
+            language = 'cpp'
+        elif syntax == 'objc':
+            language = 'oc'
+        elif syntax == 'objc++':
+            language = 'oc+'
         else:
-            suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-            with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo['cwd'], encoding='utf-8') as file:
-                file.write(text)
-                file.close()
-                tmp_file = file.name
-                cmd.extend(['source', tmp_file])
+            language = syntax
 
-        return cmd, tmp_file
+        cmd.extend(['-l', language])
+
+        return cmd
 
     def format(self, text):
-        cmd, tmp_file = self.get_cmd(text)
+        cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
         cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd:
-            if tmp_file and os.path.isfile(tmp_file):
-                os.unlink(tmp_file)
             return None
 
         try:
             proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
-            stdout, stderr = proc.communicate()
-
-            if tmp_file and os.path.isfile(tmp_file):
-                os.unlink(tmp_file)
+            stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
             if errno > 0:
@@ -93,9 +86,6 @@ class PrettydiffmaxFormatter:
             else:
                 return stdout.decode('utf-8')
         except OSError:
-            if tmp_file and os.path.isfile(tmp_file):
-                os.unlink(tmp_file)
-
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
         return None

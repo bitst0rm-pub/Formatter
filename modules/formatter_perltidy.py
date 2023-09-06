@@ -11,27 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['terser']
+INTERPRETERS = ['perl']
+EXECUTABLES = ['perltidy', 'perltidy.pl']
 MODULE_CONFIG = {
-    'source': 'https://github.com/terser-js/terser',
-    'name': 'Terser',
-    'uid': 'terser',
-    'type': 'minifier',
-    'syntaxes': ['js'],
+    'source': 'https://github.com/perltidy/perltidy',
+    'name': 'Perltidy',
+    'uid': 'perltidy',
+    'type': 'beautifier',
+    'syntaxes': ['perl'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'terser_rc.json'
+        'default': 'perltidy_rc.cfg'
     }
 }
 
 
-
-class TerserFormatter:
+class PerltidyFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -46,9 +45,9 @@ class TerserFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config-file', config])
+            cmd.extend(['--profile=' + config])
 
-        cmd.extend(['--compress', '--mangle', '--'])
+        cmd.extend(['--standard-output', '--standard-error-output', '--warning-output'])
 
         return cmd
 

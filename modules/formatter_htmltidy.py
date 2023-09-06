@@ -11,24 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-EXECUTABLES = ['shfmt']
+EXECUTABLES = ['tidy']
 MODULE_CONFIG = {
-    'source': 'https://github.com/mvdan/sh',
-    'name': 'Shfmt',
-    'uid': 'shfmtmin',
-    'type': 'minifier',
-    'syntaxes': ['bash'],
+    'source': 'https://github.com/htacg/tidy-html5',
+    'name': 'HTML Tidy',
+    'uid': 'htmltidy',
+    'type': 'beautifier',
+    'syntaxes': ['html', 'xml'],
     "executable_path": "",
     'args': None,
-    'config_path': None,
-    'comment': 'no config'
+    'config_path': {
+        'html': 'htmltidy_html_rc.cfg',
+        'xml': 'htmltidy_xml_rc.cfg'
+    }
 }
 
 
-class ShfmtminFormatter:
+class HtmltidyFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -41,11 +43,15 @@ class ShfmtminFormatter:
         if not executable:
             return None
 
-        cmd = [executable, '--minify']
+        cmd = [executable]
 
         args = common.get_args(self.uid)
         if args:
             cmd.extend(args)
+
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
+        if config:
+            cmd.extend(['-config', config])
 
         cmd.extend(['-'])
 
@@ -63,9 +69,11 @@ class ShfmtminFormatter:
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
-            if errno > 0:
+            if errno > 1:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
+                if errno == 1:
+                    log.warning('File formatted but has warnings (errno=%d): "%s"', errno, stderr.decode('utf-8'))
                 return stdout.decode('utf-8')
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))

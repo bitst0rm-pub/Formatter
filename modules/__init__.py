@@ -13,7 +13,7 @@
 import os
 import importlib
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
 

@@ -13,7 +13,7 @@
 import os
 import logging
 import tempfile
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
@@ -21,18 +21,18 @@ EXECUTABLES = ['prettydiff']
 MODULE_CONFIG = {
     'source': 'https://github.com/prettydiff/prettydiff',
     'name': 'Pretty Diff',
-    'uid': 'prettydiffmin',
-    'type': 'minifier',
+    'uid': 'prettydiffmax',
+    'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'prettydiffmin_rc.json'
+        'default': 'prettydiffmax_rc.json'
     }
 }
 
 
-class PrettydiffminFormatter:
+class PrettydiffmaxFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -48,7 +48,7 @@ class PrettydiffminFormatter:
 
         cmd = [interpreter, executable]
 
-        cmd.extend(['minify'])
+        cmd.extend(['beautify'])
 
         args = common.get_args(self.uid)
         if args:

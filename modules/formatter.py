@@ -11,8 +11,8 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
-from ..src import __all__ as formatter_map
+from Formatter.modules import common
+from Formatter.modules import __all__ as formatter_map
 
 log = logging.getLogger(__name__)
 

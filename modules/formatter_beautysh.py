@@ -11,28 +11,27 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+import sublime
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-EXECUTABLES = ['uncrustify']
+INTERPRETERS = ['python3', 'python']
+EXECUTABLES = ['beautysh']
 MODULE_CONFIG = {
-    'source': 'https://github.com/uncrustify/uncrustify',
-    'name': 'Uncrustify',
-    'uid': 'uncrustify',
+    'source': 'https://github.com/lovesegfault/beautysh',
+    'name': 'Beautysh',
+    'uid': 'beautysh',
     'type': 'beautifier',
-    'syntaxes': ['c', 'c++', 'cs', 'objc', 'objc++', 'd', 'java', 'pawn', 'vala'],
+    'syntaxes': ['bash'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'objc': 'uncrustify_objc_rc.cfg',
-        'objc++': 'uncrustify_objc_rc.cfg',
-        'java': 'uncrustify_sun_java_rc.cfg',
-        'default': 'uncrustify_rc.cfg'
+        'default': 'beautysh_rc.json'
     }
 }
 
 
-class UncrustifyFormatter:
+class BeautyshFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -41,33 +40,35 @@ class UncrustifyFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
-        if not executable:
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        if not cmd:
             return None
-
-        cmd = [executable]
-
-        args = common.get_args(self.uid)
-        if args:
-            cmd.extend(args)
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['-c', config])
+            cmd.extend(self.get_config(config))
 
-        syntax = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-        if syntax == 'c++':
-            language = 'cpp'
-        elif syntax == 'objc':
-            language = 'oc'
-        elif syntax == 'objc++':
-            language = 'oc+'
-        else:
-            language = syntax
-
-        cmd.extend(['-l', language])
+        cmd.extend(['-'])
 
         return cmd
+
+    def get_config(self, path):
+        # Beautysh CLI does not have an option to
+        # read external config file. We build one.
+        with open(path, 'r', encoding='utf-8') as file:
+            data = file.read()
+        json = sublime.decode_value(data)
+
+        result = []
+        for key, value in json.items():
+            if type(value) == int:
+                result.extend(['--' + key, '%d' % value])
+            elif type(value) == bool and value:
+                result.extend(['--' + key])
+            elif type(value) == str:
+                result.extend(['--' + key, '%s' % value])
+
+        return result
 
     def format(self, text):
         cmd = self.get_cmd()

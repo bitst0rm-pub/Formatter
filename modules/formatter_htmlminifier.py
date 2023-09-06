@@ -11,50 +11,32 @@
 # @license      The MIT License (MIT)
 
 import logging
-from distutils.version import StrictVersion
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['python3', 'python']
-EXECUTABLES = ['black']
+INTERPRETERS = ['node']
+EXECUTABLES = ['html-minifier']
 MODULE_CONFIG = {
-    'source': 'https://github.com/ambv/black',
-    'name': 'Black',
-    'uid': 'black',
-    'type': 'beautifier',
-    'syntaxes': ['python'],
+    'source': 'https://github.com/kangax/html-minifier',
+    'name': 'HTMLMinifier',
+    'uid': 'htmlminifier',
+    'type': 'minifier',
+    'syntaxes': ['html', 'xml'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'default': 'black_rc.toml'
+        'default': 'htmlminifier_rc.json'
     }
 }
 
 
-class BlackFormatter:
+class HtmlminifierFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
-
-    def is_compat(self):
-        try:
-            python = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
-            if python:
-                proc = common.exec_cmd([python, '-V'], self.pathinfo['cwd'])
-                stdout = proc.communicate()[0]
-                string = stdout.decode('utf-8')
-                version = string.splitlines()[0].split(' ')[1]
-                if StrictVersion(version) >= StrictVersion('3.7.0'):
-                    return True
-                common.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
-            return None
-        except OSError:
-            log.error('Error occurred while validating Python compatibility.')
-
-        return None
 
     def get_cmd(self):
         cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
@@ -63,9 +45,10 @@ class BlackFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config', config])
+            cmd.extend(['--config-file', config])
 
-        cmd.extend(['-'])
+        ext = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
+        cmd.extend(['--file-ext', ext])
 
         return cmd
 
@@ -73,7 +56,7 @@ class BlackFormatter:
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)
         cmd = common.set_fix_cmds(cmd, self.uid)
-        if not cmd or not self.is_compat():
+        if not cmd:
             return None
 
         try:

@@ -11,26 +11,26 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-EXECUTABLES = ['tidy']
+INTERPRETERS = ['node']
+EXECUTABLES = ['js-beautify']
 MODULE_CONFIG = {
-    'source': 'https://github.com/htacg/tidy-html5',
-    'name': 'HTML Tidy',
-    'uid': 'htmltidy',
+    'source': 'https://github.com/beautify-web/js-beautify',
+    'name': 'JS Beautifier',
+    'uid': 'jsbeautifier',
     'type': 'beautifier',
-    'syntaxes': ['html', 'xml'],
+    'syntaxes': ['js', 'css', 'html', 'json', 'tsx', 'vue'],
     "executable_path": "",
     'args': None,
     'config_path': {
-        'html': 'htmltidy_html_rc.cfg',
-        'xml': 'htmltidy_xml_rc.cfg'
+        'default': 'jsbeautify_rc.json'
     }
 }
 
 
-class HtmltidyFormatter:
+class JsbeautifierFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -39,21 +39,16 @@ class HtmltidyFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
-        if not executable:
+        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        if not cmd:
             return None
-
-        cmd = [executable]
-
-        args = common.get_args(self.uid)
-        if args:
-            cmd.extend(args)
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['-config', config])
+            cmd.extend(['--config', config])
 
-        cmd.extend(['-'])
+        syntax = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
+        cmd.extend(['--type', syntax if syntax in ('js', 'css', 'html') else 'js'])
 
         return cmd
 
@@ -69,11 +64,9 @@ class HtmltidyFormatter:
             stdout, stderr = proc.communicate(text.encode('utf-8'))
 
             errno = proc.returncode
-            if errno > 1:
+            if errno > 0:
                 log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
-                if errno == 1:
-                    log.warning('File formatted but has warnings (errno=%d): "%s"', errno, stderr.decode('utf-8'))
                 return stdout.decode('utf-8')
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))

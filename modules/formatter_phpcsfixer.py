@@ -13,32 +13,50 @@
 import os
 import logging
 import tempfile
-from . import common
+from distutils.version import StrictVersion
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['stylelint']
+INTERPRETERS = ['php']
+EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
 MODULE_CONFIG = {
-    'source': 'https://github.com/stylelint/stylelint',
-    'name': 'Stylelint',
-    'uid': 'stylelint',
+    'source': 'https://github.com/FriendsOfPHP/PHP-CS-Fixer',
+    'name': 'PHP CS Fixer',
+    'uid': 'phpcsfixer',
     'type': 'beautifier',
-    'syntaxes': ['css', 'scss', 'sass', 'less', 'sss', 'sugarss'],
+    'syntaxes': ['php'],
     "executable_path": "",
-    'args': ['--config-basedir', '/path/to/javascript/node_modules'],
+    'args': None,
     'config_path': {
-        'default': 'stylelint_rc.json'
+        'default': 'php_cs_fixer_rc.php'
     }
 }
 
 
-class StylelintFormatter:
+class PhpcsfixerFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
         self.is_selected = kwargs.get('is_selected', False)
         self.pathinfo = common.get_pathinfo(self.view.file_name())
+
+    def is_compat(self):
+        try:
+            php = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
+            if php:
+                proc = common.exec_cmd([php, '-v'], self.pathinfo['cwd'])
+                stdout = proc.communicate()[0]
+                string = stdout.decode('utf-8')
+                version = string.splitlines()[0].split(' ')[1]
+                if StrictVersion(version) >= StrictVersion('7.4.0'):
+                    return True
+                common.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
+            return None
+        except OSError:
+            log.error('Error occurred while validating PHP compatibility.')
+
+        return None
 
     def get_cmd(self, text):
         cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
@@ -47,22 +65,25 @@ class StylelintFormatter:
 
         config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
         if config:
-            cmd.extend(['--config', config])
+            cmd.extend(['--config=' + config])
+            cmd.extend(['--allow-risky=yes'])
 
         tmp_file = None
 
-        # Stylelint automatically infers syntax to use based on the file extension.
         suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
 
         with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo['cwd'], encoding='utf-8') as file:
             file.write(text)
             file.close()
             tmp_file = file.name
-            cmd.extend(['--fix', tmp_file])
+            cmd.extend(['fix', tmp_file])
 
         return cmd, tmp_file
 
     def format(self, text):
+        if not self.is_compat():
+            return None
+
         cmd, tmp_file = self.get_cmd(text)
         log.debug('Current arguments: %s', cmd)
         cmd = common.set_fix_cmds(cmd, self.uid)
@@ -77,8 +98,10 @@ class StylelintFormatter:
 
             result = None
             errno = proc.returncode
-            if errno > 0:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stdout.decode('utf-8'))
+            out = stdout.decode('utf-8')
+
+            if errno > 0 or not out:
+                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
             else:
                 with open(tmp_file, 'r', encoding='utf-8') as file:
                     result = file.read()

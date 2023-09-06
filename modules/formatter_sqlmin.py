@@ -12,9 +12,8 @@
 
 import logging
 import sublime
-from . import common
-
-from ..lib3.sqlmin import sqlmin
+from Formatter.modules import common
+from Formatter.libs.sqlmin import sqlmin
 
 log = logging.getLogger(__name__)
 MODULE_CONFIG = {

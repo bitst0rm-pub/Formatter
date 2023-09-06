@@ -11,26 +11,24 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['csscomb']
+EXECUTABLES = ['shfmt']
 MODULE_CONFIG = {
-    'source': 'https://github.com/csscomb/csscomb.js',
-    'name': 'CSScomb',
-    'uid': 'csscomb',
-    'type': 'beautifier',
-    'syntaxes': ['css', 'scss', 'sass', 'less'],
+    'source': 'https://github.com/mvdan/sh',
+    'name': 'Shfmt',
+    'uid': 'shfmtmin',
+    'type': 'minifier',
+    'syntaxes': ['bash'],
     "executable_path": "",
     'args': None,
-    'config_path': {
-        'default': 'csscomb_rc.json'
-    }
+    'config_path': None,
+    'comment': 'no config'
 }
 
 
-class CsscombFormatter:
+class ShfmtminFormatter:
     def __init__(self, *args, **kwargs):
         self.view = kwargs.get('view', None)
         self.uid = kwargs.get('uid', None)
@@ -39,13 +37,15 @@ class CsscombFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
-        if not cmd:
+        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
+        if not executable:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['--config', config])
+        cmd = [executable, '--minify']
+
+        args = common.get_args(self.uid)
+        if args:
+            cmd.extend(args)
 
         cmd.extend(['-'])
 

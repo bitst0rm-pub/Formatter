@@ -13,7 +13,7 @@
 import logging
 import json
 import sublime
-from . import common
+from Formatter.modules import common
 
 log = logging.getLogger(__name__)
 MODULE_CONFIG = {
