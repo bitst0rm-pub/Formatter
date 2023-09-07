@@ -75,10 +75,15 @@ def generate_ascii_tree(reloaded_modules, package_name):
 
 def reload_modules():
     reloaded_modules = []
-    for module_name, module in sys.modules.items():
+    modules_copy = dict(sys.modules)
+    for module_name, module in modules_copy.items():
         if module_name.startswith(PACKAGE_NAME + '.') and module:
             reloaded_modules.append(module_name)
-            reload(module)
+            try:
+                reload(module)
+            except Exception as e:
+                log.error('Error reloading module %s: %s', module_name, str(e))
+                return None
     log.debug('Reloading modules (Python %s):', '.'.join(map(str, sys.version_info[:3])))
     generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 

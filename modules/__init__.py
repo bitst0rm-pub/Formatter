@@ -11,29 +11,49 @@
 # @license      The MIT License (MIT)
 
 import os
-import importlib
+import sys
 import logging
+if sys.version_info < (3, 4):
+    import imp
+else:
+    import importlib
 from Formatter.modules import common
 
 log = logging.getLogger(__name__)
 
 
-formatter_map = {}
-formatter_prefix = 'formatter_'
-formatter_prefix_len = len(formatter_prefix)
+def load_formatter_modules(module_dir):
+    formatter_map = {}
+    formatter_prefix = 'formatter_'
+    formatter_prefix_len = len(formatter_prefix)
 
-module_names = [f[:-3] for f in os.listdir(os.path.dirname(__file__)) if f.startswith(formatter_prefix) and f.endswith('.py')]
-for module_name in module_names:
-    module = importlib.import_module('.' + module_name, package=__name__)
-    formatter_class = getattr(module, module_name[formatter_prefix_len:].capitalize() + common.PACKAGE_NAME, None)
+    for filename in os.listdir(module_dir):
+        if filename.startswith(formatter_prefix) and filename.endswith('.py'):
+            module_name = filename[:-3]
+            module_path = os.path.join(module_dir, filename)
 
-    if formatter_class:
-        formatter_uid = module_name[formatter_prefix_len:]
-        formatter_map[formatter_uid] = {
-            'class': formatter_class,
-            'module': module
-        }
-    else:
-        log.error('Either missing or misspelled formatter class in %s.py', module_name)
+            try:
+                if sys.version_info < (3, 4):
+                    module = imp.load_source('Formatter.modules.' + module_name, module_path)
+                else:
+                    module = importlib.import_module('Formatter.modules.' + module_name, package=__name__)
+            except Exception as e:
+                log.error('Error loading module %s: %s', module_name, str(e))
+                continue
 
-__all__ = formatter_map
+            formatter_class_name = module_name[formatter_prefix_len:].capitalize() + common.PACKAGE_NAME
+            formatter_class = getattr(module, formatter_class_name, None)
+
+            if formatter_class:
+                formatter_uid = module_name[formatter_prefix_len:]
+                formatter_map[formatter_uid] = {
+                    'class': formatter_class,
+                    'module': module
+                }
+            else:
+                log.error('Either missing or misspelled formatter class in %s.py', module_name)
+                continue
+
+    return formatter_map
+
+__all__ = load_formatter_modules(os.path.dirname(__file__))
