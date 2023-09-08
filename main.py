@@ -18,9 +18,9 @@ import threading
 import sublime
 import sublime_plugin
 from threading import Event
-from Formatter.modules import common
-from Formatter.modules import configurator
-from Formatter.modules.formatter import Formatter
+from .modules import common
+from .modules import configurator
+from .modules.formatter import Formatter
 
 log = logging.getLogger(__name__)
 

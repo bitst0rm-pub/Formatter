@@ -15,8 +15,8 @@ import json
 import logging
 import sublime
 from collections import OrderedDict
-from Formatter.modules import common
-from Formatter.modules import __all__ as formatter_map
+from . import common
+from ..modules import __all__ as formatter_map
 
 log = logging.getLogger(__name__)
 

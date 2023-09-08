@@ -11,7 +11,7 @@
 # @license      The MIT License (MIT)
 
 import logging
-from Formatter.modules import common
+from . import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['ruby']

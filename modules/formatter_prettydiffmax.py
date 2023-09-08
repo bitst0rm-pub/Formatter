@@ -13,7 +13,7 @@
 import os
 import logging
 import tempfile
-from Formatter.modules import common
+from . import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']

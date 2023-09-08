@@ -12,7 +12,7 @@
 
 import logging
 import sublime
-from Formatter.modules import common
+from . import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']

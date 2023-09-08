@@ -17,7 +17,7 @@ if sys.version_info < (3, 4):
     import imp
 else:
     import importlib
-from Formatter.modules import common
+from . import common
 
 log = logging.getLogger(__name__)
 

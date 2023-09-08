@@ -12,8 +12,8 @@
 
 import logging
 import json
-from Formatter.modules import common
-from Formatter.libs import yaml
+from . import common
+from ..libs import yaml
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['clang-format']

@@ -10,7 +10,7 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-from Formatter.modules import common
+from .modules import common
 
 
 common.setup_logger(__name__)
