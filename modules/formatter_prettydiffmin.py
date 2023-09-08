@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# @id           $Id$
 # @rev          $Format:%H$ ($Format:%h$)
 # @tree         $Format:%T$ ($Format:%t$)
 # @date         $Format:%ci$
