@@ -498,7 +498,8 @@ MODULE_CONFIG = {                                       # REQUIRED! template to 
     'source': 'https://thirdparty-plugin.com',          # REQUIRED! info on where the user can download the plugin
     'name': 'My First Plugin',                          # REQUIRED! a free-styled plugin name, preferably short and comprehensive
     'uid': 'thisismyfirstpluginmodule',                 # REQUIRED! must match the suffix of 'formatter_thisismyfirstpluginmodule.py'
-    'type': 'minifier',                                 # REQUIRED! 'minifier' or 'beautifier' (both defaults), or 'converter' (for other purposes, e.g., Text-to-QR)
+    'type': 'minifier',                                 # REQUIRED! 'minifier' or 'beautifier' (both defaults), or 'converter' (for other purposes, e.g., Text-to-QR),
+                                                        #           or any 'whatever' string of your choice (for private purposes). Nuff said with versatility
     'syntaxes': ['js'],                                 # REQUIRED! array of syntaxes, obtained from: Tools > Developer > Show Scope Name
     "executable_path": "",                              # optional: use an empty string "" to include this key in config files or None to omit it
     'args': None,                                       # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
@@ -553,8 +554,9 @@ class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitali
         return None                                                 # REQUIRED! return the signal for failure
 
 ```
-That's all. Happy coding o_O
+**That's all**. Happy coding o_O
 
+New keys will be created in the _Default_ settings.<br/>
 Do not forget to update/adjust your _User_ settings:<br/>
 `Preferences > Package Settings > Formatter > Settings`
 
