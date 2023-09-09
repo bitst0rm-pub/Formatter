@@ -2,7 +2,7 @@
                         🎉😃🍰     Welcome to Formatter    🍰😃🎉
                         ✨✨✨ =====✨=====✨=====✨===== ✨✨✨
 
-                Did you know that Formatter can now format folders recursively?
+                        Wanna write your own module for Formatter?
 
                         Check out the README.md for guides and more:
                         https://github.com/bitst0rm-pub/Formatter
