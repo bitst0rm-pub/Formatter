@@ -506,7 +506,7 @@ MODULE_CONFIG = {                                       # REQUIRED! template to 
         'js': 'my_first_plugin_js_rc.json'              # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
         'default': 'my_first_plugin_rc.json'            # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
     },
-    'comment': 'build-in, no executable'                # optional: a single short comment, limited to 80 chars
+    'comment': 'build-in, no executable'                # optional: a single short comment, limited to 80 chars or just omit it
 }
 
 
@@ -555,7 +555,7 @@ class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitali
 ```
 That's all. Happy coding o_O
 
-Do not forget to update/adjust your _User_ settings<br/>
+Do not forget to update/adjust your _User_ settings:<br/>
 `Preferences > Package Settings > Formatter > Settings`
 
 ### 3. APIs:
