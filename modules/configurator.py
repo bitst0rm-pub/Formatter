@@ -245,11 +245,11 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             executable_path = config.get('executable_path', None)
             if executable_path is not None and isinstance(executable_path, str):
-                child['executable_path'] = config['executable_path']
+                child['executable_path'] = executable_path
 
             args = config.get('args', None)
             if args is not None and isinstance(args, list) and len(args) > 0:
-                child['args'] = config['args']
+                child['args'] = args
 
             config_path = config.get('config_path', None)
             if config_path is not None and isinstance(config_path, dict) and len(config_path) > 0:
@@ -262,7 +262,8 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             comment = config.get('comment', None)
             if comment is not None and isinstance(comment, str) and len(comment) > 0:
-                child['__comment__child'] = '/* ' + config['comment'].replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
+                truncated_comment = comment[:80] + '...' if len(comment) > 80 else comment
+                child['__comment__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
 
             (beautifiers if config['type'] == 'beautifier' else minifiers).append({uid:child})
 
