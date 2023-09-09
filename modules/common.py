@@ -83,7 +83,7 @@ def reload_modules():
             except Exception as e:
                 log.error('Error reloading module %s: %s', module_name, str(e))
                 return None
-    log.debug('Reloading modules (Python %s):', '.'.join(map(str, sys.version_info[:3])))
+    log.debug('Reloaded modules (Python %s):', '.'.join(map(str, sys.version_info[:3])))
     generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 
 def config_file():

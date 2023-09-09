@@ -532,5 +532,5 @@ class Listeners(sublime_plugin.EventListener):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.set_abort_sync_scroll()
-            common.reload_modules()
+            common.reload_modules() # might need hit save twice for legacy Python < 3.4 (upstream imp.reload bug)
             self.sync_scroll.reset_run()
