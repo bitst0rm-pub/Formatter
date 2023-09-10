@@ -158,7 +158,7 @@ def update_environ():
         log.warning('Could not clone system environment: %s', error)
     return None
 
-def setup_shared_config():
+def setup_shared_config_files():
     src = 'Packages/' + PACKAGE_NAME + '/config'
     dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
 

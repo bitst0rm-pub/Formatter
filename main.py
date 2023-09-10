@@ -45,10 +45,13 @@ RECURSIVE_TARGET = {
 
 def plugin_loaded():
     ready = configurator.create_package_config_files()
-    common.get_config()
-    log.disabled = not common.config.get('debug')
+    if ready:
+        common.get_config()
+        common.setup_shared_config_files()
+        log.disabled = not common.config.get('debug')
+    else:
+        log.disabled = False
     log.info('%s version: %s', common.PACKAGE_NAME, common.VERSION)
-    common.setup_shared_config()
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 
