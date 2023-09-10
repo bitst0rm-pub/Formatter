@@ -419,7 +419,7 @@ If you encounter issues, please activate the key `"debug": true` in `Formatter.s
 
 ## Development:
 
-Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your personal needs while remaining independent from the original plugins provided by Formatter.
+Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your personal needs while remaining independent from the original plugin modules provided by Formatter.
 
 ### 1. Prerequisite:
 
@@ -428,6 +428,7 @@ Config files for third-party plugins must be placed in the following folder: `Fo
 2. Activate the debug mode with the secret key `dev` in your Formatter settings. The `dev` key should never be used in a production environment.
 
 _Formatter.sublime-settings_
+
 ```js
 {
     "debug": true,  // controls printing error messages
@@ -440,7 +441,7 @@ _Formatter.sublime-settings_
 
 Developing a module for Formatter is straightforward. All you need to do is create a `formatter_xxx.py` file with just a few lines of code to integrate it into Formatter:
 
-1. Create a Python file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder.
+1. Create a Python file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder.<br/>
 Ensure to follow these conventions:
 
 - Create only one file per plugin in the `Formatter > modules` folder:
@@ -461,6 +462,7 @@ Ensure to follow these conventions:
 2. The content of this module file should follow the structure outlined below:
 
 _formatter_thisismyfirstpluginmodule.py_
+
 ```py
 #!/usr/bin/env python3
 
@@ -535,7 +537,7 @@ class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitali
     def format(self, text):                                         # REQUIRED! no more, no less, exact as written, where text is the current input view content
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)                     # REQUIRED!
-        cmd = common.set_fix_cmds(cmd, self.uid)                    # REQUIRED! to finnally set the "fix_commands" option
+        cmd = common.set_fix_cmds(cmd, self.uid)                    # REQUIRED! to finally set the "fix_commands" option
         if not cmd:
             return None
 
@@ -565,6 +567,7 @@ Do not forget to update/adjust your _User_ settings:<br/>
 All APIs can be found in the file `common.py`
 
 - Essentially for the `def get_cmd(self)` function:
+
 ```py
 cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES) # a alias of get_runtime_path(...) and get_args(uid)
 interpreter = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
@@ -576,13 +579,14 @@ component = common.get_pathinfo(path)
 ```
 
 - Essentially for the `def format(self, text)` function:
+
 ```py
 cmd = common.set_fix_cmds(cmd, self.uid)
 proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
 ```
 
 ### 4. Send pull requests:
-Customized modules that have not yet been integrated into Formatter will be erased by any Formatter updates. Consider downloading Formatter directly from this repository instead of installing it through Package Control. The downside is that you'll need to manually update it.
+Customized modules that have not yet been integrated into Formatter will be wiped out by any Formatter updates via Package Control. Consider downloading Formatter directly from this repository instead of installing it through Package Control. The downside is that you'll need to manually update it.
 
 
 ## License
