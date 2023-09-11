@@ -25,6 +25,7 @@ def build_sublime_menu_children(formatter_map):
     minifiers = []
     converters = []
     custom = []
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -38,7 +39,6 @@ def build_sublime_menu_children(formatter_map):
                 ]))
             ])
 
-            type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
@@ -54,15 +54,13 @@ def build_context_sublime_menu(formatter_map):
     ]
 
     beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
-    sorted_beautifiers = sorted(beautifiers, key=lambda x: x['args']['uid'])
-    sorted_minifiers = sorted(minifiers, key=lambda x: x['args']['uid'])
-    sorted_converters = sorted(converters, key=lambda x: x['args']['uid'])
-    sorted_custom = sorted(custom, key=lambda x: x['args']['uid'])
-    context_menu[0]['children'].extend(sorted_beautifiers + [{'caption': '-'}] + sorted_minifiers)
-    if sorted_converters:
-        context_menu[0]['children'].extend([{'caption': '-'}] + sorted_converters)
-    if sorted_custom:
-        context_menu[0]['children'].extend([{'caption': '-'}] + sorted_custom)
+    sort_and_extend = lambda lst, caption=None: context_menu[0]['children'].extend(
+        ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
+    )
+    sort_and_extend(beautifiers, None)
+    sort_and_extend(minifiers, '-')
+    sort_and_extend(converters, '-')
+    sort_and_extend(custom, '-')
     json_text = json.dumps(context_menu, ensure_ascii=False, indent=4)
 
     return strip_trailing(json_text)
@@ -141,15 +139,13 @@ def build_main_sublime_menu(formatter_map):
     ]
 
     beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
-    sorted_beautifiers = sorted(beautifiers, key=lambda x: x['args']['uid'])
-    sorted_minifiers = sorted(minifiers, key=lambda x: x['args']['uid'])
-    sorted_converters = sorted(converters, key=lambda x: x['args']['uid'])
-    sorted_custom = sorted(custom, key=lambda x: x['args']['uid'])
-    main_menu[0]['children'][0]['children'].extend(sorted_beautifiers + [{'caption': '-'}] + sorted_minifiers)
-    if sorted_converters:
-        main_menu[0]['children'][0]['children'].extend([{'caption': '-'}] + sorted_converters)
-    if sorted_custom:
-        main_menu[0]['children'][0]['children'].extend([{'caption': '-'}] + sorted_custom)
+    sort_and_extend = lambda lst, caption=None: main_menu[0]['children'][0]['children'].extend(
+        ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
+    )
+    sort_and_extend(beautifiers, None)
+    sort_and_extend(minifiers, '-')
+    sort_and_extend(converters, '-')
+    sort_and_extend(custom, '-')
     json_text = json.dumps(main_menu, ensure_ascii=False, indent=4)
 
     return strip_trailing(json_text)
@@ -159,12 +155,8 @@ def build_formatter_sublime_commands_children(formatter_map):
     minifiers = []
     converters = []
     custom = []
-
-    type_to_action = {
-        'beautifier': 'Beautify',
-        'minifier': 'Minify',
-        'converter': 'Convert'
-    }
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
+    type_to_action = {'beautifier': 'Beautify', 'minifier': 'Minify', 'converter': 'Convert'}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -178,7 +170,6 @@ def build_formatter_sublime_commands_children(formatter_map):
                 ]))
             ])
 
-            type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
@@ -197,15 +188,13 @@ def build_formatter_sublime_commands(formatter_map):
     ]
 
     beautifiers, minifiers, converters, custom = build_formatter_sublime_commands_children(formatter_map)
-    sorted_beautifiers = sorted(beautifiers, key=lambda x: x['args']['uid'])
-    sorted_minifiers = sorted(minifiers, key=lambda x: x['args']['uid'])
-    sorted_converters = sorted(converters, key=lambda x: x['args']['uid'])
-    sorted_custom = sorted(custom, key=lambda x: x['args']['uid'])
-    sublime_commands.extend(sorted_beautifiers + sorted_minifiers)
-    if sorted_converters:
-        sublime_commands.extend(sorted_converters)
-    if sorted_custom:
-        sublime_commands.extend(sorted_custom)
+    sort_and_extend = lambda lst, caption=None: sublime_commands.extend(
+        ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
+    )
+    sort_and_extend(beautifiers, None)
+    sort_and_extend(minifiers, None)
+    sort_and_extend(converters, None)
+    sort_and_extend(custom, None)
     json_text = json.dumps(sublime_commands, ensure_ascii=False, indent=4)
 
     return strip_trailing(json_text)
@@ -215,6 +204,7 @@ def build_example_sublime_keymap(formatter_map):
     minifiers = []
     converters = []
     custom = []
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -228,16 +218,13 @@ def build_example_sublime_keymap(formatter_map):
                         ]))
                     ])
 
-            type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    sorted_beautifiers = sorted(beautifiers, key=lambda x: x['args']['uid'])
-    sorted_minifiers = sorted(minifiers, key=lambda x: x['args']['uid'])
-    sorted_converters = sorted(converters, key=lambda x: x['args']['uid'])
-    sorted_custom = sorted(custom, key=lambda x: x['args']['uid'])
+    sort_key = lambda x: x['args']['uid']
+    sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, custom]]
 
-    formatted_keymap = '[\n    ' + ',\n    '.join([json.dumps(item, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + (sorted_converters if sorted_converters else []) + (sorted_custom if sorted_custom else [])]) + '\n]'
+    formatted_keymap = '[\n    ' + ',\n    '.join([json.dumps(item, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:
@@ -264,6 +251,7 @@ def build_formatter_sublime_settings_children(formatter_map):
     minifiers = []
     converters = []
     custom = []
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -305,7 +293,6 @@ def build_formatter_sublime_settings_children(formatter_map):
                 truncated_comment = comment[:80] + '...' if len(comment) > 80 else comment
                 child['__comment__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
 
-            type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
             target_list = type_to_list.get(config['type'], custom)
             target_list.append({uid:child})
 
@@ -470,22 +457,11 @@ def build_formatter_sublime_settings(formatter_map):
         ])
 
     beautifiers, minifiers, converters, custom = build_formatter_sublime_settings_children(formatter_map)
-    sorted_beautifiers = sorted(beautifiers, key=lambda x: list(x.keys())[0])
-    sorted_minifiers = sorted(minifiers, key=lambda x: list(x.keys())[0])
-    sorted_converters = sorted(converters, key=lambda x: list(x.keys())[0])
-    sorted_custom = sorted(custom, key=lambda x: list(x.keys())[0])
-
-    for x in sorted_beautifiers:
-        sublime_settings['formatters'].update(x)
-
-    for x in sorted_minifiers:
-        sublime_settings['formatters'].update(x)
-
-    for x in converters:
-        sublime_settings['formatters'].update(x)
-
-    for x in custom:
-        sublime_settings['formatters'].update(x)
+    categories = [beautifiers, minifiers, converters, custom]
+    for category in categories:
+        sorted_category = sorted(category, key=lambda x: list(x.keys())[0])
+        for x in sorted_category:
+            sublime_settings['formatters'].update(x)
 
     json_text = json.dumps(sublime_settings, ensure_ascii=False, indent=4)
 
