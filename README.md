@@ -116,17 +116,12 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 
 There are 3 ways to install Formatter:
 
-- **With the Package Control plugin:** The easiest way to install `Formatter` is through [Package Control](https://packagecontrol.io/packages/Formatter).
+- **Using [Package Control](https://packagecontrol.io/packages/Formatter):** run `Package Control: Install Package` and select `Formatter`
+- **or Clone:** into your sublime `Packages` directory:<br/>
+    `git clone https://github.com/bitst0rm-pub/Formatter.git Formatter`
+- **or Download:** the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter) to your sublime `Packages` directory and rename it to `Formatter`
 
-> Once you install Package Control, restart Sublime Text and bring up the Command Palette (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on MacOSX, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on Linux/Windows). Select "Package Control: Install Package", wait while Package Control fetches the latest package list, then select `Formatter` when the list appears. The advantage of using this method is that Package Control will automatically keep Formatter up to date with the latest version.
-
-- **With Git:** Clone the repository in your Sublime Text `Packages` directory:
-
-        git clone https://github.com/bitst0rm-pub/Formatter.git Formatter
-
-- **Without Git:** Download the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter), copy the whole directory into the Sublime Text `Packages` directory and make sure to rename it to `Formatter`.
-
-The `Packages` directory is located differently in:
+The `Packages` directory is located in:
 
 - MacOSX: `~/Library/Application Support/Sublime Text 3/Packages/`
 - Linux: `~/.config/sublime-text-3/Packages/`
@@ -135,7 +130,7 @@ The `Packages` directory is located differently in:
 
 ## Configuration
 
-Formatter stores config files in 2 different locations:
+Formatter stores config files only in 2 different locations:
 
 - Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
 Note: Do **not** use config files with suffix `.master.` This is the latest reference files and will be updated by any package updates.
@@ -469,11 +464,11 @@ _formatter_thisismyfirstpluginmodule.py_
 MODULE_CONFIG = {}                              # REQUIRED! template to create several sublime config files
 
 class ThisismyfirstpluginmoduleFormatter:       # REQUIRED! the Capitalized of uid and the Capitalized word "Formatter", nothing else!
-    def __init__(self, *args, **kwargs):        # REQUIRED! should included if even not used (conventions)
+    def __init__(self, *args, **kwargs):        # REQUIRED! should included if even not used for clarity
 
     def get_cmd(self):                          # optional: get commands, e.g get the "config_path", "executable_path" etc...
 
-    def format(self, text):                     # REQUIRED! no more, no less, exact as written, where text is the current input view content
+    def format(self, text):                     # REQUIRED! function exact as written, where text is the current input view content
 ```
 
 Details as an example:
@@ -514,7 +509,7 @@ MODULE_CONFIG = {                                       # REQUIRED! template to 
 
 
 class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitalized of uid and the Capitalized word "Formatter", nothing else!
-    def __init__(self, *args, **kwargs):                # REQUIRED! should included if even not used (conventions)
+    def __init__(self, *args, **kwargs):                # REQUIRED! should included if even not used for clarity
         self.view = kwargs.get('view', None)            # also include this one and below too
         self.uid = kwargs.get('uid', None)
         self.region = kwargs.get('region', None)
@@ -534,10 +529,10 @@ class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitali
 
         return cmd
 
-    def format(self, text):                                         # REQUIRED! no more, no less, exact as written, where text is the current input view content
+    def format(self, text):                                         # REQUIRED! function exact as written, where text is the current input view content
         cmd = self.get_cmd()
         log.debug('Current arguments: %s', cmd)                     # REQUIRED!
-        cmd = common.set_fix_cmds(cmd, self.uid)                    # REQUIRED! to finally set the "fix_commands" option
+        cmd = common.set_fix_cmds(cmd, self.uid)                    # REQUIRED! to finally process the "fix_commands" option
         if not cmd:
             return None
 
@@ -553,7 +548,7 @@ class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitali
         except OSError:
             log.error('Error occurred while running: %s', ' '.join(cmd))
 
-        return None                                                 # REQUIRED! return the signal for failure
+        return None                                                 # REQUIRED! return None to indicate failure
 
 ```
 **That's all**. Happy coding o_O
