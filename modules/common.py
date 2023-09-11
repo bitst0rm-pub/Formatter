@@ -27,7 +27,6 @@ from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
 log = logging.getLogger(__name__)
 
 IS_WINDOWS = sublime.platform() == 'windows'
-VERSION = '1.0.6'
 PACKAGE_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'

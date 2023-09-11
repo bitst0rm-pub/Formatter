@@ -19,6 +19,7 @@ import sublime_plugin
 from threading import Event
 from .modules import common
 from .modules import configurator
+from .modules.version import __version__
 from .modules.formatter import Formatter
 
 log = logging.getLogger(__name__)
@@ -51,13 +52,13 @@ def plugin_loaded():
         log.disabled = not common.config.get('debug')
     else:
         log.disabled = False
-    log.info('%s version: %s', common.PACKAGE_NAME, common.VERSION)
+    log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, common.sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
     def run(self):
-        sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + common.VERSION)
+        sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + __version__)
 
 
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
