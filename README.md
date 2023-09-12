@@ -434,7 +434,7 @@ _Formatter.sublime-settings_
 
 ### 2. Creating a module:
 
-Developing a module for Formatter is straightforward. All you need to do is create a `formatter_xxx.py` file with just a few lines of code to integrate it into Formatter:
+Developing a module for Formatter is straightforward. All you need to do is create a `formatter_xxx.py` file with just a few lines of code:
 
 1. Create a Python file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder.<br/>
 Ensure to follow these conventions:
@@ -452,7 +452,7 @@ Ensure to follow these conventions:
     - The suffix `thisismyfirstpluginmodule`: serving as the unique Formatter ID, also known as uid.
 
 - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
-    - Libraries must conform to open-source standards, including the LICENSE file or license notices.
+    - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
 
 2. The content of this module file should follow the structure outlined below:
 
@@ -581,7 +581,8 @@ proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
 ```
 
 ### 4. Send pull requests:
-Customized modules that have not yet been integrated into Formatter will be wiped out by any Formatter updates via Package Control. Consider downloading Formatter directly from this repository instead of installing it through Package Control. The downside is that you'll need to manually update it.
+Customized modules that have not yet been integrated into Formatter will be wiped out by any Formatter updates via Package Control. Consider downloading Formatter directly from this repository instead of installing it through Package Control. The downside is that you'll need to update it manually.<br/>
+Modules focused on beautifying and minifying have the best chance of being accepted.
 
 
 ## License
