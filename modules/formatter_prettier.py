@@ -40,21 +40,24 @@ class PrettierFormatter:
 
     def get_cmd(self):
         cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        use_local_prettier = False
 
         if not cmd:
             log.debug("Looking for local prettier...")
             exe = self.resolve_prettier_cli()
             if exe:
+                use_local_prettier = True
                 cmd = [exe]
 
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['--config', config])
-        else:
-            cmd.extend(['--no-config'])
+        if not use_local_prettier:
+            config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
+            if config:
+                cmd.extend(['--config', config])
+            else:
+                cmd.extend(['--no-config'])
 
         if self.pathinfo['path']:
             cmd.extend(['--stdin-filepath', self.pathinfo['path']])
