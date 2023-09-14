@@ -10,6 +10,7 @@
 # @license      The MIT License (MIT)
 
 import logging
+import os
 from . import common
 
 log = logging.getLogger(__name__)
@@ -39,6 +40,13 @@ class PrettierFormatter:
 
     def get_cmd(self):
         cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+
+        if not cmd:
+            log.debug("Looking for local prettier...")
+            exe = self.resolve_prettier_cli()
+            if exe:
+                cmd = [exe]
+
         if not cmd:
             return None
 
@@ -56,6 +64,52 @@ class PrettierFormatter:
             cmd.extend(['--stdin-filepath', 'dummy' + extension])
 
         return cmd
+
+    def resolve_prettier_cli(self):
+        """
+        Recursively search up the tree from the current file
+        to find a local prettier command.
+
+        Code adapted from https://github.com/jonlabelle/SublimeJsPrettier
+        """
+
+        def make_local_prettier_path(base):
+            return os.path.join(base, 'node_modules', '.bin', 'prettier')
+
+        def make_local_nbl_prettier_path(base):
+            return os.path.join(base, 'node_modules', 'prettier', 'bin-prettier.js')
+
+        def make_parent_directories(start, limit = 500):
+            dirs = [start]
+            next_dir = start
+
+            while limit > 0:
+                next_dir = os.path.dirname(next_dir)
+                dirs.append(next_dir)
+
+                if (next_dir == os.path.abspath(os.sep)):
+                    return dirs
+
+                limit -= 1
+
+            return dirs
+
+
+        active_view_parents = make_parent_directories(os.path.dirname(self.view.file_name()), limit=500)
+
+        for parent in active_view_parents:
+            # Check standard bin
+            closest_to_view_prettier = make_local_prettier_path(parent)
+            if os.path.exists(closest_to_view_prettier):
+                return closest_to_view_prettier
+
+            # Check --no-bin-links
+            closest_to_view_prettier = make_local_nbl_prettier_path(parent)
+            if os.path.exists(closest_to_view_prettier):
+                return closest_to_view_prettier
+
+        # Couldn't find it, return None
+        return None
 
     def format(self, text):
         cmd = self.get_cmd()
