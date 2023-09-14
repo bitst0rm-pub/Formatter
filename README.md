@@ -17,7 +17,7 @@ Formatter aims to achieve:
 - Modularity: Designed for seamless integration with a variety of additional plugins.
 - Customization: Users benefit from the modular concept to craft and integrate their own modules with ease.
 - Convenience: An all-in-one tool for beautifying and minifying code.
-- Versatility: Potentially going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc.
+- Versatility: As platform potentially going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc.
 
 Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
 
