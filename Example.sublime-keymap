@@ -15,6 +15,7 @@
 // option (MacOS only: same as alt)
 
 [
+    {"keys": ["ctrl+super+?"], "command": "quick_options"},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "beautysh", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "black", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "clangformat", "type": "beautifier"}},

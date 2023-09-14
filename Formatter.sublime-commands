@@ -8,6 +8,10 @@
         "command": "open_config_folders"
     },
     {
+        "caption": "Formatter: Quick Options",
+        "command": "quick_options"
+    },
+    {
         "caption": "Formatter: Beautify with Beautysh",
         "command": "run_format",
         "args": {

@@ -49,7 +49,12 @@ def build_context_sublime_menu(formatter_map):
         OrderedDict([
             ('caption', 'Formatter'),
             ('id', 'formatter'),
-            ('children', [])
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Quick Options'),
+                    ('command', 'quick_options')
+                ])
+            ])
         ])
     ]
 
@@ -57,7 +62,7 @@ def build_context_sublime_menu(formatter_map):
     sort_and_extend = lambda lst, caption=None: context_menu[0]['children'].extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
     )
-    sort_and_extend(beautifiers, None)
+    sort_and_extend(beautifiers, '-')
     sort_and_extend(minifiers, '-')
     sort_and_extend(converters, '-')
     sort_and_extend(custom, '-')
@@ -75,7 +80,12 @@ def build_main_sublime_menu(formatter_map):
                 OrderedDict([
                     ('caption', 'Formatter'),
                     ('id', 'formatter'),
-                    ('children', [])
+                    ('children', [
+                        OrderedDict([
+                            ('caption', 'Quick Options'),
+                            ('command', 'quick_options')
+                        ])
+                    ])
                 ])
             ])
         ]),
@@ -142,7 +152,7 @@ def build_main_sublime_menu(formatter_map):
     sort_and_extend = lambda lst, caption=None: main_menu[0]['children'][0]['children'].extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
     )
-    sort_and_extend(beautifiers, None)
+    sort_and_extend(beautifiers, '-')
     sort_and_extend(minifiers, '-')
     sort_and_extend(converters, '-')
     sort_and_extend(custom, '-')
@@ -184,6 +194,10 @@ def build_formatter_sublime_commands(formatter_map):
         OrderedDict([
             ('caption', 'Formatter: Open Config Folders'),
             ('command', 'open_config_folders')
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Quick Options'),
+            ('command', 'quick_options')
         ])
     ]
 
@@ -224,7 +238,8 @@ def build_example_sublime_keymap(formatter_map):
     sort_key = lambda x: x['args']['uid']
     sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, custom]]
 
-    formatted_keymap = '[\n    ' + ',\n    '.join([json.dumps(item, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + '\n]'
+    quick_options = '{"keys": ["ctrl+super+?"], "command": "quick_options"},\n    '
+    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:

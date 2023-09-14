@@ -49,9 +49,13 @@ def plugin_loaded():
     if ready:
         common.get_config()
         common.setup_shared_config_files()
-        log.disabled = not common.config.get('debug')
-    else:
-        log.disabled = False
+
+        is_qo_mode = common.query(common.config, {}, 'quick_options')
+        if len(is_qo_mode) > 0:
+            is_enabled = common.query(common.config, False, 'quick_options', 'debug')
+        else:
+            is_enabled = common.config.get('debug')
+        common.enable_logging() if is_enabled else common.disable_logging()
     log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, common.sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
@@ -79,6 +83,67 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
                         opened_dirs.add(dirpath)
 
 
+class QuickOptionsCommand(sublime_plugin.WindowCommand):
+    option_mapping = {
+        'debug': 'Enable debugging',
+        'new_file_on_format': 'New File on Format',
+        'recursive_folder_format': 'Recursive Folder Format',
+        'use_user_settings': 'Use User Settings'
+    }
+
+    def run(self):
+        self.options = []
+        config_values = common.config.get('quick_options', {})
+
+        for key, title in self.option_mapping.items():
+            option_value = config_values.get(key, False)
+            option_status = '[x]' if option_value else '[-]'
+            if key == 'use_user_settings':
+                option_status = '[-]' if config_values else '[x]'
+            if key == 'new_file_on_format' and option_value:
+                option_label = '{} {}: {}'.format(option_status, title, option_value)
+            else:
+                option_label = '{} {}'.format(option_status, title)
+            self.options.append(option_label)
+
+        self.window.show_quick_panel(self.options, self.on_done)
+
+    def on_done(self, index):
+        if index != -1:
+            selected_option = self.options[index]
+            if 'New File on Format' in selected_option:
+                value = common.query(common.config, '', 'quick_options', 'new_file_on_format')
+                self.window.show_input_panel(
+                    'Enter a suffix for "New File on Format" (to disable: false or spaces):',
+                    value if (value and isinstance(value, str)) else '',
+                    self.on_input_done,
+                    None,
+                    None
+                )
+            else:
+                if '[-]' in selected_option:
+                    selected_option = selected_option.replace('[-]', '[x]')
+                    option_value = True
+                else:
+                    selected_option = selected_option.replace('[x]', '[-]')
+                    option_value = False
+
+                config_key = list(self.option_mapping.keys())[index]
+                if config_key == 'use_user_settings':
+                    common.config['quick_options'] = {}
+                else:
+                    common.config.setdefault('quick_options', {})[config_key] = option_value
+                    if config_key == 'debug' and option_value:
+                        common.enable_logging()
+                    else:
+                        common.disable_logging()
+
+    def on_input_done(self, user_input):
+        if user_input:
+            value = False if (user_input.isspace() or user_input.strip().lower() == 'false') else user_input.strip().strip('.').replace('[-]', '').replace('[x]', '')
+            common.config.setdefault('quick_options', {})['new_file_on_format'] = value
+
+
 class RunFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         # Edit object is useless here since it gets automatically
@@ -86,7 +151,15 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         _unused = edit
         uid = kwargs.get('uid', None)
 
-        if common.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable'):
+        is_qo_mode = common.query(common.config, {}, 'quick_options')
+        if len(is_qo_mode) > 0:
+            is_recursive = common.query(common.config, False, 'quick_options', 'recursive_folder_format')
+            log.debug('Use Quick Options mode: Recursive Folder Format: %s', is_recursive)
+        else:
+            is_recursive = common.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable')
+            log.debug('Use User Settings mode: recursive_folder_format: %s', is_recursive)
+
+        if is_recursive:
             if self.view.file_name():
                 recursive_format_lock = threading.Lock()
                 with recursive_format_lock:
@@ -108,7 +181,12 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         return not bool(self.view.settings().get('is_widget', False))
 
     def is_visible(self, **kwargs):
-        log.disabled = not common.config.get('debug')
+        is_qo_mode = common.query(common.config, {}, 'quick_options')
+        if len(is_qo_mode) > 0:
+            is_enabled = common.query(common.config, False, 'quick_options', 'debug')
+        else:
+            is_enabled = common.config.get('debug')
+        common.enable_logging() if is_enabled else common.disable_logging()
         uid = kwargs.get('uid', None)
         is_disabled = common.query(common.config, True, 'formatters', uid, 'disable')
         return not is_disabled
@@ -178,7 +256,14 @@ class SingleFormat:
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def new_file_on_format(self, uid):
-        suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+        is_qo_mode = common.query(common.config, {}, 'quick_options')
+        if len(is_qo_mode) > 0:
+            suffix = common.query(common.config, False, 'quick_options', 'new_file_on_format')
+            log.debug('Use Quick Options mode: New File on Format: %s', suffix)
+        else:
+            suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+            log.debug('Use User Settings mode: new_file_on_format: %s', suffix)
+
         if suffix and isinstance(suffix, str):
             if common.want_layout():
                 common.setup_layout(self.view)
@@ -429,7 +514,7 @@ def next_sequence(view, is_opened):
             if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['failure_count'] > 0:
                 current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
-            sublime.message_dialog('Formatting completed!\n\nPlease check the following folder for the results:\n\n%s' % RECURSIVE_TARGET['cwd'])
+            sublime.message_dialog('Formatting COMPLETED!\n\nPlease check the results in the folder:\n\n%s' % RECURSIVE_TARGET['cwd'])
             RECURSIVE_TARGET['view'] = None
             RECURSIVE_TARGET['kwargs'] = None
             RECURSIVE_TARGET['cwd'] = None
@@ -515,9 +600,9 @@ class Listeners(sublime_plugin.EventListener):
         used = set()
         is_selected = any(not sel.empty() for sel in view.sel())
         formatters = common.config.get('formatters')
-        for key, value in formatters.items():
+        for uid, value in formatters.items():
             if common.query(value, False, 'recursive_folder_format', 'enable'):
-                log.debug('The "format_on_save" option for %s is currently enabled and cannot be applied in "recursive_folder_format" mode.', key)
+                log.debug('The "format_on_save" option for %s is currently enabled and cannot be applied in "recursive_folder_format" mode.', uid)
                 continue
 
             if not is_selected:
@@ -526,10 +611,10 @@ class Listeners(sublime_plugin.EventListener):
             else:
                 # Selections: find the first non-empty region or use the first region if all are empty
                 region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
-            syntax = common.get_assigned_syntax(view, key, region, is_selected)
+            syntax = common.get_assigned_syntax(view, uid, region, is_selected)
             if value.get('format_on_save', False) and syntax in value.get('syntaxes', []) and syntax not in used:
-                log.debug('"format_on_save" enabled for ID: %s, using syntax: %s', key, syntax)
-                SingleFormat(view, **{'uid': key}).run()
+                log.debug('"format_on_save" enabled for ID: %s, using syntax: %s', uid, syntax)
+                SingleFormat(view, **{'uid': uid}).run()
                 used.add(syntax)
 
     def on_post_save(self, view):

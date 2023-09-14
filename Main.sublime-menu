@@ -9,6 +9,13 @@
                 "id": "formatter",
                 "children": [
                     {
+                        "caption": "Quick Options",
+                        "command": "quick_options"
+                    },
+                    {
+                        "caption": "-"
+                    },
+                    {
                         "caption": "Beautysh",
                         "command": "run_format",
                         "args": {

@@ -100,8 +100,14 @@ def load_config():
 def build_config(settings):
     global config
 
+    try:
+        quick_options = config.get('quick_options', {})
+    except Exception:
+        quick_options = {}
+
     # Sublime settings dict is immutable and unordered
     config = {
+        'quick_options': quick_options,
         'debug': settings.get('debug', False),
         'dev': settings.get('dev', False),
         'open_console_on_failure': settings.get('open_console_on_failure', False),
@@ -494,3 +500,11 @@ def setup_logger(name):
         logger.handlers.clear()
     logger.addHandler(handler)
     return logger
+
+def disable_logging():
+    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger.setLevel(logging.CRITICAL)
+
+def enable_logging():
+    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger.setLevel(logging.DEBUG)
