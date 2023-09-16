@@ -82,7 +82,7 @@ def build_main_sublime_menu(formatter_map):
                     ('id', 'formatter'),
                     ('children', [
                         OrderedDict([
-                            ('caption', 'Quick Options'),
+                            ('caption', '☰ Quick Options'),
                             ('command', 'quick_options')
                         ])
                     ])

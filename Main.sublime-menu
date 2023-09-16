@@ -9,7 +9,7 @@
                 "id": "formatter",
                 "children": [
                     {
-                        "caption": "Quick Options",
+                        "caption": "☰ Quick Options",
                         "command": "quick_options"
                     },
                     {
