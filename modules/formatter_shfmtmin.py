@@ -36,7 +36,7 @@ class ShfmtminFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
+        executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type=None)
         if not executable:
             return None
 

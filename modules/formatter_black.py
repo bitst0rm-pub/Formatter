@@ -40,7 +40,7 @@ class BlackFormatter:
 
     def is_compat(self):
         try:
-            python = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
+            python = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type='python')
             if python:
                 proc = common.exec_cmd([python, '-V'], self.pathinfo['cwd'])
                 stdout = proc.communicate()[0]
@@ -56,7 +56,7 @@ class BlackFormatter:
         return None
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='python')
         if not cmd:
             return None
 

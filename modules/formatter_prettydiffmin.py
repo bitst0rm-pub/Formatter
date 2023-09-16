@@ -40,8 +40,8 @@ class PrettydiffminFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self, text):
-        interpreter = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
-        executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
+        interpreter = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type='node')
+        executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type='node')
         if not interpreter or not executable:
             return None
 

@@ -42,7 +42,7 @@ class PhpcsfixerFormatter:
 
     def is_compat(self):
         try:
-            php = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
+            php = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type=None)
             if php:
                 proc = common.exec_cmd([php, '-v'], self.pathinfo['cwd'])
                 stdout = proc.communicate()[0]
@@ -58,7 +58,7 @@ class PhpcsfixerFormatter:
         return None
 
     def get_cmd(self, text):
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type=None)
         if not cmd:
             return None
 

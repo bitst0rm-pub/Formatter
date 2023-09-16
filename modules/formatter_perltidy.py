@@ -38,7 +38,7 @@ class PerltidyFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='perl')
         if not cmd:
             return None
 

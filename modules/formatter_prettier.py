@@ -14,7 +14,7 @@ from . import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
-EXECUTABLES = ['prettier']
+EXECUTABLES = ['prettier', 'bin-prettier.js']
 MODULE_CONFIG = {
     'source': 'https://github.com/prettier/prettier',
     'name': 'Prettier',
@@ -38,7 +38,7 @@ class PrettierFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)
+        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
         if not cmd:
             return None
 

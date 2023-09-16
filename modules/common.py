@@ -321,7 +321,7 @@ def expand_path(path):
         # log.debug('Normalized path: %s', path)
     return path
 
-def is_exe(file):
+def is_executeable(file):
     if file and isinstance(file, str) and exists(file) and isfile(file):
         if os.access(file, os.F_OK | os.X_OK):
             return True
@@ -354,9 +354,9 @@ def get_environ_path(fnames):
                     normdir = normcase(dir)
                     if not normdir in seen:
                         seen.add(normdir)
-                        for thefile in files:
-                            file = join(dir, thefile)
-                            if is_exe(file):
+                        for f in files:
+                            file = join(dir, f)
+                            if is_executeable(file):
                                 return file
             else:
                 log.error('"PATH" or default search path does not exist: %s', path)
@@ -366,9 +366,81 @@ def get_environ_path(fnames):
         log.error('File names variable is empty or not of type list: %s', fnames)
     return None
 
-def get_head_cmd(uid, intr_names, exec_names):
-    interpreter = get_runtime_path(uid, intr_names, 'interpreter')
-    executable = get_runtime_path(uid, exec_names, 'executable')
+def get_active_view_parent_folders(active_view, max_depth=30):
+    active_file_path = active_view.file_name()
+
+    if active_file_path:
+        d = dirname(active_file_path)
+        parent_folders = []
+
+        for _ in range(max_depth):
+            if d == dirname(d):
+                break
+            parent_folders.append(d)
+            d = dirname(d)
+
+        return parent_folders
+    else:
+        return None
+
+def get_local_executable(view, executable_names_list, runtime_type=None):
+    if not runtime_type:
+        return None
+
+    parent_folders = get_active_view_parent_folders(view)
+    if parent_folders:
+        paths = []
+        if runtime_type == 'node':
+            for folder in parent_folders:
+                for ex in executable_names_list:
+                    paths.append(join(folder, 'node_modules', '.bin', ex))
+                    paths.append(join(folder, 'node_modules', executable_names_list[0], ex))
+        if runtime_type == 'python':
+            pass
+        if runtime_type == 'perl':
+            pass
+        if runtime_type == 'ruby':
+            pass
+        for f in paths:
+            if is_executeable(f):
+                log.debug('Local executable found: %s', f)
+                return f
+    return None
+
+def get_operator(uid, operator_names_list, operator_type):
+    user_file = query(config, None, 'formatters', uid, operator_type + '_path')
+    if user_file and not isfile(user_file):
+        log.error('File %s does not exist: %s', operator_type, user_file)
+        return None
+    if is_executeable(user_file):
+        log.debug('User %s found: %s', operator_type, user_file)
+        return user_file
+    global_file = get_environ_path(operator_names_list)
+    if global_file:
+        log.debug('Global %s found: %s', operator_type, global_file)
+        return global_file
+    log.error('Could not find %s: %s', operator_type, operator_names_list)
+    return None
+
+def get_executable(view, uid, executable_names_list, runtime_type=None):
+    local_executable = get_local_executable(view, executable_names_list, runtime_type)
+    if local_executable:
+        return local_executable
+    user_and_global_executable = get_operator(uid, executable_names_list, 'executable')
+    if user_and_global_executable:
+        return user_and_global_executable
+    return None
+
+def get_interpreter(view, uid, interpreter_names_list, runtime_type=None):
+    unused_ = view, runtime_type # preserved for future
+    user_and_global_executable = get_operator(uid, interpreter_names_list, 'interpreter')
+    if user_and_global_executable:
+        return user_and_global_executable
+    return None
+
+def get_head_cmd(view, uid, interpreter_names_list, executable_names_list, runtime_type=None):
+    interpreter = get_interpreter(view, uid, interpreter_names_list, runtime_type)
+    executable = get_executable(view, uid, executable_names_list, runtime_type)
     if not interpreter or not executable:
         return None
     cmd = [interpreter, executable]
@@ -376,24 +448,6 @@ def get_head_cmd(uid, intr_names, exec_names):
     if args:
         cmd.extend(args)
     return cmd
-
-def get_runtime_path(uid, fnames, path_type):
-    if path_type not in ['interpreter', 'executable']:
-        log.error('Invalid runtime type. Either use the keyword "interpreter" or "executable".')
-        return None
-
-    local_file = query(config, None, 'formatters', uid, path_type + '_path')
-    if local_file and not isfile(local_file):
-        log.error('File does not exist: %s', local_file)
-        return None
-    if is_exe(local_file):
-        log.debug('%s: %s', path_type.capitalize(), local_file)
-        return local_file
-    global_file = get_environ_path(fnames)
-    if global_file:
-        return global_file
-    log.error('Could not find %s: %s', path_type, fnames)
-    return None
 
 def get_config_path(view, uid, region, is_selected):
     shared_config = query(config, None, 'formatters', uid, 'config_path')

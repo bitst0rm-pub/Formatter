@@ -517,11 +517,11 @@ class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitali
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):                                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
-        cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES)      # See API in common.py
+        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')      # See API below
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)     # See API in common.py
+        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)     # See API below
         if config:
             cmd.extend(['--config-file', config])                           # an array of args to run the third-party plugin
 
@@ -564,19 +564,41 @@ All APIs can be found in the file `common.py`
 - Essentially for the `def get_cmd(self)` function:
 
 ```py
-cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES) # a alias of get_runtime_path(...) and get_args(uid)
-interpreter = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter')
-executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable')
+# A alias of get_interpreter(), get_executable() and get_args(uid);
+# runtime_type=(None|'node'|'python'|'perl'|'ruby') to search for the local interpreter/executable too
+cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
+cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES) # DEPRECATED! as of v1.0.8, use get_head_cmd(...,runtime_type=) instead
+
+# Get the interpreter path or None;
+# runtime_type=(None|'node'|'python'|'perl'|'ruby') to search for the local interpreter too
+interpreter = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type=None)
+interpreter = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter') # DEPRECATED! as of v1.0.8, use get_interpreter() instead
+
+# Get the executable path or None;
+# runtime_type=(None|'node'|'python'|'perl'|'ruby') to search for the local executable too
+executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type=None)
+executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable') # DEPRECATED! as of v1.0.8, use get_executable() instead
+
+# Get the additional input arguments "args" from User settings or None
 args = common.get_args(self.uid)
+
+# Get the input "config_path" from User settings or None
 config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
+
+# Get the detected syntax of the current file or None
 syntax = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-component = common.get_pathinfo(path)
+
+# Get a dictionary of file path components: {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None
+components = common.get_pathinfo(path)
 ```
 
 - Essentially for the `def format(self, text)` function:
 
 ```py
+# To finally process the "fix_commands" option just right before exec_cmd()
 cmd = common.set_fix_cmds(cmd, self.uid)
+
+# To process the formatting with all input (fixed) arguments
 proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
 ```
 
