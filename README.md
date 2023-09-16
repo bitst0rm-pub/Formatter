@@ -401,6 +401,11 @@ Formatting actions can be triggered in different ways:
 - Right-click > Context-Menu > Formatter
 - Settings > Key Bindings
 
+### The Quick Options
+
+This feature is designed to help users quickly access and switch between options, rather than struggling with the Settings file. All the listed options here are temporarily stored in memory and only take effect during the current Sublime session. Once you close Sublime, these options are reset, or you can choose to:
+- Use vanilla User Settings: to revert to your original User Settings.
+
 
 ## Troubleshooting
 

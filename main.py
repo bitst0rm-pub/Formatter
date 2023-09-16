@@ -86,9 +86,9 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
 class QuickOptionsCommand(sublime_plugin.WindowCommand):
     option_mapping = {
         'debug': 'Enable debugging',
-        'new_file_on_format': 'New File on Format',
-        'recursive_folder_format': 'Recursive Folder Format',
-        'use_user_settings': 'Use User Settings'
+        'new_file_on_format': 'Enable New File on Format',
+        'recursive_folder_format': 'Enable Recursive Folder Format',
+        'use_user_settings': 'Use vanilla User Settings'
     }
 
     def run(self):
@@ -111,7 +111,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
     def on_done(self, index):
         if index != -1:
             selected_option = self.options[index]
-            if 'New File on Format' in selected_option:
+            if 'Enable New File on Format' in selected_option:
                 value = common.query(common.config, '', 'quick_options', 'new_file_on_format')
                 self.window.show_input_panel(
                     'Enter a suffix for "New File on Format" (to disable: false or spaces):',
