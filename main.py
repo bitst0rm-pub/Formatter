@@ -45,6 +45,7 @@ RECURSIVE_TARGET = {
 
 
 def plugin_loaded():
+    common.remove_junk()
     ready = configurator.create_package_config_files()
     if ready:
         common.get_config()

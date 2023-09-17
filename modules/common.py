@@ -14,6 +14,7 @@ import logging
 import os
 import re
 import sys
+import shutil
 import tempfile
 import sublime
 if sys.version_info < (3, 4):
@@ -51,6 +52,18 @@ LAYOUTS = {
     }
 }
 
+
+def remove_junk():
+    parent_dir = dirname(dirname(__file__))
+    items = [join(parent_dir, item) for item in ['.DS_Store', '.git']]
+    for item in items:
+        try:
+            if isfile(item):
+                os.remove(item)
+            elif isdir(item):
+                shutil.rmtree(item)
+        except Exception as e:
+            log.error('Error removing junk %s: %s', item, e)
 
 def generate_ascii_tree(reloaded_modules, package_name):
     tree = {}
