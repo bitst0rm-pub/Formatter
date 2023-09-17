@@ -87,6 +87,7 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
 class QuickOptionsCommand(sublime_plugin.WindowCommand):
     option_mapping = {
         'debug': 'Enable debugging',
+        'layout': 'Choose Layout',
         'new_file_on_format': 'Enable New File on Format',
         'recursive_folder_format': 'Enable Recursive Folder Format',
         'use_user_settings': 'Use vanilla User Settings'
@@ -101,7 +102,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             option_status = '[x]' if option_value else '[-]'
             if key == 'use_user_settings':
                 option_status = '[-]' if config_values else '[x]'
-            if key == 'new_file_on_format' and option_value:
+            if key in ['layout', 'new_file_on_format'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value)
             else:
                 option_label = '{} {}'.format(option_status, title)
@@ -112,14 +113,22 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
     def on_done(self, index):
         if index != -1:
             selected_option = self.options[index]
-            if 'Enable New File on Format' in selected_option:
+            if 'Choose Layout' in selected_option:
+                layouts = ['single', '2cols', '2rows', '<< Back']
+                def on_layout_done(layout_index):
+                    if layout_index != -1:
+                        layout_value = layouts[layout_index]
+                        if layout_value == '<< Back':
+                            self.run()
+                        else:
+                            common.config.setdefault('quick_options', {})['layout'] = layout_value
+                self.window.show_quick_panel(layouts, on_layout_done)
+            elif 'Enable New File on Format' in selected_option:
                 value = common.query(common.config, '', 'quick_options', 'new_file_on_format')
                 self.window.show_input_panel(
                     'Enter a suffix for "New File on Format" (to disable: false or spaces):',
                     value if (value and isinstance(value, str)) else '',
-                    self.on_input_done,
-                    None,
-                    None
+                    self.on_input_done, None, None
                 )
             else:
                 if '[-]' in selected_option:
@@ -259,16 +268,26 @@ class SingleFormat:
     def new_file_on_format(self, uid):
         is_qo_mode = common.query(common.config, {}, 'quick_options')
         if len(is_qo_mode) > 0:
+            mode = 'qo'
+            layout = common.query(common.config, False, 'quick_options', 'layout')
             suffix = common.query(common.config, False, 'quick_options', 'new_file_on_format')
+            log.debug('Use Quick Options mode: Choose Layout: %s', layout)
             log.debug('Use Quick Options mode: New File on Format: %s', suffix)
         else:
+            mode = 'user'
+            layout = common.query(common.config, False, 'layout', 'enable')
             suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+            log.debug('Use User Settings mode: layout: %s', layout)
             log.debug('Use User Settings mode: new_file_on_format: %s', suffix)
 
         if suffix and isinstance(suffix, str):
-            if common.want_layout():
+            window = self.view.window()
+            if mode == 'qo':
+                window.set_layout(common.assign_layout(layout))
+                window.focus_group(0)
+            elif common.want_layout():
                 common.setup_layout(self.view)
-                self.view.window().focus_group(0)
+                window.focus_group(0)
 
             file_path = self.view.file_name()
             if file_path and common.isfile(file_path):
@@ -622,5 +641,5 @@ class Listeners(sublime_plugin.EventListener):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.set_abort_sync_scroll()
-            common.reload_modules() # might need hit save twice for legacy Python < 3.4 (upstream imp.reload bug)
+            common.reload_modules() # need hit save twice for python < 3.4 (imp.reload bug)
             self.sync_scroll.reset_run()

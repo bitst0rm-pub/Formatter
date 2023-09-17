@@ -404,7 +404,8 @@ Formatting actions can be triggered in different ways:
 ### The Quick Options
 
 This feature is designed to help users quickly access and switch between options, rather than struggling with the Settings file. All the listed options here are temporarily stored in memory and only take effect during the current Sublime session. Once you close Sublime, these options are reset, or you can choose to:
-- Use vanilla User Settings: to revert to your original User Settings.
+- `Use vanilla User Settings`: to reset back to your original User Settings.
+- `Choose Layout`: this option _only_ takes effect if the `Enable New File on Format` option is enabled too.
 
 
 ## Troubleshooting
