@@ -108,50 +108,68 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                 option_label = '{} {}'.format(option_status, title)
             self.options.append(option_label)
 
+        self.show_main_menu()
+
+    def show_main_menu(self):
         self.window.show_quick_panel(self.options, self.on_done)
+
+    def show_layout_menu(self):
+        layouts = ['single', '2cols', '2rows', '<< Back']
+        self.window.show_quick_panel(layouts, lambda layout_index: self.on_layout_menu_done(layouts, layout_index))
+
+    def on_layout_menu_done(self, layouts, layout_index):
+        if layout_index != -1:
+            layout_value = layouts[layout_index]
+            if layout_value == '<< Back':
+                self.show_main_menu()
+            else:
+                common.config.setdefault('quick_options', {})['layout'] = layout_value
+                self.run()
+
+    def show_new_file_format_input(self):
+        value = common.query(common.config, '', 'quick_options', 'new_file_on_format')
+        self.window.show_input_panel(
+            'Enter a suffix for "New File on Format" (to disable: false or spaces):',
+            value if (value and isinstance(value, str)) else '',
+            self.on_new_file_format_input_done, None, None
+        )
+
+    def on_new_file_format_input_done(self, user_input):
+        if user_input:
+            value = False if (user_input.isspace() or user_input.strip().lower() == 'false') else user_input.strip().strip('.').replace('[-]', '').replace('[x]', '')
+            common.config.setdefault('quick_options', {})['new_file_on_format'] = value
+        self.run()
 
     def on_done(self, index):
         if index != -1:
             selected_option = self.options[index]
             if 'Choose Layout' in selected_option:
-                layouts = ['single', '2cols', '2rows', '<< Back']
-                def on_layout_done(layout_index):
-                    if layout_index != -1:
-                        layout_value = layouts[layout_index]
-                        if layout_value == '<< Back':
-                            self.run()
-                        else:
-                            common.config.setdefault('quick_options', {})['layout'] = layout_value
-                self.window.show_quick_panel(layouts, on_layout_done)
+                self.show_layout_menu()
             elif 'Enable New File on Format' in selected_option:
-                value = common.query(common.config, '', 'quick_options', 'new_file_on_format')
-                self.window.show_input_panel(
-                    'Enter a suffix for "New File on Format" (to disable: false or spaces):',
-                    value if (value and isinstance(value, str)) else '',
-                    self.on_input_done, None, None
-                )
+                self.show_new_file_format_input()
             else:
-                if '[-]' in selected_option:
-                    selected_option = selected_option.replace('[-]', '[x]')
-                    option_value = True
-                else:
-                    selected_option = selected_option.replace('[x]', '[-]')
-                    option_value = False
+                self.toggle_option_status(index)
 
-                config_key = list(self.option_mapping.keys())[index]
-                if config_key == 'use_user_settings':
-                    common.config['quick_options'] = {}
-                else:
-                    common.config.setdefault('quick_options', {})[config_key] = option_value
-                    if config_key == 'debug' and option_value:
-                        common.enable_logging()
-                    else:
-                        common.disable_logging()
+    def toggle_option_status(self, index):
+        selected_option = self.options[index]
+        if '[-]' in selected_option:
+            selected_option = selected_option.replace('[-]', '[x]')
+            option_value = True
+        else:
+            selected_option = selected_option.replace('[x]', '[-]')
+            option_value = False
 
-    def on_input_done(self, user_input):
-        if user_input:
-            value = False if (user_input.isspace() or user_input.strip().lower() == 'false') else user_input.strip().strip('.').replace('[-]', '').replace('[x]', '')
-            common.config.setdefault('quick_options', {})['new_file_on_format'] = value
+        config_key = list(self.option_mapping.keys())[index]
+        if config_key == 'use_user_settings':
+            common.config['quick_options'] = {}
+        else:
+            common.config.setdefault('quick_options', {})[config_key] = option_value
+            if config_key == 'debug' and option_value:
+                common.enable_logging()
+            else:
+                common.disable_logging()
+
+        self.run()
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
