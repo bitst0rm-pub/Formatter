@@ -556,4 +556,13 @@ def create_package_config_files():
             log.error('An error occurred while writing %s: %s', file, e)
             return False
 
+    try:
+        file = common.quick_options_config_file()
+        if not common.isfile(file):
+            with open(file, 'w', encoding='utf-8') as f:
+                json.dump({}, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        log.error('An error occurred while writing %s: %s', file, e)
+        return False
+
     return True

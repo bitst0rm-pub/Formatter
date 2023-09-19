@@ -84,12 +84,13 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
 
 class QuickOptionsCommand(sublime_plugin.WindowCommand):
     option_mapping = {
-        'debug': 'Enable debugging',
+        'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
         'recursive_folder_format': 'Enable Recursive Folder Format',
-        'use_user_settings': 'Reset (Use vanilla User Settings)'
+        'use_user_settings': 'Reset (permanent User Settings use)',
+        'save_quick_options': 'Save (permanent Quick Options use)'
     }
 
     def run(self):
@@ -101,6 +102,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             option_status = '[x]' if option_value else '[-]'
             if key == 'use_user_settings':
                 option_status = '[-]' if config_values else '[x]'
+            if key == 'save_quick_options':
+                option_status = '[x]' if config_values and common.load_quick_options() else '[-]'
             if key in ['layout', 'format_on_save', 'new_file_on_format'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
             else:
@@ -159,6 +162,10 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             common.config.setdefault('quick_options', {})['new_file_on_format'] = value
         self.run()
 
+    def save_quick_options_config(self):
+        config_json = common.config.get('quick_options', {})
+        self.save_qo_config_file(config_json)
+
     def on_done(self, index):
         if index != -1:
             selected_option = self.options[index]
@@ -188,6 +195,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         config_key = list(self.option_mapping.keys())[index]
         if config_key == 'use_user_settings':
             common.config['quick_options'] = {}
+            self.save_qo_config_file({})
+        elif config_key == 'save_quick_options':
+            self.save_quick_options_config()
         else:
             if config_key == 'debug':
                 if option_value:
@@ -202,6 +212,11 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                     return
             common.config.setdefault('quick_options', {})[config_key] = option_value
         self.run()
+
+    def save_qo_config_file(self, json_data):
+        file = common.quick_options_config_file()
+        with open(file, 'w', encoding='utf-8') as f:
+            common.json.dump(json_data, f, ensure_ascii=False, indent=4)
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):

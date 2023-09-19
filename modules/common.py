@@ -31,6 +31,7 @@ log = logging.getLogger(__name__)
 IS_WINDOWS = sublime.platform() == 'windows'
 PACKAGE_NAME = 'Formatter'
 ASSETS_DIRECTORY = 'formatter.assets'
+QUICK_OPTIONS_SETTING_FILE = 'Formatter.quick-options'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
 RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
 STATUS_KEY = '@!' + PACKAGE_NAME.lower()
@@ -102,6 +103,9 @@ def reload_modules():
 def config_file():
     return PACKAGE_NAME + '.sublime-settings'
 
+def quick_options_config_file():
+    return join(sublime.packages_path(), 'User', QUICK_OPTIONS_SETTING_FILE)
+
 def get_config():
     settings = sublime.load_settings(config_file())
     settings.add_on_change('@reload@', load_config)
@@ -111,17 +115,25 @@ def load_config():
     settings = sublime.load_settings(config_file())
     build_config(settings)
 
+def load_quick_options():
+    qo_file = quick_options_config_file()
+    try:
+        if isfile(qo_file):
+            with open(qo_file, 'r') as f:
+                data = json.load(f)
+            quick_options = data
+        else:
+            quick_options = config.get('quick_options', {})
+    except Exception as e:
+        quick_options = {}
+    return quick_options
+
 def build_config(settings):
     global config
 
-    try:
-        quick_options = config.get('quick_options', {})
-    except Exception:
-        quick_options = {}
-
     # Sublime settings dict is immutable and unordered
     config = {
-        'quick_options': quick_options,
+        'quick_options': load_quick_options(),
         'debug': settings.get('debug', False),
         'dev': settings.get('dev', False),
         'open_console_on_failure': settings.get('open_console_on_failure', False),
