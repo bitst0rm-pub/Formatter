@@ -136,6 +136,10 @@ def build_config(settings):
     config = recursive_map(expand_path, config)
     return config
 
+def is_quick_options_mode():
+    qo = query(config, {}, 'quick_options')
+    return len(qo) > 0
+
 def assign_layout(layout):
     return LAYOUTS.get(layout, None)
 
