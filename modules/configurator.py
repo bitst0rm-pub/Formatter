@@ -544,7 +544,7 @@ def create_package_config_files():
         try:
             text = build_function(formatter_map)
             file = common.join(directory, file_name)
-            if common.exists(file) and common.isfile(file):
+            if common.isfile(file):
                 hash_src = common.hashlib.md5(text.encode('utf-8')).hexdigest()
                 hash_dst = common.md5f(file)
                 if hash_src == hash_dst:

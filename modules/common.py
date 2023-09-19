@@ -9,12 +9,13 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-import hashlib
-import logging
 import os
 import re
 import sys
+import json
 import shutil
+import hashlib
+import logging
 import tempfile
 import sublime
 if sys.version_info < (3, 4):
@@ -23,7 +24,7 @@ else:
     from importlib import reload
 from subprocess import Popen, PIPE
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
-                    exists, normcase, normpath, pathsep, split, splitext, dirname)
+                    normcase, normpath, pathsep, split, splitext, dirname)
 
 log = logging.getLogger(__name__)
 
@@ -230,6 +231,13 @@ def md5f(fname):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
+def print_sysinfo():
+    log.info('System environments:\n%s', json.dumps(update_environ(), indent=4))
+    if is_quick_options_mode():
+        log.info('Current mode: Quick Options: \n%s', json.dumps(query(config, {}, 'quick_options'), indent=4))
+    else:
+        log.info('Current mode: User Settings')
+
 def get_pathinfo(path):
     try:
         cwd = tempfile.gettempdir()
@@ -339,7 +347,7 @@ def expand_path(path):
     return path
 
 def is_executeable(file):
-    if file and isinstance(file, str) and exists(file) and isfile(file):
+    if file and isinstance(file, str) and isfile(file):
         if os.access(file, os.F_OK | os.X_OK):
             return True
         if not IS_WINDOWS:

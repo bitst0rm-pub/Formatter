@@ -11,7 +11,6 @@
 
 import logging
 import traceback
-import json
 import time
 import threading
 import sublime
@@ -258,11 +257,7 @@ class SingleFormat:
         self.cycles = []
 
     def run(self):
-        log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
-        if common.is_quick_options_mode():
-            log.debug('Current mode: Quick Options: \n%s', json.dumps(common.query(common.config, {}, 'quick_options'), indent=4))
-        else:
-            log.debug('Current mode: User Settings')
+        common.print_sysinfo()
         try:
             formatter = Formatter(self.view)
             is_selected = self.has_selection()
@@ -456,11 +451,7 @@ class RecursiveFormat:
         self.kwargs = kwargs
 
     def run(self):
-        log.debug('System environments:\n%s', json.dumps(common.update_environ(), indent=4))
-        if common.is_quick_options_mode():
-            log.debug('Current mode: Quick Options: \n%s', json.dumps(common.query(common.config, {}, 'quick_options'), indent=4))
-        else:
-            log.debug('Current mode: User Settings')
+        common.print_sysinfo()
         try:
             cwd = common.get_pathinfo(self.view.file_name())['cwd']
             uid = self.kwargs.get('uid', None)
