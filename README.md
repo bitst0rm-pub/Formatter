@@ -17,7 +17,7 @@ Formatter aims to achieve:
 - Modularity: Designed for seamless integration with a variety of additional plugins.
 - Customization: Users benefit from the modular concept to craft and integrate their own modules with ease.
 - Convenience: An all-in-one tool for beautifying and minifying code.
-- Versatility: As platform potentially going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc.
+- Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development)
 
 Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
 
@@ -25,10 +25,11 @@ Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and
 ## Guides
 
 - Table of Contents
-  - [Plugins](#Plugins)
+  - [Plugins](#plugins)
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
+    - [The Quick Options](#the-quick-options)
   - [Troubleshooting](#troubleshooting)
   - [Todo](#todo)
   - [Development: Guide to Create Your Own Modules](#development)
@@ -130,16 +131,16 @@ The `Packages` directory is located in:
 
 ## Configuration
 
-Formatter stores config files only in 2 different locations:
+Formatter stores config files in 2 different locations:
 
 - Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
-Note: Do **not** use config files with suffix `.master.` This is the latest reference files and will be updated by any package updates.
+Note: Do **not** use config files with the suffix `.master.` as they serve as reference files and may be overwritten by any package updates.
 
         Sublime Text > Packages > User > formatter.assets > config
 
-- Default and User config files that control Formatter:
+- User Settings and Quick Options config files that control Formatter:
 
-        Sublime Text > Packages > User > Formatter.sublime-settings
+        Sublime Text > Packages > User > Formatter.sublime-settings, Formatter.quick-options
 
 Formatter settings can be accessed from: Preferences > Package Settings > Formatter > Settings.
 
@@ -403,9 +404,12 @@ Formatting actions can be triggered in different ways:
 
 ### The Quick Options
 
-This feature is designed to help users quickly access and switch between options, rather than struggling with the Settings file. All the listed options here are temporarily stored in memory and only take effect during the current Sublime session. Once you close Sublime, these options are reset, or you can choose to:
-- `Use vanilla User Settings`: to reset back to your original User Settings.
-- `Choose Layout`: this option _only_ takes effect if the `Enable New File on Format` option is enabled too.
+This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file. It comprises 3 modes:
+- **Temporary Quick Options**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
+- **Permanent User Settings**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
+- **Permanent Quick Options**: Clicking the `Save` option will make all current Temporary Quick Options permanent. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
+
+None of the modes will ever alter your Settings file.
 
 
 ## Troubleshooting
@@ -420,7 +424,7 @@ If you encounter issues, please activate the key `"debug": true` in `Formatter.s
 
 ## Development:
 
-Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your personal needs while remaining independent from the original plugin modules provided by Formatter.
+Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your personal needs while remaining independent from the original plugin modules provided by Formatter. In theory, you can use Formatter as a platform to convert _any_ form of text, as long as third-party plugins operate in a text-to-text manner, such as text-to-ASCII image conversion.
 
 ### 1. Prerequisite:
 
