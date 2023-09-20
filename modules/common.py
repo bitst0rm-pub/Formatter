@@ -150,8 +150,37 @@ def build_config(settings):
     return config
 
 def is_quick_options_mode():
-    qo = query(config, {}, 'quick_options')
-    return len(qo) > 0
+    return bool(query(config, {}, 'quick_options'))
+
+def get_mode_description(short=False):
+    qo_memory = is_quick_options_mode()
+    try:
+        file = quick_options_config_file()
+        with open(file, 'r') as f:
+            qo_file = bool(json.load(f))
+    except FileNotFoundError:
+        log.error('The file %s was not found.', file)
+        qo_file = None
+    except json.JSONDecodeError as e:
+        log.error('Error decoding JSON: %s', e)
+        qo_file = None
+    except Exception as e:
+        log.error('An error occurred: %s', e)
+        qo_file = None
+
+    mode_descriptions = {
+        'Permanent User Settings': 'PUS',
+        'Permanent Quick Options': 'PQO',
+        'Temporary Quick Options': 'TQO'
+    }
+
+    if not qo_file and not qo_memory:
+        mode = 'Permanent User Settings'
+    elif qo_file:
+        mode = 'Permanent Quick Options'
+    elif qo_memory:
+        mode = 'Temporary Quick Options'
+    return mode_descriptions[mode] if short else mode
 
 def assign_layout(layout):
     return LAYOUTS.get(layout, None)

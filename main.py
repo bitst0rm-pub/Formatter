@@ -39,7 +39,8 @@ RECURSIVE_TARGET = {
     'filelist_length': 0,
     'current_index': 0,
     'success_count': 0,
-    'failure_count': 0
+    'failure_count': 0,
+    'mode_description': None
 }
 
 
@@ -270,9 +271,11 @@ class SingleFormat:
         self.success = 0
         self.failure = 0
         self.cycles = []
+        self.print_sysinfo = common.print_sysinfo()
+        self.get_mode_description = common.get_mode_description(short=True)
 
     def run(self):
-        common.print_sysinfo()
+        self.print_sysinfo
         try:
             formatter = Formatter(self.view)
             is_selected = self.has_selection()
@@ -320,7 +323,7 @@ class SingleFormat:
 
         if common.config.get('show_statusbar'):
             self.view.window().set_status_bar_visible(True)
-            self.view.set_status(common.STATUS_KEY, common.PACKAGE_NAME + ' [ok:' + str(self.success) + '|ko:' + str(self.failure) + ']')
+            self.view.set_status(common.STATUS_KEY, '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME, self.get_mode_description, self.success, self.failure))
 
     def open_console_on_failure(self):
         if common.config.get('open_console_on_failure'):
@@ -464,9 +467,11 @@ class RecursiveFormat:
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
+        self.print_sysinfo = common.print_sysinfo()
+        RECURSIVE_TARGET['mode_description'] = common.get_mode_description(short=True)
 
     def run(self):
-        common.print_sysinfo()
+        self.print_sysinfo
         try:
             cwd = common.get_pathinfo(self.view.file_name())['cwd']
             uid = self.kwargs.get('uid', None)
@@ -585,7 +590,7 @@ def next_sequence(view, is_opened):
             if common.config.get('show_statusbar'):
                 current_view = sublime.active_window().active_view()
                 current_view.window().set_status_bar_visible(True)
-                current_view.set_status(common.STATUS_KEY, common.PACKAGE_NAME + ' [total:' + str(RECURSIVE_TARGET['filelist_length']) + '|ok:' + str(RECURSIVE_TARGET['success_count']) + '|ko:' + str(RECURSIVE_TARGET['failure_count']) + ']')
+                current_view.set_status(common.STATUS_KEY, '{}({}) [total:{}|ok:{}|ko:{}]'.format(common.PACKAGE_NAME, RECURSIVE_TARGET['mode_description'], RECURSIVE_TARGET['filelist_length'], RECURSIVE_TARGET['success_count'], RECURSIVE_TARGET['failure_count']))
 
             if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['failure_count'] > 0:
                 current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
