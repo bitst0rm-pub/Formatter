@@ -405,6 +405,7 @@ Formatting actions can be triggered in different ways:
 ### The Quick Options
 
 This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file. It comprises 3 modes:
+
 - **Temporary Quick Options**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
 - **Permanent User Settings**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
 - **Permanent Quick Options**: Clicking the `Save` option will make all current Temporary Quick Options permanent. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.

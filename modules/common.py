@@ -244,9 +244,9 @@ def md5f(fname):
     return hash_md5.hexdigest()
 
 def print_sysinfo():
-    log.info('System environments:\n%s', json.dumps(update_environ(), indent=4))
+    log.info('System environments:\n%s', json.dumps(update_environ(), ensure_ascii=False, indent=4))
     if is_quick_options_mode():
-        log.info('Current mode: Quick Options: \n%s', json.dumps(query(config, {}, 'quick_options'), indent=4))
+        log.info('Current mode: Quick Options: \n%s', json.dumps(query(config, {}, 'quick_options'), ensure_ascii=False, indent=4))
     else:
         log.info('Current mode: User Settings')
 
