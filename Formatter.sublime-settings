@@ -7,6 +7,10 @@
     "open_console_on_failure": false,
 
     // Display results on the status bar; [type: bool]
+    // The abbreviation for the current settings mode:
+    // PUS: Permanent User Settings
+    // PQO: Permanent Quick Options
+    // TQO: Temporary Quick Options
     "show_statusbar": true,
 
     // Configure the layout when opening new files; [type: dict{str:(str|bool)}]

@@ -322,7 +322,11 @@ def build_formatter_sublime_settings(formatter_map):
     // This is especially useful when combined with "debug": true'''),
             ('open_console_on_failure', False),
             ('__comment__show_statusbar', '''
-    // Display results on the status bar; [type: bool]'''),
+    // Display results on the status bar; [type: bool]
+    // The abbreviation for the current settings mode:
+    // PUS: Permanent User Settings
+    // PQO: Permanent Quick Options
+    // TQO: Temporary Quick Options'''),
             ('show_statusbar', True),
             ('__comment__layout', '''
     // Configure the layout when opening new files; [type: dict{str:(str|bool)}]
@@ -557,10 +561,10 @@ def create_package_config_files():
             return False
 
     try:
-        file = common.quick_options_config_file()
-        if not common.isfile(file):
-            with open(file, 'w', encoding='utf-8') as f:
-                json.dump({}, f, ensure_ascii=False, indent=4)
+        for file in [common.join(directory, common.QUICK_OPTIONS_SETTING_FILE), common.quick_options_config_file()]:
+            if not common.isfile(file):
+                with open(file, 'w', encoding='utf-8') as f:
+                    json.dump({}, f, ensure_ascii=False, indent=4)
     except Exception as e:
         log.error('An error occurred while writing %s: %s', file, e)
         return False
