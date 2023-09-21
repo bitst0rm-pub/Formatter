@@ -18,6 +18,7 @@ import sublime_plugin
 from threading import Event
 from .modules import common
 from .modules import configurator
+from .modules import supplementer
 from .modules.version import __version__
 from .modules.formatter import Formatter
 
@@ -678,74 +679,7 @@ class Listeners(sublime_plugin.EventListener):
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
     def on_selection_modified_async(self, view):
-        if not common.query(common.config, False, 'show_words_count', 'enable'):
-            return
-
-        current_view = view
-        selections = current_view.sel()
-        total_lines = 0
-        total_words = 0
-        total_chars = 0
-        total_chars_with_spaces = 0
-        ignore_whitespace_char = common.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
-
-        def thousands_separator(number):
-            return '{:,}'.format(number).replace(',', '.')
-
-        if selections and current_view.substr(selections[0]):
-            # Selections: words count
-            for selection in selections:
-                selected_text = current_view.substr(selection)
-                char_count_with_spaces = len(selected_text)
-
-                if ignore_whitespace_char:
-                    selected_text_no_whitespace = common.re.sub(r'\s', '', selected_text)
-                    char_count = len(selected_text_no_whitespace)
-                else:
-                    char_count = char_count_with_spaces
-
-                total_chars += char_count
-                total_chars_with_spaces += char_count_with_spaces
-
-                word_count = len(selected_text.split())
-                total_words += word_count
-
-                selected_lines = selected_text.split('\n')
-                total_lines += len(selected_lines)
-
-            status_text = 'Selections: {} | Lines: {} | Words: {} | Chars: {}'.format(
-                thousands_separator(len(selections)),
-                thousands_separator(total_lines),
-                thousands_separator(total_words),
-                thousands_separator(total_chars)
-            )
-
-            if ignore_whitespace_char:
-                status_text += ' | Chars (with spaces): {}'.format(thousands_separator(total_chars_with_spaces))
-        else:
-            # Entire view: words count
-            total_lines = current_view.rowcol(current_view.size())[0] + 1
-            total_text = current_view.substr(sublime.Region(0, current_view.size()))
-
-            if ignore_whitespace_char:
-                total_text_no_whitespace = common.re.sub(r'\s', '', total_text)
-                total_chars = len(total_text_no_whitespace)
-            else:
-                total_chars = len(total_text)
-
-            current_line = current_view.rowcol(current_view.sel()[0].begin())[0] + 1
-            current_column = current_view.rowcol(current_view.sel()[0].begin())[1] + 1
-            total_words = len(total_text.split())
-
-            status_text = 'Total Lines: {} | Words: {} | Chars: {} | Line: {}, Col: {}'.format(
-                thousands_separator(total_lines),
-                thousands_separator(total_words),
-                thousands_separator(total_chars),
-                thousands_separator(current_line),
-                thousands_separator(current_column)
-            )
-
-        view.set_status(common.STATUS_KEY + '_words_count', status_text)
+        supplementer.WordsCounter(view).run()
 
     def on_pre_save(self, view):
         used_syntaxes = set()
