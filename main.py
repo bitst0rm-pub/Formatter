@@ -677,7 +677,7 @@ class Listeners(sublime_plugin.EventListener):
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
-    def on_selection_modified(self, view):
+    def on_selection_modified_async(self, view):
         if not common.query(common.config, False, 'show_words_count', 'enable'):
             return
 
