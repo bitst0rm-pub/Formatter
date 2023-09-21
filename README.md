@@ -168,6 +168,8 @@ The following settings example should give you direction on how to setup Formatt
 
     // Display a real-time word and character count in the status bar.
     // By default, whitespace is not included in the character count.
+    // For the optimal experience, consider disabling the
+    // "show_line_column" setting in your Sublime Text.
     "show_words_count": {
         "enable": true,
         "ignore_whitespace_char": true

@@ -330,7 +330,9 @@ def build_formatter_sublime_settings(formatter_map):
             ('show_statusbar', True),
             ('__comment__show_statusbar_words_count', '''
     // Display a real-time word and character count in the status bar.
-    // By default, whitespace is not included in the character count.'''),
+    // By default, whitespace is not included in the character count.
+    // For the optimal experience, consider disabling the
+    // "show_line_column" setting in your Sublime Text.'''),
             ('show_words_count', OrderedDict([
                 ('enable', True),
                 ('ignore_whitespace_char', True)
