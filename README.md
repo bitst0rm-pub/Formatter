@@ -8,6 +8,7 @@ Key features:
 - Capability to format entire file, single or multi selections
 - Capability to format entire folder recursively
 - Shared config files available for each 3rd-party plugin
+- Displays real-time word and character counts.
 - Works offline
 
 Formatter aims to achieve:
@@ -131,18 +132,14 @@ The `Packages` directory is located in:
 
 ## Configuration
 
-Formatter stores config files in 2 different locations:
-
-- Plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) that control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
-Note: Do **not** use config files with the suffix `.master.` as they serve as reference files and may be overwritten by any package updates.
+Formatter stores third-party plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) in:
 
         Sublime Text > Packages > User > formatter.assets > config
 
-- User Settings and Quick Options config files that control Formatter:
+These files control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
+Note: Do **not** use config files with the suffix `.master.` as they serve as reference files and may be overwritten by any package updates.
 
-        Sublime Text > Packages > User > Formatter.sublime-settings, Formatter.quick-options
-
-Formatter settings can be accessed from: Preferences > Package Settings > Formatter > Settings.
+Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
 The left-hand pane contains all the default settings, while right-hand pane is where personal customizations can be made.<br/>
 Ensure to maintain the config structure in the right-hand pane.<br/>

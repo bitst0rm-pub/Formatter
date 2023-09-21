@@ -328,7 +328,7 @@ def build_formatter_sublime_settings(formatter_map):
     // PQO: Permanent Quick Options
     // TQO: Temporary Quick Options'''),
             ('show_statusbar', True),
-            ('__comment__show_statusbar_words_count', '''
+            ('__comment__show_words_count', '''
     // Display a real-time word and character count in the status bar.
     // By default, whitespace is not included in the character count.
     // For the optimal experience, consider disabling the
