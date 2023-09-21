@@ -138,6 +138,10 @@ def build_config(settings):
         'dev': settings.get('dev', False),
         'open_console_on_failure': settings.get('open_console_on_failure', False),
         'show_statusbar': settings.get('show_statusbar', True),
+        'show_words_count': {
+            'enable': query(settings, True, 'show_words_count', 'enable'),
+            'ignore_whitespace_char': query(settings, True, 'show_words_count', 'ignore_whitespace_char')
+        },
         'layout': {
             'enable': query(settings, False, 'layout', 'enable'),
             'sync_scroll': query(settings, False, 'layout', 'sync_scroll')
@@ -384,7 +388,6 @@ def expand_path(path):
         variables = sublime.active_window().extract_variables()
         path = sublime.expand_variables(path, variables)
         path = normpath(expanduser(expandvars(path)))
-        # log.debug('Normalized path: %s', path)
     return path
 
 def is_executeable(file):
