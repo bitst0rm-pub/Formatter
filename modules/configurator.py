@@ -465,10 +465,10 @@ def build_formatter_sublime_settings(formatter_map):
             // Using regex: Again, any literal "$" must be escaped to "\\$" to
             // distinguish it from the variable expansion "${...}". Accepted args:
             // [search, [replace, [index, count, new position]]], where:
-            // - search: @type:str (regex)
-            // - replace: @type:str
-            // - index: @type:int (the number is known as a list index); required!
-            // - count: @type:int (the matching occurrences per index, 0 = all); required!
+            // - search:   @type:str (regex)
+            // - replace:  @type:str
+            // - index:    @type:int (the number is known as a list index); required!
+            // - count:    @type:int (the matching occurrences per index, 0 = all); required!
             // - position: @type:int (move old index pos. to new/old one, -1 = delete index); required!'''),
                     ('fix_commands', [
                         ['--autocorrect', '--autocorrect-all', 4, 0, 4],

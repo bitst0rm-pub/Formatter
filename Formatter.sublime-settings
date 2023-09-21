@@ -1,19 +1,26 @@
 {
-    // Enable debug mode to view errors in the console; [type: bool]
+    // Enable debug mode to view errors in the console.
     "debug": false,
 
-    // Auto open the console panel whenever formatting failed; [type: bool]
+    // Auto open the console panel whenever formatting failed.
     // This is especially useful when combined with "debug": true
     "open_console_on_failure": false,
 
-    // Display results on the status bar; [type: bool]
-    // The abbreviation for the current settings mode:
+    // Display results in the status bar.
+    // The displayed abbreviation for the current settings mode:
     // PUS: Permanent User Settings
     // PQO: Permanent Quick Options
     // TQO: Temporary Quick Options
     "show_statusbar": true,
 
-    // Configure the layout when opening new files; [type: dict{str:(str|bool)}]
+    // Display a real-time word and character count in the status bar.
+    // By default, whitespace is not included in the character count.
+    "show_words_count": {
+        "enable": true,
+        "ignore_whitespace_char": true
+    },
+
+    // Configure the layout when opening new files.
     // This setting takes effect when the "new_file_on_format" option is enabled.
     // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
@@ -24,7 +31,7 @@
         "sync_scroll": true
     },
 
-    // A set of directories where executable programs are located; [type: dict{str:list[str]}]
+    // A set of directories where executable programs are located.
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
     // can be added here.
@@ -43,10 +50,10 @@
     // Plugins settings
     "formatters": {
         "example": {
-            // Disable and remove plugin from being shown in the menu; [type: bool]
+            // Disable and remove plugin from being shown in the menu.
             "disable": false,
 
-            // Auto formatting whenever the current file/view is being saved; [type: bool]
+            // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes, the first plugin takes precedence.
             // Remove the identical syntaxes from one of the plugins to avoid conflicts.
@@ -56,9 +63,10 @@
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
+            // The Quick Options feature can help in this scenario.
             "format_on_save": false,
 
-            // Create a new file containing formatted codes; [type: str]
+            // Create a new file containing formatted codes.
             // The value of this option is the suffix of the new file being renamed.
             // Suffix must be of type string. =true, =false and all other types imply =false
             // Note: It will overwrite any existing file that has the same new name in
@@ -68,7 +76,7 @@
             // myfile.raw.js -> myfile.raw.min.js
             "new_file_on_format": false,
 
-            // Recursively format the entire folder with unlimited depth; [type: dict{str:(bool|list[str])}]
+            // Recursively format the entire folder with unlimited depth.
             // This option requires an existing and currently opened file
             // to serve as the starting point.
             // For the sake of convenience, two new folders will be created at
@@ -91,13 +99,13 @@
                 "exclude_syntaxes": []
             },
 
-            // Syntax support based on the scope name, not file extension; [type: list[str]]
+            // Syntax support based on the scope name, not file extension.
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.
             "syntaxes": ["css", "js", "php"],
 
-            // Path to the interpreter to be used; [type: str]
+            // Path to the interpreter to be used.
             // Just for the sake of completeness, but it is unlikely that you will
             // ever need to use this option. Most programs you install are usually set
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
@@ -107,7 +115,7 @@
             // along with the PATH variable, to handle this situation.
             "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
 
-            // Path to the plugin executable to be used; [type: str]
+            // Path to the plugin executable to be used.
             // System variable expansions like ${HOME} and Sublime Text specific
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
             // https://www.sublimetext.com/docs/build_systems.html#variables
@@ -115,7 +123,7 @@
             // it from the variable expansion "${...}".
             "executable_path": "${HOME}/example/path/to\\$my/php-cs-fixer.phar",
 
-            // Path to the config file for each individual syntaxes; [type: dict{str:str}]
+            // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case the key must be named: "default"
@@ -129,10 +137,10 @@
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // Array of additional arguments for the command line; [type: list[str]]
+            // Array of additional arguments for the command line.
             "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
 
-            // Manipulate hardcoded command-line arguments; [type: list[list[str]]]
+            // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the source code.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
@@ -141,11 +149,11 @@
             // Using regex: Again, any literal "$" must be escaped to "\\$" to
             // distinguish it from the variable expansion "${...}". Accepted args:
             // [search, [replace, [index, count, new position]]], where:
-            // - search: type:str (regex)
-            // - replace: type:str
-            // - index: type:int (the number is known as a list index); required!
-            // - count: type:int (the matching occurrences per index, 0 = all); required!
-            // - position: type:int (move old index pos. to new/old one, -1 = delete index); required!
+            // - search:   @type:str (regex)
+            // - replace:  @type:str
+            // - index:    @type:int (the number is known as a list index); required!
+            // - count:    @type:int (the matching occurrences per index, 0 = all); required!
+            // - position: @type:int (move old index pos. to new/old one, -1 = delete index); required!
             "fix_commands": [
                 ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change
                 ["^.*?auto.*\\$", "--with", 4, 1, 5], // using escaped "\\$" regex, move index 4 to pos 5
