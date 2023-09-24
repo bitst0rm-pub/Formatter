@@ -614,13 +614,18 @@ def next_sequence(view, is_opened):
 
 class Listeners(sublime_plugin.EventListener):
     def __init__(self, *args, **kwargs):
+        # common.config is not finished loading here
         self.running = threading.Event()
         self.scroll_lock = threading.Lock()
         self.scroll_thread = None
+        self.session_manager = supplementer.SessionManager(max_database_records=600)
 
     def on_load(self, view):
         if view == RECURSIVE_TARGET['view']:
             next_sequence(view, False)
+
+        if common.query(common.config, True, 'remember_session'):
+            self.session_manager.run_on_load(view)
 
     def on_activated(self, view):
         window = view.window()
@@ -678,8 +683,13 @@ class Listeners(sublime_plugin.EventListener):
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
 
+        if common.query(common.config, True, 'remember_session'):
+            self.session_manager.run_on_pre_close(view)
+
     def on_selection_modified_async(self, view):
-        supplementer.WordsCounter(view).run()
+        if common.query(common.config, False, 'show_words_count', 'enable'):
+            ignore_whitespace_char = common.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
+            supplementer.WordsCounter(view, ignore_whitespace_char).run_on_selection_modified()
 
     def on_pre_save(self, view):
         used_syntaxes = set()

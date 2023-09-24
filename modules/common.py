@@ -142,6 +142,7 @@ def build_config(settings):
             'enable': query(settings, True, 'show_words_count', 'enable'),
             'ignore_whitespace_char': query(settings, True, 'show_words_count', 'ignore_whitespace_char')
         },
+        'remember_session': settings.get('remember_session', True),
         'layout': {
             'enable': query(settings, False, 'layout', 'enable'),
             'sync_scroll': query(settings, False, 'layout', 'sync_scroll')
@@ -601,6 +602,9 @@ def set_fix_cmds(cmd, uid):
                     else:
                         log.error('index, count and position of "fix_commands" must be of type int.')
                         return None
+                else:
+                    log.error('Length of each item in "fix_commands" must be between 3 and 5.')
+                    return None
             else:
                 log.error('Items of "fix_commands" must be of type list.')
                 return None
@@ -624,10 +628,10 @@ def setup_logger(name):
     logger.addHandler(handler)
     return logger
 
-def disable_logging():
-    root_logger = logging.getLogger(PACKAGE_NAME)
-    root_logger.setLevel(logging.CRITICAL)
-
 def enable_logging():
     root_logger = logging.getLogger(PACKAGE_NAME)
     root_logger.setLevel(logging.DEBUG)
+
+def disable_logging():
+    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger.setLevel(logging.CRITICAL)

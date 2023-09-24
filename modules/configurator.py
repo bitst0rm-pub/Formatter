@@ -337,6 +337,11 @@ def build_formatter_sublime_settings(formatter_map):
                 ('enable', True),
                 ('ignore_whitespace_char', True)
             ])),
+            ('__comment__remember_session', '''
+    // Remember and restore cursor position, selections, selected
+    // syntax and bookmarks each time a file is closed and reopened.
+    // This is helpful to resume your work from where you left off.'''),
+            ('remember_session', True),
             ('__comment__layout', '''
     // Configure the layout when opening new files.
     // This setting takes effect when the "new_file_on_format" option is enabled.
