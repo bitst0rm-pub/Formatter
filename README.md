@@ -8,7 +8,8 @@ Key features:
 - Capability to format entire file, single or multi selections
 - Capability to format entire folder recursively
 - Shared config files available for each 3rd-party plugin
-- Displays real-time word and character counts.
+- Displays real-time word and character counts
+- Automatically remembers and restores cursor position for reopened files
 - Works offline
 
 Formatter aims to achieve:
@@ -21,6 +22,9 @@ Formatter aims to achieve:
 - Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development)
 
 Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
+
+
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot.png)
 
 
 ## Guides
@@ -171,6 +175,11 @@ The following settings example should give you direction on how to setup Formatt
         "enable": true,
         "ignore_whitespace_char": true
     },
+
+    // Remember and restore cursor position, selections, selected
+    // syntax and bookmarks each time a file is closed and reopened.
+    // This is helpful to resume your work from where you left off.
+    "remember_session": true,
 
     // Configure the layout when opening new files.
     // This setting takes effect when the "new_file_on_format" option is enabled.
@@ -427,7 +436,7 @@ None of the modes will ever alter your Settings file.
 
 ## Troubleshooting
 
-If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to see what is going on. Errors can arise from upstream plugins, from your transcoding codebase, also setting wrong parameters to path or bugs inside Formatter itself can be the root of issues.
+If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to gain insight into what might be going wrong. Errors can come from upstream plugins, from your transcoding codebase, also setting wrong parameters to path or 🐞 inside Formatter itself can be the root of issues.
 
 
 ## Todo:
