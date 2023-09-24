@@ -12,7 +12,7 @@
 import os
 import logging
 import tempfile
-from . import common
+from ..core import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']

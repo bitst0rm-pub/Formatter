@@ -10,7 +10,7 @@
 # @license      The MIT License (MIT)
 
 import logging
-from . import common
+from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['uncrustify']

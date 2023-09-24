@@ -145,8 +145,7 @@ Note: Do **not** use config files with the suffix `.master.` as they serve as re
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The left-hand pane contains all the default settings, while right-hand pane is where personal customizations can be made.<br/>
-Ensure to maintain the config structure in the right-hand pane.<br/>
+The left-hand pane contains all the default settings, while right-hand pane is where personal customizations can be made. Ensure to maintain the config structure in the right-hand pane.<br/>
 Do **not** edit the default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
 The following settings example should give you direction on how to setup Formatter:
@@ -518,7 +517,7 @@ Details as an example:
 # @license      The MIT License (MIT)
 
 import logging                                          # REQUIRED! logging system for debugging this file
-from . import common                                    # REQUIRED! a collection of API functions to assist in running this file
+from ..core import common                                    # REQUIRED! a collection of APIs to assist in running this file
 
 log = logging.getLogger(__name__)                       # REQUIRED! logger setup
 INTERPRETERS = ['node']                                 # optional: case-sensitive fallback names without extension if interpreter is not found
@@ -591,7 +590,7 @@ Do not forget to update/adjust your _User_ settings:<br/>
 
 ### 3. APIs:
 
-All APIs can be found in the file `common.py`
+All APIs can be found in the file `core > common.py`
 
 - Essentially for the `def get_cmd(self)` function:
 

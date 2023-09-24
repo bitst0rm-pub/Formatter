@@ -11,7 +11,7 @@
 
 import logging
 import json
-from . import common
+from ..core import common
 from ..libs import yaml
 
 log = logging.getLogger(__name__)

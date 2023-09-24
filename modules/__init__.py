@@ -16,7 +16,7 @@ if sys.version_info < (3, 4):
     import imp
 else:
     import importlib
-from . import common
+from ..core import common
 
 log = logging.getLogger(__name__)
 

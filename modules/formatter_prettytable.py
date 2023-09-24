@@ -11,7 +11,7 @@
 
 import logging
 import sublime
-from . import common
+from ..core import common
 from ..libs.prettytable import prettytable
 
 log = logging.getLogger(__name__)

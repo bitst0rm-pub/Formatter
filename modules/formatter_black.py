@@ -11,7 +11,7 @@
 
 import logging
 from distutils.version import StrictVersion
-from . import common
+from ..core import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']

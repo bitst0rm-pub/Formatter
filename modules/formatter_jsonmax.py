@@ -12,7 +12,7 @@
 import logging
 import json
 import sublime
-from . import common
+from ..core import common
 
 log = logging.getLogger(__name__)
 MODULE_CONFIG = {

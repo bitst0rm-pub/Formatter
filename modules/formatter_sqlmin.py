@@ -11,7 +11,7 @@
 
 import logging
 import sublime
-from . import common
+from ..core import common
 from ..libs.sqlmin import sqlmin
 
 log = logging.getLogger(__name__)

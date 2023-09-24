@@ -9,7 +9,7 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-from .modules import common
+from .core import common
 
 
 common.setup_logger(__name__)

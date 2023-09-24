@@ -16,11 +16,11 @@ import threading
 import sublime
 import sublime_plugin
 from threading import Event
-from .modules import common
-from .modules import configurator
-from .modules import supplementer
-from .modules.version import __version__
-from .modules.formatter import Formatter
+from .core import common
+from .core import configurator
+from .core import supplementer
+from .core.version import __version__
+from .core.formatter import Formatter
 
 log = logging.getLogger(__name__)
 
