@@ -517,7 +517,7 @@ Details as an example:
 # @license      The MIT License (MIT)
 
 import logging                                          # REQUIRED! logging system for debugging this file
-from ..core import common                                    # REQUIRED! a collection of APIs to assist in running this file
+from ..core import common                               # REQUIRED! a collection of APIs to assist in running this file
 
 log = logging.getLogger(__name__)                       # REQUIRED! logger setup
 INTERPRETERS = ['node']                                 # optional: case-sensitive fallback names without extension if interpreter is not found
