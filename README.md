@@ -1,6 +1,6 @@
 # Formatter
 
-Formatter is a config-file-driven plugin for Sublime Text 3 & 4 to beautify and minify source code.
+Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
 Key features:
 
@@ -20,8 +20,6 @@ Formatter aims to achieve:
 - Customization: Users benefit from the modular concept to craft and integrate their own modules with ease.
 - Convenience: An all-in-one tool for beautifying and minifying code.
 - Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development)
-
-Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and it _should_ work fine on other platforms (not tested).
 
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot.png)
@@ -43,7 +41,7 @@ Formatter has been thoroughly tested on MacOSX with Sublime Text `3` and `4` and
 
 ## Plugins
 
-Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed separately and can be easily disabled in the settings. To install third-party plugins, follow the instructions provided in the linked list below. To set up the plugins correctly, please consider the following:
+Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed separately and can be easily disabled in the settings. To set up the plugins correctly, please consider the following:
 
 - Check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black requires Python >=3.7.0
 - Ensure to pass the correct path to the plugin executable and
@@ -140,8 +138,8 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
 
         Sublime Text > Packages > User > formatter.assets > config
 
-These files control the behaviours of 3rd party plugins. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs.<br/>
-Note: Do **not** use config files with the suffix `.master.` as they serve as reference files and may be overwritten by any package updates.
+These files serve as _reference_ files for your final configuration. The full list of supported options and parameters can be found on plugins dev websites. Formatter provides only a set of default config files to illustrate how it works. You might want to tweak and refine them to fit your needs. Your final config files can be placed anywhere you prefer.<br/>
+Note: Do **not** use _reference_ files with the suffix `.master.` as they could be overwritten by any package updates.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 

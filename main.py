@@ -32,18 +32,6 @@ SYNC_SCROLL = {
     'abort': False
 }
 
-RECURSIVE_TARGET = {
-    'view': None,
-    'kwargs': None,
-    'cwd': None,
-    'filelist': [],
-    'filelist_length': 0,
-    'current_index': 0,
-    'success_count': 0,
-    'failure_count': 0,
-    'mode_description': None
-}
-
 
 def plugin_loaded():
     common.remove_junk()
@@ -70,13 +58,13 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
     def run(self):
         opened_dirs = set()
 
-        configdir = common.expand_path(common.join('${packages}', 'User', common.ASSETS_DIRECTORY, 'config'))
-        if common.isdir(configdir):
-            self.window.run_command('open_dir', {'dir': configdir})
-            opened_dirs.add(configdir)
+        config_dir = common.join(sublime.packages_path(), 'User', common.ASSETS_DIRECTORY, 'config')
+        if common.isdir(config_dir):
+            self.window.run_command('open_dir', {'dir': config_dir})
+            opened_dirs.add(config_dir)
 
-        for obj in common.config.get('formatters', {}).values():
-            for path in obj.get('config_path', {}).values():
+        for formatter in common.config.get('formatters', {}).values():
+            for path in formatter.get('config_path', {}).values():
                 if path and isinstance(path, str):
                     dirpath = common.get_pathinfo(path)['cwd']
                     if common.isdir(dirpath) and dirpath not in opened_dirs:
@@ -131,10 +119,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                 self.run()
 
     def show_format_on_save_menu(self):
-        uid_list = []
-        formatters = common.config.get('formatters')
-        for uid in formatters.keys():
-            uid_list.append(uid)
+        uid_list = list(common.config.get('formatters', {}).keys())
         uid_list.append('<< Back')
         self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_save_menu_done(uid_list, uid_index))
 
@@ -225,87 +210,75 @@ class RunFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
-        _unused = edit
-        uid = kwargs.get('uid', None)
 
-        if common.is_quick_options_mode():
-            is_recursive = common.query(common.config, False, 'quick_options', 'recursive_folder_format')
-        else:
-            is_recursive = common.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable')
-
+        is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
         if is_recursive:
-            if self.view.file_name():
-                recursive_format_lock = threading.Lock()
-                with recursive_format_lock:
-                    log.debug('Starting the main thread for recursive folder formattting ...')
-                    recursive_format = RecursiveFormat(self.view, **kwargs)
-                    recursive_format_thread = threading.Thread(target=recursive_format.run)
-                    recursive_format_thread.start()
-            else:
-                common.prompt_error('ERROR: Failed due to unsaved view. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
+            self.run_recursive_formatting(**kwargs)
         else:
-            single_format_lock = threading.Lock()
-            with single_format_lock:
-                log.debug('Starting the main thread for single file formatting ...')
-                single_format = SingleFormat(self.view, **kwargs)
-                single_format_thread = threading.Thread(target=single_format.run)
-                single_format_thread.start()
+            self.run_single_formatting(**kwargs)
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
 
     def is_visible(self, **kwargs):
-        if common.is_quick_options_mode():
-            is_enabled = common.query(common.config, False, 'quick_options', 'debug')
-        else:
-            is_enabled = common.config.get('debug')
-        common.enable_logging() if is_enabled else common.disable_logging()
-        uid = kwargs.get('uid', None)
-        is_disabled = common.query(common.config, True, 'formatters', uid, 'disable')
+        is_debug_enabled = self.is_debug_enabled()
+        common.enable_logging() if is_debug_enabled else common.disable_logging()
+
+        is_disabled = common.query(common.config, True, 'formatters', kwargs.get('uid', None), 'disable')
         return not is_disabled
+
+    def is_recursive_formatting_enabled(self, uid):
+        if common.is_quick_options_mode():
+            return common.query(common.config, False, 'quick_options', 'recursive_folder_format')
+        else:
+            return common.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable')
+
+    def run_recursive_formatting(self, **kwargs):
+        if self.view.file_name():
+            with threading.Lock():
+                log.debug('Starting the main thread for recursive folder formatting ...')
+                recursive_format = RecursiveFormat(self.view, **kwargs)
+                recursive_format_thread = threading.Thread(target=recursive_format.run)
+                recursive_format_thread.start()
+        else:
+            common.prompt_error('ERROR: Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
+
+    def run_single_formatting(self, **kwargs):
+        with threading.Lock():
+            log.debug('Starting the main thread for single file formatting ...')
+            single_format = SingleFormat(self.view, **kwargs)
+            single_format_thread = threading.Thread(target=single_format.run)
+            single_format_thread.start()
+
+    def is_debug_enabled(self):
+        if common.is_quick_options_mode():
+            return common.query(common.config, False, 'quick_options', 'debug')
+        else:
+            return common.config.get('debug')
 
 
 class SingleFormat:
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
-        self.success = 0
-        self.failure = 0
+        self.success, self.failure = 0, 0
         self.cycles = []
-        self.print_sysinfo = common.print_sysinfo()
-        self.get_mode_description = common.get_mode_description(short=True)
+        self.is_selected = self.has_selection()
+        self.kwargs.update(view=self.view, is_selected=self.is_selected)
+        self.formatter = Formatter(self.view)
 
     def run(self):
-        self.print_sysinfo
+        common.print_sysinfo()
         try:
-            formatter = Formatter(self.view)
-            is_selected = self.has_selection()
-            self.kwargs['view'] = self.view
-            self.kwargs['is_selected'] = is_selected
-
-            if not is_selected:
-                # Format entire file
-                region = sublime.Region(0, self.view.size())
+            for region in (self.view.sel() if self.is_selected else [sublime.Region(0, self.view.size())]):
                 text = self.view.substr(region)
-                self.kwargs['text'] = text
-                self.kwargs['region'] = region
-                is_success = formatter.run_formatter(**self.kwargs)
+                self.kwargs.update(text=text, region=region)
+                is_success = self.formatter.run_formatter(**self.kwargs)
                 self.cycles.append(is_success)
                 self.print_status(is_success)
-            else:
-                # Format selections
-                for region in self.view.sel():
-                    if region.empty():
-                        continue
-                    text = self.view.substr(region)
-                    self.kwargs['text'] = text
-                    self.kwargs['region'] = region
-                    is_success = formatter.run_formatter(**self.kwargs)
-                    self.cycles.append(is_success)
-                    self.print_status(is_success)
 
             if any(self.cycles):
-                self.new_file_on_format(self.kwargs.get('uid', None))
+                self.handle_successful_formatting()
             else:
                 self.open_console_on_failure()
         except Exception as e:
@@ -317,28 +290,26 @@ class SingleFormat:
     def print_status(self, is_success):
         if is_success:
             self.success += 1
-            log.debug('Formatting successful. 🎉😃🍰')
+            log.debug('Formatting successful. 🎉😃🍰\n')
         else:
             self.failure += 1
-            log.debug('Formatting failed. 💔😢💔')
+            log.debug('Formatting failed. 💔😢💔\n')
 
         if common.config.get('show_statusbar'):
-            self.view.window().set_status_bar_visible(True)
-            self.view.set_status(common.STATUS_KEY, '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME, self.get_mode_description, self.success, self.failure))
+            self.set_status_bar_text()
+
+    def set_status_bar_text(self):
+        status_text = '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME, common.get_mode_description(short=True), self.success, self.failure)
+        self.view.set_status(common.STATUS_KEY, status_text)
 
     def open_console_on_failure(self):
         if common.config.get('open_console_on_failure'):
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
-    def new_file_on_format(self, uid):
-        if common.is_quick_options_mode():
-            mode = 'qo'
-            layout = common.query(common.config, False, 'quick_options', 'layout')
-            suffix = common.query(common.config, False, 'quick_options', 'new_file_on_format')
-        else:
-            mode = 'user'
-            layout = common.query(common.config, False, 'layout', 'enable')
-            suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+    def handle_successful_formatting(self):
+        uid = self.kwargs.get('uid', None)
+        mode = 'qo' if common.is_quick_options_mode() else 'user'
+        layout, suffix = self.get_layout_and_suffix(uid, mode)
 
         if suffix and isinstance(suffix, str):
             window = self.view.window()
@@ -350,23 +321,25 @@ class SingleFormat:
                 window.focus_group(0)
 
             file_path = self.view.file_name()
-            if file_path and common.isfile(file_path):
-                new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,))
-                self.view.run_command('transfer_content_view', {'path': new_path})
-            else:
-                self.view.run_command('transfer_content_view', {'path': None})
+            new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,)) if file_path and common.isfile(file_path) else None
+            self.view.run_command('transfer_content_view', {'path': new_path})
             sublime.set_timeout(self.undo_history, 250)
 
+    def get_layout_and_suffix(self, uid, mode):
+        if mode == 'qo':
+            return (
+                common.query(common.config, False, 'quick_options', 'layout'),
+                common.query(common.config, False, 'quick_options', 'new_file_on_format')
+            )
+        else:
+            return (
+                common.query(common.config, False, 'layout', 'enable'),
+                common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+            )
+
     def undo_history(self):
-        c = self.cycles.count(True)
-        attempts = 0
-        while c > 0:
+        for _ in range(min(500, self.cycles.count(True))):
             self.view.run_command('undo')
-            c -= 1
-            attempts += 1
-            if attempts > 500:
-                log.warning('Seems like undo cycle is endless.')
-                raise Exception()
 
 
 class SubstituteCommand(sublime_plugin.TextCommand):
@@ -380,58 +353,63 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
         path = kwargs.get('path', None)
         src_view = self.view
 
+        dst_view = self.create_or_reuse_view(path, src_view)
+        self.copy_content_and_selections(edit, src_view, dst_view)
+        self.sync_scroll_views(src_view, dst_view)
+
+        if path:
+            self.save_dst_content(dst_view, path)
+        else:
+            log.debug('The view is an unsaved buffer and must be manually saved as a file.')
+        self.show_status_on_new_file(dst_view)
+
+    def create_or_reuse_view(self, path, src_view):
+        ref_name = 'untitled-%s' % src_view.id()
+        window = src_view.window()
+
         if path:
             # Reuse the same file
-            dst_view = src_view.window().find_open_file(path)
+            dst_view = window.find_open_file(path)
             if dst_view:
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
-                if common.want_layout():
-                    src_view.window().focus_group(1)
-                dst_view = src_view.window().new_file(syntax=src_view.settings().get('syntax', None))
+                dst_view = self.create_new_file(window, src_view.settings().get('syntax', None))
+                dst_view.retarget(path)
+                dst_view.set_scratch(True)
         else:
-            src_id = src_view.id()
-            dst_view = None
-            ref_name = 'untitled-%s' % src_id
-            for v in src_view.window().views():
-                # Reuse the same view
-                if v.name() == ref_name:
-                    dst_view = v
-                    break
-
+            # Reuse the same view
+            dst_view = next((v for v in window.views() if v.name() == ref_name), None)
             if dst_view:
+                # Reuse the same view
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
-                if common.want_layout():
-                    src_view.window().focus_group(1)
-                dst_view = src_view.window().new_file(syntax=src_view.settings().get('syntax', None))
+                dst_view = self.create_new_file(window, src_view.settings().get('syntax', None))
                 dst_view.set_name(ref_name)
+                dst_view.set_scratch(False)
 
+        return dst_view
+
+    def create_new_file(self, window, syntax=None):
+        if common.want_layout():
+            window.focus_group(1)
+        dst_view = window.new_file(syntax=syntax)
+        return dst_view
+
+    def copy_content_and_selections(self, edit, src_view, dst_view):
         dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
 
-        selections = []
-        for selection in src_view.sel():
-          selections.append(selection)
-
+        selections = list(src_view.sel())
         dst_view.sel().clear()
         dst_view.sel().add_all(selections)
 
         dst_view.set_viewport_position(src_view.viewport_position(), False)
         src_view.window().focus_view(dst_view)
 
+    def sync_scroll_views(self, src_view, dst_view):
         SYNC_SCROLL['view_pairs'].append([src_view, dst_view])
         SYNC_SCROLL['view_pairs'] = common.get_unique(SYNC_SCROLL['view_pairs'])
-
-        if path:
-            dst_view.retarget(path)
-            dst_view.set_scratch(True)
-            self.save_dst_content(dst_view, path)
-        else:
-            dst_view.set_scratch(False)
-            log.debug('The view is an unsaved buffer and must be manually saved as file.')
-        self.show_status_on_new_file(dst_view)
 
     def save_dst_content(self, view, path):
         allcontent = view.substr(sublime.Region(0, view.size()))
@@ -451,52 +429,205 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
 
-class OpenNextFileCommand(sublime_plugin.TextCommand):
-    def run(self, edit, **kwargs):
-        index = kwargs.get('index', None)
-        view = self.view.window().open_file(RECURSIVE_TARGET['filelist'][index])
-        # open_file() is asynchronous. Use EventListener on_load() to catch
-        # the returned view when the file is finished loading.
-        if not view.is_loading():
-            # True = file is ready and currently opened as view
-            next_sequence(view, True)
-        else:
-            RECURSIVE_TARGET['view'] = view
-
-
 class RecursiveFormat:
+    CONTEXT = {
+        'entry_view': None,
+        'new_view': None,
+        'kwargs': None,
+        'cwd': None,
+        'filelist': [],
+        'filelist_length': 0,
+        'current_index': 0,
+        'success_count': 0,
+        'failure_count': 0,
+        'mode_description': None
+    }
+
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
-        self.print_sysinfo = common.print_sysinfo()
-        RECURSIVE_TARGET['mode_description'] = common.get_mode_description(short=True)
 
     def run(self):
-        self.print_sysinfo
+        common.print_sysinfo()
         try:
-            cwd = common.get_pathinfo(self.view.file_name())['cwd']
-            uid = self.kwargs.get('uid', None)
-            x = common.query(common.config, {}, 'formatters', uid, 'recursive_folder_format')
-            exclude_dirs_regex = x.get('exclude_folders_regex', [])
-            exclude_files_regex = x.get('exclude_files_regex', [])
-            exclude_extensions = x.get('exclude_extensions', [])
-            filelist = common.get_recursive_filelist(cwd, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
+            cwd = self.get_current_working_directory()
+            filelist = self.get_recursive_filelist(cwd)
 
-            RECURSIVE_TARGET['kwargs'] = self.kwargs
-            RECURSIVE_TARGET['cwd'] = cwd
-            RECURSIVE_TARGET['filelist'] = filelist
-            RECURSIVE_TARGET['filelist_length'] = len(filelist)
-            RECURSIVE_TARGET['current_index'] = 1
-            self.view.run_command('open_next_file', {'index': 0})
+            self.prepare_context(cwd, filelist)
+            self.process_files()
+
         except Exception as e:
-            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+            self.handle_error(e)
+
+    def get_current_working_directory(self):
+        return common.get_pathinfo(self.view.file_name())['cwd']
+
+    def get_recursive_filelist(self, cwd):
+        items = self.get_recursive_format_items()
+        return common.get_recursive_filelist(
+            cwd,
+            items.get('exclude_folders_regex', []),
+            items.get('exclude_files_regex', []),
+            items.get('exclude_extensions', [])
+        )
+
+    def get_recursive_format_items(self):
+        uid = self.kwargs.get('uid', None)
+        return common.query(common.config, {}, 'formatters', uid, 'recursive_folder_format')
+
+    def prepare_context(self, cwd, filelist):
+        self.CONTEXT.update({
+            'entry_view': self.view,
+            'new_view': None,
+            'kwargs': self.kwargs,
+            'cwd': cwd,
+            'filelist': filelist,
+            'filelist_length': len(filelist),
+            'current_index': 0,
+            'success_count': 0,
+            'failure_count': 0,
+            'mode_description': common.get_mode_description(short=True)
+        })
+
+    def process_files(self):
+        self.open_next_file()
+
+    def open_next_file(self):
+        # Loop files sequentially
+        if self.CONTEXT['current_index'] < self.CONTEXT['filelist_length']:
+            file_path = self.CONTEXT['filelist'][self.CONTEXT['current_index']]
+            new_view = self.CONTEXT['entry_view'].window().open_file(file_path)
+            self.CONTEXT['current_index'] += 1
+
+            # open_file() is asynchronous. Use EventListener on_load() to catch
+            # the returned view when the file is finished loading.
+            if new_view.is_loading():
+                self.CONTEXT['new_view'] = new_view
+            else:
+                self.next_thread(new_view, is_ready=True)
+
+    def next_thread(self, new_view, is_ready=False):
+        def format_completed(is_success):
+            self.post_recursive_format(new_view, is_success)
+            if is_ready and is_success:
+                new_view.run_command('undo')
+            elif self.CONTEXT['entry_view'] != new_view:
+                new_view.set_scratch(True)
+                new_view.close()
+
+            if self.CONTEXT['current_index'] == self.CONTEXT['filelist_length']:
+                # Handle the last file
+                self.handle_formatting_completion()
+
+            self.open_next_file()
+
+        thread = SequenceFormatThread(new_view, callback=format_completed, **self.CONTEXT['kwargs'])
+        thread.start()
+
+    def post_recursive_format(self, new_view, is_success):
+        new_cwd = self.get_post_format_cwd(is_success)
+        self.show_result(is_success)
+        self.save_formatted_file(new_view, new_cwd, is_success)
+
+    def get_post_format_cwd(self, is_success):
+        base_directory = self.CONTEXT['cwd']
+        sub_directory = common.RECURSIVE_SUCCESS_DIRECTORY if is_success else common.RECURSIVE_FAILURE_DIRECTORY
+        return common.join(base_directory, sub_directory)
+
+    def show_result(self, is_success):
+        if is_success:
+            self.CONTEXT['success_count'] += 1
+            log.debug('Formatting successful. 🎉😃🍰\n')
+        else:
+            self.CONTEXT['failure_count'] += 1
+            log.debug('Formatting failed. 💔😢💔\n')
+
+    def save_formatted_file(self, new_view, new_cwd, is_success):
+        file_path = new_view.file_name()
+        new_file_path = self.generate_new_file_path(file_path, new_cwd, is_success)
+        cwd = common.get_pathinfo(new_file_path)['cwd']
+
+        try:
+            common.os.makedirs(cwd, exist_ok=True)
+            text = new_view.substr(sublime.Region(0, new_view.size()))
+            with open(new_file_path, 'w', encoding='utf-8') as f:
+                f.write(text)
+        except OSError as e:
+            self.handle_error(e, cwd, new_file_path)
+
+    def generate_new_file_path(self, file_path, new_cwd, is_success):
+        new_file_path = file_path.replace(self.CONTEXT['cwd'], new_cwd, 1)
+        if is_success:
+            suffix = self.get_new_file_suffix()
+            if suffix and isinstance(suffix, str):
+                new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
+        return new_file_path
+
+    def get_new_file_suffix(self):
+        if common.is_quick_options_mode():
+            return common.query(common.config, False, 'quick_options', 'new_file_on_format')
+        else:
+            uid = self.CONTEXT['kwargs'].get('uid', None)
+            return common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+
+    def handle_formatting_completion(self):
+        self.update_status_bar()
+        self.open_console_on_failure()
+        self.show_completion_message()
+        self.reset_context()
+
+    def update_status_bar(self):
+        if common.config.get('show_statusbar'):
+            current_view = self.get_current_view()
+            current_view.window().set_status_bar_visible(True)
+            status_text = self.generate_status_text()
+            current_view.set_status(common.STATUS_KEY, status_text)
+
+    def get_current_view(self):
+        return sublime.active_window().active_view()
+
+    def generate_status_text(self):
+        return '{}({}) [total:{}|ok:{}|ko:{}]'.format(
+            common.PACKAGE_NAME, self.CONTEXT['mode_description'],
+            self.CONTEXT['filelist_length'],
+            self.CONTEXT['success_count'],
+            self.CONTEXT['failure_count']
+        )
+
+    def open_console_on_failure(self):
+        if common.config.get('open_console_on_failure') and self.CONTEXT['failure_count'] > 0:
+            current_view = get_current_view()
+            current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
+
+    def show_completion_message(self):
+        success_rate = (self.CONTEXT['success_count'] / self.CONTEXT['filelist_length']) * 100
+        sublime.message_dialog('Formatting COMPLETED!\n\nSuccess Rate: %s%%\n\nPlease check the results in:\n%s' % (success_rate, self.CONTEXT['cwd']))
+
+    def reset_context(self):
+        for key, value in self.CONTEXT.items():
+            if isinstance(value, list):
+                self.CONTEXT[key] = []
+            elif isinstance(value, int):
+                self.CONTEXT[key] = 0
+            else:
+                self.CONTEXT[key] = None
+        # Reset and end
+
+    def handle_error(self, error, cwd=None, file_path=None):
+        log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
+        if cwd and (error.errno != common.os.errno.EEXIST):
+            log.error('Could not create directory: %s', cwd)
+            common.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
+        if file_path:
+            log.error('Could not save file: %s', file_path)
+            common.prompt_error('ERROR: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', file_path)
 
 
 class SequenceFormatThread(threading.Thread):
     def __init__(self, view, callback, **kwargs):
         self.view = view
-        self.callback = callback
         self.kwargs = kwargs
+        self.callback = callback
         self.is_success = False
         threading.Thread.__init__(self)
         self.lock = threading.Lock()
@@ -516,116 +647,47 @@ class SequenceFormatThread(threading.Thread):
                 else:
                     formatter = Formatter(self.view)
                     text = self.view.substr(region)
-                    self.kwargs['view'] = self.view
-                    self.kwargs['text'] = text
-                    self.kwargs['region'] = region
-                    self.kwargs['is_selected'] = False
+                    self.kwargs.update({
+                        'view': self.view,
+                        'text': text,
+                        'region': region,
+                        'is_selected': False
+                    })
                     self.is_success = formatter.run_formatter(**self.kwargs)
                     self.callback(self.is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
 
-def post_recursive_format(view, is_success):
-    if is_success:
-        new_cwd = common.join(RECURSIVE_TARGET['cwd'], common.RECURSIVE_SUCCESS_DIRECTORY)
-        RECURSIVE_TARGET['success_count'] += 1
-        log.debug('Formatting successful. 🎉😃🍰')
-    else:
-        new_cwd = common.join(RECURSIVE_TARGET['cwd'], common.RECURSIVE_FAILURE_DIRECTORY)
-        RECURSIVE_TARGET['failure_count'] += 1
-        log.debug('Formatting failed. 💔😢💔')
-
-    file_path = RECURSIVE_TARGET['filelist'][RECURSIVE_TARGET['current_index'] - 1]
-    new_file_path = file_path.replace(RECURSIVE_TARGET['cwd'], new_cwd, 1)
-
-    uid = RECURSIVE_TARGET['kwargs'].get('uid', None)
-    suffix = common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
-    if suffix and isinstance(suffix, str) and is_success:
-        new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
-
-    cwd = common.get_pathinfo(new_file_path)['cwd']
-    try:
-        common.os.makedirs(cwd, exist_ok=True)
-        region = sublime.Region(0, view.size())
-        text = view.substr(region)
-        with open(new_file_path, 'w', encoding='utf-8') as f:
-            f.write(text)
-    except OSError as e:
-        if e.errno != common.os.errno.EEXIST:
-            log.error('Could not create directory: %s', cwd)
-            common.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
-        else:
-            log.error('Could not save file: %s', new_file_path)
-            common.prompt_error('ERROR: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', new_file_path)
-
-        view.set_scratch(True)
-        view.close()
-        common.sys.exit(1)
-
-
-def next_sequence(view, is_opened):
-    def format_completed(is_success):
-        post_recursive_format(view, is_success)
-
-        # Loop files sequentially
-        if RECURSIVE_TARGET['current_index'] < RECURSIVE_TARGET['filelist_length']:
-            view.run_command('open_next_file', {'index': RECURSIVE_TARGET['current_index']})
-            RECURSIVE_TARGET['current_index'] += 1
-
-            if is_opened:
-                if is_success:
-                    view.run_command('undo')
-            else:
-                view.set_scratch(True)
-                view.close()
-        else:
-            # Handle the last file
-            if is_opened:
-                if is_success:
-                    view.run_command('undo')
-            else:
-                view.set_scratch(True)
-                view.close()
-
-            if common.config.get('show_statusbar'):
-                current_view = sublime.active_window().active_view()
-                current_view.window().set_status_bar_visible(True)
-                current_view.set_status(common.STATUS_KEY, '{}({}) [total:{}|ok:{}|ko:{}]'.format(common.PACKAGE_NAME, RECURSIVE_TARGET['mode_description'], RECURSIVE_TARGET['filelist_length'], RECURSIVE_TARGET['success_count'], RECURSIVE_TARGET['failure_count']))
-
-            if common.config.get('open_console_on_failure') and RECURSIVE_TARGET['failure_count'] > 0:
-                current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
-
-            sublime.message_dialog('Formatting COMPLETED!\n\nPlease check the results in:\n\n%s' % RECURSIVE_TARGET['cwd'])
-            RECURSIVE_TARGET['view'] = None
-            RECURSIVE_TARGET['kwargs'] = None
-            RECURSIVE_TARGET['cwd'] = None
-            RECURSIVE_TARGET['filelist'] = []
-            RECURSIVE_TARGET['filelist_length'] = 0
-            RECURSIVE_TARGET['current_index'] = 0
-            RECURSIVE_TARGET['success_count'] = 0
-            RECURSIVE_TARGET['failure_count'] = 0
-            RECURSIVE_TARGET['mode_description'] = None
-            # Reset and end
-
-    thread = SequenceFormatThread(view, callback=format_completed, **RECURSIVE_TARGET['kwargs'])
-    thread.start()
-
-
-class Listeners(sublime_plugin.EventListener):
+class SessionManagerListener(sublime_plugin.EventListener):
     def __init__(self, *args, **kwargs):
-        # common.config is not finished loading here
-        self.running = threading.Event()
-        self.scroll_lock = threading.Lock()
-        self.scroll_thread = None
         self.session_manager = supplementer.SessionManager(max_database_records=600)
 
     def on_load(self, view):
-        if view == RECURSIVE_TARGET['view']:
-            next_sequence(view, False)
-
         if common.query(common.config, True, 'remember_session'):
             self.session_manager.run_on_load(view)
+
+    def on_pre_close(self, view):
+        if common.query(common.config, True, 'remember_session'):
+            self.session_manager.run_on_pre_close(view)
+
+
+class WordsCounterListener(sublime_plugin.EventListener):
+    def on_selection_modified_async(self, view):
+        if common.query(common.config, False, 'show_words_count', 'enable'):
+            ignore_whitespace_char = common.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
+            supplementer.WordsCounter(view, ignore_whitespace_char).run_on_selection_modified()
+
+
+class FormatterListener(sublime_plugin.EventListener):
+    def __init__(self, *args, **kwargs):
+        self.running = threading.Event()
+        self.scroll_lock = threading.Lock()
+        self.scroll_thread = None
+
+    def on_load(self, view):
+        if view == RecursiveFormat.CONTEXT['new_view']:
+            RecursiveFormat(view).next_thread(view, is_ready=False)
 
     def on_activated(self, view):
         window = view.window()
@@ -682,14 +744,6 @@ class Listeners(sublime_plugin.EventListener):
             group, _ = window.get_view_index(view)
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
-
-        if common.query(common.config, True, 'remember_session'):
-            self.session_manager.run_on_pre_close(view)
-
-    def on_selection_modified_async(self, view):
-        if common.query(common.config, False, 'show_words_count', 'enable'):
-            ignore_whitespace_char = common.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
-            supplementer.WordsCounter(view, ignore_whitespace_char).run_on_selection_modified()
 
     def on_pre_save(self, view):
         used_syntaxes = set()

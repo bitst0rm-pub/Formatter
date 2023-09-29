@@ -44,50 +44,53 @@ class WordsCounter:
             return len(text)
 
     def run_on_selection_modified(self):
-        if self.selections and self.view.substr(self.selections[0]):
-            # Selections: words count
-            for selection in self.selections:
-                selected_text = self.view.substr(selection)
-                char_count_with_spaces = len(selected_text)
-                char_count = self.count_characters(selected_text)
+        try:
+            if self.selections and self.view.substr(self.selections[0]):
+                # Selections: words count
+                for selection in self.selections:
+                    selected_text = self.view.substr(selection)
+                    char_count_with_spaces = len(selected_text)
+                    char_count = self.count_characters(selected_text)
 
-                self.total_chars += char_count
-                self.total_chars_with_spaces += char_count_with_spaces
+                    self.total_chars += char_count
+                    self.total_chars_with_spaces += char_count_with_spaces
 
-                word_count = len(selected_text.split())
-                self.total_words += word_count
+                    word_count = len(selected_text.split())
+                    self.total_words += word_count
 
-                selected_lines = selected_text.split('\n')
-                self.total_lines += len(selected_lines)
+                    selected_lines = selected_text.split('\n')
+                    self.total_lines += len(selected_lines)
 
-            status_text = 'Selections: {} | Lines: {} | Words: {} | Chars: {}'.format(
-                self.thousands_separator(len(self.selections)),
-                self.thousands_separator(self.total_lines),
-                self.thousands_separator(self.total_words),
-                self.thousands_separator(self.total_chars)
-            )
+                status_text = 'Selections: {} | Lines: {} | Words: {} | Chars: {}'.format(
+                    self.thousands_separator(len(self.selections)),
+                    self.thousands_separator(self.total_lines),
+                    self.thousands_separator(self.total_words),
+                    self.thousands_separator(self.total_chars)
+                )
 
-            if self.ignore_whitespace_char:
-                status_text += ' | Chars (with spaces): {}'.format(self.thousands_separator(self.total_chars_with_spaces))
-        else:
-            # Entire view: words count
-            self.total_lines = self.view.rowcol(self.view.size())[0] + 1
-            total_text = self.view.substr(sublime.Region(0, self.view.size()))
+                if self.ignore_whitespace_char:
+                    status_text += ' | Chars (with spaces): {}'.format(self.thousands_separator(self.total_chars_with_spaces))
+            else:
+                # Entire view: words count
+                self.total_lines = self.view.rowcol(self.view.size())[0] + 1
+                total_text = self.view.substr(sublime.Region(0, self.view.size()))
 
-            self.total_chars = self.count_characters(total_text)
-            current_line = self.view.rowcol(self.selections[0].begin())[0] + 1
-            current_column = self.view.rowcol(self.selections[0].begin())[1] + 1
-            self.total_words = len(total_text.split())
+                self.total_chars = self.count_characters(total_text)
+                current_line = self.view.rowcol(self.selections[0].begin())[0] + 1
+                current_column = self.view.rowcol(self.selections[0].begin())[1] + 1
+                self.total_words = len(total_text.split())
 
-            status_text = 'Total Lines: {} | Words: {} | Chars: {} | Line: {}, Col: {}'.format(
-                self.thousands_separator(self.total_lines),
-                self.thousands_separator(self.total_words),
-                self.thousands_separator(self.total_chars),
-                self.thousands_separator(current_line),
-                self.thousands_separator(current_column)
-            )
+                status_text = 'Total Lines: {} | Words: {} | Chars: {} | Line: {}, Col: {}'.format(
+                    self.thousands_separator(self.total_lines),
+                    self.thousands_separator(self.total_words),
+                    self.thousands_separator(self.total_chars),
+                    self.thousands_separator(current_line),
+                    self.thousands_separator(current_column)
+                )
 
-        self.view.set_status(common.STATUS_KEY + '_words_count', status_text)
+            self.view.set_status(common.STATUS_KEY + '_words_count', status_text)
+        except:
+            pass
 
 
 class SessionManager:
