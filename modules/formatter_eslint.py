@@ -15,7 +15,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
-EXECUTABLES = ['eslint']
+EXECUTABLES = ['eslint', 'eslint.js']
 MODULE_CONFIG = {
     'source': 'https://github.com/eslint/eslint',
     'name': 'ESLint',

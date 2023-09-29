@@ -464,6 +464,7 @@ def get_local_executable(view, executable_names_list, runtime_type=None):
             for folder in parent_folders:
                 for ex in executable_names_list:
                     paths.append(join(folder, 'node_modules', '.bin', ex))
+                    paths.append(join(folder, 'node_modules', executable_names_list[0], 'bin', ex))
                     paths.append(join(folder, 'node_modules', executable_names_list[0], ex))
         if runtime_type == 'python':
             pass
