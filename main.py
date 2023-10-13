@@ -18,7 +18,8 @@ import sublime_plugin
 from threading import Event
 from .core import common
 from .core import configurator
-from .core import supplementer
+from .core.wcounter import *
+from .core.smanager import *
 from .core.version import __version__
 from .core.formatter import Formatter
 
@@ -657,26 +658,6 @@ class SequenceFormatThread(threading.Thread):
                     self.callback(self.is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
-
-
-class SessionManagerListener(sublime_plugin.EventListener):
-    def __init__(self, *args, **kwargs):
-        self.session_manager = supplementer.SessionManager(max_database_records=600)
-
-    def on_load(self, view):
-        if common.query(common.config, True, 'remember_session'):
-            self.session_manager.run_on_load(view)
-
-    def on_pre_close(self, view):
-        if common.query(common.config, True, 'remember_session'):
-            self.session_manager.run_on_pre_close(view)
-
-
-class WordsCounterListener(sublime_plugin.EventListener):
-    def on_selection_modified_async(self, view):
-        if common.query(common.config, False, 'show_words_count', 'enable'):
-            ignore_whitespace_char = common.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
-            supplementer.WordsCounter(view, ignore_whitespace_char).run_on_selection_modified()
 
 
 class FormatterListener(sublime_plugin.EventListener):
