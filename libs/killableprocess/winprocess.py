@@ -36,7 +36,7 @@
 
 from ctypes import c_void_p, POINTER, sizeof, Structure, windll, WinError, WINFUNCTYPE
 from ctypes.wintypes import BOOL, BYTE, DWORD, HANDLE, LPCWSTR, LPWSTR, UINT, WORD
-from qijo import QueryInformationJobObject
+from .qijo import QueryInformationJobObject
 
 LPVOID = c_void_p
 LPBYTE = POINTER(BYTE)
@@ -55,16 +55,16 @@ def ErrCheckBool(result, func, args):
 
 class AutoHANDLE(HANDLE):
     """Subclass of HANDLE which will call CloseHandle() on deletion."""
-    
+
     CloseHandleProto = WINFUNCTYPE(BOOL, HANDLE)
     CloseHandle = CloseHandleProto(("CloseHandle", windll.kernel32))
     CloseHandle.errcheck = ErrCheckBool
-    
+
     def Close(self):
         if self.value and self.value != HANDLE(-1).value:
             self.CloseHandle(self)
             self.value = 0
-    
+
     def __del__(self):
         self.Close()
 
@@ -87,7 +87,7 @@ class PROCESS_INFORMATION(Structure):
 
     def __init__(self):
         Structure.__init__(self)
-        
+
         self.cb = sizeof(self)
 
 LPPROCESS_INFORMATION = POINTER(PROCESS_INFORMATION)
@@ -139,10 +139,10 @@ class EnvironmentBlock:
             self._as_parameter_ = None
         else:
             values = ["%s=%s" % (key, value)
-                      for (key, value) in dict.iteritems()]
+                      for (key, value) in dict.items()]
             values.append("")
             self._as_parameter_ = LPCWSTR("\0".join(values))
-        
+
 # CreateProcess()
 
 CreateProcessProto = WINFUNCTYPE(BOOL,                  # Return type
@@ -248,7 +248,7 @@ try:
     IsProcessInJob = IsProcessInJobProto(
         ("IsProcessInJob", windll.kernel32),
         IsProcessInJobFlags)
-    IsProcessInJob.errcheck = ErrCheckBool 
+    IsProcessInJob.errcheck = ErrCheckBool
 except AttributeError:
     # windows 2k doesn't have this API
     def IsProcessInJob(process):
@@ -335,47 +335,3 @@ def CanCreateJobObject():
         return bool(limitflags & JOB_OBJECT_LIMIT_BREAKAWAY_OK) or bool(limitflags & JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK)
     else:
         return True
-
-### testing functions
-
-def parent():
-    print 'Starting parent'
-    currentProc = GetCurrentProcess()
-    if IsProcessInJob(currentProc):
-        print >> sys.stderr, "You should not be in a job object to test"
-        sys.exit(1)
-    assert CanCreateJobObject()
-    print 'File: %s' % __file__
-    command = [sys.executable, __file__, '-child']
-    print 'Running command: %s' % command
-    process = Popen(command)
-    process.kill()
-    code = process.returncode
-    print 'Child code: %s' % code
-    assert code == 127
-        
-def child():
-    print 'Starting child'
-    currentProc = GetCurrentProcess()
-    injob = IsProcessInJob(currentProc)
-    print "Is in a job?: %s" % injob
-    can_create = CanCreateJobObject()
-    print 'Can create job?: %s' % can_create
-    process = Popen('c:\\windows\\notepad.exe')
-    assert process._job
-    jobinfo = QueryInformationJobObject(process._job, 'JobObjectExtendedLimitInformation')
-    print 'Job info: %s' % jobinfo
-    limitflags = jobinfo['BasicLimitInformation']['LimitFlags']
-    print 'LimitFlags: %s' % limitflags
-    process.kill()
-
-if __name__ == '__main__':
-    import sys
-    from killableprocess import Popen
-    nargs = len(sys.argv[1:])
-    if nargs:
-        if nargs != 1 or sys.argv[1] != '-child':
-            raise AssertionError('Wrong flags; run like `python /path/to/winprocess.py`')
-        child()
-    else:
-        parent()
