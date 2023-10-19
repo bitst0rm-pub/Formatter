@@ -10,6 +10,7 @@
 # @license      The MIT License (MIT)
 
 import re
+import uuid
 import json
 import logging
 import sublime
@@ -19,6 +20,140 @@ from ..modules import __all__ as formatter_map
 
 log = logging.getLogger(__name__)
 
+
+class NoIndent(object):
+    def __init__(self, value):
+        self.value = value
+
+
+class NoIndentEncoder(json.JSONEncoder):
+    def __init__(self, *args, **kwargs):
+        super(NoIndentEncoder, self).__init__(*args, **kwargs)
+        self.kwargs = dict(kwargs)
+        del self.kwargs['indent']
+        self._replacement_map = {}
+
+    def default(self, o):
+        if isinstance(o, NoIndent):
+            key = uuid.uuid4().hex
+            self._replacement_map[key] = json.dumps(o.value, **self.kwargs)
+            return '@@%s@@' % (key,)
+        else:
+            return super(NoIndentEncoder, self).default(o)
+
+    def encode(self, o):
+        result = super(NoIndentEncoder, self).encode(o)
+        for k, v in iter(self._replacement_map.items()):
+            result = result.replace('"@@%s@@"' % (k,), v)
+        return result
+
+
+def strip_trailing(text):
+    return ('\n'.join([line.rstrip() for line in text.split('\n')]))
+
+def build_sublime_repl_children():
+    return [
+        OrderedDict([
+            ('caption', 'Node.js'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'node'),
+                        ('cmd', NoIndent([['node'], '-i', '-r', '${file}'])),
+                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'node'),
+                        ('cmd', NoIndent([['node'], '-i'])),
+                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
+            ('caption', 'PHP'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'php'),
+                        ('cmd', NoIndent([['php'], '-a', '-d', 'auto_prepend_file=${file}'])),
+                        ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'php'),
+                        ('cmd', NoIndent([['php'], '-a'])),
+                        ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
+            ('caption', 'Python'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'python'),
+                        ('cmd', NoIndent([['python3', 'python'], '-i', '-B', '${file}'])),
+                        ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'python'),
+                        ('cmd', NoIndent([['python3', 'python'], '-i', '-B'])),
+                        ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
+            ('caption', 'Shell'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'shell'),
+                        ('cmd', OrderedDict([
+                            ('windows', NoIndent([['cmd'], '/k', '${file}'])),
+                            ('linux', NoIndent([['bash'], '-i', '${file}'])),
+                            ('osx', NoIndent([['bash'], '-i', '${file}'])),
+                        ])),
+                        ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'shell'),
+                        ('cmd', OrderedDict([
+                            ('windows', NoIndent([['cmd']])),
+                            ('linux', NoIndent([['bash'], '-i'])),
+                            ('osx', NoIndent([['bash'], '-i'])),
+                        ])),
+                        ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ])
+    ]
 
 def build_sublime_menu_children(formatter_map):
     beautifiers = []
@@ -51,12 +186,18 @@ def build_context_sublime_menu(formatter_map):
             ('id', 'formatter'),
             ('children', [
                 OrderedDict([
-                    ('caption', '☰ Quick Options'),
+                    ('caption', '☰   Quick Options'),
                     ('command', 'quick_options')
+                ]),
+                OrderedDict([
+                    ('caption', '❯_  Interactive REPL'),
+                    ('children', [])
                 ])
             ])
         ])
     ]
+
+    context_menu[0]['children'][1]['children'].extend(sorted(build_sublime_repl_children(), key=lambda x: x['caption']))
 
     beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: context_menu[0]['children'].extend(
@@ -66,8 +207,8 @@ def build_context_sublime_menu(formatter_map):
     sort_and_extend(minifiers, '-')
     sort_and_extend(converters, '-')
     sort_and_extend(custom, '-')
-    json_text = json.dumps(context_menu, ensure_ascii=False, indent=4)
 
+    json_text = json.dumps(context_menu, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
     return strip_trailing(json_text)
 
 def build_main_sublime_menu(formatter_map):
@@ -82,8 +223,12 @@ def build_main_sublime_menu(formatter_map):
                     ('id', 'formatter'),
                     ('children', [
                         OrderedDict([
-                            ('caption', '☰ Quick Options'),
+                            ('caption', '☰   Quick Options'),
                             ('command', 'quick_options')
+                        ]),
+                        OrderedDict([
+                            ('caption', '❯_  Interactive REPL'),
+                            ('children', [])
                         ])
                     ])
                 ])
@@ -148,6 +293,29 @@ def build_main_sublime_menu(formatter_map):
         ])
     ]
 
+    def add_mnemonic_recursive(data, mnemonic_prefix=''):
+        for item in data:
+            caption = item.get('caption')
+            mnemonic = item.get('mnemonic')
+            if caption and caption != '-' and mnemonic is None:
+                mnemonic_key = 'mnemonic'
+                caption_mnemonic = mnemonic_prefix
+                for char in caption:
+                    if char.isalnum():
+                        caption_mnemonic += char
+                        break
+                item[mnemonic_key] = caption_mnemonic.upper()
+                ordered_item = OrderedDict([(key, item[key]) if key in item else (key, None) for key in ['caption', mnemonic_key]])
+                ordered_item.update(item)
+                item.clear()
+                item.update(ordered_item)
+
+            children = item.get('children', [])
+            if children:
+                add_mnemonic_recursive(children, mnemonic_prefix)
+
+    main_menu[0]['children'][0]['children'][1]['children'].extend(sorted(build_sublime_repl_children(), key=lambda x: x['caption']))
+
     beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: main_menu[0]['children'][0]['children'].extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
@@ -156,8 +324,9 @@ def build_main_sublime_menu(formatter_map):
     sort_and_extend(minifiers, '-')
     sort_and_extend(converters, '-')
     sort_and_extend(custom, '-')
-    json_text = json.dumps(main_menu, ensure_ascii=False, indent=4)
+    add_mnemonic_recursive(main_menu, mnemonic_prefix='')
 
+    json_text = json.dumps(main_menu, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
     return strip_trailing(json_text)
 
 def build_formatter_sublime_commands_children(formatter_map):
@@ -201,6 +370,26 @@ def build_formatter_sublime_commands(formatter_map):
         ])
     ]
 
+    def restructure_repl_children(data):
+        restructured_list = []
+
+        for key in data:
+            caption_name = key['caption']
+            actions = key['children']
+
+            for action in actions:
+                item = OrderedDict([
+                    ('caption', 'Formatter: REPL ' + caption_name + ' - ' + action['caption']),
+                    ('command', action['command']),
+                    ('args', action['args']),
+                ])
+                restructured_list.append(item)
+
+        return restructured_list
+
+    repl_children = restructure_repl_children(build_sublime_repl_children())
+    sublime_commands.extend(sorted(repl_children, key=lambda x: x['args']['uid']))
+
     beautifiers, minifiers, converters, custom = build_formatter_sublime_commands_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: sublime_commands.extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
@@ -209,8 +398,8 @@ def build_formatter_sublime_commands(formatter_map):
     sort_and_extend(minifiers, None)
     sort_and_extend(converters, None)
     sort_and_extend(custom, None)
-    json_text = json.dumps(sublime_commands, ensure_ascii=False, indent=4)
 
+    json_text = json.dumps(sublime_commands, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
     return strip_trailing(json_text)
 
 def build_example_sublime_keymap(formatter_map):
@@ -239,7 +428,29 @@ def build_example_sublime_keymap(formatter_map):
     sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, custom]]
 
     quick_options = '{"keys": ["ctrl+super+?"], "command": "quick_options"},\n    '
-    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + '\n]'
+    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + ',\n    '
+
+    def restructure_repl_children(data):
+        restructured_list = []
+
+        for key in data:
+            caption_name = key['caption']
+            actions = key['children']
+
+            for action in actions:
+                item = OrderedDict([
+                    ('keys', ['ctrl+super+?']),
+                    ('command', action['command']),
+                    ('args', action['args']),
+                ])
+                restructured_list.append(item)
+
+        return restructured_list
+
+    repl_children = restructure_repl_children(build_sublime_repl_children())
+    sorted_repl_children = sorted(repl_children, key=lambda x: x['args']['uid'])
+
+    formatted_keymap_repl = ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_repl_children]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:
@@ -259,7 +470,7 @@ def build_example_sublime_keymap(formatter_map):
 
 '''
 
-    return strip_trailing(comment + formatted_keymap)
+    return strip_trailing(comment + formatted_keymap + formatted_keymap_repl)
 
 def build_formatter_sublime_settings_children(formatter_map):
     beautifiers = []
@@ -283,7 +494,7 @@ def build_formatter_sublime_settings_children(formatter_map):
                     ('exclude_extensions', []),
                     ('exclude_syntaxes', [])
                 ])),
-                ('syntaxes', config['syntaxes'])
+                ('syntaxes', NoIndent(config['syntaxes']))
             ])
 
             executable_path = config.get('executable_path', None)
@@ -292,7 +503,7 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             args = config.get('args', None)
             if args is not None and isinstance(args, list) and len(args) > 0:
-                child['args'] = args
+                child['args'] = NoIndent(args)
 
             config_path = config.get('config_path', None)
             if config_path is not None and isinstance(config_path, dict) and len(config_path) > 0:
@@ -319,27 +530,25 @@ def build_formatter_sublime_settings(formatter_map):
             ('debug', False),
             ('__comment__open_console_on_failure', '''
     // Auto open the console panel whenever formatting failed.
-    // This is especially useful when combined with "debug": true'''),
+    // This is useful when combined with "debug": true'''),
             ('open_console_on_failure', False),
             ('__comment__show_statusbar', '''
     // Display results in the status bar.
     // The displayed abbreviation for the current settings mode:
-    // PUS: Permanent User Settings
-    // PQO: Permanent Quick Options
+    // PUS: Persistent User Settings
+    // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options'''),
             ('show_statusbar', True),
             ('__comment__show_words_count', '''
     // Display a real-time word and character count in the status bar.
-    // By default, whitespace is not included in the character count.
-    // For the optimal experience, consider disabling the
-    // "show_line_column" setting in your Sublime Text.'''),
+    // By default, whitespace is not included in the character count.'''),
             ('show_words_count', OrderedDict([
                 ('enable', True),
                 ('ignore_whitespace_char', True)
             ])),
             ('__comment__remember_session', '''
     // Remember and restore cursor position, selections, selected
-    // syntax and bookmarks each time a file is closed and reopened.
+    // syntax and bookmarks each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.'''),
             ('remember_session', True),
             ('__comment__layout', '''
@@ -363,14 +572,49 @@ def build_formatter_sublime_settings(formatter_map):
     // for the current formatting session.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
-    // to add it, either permanently via ~/.bashrc, ~/.zshrc, ~/.profile or here.'''),
+    // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.'''),
             ('environ', OrderedDict([
                 ('PATH', []),
                 ('GEM_PATH', []),
                 ('PYTHONPATH', [])
             ])),
+            ('__comment__interactive_repl', '''
+    // Interactive REPL (Read-Eval-Print-Loop)
+    // This feature allow you to run code inside Sublime Text'''),
+            ('interactive_repl', OrderedDict([
+                ('__comment__interpreter_path', '''// Path to the interpreter to run the interactive REPL.
+        // This is rarely needed, as most of the programs you have installed are usually
+        // set to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
+        // Formatter is able to detect and automatically set them for you.
+        // However, if you do need to use a specific interpreter, you can provide the path.
+        // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
+        // Further keys: "node", "php", "python", "shell"'''),
+                ('interpreter_path', OrderedDict([
+                    ('php', []),
+                    ('python', [])
+                ])),
+                ('__comment__syntax', '''// Syntax to highlight text.
+        // By default, Formatter uses the standard syntax file of Sublime Text.
+        // However, if you do need to use a specific syntax, you can provide the
+        // packages path to your syntax file. Note the exact path structure.
+        // For example: "php": "Packages/Happy/myPHP.sublime-syntax"'''),
+                ('syntax', OrderedDict([
+                    ('python', 'Packages/Python/Python.sublime-syntax')
+                ])),
+                ('__comment__view_settings', '''// Settings for the REPL views.
+        // This option affects only the current REPL view.'''),
+                ('view_settings', OrderedDict([
+                    ('translate_tabs_to_spaces', False),
+                    ('auto_complete', True),
+                    ('line_numbers', False),
+                    ('gutter', False)
+                ])),
+                ('__comment__enable_persistent_history', '''// Record commands history to use with the Up and Down arrow keys.
+        // Enabling it will retain the history across sessions; otherwise, it is temporary.'''),
+                ('enable_persistent_history', True),
+            ])),
             ('__comment__formatters', '''
-    // Plugins settings'''),
+    // Third-party plugin settings'''),
             ('formatters', OrderedDict([
                 ('example', OrderedDict([
                     ('__comment__disable', '''// Disable and remove plugin from being shown in the menu.'''),
@@ -416,9 +660,9 @@ def build_formatter_sublime_settings(formatter_map):
             // to the entire content of this settings file!'''),
                     ('recursive_folder_format', OrderedDict([
                         ('enable', False),
-                        ('exclude_folders_regex', ['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*?tits\\$']),
-                        ('exclude_files_regex', ['show_tits.sx', '.*?ball.js', '^._.*?']),
-                        ('exclude_extensions', ['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak']),
+                        ('exclude_folders_regex', NoIndent(['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*?tits\\$'])),
+                        ('exclude_files_regex', NoIndent(['show_tits.sx', '.*?ball.js', '^._.*?'])),
+                        ('exclude_extensions', NoIndent(['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak'])),
                         ('exclude_syntaxes', [])
                     ])),
                     ('__comment__syntaxes', '''
@@ -426,19 +670,17 @@ def build_formatter_sublime_settings(formatter_map):
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.'''),
-                    ('syntaxes', ['css', 'js', 'php']),
+                    ('syntaxes', NoIndent(['css', 'js', 'php'])),
                     ('__comment__interpreter_path', '''
-            // Path to the interpreter to be used.
-            // Just for the sake of completeness, but it is unlikely that you will
-            // ever need to use this option. Most programs you install are usually set
+            // Path to the interpreter to run the third-party plugin.
+            // Just for the sake of completeness, but it is unlikely that you will ever need
+            // to use this option. Most of the programs you have installed are usually set
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
-            // However, this option might be useful when you have several versions
-            // of the same program installed on your system. Even in such cases,
-            // it is still recommended to use the "environ" option mentioned above,
-            // along with the PATH variable, to handle this situation.'''),
+            // Formatter is able to detect and automatically set them for you.
+            // However, if you do need to use a specific interpreter, you can provide the path.'''),
                     ('interpreter_path', '${HOME}/example/path/to\\$my/java.exe'),
                     ('__comment__executable_path', '''
-            // Path to the plugin executable to be used.
+            // Path to the third-party plugin executable to process formatting.
             // System variable expansions like ${HOME} and Sublime Text specific
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
             // https://www.sublimetext.com/docs/build_systems.html#variables
@@ -461,7 +703,7 @@ def build_formatter_sublime_settings(formatter_map):
                     ])),
                     ('__comment__args', '''
             // Array of additional arguments for the command line.'''),
-                    ('args', ['--basedir', './example/my/baseball', '--show-tits', 'yes']),
+                    ('args', NoIndent(['--basedir', './example/my/baseball', '--show-tits', 'yes'])),
                     ('__comment__fix_commands', '''
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
@@ -478,13 +720,13 @@ def build_formatter_sublime_settings(formatter_map):
             // - count:    @type:int (the matching occurrences per index, 0 = all); required!
             // - position: @type:int (move old index pos. to new/old one, -1 = delete index); required!'''),
                     ('fix_commands', [
-                        ['--autocorrect', '--autocorrect-all', 4, 0, 4],
-                        ['^.*?auto.*\\$', '--with', 4, 1, 5],
-                        ['${packages}/to/old', '${packages}/to/new', 3, 0, 3],
-                        ['css', 5, 0, 7],
-                        [3, 0, 4],
-                        [2, 0, -1],
-                        ['--show-tits', 'xxx', 2, 0, -1]
+                        NoIndent(['--autocorrect', '--autocorrect-all', 4, 0, 4]),
+                        NoIndent(['^.*?auto.*\\$', '--with', 4, 1, 5]),
+                        NoIndent(['${packages}/to/old', '${packages}/to/new', 3, 0, 3]),
+                        NoIndent(['css', 5, 0, 7]),
+                        NoIndent([3, 0, 4]),
+                        NoIndent([2, 0, -1]),
+                        NoIndent(['--show-tits', 'xxx', 2, 0, -1])
                     ])
                 ]))
             ]))
@@ -497,13 +739,11 @@ def build_formatter_sublime_settings(formatter_map):
         for x in sorted_category:
             sublime_settings['formatters'].update(x)
 
-    json_text = json.dumps(sublime_settings, ensure_ascii=False, indent=4)
+    json_text = json.dumps(sublime_settings, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
 
-    pattern_square_brackets = re.compile(r'\[([\s\S]*?)\]')
     pattern_comment_and_commas = re.compile(r'"__comment__.+"[\s\t]*:[\s\t]*"(.+)",?|[^:]//[^\n]+')
     pattern_comment_linebreaks = re.compile(r'^(.*?//.*)$', re.MULTILINE)
     pattern_comma_before_comment = re.compile(r',([\s\n]+)(/\*)')
-    json_text = pattern_square_brackets.sub(lambda match: '[' + ' '.join(match.group(1).split()) + ']', json_text)
     json_text = pattern_comment_and_commas.sub(r'\1', json_text)
     json_text = pattern_comma_before_comment.sub(r'\1\2', json_text)
     matched_lines = pattern_comment_linebreaks.findall(json_text)
@@ -512,7 +752,7 @@ def build_formatter_sublime_settings(formatter_map):
         json_text = json_text.replace(line, modified_line)
 
     s = [
-        r'"fix_commands": [[ "--autocorrect", "--autocorrect-all", 4, 0, 4],',
+        r'["--autocorrect", "--autocorrect-all", 4, 0, 4],',
         r'["^.*?auto.*\\$", "--with", 4, 1, 5],',
         r'["${packages}/to/old", "${packages}/to/new", 3, 0, 3],',
         r'["css", 5, 0, 7],',
@@ -521,8 +761,7 @@ def build_formatter_sublime_settings(formatter_map):
         r'["--show-tits", "xxx", 2, 0, -1]'
     ]
     r = [
-        r'''"fix_commands": [
-                ["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change''',
+        r'["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change',
         r'["^.*?auto.*\\$", "--with", 4, 1, 5], // using escaped "\\$" regex, move index 4 to pos 5',
         r'["${packages}/to/old", "${packages}/to/new", 3, 0, 3], // variable expansion, no escaped "$"',
         r'["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7',
@@ -534,12 +773,6 @@ def build_formatter_sublime_settings(formatter_map):
         json_text = json_text.replace(s, r)
 
     return strip_trailing(json_text)
-
-def strip_trailing(text):
-    lines = text.split('\n')
-    cleaned_lines = [line.rstrip() for line in lines]
-    cleaned_text = '\n'.join(cleaned_lines)
-    return cleaned_text
 
 def create_package_config_files():
     directory = common.join(sublime.packages_path(), common.PACKAGE_NAME)

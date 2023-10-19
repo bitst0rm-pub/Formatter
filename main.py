@@ -20,6 +20,7 @@ from .core import common
 from .core import configurator
 from .core.wcounter import *
 from .core.smanager import *
+from .core.repler import *
 from .core.version import __version__
 from .core.formatter import Formatter
 
@@ -80,8 +81,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
         'recursive_folder_format': 'Enable Recursive Folder Format',
-        'use_user_settings': 'Reset (permanent User Settings use)',
-        'save_quick_options': 'Save (permanent Quick Options use)'
+        'use_user_settings': 'Reset (persistent User Settings use)',
+        'save_quick_options': 'Save (persistent Quick Options use)'
     }
 
     def run(self):

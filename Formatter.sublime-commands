@@ -12,6 +12,86 @@
         "command": "quick_options"
     },
     {
+        "caption": "Formatter: REPL Node.js - Run current file",
+        "command": "run_repl",
+        "args": {
+            "uid": "node",
+            "cmd": [["node"], "-i", "-r", "${file}"],
+            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL Node.js - Terminal",
+        "command": "run_repl",
+        "args": {
+            "uid": "node",
+            "cmd": [["node"], "-i"],
+            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL PHP - Run current file",
+        "command": "run_repl",
+        "args": {
+            "uid": "php",
+            "cmd": [["php"], "-a", "-d", "auto_prepend_file=${file}"],
+            "syntax": "Packages/PHP/PHP.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL PHP - Terminal",
+        "command": "run_repl",
+        "args": {
+            "uid": "php",
+            "cmd": [["php"], "-a"],
+            "syntax": "Packages/PHP/PHP.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL Python - Run current file",
+        "command": "run_repl",
+        "args": {
+            "uid": "python",
+            "cmd": [["python3", "python"], "-i", "-B", "${file}"],
+            "syntax": "Packages/Python/Python.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL Python - Terminal",
+        "command": "run_repl",
+        "args": {
+            "uid": "python",
+            "cmd": [["python3", "python"], "-i", "-B"],
+            "syntax": "Packages/Python/Python.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL Shell - Run current file",
+        "command": "run_repl",
+        "args": {
+            "uid": "shell",
+            "cmd": {
+                "windows": [["cmd"], "/k", "${file}"],
+                "linux": [["bash"], "-i", "${file}"],
+                "osx": [["bash"], "-i", "${file}"]
+            },
+            "syntax": "Packages/ShellScript/Bash.sublime-syntax"
+        }
+    },
+    {
+        "caption": "Formatter: REPL Shell - Terminal",
+        "command": "run_repl",
+        "args": {
+            "uid": "shell",
+            "cmd": {
+                "windows": [["cmd"]],
+                "linux": [["bash"], "-i"],
+                "osx": [["bash"], "-i"]
+            },
+            "syntax": "Packages/ShellScript/Bash.sublime-syntax"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Beautysh",
         "command": "run_format",
         "args": {

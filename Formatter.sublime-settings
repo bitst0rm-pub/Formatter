@@ -3,27 +3,25 @@
     "debug": false,
 
     // Auto open the console panel whenever formatting failed.
-    // This is especially useful when combined with "debug": true
+    // This is useful when combined with "debug": true
     "open_console_on_failure": false,
 
     // Display results in the status bar.
     // The displayed abbreviation for the current settings mode:
-    // PUS: Permanent User Settings
-    // PQO: Permanent Quick Options
+    // PUS: Persistent User Settings
+    // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options
     "show_statusbar": true,
 
     // Display a real-time word and character count in the status bar.
     // By default, whitespace is not included in the character count.
-    // For the optimal experience, consider disabling the
-    // "show_line_column" setting in your Sublime Text.
     "show_words_count": {
         "enable": true,
         "ignore_whitespace_char": true
     },
 
     // Remember and restore cursor position, selections, selected
-    // syntax and bookmarks each time a file is closed and reopened.
+    // syntax and bookmarks each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
     "remember_session": true,
 
@@ -47,14 +45,49 @@
     // for the current formatting session.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
-    // to add it, either permanently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
+    // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     "environ": {
         "PATH": [],
         "GEM_PATH": [],
         "PYTHONPATH": []
     },
 
-    // Plugins settings
+    // Interactive REPL (Read-Eval-Print-Loop)
+    // This feature allow you to run code inside Sublime Text
+    "interactive_repl": {
+        // Path to the interpreter to run the interactive REPL.
+        // This is rarely needed, as most of the programs you have installed are usually
+        // set to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
+        // Formatter is able to detect and automatically set them for you.
+        // However, if you do need to use a specific interpreter, you can provide the path.
+        // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
+        // Further keys: "node", "php", "python", "shell"
+        "interpreter_path": {
+            "php": [],
+            "python": []
+        },
+        // Syntax to highlight text.
+        // By default, Formatter uses the standard syntax file of Sublime Text.
+        // However, if you do need to use a specific syntax, you can provide the
+        // packages path to your syntax file. Note the exact path structure.
+        // For example: "php": "Packages/Happy/myPHP.sublime-syntax"
+        "syntax": {
+            "python": "Packages/Python/Python.sublime-syntax"
+        },
+        // Settings for the REPL views.
+        // This option affects only the current REPL view.
+        "view_settings": {
+            "translate_tabs_to_spaces": false,
+            "auto_complete": true,
+            "line_numbers": false,
+            "gutter": false
+        },
+        // Record commands history to use with the Up and Down arrow keys.
+        // Enabling it will retain the history across sessions; otherwise, it is temporary.
+        "enable_persistent_history": true
+    },
+
+    // Third-party plugin settings
     "formatters": {
         "example": {
             // Disable and remove plugin from being shown in the menu.
@@ -112,17 +145,15 @@
             // End-users are advised to consult plugin documentation to add more syntaxes.
             "syntaxes": ["css", "js", "php"],
 
-            // Path to the interpreter to be used.
-            // Just for the sake of completeness, but it is unlikely that you will
-            // ever need to use this option. Most programs you install are usually set
+            // Path to the interpreter to run the third-party plugin.
+            // Just for the sake of completeness, but it is unlikely that you will ever need
+            // to use this option. Most of the programs you have installed are usually set
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
-            // However, this option might be useful when you have several versions
-            // of the same program installed on your system. Even in such cases,
-            // it is still recommended to use the "environ" option mentioned above,
-            // along with the PATH variable, to handle this situation.
+            // Formatter is able to detect and automatically set them for you.
+            // However, if you do need to use a specific interpreter, you can provide the path.
             "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
 
-            // Path to the plugin executable to be used.
+            // Path to the third-party plugin executable to process formatting.
             // System variable expansions like ${HOME} and Sublime Text specific
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
             // https://www.sublimetext.com/docs/build_systems.html#variables

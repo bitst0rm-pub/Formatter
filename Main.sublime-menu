@@ -6,17 +6,138 @@
         "children": [
             {
                 "caption": "Formatter",
+                "mnemonic": "F",
                 "id": "formatter",
                 "children": [
                     {
-                        "caption": "☰ Quick Options",
+                        "caption": "☰   Quick Options",
+                        "mnemonic": "Q",
                         "command": "quick_options"
+                    },
+                    {
+                        "caption": "❯_  Interactive REPL",
+                        "mnemonic": "I",
+                        "children": [
+                            {
+                                "caption": "Node.js",
+                                "mnemonic": "N",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "node",
+                                            "cmd": [["node"], "-i", "-r", "${file}"],
+                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "node",
+                                            "cmd": [["node"], "-i"],
+                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "PHP",
+                                "mnemonic": "P",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "php",
+                                            "cmd": [["php"], "-a", "-d", "auto_prepend_file=${file}"],
+                                            "syntax": "Packages/PHP/PHP.sublime-syntax"
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "php",
+                                            "cmd": [["php"], "-a"],
+                                            "syntax": "Packages/PHP/PHP.sublime-syntax"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Python",
+                                "mnemonic": "P",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "python",
+                                            "cmd": [["python3", "python"], "-i", "-B", "${file}"],
+                                            "syntax": "Packages/Python/Python.sublime-syntax"
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "python",
+                                            "cmd": [["python3", "python"], "-i", "-B"],
+                                            "syntax": "Packages/Python/Python.sublime-syntax"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Shell",
+                                "mnemonic": "S",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "shell",
+                                            "cmd": {
+                                                "windows": [["cmd"], "/k", "${file}"],
+                                                "linux": [["bash"], "-i", "${file}"],
+                                                "osx": [["bash"], "-i", "${file}"]
+                                            },
+                                            "syntax": "Packages/ShellScript/Bash.sublime-syntax"
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "shell",
+                                            "cmd": {
+                                                "windows": [["cmd"]],
+                                                "linux": [["bash"], "-i"],
+                                                "osx": [["bash"], "-i"]
+                                            },
+                                            "syntax": "Packages/ShellScript/Bash.sublime-syntax"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     {
                         "caption": "-"
                     },
                     {
                         "caption": "Beautysh",
+                        "mnemonic": "B",
                         "command": "run_format",
                         "args": {
                             "uid": "beautysh",
@@ -25,6 +146,7 @@
                     },
                     {
                         "caption": "Black",
+                        "mnemonic": "B",
                         "command": "run_format",
                         "args": {
                             "uid": "black",
@@ -33,6 +155,7 @@
                     },
                     {
                         "caption": "ClangFormat",
+                        "mnemonic": "C",
                         "command": "run_format",
                         "args": {
                             "uid": "clangformat",
@@ -41,6 +164,7 @@
                     },
                     {
                         "caption": "CSScomb",
+                        "mnemonic": "C",
                         "command": "run_format",
                         "args": {
                             "uid": "csscomb",
@@ -49,6 +173,7 @@
                     },
                     {
                         "caption": "ESLint",
+                        "mnemonic": "E",
                         "command": "run_format",
                         "args": {
                             "uid": "eslint",
@@ -57,6 +182,7 @@
                     },
                     {
                         "caption": "HTML Tidy",
+                        "mnemonic": "H",
                         "command": "run_format",
                         "args": {
                             "uid": "htmltidy",
@@ -65,6 +191,7 @@
                     },
                     {
                         "caption": "JS Beautifier",
+                        "mnemonic": "J",
                         "command": "run_format",
                         "args": {
                             "uid": "jsbeautifier",
@@ -73,6 +200,7 @@
                     },
                     {
                         "caption": "JSONMax",
+                        "mnemonic": "J",
                         "command": "run_format",
                         "args": {
                             "uid": "jsonmax",
@@ -81,6 +209,7 @@
                     },
                     {
                         "caption": "Perltidy",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "perltidy",
@@ -89,6 +218,7 @@
                     },
                     {
                         "caption": "PHP CS Fixer",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "phpcsfixer",
@@ -97,6 +227,7 @@
                     },
                     {
                         "caption": "Prettier",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "prettier",
@@ -105,6 +236,7 @@
                     },
                     {
                         "caption": "Pretty Diff",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "prettydiffmax",
@@ -113,6 +245,7 @@
                     },
                     {
                         "caption": "PrettyTable",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "prettytable",
@@ -121,6 +254,7 @@
                     },
                     {
                         "caption": "RuboCop",
+                        "mnemonic": "R",
                         "command": "run_format",
                         "args": {
                             "uid": "rubocop",
@@ -129,6 +263,7 @@
                     },
                     {
                         "caption": "Shfmt",
+                        "mnemonic": "S",
                         "command": "run_format",
                         "args": {
                             "uid": "shfmt",
@@ -137,6 +272,7 @@
                     },
                     {
                         "caption": "SQL Formatter",
+                        "mnemonic": "S",
                         "command": "run_format",
                         "args": {
                             "uid": "sqlformatter",
@@ -145,6 +281,7 @@
                     },
                     {
                         "caption": "Stylelint",
+                        "mnemonic": "S",
                         "command": "run_format",
                         "args": {
                             "uid": "stylelint",
@@ -153,6 +290,7 @@
                     },
                     {
                         "caption": "Uncrustify",
+                        "mnemonic": "U",
                         "command": "run_format",
                         "args": {
                             "uid": "uncrustify",
@@ -161,6 +299,7 @@
                     },
                     {
                         "caption": "YAPF",
+                        "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
                             "uid": "yapf",
@@ -172,6 +311,7 @@
                     },
                     {
                         "caption": "Clean CSS (min)",
+                        "mnemonic": "C",
                         "command": "run_format",
                         "args": {
                             "uid": "cleancss",
@@ -180,6 +320,7 @@
                     },
                     {
                         "caption": "HTMLMinifier (min)",
+                        "mnemonic": "H",
                         "command": "run_format",
                         "args": {
                             "uid": "htmlminifier",
@@ -188,6 +329,7 @@
                     },
                     {
                         "caption": "JSONMin (min)",
+                        "mnemonic": "J",
                         "command": "run_format",
                         "args": {
                             "uid": "jsonmin",
@@ -196,6 +338,7 @@
                     },
                     {
                         "caption": "Pretty Diff (min)",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "prettydiffmin",
@@ -204,6 +347,7 @@
                     },
                     {
                         "caption": "Python Minifier (min)",
+                        "mnemonic": "P",
                         "command": "run_format",
                         "args": {
                             "uid": "pythonminifier",
@@ -212,6 +356,7 @@
                     },
                     {
                         "caption": "Shfmt (min)",
+                        "mnemonic": "S",
                         "command": "run_format",
                         "args": {
                             "uid": "shfmtmin",
@@ -220,6 +365,7 @@
                     },
                     {
                         "caption": "SQLMin (min)",
+                        "mnemonic": "S",
                         "command": "run_format",
                         "args": {
                             "uid": "sqlmin",
@@ -228,6 +374,7 @@
                     },
                     {
                         "caption": "Terser (min)",
+                        "mnemonic": "T",
                         "command": "run_format",
                         "args": {
                             "uid": "terser",
@@ -250,9 +397,11 @@
                 "children": [
                     {
                         "caption": "Formatter",
+                        "mnemonic": "F",
                         "children": [
                             {
                                 "caption": "Settings",
+                                "mnemonic": "S",
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/Formatter/Formatter.sublime-settings",
@@ -261,6 +410,7 @@
                             },
                             {
                                 "caption": "Open Config Folders",
+                                "mnemonic": "O",
                                 "command": "open_config_folders"
                             },
                             {
@@ -268,6 +418,7 @@
                             },
                             {
                                 "caption": "Example Key Bindings",
+                                "mnemonic": "E",
                                 "command": "open_file",
                                 "args": {
                                     "file": "${packages}/Formatter/Example.sublime-keymap"
@@ -275,6 +426,7 @@
                             },
                             {
                                 "caption": "Key Bindings – User",
+                                "mnemonic": "K",
                                 "command": "open_file",
                                 "args": {
                                     "file": "${packages}/User/Default (${platform}).sublime-keymap"
@@ -285,6 +437,7 @@
                             },
                             {
                                 "caption": "Version Info",
+                                "mnemonic": "V",
                                 "command": "show_version"
                             }
                         ]

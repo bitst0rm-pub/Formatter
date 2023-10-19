@@ -42,5 +42,13 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "pythonminifier", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "shfmtmin", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sqlmin", "type": "minifier"}},
-    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}}
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "node", "cmd": [["node"], "-i", "-r", "${file}"], "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "node", "cmd": [["node"], "-i"], "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "php", "cmd": [["php"], "-a", "-d", "auto_prepend_file=${file}"], "syntax": "Packages/PHP/PHP.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "php", "cmd": [["php"], "-a"], "syntax": "Packages/PHP/PHP.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "python", "cmd": [["python3", "python"], "-i", "-B", "${file}"], "syntax": "Packages/Python/Python.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "python", "cmd": [["python3", "python"], "-i", "-B"], "syntax": "Packages/Python/Python.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "shell", "cmd": {"windows": [["cmd"], "/k", "${file}"], "linux": [["bash"], "-i", "${file}"], "osx": [["bash"], "-i", "${file}"]}, "syntax": "Packages/ShellScript/Bash.sublime-syntax"}},
+    {"keys": ["ctrl+super+?"], "command": "run_repl", "args": {"uid": "shell", "cmd": {"windows": [["cmd"]], "linux": [["bash"], "-i"], "osx": [["bash"], "-i"]}, "syntax": "Packages/ShellScript/Bash.sublime-syntax"}}
 ]
