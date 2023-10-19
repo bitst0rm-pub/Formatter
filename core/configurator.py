@@ -54,6 +54,29 @@ def strip_trailing(text):
 def build_sublime_repl_children():
     return [
         OrderedDict([
+            ('caption', 'Lua'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'lua'),
+                        ('cmd', NoIndent([['lua'], '-i', '${{file}}'])),
+                        ('syntax', 'Packages/Lua/Lua.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'lua'),
+                        ('cmd', NoIndent([['lua'], '-i'])),
+                        ('syntax', 'Packages/Lua/Lua.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
             ('caption', 'Node.js'),
             ('children', [
                 OrderedDict([
