@@ -61,7 +61,7 @@ def build_sublime_repl_children():
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
                         ('uid', 'node'),
-                        ('cmd', NoIndent([['node'], '-i', '-r', '${file}'])),
+                        ('cmd', NoIndent([['node'], '-i', '-r', '${{file}}'])),
                         ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
                     ]))
                 ]),
@@ -84,7 +84,7 @@ def build_sublime_repl_children():
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
                         ('uid', 'php'),
-                        ('cmd', NoIndent([['php'], '-a', '-d', 'auto_prepend_file=${file}'])),
+                        ('cmd', NoIndent([['php'], '-a', '-d', 'auto_prepend_file=${{file}}'])),
                         ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
                     ]))
                 ]),
@@ -100,6 +100,29 @@ def build_sublime_repl_children():
             ])
         ]),
         OrderedDict([
+            ('caption', 'Perl'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'perl'),
+                        ('cmd', NoIndent([['perl'], '${packages}/Formatter/libs/repler/repl_perl.pl', '${{file}}'])),
+                        ('syntax', 'Packages/Perl/Perl.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'perl'),
+                        ('cmd', NoIndent([['perl'], '${packages}/Formatter/libs/repler/repl_perl.pl'])),
+                        ('syntax', 'Packages/Perl/Perl.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
             ('caption', 'Python'),
             ('children', [
                 OrderedDict([
@@ -107,7 +130,7 @@ def build_sublime_repl_children():
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
                         ('uid', 'python'),
-                        ('cmd', NoIndent([['python3', 'python'], '-i', '-B', '${file}'])),
+                        ('cmd', NoIndent([['python3', 'python'], '-i', '-B', '${{file}}'])),
                         ('syntax', 'Packages/Python/Python.sublime-syntax'),
                     ]))
                 ]),
@@ -131,9 +154,9 @@ def build_sublime_repl_children():
                     ('args', OrderedDict([
                         ('uid', 'shell'),
                         ('cmd', OrderedDict([
-                            ('windows', NoIndent([['cmd'], '/k', '${file}'])),
-                            ('linux', NoIndent([['bash'], '-i', '${file}'])),
-                            ('osx', NoIndent([['bash'], '-i', '${file}'])),
+                            ('windows', NoIndent([['cmd'], '/k', '${{file}}'])),
+                            ('linux', NoIndent([['bash'], '-i', '${{file}}'])),
+                            ('osx', NoIndent([['bash'], '-i', '${{file}}'])),
                         ])),
                         ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
                     ]))

@@ -42,11 +42,12 @@ class Repl:
     def run(self):
         self.script_path = self.view.file_name()
         if not self.script_path:
-            sublime.error_message('Please save the file first.')
+            common.prompt_error('Please save the file first.')
             return
 
         interpreter = self.get_interpreter()
         if not interpreter:
+            common.prompt_error('No interpreter found.')
             return
 
         self.init_history()
@@ -123,7 +124,7 @@ class Repl:
     def get_command_args(self):
         args = self.get_command_list()[1:]
         for i in range(len(args)):
-            args[i] = args[i].replace('${file}', self.script_path)
+            args[i] = common.expand_path(args[i].replace('${{file}}', self.script_path))
         return args
 
     def set_command(self, interpreter, command):
