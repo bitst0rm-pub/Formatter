@@ -224,7 +224,7 @@ class Repl:
                     flush_timer = threading.Timer(0.02, flush_buffer)
                     flush_timer.start()
 
-        sublime.set_timeout(lambda: append_output('*** Non-interactive REPL closed ***'), 100)
+        sublime.set_timeout(lambda: append_output('\n*** Non-interactive REPL closed ***'), 100)
 
     def store_repl_instance(self):
         self.rinstances.setdefault(self.rview.id(), {

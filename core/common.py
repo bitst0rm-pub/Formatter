@@ -153,7 +153,7 @@ def build_config(settings):
             'syntax': query(settings, {}, 'interactive_repl', 'syntax'),
             'view_settings': {
                 'translate_tabs_to_spaces': query(settings, False, 'interactive_repl', 'view_settings', 'translate_tabs_to_spaces'),
-                'auto_complete': query(settings, True, 'interactive_repl', 'view_settings', 'auto_complete'),
+                'auto_complete': query(settings, False, 'interactive_repl', 'view_settings', 'auto_complete'),
                 'line_numbers': query(settings, False, 'interactive_repl', 'view_settings', 'line_numbers'),
                 'gutter': query(settings, False, 'interactive_repl', 'view_settings', 'gutter')
             },

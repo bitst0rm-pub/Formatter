@@ -54,6 +54,29 @@ def strip_trailing(text):
 def build_sublime_repl_children():
     return [
         OrderedDict([
+            ('caption', 'Haskell'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'haskell'),
+                        ('cmd', NoIndent([['ghci'], '${{file}}'])),
+                        ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'ghci'),
+                        ('cmd', NoIndent([['ghci']])),
+                        ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
             ('caption', 'Lua'),
             ('children', [
                 OrderedDict([
@@ -595,7 +618,8 @@ def build_formatter_sublime_settings(formatter_map):
             ('__comment__remember_session', '''
     // Remember and restore cursor position, selections, selected
     // syntax and bookmarks each time a file is closed and re-opened.
-    // This is helpful to resume your work from where you left off.'''),
+    // This is helpful to resume your work from where you left off.
+    // It does not store sessions but only remembers the mentioned items.'''),
             ('remember_session', True),
             ('__comment__layout', '''
     // Configure the layout when opening new files.
@@ -634,7 +658,7 @@ def build_formatter_sublime_settings(formatter_map):
         // Formatter is able to detect and automatically set them for you.
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further keys: "node", "php", "python", "shell"'''),
+        // Further keys: "haskell", "lua", "node", "php", "perl", "python", "shell"'''),
                 ('interpreter_path', OrderedDict([
                     ('php', []),
                     ('python', [])
@@ -651,7 +675,7 @@ def build_formatter_sublime_settings(formatter_map):
         // This option affects only the current REPL view.'''),
                 ('view_settings', OrderedDict([
                     ('translate_tabs_to_spaces', False),
-                    ('auto_complete', True),
+                    ('auto_complete', False),
                     ('line_numbers', False),
                     ('gutter', False)
                 ])),
