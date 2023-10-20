@@ -77,6 +77,20 @@ def build_sublime_repl_children():
             ])
         ]),
         OrderedDict([
+            ('caption', 'Erlang'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'erlang'),
+                        ('cmd', NoIndent([['erl']])),
+                        ('syntax', 'Packages/Erlang/Erlang.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
             ('caption', 'Haskell'),
             ('children', [
                 OrderedDict([
@@ -704,8 +718,8 @@ def build_formatter_sublime_settings(formatter_map):
         // Formatter is able to detect and automatically set them for you.
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further keys: "coffee", "haskell", "lua", "node", "php", "perl", "python",
-        // "ruby", "shell"'''),
+        // Further keys: "coffee", "erlang", "haskell", "lua", "node", "php", "perl",
+        // "python", "ruby", "shell"'''),
                 ('interpreter_path', OrderedDict([
                     ('php', []),
                     ('python', [])
