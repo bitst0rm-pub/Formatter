@@ -54,6 +54,29 @@ def strip_trailing(text):
 def build_sublime_repl_children():
     return [
         OrderedDict([
+            ('caption', 'CoffeeScript'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'coffee'),
+                        ('cmd', NoIndent([['coffee'], '-i', '-r', '${{file}}'])),
+                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'coffee'),
+                        ('cmd', NoIndent([['coffee'], '-i'])),
+                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
             ('caption', 'Haskell'),
             ('children', [
                 OrderedDict([
@@ -200,7 +223,7 @@ def build_sublime_repl_children():
                     ('args', OrderedDict([
                         ('uid', 'ruby'),
                         ('cmd', NoIndent([['irb'], '-r', '${{file}}'])),
-                        ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                        ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
                     ]))
                 ]),
                 OrderedDict([
@@ -209,7 +232,7 @@ def build_sublime_repl_children():
                     ('args', OrderedDict([
                         ('uid', 'ruby'),
                         ('cmd', NoIndent([['irb']])),
-                        ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                        ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
                     ]))
                 ])
             ])
@@ -681,7 +704,8 @@ def build_formatter_sublime_settings(formatter_map):
         // Formatter is able to detect and automatically set them for you.
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further keys: "haskell", "lua", "node", "php", "perl", "python", "ruby", "shell"'''),
+        // Further keys: "coffee", "haskell", "lua", "node", "php", "perl", "python",
+        // "ruby", "shell"'''),
                 ('interpreter_path', OrderedDict([
                     ('php', []),
                     ('python', [])
