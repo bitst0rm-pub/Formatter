@@ -9,6 +9,8 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
+import os
+import re
 import io
 import sys
 import json
@@ -27,7 +29,7 @@ MAX_HISTORY_RECORDS = 100
 
 
 class Repl:
-    PROMPT = '>>> '
+    PROMPT = b'>>> '
     rinstances = {}
     rhistory = {}
 
@@ -37,6 +39,10 @@ class Repl:
         self.rview = self.view
         self.rprocess = None
         self.rthread = None
+        self.rencoding = None
+        self.should_filter_color = False
+        self.should_filter_echo = False
+        self.should_remove_prompt = False
         self.script_path = None
 
     def run(self):
@@ -51,6 +57,11 @@ class Repl:
             return
 
         self.init_history()
+        self.set_env()
+        self.get_encoding_setting()
+        self.get_color_filter_setting()
+        self.get_echo_filter_setting()
+        self.get_remove_prompt_setting()
         self.create_repl_view()
         self.set_repl_view_settings()
         self.set_repl_view_attributes()
@@ -70,6 +81,48 @@ class Repl:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
+
+    def set_env(self):
+        env = self.kwargs.get('env', None)
+        if env and isinstance(env, dict):
+            for key, value in env.items():
+                os.environ[key] = value
+
+    def get_encoding_setting(self):
+        encoding = self.kwargs.get('encoding', None)
+        if encoding:
+            if isinstance(encoding, str):
+                self.rencoding = encoding
+            elif isinstance(encoding, dict):
+                self.rencoding = encoding.get(sublime.platform(), 'utf-8')
+                if self.rencoding == '${{locale_encoding}}':
+                    self.rencoding = self.get_default_locale_encoding()
+        else:
+            self.rencoding = self.get_default_locale_encoding()
+
+    def get_default_locale_encoding(self):
+        import locale
+        # Equivalent to Popen() universal_newlines=True
+        return locale.getdefaultlocale()[1]
+
+    def get_color_filter_setting(self):
+        self.should_filter_color = self.get_filter_setting(filter_type='filter_color')
+
+    def get_echo_filter_setting(self):
+        self.should_filter_echo = self.get_filter_setting(filter_type='filter_echo')
+
+    def get_remove_prompt_setting(self):
+        self.should_remove_prompt = self.get_filter_setting(filter_type='remove_prompt')
+
+    def get_filter_setting(self, filter_type=None):
+        item = self.kwargs.get(filter_type, False)
+        if item:
+            if isinstance(item, bool):
+                return item
+            elif isinstance(item, dict):
+                return item.get(sublime.platform(), False)
+        else:
+            return False
 
     def create_repl_view(self):
         syntax = common.query(common.config, None, 'interactive_repl', 'syntax', self.kwargs.get('uid', None))
@@ -143,7 +196,6 @@ class Repl:
             stderr=subprocess.STDOUT,
             cwd=cwd,
             env=common.update_environ(),
-            universal_newlines=True,
             shell=common.IS_WINDOWS,
             startupinfo=self.get_startupinfo(),
             creationflags=self.creationflags()
@@ -152,7 +204,7 @@ class Repl:
     def creationflags(self):
         creationflags = 0
         if common.IS_WINDOWS and sys.version_info >= (3, 7):
-            creationflags = 0x8000000 # CREATE_NO_WINDOW
+            creationflags = 0x8000000  # CREATE_NO_WINDOW
         return creationflags
 
     def get_startupinfo(self):
@@ -170,10 +222,10 @@ class Repl:
             self.rthread.start()
 
     def capture_output(self):
-        def append_output(output):
-            self.rview.run_command('append', {'characters': output})
+        def append_output(output_bytes):
+            self.rview.run_command('append', {'characters': output_bytes.decode(self.rencoding)})
 
-        stdout_buffer = io.StringIO()
+        stdout_buffer = io.BytesIO()
         flush_timer = None
         flush_timer_lock = threading.Lock()
 
@@ -188,12 +240,17 @@ class Repl:
                     flush_timer.cancel()
                 flush_timer = None
 
+                # Output end here. Begin post fixes
+                self.do_filter_ansi_escape_color()
+                self.do_filter_echo()
+
                 # Magic to calculate room between output_end and eof
                 self.set_cursor_to_eof()
                 self.store_repl_output_end()
                 self.store_repl_prompt()  # not in use, save for future
 
-                if not self.has_repl_prompt():
+                # Automatically insert a custom prompt if it is missing
+                if not self.has_repl_prompt() and not self.should_remove_prompt:
                     append_output(self.PROMPT)
                     self.set_cursor_to_eof()
                     self.store_repl_output_end()
@@ -211,20 +268,39 @@ class Repl:
         clear_buffer_and_cancel_timer()
 
         while True:
-            output = self.rprocess.stdout.readline(1)
+            output_byte = self.rprocess.stdout.readline(1)
 
-            if self.rprocess.poll() is not None and not output:
+            if common.IS_WINDOWS and output_byte == b'\r':
+                continue  # fix \r\n in Windows
+
+            if self.rprocess.poll() is not None and not output_byte:
                 log.info('Subprocess successfully killed.')
                 break
 
-            stdout_buffer.write(output)
+            stdout_buffer.write(output_byte)
 
             with flush_timer_lock:
                 if flush_timer is None:
-                    flush_timer = threading.Timer(0.02, flush_buffer)
+                    flush_timer = threading.Timer(0.1, flush_buffer)  # 100 milliseconds
                     flush_timer.start()
 
-        sublime.set_timeout(lambda: append_output('\n*** Non-interactive REPL closed ***'), 100)
+        sublime.set_timeout(lambda: append_output(b'\n*** Non-interactive REPL closed ***'), 100)
+
+    def do_filter_ansi_escape_color(self):
+        if self.should_filter_color:
+            ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+            start = self.get_repl_output_end()
+            end = self.eof()
+            selected_text = self.rview.substr(sublime.Region(start, end))
+            cleaned_text = ansi_escape.sub('', selected_text)
+            self.rview.run_command('replace_region_text', {'start_pos': start, 'end_pos': end, 'replacement_text': cleaned_text})
+
+    def do_filter_echo(self):
+        if self.should_filter_echo:
+            command_len = self.rinstances[self.rview.id()]['command_len']
+            if command_len:
+                start = self.get_repl_output_end()
+                self.delete_text_between_positions(start, start + command_len + 1)
 
     def store_repl_instance(self):
         self.rinstances.setdefault(self.rview.id(), {
@@ -232,8 +308,10 @@ class Repl:
             'view': self.rview,
             'process': self.rprocess,
             'thread': self.rthread,
+            'encoding': self.rencoding,
             'ready': False,
-            'output_end': 0,
+            'output_end': -1,
+            'command_len': -1,
             'prompt': None
         })
 
@@ -280,7 +358,8 @@ class Repl:
             rthread = None
 
     def on_text_command_user_input(self):
-        rprocess = self.rinstances[self.rview.id()]['process']
+        rinstance = self.rinstances[self.rview.id()]
+        rprocess = rinstance['process']
         if rprocess and rprocess.poll() is None:
             # Prevent breaking up user_input into new lines when pressing the Enter key
             self.set_cursor_to_eof()
@@ -288,7 +367,10 @@ class Repl:
             user_input = self.rview.substr(sublime.Region(self.get_repl_output_end(), self.eof()))
             self.add_command_to_history(user_input)
 
-            rprocess.stdin.write(user_input + '\n')
+            # For filtering command echo
+            rinstance['command_len'] = len(user_input)
+
+            rprocess.stdin.write((user_input + '\n').encode(rinstance['encoding']))
             rprocess.stdin.flush()
 
     def is_cursor_between_output_end_and_eof(self):
@@ -346,12 +428,12 @@ class Repl:
             return ''
 
     def delete_all_between_output_end_and_eof(self):
-        eof = self.eof()
-        output_end = self.get_repl_output_end()
+        self.delete_text_between_positions(self.get_repl_output_end(), self.eof())
 
-        if output_end < eof:
+    def delete_text_between_positions(self, start, end):
+        if start < end:
             self.rview.sel().clear()
-            self.rview.sel().add(sublime.Region(output_end, eof))
+            self.rview.sel().add(sublime.Region(start, end))
             self.rview.run_command('right_delete')
             self.set_cursor_to_eof()
 
@@ -368,6 +450,17 @@ class RunReplCommand(sublime_plugin.TextCommand):
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
+
+
+class ReplaceRegionTextCommand(sublime_plugin.TextCommand):
+    def run(self, edit, start_pos, end_pos, replacement_text):
+        # Ensure start_pos and end_pos are within the valid range
+        start_pos = max(0, min(start_pos, self.view.size()))
+        end_pos = max(0, min(end_pos, self.view.size()))
+
+        # Replace the text in the specified range
+        region = sublime.Region(start_pos, end_pos)
+        self.view.replace(edit, region, replacement_text)
 
 
 class ReplListener(sublime_plugin.EventListener):

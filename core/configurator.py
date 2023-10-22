@@ -63,6 +63,11 @@ def build_sublime_repl_children():
                         ('uid', 'coffee'),
                         ('cmd', NoIndent([['coffee'], '-i', '-r', '${{file}}'])),
                         ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1'),
+                            ('NODE_DISABLE_COLORS', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -72,6 +77,11 @@ def build_sublime_repl_children():
                         ('uid', 'coffee'),
                         ('cmd', NoIndent([['coffee'], '-i'])),
                         ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1'),
+                            ('NODE_DISABLE_COLORS', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -86,6 +96,10 @@ def build_sublime_repl_children():
                         ('uid', 'erlang'),
                         ('cmd', NoIndent([['erl']])),
                         ('syntax', 'Packages/Erlang/Erlang.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -100,6 +114,10 @@ def build_sublime_repl_children():
                         ('uid', 'haskell'),
                         ('cmd', NoIndent([['ghci'], '${{file}}'])),
                         ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -109,6 +127,10 @@ def build_sublime_repl_children():
                         ('uid', 'ghci'),
                         ('cmd', NoIndent([['ghci']])),
                         ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -123,6 +145,10 @@ def build_sublime_repl_children():
                         ('uid', 'lua'),
                         ('cmd', NoIndent([['lua'], '-i', '${{file}}'])),
                         ('syntax', 'Packages/Lua/Lua.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -132,6 +158,10 @@ def build_sublime_repl_children():
                         ('uid', 'lua'),
                         ('cmd', NoIndent([['lua'], '-i'])),
                         ('syntax', 'Packages/Lua/Lua.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -146,6 +176,12 @@ def build_sublime_repl_children():
                         ('uid', 'node'),
                         ('cmd', NoIndent([['node'], '-i', '-r', '${{file}}'])),
                         ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1'),
+                            ('NODE_DISABLE_COLORS', '1'),
+                            ('NODE_NO_READLINE', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -155,6 +191,12 @@ def build_sublime_repl_children():
                         ('uid', 'node'),
                         ('cmd', NoIndent([['node'], '-i'])),
                         ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1'),
+                            ('NODE_DISABLE_COLORS', '1'),
+                            ('NODE_NO_READLINE', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -169,6 +211,10 @@ def build_sublime_repl_children():
                         ('uid', 'php'),
                         ('cmd', NoIndent([['php'], '-a', '-d', 'auto_prepend_file=${{file}}'])),
                         ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -178,6 +224,10 @@ def build_sublime_repl_children():
                         ('uid', 'php'),
                         ('cmd', NoIndent([['php'], '-a'])),
                         ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -192,6 +242,10 @@ def build_sublime_repl_children():
                         ('uid', 'perl'),
                         ('cmd', NoIndent([['perl'], '${packages}/Formatter/libs/repler/repl_perl.pl', '${{file}}'])),
                         ('syntax', 'Packages/Perl/Perl.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -201,6 +255,47 @@ def build_sublime_repl_children():
                         ('uid', 'perl'),
                         ('cmd', NoIndent([['perl'], '${packages}/Formatter/libs/repler/repl_perl.pl'])),
                         ('syntax', 'Packages/Perl/Perl.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
+            ('caption', 'PowerShell'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'powershell'),
+                        ('cmd', NoIndent([['pwsh', 'powershell'], '-NoExit', '-ExecutionPolicy', 'Unrestricted', '-File', '${{file}}'])),
+                        ('syntax', 'Packages/Batch File/Batch File.sublime-syntax'),
+                        ('filter_echo', True),
+                        ('filter_color', True),
+                        ('remove_prompt', True),
+                        ('encoding', 'cp858'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'powershell'),
+                        ('cmd', NoIndent([['pwsh', 'powershell']])),
+                        ('syntax', 'Packages/Batch File/Batch File.sublime-syntax'),
+                        ('filter_echo', True),
+                        ('filter_color', True),
+                        ('remove_prompt', True),
+                        ('encoding', 'cp858'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -215,6 +310,11 @@ def build_sublime_repl_children():
                         ('uid', 'python'),
                         ('cmd', NoIndent([['python3', 'python'], '-i', '-B', '${{file}}'])),
                         ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1'),
+                            ('PYTHONIOENCODING', 'utf-8')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -224,6 +324,11 @@ def build_sublime_repl_children():
                         ('uid', 'python'),
                         ('cmd', NoIndent([['python3', 'python'], '-i', '-B'])),
                         ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1'),
+                            ('PYTHONIOENCODING', 'utf-8')
+                        ]))
                     ]))
                 ])
             ])
@@ -238,6 +343,11 @@ def build_sublime_repl_children():
                         ('uid', 'ruby'),
                         ('cmd', NoIndent([['irb'], '-r', '${{file}}'])),
                         ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
+                        ('filter_echo', True),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -247,6 +357,11 @@ def build_sublime_repl_children():
                         ('uid', 'ruby'),
                         ('cmd', NoIndent([['irb']])),
                         ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
+                        ('filter_echo', True),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
@@ -265,6 +380,15 @@ def build_sublime_repl_children():
                             ('osx', NoIndent([['bash'], '-i', '${{file}}'])),
                         ])),
                         ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
+                        ('filter_echo', True),
+                        ('encoding', OrderedDict([
+                            ('windows', '${{locale_encoding}}'),
+                            ('linux', 'utf-8'),
+                            ('osx', 'utf-8'),
+                        ])),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ]),
                 OrderedDict([
@@ -278,6 +402,15 @@ def build_sublime_repl_children():
                             ('osx', NoIndent([['bash'], '-i'])),
                         ])),
                         ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
+                        ('filter_echo', True),
+                        ('encoding', OrderedDict([
+                            ('windows', '${{locale_encoding}}'),
+                            ('linux', 'utf-8'),
+                            ('osx', 'utf-8'),
+                        ])),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
                     ]))
                 ])
             ])
