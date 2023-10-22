@@ -124,7 +124,7 @@ def build_sublime_repl_children():
                     ('caption', 'Terminal'),
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
-                        ('uid', 'ghci'),
+                        ('uid', 'haskell'),
                         ('cmd', NoIndent([['ghci']])),
                         ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
                         ('encoding', 'utf-8'),
@@ -779,7 +779,7 @@ def build_formatter_sublime_settings_children(formatter_map):
             comment = config.get('comment', None)
             if comment is not None and isinstance(comment, str) and len(comment) > 0:
                 truncated_comment = comment[:80] + '...' if len(comment) > 80 else comment
-                child['__comment__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
+                child['__COMMENT__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
 
             target_list = type_to_list.get(config['type'], custom)
             target_list.append({uid:child})
@@ -788,33 +788,33 @@ def build_formatter_sublime_settings_children(formatter_map):
 
 def build_formatter_sublime_settings(formatter_map):
     sublime_settings = OrderedDict([
-            ('__comment__debug', '''// Enable debug mode to view errors in the console.'''),
+            ('__COMMENT__debug', '''// Enable debug mode to view errors in the console.'''),
             ('debug', False),
-            ('__comment__open_console_on_failure', '''
+            ('__COMMENT__open_console_on_failure', '''
     // Auto open the console panel whenever formatting failed.
     // This is useful when combined with "debug": true'''),
             ('open_console_on_failure', False),
-            ('__comment__show_statusbar', '''
+            ('__COMMENT__show_statusbar', '''
     // Display results in the status bar.
     // The displayed abbreviation for the current settings mode:
     // PUS: Persistent User Settings
     // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options'''),
             ('show_statusbar', True),
-            ('__comment__show_words_count', '''
+            ('__COMMENT__show_words_count', '''
     // Display a real-time word and character count in the status bar.
     // By default, whitespace is not included in the character count.'''),
             ('show_words_count', OrderedDict([
                 ('enable', True),
                 ('ignore_whitespace_char', True)
             ])),
-            ('__comment__remember_session', '''
+            ('__COMMENT__remember_session', '''
     // Remember and restore cursor position, selections, selected
     // syntax and bookmarks each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
-    // It does not store sessions but only remembers the mentioned items.'''),
+    // It does not store sessions but only remembers the 4 mentioned items.'''),
             ('remember_session', True),
-            ('__comment__layout', '''
+            ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
     // This setting takes effect when the "new_file_on_format" option is enabled.
     // Available choices include 2-columns, 2-rows or single layout.
@@ -825,7 +825,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('enable', '2cols'),
                 ('sync_scroll', True)
             ])),
-            ('__comment__environ', '''
+            ('__COMMENT__environ', '''
     // A set of directories where executable programs are located.
     // It can be absolute paths to module directories, python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
@@ -841,23 +841,22 @@ def build_formatter_sublime_settings(formatter_map):
                 ('GEM_PATH', []),
                 ('PYTHONPATH', [])
             ])),
-            ('__comment__interactive_repl', '''
+            ('__COMMENT__interactive_repl', '''
     // Interactive REPL (Read-Eval-Print-Loop)
-    // This feature allow you to run code inside Sublime Text'''),
+    // This feature allow you to run code in the Terminal inside Sublime Text'''),
             ('interactive_repl', OrderedDict([
-                ('__comment__interpreter_path', '''// Path to the interpreter to run the interactive REPL.
+                ('__COMMENT__interpreter_path', '''// Path to the interpreter to run the interactive REPL.
         // This is rarely needed, as most of the programs you have installed are usually
         // set to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
         // Formatter is able to detect and automatically set them for you.
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further keys: "coffee", "erlang", "haskell", "lua", "node", "php", "perl",
-        // "python", "ruby", "shell"'''),
+        // Further available keys:
+        __REPL_UID__"'''),
                 ('interpreter_path', OrderedDict([
-                    ('php', []),
                     ('python', [])
                 ])),
-                ('__comment__syntax', '''// Syntax to highlight text.
+                ('__COMMENT__syntax', '''// Syntax to highlight text.
         // By default, Formatter uses the standard syntax file of Sublime Text.
         // However, if you do need to use a specific syntax, you can provide the
         // packages path to your syntax file. Note the exact path structure.
@@ -865,7 +864,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('syntax', OrderedDict([
                     ('python', 'Packages/Python/Python.sublime-syntax')
                 ])),
-                ('__comment__view_settings', '''// Settings for the REPL views.
+                ('__COMMENT__view_settings', '''// Settings for the REPL views.
         // This option affects only the current REPL view.'''),
                 ('view_settings', OrderedDict([
                     ('translate_tabs_to_spaces', False),
@@ -873,17 +872,17 @@ def build_formatter_sublime_settings(formatter_map):
                     ('line_numbers', False),
                     ('gutter', False)
                 ])),
-                ('__comment__enable_persistent_history', '''// Record commands history to use with the Up and Down arrow keys.
+                ('__COMMENT__enable_persistent_history', '''// Record commands history to use with the Up and Down arrow keys.
         // Enabling it will retain the history across sessions; otherwise, it is temporary.'''),
                 ('enable_persistent_history', True),
             ])),
-            ('__comment__formatters', '''
-    // Third-party plugin settings'''),
+            ('__COMMENT__formatters', '''
+    // THIRD-PARTY FORMATTING PLUGINS'''),
             ('formatters', OrderedDict([
                 ('example', OrderedDict([
-                    ('__comment__disable', '''// Disable and remove plugin from being shown in the menu.'''),
+                    ('__COMMENT__disable', '''// Disable and remove plugin from being shown in the menu.'''),
                     ('disable', False),
-                    ('__comment__format_on_save', '''
+                    ('__COMMENT__format_on_save', '''
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
             // For plugins with the same syntaxes, the first plugin takes precedence.
@@ -896,7 +895,7 @@ def build_formatter_sublime_settings(formatter_map):
             // execution order between the two, and determining your favorist is not possible.
             // The Quick Options feature can help in this scenario.'''),
                     ('format_on_save', False),
-                    ('__comment__new_file_on_format', '''
+                    ('__COMMENT__new_file_on_format', '''
             // Create a new file containing formatted codes.
             // The value of this option is the suffix of the new file being renamed.
             // Suffix must be of type string. =true, =false and all other types imply =false
@@ -906,7 +905,7 @@ def build_formatter_sublime_settings(formatter_map):
             // "new_file_on_format": "min", will create a new file:
             // myfile.raw.js -> myfile.raw.min.js'''),
                     ('new_file_on_format', False),
-                    ('__comment__recursive_folder_format', '''
+                    ('__COMMENT__recursive_folder_format', '''
             // Recursively format the entire folder with unlimited depth.
             // This option requires an existing and currently opened file
             // to serve as the starting point.
@@ -929,13 +928,13 @@ def build_formatter_sublime_settings(formatter_map):
                         ('exclude_extensions', NoIndent(['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak'])),
                         ('exclude_syntaxes', [])
                     ])),
-                    ('__comment__syntaxes', '''
+                    ('__COMMENT__syntaxes', '''
             // Syntax support based on the scope name, not file extension.
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.'''),
                     ('syntaxes', NoIndent(['css', 'js', 'php'])),
-                    ('__comment__interpreter_path', '''
+                    ('__COMMENT__interpreter_path', '''
             // Path to the interpreter to run the third-party plugin.
             // Just for the sake of completeness, but it is unlikely that you will ever need
             // to use this option. Most of the programs you have installed are usually set
@@ -943,7 +942,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.'''),
                     ('interpreter_path', '${HOME}/example/path/to\\$my/java.exe'),
-                    ('__comment__executable_path', '''
+                    ('__COMMENT__executable_path', '''
             // Path to the third-party plugin executable to process formatting.
             // System variable expansions like ${HOME} and Sublime Text specific
             // ${packages}, ${file_path} etc. can be used to assign paths. More:
@@ -951,7 +950,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".'''),
                     ('executable_path', '${HOME}/example/path/to\\$my/php-cs-fixer.phar'),
-                    ('__comment__config_path', '''
+                    ('__COMMENT__config_path', '''
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
@@ -965,10 +964,10 @@ def build_formatter_sublime_settings(formatter_map):
                         ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
                         ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
                     ])),
-                    ('__comment__args', '''
+                    ('__COMMENT__args', '''
             // Array of additional arguments for the command line.'''),
                     ('args', NoIndent(['--basedir', './example/my/baseball', '--show-tits', 'yes'])),
-                    ('__comment__fix_commands', '''
+                    ('__COMMENT__fix_commands', '''
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the source code.
@@ -1005,7 +1004,7 @@ def build_formatter_sublime_settings(formatter_map):
 
     json_text = json.dumps(sublime_settings, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
 
-    pattern_comment_and_commas = re.compile(r'"__comment__.+"[\s\t]*:[\s\t]*"(.+)",?|[^:]//[^\n]+')
+    pattern_comment_and_commas = re.compile(r'"__COMMENT__.+"[\s\t]*:[\s\t]*"(.+)",?|[^:]//[^\n]+')
     pattern_comment_linebreaks = re.compile(r'^(.*?//.*)$', re.MULTILINE)
     pattern_comma_before_comment = re.compile(r',([\s\n]+)(/\*)')
     json_text = pattern_comment_and_commas.sub(r'\1', json_text)
@@ -1035,6 +1034,41 @@ def build_formatter_sublime_settings(formatter_map):
     ]
     for s, r in zip(s, r):
         json_text = json_text.replace(s, r)
+
+    def get_unique_repl_uids(menu_structure):
+        unique_uids = set()
+
+        def extract_uids(structure):
+            for item in structure:
+                if 'uid' in item.get('args', {}):
+                    unique_uids.add(item['args']['uid'])
+                if 'children' in item:
+                    extract_uids(item['children'])
+
+        extract_uids(menu_structure)
+        return sorted(list(unique_uids))
+
+    def format_unique_repl_uids_as_text(unique_uids, max_line_length=70):
+        lines = []
+        current_line = ''
+
+        for uid in unique_uids:
+            if len(current_line) + len(uid) + 2 <= max_line_length:  # 2 for quotes and comma
+                if current_line:
+                    current_line += ', '
+                current_line += '"' + uid + '"'
+            else:
+                lines.append(current_line)
+                current_line = '"' + uid + '"'
+
+        if current_line:
+            lines.append(current_line)
+
+        return '// ' + '\n        // '.join(lines)
+
+    unique_repl_uids = get_unique_repl_uids(build_sublime_repl_children())
+    formatted_text = format_unique_repl_uids_as_text(unique_repl_uids)
+    json_text = json_text.replace('__REPL_UID__', formatted_text)
 
     return strip_trailing(json_text)
 
