@@ -105,6 +105,24 @@ def build_sublime_repl_children():
             ])
         ]),
         OrderedDict([
+            ('caption', 'GDB'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'gdb'),
+                        ('cmd', NoIndent([['gdb']])),
+                        ('syntax', 'Packages/Binary/Binary.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
             ('caption', 'Haskell'),
             ('children', [
                 OrderedDict([
