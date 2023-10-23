@@ -19,6 +19,130 @@
                         "mnemonic": "I",
                         "children": [
                             {
+                                "caption": "CoffeeScript",
+                                "mnemonic": "C",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "coffee",
+                                            "cmd": [["coffee"], "-i", "-r", "${{file}}"],
+                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1",
+                                                "NODE_DISABLE_COLORS": "1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "coffee",
+                                            "cmd": [["coffee"], "-i"],
+                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1",
+                                                "NODE_DISABLE_COLORS": "1"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Erlang",
+                                "mnemonic": "E",
+                                "children": [
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "erlang",
+                                            "cmd": [["erl"]],
+                                            "syntax": "Packages/Erlang/Erlang.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Haskell",
+                                "mnemonic": "H",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "haskell",
+                                            "cmd": [["ghci"], "${{file}}"],
+                                            "syntax": "Packages/Haskell/Haskell.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "haskell",
+                                            "cmd": [["ghci"]],
+                                            "syntax": "Packages/Haskell/Haskell.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Lua",
+                                "mnemonic": "L",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "lua",
+                                            "cmd": [["lua"], "-i", "${{file}}"],
+                                            "syntax": "Packages/Lua/Lua.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "lua",
+                                            "cmd": [["lua"], "-i"],
+                                            "syntax": "Packages/Lua/Lua.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
                                 "caption": "Node.js",
                                 "mnemonic": "N",
                                 "children": [
@@ -28,8 +152,14 @@
                                         "command": "run_repl",
                                         "args": {
                                             "uid": "node",
-                                            "cmd": [["node"], "-i", "-r", "${file}"],
-                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+                                            "cmd": [["node"], "-i", "-r", "${{file}}"],
+                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1",
+                                                "NODE_DISABLE_COLORS": "1",
+                                                "NODE_NO_READLINE": "1"
+                                            }
                                         }
                                     },
                                     {
@@ -39,7 +169,13 @@
                                         "args": {
                                             "uid": "node",
                                             "cmd": [["node"], "-i"],
-                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+                                            "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1",
+                                                "NODE_DISABLE_COLORS": "1",
+                                                "NODE_NO_READLINE": "1"
+                                            }
                                         }
                                     }
                                 ]
@@ -54,8 +190,12 @@
                                         "command": "run_repl",
                                         "args": {
                                             "uid": "php",
-                                            "cmd": [["php"], "-a", "-d", "auto_prepend_file=${file}"],
-                                            "syntax": "Packages/PHP/PHP.sublime-syntax"
+                                            "cmd": [["php"], "-a", "-d", "auto_prepend_file=${{file}}"],
+                                            "syntax": "Packages/PHP/PHP.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
                                         }
                                     },
                                     {
@@ -65,7 +205,85 @@
                                         "args": {
                                             "uid": "php",
                                             "cmd": [["php"], "-a"],
-                                            "syntax": "Packages/PHP/PHP.sublime-syntax"
+                                            "syntax": "Packages/PHP/PHP.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Perl",
+                                "mnemonic": "P",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "perl",
+                                            "cmd": [["perl"], "${packages}/Formatter/libs/repler/repl_perl.pl", "${{file}}"],
+                                            "syntax": "Packages/Perl/Perl.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "perl",
+                                            "cmd": [["perl"], "${packages}/Formatter/libs/repler/repl_perl.pl"],
+                                            "syntax": "Packages/Perl/Perl.sublime-syntax",
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "PowerShell",
+                                "mnemonic": "P",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "powershell",
+                                            "cmd": [["pwsh", "powershell"], "-NoExit", "-ExecutionPolicy", "Unrestricted", "-File", "${{file}}"],
+                                            "syntax": "Packages/Batch File/Batch File.sublime-syntax",
+                                            "filter_echo": true,
+                                            "filter_color": true,
+                                            "remove_prompt": true,
+                                            "encoding": "cp858",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "powershell",
+                                            "cmd": [["pwsh", "powershell"]],
+                                            "syntax": "Packages/Batch File/Batch File.sublime-syntax",
+                                            "filter_echo": true,
+                                            "filter_color": true,
+                                            "remove_prompt": true,
+                                            "encoding": "cp858",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
                                         }
                                     }
                                 ]
@@ -80,8 +298,14 @@
                                         "command": "run_repl",
                                         "args": {
                                             "uid": "python",
-                                            "cmd": [["python3", "python"], "-i", "-B", "${file}"],
-                                            "syntax": "Packages/Python/Python.sublime-syntax"
+                                            "cmd": [["python3", "python"], "-i", "-B", "${{file}}"],
+                                            "syntax": "Packages/Python/Python.sublime-syntax",
+                                            "extend_search_path": true,
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1",
+                                                "PYTHONIOENCODING": "utf-8"
+                                            }
                                         }
                                     },
                                     {
@@ -91,7 +315,49 @@
                                         "args": {
                                             "uid": "python",
                                             "cmd": [["python3", "python"], "-i", "-B"],
-                                            "syntax": "Packages/Python/Python.sublime-syntax"
+                                            "syntax": "Packages/Python/Python.sublime-syntax",
+                                            "extend_search_path": true,
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1",
+                                                "PYTHONIOENCODING": "utf-8"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "caption": "Ruby",
+                                "mnemonic": "R",
+                                "children": [
+                                    {
+                                        "caption": "Run current file",
+                                        "mnemonic": "R",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "ruby",
+                                            "cmd": [["irb"], "-r", "${{file}}"],
+                                            "syntax": "Packages/Ruby/Ruby.sublime-syntax",
+                                            "filter_echo": true,
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "caption": "Terminal",
+                                        "mnemonic": "T",
+                                        "command": "run_repl",
+                                        "args": {
+                                            "uid": "ruby",
+                                            "cmd": [["irb"]],
+                                            "syntax": "Packages/Ruby/Ruby.sublime-syntax",
+                                            "filter_echo": true,
+                                            "encoding": "utf-8",
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
                                         }
                                     }
                                 ]
@@ -107,11 +373,20 @@
                                         "args": {
                                             "uid": "shell",
                                             "cmd": {
-                                                "windows": [["cmd"], "/k", "${file}"],
-                                                "linux": [["bash"], "-i", "${file}"],
-                                                "osx": [["bash"], "-i", "${file}"]
+                                                "windows": [["cmd"], "/k", "${{file}}"],
+                                                "linux": [["bash"], "-i", "${{file}}"],
+                                                "osx": [["bash"], "-i", "${{file}}"]
                                             },
-                                            "syntax": "Packages/ShellScript/Bash.sublime-syntax"
+                                            "syntax": "Packages/ShellScript/Bash.sublime-syntax",
+                                            "filter_echo": true,
+                                            "encoding": {
+                                                "windows": "${{locale_encoding}}",
+                                                "linux": "utf-8",
+                                                "osx": "utf-8"
+                                            },
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
                                         }
                                     },
                                     {
@@ -125,7 +400,16 @@
                                                 "linux": [["bash"], "-i"],
                                                 "osx": [["bash"], "-i"]
                                             },
-                                            "syntax": "Packages/ShellScript/Bash.sublime-syntax"
+                                            "syntax": "Packages/ShellScript/Bash.sublime-syntax",
+                                            "filter_echo": true,
+                                            "encoding": {
+                                                "windows": "${{locale_encoding}}",
+                                                "linux": "utf-8",
+                                                "osx": "utf-8"
+                                            },
+                                            "env": {
+                                                "NO_COLOR": "1"
+                                            }
                                         }
                                     }
                                 ]

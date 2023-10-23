@@ -310,6 +310,7 @@ def build_sublime_repl_children():
                         ('uid', 'python'),
                         ('cmd', NoIndent([['python3', 'python'], '-i', '-B', '${{file}}'])),
                         ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                        ('extend_search_path', True),
                         ('encoding', 'utf-8'),
                         ('env', OrderedDict([
                             ('NO_COLOR', '1'),
@@ -324,6 +325,7 @@ def build_sublime_repl_children():
                         ('uid', 'python'),
                         ('cmd', NoIndent([['python3', 'python'], '-i', '-B'])),
                         ('syntax', 'Packages/Python/Python.sublime-syntax'),
+                        ('extend_search_path', True),
                         ('encoding', 'utf-8'),
                         ('env', OrderedDict([
                             ('NO_COLOR', '1'),

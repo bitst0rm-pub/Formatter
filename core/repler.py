@@ -43,6 +43,7 @@ class Repl:
         self.should_filter_color = False
         self.should_filter_echo = False
         self.should_remove_prompt = False
+        self.should_extend_search_path = False
         self.script_path = None
 
     def run(self):
@@ -62,11 +63,12 @@ class Repl:
         self.get_color_filter_setting()
         self.get_echo_filter_setting()
         self.get_remove_prompt_setting()
+        self.get_extend_search_path_setting()
         self.create_repl_view()
         self.set_repl_view_settings()
         self.set_repl_view_attributes()
         cmd, cwd = self.set_command(interpreter, self.get_command_args())
-        self.set_search_path(cwd)
+        self.set_extend_search_path(cwd)
         self.popen(cmd, cwd)
         self.start_repl_thread()
         self.store_repl_instance()
@@ -113,6 +115,9 @@ class Repl:
 
     def get_remove_prompt_setting(self):
         self.should_remove_prompt = self.get_filter_setting(filter_type='remove_prompt')
+
+    def get_extend_search_path_setting(self):
+        self.should_extend_search_path = self.get_filter_setting(filter_type='extend_search_path')  # python only
 
     def get_filter_setting(self, filter_type=None):
         item = self.kwargs.get(filter_type, False)
@@ -184,8 +189,8 @@ class Repl:
         command.insert(0, interpreter)
         return command, common.dirname(self.script_path)
 
-    def set_search_path(self, cwd):
-        if cwd not in sys.path:
+    def set_extend_search_path(self, cwd):
+        if self.should_extend_search_path and cwd not in sys.path:
             sys.path.append(cwd)
 
     def popen(self, cmd, cwd):
