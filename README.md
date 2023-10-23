@@ -1,7 +1,7 @@
 # Formatter
 
-Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
-It includes an interactive REPL and other features that are absent in the standard Sublime Text.
+Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.<br/>
+It also includes other features that are absent in the standard Sublime Text.
 
 Key features:
 
@@ -11,8 +11,8 @@ Key features:
 - Shared config files available for each 3rd-party plugin
 - Displays real-time word and character counts
 - Automatically remembers and restores text position
-- Capability to run interactive REPL (Read-Eval-Print-Loop) inside Sublime Text
-- Works offline
+- Run interactive REPL (Read-Eval-Print-Loop) Terminal inside Sublime Text
+- Open source and works offline
 
 Formatter aims to achieve:
 
@@ -24,7 +24,13 @@ Formatter aims to achieve:
 - Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development)
 
 
-![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot.png)
+_Formatter_
+
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
+
+_Interactive REPL: more languages coming soon..._
+
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
 
 
 ## Guides
@@ -176,6 +182,7 @@ The following settings example should give you direction on how to setup Formatt
     // Remember and restore cursor position, selections, selected
     // syntax and bookmarks each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
+    // It does not store sessions but only remembers the 4 mentioned items.
     "remember_session": true,
 
     // Configure the layout when opening new files.
@@ -206,7 +213,7 @@ The following settings example should give you direction on how to setup Formatt
     },
 
     // Interactive REPL (Read-Eval-Print-Loop)
-    // This feature allow you to run code inside Sublime Text
+    // This feature allow you to run code in the Terminal inside Sublime Text
     "interactive_repl": {
         // Path to the interpreter to run the interactive REPL.
         // This is rarely needed, as most of the programs you have installed are usually
@@ -214,9 +221,10 @@ The following settings example should give you direction on how to setup Formatt
         // Formatter is able to detect and automatically set them for you.
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further keys: "node", "php", "python", "shell"
+        // Further available keys:
+        // "coffee", "erlang", "haskell", "lua", "node", "perl", "php"
+        // "powershell", "python", "ruby", "shell""
         "interpreter_path": {
-            "php": [],
             "python": []
         },
         // Syntax to highlight text.
@@ -231,7 +239,7 @@ The following settings example should give you direction on how to setup Formatt
         // This option affects only the current REPL view.
         "view_settings": {
             "translate_tabs_to_spaces": false,
-            "auto_complete": true,
+            "auto_complete": false,
             "line_numbers": false,
             "gutter": false
         },
@@ -240,7 +248,7 @@ The following settings example should give you direction on how to setup Formatt
         "enable_persistent_history": true
     },
 
-    // Third-party plugin settings
+    // THIRD-PARTY FORMATTING PLUGINS
     "formatters": {
         "example": {
             // Disable and remove plugin from being shown in the menu.
