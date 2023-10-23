@@ -223,7 +223,7 @@ The following settings example should give you direction on how to setup Formatt
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
         // Further available keys:
         // "coffee", "erlang", "haskell", "lua", "node", "perl", "php"
-        // "powershell", "python", "ruby", "shell""
+        // "powershell", "python", "ruby", "shell"
         "interpreter_path": {
             "python": []
         },

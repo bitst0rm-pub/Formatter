@@ -675,7 +675,7 @@ class FormatterListener(sublime_plugin.EventListener):
         window = view.window()
         if common.query(common.config, False, 'layout', 'sync_scroll'):
             do_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
-            self.running.set() if do_run else self.running.clear() # control pause/resume scrolling
+            self.running.set() if do_run else self.running.clear()  # control pause/resume scrolling
 
             if window and common.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
                 for view_pair in SYNC_SCROLL['view_pairs']:
@@ -694,11 +694,11 @@ class FormatterListener(sublime_plugin.EventListener):
     @common.run_once
     def sync_scroll(self, *args, **kwargs):
         with self.scroll_lock:
-            self.running.set() # start running
+            self.running.set()  # start running
             while not SYNC_SCROLL['abort']:
                 if not self.running.is_set():
                     log.debug('Scroll synchronization paused.')
-                    self.running.wait() # pause/resume
+                    self.running.wait()  # pause/resume
                 if SYNC_SCROLL['view_active'] and SYNC_SCROLL['view_dst'] and SYNC_SCROLL['view_src']:
                     if SYNC_SCROLL['view_active'] == 'src':
                         SYNC_SCROLL['view_dst'].set_viewport_position(SYNC_SCROLL['view_src'].viewport_position(), False)
@@ -763,5 +763,5 @@ class FormatterListener(sublime_plugin.EventListener):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.set_abort_sync_scroll()
-            common.reload_modules() # might need hit save twice for python < 3.4 (imp.reload upstream bug)
+            common.reload_modules()  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
             self.sync_scroll.reset_run()

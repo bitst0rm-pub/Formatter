@@ -514,7 +514,7 @@ def get_executable(view, uid, executable_names_list, runtime_type=None):
     return None
 
 def get_interpreter(view, uid, interpreter_names_list, runtime_type=None):
-    unused_ = view, runtime_type # preserved for future
+    unused_ = view, runtime_type  # preserved for future
     user_and_global_executable = get_operator(uid, interpreter_names_list, 'interpreter')
     if user_and_global_executable:
         return user_and_global_executable

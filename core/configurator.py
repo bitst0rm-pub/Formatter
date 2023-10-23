@@ -781,7 +781,7 @@ def build_formatter_sublime_settings_children(formatter_map):
             comment = config.get('comment', None)
             if comment is not None and isinstance(comment, str) and len(comment) > 0:
                 truncated_comment = comment[:80] + '...' if len(comment) > 80 else comment
-                child['__COMMENT__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */' # '/* ' is marker for pattern_comma_before_comment
+                child['__COMMENT__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */'  # '/* ' is marker for pattern_comma_before_comment
 
             target_list = type_to_list.get(config['type'], custom)
             target_list.append({uid:child})
@@ -854,7 +854,7 @@ def build_formatter_sublime_settings(formatter_map):
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
         // Further available keys:
-        __REPL_UID__"'''),
+        __REPL_UID__'''),
                 ('interpreter_path', OrderedDict([
                     ('python', [])
                 ])),

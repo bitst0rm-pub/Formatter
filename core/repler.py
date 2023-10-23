@@ -499,6 +499,7 @@ class ReplListener(sublime_plugin.EventListener):
             return ('nop', {})  # block default behavior
 
         return None
+        # more cmd: sublime.log_commands(True) https://docs.sublimetext.io/reference/commands.html
 
     def on_pre_close(self, view):
         rv = Repl(view)
