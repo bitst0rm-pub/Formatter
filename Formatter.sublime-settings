@@ -513,6 +513,24 @@
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
+        "swiftformat": {
+            "info": "https://github.com/nicklockwood/SwiftFormat",
+            "disable": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["swift"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
+            }
+        },
         "uncrustify": {
             "info": "https://github.com/uncrustify/uncrustify",
             "disable": false,

@@ -516,6 +516,14 @@
                 }
             },
             {
+                "caption": "SwiftFormat",
+                "command": "run_format",
+                "args": {
+                    "uid": "swiftformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Uncrustify",
                 "command": "run_format",
                 "args": {

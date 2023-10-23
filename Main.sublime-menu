@@ -573,6 +573,15 @@
                         }
                     },
                     {
+                        "caption": "SwiftFormat",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "swiftformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Uncrustify",
                         "mnemonic": "U",
                         "command": "run_format",
