@@ -93,7 +93,7 @@ def build_sublime_repl_children():
                     ('caption', 'Terminal'),
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
-                        ('uid', 'erlang'),
+                        ('uid', 'erl'),
                         ('cmd', NoIndent([['erl']])),
                         ('syntax', 'Packages/Erlang/Erlang.sublime-syntax'),
                         ('encoding', 'utf-8'),
@@ -114,6 +114,7 @@ def build_sublime_repl_children():
                         ('uid', 'gdb'),
                         ('cmd', NoIndent([['gdb']])),
                         ('syntax', 'Packages/Binary/Binary.sublime-syntax'),
+                        ('remove_prompt', True),
                         ('encoding', 'utf-8'),
                         ('env', OrderedDict([
                             ('NO_COLOR', '1')
@@ -129,7 +130,7 @@ def build_sublime_repl_children():
                     ('caption', 'Run current file'),
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
-                        ('uid', 'haskell'),
+                        ('uid', 'ghci'),
                         ('cmd', NoIndent([['ghci'], '${{file}}'])),
                         ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
                         ('encoding', 'utf-8'),
@@ -142,9 +143,42 @@ def build_sublime_repl_children():
                     ('caption', 'Terminal'),
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
-                        ('uid', 'haskell'),
+                        ('uid', 'ghci'),
                         ('cmd', NoIndent([['ghci']])),
                         ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ])
+            ])
+        ]),
+        OrderedDict([
+            ('caption', 'JShell'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'jshell'),
+                        ('cmd', NoIndent([['jshell'], '--startup', '${{file}}'])),
+                        ('syntax', 'Packages/Java/Java.sublime-syntax'),
+                        ('remove_prompt', True),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'jshell'),
+                        ('cmd', NoIndent([['jshell']])),
+                        ('syntax', 'Packages/Java/Java.sublime-syntax'),
+                        ('remove_prompt', True),
                         ('encoding', 'utf-8'),
                         ('env', OrderedDict([
                             ('NO_COLOR', '1')
@@ -360,7 +394,7 @@ def build_sublime_repl_children():
                     ('caption', 'Run current file'),
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
-                        ('uid', 'ruby'),
+                        ('uid', 'irb'),
                         ('cmd', NoIndent([['irb'], '-r', '${{file}}'])),
                         ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
                         ('filter_echo', True),
@@ -374,7 +408,7 @@ def build_sublime_repl_children():
                     ('caption', 'Terminal'),
                     ('command', 'run_repl'),
                     ('args', OrderedDict([
-                        ('uid', 'ruby'),
+                        ('uid', 'irb'),
                         ('cmd', NoIndent([['irb']])),
                         ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
                         ('filter_echo', True),
