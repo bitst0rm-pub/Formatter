@@ -492,7 +492,42 @@ def build_sublime_repl_children():
                     ]))
                 ])
             ])
-        ])
+        ]),
+        OrderedDict([
+            ('caption', 'Swift'),
+            ('children', [
+                OrderedDict([
+                    ('caption', 'Run current file'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'swift'),
+                        ('type', 'file'),
+                        ('cmd', NoIndent([['swift'], '${{file}}'])),
+                        ('syntax', 'Packages/Text/Plain text.tmLanguage'),
+                        ('filter_color', True),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ]),
+                OrderedDict([
+                    ('caption', 'Terminal'),
+                    ('command', 'run_repl'),
+                    ('args', OrderedDict([
+                        ('uid', 'swift'),
+                        ('type', 'terminal'),
+                        ('cmd', NoIndent([['swift']])),
+                        ('syntax', 'Packages/Text/Plain text.tmLanguage'),
+                        ('filter_color', True),
+                        ('encoding', 'utf-8'),
+                        ('env', OrderedDict([
+                            ('NO_COLOR', '1')
+                        ]))
+                    ]))
+                ])
+            ])
+        ]),
     ]
 
 def build_sublime_menu_children(formatter_map):
