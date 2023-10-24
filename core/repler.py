@@ -14,6 +14,7 @@ import re
 import io
 import sys
 import json
+import time
 import logging
 import threading
 import subprocess
@@ -48,7 +49,7 @@ class Repl:
 
     def run(self):
         self.script_path = self.view.file_name()
-        if not self.script_path:
+        if not self.script_path and self.kwargs.get('type', None) == 'file':
             common.prompt_error('Please save the file first.')
             return
 
@@ -289,7 +290,17 @@ class Repl:
                     flush_timer = threading.Timer(0.1, flush_buffer)  # 100 milliseconds
                     flush_timer.start()
 
-        sublime.set_timeout(lambda: append_output(b'\n*** Non-interactive REPL closed ***'), 100)
+        start_time = time.time()
+        while True:
+            if time.time() - start_time >= 5:  # 5 seconds
+                log.debug('REPL too slow to finish as expected. (id=%s)', self.kwargs.get('uid', None))
+                break
+
+            if stdout_buffer.tell() == 0:
+                sublime.set_timeout(lambda: append_output(b'\n*** Non-interactive REPL closed ***'), 60)
+                break
+            else:
+                time.sleep(0.2)
 
     def do_filter_ansi_escape_color(self):
         if self.should_filter_color:
