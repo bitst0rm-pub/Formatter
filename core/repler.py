@@ -276,8 +276,8 @@ class Repl:
         while True:
             output_byte = self.rprocess.stdout.readline(1)
 
-            if common.IS_WINDOWS and output_byte == b'\r':
-                continue  # fix \r\n in Windows
+            if output_byte == b'\r':
+                continue  # fix \r\n <0x0d>
 
             if self.rprocess.poll() is not None and not output_byte:
                 log.info('Subprocess successfully killed.')
