@@ -18,6 +18,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "coffee",
+                                    "type": "file",
                                     "cmd": [["coffee"], "-i", "-r", "${{file}}"],
                                     "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
                                     "encoding": "utf-8",
@@ -32,6 +33,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "coffee",
+                                    "type": "terminal",
                                     "cmd": [["coffee"], "-i"],
                                     "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
                                     "encoding": "utf-8",
@@ -50,9 +52,30 @@
                                 "caption": "Terminal",
                                 "command": "run_repl",
                                 "args": {
-                                    "uid": "erlang",
+                                    "uid": "erl",
+                                    "type": "terminal",
                                     "cmd": [["erl"]],
                                     "syntax": "Packages/Erlang/Erlang.sublime-syntax",
+                                    "encoding": "utf-8",
+                                    "env": {
+                                        "NO_COLOR": "1"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "caption": "GDB",
+                        "children": [
+                            {
+                                "caption": "Terminal",
+                                "command": "run_repl",
+                                "args": {
+                                    "uid": "gdb",
+                                    "type": "terminal",
+                                    "cmd": [["gdb"]],
+                                    "syntax": "Packages/Binary/Binary.sublime-syntax",
+                                    "remove_prompt": true,
                                     "encoding": "utf-8",
                                     "env": {
                                         "NO_COLOR": "1"
@@ -68,7 +91,8 @@
                                 "caption": "Run current file",
                                 "command": "run_repl",
                                 "args": {
-                                    "uid": "haskell",
+                                    "uid": "ghci",
+                                    "type": "file",
                                     "cmd": [["ghci"], "${{file}}"],
                                     "syntax": "Packages/Haskell/Haskell.sublime-syntax",
                                     "encoding": "utf-8",
@@ -81,9 +105,45 @@
                                 "caption": "Terminal",
                                 "command": "run_repl",
                                 "args": {
-                                    "uid": "haskell",
+                                    "uid": "ghci",
+                                    "type": "terminal",
                                     "cmd": [["ghci"]],
                                     "syntax": "Packages/Haskell/Haskell.sublime-syntax",
+                                    "encoding": "utf-8",
+                                    "env": {
+                                        "NO_COLOR": "1"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "caption": "JShell",
+                        "children": [
+                            {
+                                "caption": "Run current file",
+                                "command": "run_repl",
+                                "args": {
+                                    "uid": "jshell",
+                                    "type": "file",
+                                    "cmd": [["jshell"], "--startup", "${{file}}"],
+                                    "syntax": "Packages/Java/Java.sublime-syntax",
+                                    "remove_prompt": true,
+                                    "encoding": "utf-8",
+                                    "env": {
+                                        "NO_COLOR": "1"
+                                    }
+                                }
+                            },
+                            {
+                                "caption": "Terminal",
+                                "command": "run_repl",
+                                "args": {
+                                    "uid": "jshell",
+                                    "type": "terminal",
+                                    "cmd": [["jshell"]],
+                                    "syntax": "Packages/Java/Java.sublime-syntax",
+                                    "remove_prompt": true,
                                     "encoding": "utf-8",
                                     "env": {
                                         "NO_COLOR": "1"
@@ -100,6 +160,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "lua",
+                                    "type": "file",
                                     "cmd": [["lua"], "-i", "${{file}}"],
                                     "syntax": "Packages/Lua/Lua.sublime-syntax",
                                     "encoding": "utf-8",
@@ -113,6 +174,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "lua",
+                                    "type": "terminal",
                                     "cmd": [["lua"], "-i"],
                                     "syntax": "Packages/Lua/Lua.sublime-syntax",
                                     "encoding": "utf-8",
@@ -131,6 +193,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "node",
+                                    "type": "file",
                                     "cmd": [["node"], "-i", "-r", "${{file}}"],
                                     "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
                                     "encoding": "utf-8",
@@ -146,6 +209,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "node",
+                                    "type": "terminal",
                                     "cmd": [["node"], "-i"],
                                     "syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
                                     "encoding": "utf-8",
@@ -166,6 +230,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "php",
+                                    "type": "file",
                                     "cmd": [["php"], "-a", "-d", "auto_prepend_file=${{file}}"],
                                     "syntax": "Packages/PHP/PHP.sublime-syntax",
                                     "encoding": "utf-8",
@@ -179,6 +244,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "php",
+                                    "type": "terminal",
                                     "cmd": [["php"], "-a"],
                                     "syntax": "Packages/PHP/PHP.sublime-syntax",
                                     "encoding": "utf-8",
@@ -197,6 +263,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "perl",
+                                    "type": "file",
                                     "cmd": [["perl"], "${packages}/Formatter/libs/repler/repl_perl.pl", "${{file}}"],
                                     "syntax": "Packages/Perl/Perl.sublime-syntax",
                                     "encoding": "utf-8",
@@ -210,6 +277,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "perl",
+                                    "type": "terminal",
                                     "cmd": [["perl"], "${packages}/Formatter/libs/repler/repl_perl.pl"],
                                     "syntax": "Packages/Perl/Perl.sublime-syntax",
                                     "encoding": "utf-8",
@@ -228,6 +296,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "powershell",
+                                    "type": "file",
                                     "cmd": [["pwsh", "powershell"], "-NoExit", "-ExecutionPolicy", "Unrestricted", "-File", "${{file}}"],
                                     "syntax": "Packages/Batch File/Batch File.sublime-syntax",
                                     "filter_echo": true,
@@ -244,6 +313,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "powershell",
+                                    "type": "terminal",
                                     "cmd": [["pwsh", "powershell"]],
                                     "syntax": "Packages/Batch File/Batch File.sublime-syntax",
                                     "filter_echo": true,
@@ -265,6 +335,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "python",
+                                    "type": "file",
                                     "cmd": [["python3", "python"], "-i", "-B", "${{file}}"],
                                     "syntax": "Packages/Python/Python.sublime-syntax",
                                     "extend_search_path": true,
@@ -280,6 +351,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "python",
+                                    "type": "terminal",
                                     "cmd": [["python3", "python"], "-i", "-B"],
                                     "syntax": "Packages/Python/Python.sublime-syntax",
                                     "extend_search_path": true,
@@ -299,7 +371,8 @@
                                 "caption": "Run current file",
                                 "command": "run_repl",
                                 "args": {
-                                    "uid": "ruby",
+                                    "uid": "irb",
+                                    "type": "file",
                                     "cmd": [["irb"], "-r", "${{file}}"],
                                     "syntax": "Packages/Ruby/Ruby.sublime-syntax",
                                     "filter_echo": true,
@@ -313,7 +386,8 @@
                                 "caption": "Terminal",
                                 "command": "run_repl",
                                 "args": {
-                                    "uid": "ruby",
+                                    "uid": "irb",
+                                    "type": "terminal",
                                     "cmd": [["irb"]],
                                     "syntax": "Packages/Ruby/Ruby.sublime-syntax",
                                     "filter_echo": true,
@@ -333,6 +407,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "shell",
+                                    "type": "file",
                                     "cmd": {
                                         "windows": [["cmd"], "/k", "${{file}}"],
                                         "linux": [["bash"], "-i", "${{file}}"],
@@ -355,6 +430,7 @@
                                 "command": "run_repl",
                                 "args": {
                                     "uid": "shell",
+                                    "type": "terminal",
                                     "cmd": {
                                         "windows": [["cmd"]],
                                         "linux": [["bash"], "-i"],
@@ -367,6 +443,41 @@
                                         "linux": "utf-8",
                                         "osx": "utf-8"
                                     },
+                                    "env": {
+                                        "NO_COLOR": "1"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "caption": "Swift",
+                        "children": [
+                            {
+                                "caption": "Run current file",
+                                "command": "run_repl",
+                                "args": {
+                                    "uid": "swift",
+                                    "type": "file",
+                                    "cmd": [["swift"], "${{file}}"],
+                                    "syntax": "Packages/Text/Plain text.tmLanguage",
+                                    "filter_color": true,
+                                    "encoding": "utf-8",
+                                    "env": {
+                                        "NO_COLOR": "1"
+                                    }
+                                }
+                            },
+                            {
+                                "caption": "Terminal",
+                                "command": "run_repl",
+                                "args": {
+                                    "uid": "swift",
+                                    "type": "terminal",
+                                    "cmd": [["swift"]],
+                                    "syntax": "Packages/Text/Plain text.tmLanguage",
+                                    "filter_color": true,
+                                    "encoding": "utf-8",
                                     "env": {
                                         "NO_COLOR": "1"
                                     }

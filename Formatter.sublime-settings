@@ -63,8 +63,8 @@
         // However, if you do need to use a specific interpreter, you can provide the path.
         // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
         // Further available keys:
-        // "coffee", "erlang", "haskell", "lua", "node", "perl", "php"
-        // "powershell", "python", "ruby", "shell"
+        // "coffee", "erl", "gdb", "ghci", "irb", "jshell", "lua", "node", "perl"
+        // "php", "powershell", "python", "shell", "swift"
         "interpreter_path": {
             "python": []
         },
