@@ -19,7 +19,7 @@ Formatter aims to achieve:
 - Flexibility: Users benefit from a wide range of flexible config options.
 - Freedom: Third-party plugin updates are not tied to the Formatter itself.
 - Modularity: Designed for seamless integration with a variety of additional plugins.
-- Customization: Users benefit from the modular concept to craft and integrate their own modules with ease.
+- Customization: Users benefit from the modular concept to integrate their own modules with ease.
 - Convenience: An all-in-one tool for beautifying and minifying code.
 - Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development)
 
@@ -132,9 +132,9 @@ There are 3 ways to install Formatter:
 
 - **Using [Package Control](https://packagecontrol.io/packages/Formatter):** run `Package Control: Install Package` and select `Formatter`
 - **or Clone:** into your sublime `Packages` directory:<br/>
-    `git clone https://github.com/bitst0rm-pub/Formatter.git Formatter`
-    `cd Formatter`
-    `rm -rf .git/*` Delete the root of all troubles and conflicts
+        git clone https://github.com/bitst0rm-pub/Formatter.git Formatter
+        cd Formatter
+        rm -rf .git  # important: to delete the root of all conflicts
 - **or Download:** the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter) to your sublime `Packages` directory and rename it to `Formatter`
 
 The `Packages` directory is located in:

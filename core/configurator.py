@@ -52,6 +52,14 @@ def strip_trailing(text):
     return ('\n'.join([line.rstrip() for line in text.split('\n')]))
 
 def build_sublime_repl_children():
+    # Other available args:
+    # 'type' (str): 'file' or 'terminal'
+    # 'encoding' (str or dict{'windows'|'linux'|'osx'}): 'utf-8' or '${{locale_encoding}}'
+    # 'filter_echo' (str or dict{'windows'|'linux'|'osx'}): True or False
+    # 'filter_color' (str or dict{'windows'|'linux'|'osx'}): True or False
+    # 'remove_prompt' (str or dict{'windows'|'linux'|'osx'}): True or False
+    # 'extend_search_path' (str, for python repl only): True or False
+
     return [
         OrderedDict([
             ('caption', 'CoffeeScript'),
@@ -527,7 +535,7 @@ def build_sublime_repl_children():
                     ]))
                 ])
             ])
-        ]),
+        ])
     ]
 
 def build_sublime_menu_children(formatter_map):
