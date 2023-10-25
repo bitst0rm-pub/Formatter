@@ -182,13 +182,15 @@ class Repl:
 
     def get_command_args(self):
         args = self.get_command_list()[1:]
-        for i in range(len(args)):
-            args[i] = common.expand_path(args[i].replace('${{file}}', self.script_path))
+        if self.script_path and isinstance(self.script_path, str):
+            for i in range(len(args)):
+                args[i] = common.expand_path(args[i].replace('${{file}}', self.script_path))
         return args
 
     def set_command(self, interpreter, command):
         command.insert(0, interpreter)
-        return command, common.dirname(self.script_path)
+        cwd = common.dirname(self.script_path) if self.script_path and isinstance(self.script_path, str) else None
+        return command, cwd
 
     def set_extend_search_path(self, cwd):
         if self.should_extend_search_path and cwd not in sys.path:
