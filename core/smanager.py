@@ -114,7 +114,7 @@ class SessionManager:
         syntax = entry.get('syntax', None)
 
         if syntax:
-            view.set_syntax_file(syntax)
+            view.assign_syntax(syntax)
 
     def add_bookmarks(self, file_path, bookmarks):
         data = self.read_session_file()
