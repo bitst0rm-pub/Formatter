@@ -51,493 +51,6 @@ class NoIndentEncoder(json.JSONEncoder):
 def strip_trailing(text):
     return ('\n'.join([line.rstrip() for line in text.split('\n')]))
 
-def build_sublime_repl_children():
-    # Other available args:
-    # 'type' (str): 'file' or 'terminal'
-    # 'encoding' (str or dict{'windows'|'linux'|'osx'}): 'utf-8' or '${{locale_encoding}}'
-    # 'filter_echo' (str or dict{'windows'|'linux'|'osx'}): True or False
-    # 'filter_color' (str or dict{'windows'|'linux'|'osx'}): True or False
-    # 'remove_prompt' (str or dict{'windows'|'linux'|'osx'}): True or False
-    # 'extend_search_path' (str, for python repl only): True or False
-
-    return [
-        OrderedDict([
-            ('caption', 'CoffeeScript'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'coffee'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['coffee'], '-i', '-r', '${{file}}'])),
-                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1'),
-                            ('NODE_DISABLE_COLORS', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'coffee'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['coffee'], '-i'])),
-                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1'),
-                            ('NODE_DISABLE_COLORS', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Erlang'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'erl'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['erl']])),
-                        ('syntax', 'Packages/Erlang/Erlang.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'GDB'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'gdb'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['gdb']])),
-                        ('syntax', 'Packages/Binary/Binary.sublime-syntax'),
-                        ('remove_prompt', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Haskell'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'ghci'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['ghci'], '${{file}}'])),
-                        ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'ghci'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['ghci']])),
-                        ('syntax', 'Packages/Haskell/Haskell.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'JShell'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'jshell'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['jshell'], '--startup', '${{file}}'])),
-                        ('syntax', 'Packages/Java/Java.sublime-syntax'),
-                        ('remove_prompt', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'jshell'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['jshell']])),
-                        ('syntax', 'Packages/Java/Java.sublime-syntax'),
-                        ('remove_prompt', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Lua'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'lua'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['lua'], '-i', '${{file}}'])),
-                        ('syntax', 'Packages/Lua/Lua.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'lua'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['lua'], '-i'])),
-                        ('syntax', 'Packages/Lua/Lua.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Node.js'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'node'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['node'], '-i', '-r', '${{file}}'])),
-                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1'),
-                            ('NODE_DISABLE_COLORS', '1'),
-                            ('NODE_NO_READLINE', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'node'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['node'], '-i'])),
-                        ('syntax', 'Packages/JavaScript/JavaScript.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1'),
-                            ('NODE_DISABLE_COLORS', '1'),
-                            ('NODE_NO_READLINE', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'PHP'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'php'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['php'], '-a', '-d', 'auto_prepend_file=${{file}}'])),
-                        ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'php'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['php'], '-a'])),
-                        ('syntax', 'Packages/PHP/PHP.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Perl'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'perl'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['perl'], '${packages}/Formatter/libs/repler/repl_perl.pl', '${{file}}'])),
-                        ('syntax', 'Packages/Perl/Perl.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'perl'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['perl'], '${packages}/Formatter/libs/repler/repl_perl.pl'])),
-                        ('syntax', 'Packages/Perl/Perl.sublime-syntax'),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'PowerShell'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'powershell'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['pwsh', 'powershell'], '-NoExit', '-ExecutionPolicy', 'Unrestricted', '-File', '${{file}}'])),
-                        ('syntax', 'Packages/Batch File/Batch File.sublime-syntax'),
-                        ('filter_echo', True),
-                        ('filter_color', True),
-                        ('remove_prompt', True),
-                        ('encoding', 'cp858'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'powershell'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['pwsh', 'powershell']])),
-                        ('syntax', 'Packages/Batch File/Batch File.sublime-syntax'),
-                        ('filter_echo', True),
-                        ('filter_color', True),
-                        ('remove_prompt', True),
-                        ('encoding', 'cp858'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Python'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'python'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['python3', 'python'], '-i', '-B', '${{file}}'])),
-                        ('syntax', 'Packages/Python/Python.sublime-syntax'),
-                        ('extend_search_path', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1'),
-                            ('PYTHONIOENCODING', 'utf-8')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'python'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['python3', 'python'], '-i', '-B'])),
-                        ('syntax', 'Packages/Python/Python.sublime-syntax'),
-                        ('extend_search_path', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1'),
-                            ('PYTHONIOENCODING', 'utf-8')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Ruby'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'irb'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['irb'], '-r', '${{file}}'])),
-                        ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
-                        ('filter_echo', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'irb'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['irb']])),
-                        ('syntax', 'Packages/Ruby/Ruby.sublime-syntax'),
-                        ('filter_echo', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Shell'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'shell'),
-                        ('type', 'file'),
-                        ('cmd', OrderedDict([
-                            ('windows', NoIndent([['cmd'], '/k', '${{file}}'])),
-                            ('linux', NoIndent([['bash'], '-i', '${{file}}'])),
-                            ('osx', NoIndent([['bash'], '-i', '${{file}}'])),
-                        ])),
-                        ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
-                        ('filter_echo', True),
-                        ('encoding', OrderedDict([
-                            ('windows', '${{locale_encoding}}'),
-                            ('linux', 'utf-8'),
-                            ('osx', 'utf-8'),
-                        ])),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'shell'),
-                        ('type', 'terminal'),
-                        ('cmd', OrderedDict([
-                            ('windows', NoIndent([['cmd']])),
-                            ('linux', NoIndent([['bash'], '-i'])),
-                            ('osx', NoIndent([['bash'], '-i'])),
-                        ])),
-                        ('syntax', 'Packages/ShellScript/Bash.sublime-syntax'),
-                        ('filter_echo', True),
-                        ('encoding', OrderedDict([
-                            ('windows', '${{locale_encoding}}'),
-                            ('linux', 'utf-8'),
-                            ('osx', 'utf-8'),
-                        ])),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ]),
-        OrderedDict([
-            ('caption', 'Swift'),
-            ('children', [
-                OrderedDict([
-                    ('caption', 'Run current file'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'swift'),
-                        ('type', 'file'),
-                        ('cmd', NoIndent([['swift'], '${{file}}'])),
-                        ('syntax', 'Packages/Text/Plain text.tmLanguage'),
-                        ('filter_color', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ]),
-                OrderedDict([
-                    ('caption', 'Terminal'),
-                    ('command', 'run_repl'),
-                    ('args', OrderedDict([
-                        ('uid', 'swift'),
-                        ('type', 'terminal'),
-                        ('cmd', NoIndent([['swift']])),
-                        ('syntax', 'Packages/Text/Plain text.tmLanguage'),
-                        ('filter_color', True),
-                        ('encoding', 'utf-8'),
-                        ('env', OrderedDict([
-                            ('NO_COLOR', '1')
-                        ]))
-                    ]))
-                ])
-            ])
-        ])
-    ]
-
 def build_sublime_menu_children(formatter_map):
     beautifiers = []
     minifiers = []
@@ -569,18 +82,12 @@ def build_context_sublime_menu(formatter_map):
             ('id', 'formatter'),
             ('children', [
                 OrderedDict([
-                    ('caption', '☰   Quick Options'),
+                    ('caption', '☰ Quick Options'),
                     ('command', 'quick_options')
-                ]),
-                OrderedDict([
-                    ('caption', '❯_  Interactive REPL'),
-                    ('children', [])
                 ])
             ])
         ])
     ]
-
-    context_menu[0]['children'][1]['children'].extend(sorted(build_sublime_repl_children(), key=lambda x: x['caption']))
 
     beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: context_menu[0]['children'].extend(
@@ -606,12 +113,8 @@ def build_main_sublime_menu(formatter_map):
                     ('id', 'formatter'),
                     ('children', [
                         OrderedDict([
-                            ('caption', '☰   Quick Options'),
+                            ('caption', '☰ Quick Options'),
                             ('command', 'quick_options')
-                        ]),
-                        OrderedDict([
-                            ('caption', '❯_  Interactive REPL'),
-                            ('children', [])
                         ])
                     ])
                 ])
@@ -697,8 +200,6 @@ def build_main_sublime_menu(formatter_map):
             if children:
                 add_mnemonic_recursive(children, mnemonic_prefix)
 
-    main_menu[0]['children'][0]['children'][1]['children'].extend(sorted(build_sublime_repl_children(), key=lambda x: x['caption']))
-
     beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: main_menu[0]['children'][0]['children'].extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
@@ -753,26 +254,6 @@ def build_formatter_sublime_commands(formatter_map):
         ])
     ]
 
-    def restructure_repl_children(data):
-        restructured_list = []
-
-        for key in data:
-            caption_name = key['caption']
-            actions = key['children']
-
-            for action in actions:
-                item = OrderedDict([
-                    ('caption', 'Formatter: REPL ' + caption_name + ' - ' + action['caption']),
-                    ('command', action['command']),
-                    ('args', action['args']),
-                ])
-                restructured_list.append(item)
-
-        return restructured_list
-
-    repl_children = restructure_repl_children(build_sublime_repl_children())
-    sublime_commands.extend(sorted(repl_children, key=lambda x: x['args']['uid']))
-
     beautifiers, minifiers, converters, custom = build_formatter_sublime_commands_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: sublime_commands.extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
@@ -811,29 +292,7 @@ def build_example_sublime_keymap(formatter_map):
     sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, custom]]
 
     quick_options = '{"keys": ["ctrl+super+?"], "command": "quick_options"},\n    '
-    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + ',\n    '
-
-    def restructure_repl_children(data):
-        restructured_list = []
-
-        for key in data:
-            caption_name = key['caption']
-            actions = key['children']
-
-            for action in actions:
-                item = OrderedDict([
-                    ('keys', ['ctrl+super+?']),
-                    ('command', action['command']),
-                    ('args', action['args']),
-                ])
-                restructured_list.append(item)
-
-        return restructured_list
-
-    repl_children = restructure_repl_children(build_sublime_repl_children())
-    sorted_repl_children = sorted(repl_children, key=lambda x: x['args']['uid'])
-
-    formatted_keymap_repl = ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_repl_children]) + '\n]'
+    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:
@@ -853,7 +312,7 @@ def build_example_sublime_keymap(formatter_map):
 
 '''
 
-    return strip_trailing(comment + formatted_keymap + formatted_keymap_repl)
+    return strip_trailing(comment + formatted_keymap)
 
 def build_formatter_sublime_settings_children(formatter_map):
     beautifiers = []
@@ -932,8 +391,7 @@ def build_formatter_sublime_settings(formatter_map):
             ('__COMMENT__remember_session', '''
     // Remember and restore cursor position, selections, selected
     // syntax and bookmarks each time a file is closed and re-opened.
-    // This is helpful to resume your work from where you left off.
-    // It does not store sessions but only remembers the 4 mentioned items.'''),
+    // This is helpful to resume your work from where you left off.'''),
             ('remember_session', True),
             ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
@@ -961,41 +419,6 @@ def build_formatter_sublime_settings(formatter_map):
                 ('PATH', []),
                 ('GEM_PATH', []),
                 ('PYTHONPATH', [])
-            ])),
-            ('__COMMENT__interactive_repl', '''
-    // Interactive REPL (Read-Eval-Print-Loop)
-    // This feature allow you to run code in the Terminal inside Sublime Text'''),
-            ('interactive_repl', OrderedDict([
-                ('__COMMENT__interpreter_path', '''// Path to the interpreter to run the interactive REPL.
-        // This is rarely needed, as most of the programs you have installed are usually
-        // set to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
-        // Formatter is able to detect and automatically set them for you.
-        // However, if you do need to use a specific interpreter, you can provide the path.
-        // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further available keys:
-        __REPL_UID__'''),
-                ('interpreter_path', OrderedDict([
-                    ('python', [])
-                ])),
-                ('__COMMENT__syntax', '''// Syntax to highlight text.
-        // By default, Formatter uses the standard syntax file of Sublime Text.
-        // However, if you do need to use a specific syntax, you can provide the
-        // packages path to your syntax file. Note the exact path structure.
-        // For example: "php": "Packages/Happy/myPHP.sublime-syntax"'''),
-                ('syntax', OrderedDict([
-                    ('python', 'Packages/Python/Python.sublime-syntax')
-                ])),
-                ('__COMMENT__view_settings', '''// Settings for the REPL views.
-        // This option affects only the current REPL view.'''),
-                ('view_settings', OrderedDict([
-                    ('translate_tabs_to_spaces', False),
-                    ('auto_complete', False),
-                    ('line_numbers', False),
-                    ('gutter', False)
-                ])),
-                ('__COMMENT__enable_persistent_history', '''// Record commands history to use with the Up and Down arrow keys.
-        // Enabling it will retain the history across sessions; otherwise, it is temporary.'''),
-                ('enable_persistent_history', True),
             ])),
             ('__COMMENT__formatters', '''
     // THIRD-PARTY FORMATTING PLUGINS'''),
@@ -1155,41 +578,6 @@ def build_formatter_sublime_settings(formatter_map):
     ]
     for s, r in zip(s, r):
         json_text = json_text.replace(s, r)
-
-    def get_unique_repl_uids(menu_structure):
-        unique_uids = set()
-
-        def extract_uids(structure):
-            for item in structure:
-                if 'uid' in item.get('args', {}):
-                    unique_uids.add(item['args']['uid'])
-                if 'children' in item:
-                    extract_uids(item['children'])
-
-        extract_uids(menu_structure)
-        return sorted(list(unique_uids))
-
-    def format_unique_repl_uids_as_text(unique_uids, max_line_length=70):
-        lines = []
-        current_line = ''
-
-        for uid in unique_uids:
-            if len(current_line) + len(uid) + 2 <= max_line_length:  # 2 for quotes and comma
-                if current_line:
-                    current_line += ', '
-                current_line += '"' + uid + '"'
-            else:
-                lines.append(current_line)
-                current_line = '"' + uid + '"'
-
-        if current_line:
-            lines.append(current_line)
-
-        return '// ' + '\n        // '.join(lines)
-
-    unique_repl_uids = get_unique_repl_uids(build_sublime_repl_children())
-    formatted_text = format_unique_repl_uids_as_text(unique_repl_uids)
-    json_text = json_text.replace('__REPL_UID__', formatted_text)
 
     return strip_trailing(json_text)
 

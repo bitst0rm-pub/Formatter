@@ -148,17 +148,6 @@ def build_config(settings):
             'sync_scroll': query(settings, False, 'layout', 'sync_scroll')
         },
         'environ': settings.get('environ', {}),
-        'interactive_repl': {
-            'interpreter_path': query(settings, {}, 'interactive_repl', 'interpreter_path'),
-            'syntax': query(settings, {}, 'interactive_repl', 'syntax'),
-            'view_settings': {
-                'translate_tabs_to_spaces': query(settings, False, 'interactive_repl', 'view_settings', 'translate_tabs_to_spaces'),
-                'auto_complete': query(settings, False, 'interactive_repl', 'view_settings', 'auto_complete'),
-                'line_numbers': query(settings, False, 'interactive_repl', 'view_settings', 'line_numbers'),
-                'gutter': query(settings, False, 'interactive_repl', 'view_settings', 'gutter')
-            },
-            'enable_persistent_history': query(settings, True, 'interactive_repl', 'enable_persistent_history'),
-        },
         'formatters': settings.get('formatters', {})
     }
     config['formatters'].pop('example', None)

@@ -20,7 +20,6 @@ from .core import common
 from .core import configurator
 from .core.wcounter import *
 from .core.smanager import *
-from .core.repler import *
 from .core.version import __version__
 from .core.formatter import Formatter
 

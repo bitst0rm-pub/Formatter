@@ -23,7 +23,6 @@
     // Remember and restore cursor position, selections, selected
     // syntax and bookmarks each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
-    // It does not store sessions but only remembers the 4 mentioned items.
     "remember_session": true,
 
     // Configure the layout when opening new files.
@@ -51,42 +50,6 @@
         "PATH": [],
         "GEM_PATH": [],
         "PYTHONPATH": []
-    },
-
-    // Interactive REPL (Read-Eval-Print-Loop)
-    // This feature allow you to run code in the Terminal inside Sublime Text
-    "interactive_repl": {
-        // Path to the interpreter to run the interactive REPL.
-        // This is rarely needed, as most of the programs you have installed are usually
-        // set to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
-        // Formatter is able to detect and automatically set them for you.
-        // However, if you do need to use a specific interpreter, you can provide the path.
-        // For example: "php": ["path/to/php8.exe", "path/to/php.exe"]
-        // Further available keys:
-        // "coffee", "erl", "gdb", "ghci", "irb", "jshell", "lua", "node", "perl"
-        // "php", "powershell", "python", "shell", "swift"
-        "interpreter_path": {
-            "python": []
-        },
-        // Syntax to highlight text.
-        // By default, Formatter uses the standard syntax file of Sublime Text.
-        // However, if you do need to use a specific syntax, you can provide the
-        // packages path to your syntax file. Note the exact path structure.
-        // For example: "php": "Packages/Happy/myPHP.sublime-syntax"
-        "syntax": {
-            "python": "Packages/Python/Python.sublime-syntax"
-        },
-        // Settings for the REPL views.
-        // This option affects only the current REPL view.
-        "view_settings": {
-            "translate_tabs_to_spaces": false,
-            "auto_complete": false,
-            "line_numbers": false,
-            "gutter": false
-        },
-        // Record commands history to use with the Up and Down arrow keys.
-        // Enabling it will retain the history across sessions; otherwise, it is temporary.
-        "enable_persistent_history": true
     },
 
     // THIRD-PARTY FORMATTING PLUGINS
