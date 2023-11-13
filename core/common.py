@@ -557,7 +557,7 @@ def get_assigned_syntax(view, uid, region, is_selected):
         scopes = view.scope_name(0 if not is_selected else region.a).strip().lower().split(' ')
         for syntax in syntaxes:
             for scope in scopes:
-                if 'source.' + syntax + '.embedded' in scope:
+                if any(('source.' + syntax + x) in scope for x in ['.embedded', '.sublime']):
                     return syntax
                 if 'source.' + syntax == scope:
                     return syntax
