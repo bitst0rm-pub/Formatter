@@ -40,7 +40,7 @@ _Formatter in action..._
 
 ## Plugins
 
-Formatter is useless without third-party plugins. It relies on external plugins in order to format code.
+Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
 **Plugins that work with Formatter:** _Need more? see_ [Development](#development)
 
