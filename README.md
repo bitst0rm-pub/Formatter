@@ -24,7 +24,7 @@ Formatter aims to achieve:
 
 _Formatter in action..._
 
-![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot.png)
 
 
 ## Guides
@@ -35,19 +35,13 @@ _Formatter in action..._
   - [Configuration](#configuration)
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
-  - [Troubleshooting](#troubleshooting)
-  - [Todo](#todo)
   - [Development: Guide to Create Your Own Modules](#development)
   - [License](#license)
 
 
 ## Plugins
 
-Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed separately and can be easily disabled in the settings. To set up the plugins correctly, please consider the following:
-
-- Check plugin requirements, eg. PHP-CS-Fixer needs PHP >=7.4.0 or Black requires Python >=3.7.0
-- Ensure to pass the correct path to the plugin executable and
-- Adjust their environment variables (PATH, PYTHONPATH etc.) in the `Formatter.sublime-settings`.
+Formatter is useless without third-party plugins. It relies on external plugins in order to format code.
 
 **Plugins that work with Formatter:** _Need more? see_ [Development](#development)
 
@@ -122,15 +116,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 
 ## Installation
 
-There are 3 ways to install Formatter:
-
 - **Using [Package Control](https://packagecontrol.io/packages/Formatter):** run `Package Control: Install Package` and select `Formatter`
-- **or Clone:** into your sublime `Packages` directory:
-
-        git clone https://github.com/bitst0rm-pub/Formatter.git Formatter
-        cd Formatter
-        rm -rf .git  # important: to remove the root of all conflicts
-
 - **or Download:** the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter) to your sublime `Packages` directory and rename it to `Formatter`
 
 The `Packages` directory is located in:
@@ -150,9 +136,6 @@ These files serve as _reference_ files for your final configuration. The full li
 Note: Do **not** use _reference_ files with the suffix `.master.` as they could be overwritten by any package updates.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
-
-The left-hand pane contains all the default settings, while right-hand pane is where personal customizations can be made. Ensure to maintain the config structure in the right-hand pane.<br/>
-Do **not** edit the default settings in the left-hand pane. Any modifications there will be lost when the package is updated.
 
 The following settings example should give you direction on how to setup Formatter:
 
@@ -433,16 +416,6 @@ This feature is designed to help users quickly access and switch between options
 - **Persistent Quick Options**: Clicking the `Save` option will make all current Temporary Quick Options persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
 
 None of the modes will ever alter your Settings file.
-
-
-## Troubleshooting
-
-If you encounter issues, please activate the key `"debug": true` in `Formatter.sublime-settings` to gain insight into what might be going wrong. Errors can come from upstream plugins, from your transcoding codebase, also setting wrong parameters to path or 🐞 inside Formatter itself can be the root of issues.
-
-
-## Todo:
-
-- Maybe add support for more languages. Make suggestions or develop your own module, see [Development](#development)
 
 
 ## Development:
