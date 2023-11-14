@@ -17,9 +17,8 @@ Formatter aims to achieve:
 - Flexibility: Users benefit from a wide range of flexible config options.
 - Freedom: Third-party plugin updates are not tied to the Formatter itself.
 - Modularity: Designed for seamless integration with a variety of additional plugins.
-- Customization: Users benefit from the modular concept to integrate their own modules with ease.
 - Convenience: An all-in-one tool for beautifying and minifying code.
-- Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development)
+- Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development) to integrate your own modules with ease.
 
 
 _Formatter in action..._
@@ -398,7 +397,9 @@ Formatter has been designed to detect the syntax of files according to file scop
 
         Sublime Text > View > Syntax
 
-Setting wrong syntax when formatting code will cause error: _`Syntax out of the scope.`_
+Setting wrong syntax when formatting code will cause error:
+
+        Syntax out of the scope.
 
 Formatting actions can be triggered in different ways:
 
