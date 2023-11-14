@@ -38,7 +38,12 @@ class PrettierFormatter:
         self.pathinfo = common.get_pathinfo(self.view.file_name())
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
+        if common.IS_WINDOWS:
+            executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type='node')
+            cmd = [executable] if not executable.endswith('js') else common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
+        else:
+            cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
+
         if not cmd:
             return None
 
