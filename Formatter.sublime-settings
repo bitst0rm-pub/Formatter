@@ -506,7 +506,7 @@
                 "exclude_extensions": [],
                 "exclude_syntaxes": []
             },
-            "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
+            "syntaxes": ["c", "c++", "cs", "d", "es", "objc", "objc++", "java", "pawn", "vala"],
             "executable_path": "",
             "config_path": {
                 "java": "${packages}/User/formatter.assets/config/uncrustify_sun_java_rc.cfg",

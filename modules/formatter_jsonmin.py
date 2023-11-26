@@ -12,6 +12,7 @@
 import logging
 import json
 import sublime
+from ..core import common
 
 log = logging.getLogger(__name__)
 MODULE_CONFIG = {
@@ -27,12 +28,13 @@ MODULE_CONFIG = {
 }
 
 
-class JsonminFormatter:
+class JsonminFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        pass
+        super().__init__(*args, **kwargs)
 
-    def format(self, text):
+    def format(self):
         try:
+            text = self.get_text_from_region(self.region)
             obj = sublime.decode_value(text)
             result = json.dumps(obj, ensure_ascii=False, separators=(',', ':'), indent=None)
             return result

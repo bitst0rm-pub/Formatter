@@ -426,7 +426,10 @@ Starting from version 1.0.6, you now have the ability to create your own module 
 ### 1. Prerequisite:
 
 1. Create a config file specific to your third-party plugin. Please note that the format and content of this config file may vary among different plugins. Consult the documentation provided by the third-party plugin for detailed instructions.
-Config files for third-party plugins must be placed in the following folder: `Formatter > config`
+Config files for third-party plugins must be placed in the following folder:
+
+        Formatter > config
+
 2. Activate the debug mode with the secret key `dev` in your Formatter settings. The `dev` key should never be used in a production environment.
 
 _Formatter.sublime-settings_
@@ -441,25 +444,20 @@ _Formatter.sublime-settings_
 
 ### 2. Creating a module:
 
-Developing a module for Formatter is straightforward. All you need to do is create a `formatter_xxx.py` file with just a few lines of code:
+Developing a module for Formatter is straightforward. All you need to do is creating a python file with just a few lines of code as below:
 
-1. Create a Python file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder.<br/>
-Ensure to follow these conventions:
+1. Create a file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder. Ensure to follow these conventions:
 
-- Create only one file per plugin in the `Formatter > modules` folder:
-    - All functions and other necessary components should reside inside this file.
+    - Create only **one** file per plugin in the `Formatter > modules` folder:
+        - All functions and other necessary components should reside inside this file.
 
-- The file name is all lowercase and includes:
-    - Prefix: `formatter_`
-    - Suffix: `thisismyfirstpluginmodule`, using _only_ letters from 'a' to 'z' (no spaces or underscores)
-    - Extension: `.py`
+    - The file name is all **lowercase** and contains only **alphanumeric** characters (no spaces or    underscores):
+        - Prefix: `formatter_` (indicating that it's a module for a third-party plugin)
+        - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as uid)
+        - Extension: `.py`
 
-- The pattern of this file name represents:
-    - The prefix `formatter_`: indicating that it's a module for a third-party plugin.
-    - The suffix `thisismyfirstpluginmodule`: serving as the unique Formatter ID, also known as uid.
-
-- External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
-    - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
+    - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
+        - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
 
 2. The content of this module file should follow the structure outlined below:
 
@@ -468,14 +466,17 @@ _formatter_thisismyfirstpluginmodule.py_
 ```py
 #!/usr/bin/env python3
 
-MODULE_CONFIG = {}                              # REQUIRED! template to create several sublime config files
+INTERPRETERS = []                                           # optional: Fallback list of interpreter names
+EXECUTABLES = []                                            # REQUIRED: Fallback list of executable names
+MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
 
-class ThisismyfirstpluginmoduleFormatter:       # REQUIRED! the Capitalized of uid and the Capitalized word "Formatter", nothing else!
-    def __init__(self, *args, **kwargs):        # REQUIRED! should included if even not used for clarity
+class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
-    def get_cmd(self):                          # optional: get commands, e.g get the "config_path", "executable_path" etc...
+    def get_cmd(self):                                      # optional: get commands, e.g get the "config_path", "executable_path" etc...
 
-    def format(self, text):                     # REQUIRED! function exact as written, where text is the current input view content
+    def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
 ```
 
 Details as an example:
@@ -492,70 +493,65 @@ Details as an example:
 # @link         you
 # @license      The MIT License (MIT)
 
-import logging                                          # REQUIRED! logging system for debugging this file
-from ..core import common                               # REQUIRED! a collection of APIs to assist in running this file
+import logging                                              # REQUIRED: logging system for debugging this file
+from ..core import common                                   # REQUIRED: a collection of APIs to assist in running this file
 
-log = logging.getLogger(__name__)                       # REQUIRED! logger setup
-INTERPRETERS = ['node']                                 # optional: case-sensitive fallback names without extension if interpreter is not found
-EXECUTABLES = ['terser']                                # optional: case-sensitive fallback names without extension if executable is not found
-MODULE_CONFIG = {                                       # REQUIRED! template to create several sublime config files
-    'source': 'https://thirdparty-plugin.com',          # REQUIRED! info on where the user can download the plugin
-    'name': 'My First Plugin',                          # REQUIRED! a free-styled plugin name, preferably short and comprehensive
-    'uid': 'thisismyfirstpluginmodule',                 # REQUIRED! must match the suffix of 'formatter_thisismyfirstpluginmodule.py'
-    'type': 'minifier',                                 # REQUIRED! 'minifier' or 'beautifier' (both defaults), or 'converter' (for other purposes, e.g., Text-to-QR),
-                                                        #           or any 'whatever' string of your choice (for private purposes). Nuff said with versatility
-    'syntaxes': ['js'],                                 # REQUIRED! array of syntaxes, obtained from: Tools > Developer > Show Scope Name
-    "executable_path": "",                              # optional: use an empty string "" to include this key in config files or None to omit it
-    'args': None,                                       # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
-    'config_path': {                                    # optional: a dictionary to include this key in config files or None to omit it
-        'js': 'my_first_plugin_js_rc.json'              # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
-        'default': 'my_first_plugin_rc.json'            # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
+log = logging.getLogger(__name__)                           # REQUIRED: logger setup
+INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
+EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
+MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
+    'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
+    'name': 'My First Plugin',                              # REQUIRED: a free-styled plugin name, preferably short and comprehensive
+    'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
+    'type': 'minifier',                                     # REQUIRED: "minifier" OR "beautifier" (both defaults), OR "converter" (for other purposes, e.g., Text-to-QR),
+                                                            #           OR any string of your choice (for private purposes).
+    'syntaxes': ['js'],                                     # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
+    "executable_path": "",                                  # optional: use an empty string "" to include this key in config files or None to omit it
+    'args': None,                                           # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
+    'config_path': {                                        # optional: a dictionary to include this key in config files or None to omit it
+        'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
+        'default': 'my_first_plugin_rc.json'                # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
     },
-    'comment': 'build-in, no executable'                # optional: a single short comment, limited to 80 chars or just omit it
+    'comment': 'build-in, no executable'                    # optional: a single short comment, limited to 80 chars or just omit it
 }
 
 
-class ThisismyfirstpluginmoduleFormatter:               # REQUIRED! the Capitalized of uid and the Capitalized word "Formatter", nothing else!
-    def __init__(self, *args, **kwargs):                # REQUIRED! should included if even not used for clarity
-        self.view = kwargs.get('view', None)            # also include this one and below too
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+    def __init__(self, *args, **kwargs):                    # REQUIRED: initialization
+        super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
-    def get_cmd(self):                                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
-        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')      # See API below
+    def get_cmd(self):                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
+        cmd = self.get_combo_cmd(runtime_type='node')       # See API below
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)     # See API below
-        if config:
-            cmd.extend(['--config-file', config])                           # an array of args to run the third-party plugin
+        path = self.get_config_path()                       # See API below
+        if path:
+            cmd.extend(['--config-file', path])             # an array of args to run the third-party plugin
 
         cmd.extend(['--compress', '--mangle', '--'])
 
+        log.debug('Current arguments: %s', cmd)             # REQUIRED: to debug the input command
+        cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return
+
         return cmd
 
-    def format(self, text):                                         # REQUIRED! function exact as written, where text is the current input view content
+    def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
         cmd = self.get_cmd()
-        log.debug('Current arguments: %s', cmd)                     # REQUIRED!
-        cmd = common.set_fix_cmds(cmd, self.uid)                    # REQUIRED! to finally process the "fix_commands" option
-        if not cmd:
+        if not self.is_valid_cmd(cmd):                      # REQUIRED: is command ok?
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo[1])
-            stdout, stderr = proc.communicate(text.encode('utf-8'))
+            exitcode, stdout, stderr = self.exec_cmd(cmd)   # REQUIRED: process command
 
-            errno = proc.returncode
-            if errno > 0:                                           # REQUIRED! consult the plugin documentation for the exit codes
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+            if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
             else:
-                return stdout.decode('utf-8')                       # REQUIRED! return the formatted code on success
+                return stdout                               # REQUIRED: return the formatted code on success
         except OSError:
             log.error('Error occurred while running: %s', ' '.join(cmd))
 
-        return None                                                 # REQUIRED! return None to indicate failure
+        return None                                         # REQUIRED: return None to indicate failure
 
 ```
 **That's all**. Happy coding o_O
@@ -566,47 +562,48 @@ Do not forget to update/adjust your _User_ settings:<br/>
 
 ### 3. APIs:
 
-All APIs can be found in the file `core > common.py`
+The entire set of Formatter APIs can be found in the file: `core > common.py`<br/>
+The responsibility for processing plugin modules lies with the methods of the class: `class Module(object)`<br/>
+Starting from version 1.0.19, all previous APIs have been deprecated. Please update to the new APIs accordingly:
 
 - Essentially for the `def get_cmd(self)` function:
 
 ```py
-# A alias of get_interpreter(), get_executable() and get_args(uid);
-# runtime_type=(None|'node'|'python'|'perl'|'ruby') to search for the local interpreter/executable too
-cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
-cmd = common.get_head_cmd(self.uid, INTERPRETERS, EXECUTABLES) # DEPRECATED! as of v1.0.8, use get_head_cmd(...,runtime_type=) instead
+# A alias of get_interpreter(), get_executable() and get_args(uid) together;
+# runtime_type=(None|'node'|'python'|'perl'|'ruby') to activate searching for the local executable
+cmd = self.get_combo_cmd(runtime_type=None)
 
 # Get the interpreter path or None;
-# runtime_type=(None|'node'|'python'|'perl'|'ruby') to search for the local interpreter too
-interpreter = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type=None)
-interpreter = common.get_runtime_path(self.uid, INTERPRETERS, 'interpreter') # DEPRECATED! as of v1.0.8, use get_interpreter() instead
+interpreter = self.get_interpreter()
 
 # Get the executable path or None;
-# runtime_type=(None|'node'|'python'|'perl'|'ruby') to search for the local executable too
-executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type=None)
-executable = common.get_runtime_path(self.uid, EXECUTABLES, 'executable') # DEPRECATED! as of v1.0.8, use get_executable() instead
+# runtime_type=(None|'node'|'python'|'perl'|'ruby') to activate searching for the local executable
+executable = self.get_executable(runtime_type=None)
 
-# Get the additional input arguments "args" from User settings or None
-args = common.get_args(self.uid)
+# Get the input arguments "args" from the User settings or None
+args = self.get_args()
 
-# Get the input "config_path" from User settings or None
-config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
+# Get the input "config_path" from the User settings or None
+path = self.get_config_path()
 
 # Get the detected syntax of the current file or None
-syntax = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
+syntax = self.get_assigned_syntax()
 
 # Get a dictionary of file path components: {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None
-components = common.get_pathinfo(path)
+components = self.get_pathinfo()
+
+# To finally process the "fix_commands" option, just right before exec_cmd()
+cmd = self.fix_cmd(cmd)
 ```
 
-- Essentially for the `def format(self, text)` function:
+- Essentially for the `def format(self)` function:
 
 ```py
-# To finally process the "fix_commands" option just right before exec_cmd()
-cmd = common.set_fix_cmds(cmd, self.uid)
+# To quick test cmd
+is_valid = self.is_valid_cmd(cmd)
 
 # To process the formatting with all input (fixed) arguments
-proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
+exitcode, stdout, stderr = self.exec_cmd(cmd)
 ```
 
 ### 4. Send pull requests:

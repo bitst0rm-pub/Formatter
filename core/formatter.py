@@ -16,43 +16,34 @@ from ..modules import __all__ as formatter_map
 log = logging.getLogger(__name__)
 
 
-class Formatter:
-    def __init__(self, view):
-        pass
+class Formatter(common.Module):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.kwargs = kwargs
 
-    def run_formatter(self, *args, **kwargs):
-        view = kwargs.get('view', None)
-        uid = kwargs.get('uid', None)
-        region = kwargs.get('region', None)
-        is_selected = kwargs.get('is_selected', False)
-        text = kwargs.get('text', None)
-
-        if view.is_read_only() or not view.window() or view.size () == 0:
+    def run(self):
+        if self.view.is_read_only() or not self.view.window() or self.view.size() == 0:
             log.error('View is not formattable.')
             return None
 
-        if not text:
-            return None
-
-        formatter_plugin = formatter_map.get(uid)
+        formatter_plugin = formatter_map.get(self.uid)
         if formatter_plugin:
-            syntax = common.get_assigned_syntax(view, uid, region, is_selected)
+            syntax = self.get_assigned_syntax()
             if not syntax:
-                common.prompt_error('Syntax out of the scope.', 'ID:' + uid)
+                self.prompt_error('Syntax out of the scope.', 'ID:' + self.uid)
             else:
-                file = view.file_name()
+                file = self.view.file_name()
                 log.debug('Target: %s', file if file else '(view)')
-                log.debug('Scope: %s', view.scope_name(0 if not is_selected else region.a))
+                log.debug('Scope: %s', self.view.scope_name(self.region.begin()))
                 log.debug('Syntax: %s', syntax)
-                log.debug('Formatter ID: %s', uid)
-                worker = formatter_plugin['class'](*args, **kwargs)
-                result = worker.format(text)
+                log.debug('Formatter ID: %s', self.uid)
+                worker = formatter_plugin['class'](**formatter_plugin['const'], **self.kwargs)
+                result = worker.format()
                 if result:
                     # Pass the result back to the main thread.
-                    args = {'result': result, 'region': [region.a, region.b]}
-                    view.run_command('substitute', args)
+                    self.view.run_command('replace_content_view', {'result': result, 'region': [self.region.a, self.region.b]})
                     return True
         else:
-            log.error('Formatter ID not found: %s', uid)
+            log.error('Formatter ID not found: %s', self.uid)
 
         return False

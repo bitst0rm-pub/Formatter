@@ -19,7 +19,7 @@ MODULE_CONFIG = {
     'name': 'Uncrustify',
     'uid': 'uncrustify',
     'type': 'beautifier',
-    'syntaxes': ['c', 'c++', 'cs', 'objc', 'objc++', 'd', 'java', 'pawn', 'vala'],
+    'syntaxes': ['c', 'c++', 'cs', 'd', 'es', 'objc', 'objc++', 'java', 'pawn', 'vala'],
     "executable_path": "",
     'args': None,
     'config_path': {
@@ -31,59 +31,46 @@ MODULE_CONFIG = {
 }
 
 
-class UncrustifyFormatter:
+class UncrustifyFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
     def get_cmd(self):
-        executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type=None)
+        executable = self.get_executable(runtime_type=None)
         if not executable:
             return None
 
         cmd = [executable]
 
-        args = common.get_args(self.uid)
-        if args:
-            cmd.extend(args)
+        cmd.extend(self.get_args())
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['-c', config])
+        path = self.get_config_path()
+        if path:
+            cmd.extend(['-c', path])
 
-        syntax = common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-        if syntax == 'c++':
-            language = 'cpp'
-        elif syntax == 'objc':
-            language = 'oc'
-        elif syntax == 'objc++':
-            language = 'oc+'
-        else:
-            language = syntax
+        syntax_mapping = {'c++': 'cpp', 'objc': 'oc', 'objc++': 'oc+'}
+        syntax = self.get_assigned_syntax()
+        language = syntax_mapping.get(syntax, syntax)
 
         cmd.extend(['-l', language])
 
+        log.debug('Current arguments: %s', cmd)
+        cmd = self.fix_cmd(cmd)
+
         return cmd
 
-    def format(self, text):
+    def format(self):
         cmd = self.get_cmd()
-        log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.uid)
-        if not cmd:
+        if not self.is_valid_cmd(cmd):
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
-            stdout, stderr = proc.communicate(text.encode('utf-8'))
+            exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-            errno = proc.returncode
-            if errno > 0:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+            if exitcode > 0:
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
             else:
-                return stdout.decode('utf-8')
+                return stdout
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 

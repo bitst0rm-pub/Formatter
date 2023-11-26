@@ -30,22 +30,19 @@ MODULE_CONFIG = {
 }
 
 
-class JsonmaxFormatter:
+class JsonmaxFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
-    def format(self, text):
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            with open(config, 'r', encoding='utf-8') as file:
+    def format(self):
+        path = self.get_config_path()
+        if path:
+            with open(path, 'r', encoding='utf-8') as file:
                 cmd = json.load(file)
             log.debug('Current arguments: %s', cmd)
 
         try:
+            text = self.get_text_from_region(self.region)
             obj = sublime.decode_value(text)
             result = json.dumps(obj, **cmd)
             return result

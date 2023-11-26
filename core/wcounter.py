@@ -86,9 +86,9 @@ class WordsCounter:
             pass
 
 
-class WordsCounterListener(sublime_plugin.EventListener):
+class WordsCounterListener(sublime_plugin.EventListener, common.Base):
     def on_selection_modified_async(self, view):
-        if common.query(common.config, False, 'show_words_count', 'enable'):
-            ignore_whitespace_char = common.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
+        if self.query(common.config, False, 'show_words_count', 'enable'):
+            ignore_whitespace_char = self.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
             view.settings().set('show_line_column', 'disabled')
             WordsCounter(view, ignore_whitespace_char).run_on_selection_modified()

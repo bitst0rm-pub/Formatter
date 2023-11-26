@@ -184,14 +184,14 @@ class SessionManager:
                     self.restore_bookmarks(view, file_path)
 
 
-class SessionManagerListener(sublime_plugin.EventListener):
+class SessionManagerListener(sublime_plugin.EventListener, common.Base):
     def __init__(self, *args, **kwargs):
         self.session_manager = SessionManager(max_database_records=600)
 
     def on_load(self, view):
-        if common.query(common.config, True, 'remember_session'):
+        if self.query(common.config, True, 'remember_session'):
             self.session_manager.run_on_load(view)
 
     def on_pre_close(self, view):
-        if common.query(common.config, True, 'remember_session'):
+        if self.query(common.config, True, 'remember_session'):
             self.session_manager.run_on_pre_close(view)

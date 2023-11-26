@@ -29,55 +29,54 @@ MODULE_CONFIG = {
 }
 
 
-class PrettierFormatter:
+class PrettierFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
     def get_cmd(self):
         if common.IS_WINDOWS:
-            executable = common.get_executable(self.view, self.uid, EXECUTABLES, runtime_type='node')
-            cmd = [executable] if not executable.endswith('js') else common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
-        else:
-            cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
+            executable = self.get_executable(runtime_type='node')
+            if not executable.endswith('js'):
+                cmd = [executable]
 
-        if not cmd:
+                cmd.extend(self.get_args())
+            else:
+                self.get_combo_cmd(runtime_type='node')
+        else:
+            cmd = self.get_combo_cmd(runtime_type='node')
+
+        if not self.is_valid_cmd(cmd):
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['--config', config])
-        else:
-            cmd.extend(['--no-config'])
+        path = self.get_config_path()
+        if path:
+            cmd.extend(['--config', path])
 
-        if self.pathinfo['path']:
-            cmd.extend(['--stdin-filepath', self.pathinfo['path']])
+        file = self.get_pathinfo()['path']
+        if file:
+            cmd.extend(['--stdin-filepath', file])
         else:
             # Prettier automatically infers which parser to use based on the file extension.
-            extension = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-            cmd.extend(['--stdin-filepath', 'dummy' + extension])
+            syntax = self.get_assigned_syntax()
+            cmd.extend(['--stdin-filepath', 'dummy.' + syntax])
+
+        log.debug('Current arguments: %s', cmd)
+        cmd = self.fix_cmd(cmd)
 
         return cmd
 
-    def format(self, text):
+    def format(self):
         cmd = self.get_cmd()
-        log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.uid)
-        if not cmd:
+        if not self.is_valid_cmd(cmd):
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
-            stdout, stderr = proc.communicate(text.encode('utf-8'))
+            exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-            errno = proc.returncode
-            if errno > 0:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+            if exitcode > 0:
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
             else:
-                return stdout.decode('utf-8')
+                return stdout
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 

@@ -30,46 +30,41 @@ MODULE_CONFIG = {
 }
 
 
-class EslintFormatter:
+class EslintFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='node')
+        cmd = self.get_combo_cmd(runtime_type='node')
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['--config', config])
+        path = self.get_config_path()
+        if path:
+            cmd.extend(['--config', path])
 
         cmd.extend(['--stdin', '--fix-dry-run', '--format=json'])
 
+        log.debug('Current arguments: %s', cmd)
+        cmd = self.fix_cmd(cmd)
+
         return cmd
 
-    def format(self, text):
+    def format(self):
         cmd = self.get_cmd()
-        log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.uid)
-        if not cmd:
+        if not self.is_valid_cmd(cmd):
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
-            stdout, stderr = proc.communicate(text.encode('utf-8'))
+            exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-            errno = proc.returncode
-            if errno > 1:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+            if exitcode > 1:
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
             else:
-                obj = sublime.decode_value(stdout.decode('utf-8'))[0]
+                obj = sublime.decode_value(stdout)[0]
                 if 'output' in obj:
                     return obj.get('output', None)
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
                 for i in obj.get('messages', []):
                     print(i)
         except OSError:

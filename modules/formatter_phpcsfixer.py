@@ -32,75 +32,61 @@ MODULE_CONFIG = {
 }
 
 
-class PhpcsfixerFormatter:
+class PhpcsfixerFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
     def is_compat(self):
         try:
-            php = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type=None)
+            php = self.get_interpreter()
             if php:
-                proc = common.exec_cmd([php, '-v'], self.pathinfo['cwd'])
-                stdout = proc.communicate()[0]
+                process = self.popen([php, '-v'])
+                stdout = process.communicate()[0]
                 string = stdout.decode('utf-8')
                 version = string.splitlines()[0].split(' ')[1]
+
                 if StrictVersion(version) >= StrictVersion('7.4.0'):
                     return True
-                common.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
-            return None
+                self.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
+            return False
         except OSError:
             log.error('Error occurred while validating PHP compatibility.')
 
-        return None
+        return False
 
-    def get_cmd(self, text):
-        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type=None)
+    def get_cmd(self):
+        cmd = self.get_combo_cmd(runtime_type=None)
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['--config=' + config])
-            cmd.extend(['--allow-risky=yes'])
+        path = self.get_config_path()
+        if path:
+            cmd.extend(['--config=' + path, '--allow-risky=yes'])
 
-        tmp_file = None
+        tmp_file = self.create_tmp_file()
+        cmd.extend(['fix', tmp_file])
 
-        suffix = '.' + common.get_assigned_syntax(self.view, self.uid, self.region, self.is_selected)
-
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.pathinfo['cwd'], encoding='utf-8') as file:
-            file.write(text)
-            file.close()
-            tmp_file = file.name
-            cmd.extend(['fix', tmp_file])
+        log.debug('Current arguments: %s', cmd)
+        cmd = self.fix_cmd(cmd)
 
         return cmd, tmp_file
 
-    def format(self, text):
+    def format(self):
         if not self.is_compat():
             return None
 
-        cmd, tmp_file = self.get_cmd(text)
-        log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.uid)
-        if not cmd:
-            if tmp_file and os.path.isfile(tmp_file):
-                os.unlink(tmp_file)
+        cmd, tmp_file = self.get_cmd()
+        if not self.is_valid_cmd(cmd):
+            self.remove_tmp_file(tmp_file)
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
-            stdout, stderr = proc.communicate()
+            exitcode, stdout, stderr = self.exec_com(cmd)
 
             result = None
-            errno = proc.returncode
-            out = stdout.decode('utf-8')
 
-            if errno > 0 or not out:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+            if exitcode > 0 or not stdout:
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
             else:
                 with open(tmp_file, 'r', encoding='utf-8') as file:
                     result = file.read()
@@ -108,7 +94,6 @@ class PhpcsfixerFormatter:
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 
-        if tmp_file and os.path.isfile(tmp_file):
-            os.unlink(tmp_file)
+        self.remove_tmp_file(tmp_file)
 
         return result

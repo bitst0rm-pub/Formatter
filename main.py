@@ -35,14 +35,16 @@ SYNC_SCROLL = {
 
 
 def plugin_loaded():
-    common.remove_junk()
+    api = common.Base()
+
+    api.remove_junk()
     ready = configurator.create_package_config_files()
     if ready:
-        common.get_config()
-        common.setup_shared_config_files()
+        api.get_config()
+        api.setup_shared_config_files()
 
-        if common.is_quick_options_mode():
-            is_enabled = common.query(common.config, False, 'quick_options', 'debug')
+        if api.is_quick_options_mode():
+            is_enabled = api.query(common.config, False, 'quick_options', 'debug')
         else:
             is_enabled = common.config.get('debug')
         common.enable_logging() if is_enabled else common.disable_logging()
@@ -55,25 +57,25 @@ class ShowVersionCommand(sublime_plugin.WindowCommand):
         sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + __version__)
 
 
-class OpenConfigFoldersCommand(sublime_plugin.WindowCommand):
+class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
-        opened_dirs = set()
+        seen = set()
 
         config_dir = common.join(sublime.packages_path(), 'User', common.ASSETS_DIRECTORY, 'config')
         if common.isdir(config_dir):
             self.window.run_command('open_dir', {'dir': config_dir})
-            opened_dirs.add(config_dir)
+            seen.add(config_dir)
 
         for formatter in common.config.get('formatters', {}).values():
             for path in formatter.get('config_path', {}).values():
                 if path and isinstance(path, str):
-                    dirpath = common.get_pathinfo(path)['cwd']
-                    if common.isdir(dirpath) and dirpath not in opened_dirs:
+                    dirpath = self.get_pathinfo(path)['cwd']
+                    if common.isdir(dirpath) and dirpath not in seen:
                         self.window.run_command('open_dir', {'dir': dirpath})
-                        opened_dirs.add(dirpath)
+                        seen.add(dirpath)
 
 
-class QuickOptionsCommand(sublime_plugin.WindowCommand):
+class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
@@ -94,7 +96,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             if key == 'use_user_settings':
                 option_status = '[-]' if config_values else '[x]'
             if key == 'save_quick_options':
-                option_status = '[x]' if config_values and common.load_quick_options() else '[-]'
+                option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
             if key in ['layout', 'format_on_save', 'new_file_on_format'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
             else:
@@ -137,7 +139,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                 self.run()
 
     def show_new_file_format_input(self):
-        value = common.query(common.config, '', 'quick_options', 'new_file_on_format')
+        value = self.query(common.config, '', 'quick_options', 'new_file_on_format')
         self.window.show_input_panel(
             'Enter a suffix for "New File on Format" (to disable: false or spaces):',
             value if (value and isinstance(value, str)) else '',
@@ -160,9 +162,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             if 'Choose Layout' in selected_option:
                 self.show_layout_menu()
             elif 'Enable Format on Save' in selected_option:
-                is_rff_on = common.query(common.config, False, 'quick_options', 'recursive_folder_format')
+                is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
                 if is_rff_on:
-                    common.prompt_error('ERROR: Format on Save is not compatible with an enabled Recursive Folder Format.')
+                    self.prompt_error('ERROR: Format on Save is not compatible with an enabled Recursive Folder Format.')
                     self.run()
                 else:
                     self.show_format_on_save_menu()
@@ -193,21 +195,21 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                 else:
                     common.disable_logging()
             if config_key == 'recursive_folder_format':
-                is_fos_on = common.query(common.config, [], 'quick_options', 'format_on_save')
+                is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_save')
                 if option_value and is_fos_on:
-                    common.prompt_error('ERROR: Recursive Folder Format is not compatible with an enabled Format on Save.')
+                    self.prompt_error('ERROR: Recursive Folder Format is not compatible with an enabled Format on Save.')
                     self.run()
                     return
             common.config.setdefault('quick_options', {})[config_key] = option_value
         self.run()
 
     def save_qo_config_file(self, json_data):
-        file = common.quick_options_config_file()
+        file = self.quick_options_config_file()
         with open(file, 'w', encoding='utf-8') as f:
             common.json.dump(json_data, f, ensure_ascii=False, indent=4)
 
 
-class RunFormatCommand(sublime_plugin.TextCommand):
+class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
@@ -225,14 +227,14 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         is_debug_enabled = self.is_debug_enabled()
         common.enable_logging() if is_debug_enabled else common.disable_logging()
 
-        is_disabled = common.query(common.config, True, 'formatters', kwargs.get('uid', None), 'disable')
+        is_disabled = self.query(common.config, True, 'formatters', kwargs.get('uid', None), 'disable')
         return not is_disabled
 
     def is_recursive_formatting_enabled(self, uid):
-        if common.is_quick_options_mode():
-            return common.query(common.config, False, 'quick_options', 'recursive_folder_format')
+        if self.is_quick_options_mode():
+            return self.query(common.config, False, 'quick_options', 'recursive_folder_format')
         else:
-            return common.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable')
+            return self.query(common.config, False, 'formatters', uid, 'recursive_folder_format', 'enable')
 
     def run_recursive_formatting(self, **kwargs):
         if self.view.file_name():
@@ -242,7 +244,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
                 recursive_format_thread = threading.Thread(target=recursive_format.run)
                 recursive_format_thread.start()
         else:
-            common.prompt_error('ERROR: Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
+            self.prompt_error('ERROR: Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
 
     def run_single_formatting(self, **kwargs):
         with threading.Lock():
@@ -252,29 +254,27 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             single_format_thread.start()
 
     def is_debug_enabled(self):
-        if common.is_quick_options_mode():
-            return common.query(common.config, False, 'quick_options', 'debug')
+        if self.is_quick_options_mode():
+            return self.query(common.config, False, 'quick_options', 'debug')
         else:
             return common.config.get('debug')
 
 
-class SingleFormat:
+class SingleFormat(common.Base):
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
+        self.kwargs.update(view=self.view)
         self.success, self.failure = 0, 0
         self.cycles = []
-        self.is_selected = self.has_selection()
-        self.kwargs.update(view=self.view, is_selected=self.is_selected)
-        self.formatter = Formatter(self.view)
 
     def run(self):
-        common.print_sysinfo()
+        self.print_sysinfo()
         try:
-            for region in (self.view.sel() if self.is_selected else [sublime.Region(0, self.view.size())]):
-                text = self.view.substr(region)
-                self.kwargs.update(text=text, region=region)
-                is_success = self.formatter.run_formatter(**self.kwargs)
+            for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
+                self.kwargs.update(region=region)
+                super().__init__(**self.kwargs)
+                is_success = Formatter(**self.kwargs).run()
                 self.cycles.append(is_success)
                 self.print_status(is_success)
 
@@ -300,7 +300,7 @@ class SingleFormat:
             self.set_status_bar_text()
 
     def set_status_bar_text(self):
-        status_text = '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME, common.get_mode_description(short=True), self.success, self.failure)
+        status_text = '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME, self.get_mode_description(short=True), self.success, self.failure)
         self.view.set_status(common.STATUS_KEY, status_text)
 
     def open_console_on_failure(self):
@@ -309,16 +309,16 @@ class SingleFormat:
 
     def handle_successful_formatting(self):
         uid = self.kwargs.get('uid', None)
-        mode = 'qo' if common.is_quick_options_mode() else 'user'
+        mode = 'qo' if self.is_quick_options_mode() else 'user'
         layout, suffix = self.get_layout_and_suffix(uid, mode)
 
         if suffix and isinstance(suffix, str):
             window = self.view.window()
             if mode == 'qo':
-                window.set_layout(common.assign_layout(layout))
+                window.set_layout(self.assign_layout(layout))
                 window.focus_group(0)
-            elif common.want_layout():
-                common.setup_layout(self.view)
+            elif self.want_layout():
+                self.setup_layout(self.view)
                 window.focus_group(0)
 
             file_path = self.view.file_name()
@@ -329,13 +329,13 @@ class SingleFormat:
     def get_layout_and_suffix(self, uid, mode):
         if mode == 'qo':
             return (
-                common.query(common.config, False, 'quick_options', 'layout'),
-                common.query(common.config, False, 'quick_options', 'new_file_on_format')
+                self.query(common.config, False, 'quick_options', 'layout'),
+                self.query(common.config, False, 'quick_options', 'new_file_on_format')
             )
         else:
             return (
-                common.query(common.config, False, 'layout', 'enable'),
-                common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+                self.query(common.config, False, 'layout', 'enable'),
+                self.query(common.config, False, 'formatters', uid, 'new_file_on_format')
             )
 
     def undo_history(self):
@@ -343,13 +343,13 @@ class SingleFormat:
             self.view.run_command('undo')
 
 
-class SubstituteCommand(sublime_plugin.TextCommand):
+class ReplaceContentViewCommand(sublime_plugin.TextCommand):
     def run(self, edit, result, region):
         log.debug('Replacing text ...')
         self.view.replace(edit, sublime.Region(region[0], region[1]), result)
 
 
-class TransferContentViewCommand(sublime_plugin.TextCommand):
+class TransferContentViewCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
         path = kwargs.get('path', None)
         src_view = self.view
@@ -393,7 +393,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
         return dst_view
 
     def create_new_file(self, window, syntax=None):
-        if common.want_layout():
+        if self.want_layout():
             window.focus_group(1)
         dst_view = window.new_file(syntax=syntax)
         return dst_view
@@ -410,7 +410,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
 
     def sync_scroll_views(self, src_view, dst_view):
         SYNC_SCROLL['view_pairs'].append([src_view, dst_view])
-        SYNC_SCROLL['view_pairs'] = common.get_unique(SYNC_SCROLL['view_pairs'])
+        SYNC_SCROLL['view_pairs'] = self.get_unique(SYNC_SCROLL['view_pairs'])
 
     def save_dst_content(self, view, path):
         allcontent = view.substr(sublime.Region(0, view.size()))
@@ -419,7 +419,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 file.write(allcontent)
         except OSError as e:
             log.error('Could not save file: %s\n%s', path, e)
-            common.prompt_error('ERROR: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
+            self.prompt_error('ERROR: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
 
     def show_status_on_new_file(self, view):
         if view.is_loading():
@@ -430,7 +430,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand):
                 view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
 
 
-class RecursiveFormat:
+class RecursiveFormat(common.Base):
     CONTEXT = {
         'entry_view': None,
         'new_view': None,
@@ -449,10 +449,10 @@ class RecursiveFormat:
         self.kwargs = kwargs
 
     def run(self):
-        common.print_sysinfo()
+        self.print_sysinfo()
         try:
             cwd = self.get_current_working_directory()
-            filelist = self.get_recursive_filelist(cwd)
+            filelist = self.get_recursive_files(cwd)
 
             self.prepare_context(cwd, filelist)
             self.process_files()
@@ -461,11 +461,11 @@ class RecursiveFormat:
             self.handle_error(e)
 
     def get_current_working_directory(self):
-        return common.get_pathinfo(self.view.file_name())['cwd']
+        return self.get_pathinfo(self.view.file_name())['cwd']
 
-    def get_recursive_filelist(self, cwd):
+    def get_recursive_files(self, cwd):
         items = self.get_recursive_format_items()
-        return common.get_recursive_filelist(
+        return self.get_recursive_filelist(
             cwd,
             items.get('exclude_folders_regex', []),
             items.get('exclude_files_regex', []),
@@ -474,7 +474,7 @@ class RecursiveFormat:
 
     def get_recursive_format_items(self):
         uid = self.kwargs.get('uid', None)
-        return common.query(common.config, {}, 'formatters', uid, 'recursive_folder_format')
+        return self.query(common.config, {}, 'formatters', uid, 'recursive_folder_format')
 
     def prepare_context(self, cwd, filelist):
         self.CONTEXT.update({
@@ -487,7 +487,7 @@ class RecursiveFormat:
             'current_index': 0,
             'success_count': 0,
             'failure_count': 0,
-            'mode_description': common.get_mode_description(short=True)
+            'mode_description': self.get_mode_description(short=True)
         })
 
     def process_files(self):
@@ -546,7 +546,7 @@ class RecursiveFormat:
     def save_formatted_file(self, new_view, new_cwd, is_success):
         file_path = new_view.file_name()
         new_file_path = self.generate_new_file_path(file_path, new_cwd, is_success)
-        cwd = common.get_pathinfo(new_file_path)['cwd']
+        cwd = self.get_pathinfo(new_file_path)['cwd']
 
         try:
             common.os.makedirs(cwd, exist_ok=True)
@@ -565,11 +565,11 @@ class RecursiveFormat:
         return new_file_path
 
     def get_new_file_suffix(self):
-        if common.is_quick_options_mode():
-            return common.query(common.config, False, 'quick_options', 'new_file_on_format')
+        if self.is_quick_options_mode():
+            return self.query(common.config, False, 'quick_options', 'new_file_on_format')
         else:
             uid = self.CONTEXT['kwargs'].get('uid', None)
-            return common.query(common.config, False, 'formatters', uid, 'new_file_on_format')
+            return self.query(common.config, False, 'formatters', uid, 'new_file_on_format')
 
     def handle_formatting_completion(self):
         self.update_status_bar()
@@ -601,7 +601,7 @@ class RecursiveFormat:
             current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def show_completion_message(self):
-        success_rate = (self.CONTEXT['success_count'] / self.CONTEXT['filelist_length']) * 100
+        success_rate = '{:.2f}'.format((self.CONTEXT['success_count'] / self.CONTEXT['filelist_length']) * 100)
         sublime.message_dialog('Formatting COMPLETED!\n\nSuccess Rate: %s%%\n\nPlease check the results in:\n%s' % (success_rate, self.CONTEXT['cwd']))
 
     def reset_context(self):
@@ -618,13 +618,13 @@ class RecursiveFormat:
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
         if cwd and (error.errno != common.os.errno.EEXIST):
             log.error('Could not create directory: %s', cwd)
-            common.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
+            self.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
         if file_path:
             log.error('Could not save file: %s', file_path)
-            common.prompt_error('ERROR: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', file_path)
+            self.prompt_error('ERROR: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', file_path)
 
 
-class SequenceFormatThread(threading.Thread):
+class SequenceFormatThread(threading.Thread, common.Base):
     def __init__(self, view, callback, **kwargs):
         self.view = view
         self.kwargs = kwargs
@@ -638,29 +638,25 @@ class SequenceFormatThread(threading.Thread):
             with self.lock:
                 region = sublime.Region(0, self.view.size())
                 uid = self.kwargs.get('uid', None)
-                syntax = common.get_assigned_syntax(self.view, uid, region, False)
-                exclude_syntaxes = common.query(common.config, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
+                syntax = self.get_assigned_syntax(self.view, uid, region)
+                exclude_syntaxes = self.query(common.config, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
                 if not syntax or syntax in exclude_syntaxes:
                     if not syntax:
-                        scope = common.query(common.config, [], 'formatters', uid, 'syntaxes')
+                        scope = self.query(common.config, [], 'formatters', uid, 'syntaxes')
                         log.warning('Syntax out of the scope. Plugin scope: %s, ID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
                     self.callback(False)
                 else:
-                    formatter = Formatter(self.view)
-                    text = self.view.substr(region)
                     self.kwargs.update({
                         'view': self.view,
-                        'text': text,
-                        'region': region,
-                        'is_selected': False
+                        'region': region
                     })
-                    self.is_success = formatter.run_formatter(**self.kwargs)
+                    self.is_success = Formatter(**self.kwargs).run()
                     self.callback(self.is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
 
-class FormatterListener(sublime_plugin.EventListener):
+class FormatterListener(sublime_plugin.EventListener, common.Base):
     def __init__(self, *args, **kwargs):
         self.running = threading.Event()
         self.scroll_lock = threading.Lock()
@@ -672,11 +668,11 @@ class FormatterListener(sublime_plugin.EventListener):
 
     def on_activated(self, view):
         window = view.window()
-        if common.query(common.config, False, 'layout', 'sync_scroll'):
+        if self.query(common.config, False, 'layout', 'sync_scroll'):
             do_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
             self.running.set() if do_run else self.running.clear()  # control pause/resume scrolling
 
-            if window and common.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
+            if window and self.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
                 for view_pair in SYNC_SCROLL['view_pairs']:
                     if view in view_pair:
                         SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'] = view_pair
@@ -713,8 +709,8 @@ class FormatterListener(sublime_plugin.EventListener):
 
     def on_pre_close(self, view):
         window = view.window()
-        if window and common.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
-            if common.query(common.config, False, 'layout', 'sync_scroll'):
+        if window and self.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
+            if self.query(common.config, False, 'layout', 'sync_scroll'):
                 for view_pair in SYNC_SCROLL['view_pairs']:
                     if view in view_pair:
                         # Remove pair for sync scroll
@@ -724,19 +720,21 @@ class FormatterListener(sublime_plugin.EventListener):
             # Auto switching to single layout upon closing the latest view
             group, _ = window.get_view_index(view)
             if len(window.views_in_group(group)) == 1:
-                sublime.set_timeout(lambda: window.set_layout(common.assign_layout('single')), 0)
+                sublime.set_timeout(lambda: window.set_layout(self.assign_layout('single')), 0)
 
     def on_pre_save(self, view):
         used_syntaxes = set()
         is_selected = any(not sel.empty() for sel in view.sel())
-        is_qo_mode = common.is_quick_options_mode()
-        is_rff_on = common.query(common.config, False, 'quick_options', 'recursive_folder_format')
+        is_qo_mode = self.is_quick_options_mode()
+        is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
         formatters = common.config.get('formatters')
 
         def should_skip_formatter(uid, value):
-            if (is_qo_mode and uid not in common.query(common.config, [], 'quick_options', 'format_on_save')) or (not is_qo_mode and not value.get('format_on_save', False)):
+            if not isinstance(value, dict):
                 return True
-            if (is_qo_mode and is_rff_on) or (not is_qo_mode and common.query(value, False, 'recursive_folder_format', 'enable')):
+            if (is_qo_mode and uid not in self.query(common.config, [], 'quick_options', 'format_on_save')) or (not is_qo_mode and not value.get('format_on_save', False)):
+                return True
+            if (is_qo_mode and is_rff_on) or (not is_qo_mode and self.query(value, False, 'recursive_folder_format', 'enable')):
                 mode = 'Quick Options' if is_qo_mode else 'User Settings'
                 log.info('%s mode: %s has the "format_on_save" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid)
                 return True
@@ -752,7 +750,7 @@ class FormatterListener(sublime_plugin.EventListener):
             else:
                 # Entire file
                 region = sublime.Region(0, view.size())
-            syntax = common.get_assigned_syntax(view, uid, region, is_selected)
+            syntax = self.get_assigned_syntax(view=view, uid=uid, region=region)
             if syntax in value.get('syntaxes', []) and syntax not in used_syntaxes:
                 log.debug('"format_on_save" enabled for ID: %s, using syntax: %s', uid, syntax)
                 SingleFormat(view, uid=uid).run()
@@ -762,5 +760,5 @@ class FormatterListener(sublime_plugin.EventListener):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.set_abort_sync_scroll()
-            common.reload_modules()  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
+            self.reload_modules()  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
             self.sync_scroll.reset_run()

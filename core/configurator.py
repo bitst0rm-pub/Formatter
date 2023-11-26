@@ -28,7 +28,7 @@ class NoIndent(object):
 
 class NoIndentEncoder(json.JSONEncoder):
     def __init__(self, *args, **kwargs):
-        super(NoIndentEncoder, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.kwargs = dict(kwargs)
         del self.kwargs['indent']
         self._replacement_map = {}
@@ -39,10 +39,10 @@ class NoIndentEncoder(json.JSONEncoder):
             self._replacement_map[key] = json.dumps(o.value, **self.kwargs)
             return '@@%s@@' % (key,)
         else:
-            return super(NoIndentEncoder, self).default(o)
+            return super().default(o)
 
     def encode(self, o):
-        result = super(NoIndentEncoder, self).encode(o)
+        result = super().encode(o)
         for k, v in iter(self._replacement_map.items()):
             result = result.replace('"@@%s@@"' % (k,), v)
         return result
@@ -599,13 +599,15 @@ def create_package_config_files():
         'Formatter.sublime-settings': build_formatter_sublime_settings
     }
 
+    api = common.Base()
+
     for file_name, build_function in file_functions.items():
         try:
             text = build_function(formatter_map)
             file = common.join(directory, file_name)
             if common.isfile(file):
                 hash_src = common.hashlib.md5(text.encode('utf-8')).hexdigest()
-                hash_dst = common.md5f(file)
+                hash_dst = api.md5f(file)
                 if hash_src == hash_dst:
                     continue
 
@@ -616,7 +618,7 @@ def create_package_config_files():
             return False
 
     try:
-        for file in [common.join(directory, common.QUICK_OPTIONS_SETTING_FILE), common.quick_options_config_file()]:
+        for file in [common.join(directory, common.QUICK_OPTIONS_SETTING_FILE), api.quick_options_config_file()]:
             if not common.isfile(file):
                 with open(file, 'w', encoding='utf-8') as f:
                     json.dump({}, f, ensure_ascii=False, indent=4)

@@ -30,13 +30,9 @@ MODULE_CONFIG = {
 }
 
 
-class PrettytableFormatter:
+class PrettytableFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
     def read_data(self, text, sep):
         lines = text.splitlines()
@@ -54,11 +50,11 @@ class PrettytableFormatter:
 
         return table
 
-    def format(self, text):
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
+    def format(self):
+        path = self.get_config_path()
         json = {}
-        if config:
-            with open(config, 'r', encoding='utf-8') as file:
+        if path:
+            with open(path, 'r', encoding='utf-8') as file:
                 data = file.read()
             json = sublime.decode_value(data)
             log.debug('Current arguments: %s', json)
@@ -89,6 +85,7 @@ class PrettytableFormatter:
                 sty = value
                 break
 
+        text = self.get_text_from_region(self.region)
         data = self.read_data(text, separator)
         table = self.make_table(data)
         table.set_style(sty)

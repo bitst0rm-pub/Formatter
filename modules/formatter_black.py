@@ -30,60 +30,56 @@ MODULE_CONFIG = {
 }
 
 
-class BlackFormatter:
+class BlackFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
     def is_compat(self):
         try:
-            python = common.get_interpreter(self.view, self.uid, INTERPRETERS, runtime_type='python')
+            python = self.get_interpreter()
             if python:
-                proc = common.exec_cmd([python, '-V'], self.pathinfo['cwd'])
+                proc = self.popen([python, '-V'])
                 stdout = proc.communicate()[0]
                 string = stdout.decode('utf-8')
                 version = string.splitlines()[0].split(' ')[1]
+
                 if StrictVersion(version) >= StrictVersion('3.7.0'):
                     return True
-                common.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
-            return None
+                self.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
+            return False
         except OSError:
             log.error('Error occurred while validating Python compatibility.')
 
-        return None
+        return False
 
     def get_cmd(self):
-        cmd = common.get_head_cmd(self.view, self.uid, INTERPRETERS, EXECUTABLES, runtime_type='python')
+        cmd = self.get_combo_cmd(runtime_type='python')
         if not cmd:
             return None
 
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
-        if config:
-            cmd.extend(['--config', config])
+        path = self.get_config_path()
+        if path:
+            cmd.extend(['--config', path])
 
         cmd.extend(['-'])
 
+        log.debug('Current arguments: %s', cmd)
+        cmd = self.fix_cmd(cmd)
+
         return cmd
 
-    def format(self, text):
+    def format(self):
         cmd = self.get_cmd()
-        log.debug('Current arguments: %s', cmd)
-        cmd = common.set_fix_cmds(cmd, self.uid)
         if not cmd or not self.is_compat():
             return None
 
         try:
-            proc = common.exec_cmd(cmd, self.pathinfo['cwd'])
-            stdout, stderr = proc.communicate(text.encode('utf-8'))
+            exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-            errno = proc.returncode
-            if errno > 0:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, stderr.decode('utf-8'))
+            if exitcode > 0:
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
             else:
-                return stdout.decode('utf-8')
+                return stdout
         except OSError:
             log.error('An error occurred while executing the command: %s', ' '.join(cmd))
 

@@ -30,30 +30,27 @@ MODULE_CONFIG = {
 }
 
 
-class SqlminFormatter:
+class SqlminFormatter(common.Module):
     def __init__(self, *args, **kwargs):
-        self.view = kwargs.get('view', None)
-        self.uid = kwargs.get('uid', None)
-        self.region = kwargs.get('region', None)
-        self.is_selected = kwargs.get('is_selected', False)
-        self.pathinfo = common.get_pathinfo(self.view.file_name())
+        super().__init__(*args, **kwargs)
 
-    def format(self, text):
-        config = common.get_config_path(self.view, self.uid, self.region, self.is_selected)
+    def format(self):
+        path = self.get_config_path()
         json = {}
-        if config:
-            with open(config, 'r', encoding='utf-8') as file:
+        if path:
+            with open(path, 'r', encoding='utf-8') as file:
                 data = file.read()
             json = sublime.decode_value(data)
             log.debug('Current arguments: %s', json)
 
         try:
+            text = self.get_text_from_region(self.region)
             output = sqlmin.minify(text, json)
-            errno = output['code']
+            exitcode = output['code']
             result = output['result']
 
-            if errno > 0:
-                log.error('File not formatted due to an error (errno=%d): "%s"', errno, result)
+            if exitcode > 0:
+                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, result)
             else:
                 return result
         except OSError:
