@@ -21,6 +21,9 @@ MODULE_CONFIG = {
     'uid': 'jsbeautifier',
     'type': 'beautifier',
     'syntaxes': ['js', 'css', 'html', 'json', 'tsx', 'vue'],
+    'exclude_syntaxes': {
+        'html': ['markdown']
+    },
     "executable_path": "",
     'args': None,
     'config_path': {

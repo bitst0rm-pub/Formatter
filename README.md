@@ -249,7 +249,17 @@ The following settings example should give you direction on how to setup Formatt
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.
-            "syntaxes": ["css", "js", "php"],
+            "syntaxes": ["css", "html", "js", "php"],
+
+            // Exclude a list of syntaxes for an individual syntax key.
+            // A list of excluded syntaxes can be applied to all syntax definitions.
+            // In this case, the key must be named: "all".
+            // This option is useful to exclude part of the scope selector.
+            // For example: text.html.markdown, want html but wish to filter out markdown.
+            "exclude_syntaxes": {
+                "html": ["markdown"],
+                "all": ["markdown"]
+            },
 
             // Path to the interpreter to run the third-party plugin.
             // Just for the sake of completeness, but it is unlikely that you will ever need
@@ -270,7 +280,7 @@ The following settings example should give you direction on how to setup Formatt
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
-            // In this case the key must be named: "default"
+            // In this case, the key must be named: "default"
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
             // Do not use the reference files with suffix '.master.' directly.
@@ -505,7 +515,10 @@ MODULE_CONFIG = {                                           # REQUIRED: template
     'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
     'type': 'minifier',                                     # REQUIRED: "minifier" OR "beautifier" (both defaults), OR "converter" (for other purposes, e.g., Text-to-QR),
                                                             #           OR any string of your choice (for private purposes).
-    'syntaxes': ['js'],                                     # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
+    'syntaxes': ['js', 'html'],                             # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
+    'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
+        'html': ['markdown']
+    },
     "executable_path": "",                                  # optional: use an empty string "" to include this key in config files or None to omit it
     'args': None,                                           # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
     'config_path': {                                        # optional: a dictionary to include this key in config files or None to omit it
@@ -564,7 +577,7 @@ Do not forget to update/adjust your _User_ settings:<br/>
 
 The entire set of Formatter APIs can be found in the file: `core > common.py`<br/>
 The responsibility for processing plugin modules lies with the methods of the class: `class Module(object)`<br/>
-Starting from version 1.0.19, all previous APIs have been deprecated. Please update to the new APIs accordingly:
+Starting from version 1.1.0, all previous APIs have been deprecated. Please update to the new APIs accordingly:
 
 - Essentially for the `def get_cmd(self)` function:
 

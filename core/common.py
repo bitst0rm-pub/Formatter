@@ -297,12 +297,22 @@ class Module(object):
         return cmd if all(cmd) else None
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):
-        if not view and not uid and not region:
-            view = self.view
-            uid = self.uid
-            region = self.region
+        if not all((view, uid, region)):
+            view, uid, region = self.view, self.uid, self.region
 
         syntaxes = self.query(config, None, 'formatters', uid, 'syntaxes')
+        exclude_syntaxes = self.query(config, None, 'formatters', uid, 'exclude_syntaxes')
+
+        def should_exclude(syntax, scope):
+            return (
+                exclude_syntaxes
+                and isinstance(exclude_syntaxes, dict)
+                and any(
+                    (key.strip().lower() in ['all', syntax]) and
+                    (isinstance(value, list) and any(x in scope for x in value))
+                    for key, value in exclude_syntaxes.items()
+                )
+            )
 
         if syntaxes and isinstance(syntaxes, list):
             syntaxes = [syntax.lower() for syntax in syntaxes if syntax]
@@ -311,23 +321,33 @@ class Module(object):
             for syntax in syntaxes:
                 for scope in scopes:
                     if any(('source.' + syntax + x) in scope for x in ['.embedded', '.sublime']):
+                        if should_exclude(syntax, scope):
+                            return None
                         return syntax
                     if 'source.' + syntax == scope:
+                        if should_exclude(syntax, scope):
+                            return None
                         return syntax
 
             for syntax in syntaxes:
                 for scope in scopes:
                     if scope.endswith('.' + syntax):
+                        if should_exclude(syntax, scope):
+                            return None
                         return syntax
 
             for syntax in syntaxes:
                 for scope in scopes:
                     if '.' + syntax + '.' in scope:
+                        if should_exclude(syntax, scope):
+                            return None
                         return syntax
 
             for syntax in syntaxes:
                 for scope in scopes:
                     if scope.startswith(syntax + '.'):
+                        if should_exclude(syntax, scope):
+                            return None
                         return syntax
 
             return None

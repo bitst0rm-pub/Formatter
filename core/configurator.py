@@ -339,6 +339,10 @@ def build_formatter_sublime_settings_children(formatter_map):
                 ('syntaxes', NoIndent(config['syntaxes']))
             ])
 
+            exclude_syntaxes = config.get('exclude_syntaxes', None)
+            if exclude_syntaxes is not None and isinstance(exclude_syntaxes, dict):
+                child['exclude_syntaxes'] = {key: NoIndent(value) for key, value in exclude_syntaxes.items()}
+
             executable_path = config.get('executable_path', None)
             if executable_path is not None and isinstance(executable_path, str):
                 child['executable_path'] = executable_path
@@ -477,7 +481,17 @@ def build_formatter_sublime_settings(formatter_map):
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.'''),
-                    ('syntaxes', NoIndent(['css', 'js', 'php'])),
+                    ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
+                    ('__COMMENT__exclude_syntaxes', '''
+            // Exclude a list of syntaxes for an individual syntax key.
+            // A list of excluded syntaxes can be applied to all syntax definitions.
+            // In this case, the key must be named: "all".
+            // This option is useful to exclude part of the scope selector.
+            // For example: text.html.markdown, want html but wish to filter out markdown.'''),
+                    ('exclude_syntaxes', OrderedDict([
+                        ('html', NoIndent(['markdown'])),
+                        ('all', NoIndent(['markdown']))
+                    ])),
                     ('__COMMENT__interpreter_path', '''
             // Path to the interpreter to run the third-party plugin.
             // Just for the sake of completeness, but it is unlikely that you will ever need

@@ -108,7 +108,17 @@
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
             // End-users are advised to consult plugin documentation to add more syntaxes.
-            "syntaxes": ["css", "js", "php"],
+            "syntaxes": ["css", "html", "js", "php"],
+
+            // Exclude a list of syntaxes for an individual syntax key.
+            // A list of excluded syntaxes can be applied to all syntax definitions.
+            // In this case, the key must be named: "all".
+            // This option is useful to exclude part of the scope selector.
+            // For example: text.html.markdown, want html but wish to filter out markdown.
+            "exclude_syntaxes": {
+                "html": ["markdown"],
+                "all": ["markdown"]
+            },
 
             // Path to the interpreter to run the third-party plugin.
             // Just for the sake of completeness, but it is unlikely that you will ever need
@@ -290,6 +300,9 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js", "css", "html", "json", "tsx", "vue"],
+            "exclude_syntaxes": {
+                "html": ["markdown"]
+            },
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/jsbeautify_rc.json"
