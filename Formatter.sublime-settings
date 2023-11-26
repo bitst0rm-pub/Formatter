@@ -71,6 +71,11 @@
             // The Quick Options feature can help in this scenario.
             "format_on_save": false,
 
+            // Auto formatting whenever code is pasted into the current file/view.
+            // The conditions and solution for this option are identical to those of
+            // the "format_on_save" option mentioned above.
+            "format_on_paste": false,
+
             // Create a new file containing formatted codes.
             // The value of this option is the suffix of the new file being renamed.
             // Suffix must be of type string. =true, =false and all other types imply =false
@@ -180,6 +185,7 @@
         "beautysh": {
             "info": "https://github.com/lovesegfault/beautysh",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -198,6 +204,7 @@
         "black": {
             "info": "https://github.com/ambv/black",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -216,6 +223,7 @@
         "clangformat": {
             "info": "https://clang.llvm.org/docs/ClangFormat.html",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -234,6 +242,7 @@
         "csscomb": {
             "info": "https://github.com/csscomb/csscomb.js",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -252,6 +261,7 @@
         "eslint": {
             "info": "https://github.com/eslint/eslint",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -271,6 +281,7 @@
         "htmltidy": {
             "info": "https://github.com/htacg/tidy-html5",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -290,6 +301,7 @@
         "jsbeautifier": {
             "info": "https://github.com/beautify-web/js-beautify",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -311,6 +323,7 @@
         "jsonmax": {
             "info": "build-in",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -329,6 +342,7 @@
         "perltidy": {
             "info": "https://github.com/perltidy/perltidy",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -347,6 +361,7 @@
         "phpcsfixer": {
             "info": "https://github.com/FriendsOfPHP/PHP-CS-Fixer",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -365,6 +380,7 @@
         "prettier": {
             "info": "https://github.com/prettier/prettier",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -383,6 +399,7 @@
         "prettydiffmax": {
             "info": "https://github.com/prettydiff/prettydiff",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -401,6 +418,7 @@
         "prettytable": {
             "info": "https://github.com/jazzband/prettytable",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -419,6 +437,7 @@
         "rubocop": {
             "info": "https://github.com/rubocop-hq/rubocop",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -437,6 +456,7 @@
         "shfmt": {
             "info": "https://github.com/mvdan/sh",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -455,6 +475,7 @@
         "sqlformatter": {
             "info": "https://github.com/sql-formatter-org/sql-formatter",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -473,6 +494,7 @@
         "stylelint": {
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -492,6 +514,7 @@
         "swiftformat": {
             "info": "https://github.com/nicklockwood/SwiftFormat",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -510,6 +533,7 @@
         "uncrustify": {
             "info": "https://github.com/uncrustify/uncrustify",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -531,6 +555,7 @@
         "yapf": {
             "info": "https://github.com/google/yapf",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -549,6 +574,7 @@
         "cleancss": {
             "info": "https://github.com/jakubpawlowicz/clean-css-cli",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -567,6 +593,7 @@
         "htmlminifier": {
             "info": "https://github.com/kangax/html-minifier",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -585,6 +612,7 @@
         "jsonmin": {
             "info": "build-in",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -600,6 +628,7 @@
         "prettydiffmin": {
             "info": "https://github.com/prettydiff/prettydiff",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -618,6 +647,7 @@
         "pythonminifier": {
             "info": "https://github.com/dflook/python-minifier",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -636,6 +666,7 @@
         "shfmtmin": {
             "info": "https://github.com/mvdan/sh",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -652,6 +683,7 @@
         "sqlmin": {
             "info": "https://github.com/bitst0rm",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -670,6 +702,7 @@
         "terser": {
             "info": "https://github.com/terser-js/terser",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {

@@ -212,6 +212,11 @@ The following settings example should give you direction on how to setup Formatt
             // The Quick Options feature can help in this scenario.
             "format_on_save": false,
 
+            // Auto formatting whenever code is pasted into the current file/view.
+            // The conditions and solution for this option are identical to those of
+            // the "format_on_save" option mentioned above.
+            "format_on_paste": false,
+
             // Create a new file containing formatted codes.
             // The value of this option is the suffix of the new file being renamed.
             // Suffix must be of type string. =true, =false and all other types imply =false

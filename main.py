@@ -79,6 +79,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
+        'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
         'recursive_folder_format': 'Enable Recursive Folder Format',
@@ -97,7 +98,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 option_status = '[-]' if config_values else '[x]'
             if key == 'save_quick_options':
                 option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
-            if key in ['layout', 'format_on_save', 'new_file_on_format'] and option_value:
+            if key in ['layout', 'format_on_paste', 'format_on_save', 'new_file_on_format'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
             else:
                 option_label = '{} {}'.format(option_status, title)
@@ -121,10 +122,27 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 common.config.setdefault('quick_options', {})['layout'] = layout_value
                 self.run()
 
+    def show_format_on_paste_menu(self):
+        uid_list = list(common.config.get('formatters', {}).keys())
+        uid_list.append('<< Back')
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_paste_menu_done(uid_list, uid_index))
+
     def show_format_on_save_menu(self):
         uid_list = list(common.config.get('formatters', {}).keys())
         uid_list.append('<< Back')
         self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_save_menu_done(uid_list, uid_index))
+
+    def on_format_on_paste_menu_done(self, uid_list, uid_index):
+        if uid_index != -1:
+            uid_value = uid_list[uid_index]
+            if uid_value == '<< Back':
+                self.show_main_menu()
+            else:
+                current_format_on_paste = common.config.setdefault('quick_options', {}).get('format_on_paste', [])
+                if uid_value not in current_format_on_paste:
+                    current_format_on_paste.append(uid_value)
+                    common.config.setdefault('quick_options', {})['format_on_paste'] = current_format_on_paste
+                self.run()
 
     def on_format_on_save_menu_done(self, uid_list, uid_index):
         if uid_index != -1:
@@ -161,6 +179,13 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             selected_option = self.options[index]
             if 'Choose Layout' in selected_option:
                 self.show_layout_menu()
+            elif 'Enable Format on Paste' in selected_option:
+                is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
+                if is_rff_on:
+                    self.prompt_error('ERROR: Format on Paste is not compatible with an enabled Recursive Folder Format.')
+                    self.run()
+                else:
+                    self.show_format_on_paste_menu()
             elif 'Enable Format on Save' in selected_option:
                 is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
                 if is_rff_on:
@@ -194,6 +219,12 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     common.enable_logging()
                 else:
                     common.disable_logging()
+            if config_key == 'recursive_folder_format':
+                is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_paste')
+                if option_value and is_fos_on:
+                    self.prompt_error('ERROR: Recursive Folder Format is not compatible with an enabled Format on Paste.')
+                    self.run()
+                    return
             if config_key == 'recursive_folder_format':
                 is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_save')
                 if option_value and is_fos_on:
@@ -722,7 +753,18 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(self.assign_layout('single')), 0)
 
+    def on_text_command(self, view, command_name, args):
+        if command_name in ['paste', 'paste_and_indent']:
+            sublime.set_timeout_async(lambda: self._on_paste_or_save(view, opkey='format_on_paste'), 100)
+            return None
+
     def on_pre_save(self, view):
+        self._on_paste_or_save(view, opkey='format_on_save')
+
+    def _on_paste_or_save(self, view, opkey=None):
+        if not opkey:
+            return None
+
         used_syntaxes = set()
         is_selected = any(not sel.empty() for sel in view.sel())
         is_qo_mode = self.is_quick_options_mode()
@@ -730,13 +772,13 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         formatters = common.config.get('formatters')
 
         def should_skip_formatter(uid, value):
-            if not isinstance(value, dict):
+            if not isinstance(value, dict) or value.get('disable', True):
                 return True
-            if (is_qo_mode and uid not in self.query(common.config, [], 'quick_options', 'format_on_save')) or (not is_qo_mode and not value.get('format_on_save', False)):
+            if (is_qo_mode and uid not in self.query(common.config, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
                 return True
             if (is_qo_mode and is_rff_on) or (not is_qo_mode and self.query(value, False, 'recursive_folder_format', 'enable')):
                 mode = 'Quick Options' if is_qo_mode else 'User Settings'
-                log.info('%s mode: %s has the "format_on_save" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid)
+                log.info('%s mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid, opkey)
                 return True
             return False
 
@@ -752,7 +794,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
                 region = sublime.Region(0, view.size())
             syntax = self.get_assigned_syntax(view=view, uid=uid, region=region)
             if syntax in value.get('syntaxes', []) and syntax not in used_syntaxes:
-                log.debug('"format_on_save" enabled for ID: %s, using syntax: %s', uid, syntax)
+                log.debug('"%s" enabled for ID: %s, using syntax: %s', opkey, uid, syntax)
                 SingleFormat(view, uid=uid).run()
                 used_syntaxes.add(syntax)
 

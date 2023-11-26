@@ -327,6 +327,7 @@ def build_formatter_sublime_settings_children(formatter_map):
             child = OrderedDict([
                 ('info', config['source']),
                 ('disable', False),
+                ('format_on_paste', False),
                 ('format_on_save', False),
                 ('new_file_on_format', False),
                 ('recursive_folder_format', OrderedDict([
@@ -443,6 +444,11 @@ def build_formatter_sublime_settings(formatter_map):
             // execution order between the two, and determining your favorist is not possible.
             // The Quick Options feature can help in this scenario.'''),
                     ('format_on_save', False),
+                    ('__COMMENT__format_on_paste', '''
+            // Auto formatting whenever code is pasted into the current file/view.
+            // The conditions and solution for this option are identical to those of
+            // the "format_on_save" option mentioned above.'''),
+                    ('format_on_paste', False),
                     ('__COMMENT__new_file_on_format', '''
             // Create a new file containing formatted codes.
             // The value of this option is the suffix of the new file being renamed.
