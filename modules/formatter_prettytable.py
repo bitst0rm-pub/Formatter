@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'prettytable',
     'type': 'beautifier',
     'syntaxes': ['csv', 'text'],
+    'exclude_syntaxes': None,
     "executable_path": None,
     'args': None,
     'config_path': {

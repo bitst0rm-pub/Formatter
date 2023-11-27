@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'yapf',
     'type': 'beautifier',
     'syntaxes': ['python'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

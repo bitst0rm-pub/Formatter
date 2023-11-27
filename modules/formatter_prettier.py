@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'prettier',
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

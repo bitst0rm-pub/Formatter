@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'shfmt',
     'type': 'beautifier',
     'syntaxes': ['bash'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'sqlformatter',
     'type': 'beautifier',
     'syntaxes': ['sql'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

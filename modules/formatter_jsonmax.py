@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'jsonmax',
     'type': 'beautifier',
     'syntaxes': ['json'],
+    'exclude_syntaxes': None,
     "executable_path": None,
     'args': None,
     'config_path': {

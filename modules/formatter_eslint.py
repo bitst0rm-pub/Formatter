@@ -22,6 +22,7 @@ MODULE_CONFIG = {
     'uid': 'eslint',
     'type': 'beautifier',
     'syntaxes': ['js'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': ['--resolve-plugins-relative-to', '/path/to/javascript/node_modules'],
     'config_path': {

@@ -20,6 +20,7 @@ MODULE_CONFIG = {
     'uid': 'shfmtmin',
     'type': 'minifier',
     'syntaxes': ['bash'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': None,

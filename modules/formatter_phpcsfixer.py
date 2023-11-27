@@ -24,6 +24,7 @@ MODULE_CONFIG = {
     'uid': 'phpcsfixer',
     'type': 'beautifier',
     'syntaxes': ['php'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

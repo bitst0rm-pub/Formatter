@@ -20,6 +20,7 @@ MODULE_CONFIG = {
     'uid': 'swiftformat',
     'type': 'beautifier',
     'syntaxes': ['swift'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

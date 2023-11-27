@@ -23,6 +23,7 @@ MODULE_CONFIG = {
     'uid': 'prettydiffmin',
     'type': 'minifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

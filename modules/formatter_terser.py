@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'terser',
     'type': 'minifier',
     'syntaxes': ['js'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

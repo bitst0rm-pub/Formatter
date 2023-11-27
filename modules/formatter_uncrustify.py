@@ -20,6 +20,7 @@ MODULE_CONFIG = {
     'uid': 'uncrustify',
     'type': 'beautifier',
     'syntaxes': ['c', 'c++', 'cs', 'd', 'es', 'objc', 'objc++', 'java', 'pawn', 'vala'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

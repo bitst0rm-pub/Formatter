@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'csscomb',
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'sass', 'less'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

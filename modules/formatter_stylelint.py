@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'stylelint',
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'sass', 'less', 'sss', 'sugarss'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': ['--config-basedir', '/path/to/javascript/node_modules'],
     'config_path': {

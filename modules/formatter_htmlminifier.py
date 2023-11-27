@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'htmlminifier',
     'type': 'minifier',
     'syntaxes': ['html', 'xml'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

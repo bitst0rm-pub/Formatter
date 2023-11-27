@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'perltidy',
     'type': 'beautifier',
     'syntaxes': ['perl'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

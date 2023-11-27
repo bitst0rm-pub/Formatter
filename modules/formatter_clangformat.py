@@ -22,6 +22,7 @@ MODULE_CONFIG = {
     'uid': 'clangformat',
     'type': 'beautifier',
     'syntaxes': ['c', 'cs', 'c++', 'objc', 'objc++', 'js', 'tsx', 'jsx', 'json', 'java', 'proto', 'protodevel', 'td', 'sv', 'svh', 'v', 'vh'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

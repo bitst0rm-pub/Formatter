@@ -21,6 +21,7 @@ MODULE_CONFIG = {
     'uid': 'rubocop',
     'type': 'beautifier',
     'syntaxes': ['ruby'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

@@ -22,6 +22,7 @@ MODULE_CONFIG = {
     'uid': 'cleancss',
     'type': 'minifier',
     'syntaxes': ['css', 'scss', 'sass', 'less'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {

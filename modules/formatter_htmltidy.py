@@ -20,6 +20,7 @@ MODULE_CONFIG = {
     'uid': 'htmltidy',
     'type': 'beautifier',
     'syntaxes': ['html', 'xml'],
+    'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
     'config_path': {
