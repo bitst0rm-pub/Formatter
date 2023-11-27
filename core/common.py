@@ -689,9 +689,15 @@ class Base(Module):
     def is_text_file(self, file_path):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
-                next(f)
+                try:
+                    # Attempt to read the first line
+                    next(f)
+                except StopIteration:
+                    # If the file is empty, return False
+                    return False
             return True
         except UnicodeDecodeError:
+            # If a UnicodeDecodeError occurs, the file is not a text file
             return False
 
     def get_unique(self, data):
