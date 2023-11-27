@@ -13,6 +13,7 @@ import os
 import re
 import sys
 import json
+import time
 import shutil
 import hashlib
 import logging
@@ -174,14 +175,31 @@ class Module(object):
                         env=self.update_environ(), shell=IS_WINDOWS, startupinfo=info)
         return process
 
+    def kill(self, process):
+        try:
+            if self.is_alive(process):
+                process.terminate()
+                process.wait()
+                time.sleep(1)
+            if self.is_alive(process):
+                process.kill()
+                process.wait()
+        except Exception as e:
+            log.error('Error terminating process: %s', e)
+
+    def is_alive(self, process):
+        return process.poll() is None
+
     def exec_com(self, cmd):
         process = self.popen(cmd)
         stdout, stderr = process.communicate()
+        self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def exec_cmd(self, cmd):
         process = self.popen(cmd)
         stdout, stderr = process.communicate(self.get_text_from_region(self.region).encode('utf-8'))
+        self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def get_text_from_region(self, region):
