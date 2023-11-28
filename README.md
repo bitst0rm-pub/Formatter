@@ -7,6 +7,7 @@ Key features:
 - Support for more than 20 major programming languages
 - Capability to format entire file, single or multi selections
 - Capability to format entire folder recursively
+- Works with both saved and unsaved files
 - Shared config files available for each 3rd-party plugin
 - Displays real-time word and character counts
 - Automatically remembers and restores text position
@@ -516,7 +517,7 @@ INTERPRETERS = ['node']                                     # optional: case-sen
 EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
 MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
     'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
-    'name': 'My First Plugin',                              # REQUIRED: a free-styled plugin name, preferably short and comprehensive
+    'name': 'My First Plugin',                              # REQUIRED: a freely chosen plugin name, preferably short and comprehensive
     'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
     'type': 'minifier',                                     # REQUIRED: "minifier" OR "beautifier" (both defaults), OR "converter" (for other purposes, e.g., Text-to-QR),
                                                             #           OR any string of your choice (for private purposes).
@@ -581,21 +582,21 @@ Do not forget to update/adjust your _User_ settings:<br/>
 ### 3. APIs:
 
 The entire set of Formatter APIs can be found in the file: `core > common.py`<br/>
-The responsibility for processing plugin modules lies with the methods of the class: `class Module(object)`<br/>
+Responsible for handling plugin modules is the class: `class Module(object)`<br/>
 Starting from version 1.1.0, all previous APIs have been deprecated. Please update to the new APIs accordingly:
 
 - Essentially for the `def get_cmd(self)` function:
 
 ```py
-# A alias of get_interpreter(), get_executable() and get_args(uid) together;
-# runtime_type=(None|'node'|'python'|'perl'|'ruby') to activate searching for the local executable
+# An alias for get_interpreter(), get_executable() and get_args() together
+# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search
 cmd = self.get_combo_cmd(runtime_type=None)
 
-# Get the interpreter path or None;
+# Get the interpreter path or None
 interpreter = self.get_interpreter()
 
-# Get the executable path or None;
-# runtime_type=(None|'node'|'python'|'perl'|'ruby') to activate searching for the local executable
+# Get the executable path or None
+# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search
 executable = self.get_executable(runtime_type=None)
 
 # Get the input arguments "args" from the User settings or None
@@ -607,8 +608,16 @@ path = self.get_config_path()
 # Get the detected syntax of the current file or None
 syntax = self.get_assigned_syntax()
 
-# Get a dictionary of file path components: {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None
+# Get a dictionary of file path components:
+# {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None
 components = self.get_pathinfo()
+
+# Create and get the temp file path
+# Useful for plugins lacking a built-in mechanism to fix files inplace
+tmp_file = self.create_tmp_file(suffix=None)
+
+# Remove temp file
+self.remove_tmp_file(tmp_file)
 
 # To finally process the "fix_commands" option, just right before exec_cmd()
 cmd = self.fix_cmd(cmd)
@@ -617,7 +626,7 @@ cmd = self.fix_cmd(cmd)
 - Essentially for the `def format(self)` function:
 
 ```py
-# To quick test cmd
+# To quickly perform a formal test on the command
 is_valid = self.is_valid_cmd(cmd)
 
 # To process the formatting with all input (fixed) arguments
