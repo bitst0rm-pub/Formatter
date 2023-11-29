@@ -194,7 +194,21 @@ The following settings example should give you direction on how to setup Formatt
         "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"]
     },
 
-    // THIRD-PARTY FORMATTING PLUGINS
+    // This option addresses the syntaxes impact described in "format_on_save."
+    // It serves as a global helper and only applies to the following options:
+    // 1. "format_on_save"
+    // 2. "format_on_paste"
+    // To use this option the "format_on_save" and/or "format_on_paste" options
+    // at the plugins level must also be enabled. This option takes precedence
+    // over the syntaxes specified there.
+    // All syntaxes in this option must be unique without any duplicates.
+    "format_on_unique": {
+        "enable": false,
+        "jsbeautifier": ["css", "js"],
+        "black": ["python"]
+    },
+
+    // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "example": {
             // Disable and remove plugin from being shown in the menu.
@@ -202,7 +216,7 @@ The following settings example should give you direction on how to setup Formatt
 
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes, the first plugin takes precedence.
+            // For multi plugins with the same syntaxes, the first plugin takes precedence.
             // Remove the identical syntaxes from one of the plugins to avoid conflicts.
             // For example:
             // Plugin A (enabled): syntaxes ["css", "js"]
@@ -210,12 +224,13 @@ The following settings example should give you direction on how to setup Formatt
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
-            // The Quick Options feature can help in this scenario.
+            // Solution: Use the Quick Options feature or the "format_on_unique" option,
+            // as both are designed for this purpose to help in this scenario.
             "format_on_save": false,
 
             // Auto formatting whenever code is pasted into the current file/view.
-            // The conditions and solution for this option are identical to those of
-            // the "format_on_save" option mentioned above.
+            // The syntaxes dilemma and solutions for this option are identical to
+            // those of the "format_on_save" option mentioned above.
             "format_on_paste": false,
 
             // Create a new file containing formatted codes.

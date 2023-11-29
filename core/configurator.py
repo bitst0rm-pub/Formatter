@@ -425,8 +425,22 @@ def build_formatter_sublime_settings(formatter_map):
                 ('GEM_PATH', []),
                 ('PYTHONPATH', [])
             ])),
+            ('__COMMENT__format_on_unique', '''
+    // This option addresses the syntaxes impact described in "format_on_save."
+    // It serves as a global helper and only applies to the following options:
+    // 1. "format_on_save"
+    // 2. "format_on_paste"
+    // To use this option the "format_on_save" and/or "format_on_paste" options
+    // at the plugins level must also be enabled. This option takes precedence
+    // over the syntaxes specified there.
+    // All syntaxes in this option must be unique without any duplicates.'''),
+            ('format_on_unique', OrderedDict([
+                ('enable', False),
+                ('jsbeautifier', NoIndent(['css', 'js'])),
+                ('black', NoIndent(['python']))
+            ])),
             ('__COMMENT__formatters', '''
-    // THIRD-PARTY FORMATTING PLUGINS'''),
+    // THIRD-PARTY PLUGINS LEVEL'''),
             ('formatters', OrderedDict([
                 ('example', OrderedDict([
                     ('__COMMENT__disable', '''// Disable and remove plugin from being shown in the menu.'''),
@@ -434,7 +448,7 @@ def build_formatter_sublime_settings(formatter_map):
                     ('__COMMENT__format_on_save', '''
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
-            // For plugins with the same syntaxes, the first plugin takes precedence.
+            // For multi plugins with the same syntaxes, the first plugin takes precedence.
             // Remove the identical syntaxes from one of the plugins to avoid conflicts.
             // For example:
             // Plugin A (enabled): syntaxes ["css", "js"]
@@ -442,12 +456,13 @@ def build_formatter_sublime_settings(formatter_map):
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
-            // The Quick Options feature can help in this scenario.'''),
+            // Solution: Use the Quick Options feature or the "format_on_unique" option,
+            // as both are designed for this purpose to help in this scenario.'''),
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file/view.
-            // The conditions and solution for this option are identical to those of
-            // the "format_on_save" option mentioned above.'''),
+            // The syntaxes dilemma and solutions for this option are identical to
+            // those of the "format_on_save" option mentioned above.'''),
                     ('format_on_paste', False),
                     ('__COMMENT__new_file_on_format', '''
             // Create a new file containing formatted codes.
@@ -518,7 +533,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
-            // In this case the key must be named: "default"
+            // In this case, the key must be named: "default"
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
             // Do not use the reference files with suffix '.master.' directly.

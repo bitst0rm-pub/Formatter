@@ -79,6 +79,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
+        'format_on_unique': 'Enable Format on Unique',
         'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
@@ -219,6 +220,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     common.enable_logging()
                 else:
                     common.disable_logging()
+            if config_key == 'format_on_unique':
+                if option_value:
+                    self.prompt_error('INFO: Format on Unique requires at least an enabled Format on Save and/or Format on Paste in this Quick Options mode.\n\nDue to the limited UI design of Sublime Text panel, you must input your unique syntaxes through References > Package Settings > Formatter > Settings > "format_on_unique" if not already done before.')
             if config_key == 'recursive_folder_format':
                 is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_paste')
                 if option_value and is_fos_on:
@@ -765,38 +769,81 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         if not opkey:
             return None
 
-        used_syntaxes = set()
-        is_selected = any(not sel.empty() for sel in view.sel())
+        unique = common.config.get('format_on_unique', None)
         is_qo_mode = self.is_quick_options_mode()
-        is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
+        is_fou_on = self.query(common.config, False, 'quick_options', 'format_on_unique')
+
+        if unique and isinstance(unique, dict) and ((is_qo_mode and is_fou_on) or unique.get('enable', False)):
+            self._on_paste_or_save__unique(view, unique, opkey)
+        else:
+            self._on_paste_or_save__regular(view, opkey)
+
+    def _on_paste_or_save__unique(self, view, unique, opkey):
+        def are_unique_values(unique):
+            flat_values = [value for key, values_list in unique.items() if key != 'enable' for value in values_list]
+            return (len(flat_values) == len(set(flat_values)))
+
         formatters = common.config.get('formatters')
 
-        def should_skip_formatter(uid, value):
-            if not isinstance(value, dict) or value.get('disable', True):
-                return True
-            if (is_qo_mode and uid not in self.query(common.config, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
-                return True
-            if (is_qo_mode and is_rff_on) or (not is_qo_mode and self.query(value, False, 'recursive_folder_format', 'enable')):
-                mode = 'Quick Options' if is_qo_mode else 'User Settings'
-                log.info('%s mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid, opkey)
-                return True
-            return False
+        if are_unique_values(unique):
+            for uid, value in unique.items():
+                if uid == 'enable':
+                    continue
+
+                v = self.query(formatters, None, uid)
+                if self._on_paste_or_save__should_skip_formatter(uid, v, opkey):
+                    continue
+
+                syntax = self._on_paste_or_save__get_syntax(view, uid)
+                if syntax in value:
+                    SingleFormat(view, uid=uid).run()
+                    break
+        else:
+            self.prompt_error('ERROR: There are duplicate syntaxes in your "format_on_unique" option setting. Please sort them out.')
+
+    def _on_paste_or_save__regular(self, view, opkey):
+        seen = set()
+        formatters = common.config.get('formatters')
 
         for uid, value in formatters.items():
-            if should_skip_formatter(uid, value):
+            if self._on_paste_or_save__should_skip_formatter(uid, value, opkey):
                 continue
 
-            if is_selected:
-                # Selections: find the first non-empty region or use the first region if all are empty
-                region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
-            else:
-                # Entire file
-                region = sublime.Region(0, view.size())
-            syntax = self.get_assigned_syntax(view=view, uid=uid, region=region)
-            if syntax in value.get('syntaxes', []) and syntax not in used_syntaxes:
+            syntax = self._on_paste_or_save__get_syntax(view, uid)
+            if syntax in value.get('syntaxes', []) and syntax not in seen:
                 log.debug('"%s" enabled for ID: %s, using syntax: %s', opkey, uid, syntax)
                 SingleFormat(view, uid=uid).run()
-                used_syntaxes.add(syntax)
+                seen.add(syntax)
+
+    def _on_paste_or_save__should_skip_formatter(self, uid, value, opkey):
+        is_qo_mode = self.is_quick_options_mode()
+        is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
+
+        if not isinstance(value, dict) or value.get('disable', True):
+            return True
+
+        if (is_qo_mode and uid not in self.query(common.config, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
+            return True
+
+        if (is_qo_mode and is_rff_on) or (not is_qo_mode and self.query(value, False, 'recursive_folder_format', 'enable')):
+            mode = 'Quick Options' if is_qo_mode else 'User Settings'
+            log.info('%s mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid, opkey)
+            return True
+
+        return False
+
+    def _on_paste_or_save__get_syntax(self, view, uid):
+        is_selected = any(not sel.empty() for sel in view.sel())
+
+        if is_selected:
+            # Selections: find the first non-empty region or use the first region if all are empty
+            region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
+        else:
+            # Entire file
+            region = sublime.Region(0, view.size())
+
+        syntax = self.get_assigned_syntax(view=view, uid=uid, region=region)
+        return syntax
 
     def on_post_save(self, view):
         if common.config.get('debug') and common.config.get('dev'):

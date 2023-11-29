@@ -567,6 +567,7 @@ class Base(Module):
                 'sync_scroll': self.query(settings, False, 'layout', 'sync_scroll')
             },
             'environ': settings.get('environ', {}),
+            'format_on_unique': settings.get('format_on_unique', {}),
             'formatters': settings.get('formatters', {})
         }
 
