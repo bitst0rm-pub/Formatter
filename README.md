@@ -339,46 +339,10 @@ The following settings example should give you direction on how to setup Formatt
                 ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
-        "beautysh": {
-            "info": "https://github.com/lovesegfault/beautysh",
-            "disable": false,
-            "format_on_save": false,
-            "new_file_on_format": false,
-            "recursive_folder_format": {
-                "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
-                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
-                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
-                "exclude_syntaxes": []
-            },
-            "syntaxes": ["bash"],
-            "executable_path": "${packages}/User/MyFolder/python/bin/beautysh",
-            "config_path": {
-                "default": "${packages}/User/formatter.assets/config/beautysh_rc.json"
-            }
-        },
-        "htmltidy": {
-            "info": "https://github.com/htacg/tidy-html5",
-            "disable": false,
-            "format_on_save": false,
-            "new_file_on_format": false,
-            "recursive_folder_format": {
-                "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
-                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
-                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
-                "exclude_syntaxes": []
-            },
-            "syntaxes": ["html", "xml"],
-            "executable_path": "${packages}/User/formatter.assets/bin/tidy",
-            "config_path": {
-                "html": "${packages}/User/formatter.assets/config/htmltidy_html_rc.cfg",
-                "xml": "${packages}/User/formatter.assets/config/htmltidy_xml_rc.cfg"
-            }
-        },
         "stylelint": {
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
@@ -398,6 +362,7 @@ The following settings example should give you direction on how to setup Formatt
         "uncrustify": {
             "info": "https://github.com/uncrustify/uncrustify",
             "disable": false,
+            "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
             "recursive_folder_format": {
