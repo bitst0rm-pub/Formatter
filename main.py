@@ -757,9 +757,9 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(self.assign_layout('single')), 0)
 
-    def on_text_command(self, view, command_name, args):
+    def on_post_text_command(self, view, command_name, args):
         if command_name in ['paste', 'paste_and_indent']:
-            sublime.set_timeout_async(lambda: self._on_paste_or_save(view, opkey='format_on_paste'), 100)
+            self._on_paste_or_save(view, opkey='format_on_paste')
             return None
 
     def on_pre_save(self, view):

@@ -194,7 +194,7 @@ The following settings example should give you direction on how to setup Formatt
         "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"]
     },
 
-    // This option addresses the syntaxes impact described in "format_on_save."
+    // This option addresses the syntaxes impact described in "format_on_save".
     // It serves as a global helper and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"

@@ -426,7 +426,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('PYTHONPATH', [])
             ])),
             ('__COMMENT__format_on_unique', '''
-    // This option addresses the syntaxes impact described in "format_on_save."
+    // This option addresses the syntaxes impact described in "format_on_save".
     // It serves as a global helper and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"
