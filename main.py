@@ -9,7 +9,10 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
+import os
+import sys
 import time
+import json
 import logging
 import traceback
 import threading
@@ -48,7 +51,7 @@ def plugin_loaded():
         else:
             is_enabled = common.config.get('debug')
         common.enable_logging() if is_enabled else common.disable_logging()
-    log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, common.sys.version_info[:3])))
+    log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 
@@ -61,8 +64,8 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
         seen = set()
 
-        config_dir = common.join(sublime.packages_path(), 'User', common.ASSETS_DIRECTORY, 'config')
-        if common.isdir(config_dir):
+        config_dir = os.path.join(sublime.packages_path(), 'User', common.ASSETS_DIRECTORY, 'config')
+        if os.path.isdir(config_dir):
             self.window.run_command('open_dir', {'dir': config_dir})
             seen.add(config_dir)
 
@@ -70,7 +73,7 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
             for path in formatter.get('config_path', {}).values():
                 if path and isinstance(path, str):
                     dirpath = self.get_pathinfo(path)['cwd']
-                    if common.isdir(dirpath) and dirpath not in seen:
+                    if os.path.isdir(dirpath) and dirpath not in seen:
                         self.window.run_command('open_dir', {'dir': dirpath})
                         seen.add(dirpath)
 
@@ -241,7 +244,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     def save_qo_config_file(self, json_data):
         file = self.quick_options_config_file()
         with open(file, 'w', encoding='utf-8') as f:
-            common.json.dump(json_data, f, ensure_ascii=False, indent=4)
+            json.dump(json_data, f, ensure_ascii=False, indent=4)
 
 
 class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
@@ -357,7 +360,7 @@ class SingleFormat(common.Base):
                 window.focus_group(0)
 
             file_path = self.view.file_name()
-            new_path = '{0}.{2}{1}'.format(*common.splitext(file_path) + (suffix,)) if file_path and common.isfile(file_path) else None
+            new_path = '{0}.{2}{1}'.format(*os.path.splitext(file_path) + (suffix,)) if file_path and os.path.isfile(file_path) else None
             self.view.run_command('transfer_content_view', {'path': new_path})
             sublime.set_timeout(self.undo_history, 250)
 
@@ -568,7 +571,7 @@ class RecursiveFormat(common.Base):
     def get_post_format_cwd(self, is_success):
         base_directory = self.CONTEXT['cwd']
         sub_directory = common.RECURSIVE_SUCCESS_DIRECTORY if is_success else common.RECURSIVE_FAILURE_DIRECTORY
-        return common.join(base_directory, sub_directory)
+        return os.path.join(base_directory, sub_directory)
 
     def show_result(self, is_success):
         if is_success:
@@ -584,7 +587,7 @@ class RecursiveFormat(common.Base):
         cwd = self.get_pathinfo(new_file_path)['cwd']
 
         try:
-            common.os.makedirs(cwd, exist_ok=True)
+            os.makedirs(cwd, exist_ok=True)
             text = new_view.substr(sublime.Region(0, new_view.size()))
             with open(new_file_path, 'w', encoding='utf-8') as f:
                 f.write(text)
@@ -596,7 +599,7 @@ class RecursiveFormat(common.Base):
         if is_success:
             suffix = self.get_new_file_suffix()
             if suffix and isinstance(suffix, str):
-                new_file_path = '{0}.{2}{1}'.format(*common.splitext(new_file_path) + (suffix,))
+                new_file_path = '{0}.{2}{1}'.format(*os.path.splitext(new_file_path) + (suffix,))
         return new_file_path
 
     def get_new_file_suffix(self):
@@ -651,7 +654,7 @@ class RecursiveFormat(common.Base):
 
     def handle_error(self, error, cwd=None, file_path=None):
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
-        if cwd and (error.errno != common.os.errno.EEXIST):
+        if cwd and (error.errno != os.errno.EEXIST):
             log.error('Could not create directory: %s', cwd)
             self.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
         if file_path:
