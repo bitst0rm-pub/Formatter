@@ -51,6 +51,14 @@
                 }
             },
             {
+                "caption": "Gofmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "gofmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "HTML Tidy",
                 "command": "run_format",
                 "args": {

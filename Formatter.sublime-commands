@@ -52,6 +52,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Gofmt",
+        "command": "run_format",
+        "args": {
+            "uid": "gofmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with HTML Tidy",
         "command": "run_format",
         "args": {

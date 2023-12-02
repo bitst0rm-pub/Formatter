@@ -13,37 +13,35 @@ import logging
 from ..core import common
 
 log = logging.getLogger(__name__)
-INTERPRETERS = ['node']
-EXECUTABLES = ['terser']
+EXECUTABLES = ['gofmt']
 MODULE_CONFIG = {
-    'source': 'https://github.com/terser-js/terser',
-    'name': 'Terser',
-    'uid': 'terser',
-    'type': 'minifier',
-    'syntaxes': ['js'],
+    'source': 'https://pkg.go.dev/cmd/gofmt',
+    'name': 'Gofmt',
+    'uid': 'gofmt',
+    'type': 'beautifier',
+    'syntaxes': ['go'],
     'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
-    'config_path': {
-        'default': 'terser_rc.json'
-    }
+    'config_path': None,
+    'comment': 'no config'
 }
 
 
-class TerserFormatter(common.Module):
+class GofmtFormatter(common.Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def get_cmd(self):
-        cmd = self.get_combo_cmd(runtime_type='node')
-        if not cmd:
+        executable = self.get_executable(runtime_type=None)
+        if not executable:
             return None
 
-        path = self.get_config_path()
-        if path:
-            cmd.extend(['--config-file', path])
+        cmd = [executable]
 
-        cmd.extend(['--compress', '--mangle', '--'])
+        cmd.extend(self.get_args())
+
+        cmd.extend(['-e', '-s'])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)
