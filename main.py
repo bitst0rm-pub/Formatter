@@ -89,7 +89,8 @@ class ConfigManagerCommand(sublime_plugin.WindowCommand, common.Base):
         file_paths_to_zip = [
             self.quick_options_config_file(),
             os.path.join(sublime.packages_path(), 'User', 'Formatter.sublime-settings'),
-            SESSION_FILE,
+            os.path.join(sublime.packages_path(), 'User', 'Default (' + sublime.platform().upper() + ').sublime-keymap'),
+            SESSION_FILE
         ]
 
         config_paths = [
