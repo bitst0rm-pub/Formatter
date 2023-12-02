@@ -327,6 +327,25 @@
                                 "caption": "-"
                             },
                             {
+                                "caption": "Backup Settings",
+                                "mnemonic": "B",
+                                "command": "config_manager",
+                                "args": {
+                                    "type": "backup"
+                                }
+                            },
+                            {
+                                "caption": "Restore Settings",
+                                "mnemonic": "R",
+                                "command": "config_manager",
+                                "args": {
+                                    "type": "restore"
+                                }
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
                                 "caption": "Version Info",
                                 "mnemonic": "V",
                                 "command": "show_version"

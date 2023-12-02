@@ -13,8 +13,10 @@ import re
 import uuid
 import json
 import logging
-import sublime
 from collections import OrderedDict
+
+import sublime
+
 from . import common
 from ..modules import __all__ as formatter_map
 
@@ -162,6 +164,23 @@ def build_main_sublime_menu(formatter_map):
                                     ('command', 'open_file'),
                                     ('args', OrderedDict([
                                         ('file', '${packages}/User/Default (${platform}).sublime-keymap')
+                                    ]))
+                                ]),
+                                OrderedDict([
+                                    ('caption', '-')
+                                ]),
+                                OrderedDict([
+                                    ('caption', 'Backup Settings'),
+                                    ('command', 'config_manager'),
+                                    ('args', OrderedDict([
+                                        ('type', 'backup')
+                                    ]))
+                                ]),
+                                OrderedDict([
+                                    ('caption', 'Restore Settings'),
+                                    ('command', 'config_manager'),
+                                    ('args', OrderedDict([
+                                        ('type', 'restore')
                                     ]))
                                 ]),
                                 OrderedDict([
