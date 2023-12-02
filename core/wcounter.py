@@ -10,8 +10,10 @@
 # @license      The MIT License (MIT)
 
 import logging
+
 import sublime
 import sublime_plugin
+
 from . import common
 
 log = logging.getLogger(__name__)

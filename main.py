@@ -458,7 +458,6 @@ class SingleFormat(common.Base):
 
 class ReplaceContentViewCommand(sublime_plugin.TextCommand):
     def run(self, edit, result, region):
-        log.debug('Replacing text ...')
         self.view.replace(edit, sublime.Region(region[0], region[1]), result)
 
 
@@ -715,7 +714,7 @@ class RecursiveFormat(common.Base):
 
     def show_completion_message(self):
         success_rate = '{:.2f}'.format((self.CONTEXT['success_count'] / self.CONTEXT['filelist_length']) * 100)
-        sublime.message_dialog('Formatting COMPLETED!\n\nSuccess Rate: %s%%\n\nPlease check the results in:\n%s' % (success_rate, self.CONTEXT['cwd']))
+        self.popup_message('Formatting COMPLETED!\n\nSuccess Rate: %s%%\n\nPlease check the results in:\n%s' % (success_rate, self.CONTEXT['cwd']), 'INFO', dialog=True)
 
     def reset_context(self):
         for key, value in self.CONTEXT.items():

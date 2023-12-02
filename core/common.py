@@ -18,11 +18,14 @@ import shutil
 import hashlib
 import logging
 import tempfile
+
 import sublime
+
 if sys.version_info < (3, 4):
     from imp import reload
 else:
     from importlib import reload
+
 from subprocess import Popen, PIPE
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     normcase, normpath, pathsep, split, splitext, dirname)

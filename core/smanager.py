@@ -13,9 +13,11 @@ import os
 import json
 import logging
 import threading
+from datetime import datetime, timedelta
+
 import sublime
 import sublime_plugin
-from datetime import datetime, timedelta
+
 from . import common
 
 log = logging.getLogger(__name__)
