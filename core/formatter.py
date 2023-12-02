@@ -30,7 +30,7 @@ class Formatter(common.Module):
         if formatter_plugin:
             syntax = self.get_assigned_syntax()
             if not syntax:
-                self.prompt_error('Syntax out of the scope.', 'ID:' + self.uid)
+                self.popup_message('Syntax out of the scope.', 'ID:' + self.uid)
             else:
                 file = self.view.file_name()
                 log.debug('Target: %s', file if file else '(view)')

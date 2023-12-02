@@ -186,14 +186,14 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             elif 'Enable Format on Paste' in selected_option:
                 is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
                 if is_rff_on:
-                    self.prompt_error('ERROR: Format on Paste is not compatible with an enabled Recursive Folder Format.')
+                    self.popup_message('Format on Paste is not compatible with an enabled Recursive Folder Format.', 'ERROR')
                     self.run()
                 else:
                     self.show_format_on_paste_menu()
             elif 'Enable Format on Save' in selected_option:
                 is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
                 if is_rff_on:
-                    self.prompt_error('ERROR: Format on Save is not compatible with an enabled Recursive Folder Format.')
+                    self.popup_message('Format on Save is not compatible with an enabled Recursive Folder Format.', 'ERROR')
                     self.run()
                 else:
                     self.show_format_on_save_menu()
@@ -225,17 +225,17 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     common.disable_logging()
             if config_key == 'format_on_unique':
                 if option_value:
-                    self.prompt_error('INFO: Format on Unique requires at least an enabled Format on Save and/or Format on Paste in this Quick Options mode.\n\nDue to the limited UI design of Sublime Text panel, you must input your unique syntaxes through References > Package Settings > Formatter > Settings > "format_on_unique" if not already done before.')
+                    self.popup_message('Format on Unique requires at least an enabled Format on Save and/or Format on Paste in this Quick Options mode.\n\nDue to the limited UI design of Sublime Text panel, you must input your unique syntaxes through References > Package Settings > Formatter > Settings > "format_on_unique" if not already done before.', 'INFO')
             if config_key == 'recursive_folder_format':
                 is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_paste')
                 if option_value and is_fos_on:
-                    self.prompt_error('ERROR: Recursive Folder Format is not compatible with an enabled Format on Paste.')
+                    self.popup_message('Recursive Folder Format is not compatible with an enabled Format on Paste.', 'ERROR')
                     self.run()
                     return
             if config_key == 'recursive_folder_format':
                 is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_save')
                 if option_value and is_fos_on:
-                    self.prompt_error('ERROR: Recursive Folder Format is not compatible with an enabled Format on Save.')
+                    self.popup_message('Recursive Folder Format is not compatible with an enabled Format on Save.', 'ERROR')
                     self.run()
                     return
             common.config.setdefault('quick_options', {})[config_key] = option_value
@@ -282,7 +282,7 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
                 recursive_format_thread = threading.Thread(target=recursive_format.run)
                 recursive_format_thread.start()
         else:
-            self.prompt_error('ERROR: Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.')
+            self.popup_message('Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.', 'ERROR')
 
     def run_single_formatting(self, **kwargs):
         with threading.Lock():
@@ -457,7 +457,7 @@ class TransferContentViewCommand(sublime_plugin.TextCommand, common.Base):
                 file.write(allcontent)
         except OSError as e:
             log.error('Could not save file: %s\n%s', path, e)
-            self.prompt_error('ERROR: Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.')
+            self.popup_message('Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.', 'ERROR')
 
     def show_status_on_new_file(self, view):
         if view.is_loading():
@@ -656,10 +656,10 @@ class RecursiveFormat(common.Base):
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
         if cwd and (error.errno != os.errno.EEXIST):
             log.error('Could not create directory: %s', cwd)
-            self.prompt_error('ERROR: Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.', cwd)
+            self.popup_message('Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.' % cwd, 'ERROR')
         if file_path:
             log.error('Could not save file: %s', file_path)
-            self.prompt_error('ERROR: Could not save file: %s\nError mainly appears due to a lack of necessary permissions.', file_path)
+            self.popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
 
 
 class SequenceFormatThread(threading.Thread, common.Base):
@@ -802,7 +802,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
                     SingleFormat(view, uid=uid).run()
                     break
         else:
-            self.prompt_error('ERROR: There are duplicate syntaxes in your "format_on_unique" option setting. Please sort them out.')
+            self.popup_message('There are duplicate syntaxes in your "format_on_unique" option setting. Please sort them out.', 'ERROR')
 
     def _on_paste_or_save__regular(self, view, opkey):
         seen = set()

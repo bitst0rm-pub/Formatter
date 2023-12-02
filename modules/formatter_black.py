@@ -46,7 +46,7 @@ class BlackFormatter(common.Module):
 
                 if StrictVersion(version) >= StrictVersion('3.7.0'):
                     return True
-                self.prompt_error('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
+                self.popup_message('Current Python version: %s\nBlack requires a minimum Python 3.7.0.' % version, 'ID:' + self.uid)
             return False
         except OSError:
             log.error('Error occurred while validating Python compatibility.')

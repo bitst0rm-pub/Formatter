@@ -451,12 +451,14 @@ class Module(object):
     def is_valid_cmd(self, cmd):
         return all(isinstance(x, str) for x in cmd) if cmd and isinstance(cmd, list) else False
 
-    def prompt_error(self, text, name=None):
-        if name:
-            string = u'%s (%s):\n\n%s' % (PACKAGE_NAME, name, text)
+    def popup_message(self, text, title=None, dialog=False):
+        template = u'%s' + (u' (%s)' if title else '') + u':\n\n%s'
+        message = template % (PACKAGE_NAME, title, text) if title else template % (PACKAGE_NAME, text)
+
+        if dialog:
+            sublime.message_dialog(message)
         else:
-            string = u'%s:\n\n%s' % (PACKAGE_NAME, text)
-        sublime.error_message(string)
+            sublime.error_message(message)
 
 
 class Base(Module):

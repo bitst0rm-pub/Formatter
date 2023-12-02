@@ -48,7 +48,7 @@ class PhpcsfixerFormatter(common.Module):
 
                 if StrictVersion(version) >= StrictVersion('7.4.0'):
                     return True
-                self.prompt_error('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
+                self.popup_message('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
             return False
         except OSError:
             log.error('Error occurred while validating PHP compatibility.')
