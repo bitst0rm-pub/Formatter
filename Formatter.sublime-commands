@@ -60,6 +60,22 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Gofumpt",
+        "command": "run_format",
+        "args": {
+            "uid": "gofumpt",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Goimports",
+        "command": "run_format",
+        "args": {
+            "uid": "goimports",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with HTML Tidy",
         "command": "run_format",
         "args": {

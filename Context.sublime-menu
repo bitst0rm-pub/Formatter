@@ -59,6 +59,22 @@
                 }
             },
             {
+                "caption": "Gofumpt",
+                "command": "run_format",
+                "args": {
+                    "uid": "gofumpt",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Goimports",
+                "command": "run_format",
+                "args": {
+                    "uid": "goimports",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "HTML Tidy",
                 "command": "run_format",
                 "args": {

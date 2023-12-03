@@ -72,6 +72,24 @@
                         }
                     },
                     {
+                        "caption": "Gofumpt",
+                        "mnemonic": "G",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "gofumpt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Goimports",
+                        "mnemonic": "G",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "goimports",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "HTML Tidy",
                         "mnemonic": "H",
                         "command": "run_format",

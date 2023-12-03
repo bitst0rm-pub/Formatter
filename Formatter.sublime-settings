@@ -310,6 +310,40 @@
             "executable_path": ""
             /* no config */
         },
+        "gofumpt": {
+            "info": "https://github.com/mvdan/gofumpt",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["go"],
+            "executable_path": ""
+            /* no config */
+        },
+        "goimports": {
+            "info": "https://pkg.go.dev/golang.org/x/tools/cmd/goimports",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["go"],
+            "executable_path": ""
+            /* no config */
+        },
         "htmltidy": {
             "info": "https://github.com/htacg/tidy-html5",
             "disable": false,
