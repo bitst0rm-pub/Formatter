@@ -171,6 +171,15 @@
                         }
                     },
                     {
+                        "caption": "ShellCheck",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "shellcheck",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Shfmt",
                         "mnemonic": "S",
                         "command": "run_format",

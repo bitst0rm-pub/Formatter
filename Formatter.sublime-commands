@@ -148,6 +148,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with ShellCheck",
+        "command": "run_format",
+        "args": {
+            "uid": "shellcheck",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Shfmt",
         "command": "run_format",
         "args": {

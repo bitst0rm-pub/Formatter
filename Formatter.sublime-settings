@@ -519,6 +519,26 @@
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
         },
+        "shellcheck": {
+            "info": "https://github.com/koalaman/shellcheck",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["bash"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/shellcheck_rc.cfg"
+            }
+            /* limited autofix, no formatting capability */
+        },
         "shfmt": {
             "info": "https://github.com/mvdan/sh",
             "disable": false,

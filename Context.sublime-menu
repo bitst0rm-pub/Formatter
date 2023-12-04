@@ -147,6 +147,14 @@
                 }
             },
             {
+                "caption": "ShellCheck",
+                "command": "run_format",
+                "args": {
+                    "uid": "shellcheck",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Shfmt",
                 "command": "run_format",
                 "args": {
