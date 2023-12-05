@@ -189,6 +189,15 @@
                         }
                     },
                     {
+                        "caption": "Rustfmt",
+                        "mnemonic": "R",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "rustfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ShellCheck",
                         "mnemonic": "S",
                         "command": "run_format",

@@ -558,6 +558,25 @@
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
         },
+        "rustfmt": {
+            "info": "https://github.com/rust-lang/rustfmt",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["rust"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/rustfmt_rc.toml"
+            }
+        },
         "shellcheck": {
             "info": "https://github.com/koalaman/shellcheck",
             "disable": false,

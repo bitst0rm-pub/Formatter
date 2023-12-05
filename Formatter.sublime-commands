@@ -164,6 +164,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Rustfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "rustfmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ShellCheck",
         "command": "run_format",
         "args": {

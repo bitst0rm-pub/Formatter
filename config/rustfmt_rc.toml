@@ -1,0 +1,392 @@
+# This config file is complete and entirely based on default values.
+# https://github.com/rust-lang/rustfmt/blob/master/Configurations.md
+# Update: 2023-12-05
+
+array_width = 60
+# Maximum width of an array literal before falling back to vertical formatting.
+# Default value: 60
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+attr_fn_like_width = 70
+# Maximum width of the args of a function-like attributes before falling back to vertical formatting.
+# Default value: 70
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+binop_separator = "Front"
+# Where to put a binary operator when a binary expression goes multiline.
+# Default value: "Front"
+# Possible values: "Front", "Back"
+
+blank_lines_lower_bound = 0
+# Minimum number of blank lines which must be put between items. If two items have fewer blank lines between them, additional blank lines are inserted.
+# Default value: 0
+# Possible values: unsigned integer
+
+blank_lines_upper_bound = 1
+# Maximum number of blank lines which can be put between items. If more than this number of consecutive empty lines are found, they are trimmed down to match this integer.
+# Default value: 1
+# Possible values: any non-negative integer
+
+brace_style = "SameLineWhere"
+# Brace style for items
+# Default value: "SameLineWhere"
+# Possible values: "AlwaysNextLine", "PreferSameLine", "SameLineWhere"
+
+chain_width = 60
+# Maximum width of a chain to fit on one line.
+# Default value: 60
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+combine_control_expr = true
+# Combine control expressions with function calls.
+# Default value: true
+# Possible values: true, false
+
+comment_width = 80
+# Maximum length of comments. No effect unless wrap_comments = true.
+# Default value: 80
+# Possible values: any positive integer
+
+condense_wildcard_suffixes = false
+# Replace strings of _ wildcards by a single .. in tuple patterns
+# Default value: false
+# Possible values: true, false
+
+control_brace_style = "AlwaysSameLine"
+# Brace style for control flow constructs
+# Default value: "AlwaysSameLine"
+# Possible values: "AlwaysNextLine", "AlwaysSameLine", "ClosingNextLine"
+
+disable_all_formatting = false
+# Don't reformat anything.
+# Note that this option may be soft-deprecated in the future once the ignore option is stabilized. Nightly toolchain users are encouraged to use ignore instead when possible.
+# Default value: false
+# Possible values: true, false
+
+edition = "2015"
+# Specifies which edition is used by the parser.
+# Default value: "2015"
+# Possible values: "2015", "2018", "2021"
+
+empty_item_single_line = true
+# Put empty-body functions and impls on a single line
+# Default value: true
+# Possible values: true, false
+
+enum_discrim_align_threshold = 0
+# The maximum length of enum variant having discriminant, that gets vertically aligned with others. Variants without discriminants would be ignored for the purpose of alignment.
+# Note that this is not how much whitespace is inserted, but instead the longest variant name that doesn't get ignored when aligning.
+# Default value : 0
+# Possible values: any positive integer
+
+error_on_line_overflow = false
+# Error if Rustfmt is unable to get all lines within max_width, except for comments and string literals. If this happens, then it is a bug in Rustfmt. You might be able to work around the bug by refactoring your code to avoid long/complex expressions, usually by extracting a local variable or using a shorter name.
+# Default value: false
+# Possible values: true, false
+
+error_on_unformatted = false
+# Error if unable to get comments or string literals within max_width, or they are left with trailing whitespaces.
+# Default value: false
+# Possible values: true, false
+
+fn_args_layout = "Tall"
+# This option is deprecated and has been renamed to fn_params_layout to better communicate that it affects the layout of parameters in function signatures.
+# Default value: "Tall"
+# Possible values: "Compressed", "Tall", "Vertical"
+
+fn_call_width = 60
+# Maximum width of the args of a function call before falling back to vertical formatting.
+# Default value: 60
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+fn_params_layout = "Tall"
+# Control the layout of parameters in function signatures.
+# Default value: "Tall"
+# Possible values: "Compressed", "Tall", "Vertical"
+
+fn_single_line = false
+# Put single-expression functions on a single line
+# Default value: false
+# Possible values: true, false
+
+force_explicit_abi = true
+# Always print the abi for extern items
+# Default value: true
+# Possible values: true, false
+
+force_multiline_blocks = false
+# Force multiline closure and match arm bodies to be wrapped in a block
+# Default value: false
+# Possible values: false, true
+
+format_code_in_doc_comments = false
+# Format code snippet included in doc comments.
+# Default value: false
+# Possible values: true, false
+
+doc_comment_code_block_width = 100
+# Max width for code snippets included in doc comments. Only used if format_code_in_doc_comments is true.
+# Default value: 100
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+format_generated_files = true
+# Format generated files. A file is considered generated if any of the first five lines contain a @generated comment marker. By default, generated files are reformatted, i. e. @generated marker is ignored. This option is currently ignored for stdin (@generated in stdin is ignored.)
+# Default value: true
+# Possible values: true, false
+
+format_macro_matchers = false
+# Format the metavariable matching patterns in macros.
+# Default value: false
+# Possible values: true, false
+
+format_macro_bodies = true
+# Format the bodies of macros.
+# Default value: true
+# Possible values: true, false
+
+skip_macro_invocations = []
+# Skip formatting the bodies of macro invocations with the following names.
+# rustfmt will not format any macro invocation for macros with names set in this list. Including the special value "*" will prevent any macro invocations from being formatted.
+# Note: This option does not have any impact on how rustfmt formats macro definitions.
+# Default value: []
+# Possible values: a list of macro name idents, ["name_0", "name_1", ..., "*"]
+
+format_strings = false
+# Format string literals where necessary
+# Default value: false
+# Possible values: true, false
+
+hard_tabs = false
+# Use tab characters for indentation, spaces for alignment
+# Default value: false
+# Possible values: true, false
+
+hex_literal_case = "Preserve"
+# Control the case of the letters in hexadecimal literal values
+# Default value: Preserve
+# Possible values: Preserve, Upper, Lower
+
+hide_parse_errors = false
+# Do not show parse errors if the parser failed to parse files.
+# Default value: false
+# Possible values: true, false
+
+imports_indent = "Block"
+# Indent style of imports
+# Default Value: "Block"
+# Possible values: "Block", "Visual"
+
+imports_layout = "Mixed"
+# Item layout inside a imports block
+# Default value: "Mixed"
+# Possible values: "Horizontal", "HorizontalVertical", "Mixed", "Vertical"
+
+indent_style = "Block"
+# Indent on expressions or items.
+# Default value: "Block"
+# Possible values: "Block", "Visual"
+
+inline_attribute_width = 0
+# Write an item and its attribute on the same line if their combined width is below a threshold
+# Default value: 0
+# Possible values: any positive integer
+
+match_arm_blocks = true
+# Controls whether arm bodies are wrapped in cases where the first line of the body cannot fit on the same line as the => operator.
+# The Style Guide requires that bodies are block wrapped by default if a line break is required after the =>, but this option can be used to disable that behavior to prevent wrapping arm bodies in that event, so long as the body does not contain multiple statements nor line comments.
+# Default value: true
+# Possible values: true, false
+
+match_arm_leading_pipes = "Never"
+# Controls whether to include a leading pipe on match arms
+# Default value: Never
+# Possible values: Always, Never, Preserve
+
+match_block_trailing_comma = false
+# Put a trailing comma after a block based match arm (non-block arms are not affected)
+# Default value: false
+# Possible values: true, false
+
+max_width = 100
+# Maximum width of each line
+# Default value: 100
+# Possible values: any positive integer
+
+merge_derives = true
+# Merge multiple derives into a single one.
+# Default value: true
+# Possible values: true, false
+
+imports_granularity = "Preserve"
+# Controls how imports are structured in use statements. Imports will be merged or split to the configured level of granularity.
+# Similar to other import related configuration options, this option operates within the bounds of user-defined groups of imports. See group_imports for more information on import groups.
+# Note that rustfmt will not modify the granularity of imports containing comments if doing so could potentially lose or misplace said comments.
+# Default value: Preserve
+# Possible values: Preserve, Crate, Module, Item, One
+
+merge_imports = false
+# This option is deprecated. Use imports_granularity = "Crate" instead.
+# Default value: false
+# Possible values: true, false
+
+newline_style = "Auto"
+# Unix or Windows line endings
+# Default value: "Auto"
+# Possible values: "Auto", "Native", "Unix", "Windows"
+
+normalize_comments = false
+# Convert /* */ comments to // comments where possible
+# Default value: false
+# Possible values: true, false
+
+normalize_doc_attributes = false
+# Convert #![doc] and #[doc] attributes to //! and /// doc comments.
+# Default value: false
+# Possible values: true, false
+
+overflow_delimited_expr = false
+# When structs, slices, arrays, and block/array-like macros are used as the last argument in an expression list, allow them to overflow (like blocks/closures) instead of being indented on a new line.
+# Default value: false
+# Possible values: true, false
+
+remove_nested_parens = true
+# Remove nested parens.
+# Default value: true,
+# Possible values: true, false
+
+reorder_impl_items = false
+# Reorder impl items. type and const are put first, then macros and methods.
+# Default value: false
+# Possible values: true, false
+
+reorder_imports = true
+# Reorder import and extern crate statements alphabetically in groups (a group is separated by a newline).
+# Default value: true
+# Possible values: true, false
+
+group_imports = "Preserve"
+# Controls the strategy for how consecutive imports are grouped together.
+# Controls the strategy for grouping sets of consecutive imports. Imports may contain newlines between imports and still be grouped together as a single set, but other statements between imports will result in different grouping sets.
+# Default value: Preserve
+# Possible values: Preserve, StdExternalCrate, One
+
+reorder_modules = true
+# Reorder mod declarations alphabetically in group.
+# Default value: true
+# Possible values: true, false
+
+short_array_element_width_threshold = 10
+# The width threshold for an array element to be considered "short".
+# The layout of an array is dependent on the length of each of its elements. If the length of every element in an array is below this threshold (all elements are "short") then the array can be formatted in the mixed/compressed style, but if any one element has a length that exceeds this threshold then the array elements will have to be formatted vertically.
+# Default value: 10
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+skip_children = false
+# Don't reformat out of line modules
+# Default value: false
+# Possible values: true, false
+
+single_line_if_else_max_width = 50
+# Maximum line length for single line if-else expressions. A value of 0 (zero) results in if-else expressions always being broken into multiple lines. Note this occurs when use_small_heuristics is set to Off.
+# Default value: 50
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+single_line_let_else_max_width = 50
+# Maximum line length for single line let-else statements. See the let-else statement section of the Rust Style Guide for more details on when a let-else statement may be written on a single line. A value of 0 (zero) means the divergent else block will always be formatted over multiple lines. Note this occurs when use_small_heuristics is set to Off.
+# By default this option is set as a percentage of max_width provided by use_small_heuristics, but a value set directly for single_line_let_else_max_width will take precedence.
+# Default value: 50
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+space_after_colon = true
+# Leave a space after the colon.
+# Default value: true
+# Possible values: true, false
+
+space_before_colon = false
+# Leave a space before the colon.
+# Default value: false
+# Possible values: true, false
+
+spaces_around_ranges = false
+# Put spaces around the .., ..=, and ... range operators
+# Default value: false
+# Possible values: true, false
+
+struct_field_align_threshold = 0
+# The maximum diff of width between struct fields to be aligned with each other.
+# Default value : 0
+# Possible values: any non-negative integer
+
+struct_lit_single_line = true
+# Put small struct literals on a single line
+# Default value: true
+# Possible values: true, false
+
+struct_lit_width = 18
+# Maximum width in the body of a struct literal before falling back to vertical formatting. A value of 0 (zero) results in struct literals always being broken into multiple lines. Note this occurs when use_small_heuristics is set to Off.
+# Default value: 18
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+struct_variant_width = 35
+# Maximum width in the body of a struct variant before falling back to vertical formatting. A value of 0 (zero) results in struct literals always being broken into multiple lines. Note this occurs when use_small_heuristics is set to Off.
+# Default value: 35
+# Possible values: any positive integer that is less than or equal to the value specified for max_width
+
+tab_spaces = 4
+# Number of spaces per tab
+# Default value: 4
+# Possible values: any positive integer
+
+trailing_comma = "Vertical"
+# How to handle trailing commas for lists
+# Default value: "Vertical"
+# Possible values: "Always", "Never", "Vertical"
+
+trailing_semicolon = true
+# Add trailing semicolon after break, continue and return
+# Default value: true
+# Possible values: true, false
+
+type_punctuation_density = "Wide"
+# Determines if + or = are wrapped in spaces in the punctuation of types
+# Default value: "Wide"
+# Possible values: "Compressed", "Wide"
+
+unstable_features = false
+# Enable unstable features on the unstable channel.
+# Default value: false
+# Possible values: true, false
+
+use_field_init_shorthand = false
+# Use field initialize shorthand if possible.
+# Default value: false
+# Possible values: true, false
+
+use_small_heuristics = "Default"
+# This option can be used to simplify the management and bulk updates of the granular width configuration settings (fn_call_width, attr_fn_like_width, struct_lit_width, struct_variant_width, array_width, chain_width, single_line_if_else_max_width), that respectively control when formatted constructs are multi-lined/vertical based on width.
+# Note that explicitly provided values for the width configuration settings take precedence and override the calculated values determined by use_small_heuristics.
+# Default value: "Default"
+# Possible values: "Default", "Off", "Max"
+
+use_try_shorthand = false
+# Replace uses of the try! macro by the ? shorthand
+# Default value: false
+# Possible values: true, false
+
+version = "One"
+# Which version of the formatting rules to use. Version::One is backwards-compatible with Rustfmt 1.0. Other versions are only backwards compatible within a major version number.
+# Default value: One
+# Possible values: One, Two
+
+where_single_line = false
+# Forces the where clause to be laid out on a single line.
+# Default value: false
+# Possible values: true, false
+
+wrap_comments = false
+# Break comments to fit on the line
+# Note that no wrapping will happen if:
+# The comment is the start of a markdown header doc comment
+# An URL was found in the comment
+# Default value: false
+# Possible values: true, false
