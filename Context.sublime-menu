@@ -19,6 +19,14 @@
                 }
             },
             {
+                "caption": "Autopep8",
+                "command": "run_format",
+                "args": {
+                    "uid": "autopep8",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Beautysh",
                 "command": "run_format",
                 "args": {

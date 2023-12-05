@@ -217,6 +217,25 @@
                 "default": "${packages}/User/formatter.assets/config/artistic_style_astyle_rc.ini"
             }
         },
+        "autopep8": {
+            "info": "https://github.com/hhatto/autopep8",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["python"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/autopep8_rc.cfg"
+            }
+        },
         "beautysh": {
             "info": "https://github.com/lovesegfault/beautysh",
             "disable": false,

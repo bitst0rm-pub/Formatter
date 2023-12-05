@@ -27,6 +27,15 @@
                         }
                     },
                     {
+                        "caption": "Autopep8",
+                        "mnemonic": "A",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "autopep8",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Beautysh",
                         "mnemonic": "B",
                         "command": "run_format",

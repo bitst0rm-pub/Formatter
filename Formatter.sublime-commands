@@ -20,6 +20,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Autopep8",
+        "command": "run_format",
+        "args": {
+            "uid": "autopep8",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Beautysh",
         "command": "run_format",
         "args": {
