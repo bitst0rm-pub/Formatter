@@ -18,6 +18,15 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Artistic Style",
+                        "mnemonic": "A",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "astyle",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Beautysh",
                         "mnemonic": "B",
                         "command": "run_format",

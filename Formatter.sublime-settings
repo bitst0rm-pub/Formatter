@@ -197,6 +197,26 @@
                 ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
+        "astyle": {
+            "info": "https://sourceforge.net/projects/astyle",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["c", "c++", "cs", "objc", "objc++", "java", "js"],
+            "executable_path": "",
+            "config_path": {
+                "java": "${packages}/User/formatter.assets/config/artistic_style_java_rc.ini",
+                "default": "${packages}/User/formatter.assets/config/artistic_style_astyle_rc.ini"
+            }
+        },
         "beautysh": {
             "info": "https://github.com/lovesegfault/beautysh",
             "disable": false,

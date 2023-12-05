@@ -12,6 +12,14 @@
         "command": "quick_options"
     },
     {
+        "caption": "Formatter: Beautify with Artistic Style",
+        "command": "run_format",
+        "args": {
+            "uid": "astyle",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Beautysh",
         "command": "run_format",
         "args": {

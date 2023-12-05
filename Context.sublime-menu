@@ -11,6 +11,14 @@
                 "caption": "-"
             },
             {
+                "caption": "Artistic Style",
+                "command": "run_format",
+                "args": {
+                    "uid": "astyle",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Beautysh",
                 "command": "run_format",
                 "args": {
