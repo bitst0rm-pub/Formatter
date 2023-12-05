@@ -45,7 +45,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
 **Plugins that work with Formatter:** _Need more? see_ [Development](#development)
 
-1. [Artistic Style (AStyle)](http://astyle.sourceforge.net/): A source code formatter for C, C++, C#, and Java that automatically adjusts the formatting to a specified style guide.
+1. [Artistic Style](https://astyle.sourceforge.net): A source code formatter for C, C++, C#, and Java that automatically adjusts the formatting to a specified style guide.
 2. [autopep8](https://github.com/hhatto/autopep8): A tool that automatically formats Python code to comply with the PEP 8 style guide.
 3. [Beautysh](https://github.com/lovesegfault/beautysh): A shell script beautifier that formats shell scripts for better readability.
 4. [Black](https://github.com/ambv/black): A code formatter for Python that enforces a consistent style by automatically reformatting Python code.
