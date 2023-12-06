@@ -413,8 +413,8 @@ def build_formatter_sublime_settings(formatter_map):
                 ('ignore_whitespace_char', True)
             ])),
             ('__COMMENT__remember_session', '''
-    // Remember and restore cursor position, selections, selected
-    // syntax and bookmarks each time a file is closed and re-opened.
+    // Remember and restore cursor position, selections and bookmarks
+    // each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.'''),
             ('remember_session', True),
             ('__COMMENT__layout', '''

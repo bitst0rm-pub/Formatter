@@ -172,8 +172,8 @@ The following settings example should give you direction on how to setup Formatt
         "ignore_whitespace_char": true
     },
 
-    // Remember and restore cursor position, selections, selected
-    // syntax and bookmarks each time a file is closed and re-opened.
+    // Remember and restore cursor position, selections and bookmarks
+    // each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
     "remember_session": true,
 

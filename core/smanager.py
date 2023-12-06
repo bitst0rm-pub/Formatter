@@ -161,7 +161,7 @@ class SessionManager:
             with self.lock:
                 self.add_entry(file_path, cursor_x, cursor_y)
                 self.add_selections(file_path, selections)
-                self.add_syntax(file_path, syntax)
+                # self.add_syntax(file_path, syntax)
                 self.add_bookmarks(file_path, bookmarks)
 
     def run_on_load(self, view):
@@ -182,7 +182,7 @@ class SessionManager:
 
                     # Restore selections, syntax, and bookmarks
                     self.restore_selections(view, file_path)
-                    self.restore_syntax(view, file_path)
+                    # self.restore_syntax(view, file_path)
                     self.restore_bookmarks(view, file_path)
 
 
