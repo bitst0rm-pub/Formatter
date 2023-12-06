@@ -1,0 +1,13 @@
+                CHANGELOG
+
+1.1.2:
+    - Fix: Removed session syntax completely from session manager (ref #39)
+      The "remember_session" option now only handles:
+        1. cursor position
+        2. selections
+        3. bookmarks
+      You can set "remember_session": true without encountering
+      issues with syntax packages.
+
+    - Added new modules:
+      rustfmt
