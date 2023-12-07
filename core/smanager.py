@@ -155,7 +155,7 @@ class SessionManager:
 
             # Get selections, syntax, and bookmarks and store them
             selections = [{'start': region.begin(), 'end': region.end()} for region in view.sel()]
-            syntax = view.settings().get('syntax')
+            # syntax = view.settings().get('syntax')
             bookmarks = self.get_bookmarks(view)
 
             with self.lock:
