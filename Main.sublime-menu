@@ -144,6 +144,15 @@
                         }
                     },
                     {
+                        "caption": "Ormolu",
+                        "mnemonic": "O",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "ormolu",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Perltidy",
                         "mnemonic": "P",
                         "command": "run_format",

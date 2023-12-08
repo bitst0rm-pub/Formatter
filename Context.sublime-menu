@@ -123,6 +123,14 @@
                 }
             },
             {
+                "caption": "Ormolu",
+                "command": "run_format",
+                "args": {
+                    "uid": "ormolu",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Perltidy",
                 "command": "run_format",
                 "args": {

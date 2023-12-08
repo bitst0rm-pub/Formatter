@@ -501,7 +501,7 @@ def build_formatter_sublime_settings(formatter_map):
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // might be useful for renaming if needed.
+            // might be useful for renaming at the same time if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.

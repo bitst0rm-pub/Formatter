@@ -108,7 +108,7 @@
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // might be useful for renaming if needed.
+            // might be useful for renaming at the same time if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.
@@ -463,6 +463,23 @@
                 "default": "${packages}/User/formatter.assets/config/jsonmax_rc.json"
             }
             /* build-in, no executable */
+        },
+        "ormolu": {
+            "info": "https://github.com/tweag/ormolu",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["haskell"],
+            "executable_path": ""
+            /* no config */
         },
         "perltidy": {
             "info": "https://github.com/perltidy/perltidy",
