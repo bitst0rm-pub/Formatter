@@ -53,31 +53,32 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 6. [CleanCSS](https://github.com/jakubpawlowicz/clean-css-cli): A command-line tool that minifies and optimizes CSS files, removing unnecessary spaces, comments, etc.
 7. [CSScomb](https://github.com/csscomb/csscomb.js): A coding style formatter for CSS files that rearranges properties in a predefined order.
 8. [ESLint](https://github.com/eslint/eslint): A popular linting tool for JavaScript that identifies and fixes common coding errors and enforces consistent code style.
-9. [Gofmt](https://pkg.go.dev/cmd/gofmt): A tool that formats Go code according to the Go Programming Language style guide.
-10. [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports): A tool that automatically updates your Go import lines, adding missing ones and removing unreferenced ones.
-11. [Gofumpt](https://github.com/mvdan/gofumpt): A stricter, opinionated fork of gofmt that enforces additional formatting rules for Go code.
-12. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, and other optimizations.
-13. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
-14. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
-15. JSONMax (built-in): A JSON beautifier.
-16. JSONMin (built-in): A JSON minifier.
-17. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
-18. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
-19. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various programming languages and focuses on code consistency.
-20. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
-21. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
-22. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read, though it remains executable.
-23. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
-24. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
-25. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
-26. [shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
-27. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
-28. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
-29. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
-30. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
-31. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables to make the code smaller.
-32. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
-33. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
+9. [Fourmolu](https://github.com/tweag/fourmolu): A formatter for Haskell source code, allowing arbitrary configuration.
+10. [Gofmt](https://pkg.go.dev/cmd/gofmt): A tool that formats Go code according to the Go Programming Language style guide.
+11. [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports): A tool that automatically updates your Go import lines, adding missing ones and removing unreferenced ones.
+12. [Gofumpt](https://github.com/mvdan/gofumpt): A stricter, opinionated fork of gofmt that enforces additional formatting rules for Go code.
+13. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, and other optimizations.
+14. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
+15. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
+16. JSONMax (built-in): A JSON beautifier.
+17. JSONMin (built-in): A JSON minifier.
+18. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
+19. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
+20. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various programming languages and focuses on code consistency.
+21. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
+22. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
+23. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read, though it remains executable.
+24. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
+25. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
+26. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
+27. [shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
+28. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
+29. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
+30. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
+31. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
+32. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables to make the code smaller.
+33. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
+34. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
 
 
 Note: This list does not contain the complete languages that each plugin does support.
@@ -101,6 +102,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Python | [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black), [autopep8](https://github.com/hhatto/autopep8) | [Python Minifier](https://github.com/dflook/python-minifier) | Python `>=3.7.0` | [Yes](https://python-minifier.com) |
 | Ruby | [RuboCop](https://github.com/rubocop-hq/rubocop) | -- | Ruby | -- |
 | Rust | [Rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
+| Haskell | [Fourmolu](https://github.com/fourmolu/fourmolu) | -- | Haskell | [Yes](https://fourmolu.github.io) |
 | Swift | [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
 | Bash, Shell | [`Beautysh`](https://github.com/lovesegfault/beautysh), [shfmt](https://github.com/mvdan/sh), [ShellCheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | `Python` | -- |
 | SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | SQLMin (build-in) | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |
@@ -175,6 +177,7 @@ The following settings example should give you direction on how to setup Formatt
     // Remember and restore cursor position, selections and bookmarks
     // each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
+    // It does not remember the whole session as one might assume.
     "remember_session": true,
 
     // Configure the layout when opening new files.
@@ -201,7 +204,8 @@ The following settings example should give you direction on how to setup Formatt
     "environ": {
         "PATH": [],
         "GEM_PATH": ["${HOME}/to/my/ruby"],
-        "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"]
+        "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"],
+        "OLALA": ["$HOME/.cabal/bin:$PATH", "~/.olala/bin:$PATH"]
     },
 
     // This option addresses the syntaxes impact described in "format_on_save".
@@ -239,7 +243,7 @@ The following settings example should give you direction on how to setup Formatt
             "format_on_save": false,
 
             // Auto formatting whenever code is pasted into the current file/view.
-            // The syntaxes dilemma and solutions for this option are identical to
+            // The syntaxes impact and its solutions for this option are identical to
             // those of the "format_on_save" option mentioned above.
             "format_on_paste": false,
 
@@ -286,7 +290,7 @@ The following settings example should give you direction on how to setup Formatt
             // A list of excluded syntaxes can be applied to all syntax definitions.
             // In this case, the key must be named: "all".
             // This option is useful to exclude part of the scope selector.
-            // For example: text.html.markdown, want html but wish to filter out markdown.
+            // For example: text.html.markdown, want html but wish to filter out html.markdown.
             "exclude_syntaxes": {
                 "html": ["markdown"],
                 "all": ["markdown"]

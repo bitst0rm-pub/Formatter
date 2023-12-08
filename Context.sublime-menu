@@ -67,6 +67,14 @@
                 }
             },
             {
+                "caption": "Fourmolu",
+                "command": "run_format",
+                "args": {
+                    "uid": "fourmolu",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Gofmt",
                 "command": "run_format",
                 "args": {

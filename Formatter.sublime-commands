@@ -68,6 +68,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Fourmolu",
+        "command": "run_format",
+        "args": {
+            "uid": "fourmolu",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Gofmt",
         "command": "run_format",
         "args": {

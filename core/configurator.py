@@ -141,7 +141,7 @@ def build_main_sublime_menu(formatter_map):
                                     ('args', OrderedDict([
                                         ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
                                         ('default', '// Do NOT edit anything in the left-hand pane.\n'
-                                                    '// Pick up items you need, but make sure to maintain the structure.\n'
+                                                    '// Pick up items you need, just make sure to maintain the structure.\n'
                                                     '{\n\t$0\n}\n')
                                     ]))
                                 ]),
@@ -415,7 +415,8 @@ def build_formatter_sublime_settings(formatter_map):
             ('__COMMENT__remember_session', '''
     // Remember and restore cursor position, selections and bookmarks
     // each time a file is closed and re-opened.
-    // This is helpful to resume your work from where you left off.'''),
+    // This is helpful to resume your work from where you left off.
+    // It does not remember the whole session as one might assume.'''),
             ('remember_session', True),
             ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
@@ -480,7 +481,7 @@ def build_formatter_sublime_settings(formatter_map):
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file/view.
-            // The syntaxes dilemma and solutions for this option are identical to
+            // The syntaxes impact and its solutions for this option are identical to
             // those of the "format_on_save" option mentioned above.'''),
                     ('format_on_paste', False),
                     ('__COMMENT__new_file_on_format', '''
@@ -527,7 +528,7 @@ def build_formatter_sublime_settings(formatter_map):
             // A list of excluded syntaxes can be applied to all syntax definitions.
             // In this case, the key must be named: "all".
             // This option is useful to exclude part of the scope selector.
-            // For example: text.html.markdown, want html but wish to filter out markdown.'''),
+            // For example: text.html.markdown, want html but wish to filter out html.markdown.'''),
                     ('exclude_syntaxes', OrderedDict([
                         ('html', NoIndent(['markdown'])),
                         ('all', NoIndent(['markdown']))

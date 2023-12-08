@@ -81,6 +81,15 @@
                         }
                     },
                     {
+                        "caption": "Fourmolu",
+                        "mnemonic": "F",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "fourmolu",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Gofmt",
                         "mnemonic": "G",
                         "command": "run_format",
@@ -359,7 +368,7 @@
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/Formatter/Formatter.sublime-settings",
-                                    "default": "// Do NOT edit anything in the left-hand pane.\n// Pick up items you need, but make sure to maintain the structure.\n{\n\t$0\n}\n"
+                                    "default": "// Do NOT edit anything in the left-hand pane.\n// Pick up items you need, just make sure to maintain the structure.\n{\n\t$0\n}\n"
                                 }
                             },
                             {
