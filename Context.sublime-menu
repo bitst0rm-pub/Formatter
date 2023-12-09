@@ -59,6 +59,14 @@
                 }
             },
             {
+                "caption": "Dart Format",
+                "command": "run_format",
+                "args": {
+                    "uid": "dartformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ESLint",
                 "command": "run_format",
                 "args": {

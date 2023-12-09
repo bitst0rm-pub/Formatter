@@ -313,6 +313,23 @@
                 "default": "${packages}/User/formatter.assets/config/csscomb_rc.json"
             }
         },
+        "dartformat": {
+            "info": "https://dart.dev/tools/dart-format",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["dart"],
+            "executable_path": ""
+            /* no config */
+        },
         "eslint": {
             "info": "https://github.com/eslint/eslint",
             "disable": false,

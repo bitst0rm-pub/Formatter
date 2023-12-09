@@ -60,6 +60,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Dart Format",
+        "command": "run_format",
+        "args": {
+            "uid": "dartformat",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ESLint",
         "command": "run_format",
         "args": {
