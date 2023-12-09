@@ -711,6 +711,25 @@
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
+        "stylishhaskell": {
+            "info": "https://github.com/haskell/stylish-haskell",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["haskell"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/stylish_haskell_rc.yaml"
+            }
+        },
         "swiftformat": {
             "info": "https://github.com/nicklockwood/SwiftFormat",
             "disable": false,

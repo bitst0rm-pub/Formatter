@@ -227,6 +227,14 @@
                 }
             },
             {
+                "caption": "Stylish Haskell",
+                "command": "run_format",
+                "args": {
+                    "uid": "stylishhaskell",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "SwiftFormat",
                 "command": "run_format",
                 "args": {

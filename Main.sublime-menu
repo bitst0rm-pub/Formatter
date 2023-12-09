@@ -261,6 +261,15 @@
                         }
                     },
                     {
+                        "caption": "Stylish Haskell",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "stylishhaskell",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "SwiftFormat",
                         "mnemonic": "S",
                         "command": "run_format",

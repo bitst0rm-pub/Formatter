@@ -228,6 +228,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Stylish Haskell",
+        "command": "run_format",
+        "args": {
+            "uid": "stylishhaskell",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with SwiftFormat",
         "command": "run_format",
         "args": {
