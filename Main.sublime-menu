@@ -270,6 +270,15 @@
                         }
                     },
                     {
+                        "caption": "SVGO",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "svgomax",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "SwiftFormat",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -359,6 +368,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sqlmin",
+                            "type": "minifier"
+                        }
+                    },
+                    {
+                        "caption": "SVGO (min)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "svgomin",
                             "type": "minifier"
                         }
                     },

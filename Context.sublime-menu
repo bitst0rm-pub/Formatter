@@ -235,6 +235,14 @@
                 }
             },
             {
+                "caption": "SVGO",
+                "command": "run_format",
+                "args": {
+                    "uid": "svgomax",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "SwiftFormat",
                 "command": "run_format",
                 "args": {
@@ -314,6 +322,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sqlmin",
+                    "type": "minifier"
+                }
+            },
+            {
+                "caption": "SVGO (min)",
+                "command": "run_format",
+                "args": {
+                    "uid": "svgomin",
                     "type": "minifier"
                 }
             },

@@ -730,6 +730,25 @@
                 "default": "${packages}/User/formatter.assets/config/stylish_haskell_rc.yaml"
             }
         },
+        "svgomax": {
+            "info": "https://github.com/svg/svgo",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["svg"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/svgomax_rc.js"
+            }
+        },
         "swiftformat": {
             "info": "https://github.com/nicklockwood/SwiftFormat",
             "disable": false,
@@ -917,6 +936,25 @@
                 "default": "${packages}/User/formatter.assets/config/sqlmin_rc.json"
             }
             /* build-in, no executable */
+        },
+        "svgomin": {
+            "info": "https://github.com/svg/svgo",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["svg"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/svgomin_rc.js"
+            }
         },
         "terser": {
             "info": "https://github.com/terser-js/terser",
