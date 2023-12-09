@@ -403,6 +403,25 @@
             "executable_path": ""
             /* no config */
         },
+        "hindent": {
+            "info": "https://github.com/mihaimaruseac/hindent",
+            "disable": false,
+            "format_on_paste": false,
+            "format_on_save": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["haskell"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/hindent_rc.yaml"
+            }
+        },
         "htmltidy": {
             "info": "https://github.com/htacg/tidy-html5",
             "disable": false,

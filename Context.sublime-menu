@@ -99,6 +99,14 @@
                 }
             },
             {
+                "caption": "Hindent",
+                "command": "run_format",
+                "args": {
+                    "uid": "hindent",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "HTML Tidy",
                 "command": "run_format",
                 "args": {

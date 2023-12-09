@@ -100,6 +100,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Hindent",
+        "command": "run_format",
+        "args": {
+            "uid": "hindent",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with HTML Tidy",
         "command": "run_format",
         "args": {

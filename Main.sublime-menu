@@ -117,6 +117,15 @@
                         }
                     },
                     {
+                        "caption": "Hindent",
+                        "mnemonic": "H",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "hindent",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "HTML Tidy",
                         "mnemonic": "H",
                         "command": "run_format",

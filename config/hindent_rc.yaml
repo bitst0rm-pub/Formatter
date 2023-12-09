@@ -1,0 +1,16 @@
+# Update: 2023-12-09
+
+# Desired length of lines (default: 80)
+line-length: 80
+
+# Indentation size in spaces (default: 2)
+indent-size: 2
+
+# Don't force a trailing newline (default: false)
+no-force-newline: false
+
+# Sort imports in groups (default: true)
+sort-imports: true
+
+# Language extension
+X: []
