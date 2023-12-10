@@ -18,6 +18,15 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "ASMfmt",
+                        "mnemonic": "A",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "asmfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Artistic Style",
                         "mnemonic": "A",
                         "command": "run_format",

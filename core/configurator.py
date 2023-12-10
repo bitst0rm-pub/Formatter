@@ -432,18 +432,19 @@ def build_formatter_sublime_settings(formatter_map):
             ('__COMMENT__environ', '''
     // A set of directories where executable programs are located.
     // It can be absolute paths to module directories, python zipfiles.
-    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
-    // can be added here.
+    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, GOPATH,
+    // GOROOT, GOBIN, TMPDIR, WHATEVER, etc. can be added here.
     // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
     // from terminal. But it is only temporary in the memory and will only apply
-    // for the current formatting session.
+    // for the current formatting session. Your system environment remains untouched.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
     // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.'''),
             ('environ', OrderedDict([
                 ('PATH', []),
                 ('GEM_PATH', []),
-                ('PYTHONPATH', [])
+                ('PYTHONPATH', []),
+                ('OLALA', [])
             ])),
             ('__COMMENT__format_on_unique', '''
     // This option addresses the syntaxes impact described in "format_on_save".

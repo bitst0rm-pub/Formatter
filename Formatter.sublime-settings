@@ -39,18 +39,19 @@
 
     // A set of directories where executable programs are located.
     // It can be absolute paths to module directories, python zipfiles.
-    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, TMPDIR etc.
-    // can be added here.
+    // Any environment variables like PATH, PYTHONPATH, GEM_PATH, GOPATH,
+    // GOROOT, GOBIN, TMPDIR, WHATEVER, etc. can be added here.
     // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
     // from terminal. But it is only temporary in the memory and will only apply
-    // for the current formatting session.
+    // for the current formatting session. Your system environment remains untouched.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
     // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     "environ": {
         "PATH": [],
         "GEM_PATH": [],
-        "PYTHONPATH": []
+        "PYTHONPATH": [],
+        "OLALA": []
     },
 
     // This option addresses the syntaxes impact described in "format_on_save".
@@ -197,6 +198,23 @@
                 [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
                 ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
             ]
+        },
+        "asmfmt": {
+            "info": "https://github.com/klauspost/asmfmt",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["asm"],
+            "executable_path": ""
+            /* no config */
         },
         "astyle": {
             "info": "https://sourceforge.net/projects/astyle",
