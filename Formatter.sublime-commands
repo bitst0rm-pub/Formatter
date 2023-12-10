@@ -164,6 +164,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with NASMfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "nasmfmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Ormolu",
         "command": "run_format",
         "args": {

@@ -163,6 +163,14 @@
                 }
             },
             {
+                "caption": "NASMfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "nasmfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Ormolu",
                 "command": "run_format",
                 "args": {

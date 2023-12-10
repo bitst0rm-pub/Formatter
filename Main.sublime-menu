@@ -189,6 +189,15 @@
                         }
                     },
                     {
+                        "caption": "NASMfmt",
+                        "mnemonic": "N",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "nasmfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Ormolu",
                         "mnemonic": "O",
                         "command": "run_format",

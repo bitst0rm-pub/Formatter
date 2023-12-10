@@ -1,0 +1,7 @@
+# Update: 2023-12-11
+
+# Indentation for comments in spaces (default 40)
+ci: 40
+
+# Indentation for instructions in spaces (default 8)
+ii: 8
