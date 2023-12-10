@@ -346,8 +346,8 @@ def build_formatter_sublime_settings_children(formatter_map):
             child = OrderedDict([
                 ('info', config['source']),
                 ('disable', False),
-                ('format_on_paste', False),
                 ('format_on_save', False),
+                ('format_on_paste', False),
                 ('new_file_on_format', False),
                 ('recursive_folder_format', OrderedDict([
                     ('enable', False),

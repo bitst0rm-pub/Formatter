@@ -51,6 +51,14 @@
                 }
             },
             {
+                "caption": "Crystal",
+                "command": "run_format",
+                "args": {
+                    "uid": "crystal",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "CSScomb",
                 "command": "run_format",
                 "args": {

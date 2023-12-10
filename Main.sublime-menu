@@ -63,6 +63,15 @@
                         }
                     },
                     {
+                        "caption": "Crystal",
+                        "mnemonic": "C",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "crystal",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "CSScomb",
                         "mnemonic": "C",
                         "command": "run_format",
