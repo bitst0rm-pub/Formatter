@@ -59,33 +59,34 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 12. [Gofmt](https://pkg.go.dev/cmd/gofmt): A tool that formats Go code according to the Go Programming Language style guide.
 13. [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports): A tool that automatically updates your Go import lines and removes unreferenced ones.
 14. [Gofumpt](https://github.com/mvdan/gofumpt): A stricter, opinionated fork of gofmt that enforces additional formatting rules for Go code.
-15. [Hindent](https://github.com/mihaimaruseac/hindent): A Haskell code formatter that formats code according to a consistent style guide.
-16. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, etc.
-17. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
-18. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
-19. JSONMax (built-in): A JSON beautifier.
-20. JSONMin (built-in): A JSON minifier.
-21. [Ormolu](https://github.com/tweag/ormolu): A formatter for Haskell source code, with a focus on strict and consistent style.
-22. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
-23. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
-24. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various languages and focuses on code consistency.
-25. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
-26. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
-27. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read.
-28. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
-29. [Rubyfmt](https://github.com/fables-tales/rubyfmt): A Ruby code formatter that aims to provide consistent formatting for Ruby code.
-30. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
-31. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
-32. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
-33. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
-34. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
-35. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
-36. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
-37. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
-38. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
-39. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
-40. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
-41. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
+15. [Google Java Format](https://github.com/google/google-java-format): A tool that reformats Java code to comply with the Google Java Style Guide.
+16. [Hindent](https://github.com/mihaimaruseac/hindent): A Haskell code formatter that formats code according to a consistent style guide.
+17. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, etc.
+18. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
+19. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
+20. JSONMax (built-in): A JSON beautifier.
+21. JSONMin (built-in): A JSON minifier.
+22. [Ormolu](https://github.com/tweag/ormolu): A formatter for Haskell source code, with a focus on strict and consistent style.
+23. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
+24. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
+25. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various languages and focuses on code consistency.
+26. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
+27. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
+28. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read.
+29. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
+30. [Rubyfmt](https://github.com/fables-tales/rubyfmt): A Ruby code formatter that aims to provide consistent formatting for Ruby code.
+31. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
+32. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
+33. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
+34. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
+35. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
+36. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
+37. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
+38. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
+39. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
+40. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
+41. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
+42. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
 
 
 And now a same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
@@ -111,6 +112,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Ruby | [`RuboCop`](https://github.com/rubocop-hq/rubocop), [rubyfmt](https://github.com/fables-tales/rubyfmt) | -- | `Ruby`, None | -- |
 | Rust | [Rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
 | Haskell | [Ormolu](https://github.com/tweag/ormolu), [`Fourmolu`](https://github.com/fourmolu/fourmolu), [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell) | -- | Haskell | [`Yes`](https://fourmolu.github.io) |
+| Java | [`Google Java Format`](https://github.com/google/google-java-format), [Uncrustify](https://github.com/uncrustify/uncrustify), [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html), [Artistic Style](https://sourceforge.net/projects/astyle) | -- | `Java`, None | -- |
 | Dart | [Dart Format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Swift | [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
 | Crystal | [Crystal](https://github.com/crystal-lang/crystal) | -- | None | -- |

@@ -115,6 +115,14 @@
                 }
             },
             {
+                "caption": "Google Java Format",
+                "command": "run_format",
+                "args": {
+                    "uid": "googlejavaformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Hindent",
                 "command": "run_format",
                 "args": {

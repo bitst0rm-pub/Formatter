@@ -437,6 +437,25 @@
             "executable_path": ""
             /* no config */
         },
+        "googlejavaformat": {
+            "info": "https://github.com/google/google-java-format",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["java"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/google_java_format_rc.yaml"
+            }
+        },
         "hindent": {
             "info": "https://github.com/mihaimaruseac/hindent",
             "disable": false,

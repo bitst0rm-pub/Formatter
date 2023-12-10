@@ -1,0 +1,19 @@
+# Update: 2023-12-10
+
+# Use AOSP style instead of Google Style (4-space indentation).
+aosp: true
+
+# Fix import order and remove any unused imports, but do no other formatting (choices: false, or true).
+fix-imports-only: false
+
+# Do not fix the import order. Unused imports will still be removed (choices: false, or true).
+skip-sorting-imports: false
+
+# Do not remove unused imports. Imports will still be sorted (choices: false, or true).
+skip-removing-unused-imports: false
+
+# Do not reflow string literals that exceed the column limit (choices: false, or true).
+skip-reflowing-long-strings: false
+
+# Do not reformat javadoc (choices: false, or true).
+skip-javadoc-formatting: false

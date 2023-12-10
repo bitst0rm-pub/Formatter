@@ -135,6 +135,15 @@
                         }
                     },
                     {
+                        "caption": "Google Java Format",
+                        "mnemonic": "G",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "googlejavaformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Hindent",
                         "mnemonic": "H",
                         "command": "run_format",
