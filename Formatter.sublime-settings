@@ -648,6 +648,23 @@
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
         },
+        "rubyfmt": {
+            "info": "https://github.com/fables-tales/rubyfmt",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["ruby"],
+            "executable_path": ""
+            /* no config */
+        },
         "rustfmt": {
             "info": "https://github.com/rust-lang/rustfmt",
             "disable": false,

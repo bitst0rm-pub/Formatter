@@ -203,6 +203,14 @@
                 }
             },
             {
+                "caption": "Rubyfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "rubyfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Rustfmt",
                 "command": "run_format",
                 "args": {

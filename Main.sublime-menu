@@ -234,6 +234,15 @@
                         }
                     },
                     {
+                        "caption": "Rubyfmt",
+                        "mnemonic": "R",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "rubyfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Rustfmt",
                         "mnemonic": "R",
                         "command": "run_format",
