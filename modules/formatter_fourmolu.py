@@ -47,9 +47,10 @@ class FourmoluFormatter(common.Module):
         if path:
             with open(path, 'r', encoding='utf-8') as file:
                 cfg_dict = yaml.safe_load(file)
+
                 # Fourmolu does not have an option to
                 # read external config file. We build one.
-                flattened_list = [item for key, value in cfg_dict.items() for item in (('--' + str(key), 'null') if value is None else ('--' + str(key), str(value).lower()))]
+                flattened_list = [item for key, value in cfg_dict.items() for item in (('--' + key, 'null') if value is None else ('--' + key, str(value).lower()))]
                 cmd.extend(flattened_list)
 
         cmd.extend(['--color', 'never', '--stdin-input-file', '-'])
