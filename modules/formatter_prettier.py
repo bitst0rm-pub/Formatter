@@ -42,7 +42,7 @@ class PrettierFormatter(common.Module):
 
                 cmd.extend(self.get_args())
             else:
-                self.get_combo_cmd(runtime_type='node')
+                cmd = self.get_combo_cmd(runtime_type='node')
         else:
             cmd = self.get_combo_cmd(runtime_type='node')
 
