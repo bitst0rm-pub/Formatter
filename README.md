@@ -4,22 +4,15 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 
 Key features:
 
-- Support for more than 20 major programming languages
+- Support for more than 2 major programming languages
 - Capability to format entire file, single or multi selections
 - Capability to format entire folder recursively
 - Works with both saved and unsaved files
 - Shared config files available for each 3rd-party plugin
 - Displays real-time word and character counts
 - Automatically remembers and restores text position
+- As a platform going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development) to integrate your own modules with ease.
 - Open source and works offline
-
-Formatter aims to achieve:
-
-- Flexibility: Users benefit from a wide range of flexible config options.
-- Freedom: Third-party plugin updates are not tied to the Formatter itself.
-- Modularity: Designed for seamless integration with a variety of additional plugins.
-- Convenience: An all-in-one tool for beautifying and minifying code.
-- Versatility: As a platform potentially capable of going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development) to integrate your own modules with ease.
 
 
 _Formatter in action..._
