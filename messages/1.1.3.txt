@@ -1,0 +1,10 @@
+                CHANGELOG
+
+1.1.2:
+    - Fix: missing var for prettier
+
+    - Added new modules:
+      Fourmolu, Ormolu, hindent, stylish-haskell, SVGO min and max,
+      Dart Format, Crystal, rubyfmt, Google Java Format, asmfmt,
+      nasmfmt, ktlint, standard JS, semistandard and standardx JS,
+      ts-standard, ruff.
