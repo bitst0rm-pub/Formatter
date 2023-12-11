@@ -396,7 +396,7 @@ class Module(object):
         else:
             log.warning('Setting key "config_path" must be a non-empty dict: %s', shared_config)
 
-        log.warning('Vendor default config will be used instead if any.')
+        log.info('Vendor default or per-project config will be used instead if available.')
         return None
 
     def is_valid_path(self, path):
