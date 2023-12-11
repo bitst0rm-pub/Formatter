@@ -189,6 +189,15 @@
                         }
                     },
                     {
+                        "caption": "Ktlint",
+                        "mnemonic": "K",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "ktlint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "NASMfmt",
                         "mnemonic": "N",
                         "command": "run_format",

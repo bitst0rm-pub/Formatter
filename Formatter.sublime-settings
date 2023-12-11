@@ -554,6 +554,23 @@
             }
             /* build-in, no executable */
         },
+        "ktlint": {
+            "info": "https://github.com/pinterest/ktlint",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["kotlin"],
+            "executable_path": ""
+            /* no config */
+        },
         "nasmfmt": {
             "info": "https://github.com/yamnikov-oleg/nasmfmt",
             "disable": false,

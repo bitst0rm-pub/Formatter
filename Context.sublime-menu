@@ -163,6 +163,14 @@
                 }
             },
             {
+                "caption": "Ktlint",
+                "command": "run_format",
+                "args": {
+                    "uid": "ktlint",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "NASMfmt",
                 "command": "run_format",
                 "args": {
