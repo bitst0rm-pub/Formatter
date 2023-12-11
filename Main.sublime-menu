@@ -315,6 +315,15 @@
                         }
                     },
                     {
+                        "caption": "Standard JS",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "standardjs",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Stylelint",
                         "mnemonic": "S",
                         "command": "run_format",

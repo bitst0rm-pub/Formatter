@@ -275,6 +275,14 @@
                 }
             },
             {
+                "caption": "Standard JS",
+                "command": "run_format",
+                "args": {
+                    "uid": "standardjs",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Stylelint",
                 "command": "run_format",
                 "args": {
