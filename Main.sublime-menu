@@ -288,6 +288,15 @@
                         }
                     },
                     {
+                        "caption": "Semistandard JS",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "semistandardjs",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ShellCheck",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -320,6 +329,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "standardjs",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Standardx JS",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "standardxjs",
                             "type": "beautifier"
                         }
                     },

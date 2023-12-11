@@ -252,6 +252,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Semistandard JS",
+        "command": "run_format",
+        "args": {
+            "uid": "semistandardjs",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ShellCheck",
         "command": "run_format",
         "args": {
@@ -280,6 +288,14 @@
         "command": "run_format",
         "args": {
             "uid": "standardjs",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Standardx JS",
+        "command": "run_format",
+        "args": {
+            "uid": "standardxjs",
             "type": "beautifier"
         }
     },

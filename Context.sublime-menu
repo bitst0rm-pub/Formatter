@@ -251,6 +251,14 @@
                 }
             },
             {
+                "caption": "Semistandard JS",
+                "command": "run_format",
+                "args": {
+                    "uid": "semistandardjs",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ShellCheck",
                 "command": "run_format",
                 "args": {
@@ -279,6 +287,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "standardjs",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Standardx JS",
+                "command": "run_format",
+                "args": {
+                    "uid": "standardxjs",
                     "type": "beautifier"
                 }
             },
