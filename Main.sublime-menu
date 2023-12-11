@@ -279,6 +279,15 @@
                         }
                     },
                     {
+                        "caption": "Ruff",
+                        "mnemonic": "R",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "ruff",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Rustfmt",
                         "mnemonic": "R",
                         "command": "run_format",
@@ -374,6 +383,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "swiftformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "TS Standard",
+                        "mnemonic": "T",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "tsstandard",
                             "type": "beautifier"
                         }
                     },

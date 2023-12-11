@@ -1,0 +1,64 @@
+# https://docs.astral.sh/ruff/settings/
+# Update: 2023.12.11
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv"
+]
+
+# Set the maximum line length.
+# Type: int
+# Default value: 88
+line-length = 88
+
+# The number of spaces per indentation level (tab).
+# Type: int
+# Default value: 4
+indent-width = 4
+
+[format]
+# Whether to use spaces or tabs for indentation.
+# Type: "space" | "tab"
+# Default value: "space"
+indent-style = "space"
+
+# The character Ruff uses at the end of a line.
+# Type: "auto" | "lf" | "cr-lf" | "native"
+# Default value: "auto"
+line-ending = "auto"
+
+# Whether to enable the unstable preview style formatting.
+# Type: bool
+# Default value: false
+preview = false
+
+# Whether to prefer single ' or double " quotes for strings.
+# Type: "double" | "single"
+# Default value: "double"
+quote-style = "double"
+
+# Ruff uses existing trailing commas as an indication that short lines should be left separate.
+# If this option is set to true, the magic trailing comma is ignored.
+# Type: bool
+# Default value: false
+skip-magic-trailing-comma = false

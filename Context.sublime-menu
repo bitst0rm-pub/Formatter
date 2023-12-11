@@ -243,6 +243,14 @@
                 }
             },
             {
+                "caption": "Ruff",
+                "command": "run_format",
+                "args": {
+                    "uid": "ruff",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Rustfmt",
                 "command": "run_format",
                 "args": {
@@ -327,6 +335,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "swiftformat",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "TS Standard",
+                "command": "run_format",
+                "args": {
+                    "uid": "tsstandard",
                     "type": "beautifier"
                 }
             },

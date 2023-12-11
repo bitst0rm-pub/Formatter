@@ -738,6 +738,25 @@
             "executable_path": ""
             /* no config */
         },
+        "ruff": {
+            "info": "https://github.com/astral-sh/ruff",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["python"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/ruff_rc.toml"
+            }
+        },
         "rustfmt": {
             "info": "https://github.com/rust-lang/rustfmt",
             "disable": false,
@@ -942,6 +961,23 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
             }
+        },
+        "tsstandard": {
+            "info": "https://github.com/standard/ts-standard",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["ts"],
+            "executable_path": ""
+            /* no config */
         },
         "uncrustify": {
             "info": "https://github.com/uncrustify/uncrustify",

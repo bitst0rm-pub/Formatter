@@ -244,6 +244,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Ruff",
+        "command": "run_format",
+        "args": {
+            "uid": "ruff",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Rustfmt",
         "command": "run_format",
         "args": {
@@ -328,6 +336,14 @@
         "command": "run_format",
         "args": {
             "uid": "swiftformat",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with TS Standard",
+        "command": "run_format",
+        "args": {
+            "uid": "tsstandard",
             "type": "beautifier"
         }
     },
