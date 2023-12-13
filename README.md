@@ -336,6 +336,14 @@ The following settings example should give you direction on how to setup Formatt
             // "formatter.assets/config" folder for your personal use.
             // Do not use the reference files with suffix '.master.' directly.
             // These files could be overwritten by any release updates.
+            // Note: Options from this config file always have precedence over
+            // the options from any local project (per-project config file).
+            // To disable this option in favor of the local project config:
+            // 1. Set the config path of this option to null, OR
+            // 2. Use the Quick Options: Enable Project Config, OR
+            // 3. Place an empty '.cfgignore' file inside the project root folder.
+            // Formatter will start to search up the file tree until a
+            // '.cfgignore' file is (or isn’t) found.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",

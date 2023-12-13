@@ -158,6 +158,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
+        'enable_project_config': 'Enable Project Config',
         'format_on_unique': 'Enable Format on Unique',
         'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',
@@ -328,11 +329,17 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
 
+        enable_project_config = self.query(common.config, False, 'quick_options', 'enable_project_config')
+        if enable_project_config:
+            has_cfgignore = True
+        else:
+            has_cfgignore = self.check_cfgignore()
+
         is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
         if is_recursive:
-            self.run_recursive_formatting(**kwargs)
+            self.run_recursive_formatting(has_cfgignore=has_cfgignore, **kwargs)
         else:
-            self.run_single_formatting(**kwargs)
+            self.run_single_formatting(has_cfgignore=has_cfgignore, **kwargs)
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))

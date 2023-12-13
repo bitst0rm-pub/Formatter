@@ -65,12 +65,13 @@ class Module(object):
     These APIs are strictly limited for use with files located in the 'modules' folder.
     '''
 
-    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, has_cfgignore=False, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
         self.interpreters = interpreters
         self.executables = executables
+        self.has_cfgignore = has_cfgignore
 
     def is_executeable(self, file):
         if file and isinstance(file, str) and isfile(file):
@@ -376,7 +377,18 @@ class Module(object):
         log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
         return None
 
+    def check_cfgignore(self):
+        paths = self._get_active_view_parent_folders()
+        for path in paths:
+            if isfile(join(path, '.cfgignore')):
+                log.debug('.cfgignore found at: %s', path)
+                return True
+        return False
+
     def get_config_path(self):
+        if self.has_cfgignore:
+            return None
+
         shared_config = self.query(config, None, 'formatters', self.uid, 'config_path')
 
         if shared_config and isinstance(shared_config, dict):
