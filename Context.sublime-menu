@@ -147,6 +147,14 @@
                 }
             },
             {
+                "caption": "Isort",
+                "command": "run_format",
+                "args": {
+                    "uid": "isort",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "JS Beautifier",
                 "command": "run_format",
                 "args": {

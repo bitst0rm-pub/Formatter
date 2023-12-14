@@ -148,6 +148,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Isort",
+        "command": "run_format",
+        "args": {
+            "uid": "isort",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with JS Beautifier",
         "command": "run_format",
         "args": {

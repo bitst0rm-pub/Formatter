@@ -171,6 +171,15 @@
                         }
                     },
                     {
+                        "caption": "Isort",
+                        "mnemonic": "I",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "isort",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "JS Beautifier",
                         "mnemonic": "J",
                         "command": "run_format",

@@ -1,0 +1,684 @@
+# $ isort --show-config
+# Update: 2023-12-14
+
+[tool.isort]
+# Tells isort to set the known standard library based on the specified Python version. Default is to
+# assume any Python 3 version could be the target, and use a union of all stdlib modules across
+# versions. If auto is specified, the version of the interpreter used to run isort (currently: 39)
+# will be used.
+# Default: 3
+py_version = "3"
+
+# Force specific imports to the top of their appropriate section.
+# Config default: []
+force_to_top = []
+
+# Files that isort should skip over.
+skip = [
+  ".direnv",
+  "buck-out",
+  ".git",
+  ".eggs",
+  "dist",
+  "node_modules",
+  ".hg",
+  "__pypackages__",
+  "build",
+  ".pants.d",
+  ".mypy_cache",
+  "_build",
+  "venv",
+  ".bzr",
+  ".nox",
+  ".venv",
+  ".svn",
+  ".tox"
+]
+
+# Extends --skip to add additional files that isort should skip over.
+# Config default: []
+extend_skip = []
+
+# Files that isort should skip over.
+# Config default: []
+skip_glob = []
+
+# Additional files that isort should skip over.
+# Config default: []
+extend_skip_glob = []
+
+# Treat project as a git repository and ignore files listed in .gitignore.
+# NOTE: This requires git to be installed and accessible from the same shell as isort.
+# Config default: false
+skip_gitignore = false
+
+# The max length of an import line (used for wrapping long imports).
+# Config default: 79
+line_length = 79
+
+# Specifies how long lines that are wrapped should be, if not set line_length is used.
+# NOTE: wrap_length must be LOWER than or equal to line_length.
+# Config default: 0
+wrap_length = 0
+
+# Forces line endings to the specified value. If not set, values will be guessed per-file.
+# Config default: ""
+line_ending = ""
+
+# What sections isort should display imports for and in what order.
+# Config default: ['FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+sections = [
+  "FUTURE",
+  "STDLIB",
+  "THIRDPARTY",
+  "FIRSTPARTY",
+  "LOCALFOLDER"
+]
+
+# Put all imports into the same section bucket.
+# Config default: false
+no_sections = false
+
+# Force isort to recognize a module as part of Python's internal future compatibility libraries.
+# WARNING: this overrides the behavior of future handling and therefore can result in code that
+# can't execute. If you're looking to add dependencies such as six, a better option is to create
+# another section below --future using custom sections.
+# Config default: ['__future__']
+known_future_library = [ "__future__" ]
+
+# Force isort to recognize a module as being part of a third party library.
+# Config default: []
+known_third_party = []
+
+# Force isort to recognize a module as being part of the current python project.
+# Config default: []
+known_first_party = []
+
+# Force isort to recognize a module as being a local folder. Generally, this is
+# reserved for relative imports (from . import module).
+# Config default: []
+known_local_folder = []
+
+# Force isort to recognize a module as part of Python's standard library.
+known_standard_library = [
+  "asyncio",
+  "pathlib",
+  "io",
+  "socket",
+  "sysconfig",
+  "lzma",
+  "cgitb",
+  "rlcompleter",
+  "bisect",
+  "formatter",
+  "poplib",
+  "types",
+  "traceback",
+  "sndhdr",
+  "stat",
+  "copyreg",
+  "wsgiref",
+  "turtle",
+  "smtplib",
+  "zipapp",
+  "fcntl",
+  "imaplib",
+  "codeop",
+  "calendar",
+  "pydoc",
+  "nntplib",
+  "termios",
+  "contextlib",
+  "re",
+  "concurrent",
+  "ssl",
+  "sys",
+  "typing",
+  "posixpath",
+  "textwrap",
+  "ntpath",
+  "mailbox",
+  "compileall",
+  "tracemalloc",
+  "sqlite3",
+  "sre_constants",
+  "unicodedata",
+  "tty",
+  "cgi",
+  "fileinput",
+  "hmac",
+  "reprlib",
+  "lib2to3",
+  "shelve",
+  "msilib",
+  "cmd",
+  "datetime",
+  "decimal",
+  "selectors",
+  "sre_parse",
+  "sunau",
+  "pyclbr",
+  "random",
+  "warnings",
+  "stringprep",
+  "argparse",
+  "select",
+  "dis",
+  "resource",
+  "codecs",
+  "pprint",
+  "uu",
+  "optparse",
+  "ensurepip",
+  "colorsys",
+  "collections",
+  "hashlib",
+  "nis",
+  "numbers",
+  "code",
+  "gzip",
+  "macpath",
+  "enum",
+  "atexit",
+  "pwd",
+  "glob",
+  "string",
+  "copy",
+  "cmath",
+  "turtledemo",
+  "unittest",
+  "profile",
+  "json",
+  "dummy_threading",
+  "keyword",
+  "html",
+  "winreg",
+  "abc",
+  "logging",
+  "idlelib",
+  "filecmp",
+  "gc",
+  "trace",
+  "wave",
+  "os",
+  "pty",
+  "winsound",
+  "quopri",
+  "zlib",
+  "urllib",
+  "netrc",
+  "_ast",
+  "audioop",
+  "base64",
+  "weakref",
+  "configparser",
+  "fractions",
+  "zipimport",
+  "sre",
+  "time",
+  "site",
+  "xdrlib",
+  "multiprocessing",
+  "itertools",
+  "secrets",
+  "plistlib",
+  "imghdr",
+  "ipaddress",
+  "dataclasses",
+  "telnetlib",
+  "uuid",
+  "crypt",
+  "venv",
+  "binhex",
+  "mimetypes",
+  "platform",
+  "xmlrpc",
+  "aifc",
+  "getpass",
+  "shutil",
+  "grp",
+  "pstats",
+  "tempfile",
+  "tabnanny",
+  "pipes",
+  "ctypes",
+  "runpy",
+  "socketserver",
+  "getopt",
+  "pkgutil",
+  "importlib",
+  "symtable",
+  "webbrowser",
+  "sched",
+  "zipfile",
+  "doctest",
+  "fnmatch",
+  "_dummy_thread",
+  "symbol",
+  "marshal",
+  "posix",
+  "locale",
+  "operator",
+  "zoneinfo",
+  "imp",
+  "_thread",
+  "difflib",
+  "queue",
+  "ast",
+  "builtins",
+  "syslog",
+  "distutils",
+  "bz2",
+  "linecache",
+  "smtpd",
+  "threading",
+  "faulthandler",
+  "struct",
+  "statistics",
+  "ftplib",
+  "subprocess",
+  "token",
+  "fpectl",
+  "functools",
+  "parser",
+  "array",
+  "heapq",
+  "pickletools",
+  "signal",
+  "readline",
+  "dbm",
+  "pdb",
+  "chunk",
+  "msvcrt",
+  "curses",
+  "gettext",
+  "math",
+  "timeit",
+  "ossaudiodev",
+  "shlex",
+  "sre_compile",
+  "test",
+  "pickle",
+  "http",
+  "tokenize",
+  "modulefinder",
+  "errno",
+  "inspect",
+  "binascii",
+  "contextvars",
+  "encodings",
+  "graphlib",
+  "email",
+  "bdb",
+  "mmap",
+  "csv",
+  "tkinter",
+  "py_compile",
+  "asynchat",
+  "xml",
+  "spwd",
+  "tarfile",
+  "asyncore",
+  "mailcap",
+  "cProfile"
+]
+
+# Extra modules to be included in the list of ones in Python's standard library.
+# Config default: []
+extra_standard_library = []
+
+# known_OTHER is how imports of custom sections are defined.
+# OTHER is a placeholder for the custom section name.
+# Config default: {}
+# known_other = {}
+
+# Multi line output (0-grid, 1-vertical, 2-hanging, 3-vert-hanging, 4-vert-grid,
+# 5-vert-grid-grouped, 6-deprecated-alias-for-5, 7-noqa, 8-vertical-hanging-indent-bracket,
+# 9-vertical-prefix-from-module-import, 10-hanging-indent-with-parentheses).
+# Config default: WrapModes.GRID
+multi_line_output = "GRID"
+
+# Force certain sub modules to show separately
+# Config default: []
+forced_separate = []
+
+# String to place for indents defaults to " " (4 spaces).
+# Config default: "    "
+indent = "    "
+
+# Allows customizing how isort prefixes comments that it adds or modifies on import
+# linesGenerally # (two spaces before a pound symbol) is use, though one space is also common.
+# Config default: "  #"
+comment_prefix = "  #"
+
+# Sort imports by their string length.
+# Config default: false
+length_sort = false
+
+# Sort straight imports by their string length. Similar to length_sort but applies
+# only to straight imports and doesn't affect from imports.
+# Config default: false
+length_sort_straight = false
+
+# Sort the given sections by length.
+# Config default: []
+length_sort_sections = []
+
+# Adds the specified import line to all files, automatically determining correct placement.
+# Config default: []
+add_imports = []
+
+# Removes the specified import from all files.
+# Config default: []
+remove_imports = []
+
+# Only adds the imports specified in --add-import if the file contains existing imports.
+# Config default: false
+append_only = false
+
+# Reverse order of relative imports.
+# Config default: false
+reverse_relative = false
+
+# Forces all from imports to appear on their own line
+# Config default: false
+force_single_line = false
+
+# One or more modules to exclude from the single line rule.
+# Config default: []
+single_line_exclusions = []
+
+# Sets the default section for import options: ('FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER')
+# Config default: THIRDPARTY
+default_section = "THIRDPARTY"
+
+# A mapping of import sections to import heading comments that should show above them.
+# Config default: {}
+import_headings = {}
+
+# A mapping of import sections to import footer comments that should show below them.
+# Config default: {}
+import_footers = {}
+
+# Balances wrapping to produce the most consistent line length possible.
+# Config default: false
+balanced_wrapping = false
+
+# Use parentheses for line continuation on length limit instead of backslashes.
+# NOTE: This is separate from wrap modes, and only affects how individual lines that
+# are too long get continued, not sections of multiple imports.
+# Config default: false
+use_parentheses = false
+
+# Order imports by type, which is determined by case, in addition to alphabetically.
+# Config default: true
+order_by_type = true
+
+# Ensures the output doesn't save if the resulting file contains syntax errors.
+# Config default: false
+atomic = false
+
+# The number of blank lines to place before imports. -1 for automatic determination
+# Config default: -1
+lines_before_imports = -1
+
+# The number of blank lines to place after imports. -1 for automatic determination
+# Config default: -1
+lines_after_imports = -1
+
+# The number of lines to place between sections.
+# Config default: 1
+lines_between_sections = 1
+
+# The number of lines to place between direct and from imports
+# Config default: 0
+lines_between_types = 0
+
+# Combines as imports on the same line.
+# Config default: false
+combine_as_imports = false
+
+# Ensures that if a star import is present, nothing else is imported from that namespace.
+# Config default: false
+combine_star = false
+
+# Includes a trailing comma on multi line imports that include parentheses.
+# Config default: false
+include_trailing_comma = false
+
+# Split imports list followed by a trailing comma into VERTICAL_HANGING_INDENT
+# mode. This follows Black style magic comma.
+# Config default: false
+split_on_trailing_comma = false
+
+# Switches the typical ordering preference, showing from imports first then straight ones.
+# Config default: false
+from_first = false
+
+# Shows verbose output, such as when files are skipped or when a check is successful.
+# Config default: false
+verbose = false
+
+# Shows extra quiet output, only errors are outputted.
+# Config default: false
+quiet = false
+
+# Forces import adds even if the original file is empty.
+# Config default: false
+force_adds = false
+
+# Force all imports to be sorted alphabetically within a section
+# Config default: false
+force_alphabetical_sort_within_sections = false
+
+# Force all imports to be sorted as a single section.
+# Config default: false
+force_alphabetical_sort = false
+
+# Force number of from imports (defaults to 2 when passed as CLI flag without value)
+# to be grid wrapped regardless of line length. If 0 is passed in (the global default)
+# only line length is considered.
+# Config default: 0
+force_grid_wrap = 0
+
+# Don't sort straight-style imports (like import sys) before from-style imports
+# (like from itertools import groupby). Instead, sort the imports by module,
+# independent of import style.
+# Config default: false
+force_sort_within_sections = false
+
+# Lexicographical order is strictly alphabetical order. For example by default isort will
+# sort 1, 10, 2 into 1, 2, 10 - but with lexicographical sorting enabled it will remain 1, 10, 2.
+# Config default: false
+lexicographical = false
+
+# If True isort will automatically create section groups by the top-level package they come from.
+# Config default: false
+group_by_package = false
+
+# Tells isort to ignore whitespace differences when --check-only is being used.
+# Config default: false
+ignore_whitespace = false
+
+# Sections which should not be split with previous by empty lines
+# Config default: []
+no_lines_before = []
+
+# Leaves from imports with multiple imports 'as-is' (e.g. from foo import a, c ,b).
+# Config default: false
+no_inline_sort = false
+
+# If enabled, isort will strip comments that exist within import lines.
+# Config default: false
+ignore_comments = false
+
+# Tells isort to include casing when sorting module names
+# Config default: false
+case_sensitive = false
+
+# Virtual environment to use for determining whether a package is third-party.
+# Config default: ""
+virtual_env = ""
+
+# Conda environment to use for determining whether a package is third-party
+# Config default: ""
+conda_env = ""
+
+# Inserts a blank line before a comment following an import.
+# Config default: false
+ensure_newline_before_comments = false
+
+
+# Base profile type to use for configuration. Profiles include:
+# black, django, pycharm, google, open_stack, plone, attrs, hug,
+# wemake, appnexus. As well as any shared profiles.
+# Config default: ""
+profile = ""
+
+# Tells isort to honor noqa comments to enforce skipping those comments.
+# Config default: false
+honor_noqa = false
+
+# Add an explicitly defined source path (modules within src paths have their imports automatically
+# categorized as first_party). Glob expansion (* and **) is supported for this option.
+# Config default: []
+src_paths = []
+
+# Use the old deprecated finder logic that relies on environment introspection magic.
+# Config default: false
+old_finders = false
+
+# Tells isort to remove redundant aliases from imports, such as import os as os.
+# This defaults to False simply because some projects use these seemingly useless aliases
+# to signify intent and change behaviour.
+# Config default: false
+remove_redundant_aliases = false
+
+# Causes all non-indented imports to float to the top of the file having its imports
+# sorted (immediately below the top of file comment). This can be an excellent shortcut
+# for collecting imports every once in a while when you place them in the middle of a
+# file to avoid context switching.
+# NOTE: It currently doesn't work with cimports and introduces some extra over-head and a performance penalty.
+# Config default: false
+float_to_top = false
+
+# Tells isort to filter files even when they are explicitly passed in as part of the CLI command.
+# Config default: false
+filter_files = false
+
+# Specifies the name of a formatting plugin to use when producing output.
+# Config default: ""
+# formatter = ""
+
+# Tells isort to use color in terminal output.
+# Config default: false
+color_output = false
+
+# Tells isort to treat the specified single line comment(s) as if they are code.
+# Config default: []
+treat_comments_as_code = []
+
+# Tells isort to treat all single line comments as if they are code.
+# Config default: false
+treat_all_comments_as_code = false
+
+# Specifies what extensions isort can be run against.
+# Config default: ['pxd', 'py', 'pyi', 'pyx']
+supported_extensions = [ "py", "pyx", "pxd", "pyi" ]
+
+# Specifies what extensions isort can never be run against.
+# Config default: ['pex']
+blocked_extensions = [ "pex" ]
+
+# An override list of tokens to always recognize as a CONSTANT for order_by_type regardless of casing.
+# Config default: []
+constants = []
+
+# An override list of tokens to always recognize as a Class for order_by_type regardless of casing.
+# Config default: []
+classes = []
+
+# An override list of tokens to always recognize as a var for order_by_type regardless of casing.
+# Config default: []
+variables = []
+
+# Tells isort to only show an identical custom import heading comment once, even if
+# there are multiple sections with the comment set.
+# Config default: false
+dedup_headings = false
+
+# Causes imports to be sorted based on their sections like STDLIB, THIRDPARTY, etc.
+# Within sections, the imports are ordered by their import style and the imports with the
+# same style maintain their relative positions.
+# Config default: false
+only_sections = false
+
+# Suppresses verbose output for non-modified files.
+# Config default: false
+only_modified = false
+
+# Combines all the bare straight imports of the same section in a single line.
+# Won't work with sections which have 'as' imports
+# Config default: false
+combine_straight_imports = false
+
+# Automatically determine local namespace packages, generally by lack of any src files
+# before a src containing directory.
+# Config default: true
+auto_identify_namespace_packages = true
+
+# Manually specify one or more namespace packages.
+# Config default: []
+namespace_packages = []
+
+# If True isort will follow symbolic links when doing recursive sorting.
+# Config default: true
+follow_links = true
+
+# If True isort will apply import headings to indended imports the same way it does unindented ones.
+# Config default: true
+indented_import_headings = true
+
+# Honor --case-sensitive when --force-sort-within-sections is being used. Without this
+# option set, --order-by-type decides module name ordering too.
+# Config default: false
+honor_case_in_force_sorted_sections = false
+
+# When using --force-sort-within-sections, sort relative imports the same way as
+# they are sorted when not using that setting.
+# Config default: false
+sort_relative_in_force_sorted_sections = false
+
+# Tells isort to overwrite in place using the same file handle. Comes at a performance and memory
+# usage penalty over its standard approach but ensures all file flags and modes stay unchanged.
+# Config default: false
+overwrite_in_place = false
+
+# Reverses the ordering of imports.
+# Config default: false
+reverse_sort = false
+
+# Forces star imports above others to avoid overriding directly imported variables.
+# Config default: false
+star_first = false
+
+# If True isort will honor ignores within locally defined .git_ignore files.
+# Config default: {}
+git_ls_files = {}
+
+# Override the format used to print errors.
+# Config default: {error}: {message}
+format_error = "{error}: {message}"
+
+# Override the format used to print success.
+# Config default: {success}: {message}
+format_success = "{success}: {message}"
+
+# Specify sorting function. Can be built in (natural[default] = force numbers to be
+# sequential, native = Python's built-in sorted function) or an installable plugin.
+# Config default: natural
+sort_order = "natural"
+
+# Automatically sort all re-exports (module level __all__ collections)
+# Config default: false
+sort_reexports = false
