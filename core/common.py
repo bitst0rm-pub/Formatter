@@ -235,10 +235,10 @@ class Module(object):
 
     def _get_active_view_parent_folders(self, max_depth=30):
         active_file_path = self.view.file_name()
+        parent_folders = []
 
         if active_file_path:
             d = dirname(active_file_path)
-            parent_folders = []
 
             for _ in range(max_depth):
                 if d == dirname(d):
@@ -246,9 +246,7 @@ class Module(object):
                 parent_folders.append(d)
                 d = dirname(d)
 
-            return parent_folders
-        else:
-            return None
+        return parent_folders
 
     def get_local_executable(self, runtime_type=None):
         if not runtime_type or not self.executables:
