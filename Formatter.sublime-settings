@@ -822,6 +822,25 @@
                 "default": "${packages}/User/formatter.assets/config/rustfmt_rc.toml"
             }
         },
+        "scalafmt": {
+            "info": "https://github.com/scalameta/scalafmt",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["scala"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/scalafmt_rc.conf"
+            }
+        },
         "semistandardjs": {
             "info": "https://github.com/standard/semistandard",
             "disable": false,

@@ -275,6 +275,14 @@
                 }
             },
             {
+                "caption": "Scalafmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "scalafmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Semistandard JS",
                 "command": "run_format",
                 "args": {

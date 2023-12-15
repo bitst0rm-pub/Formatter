@@ -315,6 +315,15 @@
                         }
                     },
                     {
+                        "caption": "Scalafmt",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "scalafmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Semistandard JS",
                         "mnemonic": "S",
                         "command": "run_format",

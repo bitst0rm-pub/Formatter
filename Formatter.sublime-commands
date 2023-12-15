@@ -276,6 +276,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Scalafmt",
+        "command": "run_format",
+        "args": {
+            "uid": "scalafmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Semistandard JS",
         "command": "run_format",
         "args": {

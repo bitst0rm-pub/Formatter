@@ -74,22 +74,23 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 34. [Rubyfmt](https://github.com/fables-tales/rubyfmt): A Ruby code formatter that aims to provide consistent formatting for Ruby code.
 35. [Ruff](https://github.com/astral-sh/ruff): An extremely fast Python linter and code formatter, written in Rust.
 36. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
-37. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
-38. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
-39. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
-40. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
-41. [Standard JS](https://github.com/standard/standard): A JavaScript style guide, linter, and formatter.
-42. [Standardx JS](https://github.com/standard/standardx): An extended version of the JavaScript Standard Style with additional features.
-43. [Semistandard JS](https://github.com/standard/semistandard): A JavaScript style guide and linter with semicolons.
-44. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
-45. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
-46. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
-47. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
-48. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
-49. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
-50. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
-51. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
-52. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
+37. [Scalafmt](https://github.com/scalameta/scalafmt): A code formatter for Scala that follows the official Scala style guide.
+38. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
+39. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
+40. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
+41. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
+42. [Standard JS](https://github.com/standard/standard): A JavaScript style guide, linter, and formatter.
+43. [Standardx JS](https://github.com/standard/standardx): An extended version of the JavaScript Standard Style with additional features.
+44. [Semistandard JS](https://github.com/standard/semistandard): A JavaScript style guide and linter with semicolons.
+45. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
+46. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
+47. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
+48. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
+49. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
+50. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
+51. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
+52. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
+53. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
 
 
 And now a same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
@@ -120,6 +121,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Dart | [Dart Format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Swift | [Apple swift-format](https://github.com/apple/swift-format), [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
 | Crystal | [Crystal](https://github.com/crystal-lang/crystal) | -- | None | -- |
+| Scala | [scalafmt](https://github.com/scalameta/scalafmt) | -- | None | -- |
 | Bash, Shell | [`Beautysh`](https://github.com/lovesegfault/beautysh), [shfmt](https://github.com/mvdan/sh), [ShellCheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | `Python` | -- |
 | SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | SQLMin (build-in) | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |
 | CSV, TSV, DSV, Text | [PrettyTable](https://github.com/jazzband/prettytable) (build-in) | -- | Python | -- |
