@@ -18,6 +18,15 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Apple Swift Format",
+                        "mnemonic": "A",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "appleswiftformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ASMfmt",
                         "mnemonic": "A",
                         "command": "run_format",

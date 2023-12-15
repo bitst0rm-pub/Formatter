@@ -12,6 +12,14 @@
         "command": "quick_options"
     },
     {
+        "caption": "Formatter: Beautify with Apple Swift Format",
+        "command": "run_format",
+        "args": {
+            "uid": "appleswiftformat",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ASMfmt",
         "command": "run_format",
         "args": {

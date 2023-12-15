@@ -207,6 +207,25 @@
                 ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
+        "appleswiftformat": {
+            "info": "https://github.com/apple/swift-format",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["swift"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/apple_swift_format_rc.json"
+            }
+        },
         "asmfmt": {
             "info": "https://github.com/klauspost/asmfmt",
             "disable": false,
