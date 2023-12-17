@@ -82,15 +82,16 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 42. [Standard JS](https://github.com/standard/standard): A JavaScript style guide, linter, and formatter.
 43. [Standardx JS](https://github.com/standard/standardx): An extended version of the JavaScript Standard Style with additional features.
 44. [Semistandard JS](https://github.com/standard/semistandard): A JavaScript style guide and linter with semicolons.
-45. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
-46. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
-47. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
-48. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
-49. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
-50. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
-51. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
-52. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
-53. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
+45. [Standard RB](https://github.com/standardrb/standard): A Ruby style guide and formatter.
+46. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
+47. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
+48. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
+49. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
+50. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
+51. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
+52. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
+53. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
+54. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
 
 
 And now a same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
@@ -113,7 +114,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Perl | [Perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
 | PHP | [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) | -- | PHP >=`7.4.0` | [Yes](https://mlocati.github.io/php-cs-fixer-configurator) |
 | Python | [Ruff](https://github.com/astral-sh/ruff), [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black), [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort) | [Python Minifier](https://github.com/dflook/python-minifier) | Python `>=3.7.0` | [Yes](https://python-minifier.com) |
-| Ruby | [`RuboCop`](https://github.com/rubocop-hq/rubocop), [rubyfmt](https://github.com/fables-tales/rubyfmt) | -- | `Ruby`, None | -- |
+| Ruby | [`RuboCop`](https://github.com/rubocop-hq/rubocop), [rubyfmt](https://github.com/fables-tales/rubyfmt), [standard RB](https://github.com/standardrb/standard) | -- | `Ruby`, None | -- |
 | Rust | [Rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
 | Haskell | [Ormolu](https://github.com/tweag/ormolu), [`Fourmolu`](https://github.com/fourmolu/fourmolu), [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell) | -- | Haskell | [`Yes`](https://fourmolu.github.io) |
 | Java | [`Google Java Format`](https://github.com/google/google-java-format), [Uncrustify](https://github.com/uncrustify/uncrustify), [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html), [Artistic Style](https://sourceforge.net/projects/astyle) | -- | `Java`, None | -- |

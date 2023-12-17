@@ -55,6 +55,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "shfmt", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sqlformatter", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "standardjs", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "standardrb", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "standardxjs", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "stylelint", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "stylishhaskell", "type": "beautifier"}},

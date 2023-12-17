@@ -324,6 +324,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Standard RB",
+        "command": "run_format",
+        "args": {
+            "uid": "standardrb",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Standardx JS",
         "command": "run_format",
         "args": {

@@ -369,6 +369,15 @@
                         }
                     },
                     {
+                        "caption": "Standard RB",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "standardrb",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Standardx JS",
                         "mnemonic": "S",
                         "command": "run_format",
