@@ -30,6 +30,7 @@ AllCops:
     - '**/*.rbx'
     - '**/*.ru'
     - '**/*.ruby'
+    - '**/*.schema'
     - '**/*.spec'
     - '**/*.thor'
     - '**/*.watchr'
@@ -55,6 +56,7 @@ AllCops:
     - '**/Puppetfile'
     - '**/Rakefile'
     - '**/rakefile'
+    - '**/Schemafile'
     - '**/Snapfile'
     - '**/Steepfile'
     - '**/Thorfile'
@@ -166,6 +168,16 @@ Bundler/DuplicatedGem:
   Severity: warning
   VersionAdded: '0.46'
   VersionChanged: '1.40'
+  Include:
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
+
+Bundler/DuplicatedGroup:
+  Description: 'Checks for duplicate group entries in Gemfile.'
+  Enabled: true
+  Severity: warning
+  VersionAdded: '1.56'
   Include:
     - '**/*.gemfile'
     - '**/Gemfile'
@@ -467,7 +479,9 @@ Layout/ClassStructure:
   Description: 'Enforces a configured order of definitions within a class body.'
   StyleGuide: '#consistent-classes'
   Enabled: false
+  SafeAutoCorrect: false
   VersionAdded: '0.52'
+  VersionChanged: '1.53'
   Categories:
     module_inclusion:
       - include
@@ -575,6 +589,8 @@ Layout/EmptyLineBetweenDefs:
   EmptyLineBetweenMethodDefs: true
   EmptyLineBetweenClassDefs: true
   EmptyLineBetweenModuleDefs: true
+  # `DefLikeMacros` takes the name of any macro that you want to treat like a def.
+  DefLikeMacros: []
   # `AllowAdjacentOneLineDefs` means that single line method definitions don't
   # need an empty line between them. `true` by default.
   AllowAdjacentOneLineDefs: true
@@ -1335,6 +1351,10 @@ Layout/SpaceAroundOperators:
   SupportedStylesForExponentOperator:
     - space
     - no_space
+  EnforcedStyleForRationalLiterals: no_space
+  SupportedStylesForRationalLiterals:
+    - space
+    - no_space
 
 Layout/SpaceBeforeBlockBraces:
   Description: >-
@@ -1530,7 +1550,6 @@ Lint/AmbiguousBlockAssociation:
   Description: >-
                  Checks for ambiguous block association with method when param passed without
                  parentheses.
-  StyleGuide: '#syntax'
   Enabled: true
   VersionAdded: '0.48'
   VersionChanged: '1.13'
@@ -1944,6 +1963,12 @@ Lint/InterpolationCheck:
   VersionAdded: '0.50'
   VersionChanged: '1.40'
 
+Lint/ItWithoutArgumentsInBlock:
+  Description: 'Checks uses of `it` calls without arguments in block.'
+  Reference: 'https://bugs.ruby-lang.org/issues/18980'
+  Enabled: pending
+  VersionAdded: '1.59'
+
 Lint/LambdaWithoutLiteralBlock:
   Description: 'Checks uses of lambda without a literal block.'
   Enabled: pending
@@ -1953,6 +1978,11 @@ Lint/LiteralAsCondition:
   Description: 'Checks of literals used in conditions.'
   Enabled: true
   VersionAdded: '0.51'
+
+Lint/LiteralAssignmentInCondition:
+  Description: 'Checks for literal assignments in the conditions.'
+  Enabled: pending
+  VersionAdded: '1.58'
 
 Lint/LiteralInInterpolation:
   Description: 'Checks for literals used in interpolation.'
@@ -1988,8 +2018,15 @@ Lint/MissingSuper:
                   Checks for the presence of constructors and lifecycle callbacks
                   without calls to `super`.
   Enabled: true
+  AllowedParentClasses: []
   VersionAdded: '0.89'
   VersionChanged: '1.4'
+
+Lint/MixedCaseRange:
+  Description: 'Checks for mixed-case character ranges since they include likely unintended characters.'
+  Enabled: pending
+  SafeAutoCorrect: false
+  VersionAdded: '1.53'
 
 Lint/MixedRegexpCaptureTypes:
   Description: 'Do not mix named captures and numbered captures in a Regexp literal.'
@@ -2140,10 +2177,17 @@ Lint/RedundantDirGlobSort:
   VersionChanged: '1.26'
   SafeAutoCorrect: false
 
+Lint/RedundantRegexpQuantifiers:
+  Description: 'Checks for redundant quantifiers in Regexps.'
+  Enabled: pending
+  VersionAdded: '1.53'
+
 Lint/RedundantRequireStatement:
   Description: 'Checks for unnecessary `require` statement.'
   Enabled: true
+  SafeAutoCorrect: false
   VersionAdded: '0.76'
+  VersionChanged: '1.57'
 
 Lint/RedundantSafeNavigation:
   Description: 'Checks for redundant safe navigation calls.'
@@ -3055,7 +3099,20 @@ Style/ArgumentsForwarding:
   StyleGuide: '#arguments-forwarding'
   Enabled: pending
   AllowOnlyRestArgument: true
+  UseAnonymousForwarding: true
+  RedundantRestArgumentNames:
+    - args
+    - arguments
+  RedundantKeywordRestArgumentNames:
+    - kwargs
+    - options
+    - opts
+  RedundantBlockArgumentNames:
+    - blk
+    - block
+    - proc
   VersionAdded: '1.1'
+  VersionChanged: '1.58'
 
 Style/ArrayCoercion:
   Description: >-
@@ -3065,6 +3122,13 @@ Style/ArrayCoercion:
   Safe: false
   Enabled: false
   VersionAdded: '0.88'
+
+Style/ArrayFirstLast:
+  Description: 'Use `arr.first` and `arr.last` instead of `arr[0]` and `arr[-1]`.'
+  Reference: '#first-and-last'
+  Enabled: false
+  VersionAdded: '1.58'
+  Safe: false
 
 Style/ArrayIntersect:
   Description: 'Use `array1.intersect?(array2)` instead of `(array1 & array2).any?`.'
@@ -3326,7 +3390,9 @@ Style/ClassEqualityComparison:
   Description: 'Enforces the use of `Object#instance_of?` instead of class comparison for equality.'
   StyleGuide: '#instance-of-vs-class-comparison'
   Enabled: true
+  SafeAutoCorrect: false
   VersionAdded: '0.93'
+  VersionChanged: '1.57'
   AllowedMethods:
     - ==
     - equal?
@@ -3381,6 +3447,7 @@ Style/CollectionMethods:
   PreferredMethods:
     collect: 'map'
     collect!: 'map!'
+    collect_concat: 'flat_map'
     inject: 'reduce'
     detect: 'find'
     find_all: 'select'
@@ -3899,8 +3966,9 @@ Style/HashConversion:
   Description: 'Avoid Hash[] in favor of ary.to_h or literal hashes.'
   StyleGuide: '#avoid-hash-constructor'
   Enabled: pending
+  SafeAutoCorrect: false
   VersionAdded: '1.10'
-  VersionChanged: '1.11'
+  VersionChanged: '1.55'
   AllowSplatArgument: true
 
 Style/HashEachMethods:
@@ -4101,12 +4169,6 @@ Style/InvertibleUnlessCondition:
     :none?: :any?
     :even?: :odd?
     :odd?: :even?
-    # `ActiveSupport` defines some common inverse methods. They are listed below,
-    # and not enabled by default.
-    # :present?: :blank?
-    # :blank?: :present?
-    # :include?: :exclude?
-    # :exclude?: :include?
 
 Style/IpAddresses:
   Description: "Don't include literal IP addresses in code."
@@ -4793,12 +4855,16 @@ Style/RedundantArgument:
   Enabled: pending
   Safe: false
   VersionAdded: '1.4'
-  VersionChanged: '1.40'
+  VersionChanged: '1.55'
   Methods:
     # Array#join
     join: ''
     # Array#sum
     sum: 0
+    # Kernel.#exit
+    exit: true
+    # Kernel.#exit!
+    exit!: false
     # String#split
     split: ' '
     # String#chomp
@@ -4843,6 +4909,11 @@ Style/RedundantConstantBase:
   Enabled: pending
   VersionAdded: '1.40'
 
+Style/RedundantCurrentDirectoryInPath:
+  Description: 'Checks for uses a redundant current directory in path.'
+  Enabled: pending
+  VersionAdded: '1.53'
+
 Style/RedundantDoubleSplatHashBraces:
   Description: 'Checks for redundant uses of double splat hash braces.'
   Enabled: pending
@@ -4865,7 +4936,7 @@ Style/RedundantFetchBlock:
   Description: >-
                   Use `fetch(key, value)` instead of `fetch(key) { value }`
                   when value has Numeric, Rational, Complex, Symbol or String type, `false`, `true`, `nil` or is a constant.
-  Reference: 'https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code'
+  Reference: 'https://github.com/fastruby/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code'
   Enabled: true
   Safe: false
   # If enabled, this cop will autocorrect usages of
@@ -4887,7 +4958,9 @@ Style/RedundantFilterChain:
                   Identifies usages of `any?`, `empty?`, `none?` or `one?` predicate methods chained to
                   `select`/`filter`/`find_all` and change them to use predicate method instead.
   Enabled: pending
+  SafeAutoCorrect: false
   VersionAdded: '1.52'
+  VersionChanged: '1.57'
 
 Style/RedundantFreeze:
   Description: "Checks usages of Object#freeze on immutable objects."
@@ -4930,6 +5003,11 @@ Style/RedundantPercentQ:
   StyleGuide: '#percent-q'
   Enabled: true
   VersionAdded: '0.76'
+
+Style/RedundantRegexpArgument:
+  Description: 'Identifies places where argument can be replaced from a deterministic regexp to a string.'
+  Enabled: pending
+  VersionAdded: '1.53'
 
 Style/RedundantRegexpCharacterClass:
   Description: 'Checks for unnecessary single-element Regexp character classes.'
@@ -5043,6 +5121,15 @@ Style/ReturnNil:
     - return_nil
   VersionAdded: '0.50'
 
+Style/ReturnNilInPredicateMethodDefinition:
+  Description: 'Checks if uses of `return` or `return nil` in predicate method definition.'
+  StyleGuide: '#bool-methods-qmark'
+  Enabled: pending
+  SafeAutoCorrect: false
+  AllowedMethods: []
+  AllowedPatterns: []
+  VersionAdded: '1.53'
+
 Style/SafeNavigation:
   Description: >-
                   Transforms usages of a method call safeguarded by
@@ -5070,7 +5157,7 @@ Style/Sample:
   Description: >-
                   Use `sample` instead of `shuffle.first`,
                   `shuffle.last`, and `shuffle[Integer]`.
-  Reference: 'https://github.com/JuanitoFatas/fast-ruby#arrayshufflefirst-vs-arraysample-code'
+  Reference: 'https://github.com/fastruby/fast-ruby#arrayshufflefirst-vs-arraysample-code'
   Enabled: true
   VersionAdded: '0.30'
 
@@ -5134,6 +5221,12 @@ Style/SingleLineBlockParams:
     - inject:
         - acc
         - elem
+
+Style/SingleLineDoEndBlock:
+  Description: 'Checks for single-line `do`...`end` blocks.'
+  StyleGuide: '#single-line-do-end-block'
+  Enabled: pending
+  VersionAdded: '1.57'
 
 Style/SingleLineMethods:
   Description: 'Avoid single-line methods.'
@@ -5270,6 +5363,12 @@ Style/StructInheritance:
   SafeAutoCorrect: false
   VersionAdded: '0.29'
   VersionChanged: '1.20'
+
+Style/SuperWithArgsParentheses:
+  Description: 'Use parentheses for `super` with arguments.'
+  StyleGuide: '#super-with-args'
+  Enabled: pending
+  VersionAdded: '1.58'
 
 Style/SwapValues:
   Description: 'Enforces the use of shorthand-style swapping of 2 variables.'
@@ -5526,6 +5625,11 @@ Style/WordArray:
   MinSize: 2
   # The regular expression `WordRegex` decides what is considered a word.
   WordRegex: !ruby/regexp '/\A(?:\p{Word}|\p{Word}-\p{Word}|\n|\t)+\z/'
+
+Style/YAMLFileRead:
+  Description: 'Checks for the use of `YAML.load`, `YAML.safe_load`, and `YAML.parse` with `File.read` argument.'
+  Enabled: pending
+  VersionAdded: '1.53'
 
 Style/YodaCondition:
   Description: 'Forbid or enforce yoda conditions.'
