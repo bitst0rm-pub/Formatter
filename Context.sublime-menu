@@ -187,6 +187,14 @@
                 }
             },
             {
+                "caption": "LuaFormatter",
+                "command": "run_format",
+                "args": {
+                    "uid": "luaformatter",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "NASMfmt",
                 "command": "run_format",
                 "args": {

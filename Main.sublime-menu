@@ -216,6 +216,15 @@
                         }
                     },
                     {
+                        "caption": "LuaFormatter",
+                        "mnemonic": "L",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "luaformatter",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "NASMfmt",
                         "mnemonic": "N",
                         "command": "run_format",
