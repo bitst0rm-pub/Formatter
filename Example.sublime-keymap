@@ -59,6 +59,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "standardxjs", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "stylelint", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "stylishhaskell", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "stylua", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "svgomax", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "swiftformat", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "tsstandard", "type": "beautifier"}},

@@ -356,6 +356,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with StyLua",
+        "command": "run_format",
+        "args": {
+            "uid": "stylua",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with SVGO",
         "command": "run_format",
         "args": {

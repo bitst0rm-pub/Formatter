@@ -355,6 +355,14 @@
                 }
             },
             {
+                "caption": "StyLua",
+                "command": "run_format",
+                "args": {
+                    "uid": "stylua",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "SVGO",
                 "command": "run_format",
                 "args": {

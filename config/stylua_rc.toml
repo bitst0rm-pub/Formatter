@@ -1,0 +1,31 @@
+# Update: 2023-12-17
+
+# The column width to use to attempt to wrap lines
+column_width = 120
+
+# The type of line endings to use
+# [possible values: Unix, Windows]
+line_endings = "Unix"
+
+# The type of indents to use
+# [possible values: Tabs, Spaces]
+indent_type = "Tabs"
+
+# The width of a single indentation level
+indent_width = 4
+
+# The style of quotes to use in string literals
+# [possible values: AutoPreferDouble, AutoPreferSingle, ForceDouble, ForceSingle]
+quote_style = "AutoPreferDouble"
+
+# Specify whether to apply parentheses on function calls with single string or table arg
+# [possible values: Always, NoSingleString, NoSingleTable, None, Input]
+call_parentheses = "Always"
+
+# Specify whether to collapse simple statements
+# [possible values: Never, FunctionOnly, ConditionalOnly, Always]
+collapse_simple_statement = "Never"
+
+# Enable requires sorting
+[sort_requires]
+enabled = false

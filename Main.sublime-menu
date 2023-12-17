@@ -405,6 +405,15 @@
                         }
                     },
                     {
+                        "caption": "StyLua",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "stylua",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "SVGO",
                         "mnemonic": "S",
                         "command": "run_format",
