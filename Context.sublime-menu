@@ -275,6 +275,14 @@
                 }
             },
             {
+                "caption": "Rufo",
+                "command": "run_format",
+                "args": {
+                    "uid": "rufo",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Rustfmt",
                 "command": "run_format",
                 "args": {

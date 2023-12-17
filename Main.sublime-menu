@@ -315,6 +315,15 @@
                         }
                     },
                     {
+                        "caption": "Rufo",
+                        "mnemonic": "R",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "rufo",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Rustfmt",
                         "mnemonic": "R",
                         "command": "run_format",
