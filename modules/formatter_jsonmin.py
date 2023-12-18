@@ -17,7 +17,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'JSONMin',
+    'name': 'JSON',
     'uid': 'jsonmin',
     'type': 'minifier',
     'syntaxes': ['json'],
