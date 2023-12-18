@@ -219,6 +219,14 @@
                 }
             },
             {
+                "caption": "PHP CodeSniffer",
+                "command": "run_format",
+                "args": {
+                    "uid": "phpcbf",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "PHP CS Fixer",
                 "command": "run_format",
                 "args": {

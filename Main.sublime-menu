@@ -252,6 +252,15 @@
                         }
                     },
                     {
+                        "caption": "PHP CodeSniffer",
+                        "mnemonic": "P",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "phpcbf",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "PHP CS Fixer",
                         "mnemonic": "P",
                         "command": "run_format",

@@ -220,6 +220,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with PHP CodeSniffer",
+        "command": "run_format",
+        "args": {
+            "uid": "phpcbf",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with PHP CS Fixer",
         "command": "run_format",
         "args": {
