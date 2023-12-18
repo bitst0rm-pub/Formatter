@@ -111,7 +111,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | JSON | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), JSONMax (build-in) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff), JSONMin (build-in) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
 | GraphQL | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Markdown | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
-| TypeScript | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify), [TS-standard](https://github.com/standard/ts-standard), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml), [tsfmt](https://github.com/vvakame/typescript-formatter) |
+| TypeScript | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify), [TS-standard](https://github.com/standard/ts-standard), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [tsfmt](https://github.com/vvakame/typescript-formatter) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
 | Vue | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
 | YAML | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Lua | [StyLua](https://github.com/JohnnyMorganz/StyLua), [LuaFormatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
