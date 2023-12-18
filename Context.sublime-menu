@@ -395,6 +395,14 @@
                 }
             },
             {
+                "caption": "TSfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "tsfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "TS Standard",
                 "command": "run_format",
                 "args": {

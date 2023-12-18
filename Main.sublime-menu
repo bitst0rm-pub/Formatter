@@ -450,6 +450,15 @@
                         }
                     },
                     {
+                        "caption": "TSfmt",
+                        "mnemonic": "T",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "tsfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "TS Standard",
                         "mnemonic": "T",
                         "command": "run_format",

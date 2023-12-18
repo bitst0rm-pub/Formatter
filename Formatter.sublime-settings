@@ -1099,6 +1099,26 @@
                 "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
             }
         },
+        "tsfmt": {
+            "info": "https://github.com/vvakame/typescript-formatter",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["ts", "tsx"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/tsfmt.json"
+            }
+            /* hardcoded config file name */
+        },
         "tsstandard": {
             "info": "https://github.com/standard/ts-standard",
             "disable": false,
