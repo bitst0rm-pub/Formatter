@@ -67,6 +67,14 @@
                 }
             },
             {
+                "caption": "CLJfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "cljfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Crystal",
                 "command": "run_format",
                 "args": {
@@ -171,7 +179,7 @@
                 }
             },
             {
-                "caption": "JSONMax",
+                "caption": "JSON",
                 "command": "run_format",
                 "args": {
                     "uid": "jsonmax",
@@ -454,7 +462,7 @@
                 }
             },
             {
-                "caption": "JSONMin (min)",
+                "caption": "JSON (min)",
                 "command": "run_format",
                 "args": {
                     "uid": "jsonmin",

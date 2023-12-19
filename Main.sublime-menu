@@ -81,6 +81,15 @@
                         }
                     },
                     {
+                        "caption": "CLJfmt",
+                        "mnemonic": "C",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "cljfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Crystal",
                         "mnemonic": "C",
                         "command": "run_format",
@@ -198,7 +207,7 @@
                         }
                     },
                     {
-                        "caption": "JSONMax",
+                        "caption": "JSON",
                         "mnemonic": "J",
                         "command": "run_format",
                         "args": {
@@ -516,7 +525,7 @@
                         }
                     },
                     {
-                        "caption": "JSONMin (min)",
+                        "caption": "JSON (min)",
                         "mnemonic": "J",
                         "command": "run_format",
                         "args": {

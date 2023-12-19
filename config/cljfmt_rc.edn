@@ -1,0 +1,74 @@
+{
+  ;; cljfmt should correct the indentation of your code.
+  ;; By default, cljfmt indents according to the Clojure Style Guide.
+  ;; Any function or macro that differs needs specific indent rules.
+  ;; These can be defined using the :indents or :extra-indents options.
+  ;; Defaults to true.
+  :indentation? true
+
+  ;; A map of var symbols to indentation rules, i.e. {symbol [& rules]}.
+  ;; Indentation in Clojure can be difficult to get right,
+  ;; as each macro may have different indentation conventions.
+  ;; See INDENTS.md for a complete explanation. This will replace the default indents.
+  ;; For example: :indents {#".*" [[:inner 0]]}
+  ;; :indents {}
+
+  ;; The same as :indents, except that this will append to the default indents.
+  ;; The :indents option will replace all default indents,
+  ;; while the :extra-indents option will add to them.
+  ;; For example: :extra-indents {com.example/foo [[:inner 0]]}
+  ;; :extra-indents {}
+
+  ;; A map of namespace alias strings to fully qualified namespace names.
+  ;; This option is unnecessary in most cases because cljfmt will parse
+  ;; the ns declaration in each file. See INDENTS.md.
+  ;; For example: :alias-map {ex com.example}
+  ;; :alias-map {}
+
+  ;; cljfmt should remove whitespace surrounding inner forms.
+  ;; This will convert (  foo  ) to (foo).
+  ;; Defaults to true.
+  :remove-surrounding-whitespace? true
+
+  ;; cljfmt should remove trailing whitespace in lines.
+  ;; This will convert (foo)   \n to (foo)\n.
+  ;; Defaults to true.
+  :remove-trailing-whitespace? true
+
+  ;; cljfmt should insert whitespace missing from between elements.
+  ;; This will convert (foo(bar)) to (foo (bar)).
+  ;; Defaults to true.
+  :insert-missing-whitespace? true
+
+  ;; cljfmt should collapse consecutive blank lines.
+  ;; This will convert (foo)\n\n\n(bar) to (foo)\n\n(bar).
+  ;; Defaults to true.
+  :remove-consecutive-blank-lines? true
+
+  ;; cljfmt should remove multiple non-indenting spaces.
+  ;; For example, this will convert {:a 1     :b 2} to {:a 1 :b 2}.
+  ;; Defaults to false.
+  :remove-multiple-non-indenting-spaces? false
+
+  ;; cljfmt should break hashmaps onto multiple lines.
+  ;; This will convert {:a 1 :b 2} to {:a 1\n:b 2}.
+  ;; Defaults to false.
+  :split-keypairs-over-multiple-lines? false
+
+  ;; cljfmt should alphanumerically sort the requires, imports and other
+  ;; references in the ns forms at the top of your namespaces.
+  ;; Defaults to false.
+  :sort-ns-references? false
+
+  ;; Function arguments indentation style may be community, cursive, or zprint:
+  ;; :community if cljfmt should follow the community style recommendation
+  ;;      to indent function/macro arguments by a single space when there are no
+  ;;      arguments on the same line as the function name.
+  ;; :cursive if two spaces should be used instead, unless the first thing
+  ;;      in the list (not counting metadata) is a data structure literal. This should
+  ;;      replicate Cursive's default behaviour.
+  ;; :zprint if two spaces should be used instead if the first thing in the
+  ;;      list is a symbol or keyword. This should replicate zprint's default behaviour.
+  ;; Defaults to :community
+  :function-arguments-indentation :community
+}

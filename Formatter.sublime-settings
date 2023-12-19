@@ -339,6 +339,25 @@
                 "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"
             }
         },
+        "cljfmt": {
+            "info": "https://github.com/weavejester/cljfmt",
+            "disable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["clojure"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/cljfmt_rc.edn"
+            }
+        },
         "crystal": {
             "info": "https://github.com/crystal-lang/crystal",
             "disable": false,
