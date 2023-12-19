@@ -3,7 +3,6 @@
 ✨✨✨ =====✨=====✨=====✨===== ✨✨✨
 
      Beyond beautifying and minifying
-       Expand with your own modules
 
 Check out the README.md for guides and more:
 https://github.com/bitst0rm-pub/Formatter
