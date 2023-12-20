@@ -721,8 +721,11 @@ class RecursiveFormat(common.Base):
             current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def show_completion_message(self):
-        success_rate = '{:.2f}'.format((self.CONTEXT['success_count'] / self.CONTEXT['filelist_length']) * 100)
-        self.popup_message('Formatting COMPLETED!\n\nSuccess Rate: %s%%\n\nPlease check the results in:\n%s' % (success_rate, self.CONTEXT['cwd']), 'INFO', dialog=True)
+        ok = self.CONTEXT['success_count']
+        ko = self.CONTEXT['failure_count']
+        total = self.CONTEXT['filelist_length']
+        success_rate = '{:.2f}'.format((ok / total) * 100)
+        self.popup_message('Formatting COMPLETED!\n\nOK: %s\nKO: %s\nTotal: %s\nSuccess Rate: %s%%\n\nPlease check the results in:\n%s' % (ok, ko, total, success_rate, self.CONTEXT['cwd']), 'INFO', dialog=True)
 
     def reset_context(self):
         for key, value in self.CONTEXT.items():
