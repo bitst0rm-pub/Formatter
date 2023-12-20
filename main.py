@@ -717,7 +717,7 @@ class RecursiveFormat(common.Base):
 
     def open_console_on_failure(self):
         if common.config.get('open_console_on_failure') and self.CONTEXT['failure_count'] > 0:
-            current_view = get_current_view()
+            current_view = self.get_current_view()
             current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def show_completion_message(self):
