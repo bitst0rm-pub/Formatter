@@ -345,7 +345,7 @@ def build_formatter_sublime_settings_children(formatter_map):
         if config:
             child = OrderedDict([
                 ('info', config['source']),
-                ('disable', False),
+                ('disable', True),
                 ('format_on_save', False),
                 ('format_on_paste', False),
                 ('new_file_on_format', False),
