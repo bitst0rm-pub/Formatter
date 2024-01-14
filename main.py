@@ -158,7 +158,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
-        'enable_project_config': 'Enable Project Config',
+        'enable_project_config': 'Prioritize Per-project Basis Config',
         'format_on_unique': 'Enable Format on Unique',
         'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',

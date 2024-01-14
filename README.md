@@ -353,7 +353,7 @@ The following settings example should give you direction on how to setup Formatt
             // the options from any local project (per-project config file).
             // To disable this option in favor of the local project config:
             // 1. Set the config path of this option to null, OR
-            // 2. Use the Quick Options: Enable Project Config, OR
+            // 2. Use the Quick Options: Prioritize Per-project Basis Config, OR
             // 3. Place an empty '.cfgignore' file inside the project root folder.
             // Formatter will start to search up the file tree until a
             // '.cfgignore' file is (or isn’t) found.
