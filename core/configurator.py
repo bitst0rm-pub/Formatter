@@ -452,8 +452,8 @@ def build_formatter_sublime_settings(formatter_map):
     // 1. "format_on_save"
     // 2. "format_on_paste"
     // To use this option the "format_on_save" and/or "format_on_paste" options
-    // at the plugins level must also be enabled. This option takes precedence
-    // over the syntaxes specified there.
+    // at the "formatters" plugin level must also be enabled. This option
+    // takes precedence over the syntaxes specified there.
     // All syntaxes in this option must be unique without any duplicates.'''),
             ('format_on_unique', OrderedDict([
                 ('enable', False),
@@ -574,7 +574,7 @@ def build_formatter_sublime_settings(formatter_map):
                     ])),
                     ('__COMMENT__args', '''
             // Array of additional arguments for the command line.'''),
-                    ('args', NoIndent(['--basedir', './example/my/baseball', '--show-tits', 'yes'])),
+                    ('args', NoIndent(['--basedir', './example/my/baseball', '--show-bobs', 'yes'])),
                     ('__COMMENT__fix_commands', '''
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
@@ -597,7 +597,7 @@ def build_formatter_sublime_settings(formatter_map):
                         NoIndent(['css', 5, 0, 7]),
                         NoIndent([3, 0, 4]),
                         NoIndent([2, 0, -1]),
-                        NoIndent(['--show-tits', 'xxx', 2, 0, -1])
+                        NoIndent(['--show-bobs', 'xxx', 2, 0, -1])
                     ])
                 ]))
             ]))
@@ -629,7 +629,7 @@ def build_formatter_sublime_settings(formatter_map):
         r'["css", 5, 0, 7],',
         r'[3, 0, 4],',
         r'[2, 0, -1],',
-        r'["--show-tits", "xxx", 2, 0, -1]'
+        r'["--show-bobs", "xxx", 2, 0, -1]'
     ]
     r = [
         r'["--autocorrect", "--autocorrect-all", 4, 0, 4], // no index pos change',
@@ -638,7 +638,7 @@ def build_formatter_sublime_settings(formatter_map):
         r'["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7',
         r'[3, 0, 4], // just move index 3 to the new pos 4. (count 0 irrelevant)',
         r'[2, 0, -1], // just delete the index 2. (count 0 irrelevant)',
-        r'["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)'
+        r'["--show-bobs", "xxx", 2, 0, -1] // enough bobs, pop it out. ("xxx", 2, 0 irrelevant)'
     ]
     for s, r in zip(s, r):
         json_text = json_text.replace(s, r)

@@ -11,7 +11,7 @@ Key features:
 - Shared config files available for each 3rd-party plugin
 - Displays real-time word and character counts
 - Automatically remembers and restores text position
-- As a platform going beyond beautification and minification, eg. Text to QR code, ASCII art, ULM conversion etc. _see_ [Development](#development) to integrate your own modules with ease.
+- As a platform going beyond beautification and minification, eg. Text to QR code, ASCII art conversion etc. _see_ [Development](#development) to integrate your own modules with ease.
 - Open source and works offline
 
 
@@ -100,7 +100,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 60. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
 
 
-And now a same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
+And now the same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
 For example, Pretty Diff supports 45 languages, that would blow up the frame of this list here.<br/>
 `build-in` plugins are integrated plugins that do not need to install by end-users.
 
@@ -173,12 +173,12 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_/_example_ files for your configuration and could be overwritten by any package updates.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your configuration and could be overwritten by any package updates. Some exotic plugins do not handle input file. You need these _example_ files to control the configuration.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following settings example should give you direction on how to setup Formatter:
+The following detailed settings example is the head of Formatter and should give you direction on how to setup it. You do not need to take the whole set of options. Just take the ones you need, but leave the json structure be intact:
 
 ```js
 {
@@ -242,8 +242,8 @@ The following settings example should give you direction on how to setup Formatt
     // 1. "format_on_save"
     // 2. "format_on_paste"
     // To use this option the "format_on_save" and/or "format_on_paste" options
-    // at the plugins level must also be enabled. This option takes precedence
-    // over the syntaxes specified there.
+    // at the "formatters" plugin level must also be enabled. This option
+    // takes precedence over the syntaxes specified there.
     // All syntaxes in this option must be unique without any duplicates.
     "format_on_unique": {
         "enable": false,
@@ -364,7 +364,7 @@ The following settings example should give you direction on how to setup Formatt
             },
 
             // Array of additional arguments for the command line.
-            "args": ["--basedir", "./example/my/baseball", "--show-tits", "yes"],
+            "args": ["--basedir", "./example/my/baseball", "--show-bobs", "yes"],
 
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
@@ -387,7 +387,7 @@ The following settings example should give you direction on how to setup Formatt
                 ["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7
                 [3, 0, 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
                 [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
-                ["--show-tits", "xxx", 2, 0, -1] // enough tits, pop it out. ("xxx", 2, 0 irrelevant)
+                ["--show-bobs", "xxx", 2, 0, -1] // enough bobs, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
         "stylelint": {
