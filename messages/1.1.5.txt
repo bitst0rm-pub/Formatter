@@ -1,0 +1,7 @@
+                CHANGELOG
+
+1.1.5:
+    - Fix: Add the missing self to get_current_view()
+      for open_console_on_failure
+
+    - Minor cosmetic updates
