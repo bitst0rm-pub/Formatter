@@ -12,7 +12,6 @@
 import logging
 import json
 from ..core import common
-from ..libs import yaml
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['clang-format']
@@ -46,9 +45,7 @@ class ClangformatFormatter(common.Module):
 
         path = self.get_config_path()
         if path:
-            with open(path, 'r', encoding='utf-8') as file:
-                cfg_dict = yaml.safe_load(file)
-            cmd.extend(['--style', json.dumps(cfg_dict)])
+            cmd.extend(['--style=file:' + path])
 
         extmap = {
             # (sublime, clang)
@@ -77,7 +74,7 @@ class ClangformatFormatter(common.Module):
         syntax = self.get_assigned_syntax()
         syntax = next(value for key, value in extmap if key == syntax)
 
-        cmd.extend(['--assume-filename', 'dummy.' + syntax])
+        cmd.extend(['--assume-filename=dummy.' + syntax, '-'])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)
