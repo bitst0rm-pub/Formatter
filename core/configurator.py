@@ -464,8 +464,9 @@ def build_formatter_sublime_settings(formatter_map):
     // THIRD-PARTY PLUGINS LEVEL'''),
             ('formatters', OrderedDict([
                 ('example', OrderedDict([
-                    ('__COMMENT__disable', '''// Disable and remove plugin from being shown in the menu.'''),
-                    ('disable', False),
+                    ('__COMMENT__disable', '''// Plugin activation.
+            // By default, all plugins are disabled and disappear from the menu.'''),
+                    ('disable', True),
                     ('__COMMENT__format_on_save', '''
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
@@ -513,8 +514,8 @@ def build_formatter_sublime_settings(formatter_map):
             // to the entire content of this settings file!'''),
                     ('recursive_folder_format', OrderedDict([
                         ('enable', False),
-                        ('exclude_folders_regex', NoIndent(['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*?tits\\$'])),
-                        ('exclude_files_regex', NoIndent(['show_tits.sx', '.*?ball.js', '^._.*?'])),
+                        ('exclude_folders_regex', NoIndent(['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*foo\\$'])),
+                        ('exclude_files_regex', NoIndent(['^._.*$', '.*bar.exe'])),
                         ('exclude_extensions', NoIndent(['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak'])),
                         ('exclude_syntaxes', [])
                     ])),

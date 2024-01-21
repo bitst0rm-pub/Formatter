@@ -178,7 +178,7 @@ It is recommended to explore this folder, as it may contain additional config fi
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following detailed settings example is the head of Formatter and should give you direction on how to setup it. You do not need to take the whole set of options. Just take the ones you need, but leave the json structure be intact:
+The following setting details with default values should give you direction on how to setup it. You do not need to take the whole set of options. Just take the ones you need, but leave the json structure be intact:
 
 ```js
 {
@@ -254,8 +254,9 @@ The following detailed settings example is the head of Formatter and should give
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "example": {
-            // Disable and remove plugin from being shown in the menu.
-            "disable": false,
+            // Plugin activation.
+            // By default, all plugins are disabled and disappear from the menu.
+            "disable": true,
 
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
@@ -303,8 +304,8 @@ The following detailed settings example is the head of Formatter and should give
             // to the entire content of this settings file!
             "recursive_folder_format": {
                 "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
-                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
+                "exclude_files_regex": ["^._.*$", ".*bar.exe"],
                 "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
                 "exclude_syntaxes": []
             },

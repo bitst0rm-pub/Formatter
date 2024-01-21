@@ -71,8 +71,9 @@
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "example": {
-            // Disable and remove plugin from being shown in the menu.
-            "disable": false,
+            // Plugin activation.
+            // By default, all plugins are disabled and disappear from the menu.
+            "disable": true,
 
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
@@ -120,8 +121,8 @@
             // to the entire content of this settings file!
             "recursive_folder_format": {
                 "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
-                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
+                "exclude_files_regex": ["^._.*$", ".*bar.exe"],
                 "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
                 "exclude_syntaxes": []
             },
