@@ -399,8 +399,8 @@ The following setting details with default values should give you direction on h
             "new_file_on_format": false,
             "recursive_folder_format": {
                 "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
-                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
+                "exclude_files_regex": ["^._.*$", ".*bar.exe"],
                 "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
                 "exclude_syntaxes": []
             },
@@ -419,8 +419,8 @@ The following setting details with default values should give you direction on h
             "new_file_on_format": false,
             "recursive_folder_format": {
                 "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*?tits\\$"],
-                "exclude_files_regex": ["show_tits.sx", ".*?ball.js", "^._.*?"],
+                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
+                "exclude_files_regex": ["^._.*$", ".*bar.exe"],
                 "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
                 "exclude_syntaxes": []
             },
@@ -460,11 +460,12 @@ Formatting actions can be triggered in different ways:
 
 This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file. It comprises 3 modes:
 
-- **Temporary Quick Options**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
-- **Persistent User Settings**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
-- **Persistent Quick Options**: Clicking the `Save` option will make all current Temporary Quick Options persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
+- **Temporary Quick Options (TQO)**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
+- **Persistent User Settings (PUS)**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
+- **Persistent Quick Options (PQO)**: Clicking the `Save` option will make all current Temporary Quick Options persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
 
-None of the modes will ever alter your Settings file.
+None of the modes will ever alter your Settings file.<br/>
+You will be able to see the current mode on the status bar.
 
 
 ## Development:

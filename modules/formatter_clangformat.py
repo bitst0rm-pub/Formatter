@@ -74,7 +74,7 @@ class ClangformatFormatter(common.Module):
         syntax = self.get_assigned_syntax()
         syntax = next(value for key, value in extmap if key == syntax)
 
-        cmd.extend(['--assume-filename=dummy.' + syntax, '-'])
+        cmd.extend(['--assume-filename=dummy.' + syntax, '--'])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)
