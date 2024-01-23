@@ -1,0 +1,9 @@
+                CHANGELOG
+
+1.1.6:
+    - Fix: Prevent spawning of an insecure shell on Windows.
+      This addresses an issue where, on certain Windows
+      versions, command arguments were not retained.
+      (closed #44) Thanks h2110100 for testing.
+
+    - Updated the obsolete clang-format arguments

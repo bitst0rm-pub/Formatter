@@ -173,7 +173,7 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your configuration and could be overwritten by any package updates. Some exotic plugins do not handle input file. You need these _example_ files to control the configuration.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your configuration and could be overwritten by any package updates. Some exotic plugins do not handle input file. You need these _example_ files to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
