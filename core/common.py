@@ -176,7 +176,7 @@ class Module(object):
 
         # Input cmd must be a list of strings
         process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=self.get_pathinfo()['cwd'],
-                        env=self.update_environ(), shell=IS_WINDOWS, startupinfo=info)
+                        env=self.update_environ(), shell=False, startupinfo=info)
         return process
 
     def kill(self, process):
