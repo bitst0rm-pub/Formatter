@@ -196,6 +196,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with LaTeXindent",
+        "command": "run_format",
+        "args": {
+            "uid": "latexindent",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with LuaFormatter",
         "command": "run_format",
         "args": {

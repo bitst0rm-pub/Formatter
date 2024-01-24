@@ -195,6 +195,14 @@
                 }
             },
             {
+                "caption": "LaTeXindent",
+                "command": "run_format",
+                "args": {
+                    "uid": "latexindent",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "LuaFormatter",
                 "command": "run_format",
                 "args": {

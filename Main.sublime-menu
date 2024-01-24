@@ -225,6 +225,15 @@
                         }
                     },
                     {
+                        "caption": "LaTeXindent",
+                        "mnemonic": "L",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "latexindent",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "LuaFormatter",
                         "mnemonic": "L",
                         "command": "run_format",
