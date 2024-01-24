@@ -230,6 +230,10 @@ The following setting details with default values should give you direction on h
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
     // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
+    // In debug mode, Formatter will display your current system environments
+    // to assist you in configuration. On Windows, you can use either escaped
+    // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
+    // as path separators for all other options as well.
     "environ": {
         "PATH": [],
         "GEM_PATH": ["${HOME}/to/my/ruby"],
@@ -273,8 +277,8 @@ The following setting details with default values should give you direction on h
             "format_on_save": false,
 
             // Auto formatting whenever code is pasted into the current file/view.
-            // The syntaxes impact and its solutions for this option are identical to
-            // those of the "format_on_save" option mentioned above.
+            // This option is affected by the same syntax impact, and its solutions
+            // are identical to those mentioned above for the "format_on_save" option.
             "format_on_paste": false,
 
             // Create a new file containing formatted codes.

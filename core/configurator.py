@@ -439,7 +439,11 @@ def build_formatter_sublime_settings(formatter_map):
     // for the current formatting session. Your system environment remains untouched.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python and ruby you probably need
-    // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.'''),
+    // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
+    // In debug mode, Formatter will display your current system environments
+    // to assist you in configuration. On Windows, you can use either escaped
+    // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
+    // as path separators for all other options as well.'''),
             ('environ', OrderedDict([
                 ('PATH', []),
                 ('GEM_PATH', []),
@@ -483,8 +487,8 @@ def build_formatter_sublime_settings(formatter_map):
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file/view.
-            // The syntaxes impact and its solutions for this option are identical to
-            // those of the "format_on_save" option mentioned above.'''),
+            // This option is affected by the same syntax impact, and its solutions
+            // are identical to those mentioned above for the "format_on_save" option.'''),
                     ('format_on_paste', False),
                     ('__COMMENT__new_file_on_format', '''
             // Create a new file containing formatted codes.
