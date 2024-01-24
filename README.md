@@ -36,7 +36,7 @@ _Formatter in action..._
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
-**The complete list of plugins that are compatible with Formatter:** _Need more? see_ [Development](#development)
+**The complete list of plugins compatible with Formatter:** _Need more? see_ [Development](#development)
 
 1. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
 2. [Artistic Style](https://astyle.sourceforge.net): A source code formatter for C, C++, C#, and Java that automatically adjusts the formatting.
@@ -173,7 +173,7 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your configuration and could be overwritten by any package updates. Some exotic plugins do not handle input file. You need these _example_ files to configure them.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Some exotic plugins do not handle input file. You need these _example_ files as reference to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
@@ -468,18 +468,19 @@ This feature is designed to help users quickly access and switch between options
 - **Persistent User Settings (PUS)**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
 - **Persistent Quick Options (PQO)**: Clicking the `Save` option will make all current Temporary Quick Options persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
 
-None of the modes will ever alter your Settings file.<br/>
-You will be able to see the current mode on the status bar.
+Summary:<br/>
+The `Reset` option is the exclusive method to exit any mode.<br/>
+None of the modes will ever modify your Settings file.<br/>
+The current mode is indicated on the status bar for your reference.
 
 
 ## Development:
 
-Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your personal needs while remaining independent from the original plugin modules provided by Formatter. In theory, you can use Formatter as a platform to convert _any_ form of text, as long as third-party plugins operate in a text-to-text manner, such as text-to-ASCII image conversion.
+Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert _any_ form of text, as long as third-party plugins operate in a text-to-text manner, such as text-to-ASCII image conversion.
 
 ### 1. Prerequisite:
 
-1. Create a config file specific to your third-party plugin. Please note that the format and content of this config file may vary among different plugins. Consult the documentation provided by the third-party plugin for detailed instructions.
-Config files for third-party plugins must be placed in the following folder:
+1. Create a config file specific to your third-party plugin. Config files for third-party plugins must be placed in the following folder:
 
         Formatter > config
 
