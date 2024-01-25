@@ -100,6 +100,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Deno",
+        "command": "run_format",
+        "args": {
+            "uid": "deno",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ESLint",
         "command": "run_format",
         "args": {

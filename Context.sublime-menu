@@ -99,6 +99,14 @@
                 }
             },
             {
+                "caption": "Deno",
+                "command": "run_format",
+                "args": {
+                    "uid": "deno",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ESLint",
                 "command": "run_format",
                 "args": {
