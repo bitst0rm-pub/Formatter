@@ -261,6 +261,15 @@
                         }
                     },
                     {
+                        "caption": "OCamlformat",
+                        "mnemonic": "O",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "ocamlformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Ormolu",
                         "mnemonic": "O",
                         "command": "run_format",

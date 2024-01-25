@@ -228,6 +228,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with OCamlformat",
+        "command": "run_format",
+        "args": {
+            "uid": "ocamlformat",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Ormolu",
         "command": "run_format",
         "args": {

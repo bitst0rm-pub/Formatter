@@ -227,6 +227,14 @@
                 }
             },
             {
+                "caption": "OCamlformat",
+                "command": "run_format",
+                "args": {
+                    "uid": "ocamlformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Ormolu",
                 "command": "run_format",
                 "args": {

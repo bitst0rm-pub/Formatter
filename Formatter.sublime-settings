@@ -717,6 +717,25 @@
                 "default": "${packages}/User/formatter.assets/config/nasmfmt_rc.yaml"
             }
         },
+        "ocamlformat": {
+            "info": "https://github.com/ocaml-ppx/ocamlformat",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["ocaml", "ocamlyacc", "ocamllex"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/ocamlformat_rc.cfg"
+            }
+        },
         "ormolu": {
             "info": "https://github.com/tweag/ormolu",
             "disable": true,
