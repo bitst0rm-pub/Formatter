@@ -10,7 +10,6 @@
 # @license      The MIT License (MIT)
 
 import logging
-import json
 from ..core import common
 
 log = logging.getLogger(__name__)
