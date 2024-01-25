@@ -1,0 +1,24 @@
+[[language]]
+name = "json"
+extensions = ["json", "avsc", "geojson", "gltf", "har", "ice", "JSON-tmLanguage", "jsonl", "mcmeta", "tfstate", "tfstate.backup", "topojson", "webapp", "webmanifest"]
+indent = "    " # 4 spaces
+
+[[language]]
+name = "nickel"
+extensions = ["ncl"]
+
+[[language]]
+name = "ocaml"
+extensions = ["ml"]
+
+[[language]]
+name = "ocaml_interface"
+extensions = ["mli"]
+
+[[language]]
+name = "ocamllex"
+extensions = ["mll"]
+
+[[language]]
+name = "toml"
+extensions = ["toml"]

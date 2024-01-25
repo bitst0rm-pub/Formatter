@@ -428,6 +428,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Topiary",
+        "command": "run_format",
+        "args": {
+            "uid": "topiary",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with TSfmt",
         "command": "run_format",
         "args": {

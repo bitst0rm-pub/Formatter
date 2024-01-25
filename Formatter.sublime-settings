@@ -429,7 +429,7 @@
                 "exclude_extensions": [],
                 "exclude_syntaxes": []
             },
-            "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown"],
+            "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown", "ipynb"],
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/deno_rc.json"
@@ -1179,6 +1179,25 @@
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
+            }
+        },
+        "topiary": {
+            "info": "https://github.com/tweag/topiary",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["json", "nickel", "ocaml", "ocamllex", "toml"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/topiary_rc.toml"
             }
         },
         "tsfmt": {

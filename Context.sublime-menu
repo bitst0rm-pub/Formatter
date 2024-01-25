@@ -427,6 +427,14 @@
                 }
             },
             {
+                "caption": "Topiary",
+                "command": "run_format",
+                "args": {
+                    "uid": "topiary",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "TSfmt",
                 "command": "run_format",
                 "args": {

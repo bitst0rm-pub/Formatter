@@ -486,6 +486,15 @@
                         }
                     },
                     {
+                        "caption": "Topiary",
+                        "mnemonic": "T",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "topiary",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "TSfmt",
                         "mnemonic": "T",
                         "command": "run_format",
