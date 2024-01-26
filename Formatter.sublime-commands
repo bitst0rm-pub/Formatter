@@ -236,6 +236,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with OCP-indent",
+        "command": "run_format",
+        "args": {
+            "uid": "ocpindent",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Ormolu",
         "command": "run_format",
         "args": {

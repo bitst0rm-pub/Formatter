@@ -270,6 +270,15 @@
                         }
                     },
                     {
+                        "caption": "OCP-indent",
+                        "mnemonic": "O",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "ocpindent",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Ormolu",
                         "mnemonic": "O",
                         "command": "run_format",

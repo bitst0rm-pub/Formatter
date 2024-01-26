@@ -235,6 +235,14 @@
                 }
             },
             {
+                "caption": "OCP-indent",
+                "command": "run_format",
+                "args": {
+                    "uid": "ocpindent",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Ormolu",
                 "command": "run_format",
                 "args": {
