@@ -477,10 +477,11 @@ This feature is designed to help users quickly access and switch between options
 - **Persistent User Settings (PUS)**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
 - **Persistent Quick Options (PQO)**: Clicking the `Save` option will make all current Temporary Quick Options persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
 
-Summary:<br/>
-The `Reset` option is the exclusive method to exit any mode.<br/>
-None of the modes will ever modify your Settings file.<br/>
-The current mode is indicated on the status bar for your reference.
+Summary:
+
+- The `Reset` option is the exclusive method to exit any mode.
+- None of the modes will ever modify your Settings file.
+- The current mode is indicated on the status bar for your reference.
 
 
 ## Development:
@@ -679,11 +680,6 @@ is_valid = self.is_valid_cmd(cmd)
 # To process the formatting with all input (fixed) arguments
 exitcode, stdout, stderr = self.exec_cmd(cmd)
 ```
-
-### 4. Send pull requests:
-Customized modules that have not yet been integrated into Formatter will be wiped out by any Formatter updates via Package Control. Consider downloading Formatter directly from this repository instead of installing it through Package Control. The downside is that you'll need to update Formatter manually.<br/>
-Modules focused on beautifying and minifying have the best chance of being accepted.
-
 
 ## License
 

@@ -1,0 +1,11 @@
+                CHANGELOG
+
+1.1.7:
+    - Fix the broken edit on ST4
+    - Fix SyntaxError on ST3
+    - Fix JSONmax
+    - Change to use list from Prioritize Per-project Basis Config
+    - Improve Quick Option to remove existing items from list
+
+    - Added new modules:
+      LaTeXindent, Deno, Topiary, OCamlformat, OCP-indent
