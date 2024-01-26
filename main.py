@@ -444,7 +444,7 @@ class SingleFormat(common.Base):
 
             file_path = self.view.file_name()
             new_path = '{0}.{2}{1}'.format(*os.path.splitext(file_path) + (suffix,)) if file_path and os.path.isfile(file_path) else None
-            self.view.run_command('transfer_content_view', {'path': new_path})
+            self.view.run_command('transfer_view_content', {'path': new_path})
             sublime.set_timeout(self.undo_history, 250)
 
     def get_layout_and_suffix(self, uid, mode):
@@ -464,12 +464,12 @@ class SingleFormat(common.Base):
             self.view.run_command('undo')
 
 
-class ReplaceContentViewCommand(sublime_plugin.TextCommand):
+class ReplaceViewContentCommand(sublime_plugin.TextCommand):
     def run(self, edit, result, region):
         self.view.replace(edit, sublime.Region(region[0], region[1]), result)
 
 
-class TransferContentViewCommand(sublime_plugin.TextCommand, common.Base):
+class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
         path = kwargs.get('path', None)
         src_view = self.view

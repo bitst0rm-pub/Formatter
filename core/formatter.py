@@ -41,7 +41,7 @@ class Formatter(common.Module):
                 result = worker.format()
                 if result:
                     # Pass the result back to the main thread.
-                    self.view.run_command('replace_content_view', {'result': result, 'region': [self.region.a, self.region.b]})
+                    self.view.run_command('replace_view_content', {'result': result, 'region': [self.region.a, self.region.b]})
                     return True
         else:
             log.error('Formatter ID not found: %s', self.uid)
