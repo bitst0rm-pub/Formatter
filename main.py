@@ -200,7 +200,12 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             if layout_value == '<< Back':
                 self.show_main_menu()
             else:
-                common.config.setdefault('quick_options', {})['layout'] = layout_value
+                current_layout_value = common.config.setdefault('quick_options', {}).get('layout', None)
+                if layout_value == current_layout_value:
+                    current_layout_value = None
+                else:
+                    current_layout_value = layout_value
+                common.config.setdefault('quick_options', {})['layout'] = current_layout_value
                 self.run()
 
     def show_format_on_paste_menu(self):
@@ -220,9 +225,11 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 self.show_main_menu()
             else:
                 current_format_on_paste = common.config.setdefault('quick_options', {}).get('format_on_paste', [])
-                if uid_value not in current_format_on_paste:
+                if uid_value in current_format_on_paste:
+                    current_format_on_paste.remove(uid_value)
+                else:
                     current_format_on_paste.append(uid_value)
-                    common.config.setdefault('quick_options', {})['format_on_paste'] = current_format_on_paste
+                common.config.setdefault('quick_options', {})['format_on_paste'] = current_format_on_paste
                 self.run()
 
     def on_format_on_save_menu_done(self, uid_list, uid_index):
@@ -232,9 +239,11 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 self.show_main_menu()
             else:
                 current_format_on_save = common.config.setdefault('quick_options', {}).get('format_on_save', [])
-                if uid_value not in current_format_on_save:
+                if uid_value in current_format_on_save:
+                    current_format_on_save.remove(uid_value)
+                else:
                     current_format_on_save.append(uid_value)
-                    common.config.setdefault('quick_options', {})['format_on_save'] = current_format_on_save
+                common.config.setdefault('quick_options', {})['format_on_save'] = current_format_on_save
                 self.run()
 
     def show_new_file_format_input(self):
