@@ -158,7 +158,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
-        'enable_project_config': 'Prioritize Per-project Basis Config',
+        'prioritize_project_config': 'Prioritize Per-project Basis Config',
         'format_on_unique': 'Enable Format on Unique',
         'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',
@@ -179,7 +179,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 option_status = '[-]' if config_values else '[x]'
             if key == 'save_quick_options':
                 option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
-            if key in ['layout', 'format_on_paste', 'format_on_save', 'new_file_on_format'] and option_value:
+            if key in ['layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
             else:
                 option_label = '{} {}'.format(option_status, title)
@@ -208,15 +208,29 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 common.config.setdefault('quick_options', {})['layout'] = current_layout_value
                 self.run()
 
+    def show_prioritize_project_config_menu(self):
+        uid_list = list(common.config.get('formatters', {}).keys())
+        uid_list.append('<< Back')
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_prioritize_project_config_menu_done(uid_list, uid_index))
+
+    def on_prioritize_project_config_menu_done(self, uid_list, uid_index):
+        if uid_index != -1:
+            uid_value = uid_list[uid_index]
+            if uid_value == '<< Back':
+                self.show_main_menu()
+            else:
+                current_prioritize_project_config = common.config.setdefault('quick_options', {}).get('prioritize_project_config', [])
+                if uid_value in current_prioritize_project_config:
+                    current_prioritize_project_config.remove(uid_value)
+                else:
+                    current_prioritize_project_config.append(uid_value)
+                common.config.setdefault('quick_options', {})['prioritize_project_config'] = current_prioritize_project_config
+                self.run()
+
     def show_format_on_paste_menu(self):
         uid_list = list(common.config.get('formatters', {}).keys())
         uid_list.append('<< Back')
         self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_paste_menu_done(uid_list, uid_index))
-
-    def show_format_on_save_menu(self):
-        uid_list = list(common.config.get('formatters', {}).keys())
-        uid_list.append('<< Back')
-        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_save_menu_done(uid_list, uid_index))
 
     def on_format_on_paste_menu_done(self, uid_list, uid_index):
         if uid_index != -1:
@@ -231,6 +245,11 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     current_format_on_paste.append(uid_value)
                 common.config.setdefault('quick_options', {})['format_on_paste'] = current_format_on_paste
                 self.run()
+
+    def show_format_on_save_menu(self):
+        uid_list = list(common.config.get('formatters', {}).keys())
+        uid_list.append('<< Back')
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_save_menu_done(uid_list, uid_index))
 
     def on_format_on_save_menu_done(self, uid_list, uid_index):
         if uid_index != -1:
@@ -269,6 +288,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             selected_option = self.options[index]
             if 'Choose Layout' in selected_option:
                 self.show_layout_menu()
+            elif 'Prioritize Per-project Basis Config' in selected_option:
+                self.show_prioritize_project_config_menu()
             elif 'Enable Format on Paste' in selected_option:
                 is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
                 if is_rff_on:
@@ -338,8 +359,8 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
         # Edit object is useless here since it gets automatically
         # destroyed before the code is reached in the new thread.
 
-        enable_project_config = self.query(common.config, False, 'quick_options', 'enable_project_config')
-        if enable_project_config:
+        prioritize_project_config = self.query(common.config, [], 'quick_options', 'prioritize_project_config')
+        if kwargs.get('uid', None) in prioritize_project_config:
             has_cfgignore = True
         else:
             has_cfgignore = self.check_cfgignore()
