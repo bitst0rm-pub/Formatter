@@ -28,6 +28,7 @@ class Formatter(common.Module):
 
         formatter_plugin = formatter_map.get(self.uid)
         if formatter_plugin:
+            self.kwargs.update(formatter_plugin['const'])
             syntax = self.get_assigned_syntax()
             if not syntax:
                 self.popup_message('Syntax out of the scope.', 'ID:' + self.uid)
@@ -37,7 +38,7 @@ class Formatter(common.Module):
                 log.debug('Scope: %s', self.view.scope_name(self.region.begin()))
                 log.debug('Syntax: %s', syntax)
                 log.debug('Formatter ID: %s', self.uid)
-                worker = formatter_plugin['class'](**formatter_plugin['const'], **self.kwargs)
+                worker = formatter_plugin['class'](**self.kwargs)
                 result = worker.format()
                 if result:
                     # Pass the result back to the main thread.
