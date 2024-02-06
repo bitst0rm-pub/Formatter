@@ -1,0 +1,25 @@
+{
+    "excludes":[
+        "**/node_modules",
+        "**/*-lock.json"
+    ],
+    "lineWidth":120,
+    "typescript":{
+        "locked":true,
+        "lineWidth":80,
+        "indentWidth":2,
+        "useTabs":false,
+        "quoteStyle":"preferSingle",
+        "binaryExpression.operatorPosition":"sameLine"
+    },
+    "json":{
+        "lineWidth":80,
+        "indentWidth":2,
+        "useTabs":false
+    },
+    "plugins":[
+        "https://plugins.dprint.dev/typescript-0.88.10.wasm",
+        "https://plugins.dprint.dev/json-0.19.1.wasm",
+        "https://plugins.dprint.dev/markdown-0.16.3.wasm"
+    ]
+}
