@@ -965,5 +965,5 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.set_abort_sync_scroll()
-            self.reload_modules()  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
+            self.reload_modules(print_tree=True)  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
             self.sync_scroll.reset_run()

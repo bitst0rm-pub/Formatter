@@ -511,7 +511,7 @@ class Base(Module):
         print(package_name)
         print_tree(tree[package_name], '')
 
-    def reload_modules(self):
+    def reload_modules(self, print_tree=False):
         reloaded_modules = []
         modules_copy = dict(sys.modules)
 
@@ -526,7 +526,8 @@ class Base(Module):
                     return None
 
         log.debug('Reloaded modules (Python %s):', '.'.join(map(str, sys.version_info[:3])))
-        self.generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
+        if print_tree:
+            self.generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 
     def config_file(self):
         return PACKAGE_NAME + '.sublime-settings'
@@ -770,9 +771,8 @@ class Base(Module):
 
     def expand_path(self, path):
         if path and isinstance(path, str):
-            variables = sublime.active_window().extract_variables()
-            path = sublime.expand_variables(path, variables)
             path = normpath(expanduser(expandvars(path)))
+            path = sublime.expand_variables(path, sublime.active_window().extract_variables())
         return path
 
 
