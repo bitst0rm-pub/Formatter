@@ -40,7 +40,7 @@ class JsonmaxFormatter(common.Module):
 
         try:
             text = self.get_text_from_region(self.region)
-            obj = sublime.decode_value(text)
+            obj = json.loads(text)
             result = json.dumps(obj, **cmd if path else {'ensure_ascii': False, 'indent': 4})
             return result
         except ValueError as err:

@@ -32,7 +32,7 @@ class JsonminFormatter(common.Module):
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            obj = sublime.decode_value(text)
+            obj = json.loads(text)
             result = json.dumps(obj, ensure_ascii=False, separators=(',', ':'), indent=None)
             return result
         except ValueError as err:
