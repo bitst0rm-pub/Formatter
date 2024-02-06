@@ -1,0 +1,23 @@
+                CHANGELOG
+
+1.1.8:
+    - Fix:
+      - modules imports
+      - unsorted JSON max and min
+      - config None when using Package Control
+
+    - Added a new option to integrate custom modules:
+      // Integrate your custom modules into the Formatter ecosystem.
+      // This option ensures that your own modules won't be automatically removed
+      // from Packages Control during any release updates. It also spares you the trouble
+      // of having to submit pull requests on GitHub to have your own modules integrated.
+      // For security reasons, Formatter never communicates over the Internet.
+      // All paths to files and folders must be local.
+      "custom_modules": {
+          "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
+          "modules": ["/path/to/formatter_foo.py", "/path/to/formatter_bar.py"],
+          "libs": ["/path/to/foolib", "/path/to/mylib"]
+      },
+
+    - Added new modules:
+      Dprint
