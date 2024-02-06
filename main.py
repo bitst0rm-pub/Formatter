@@ -92,6 +92,8 @@ def entry():
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 def plugin_loaded():
+    api = common.Base()
+    api.get_config()
     done = False
 
     if has_package_control():
