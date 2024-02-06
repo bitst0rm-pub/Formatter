@@ -72,19 +72,10 @@ def copyfiles():
                         shutil.rmtree(dst)
                         shutil.copytree(src, dst)
 
-def plugin_loaded():
+def entry():
     api = common.Base()
-    done = False
-
-    if has_package_control():
-        from package_control import events
-        if events.post_upgrade(common.PACKAGE_NAME):
-            sublime.set_timeout_async(copyfiles, 120)
-            sublime.set_timeout_async(api.reload_modules, 150)
-            done = True
-    if not done:
-        sublime.set_timeout_async(copyfiles, 120)
-        sublime.set_timeout_async(api.reload_modules, 150)
+    copyfiles()
+    api.reload_modules(print_tree=False)
 
     api.remove_junk()
     ready = configurator.create_package_config_files()
@@ -99,6 +90,17 @@ def plugin_loaded():
         common.enable_logging() if is_enabled else common.disable_logging()
     log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
+
+def plugin_loaded():
+    done = False
+
+    if has_package_control():
+        from package_control import events
+        if events.post_upgrade(common.PACKAGE_NAME):
+            sublime.set_timeout_async(entry, 150)
+            done = True
+    if not done:
+        sublime.set_timeout_async(entry, 150)
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
