@@ -636,11 +636,22 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 ```
 **That's all**. Happy coding o_O
 
-New keys will be created in the _Default_ settings.<br/>
+New keys will be automatically created in the _Default_ settings.<br/>
 Do not forget to update/adjust your _User_ settings:<br/>
 `Preferences > Package Settings > Formatter > Settings`
 
-### 3. APIs:
+### 3. Integrating modules:
+
+You have the choice to either submit a pull request or integrate your modules yourself using:
+```js
+    "custom_modules": {
+        "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
+        "modules": ["/path/to/formatter_foo.py", "/path/to/formatter_bar.py"],
+        "libs": ["/path/to/foolib", "/path/to/mylib"]
+    },
+```
+
+### 4. APIs:
 
 The entire set of Formatter APIs can be found in the file: `core > common.py`<br/>
 Responsible for handling plugin modules is the class: `class Module(object)`<br/>
