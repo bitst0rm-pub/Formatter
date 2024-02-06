@@ -560,32 +560,36 @@ class Base(Module):
         return quick_options
 
     def build_config(self, settings):
-        global config
+        try:
+            global config
 
-        # Sublime settings dict is immutable and unordered
-        config = {
-            'quick_options': self.load_quick_options(),
-            'debug': settings.get('debug', False),
-            'dev': settings.get('dev', False),
-            'open_console_on_failure': settings.get('open_console_on_failure', False),
-            'show_statusbar': settings.get('show_statusbar', True),
-            'show_words_count': {
-                'enable': self.query(settings, True, 'show_words_count', 'enable'),
-                'ignore_whitespace_char': self.query(settings, True, 'show_words_count', 'ignore_whitespace_char')
-            },
-            'remember_session': settings.get('remember_session', True),
-            'layout': {
-                'enable': self.query(settings, False, 'layout', 'enable'),
-                'sync_scroll': self.query(settings, False, 'layout', 'sync_scroll')
-            },
-            'environ': settings.get('environ', {}),
-            'format_on_unique': settings.get('format_on_unique', {}),
-            'formatters': settings.get('formatters', {})
-        }
+            # Sublime settings dict is immutable and unordered
+            config = {
+                'quick_options': self.load_quick_options(),
+                'debug': settings.get('debug', False),
+                'dev': settings.get('dev', False),
+                'open_console_on_failure': settings.get('open_console_on_failure', False),
+                'show_statusbar': settings.get('show_statusbar', True),
+                'show_words_count': {
+                    'enable': self.query(settings, True, 'show_words_count', 'enable'),
+                    'ignore_whitespace_char': self.query(settings, True, 'show_words_count', 'ignore_whitespace_char')
+                },
+                'remember_session': settings.get('remember_session', True),
+                'layout': {
+                    'enable': self.query(settings, False, 'layout', 'enable'),
+                    'sync_scroll': self.query(settings, False, 'layout', 'sync_scroll')
+                },
+                'environ': settings.get('environ', {}),
+                'format_on_unique': settings.get('format_on_unique', {}),
+                'formatters': settings.get('formatters', {})
+            }
 
-        config['formatters'].pop('example', None)
-        config = self.recursive_map(self.expand_path, config)
-        return config
+            config['formatters'].pop('example', None)
+            config = self.recursive_map(self.expand_path, config)
+            return config
+        except Exception as e:
+            self.reload_modules(print_tree=False)
+            sublime.set_timeout_async(self.load_config, 100)
 
     def is_quick_options_mode(self):
         return bool(self.query(config, {}, 'quick_options'))
