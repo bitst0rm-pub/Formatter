@@ -6,6 +6,18 @@
     // This is useful when combined with "debug": true
     "open_console_on_failure": false,
 
+    // Integrate your custom modules into the Formatter ecosystem.
+    // This option ensures that your own modules won't be automatically removed
+    // from Packages Control during any release updates. It also spares you the trouble
+    // of having to submit pull requests on GitHub to have your own modules integrated.
+    // For security reasons, Formatter never communicates over the Internet.
+    // All paths to files and folders must be local.
+    "custom_modules": {
+        "config": [],
+        "modules": [],
+        "libs": []
+    },
+
     // Display results in the status bar.
     // The displayed abbreviation for the current settings mode:
     // PUS: Persistent User Settings
@@ -433,6 +445,25 @@
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/deno_rc.json"
+            }
+        },
+        "dprint": {
+            "info": "https://github.com/dprint/dprint",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown", "toml"],
+            "executable_path": "",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/dprint_rc.json"
             }
         },
         "eslint": {

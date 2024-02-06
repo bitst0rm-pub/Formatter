@@ -199,6 +199,18 @@ The following setting details with default values should give you direction on h
     // This is useful when combined with "debug": true
     "open_console_on_failure": false,
 
+    // Integrate your custom modules into the Formatter ecosystem.
+    // This option ensures that your own modules won't be automatically removed
+    // from Packages Control during any release updates. It also spares you the trouble
+    // of having to submit pull requests on GitHub to have your own modules integrated.
+    // For security reasons, Formatter never communicates over the Internet.
+    // All paths to files and folders must be local.
+    "custom_modules": {
+        "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
+        "modules": ["/path/to/formatter_foo.py", "/path/to/formatter_bar.py"],
+        "libs": ["/path/to/foolib", "/path/to/mylib"]
+    },
+
     // Display results in the status bar.
     // The displayed abbreviation for the current settings mode:
     // PUS: Persistent User Settings

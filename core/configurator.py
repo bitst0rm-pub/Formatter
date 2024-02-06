@@ -394,6 +394,18 @@ def build_formatter_sublime_settings(formatter_map):
     // Auto open the console panel whenever formatting failed.
     // This is useful when combined with "debug": true'''),
             ('open_console_on_failure', False),
+            ('__COMMENT__custom_modules', '''
+    // Integrate your custom modules into the Formatter ecosystem.
+    // This option ensures that your own modules won't be automatically removed
+    // from Packages Control during any release updates. It also spares you the trouble
+    // of having to submit pull requests on GitHub to have your own modules integrated.
+    // For security reasons, Formatter never communicates over the Internet.
+    // All paths to files and folders must be local.'''),
+            ('custom_modules', OrderedDict([
+                ('config', []),
+                ('modules', []),
+                ('libs', [])
+            ])),
             ('__COMMENT__show_statusbar', '''
     // Display results in the status bar.
     // The displayed abbreviation for the current settings mode:

@@ -9,10 +9,12 @@ import os
 import sys
 import time
 import json
+import shutil
 import logging
 import zipfile
 import tempfile
 import traceback
+import importlib
 import threading
 from threading import Event
 from datetime import datetime
@@ -37,8 +39,52 @@ SYNC_SCROLL = {
 }
 
 
+def read_settings_file(settings_file):
+    with open(settings_file, 'r', encoding='utf-8') as f:
+        file_content = f.read()
+        return sublime.decode_value(file_content)
+
+def has_package_control():
+    if sys.version_info < (3, 4):
+        loader = importlib.find_loader('package_control')
+    else:
+        loader = importlib.util.find_spec('package_control')
+    return loader is not None
+
+def copyfiles():
+    packages_path = sublime.packages_path()
+    settings_file = os.path.join(packages_path, 'User', common.PACKAGE_NAME + '.sublime-settings')
+    settings = read_settings_file(settings_file)
+    custom_modules = settings.get('custom_modules', {})
+
+    for k, v in custom_modules.items():
+        if k in ['config', 'modules', 'libs'] and isinstance(v, list):
+            for src in v:
+                src = sublime.expand_variables(os.path.normpath(os.path.expanduser(os.path.expandvars(src))), {'packages': packages_path})
+                base = os.path.basename(src)
+                dst = os.path.join(packages_path, common.PACKAGE_NAME, k, base)
+                if os.path.isfile(src):
+                    shutil.copy2(src, dst, follow_symlinks=True)
+                elif os.path.isdir(src):
+                    try:
+                        shutil.copytree(src, dst)
+                    except FileExistsError:
+                        shutil.rmtree(dst)
+                        shutil.copytree(src, dst)
+
 def plugin_loaded():
     api = common.Base()
+    done = False
+
+    if has_package_control():
+        from package_control import events
+        if events.post_upgrade(common.PACKAGE_NAME):
+            sublime.set_timeout_async(copyfiles, 120)
+            sublime.set_timeout_async(api.reload_modules, 150)
+            done = True
+    if not done:
+        sublime.set_timeout_async(copyfiles, 120)
+        sublime.set_timeout_async(api.reload_modules, 150)
 
     api.remove_junk()
     ready = configurator.create_package_config_files()

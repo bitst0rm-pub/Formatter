@@ -108,6 +108,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Dprint",
+        "command": "run_format",
+        "args": {
+            "uid": "dprint",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ESLint",
         "command": "run_format",
         "args": {

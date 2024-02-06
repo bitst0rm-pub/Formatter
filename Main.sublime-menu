@@ -126,6 +126,15 @@
                         }
                     },
                     {
+                        "caption": "Dprint",
+                        "mnemonic": "D",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "dprint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ESLint",
                         "mnemonic": "E",
                         "command": "run_format",
