@@ -8,6 +8,8 @@ Key features:
 - Capability to format entire file, single or multi selections
 - Capability to format entire folder recursively
 - Works with both saved and unsaved files
+- Capability to format on Save
+- Capability to format on Paste
 - Shared config files available for each 3rd-party plugin
 - Displays real-time word and character counts
 - Automatically remembers and restores text position
