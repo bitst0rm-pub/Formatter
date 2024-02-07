@@ -525,7 +525,7 @@ class Base(Module):
                     log.error('Error reloading module %s: %s', module_name, str(e))
                     return None
 
-        log.debug('Reloaded modules (Python %s):', '.'.join(map(str, sys.version_info[:3])))
+        log.debug('Reloaded modules (Python %s)', '.'.join(map(str, sys.version_info[:3])))
         if print_tree:
             self.generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 

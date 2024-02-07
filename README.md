@@ -36,7 +36,7 @@ _Formatter in action..._
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
-**The complete list of plugins compatible with Formatter:** _Need more? see_ [Development](#development)
+**The complete list of compatible plugins with Formatter:** _Need more? see_ [Development](#development)
 
 1. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
 2. [Artistic Style](https://astyle.sourceforge.net): A source code formatter for C, C++, C#, and Java that automatically adjusts the formatting.
@@ -493,6 +493,7 @@ This feature is designed to help users quickly access and switch between options
 Summary:
 
 - The `Reset` option is the exclusive method to exit any mode.
+- Clicking the same selected item will remove it.
 - None of the modes will ever modify your Settings file.
 - The current mode is indicated on the status bar for your reference.
 
