@@ -11,7 +11,7 @@ Key features:
 - Shared config files available for each 3rd-party plugin
 - Displays real-time word and character counts
 - Automatically remembers and restores text position
-- As a platform going beyond beautification and minification, eg. Text to QR code, ASCII art conversion etc. _see_ [Development](#development) to integrate your own modules with ease.
+- Customizable through the integration of your own modules. _see_ [Development](#development)
 - Open source and works offline
 
 
@@ -500,7 +500,7 @@ Summary:
 
 ## Development:
 
-Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert _any_ form of text, as long as third-party plugins operate in a text-to-text manner, such as text-to-ASCII image conversion.
+Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert _any_ form of text, as long as third-party plugins operate in a text-to-text manner, such as Text-to-QR code, text-to-ASCII image conversion.
 
 ### 1. Prerequisite:
 
