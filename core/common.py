@@ -336,7 +336,7 @@ class Module(object):
 
             for syntax in syntaxes:
                 for scope in scopes:
-                    if any(('source.' + syntax + x) in scope for x in ['.embedded', '.sublime']):
+                    if any(('source.' + syntax + x) in scope for x in ['.embedded', '.sublime', '.interpolated']):
                         if should_exclude(syntax, scope):
                             return None
                         return syntax
@@ -783,6 +783,11 @@ class Base(Module):
 '''
 Static helper APIs
 '''
+
+def read_settings_file(settings_file):
+    with open(settings_file, 'r', encoding='utf-8') as f:
+        file_content = f.read()
+        return sublime.decode_value(file_content)
 
 def run_once(func):
     def wrapper(*args, **kwargs):

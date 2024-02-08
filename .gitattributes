@@ -20,3 +20,4 @@ README.md       ident           export-subst
 .gitignore                      export-ignore
 .gitattributes                  export-ignore
 .editorconfig                   export-ignore
+.package-metadata.json          export-ignore

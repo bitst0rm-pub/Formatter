@@ -39,11 +39,6 @@ SYNC_SCROLL = {
 }
 
 
-def read_settings_file(settings_file):
-    with open(settings_file, 'r', encoding='utf-8') as f:
-        file_content = f.read()
-        return sublime.decode_value(file_content)
-
 def has_package_control():
     if sys.version_info < (3, 4):
         loader = importlib.find_loader('package_control')
@@ -54,7 +49,7 @@ def has_package_control():
 def copyfiles():
     packages_path = sublime.packages_path()
     settings_file = os.path.join(packages_path, 'User', common.PACKAGE_NAME + '.sublime-settings')
-    settings = read_settings_file(settings_file)
+    settings = common.read_settings_file(settings_file)
     custom_modules = settings.get('custom_modules', {})
 
     for k, v in custom_modules.items():

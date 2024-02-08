@@ -19,11 +19,6 @@ from ..core import common
 log = logging.getLogger(__name__)
 
 
-def read_settings_file(settings_file):
-    with open(settings_file, 'r', encoding='utf-8') as f:
-        file_content = f.read()
-        return sublime.decode_value(file_content)
-
 def update_sys_path(environ, packages_path):
     pythonpath = environ.get('PYTHONPATH', [])
     pythonpath = [os.path.normpath(os.path.expanduser(os.path.expandvars(path.replace('${packages}', packages_path))))
@@ -40,7 +35,7 @@ def load_formatter_modules(module_dir):
         packages_path = sublime.packages_path()
 
         settings_file = os.path.join(packages_path, 'User', common.PACKAGE_NAME + '.sublime-settings')
-        settings = read_settings_file(settings_file)
+        settings = common.read_settings_file(settings_file)
 
         environ = settings.get('environ', {})
         update_sys_path(environ, packages_path)

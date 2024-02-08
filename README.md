@@ -4,17 +4,17 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 
 Key features:
 
-- Support for more than 2 major programming languages
-- Capability to format entire file, single or multi selections
-- Capability to format entire folder recursively
-- Works with both saved and unsaved files
-- Capability to format on Save
-- Capability to format on Paste
-- Shared config files available for each 3rd-party plugin
-- Displays real-time word and character counts
-- Automatically remembers and restores text position
+- Support for more than 2 major programming languages.
+- Capability to format entire file, single or multi selections.
+- Capability to format entire folder recursively.
+- Works with both saved and unsaved files.
+- Capability to format on Save.
+- Capability to format on Paste.
+- Shared config files available for each 3rd-party plugin.
+- Displays real-time word and character counts.
+- Automatically remembers and restores text position.
 - Customizable through the integration of your own modules. _see_ [Development](#development)
-- Open source and works offline
+- Open source and works offline.
 
 
 _Formatter in action..._
@@ -38,7 +38,7 @@ _Formatter in action..._
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
-**The complete list of compatible plugins with Formatter:** _Need more? see_ [Development](#development)
+**The complete list of compatible plugins:** _Need more? see_ [Development](#development)
 
 1. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
 2. [Artistic Style](https://astyle.sourceforge.net): A source code formatter for C, C++, C#, and Java that automatically adjusts the formatting.
@@ -190,7 +190,7 @@ It is recommended to explore this folder, as it may contain additional config fi
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following setting details with default values should give you direction on how to setup it. You do not need to take the whole set of options. Just take the ones you need, but leave the json structure be intact:
+The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact:
 
 ```js
 {
@@ -442,16 +442,7 @@ The following setting details with default values should give you direction on h
         "uncrustify": {
             "info": "https://github.com/uncrustify/uncrustify",
             "disable": false,
-            "format_on_paste": false,
             "format_on_save": false,
-            "new_file_on_format": false,
-            "recursive_folder_format": {
-                "enable": false,
-                "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
-                "exclude_files_regex": ["^._.*$", ".*bar.exe"],
-                "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
-                "exclude_syntaxes": []
-            },
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
             "executable_path": "${HOME}/path/to/bin/uncrustify",
             "config_path": {
@@ -495,18 +486,18 @@ This feature is designed to help users quickly access and switch between options
 Summary:
 
 - The `Reset` option is the exclusive method to exit any mode.
-- Clicking the same selected item will remove it.
+- Clicking on the same selected item will remove it from the list.
 - None of the modes will ever modify your Settings file.
 - The current mode is indicated on the status bar for your reference.
 
 
 ## Development:
 
-Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert _any_ form of text, as long as third-party plugins operate in a text-to-text manner, such as Text-to-QR code, text-to-ASCII image conversion.
+Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert **_any_** form of text, as long as third-party plugins operate in a text-to-text manner, such as Text-to-QR code, text-to-ASCII image conversion.
 
 ### 1. Prerequisite:
 
-1. Create a config file specific to your third-party plugin. Config files for third-party plugins must be placed in the following folder:
+1. Create a config file specific to your third-party plugin _if needed_. Config files for third-party plugins must be placed in the following folder:
 
         Formatter > config
 
@@ -538,6 +529,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
     - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
         - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
+        - No communication over the Internet.
 
 2. The content of this module file should follow the structure outlined below:
 
@@ -565,10 +557,6 @@ Details as an example:
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# @rev          $Format:%H$ ($Format:%h$)
-# @tree         $Format:%T$ ($Format:%t$)
-# @date         $Format:%ci$
-# @author       you
 # @copyright    you
 # @link         you
 # @license      The MIT License (MIT)
