@@ -46,7 +46,7 @@ def has_package_control():
         loader = importlib.util.find_spec('package_control')
     return loader is not None
 
-def copyfiles():
+def copyfiles(api):
     packages_path = sublime.packages_path()
     settings_file = os.path.join(packages_path, 'User', common.PACKAGE_NAME + '.sublime-settings')
     settings = common.read_settings_file(settings_file)
@@ -58,18 +58,25 @@ def copyfiles():
                 src = sublime.expand_variables(os.path.normpath(os.path.expanduser(os.path.expandvars(src))), {'packages': packages_path})
                 base = os.path.basename(src)
                 dst = os.path.join(packages_path, common.PACKAGE_NAME, k, base)
+
                 if os.path.isfile(src):
-                    shutil.copy2(src, dst, follow_symlinks=True)
+                    src_md5 = api.md5f(src)
+                    dst_md5 = api.md5f(dst) if os.path.exists(dst) else None
+                    if src_md5 != dst_md5:
+                        shutil.copy2(src, dst, follow_symlinks=True)
                 elif os.path.isdir(src):
-                    try:
-                        shutil.copytree(src, dst)
-                    except FileExistsError:
-                        shutil.rmtree(dst)
-                        shutil.copytree(src, dst)
+                    src_sum = api.md5d(src)
+                    dst_sum = api.md5d(dst) if os.path.exists(dst) else None
+                    if src_sum != dst_sum:
+                        try:
+                            shutil.copytree(src, dst)
+                        except FileExistsError:
+                            shutil.rmtree(dst)
+                            shutil.copytree(src, dst)
 
 def entry():
     api = common.Base()
-    copyfiles()
+    copyfiles(api)
     api.reload_modules(print_tree=False)
 
     api.remove_junk()
@@ -87,8 +94,7 @@ def entry():
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 def plugin_loaded():
-    api = common.Base()
-    api.get_config()
+    common.Base().get_config()
     done = False
 
     if has_package_control():

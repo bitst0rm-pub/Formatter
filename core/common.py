@@ -694,12 +694,22 @@ class Base(Module):
 
         return True
 
-    def md5f(self, fname):
+    def md5f(self, file_path):
         hash_md5 = hashlib.md5()
 
-        with open(fname, 'rb') as f:
+        with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b''):
                 hash_md5.update(chunk)
+
+        return hash_md5.hexdigest()
+
+    def md5d(self, dir_path):
+        hash_md5 = hashlib.md5()
+
+        for root, _, files in os.walk(dir_path):
+            for file in files:
+                file_path = join(root, file)
+                hash_md5.update(self.md5f(file_path).encode('utf-8'))
 
         return hash_md5.hexdigest()
 
