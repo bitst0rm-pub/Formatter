@@ -592,15 +592,26 @@ class Base(Module):
             sublime.set_timeout_async(self.load_config, 100)
 
     def is_quick_options_mode(self):
-        return bool(self.query(config, {}, 'quick_options'))
+        return self.query(config, {}, 'quick_options')
+
+    def sort_dict(self, dictionary):
+        sorted_dict = {}
+        for key, value in sorted(dictionary.items()):
+            if isinstance(value, dict):
+                sorted_dict[key] = self.sort_dict(value)
+            elif isinstance(value, list):
+                sorted_dict[key] = sorted(value)
+            else:
+                sorted_dict[key] = value
+        return sorted_dict
 
     def get_mode_description(self, short=False):
-        qo_memory = self.is_quick_options_mode()
+        qo_memory = self.sort_dict(self.is_quick_options_mode())
 
         try:
             file = self.quick_options_config_file()
             with open(file, 'r') as f:
-                qo_file = bool(json.load(f))
+                qo_file = self.sort_dict(json.load(f))
         except FileNotFoundError:
             log.error('The file %s was not found.', file)
             qo_file = None
@@ -619,10 +630,10 @@ class Base(Module):
 
         if not qo_file and not qo_memory:
             mode = 'Permanent User Settings'
+        elif qo_file != qo_memory:
+            mode = 'Temporary Quick Options'
         elif qo_file:
             mode = 'Permanent Quick Options'
-        elif qo_memory:
-            mode = 'Temporary Quick Options'
 
         return mode_descriptions[mode] if short else mode
 
