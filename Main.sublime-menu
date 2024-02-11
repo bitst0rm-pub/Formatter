@@ -153,6 +153,15 @@
                         }
                     },
                     {
+                        "caption": "Gleam",
+                        "mnemonic": "G",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "gleam",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Gofmt",
                         "mnemonic": "G",
                         "command": "run_format",

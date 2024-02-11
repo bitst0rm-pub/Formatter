@@ -131,6 +131,14 @@
                 }
             },
             {
+                "caption": "Gleam",
+                "command": "run_format",
+                "args": {
+                    "uid": "gleam",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Gofmt",
                 "command": "run_format",
                 "args": {

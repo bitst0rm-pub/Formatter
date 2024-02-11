@@ -132,6 +132,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Gleam",
+        "command": "run_format",
+        "args": {
+            "uid": "gleam",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Gofmt",
         "command": "run_format",
         "args": {

@@ -60,53 +60,53 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 18. [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports): A tool that automatically updates your Go import lines and removes unreferenced ones.
 19. [Gofumpt](https://github.com/mvdan/gofumpt): A stricter, opinionated fork of gofmt that enforces additional formatting rules for Go code.
 20. [Google Java Format](https://github.com/google/google-java-format): A tool that reformats Java code to comply with the Google Java Style Guide.
-21. [Hindent](https://github.com/mihaimaruseac/hindent): A Haskell code formatter that formats code according to a consistent style guide.
-22. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, etc.
-23. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
-24. [Isort](https://github.com/pycqa/isort): A Python utility to sort imports alphabetically and automatically separated into sections.
-25. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
-26. JSONMax (built-in): A JSON beautifier.
-27. JSONMin (built-in): A JSON minifier.
-28. [Ktlint](https://github.com/pinterest/ktlint): A Kotlin-specific code formatter and linter.
-29. [LaTeXindent](https://www.ctan.org/pkg/latexindent): A tool for formatting LaTeX code.
-30. [LuaFormatter](https://github.com/Koihik/LuaFormatter): A code formatter for Lua programming language.
-31. [NASMfmt](https://github.com/yamnikov-oleg/nasmfmt): A tool for formatting NASM (Netwide Assembler) assembly code.
-32. [OCamlformat](https://github.com/ocaml-ppx/ocamlformat): An OCaml code opinionated formatter with customizable formatting rules.
-33. [OCP-indent](https://github.com/OCamlPro/ocp-indent): A tool for formatting OCaml code with various configuration options.
-34. [Ormolu](https://github.com/tweag/ormolu): A formatter for Haskell source code, with a focus on strict and consistent style.
-35. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
-36. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
-37. [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer): A tool to fix coding standard violations in PHP.
-38. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various languages and focuses on code consistency.
-39. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
-40. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
-41. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read.
-42. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
-43. [Rubyfmt](https://github.com/fables-tales/rubyfmt): A Ruby code formatter that aims to provide consistent formatting for Ruby code.
-44. [Rufo](https://github.com/ruby-formatter/rufo): An opinionated Ruby formatter.
-45. [Ruff](https://github.com/astral-sh/ruff): An extremely fast Python linter and code formatter, written in Rust.
-46. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
-47. [Scalafmt](https://github.com/scalameta/scalafmt): A code formatter for Scala that follows the official Scala style guide.
-48. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
-49. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
-50. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
-51. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
-52. [StyLua](https://github.com/JohnnyMorganz/StyLua): A Lua code formatter focusing on both aesthetics and consistency.
-53. [Standard JS](https://github.com/standard/standard): A JavaScript style guide, linter, and formatter.
-54. [Standardx JS](https://github.com/standard/standardx): An extended version of the JavaScript Standard Style with additional features.
-55. [Semistandard JS](https://github.com/standard/semistandard): A JavaScript style guide and linter with semicolons.
-56. [Standard RB](https://github.com/standardrb/standard): A Ruby style guide and formatter.
-57. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
-58. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
-59. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
-60. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
-61. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
-62. [Topiary](https://github.com/tweag/topiary): A tool for formatting and shaping trees and shrubs into artistic forms.
-63. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
-64. [TSfmt](https://github.com/vvakame/typescript-formatter): A TypeScript code formatter.
-65. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
-66. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
-
+21. [Gleam Format](https://github.com/gleam-lang/gleam): The official formatter for Gleam code.
+22. [Hindent](https://github.com/mihaimaruseac/hindent): A Haskell code formatter that formats code according to a consistent style guide.
+23. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, etc.
+24. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
+25. [Isort](https://github.com/pycqa/isort): A Python utility to sort imports alphabetically and automatically separated into sections.
+26. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
+27. JSONMax (built-in): A JSON beautifier.
+28. JSONMin (built-in): A JSON minifier.
+29. [Ktlint](https://github.com/pinterest/ktlint): A Kotlin-specific code formatter and linter.
+30. [LaTeXindent](https://www.ctan.org/pkg/latexindent): A tool for formatting LaTeX code.
+31. [LuaFormatter](https://github.com/Koihik/LuaFormatter): A code formatter for Lua programming language.
+32. [NASMfmt](https://github.com/yamnikov-oleg/nasmfmt): A tool for formatting NASM (Netwide Assembler) assembly code.
+33. [OCamlformat](https://github.com/ocaml-ppx/ocamlformat): An OCaml code opinionated formatter with customizable formatting rules.
+34. [OCP-indent](https://github.com/OCamlPro/ocp-indent): A tool for formatting OCaml code with various configuration options.
+35. [Ormolu](https://github.com/tweag/ormolu): A formatter for Haskell source code, with a focus on strict and consistent style.
+36. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
+37. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
+38. [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer): A tool to fix coding standard violations in PHP.
+39. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various languages and focuses on code consistency.
+40. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
+41. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
+42. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read.
+43. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
+44. [Rubyfmt](https://github.com/fables-tales/rubyfmt): A Ruby code formatter that aims to provide consistent formatting for Ruby code.
+45. [Rufo](https://github.com/ruby-formatter/rufo): An opinionated Ruby formatter.
+46. [Ruff](https://github.com/astral-sh/ruff): An extremely fast Python linter and code formatter, written in Rust.
+47. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
+48. [Scalafmt](https://github.com/scalameta/scalafmt): A code formatter for Scala that follows the official Scala style guide.
+49. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
+50. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
+51. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
+52. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
+53. [StyLua](https://github.com/JohnnyMorganz/StyLua): A Lua code formatter focusing on both aesthetics and consistency.
+54. [Standard JS](https://github.com/standard/standard): A JavaScript style guide, linter, and formatter.
+55. [Standardx JS](https://github.com/standard/standardx): An extended version of the JavaScript Standard Style with additional features.
+56. [Semistandard JS](https://github.com/standard/semistandard): A JavaScript style guide and linter with semicolons.
+57. [Standard RB](https://github.com/standardrb/standard): A Ruby style guide and formatter.
+58. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
+59. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
+60. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
+61. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
+62. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
+63. [Topiary](https://github.com/tweag/topiary): A tool for formatting and shaping trees and shrubs into artistic forms.
+64. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
+65. [TSfmt](https://github.com/vvakame/typescript-formatter): A TypeScript code formatter.
+66. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
+67. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
 
 And now the same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
 For example, Pretty Diff supports 45 languages, that would blow up the frame of this list here.<br/>
@@ -138,6 +138,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | Java | -- |
 | OCaml | [OCamlformat](https://github.com/ocaml-ppx/ocamlformat), [OCP-indent](https://github.com/OCamlPro/ocp-indent), [Topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | Nickel | [Topiary](https://github.com/tweag/topiary) | -- | None | -- |
+| Gleam | [Gleam](https://github.com/gleam-lang/gleam) | -- | None | -- |
 | Dart | [Dart Format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Swift | [Apple swift-format](https://github.com/apple/swift-format), [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
 | Crystal | [Crystal](https://github.com/crystal-lang/crystal) | -- | None | -- |
@@ -185,7 +186,7 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Some exotic plugins do not handle input file. You need these _example_ files as reference to configure them.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Some exotic plugins do not handle input config file. You need these _example_ files as reference to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
