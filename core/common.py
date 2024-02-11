@@ -823,7 +823,7 @@ def run_once(func):
     return wrapper
 
 def setup_logger(name):
-    formatter = logging.Formatter(fmt='▋[' + PACKAGE_NAME + '](%(threadName)s:%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
+    formatter = logging.Formatter(fmt='▋[' + PACKAGE_NAME + '](%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger = logging.getLogger(name)
