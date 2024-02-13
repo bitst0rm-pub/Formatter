@@ -38,121 +38,61 @@ _Formatter in action..._
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
-**The complete list of compatible plugins:** _Need more? see_ [Development](#development)
+**The complete list of compatible plugins (68):** _Need more? see_ [Development](#development)
 
-1. [Apple swift-format](https://github.com/apple/swift-format): The official Apple formatter for Apple Swift code.
-2. [Artistic Style](https://astyle.sourceforge.net): A source code formatter for C, C++, C#, and Java that automatically adjusts the formatting.
-3. [ASMfmt](https://github.com/klauspost/asmfmt): A tool for formatting assembly code.
-4. [Autopep8](https://github.com/hhatto/autopep8): A tool that automatically formats Python code to comply with the PEP 8 style guide.
-5. [Beautysh](https://github.com/lovesegfault/beautysh): A shell script beautifier that formats shell scripts for better readability.
-6. [Black](https://github.com/ambv/black): A code formatter for Python that enforces a consistent style by automatically reformatting.
-7. [CLJfmt](https://github.com/weavejester/cljfmt): A Clojure code formatter.
-8. [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html): A tool that formats C, C++, Objective-C, and other languages based on coding style rules.
-9. [CleanCSS](https://github.com/jakubpawlowicz/clean-css-cli): A tool that minifies CSS files, removing unnecessary spaces, comments, etc.
-10. [CSScomb](https://github.com/csscomb/csscomb.js): A coding style formatter for CSS files that rearranges properties in a predefined order.
-11. [Crystal](https://github.com/crystal-lang/crystal): The official formatter for Crystal with a syntax similar to Ruby but with a focus on performance.
-12. [Dart Format](https://dart.dev/tools/dart-format): The official Dart formatter for formatting Dart code according to the Dart style guide.
-13. [Deno](https://github.com/denoland/deno): A secure runtime and formatter for JavaScript and TypeScript.
-14. [Dprint](https://github.com/dprint/dprint): A pluggable and configurable code formatter for various languages.
-15. [ESLint](https://github.com/eslint/eslint): A popular linting tool for JavaScript that identifies and fixes common coding errors.
-16. [Elixir Mix Format](https://github.com/elixir-lang/elixir): Elixir formatter.
-17. [Fourmolu](https://github.com/fourmolu/fourmolu): A formatter for Haskell source code, allowing arbitrary configuration.
-18. [Gleam Format](https://github.com/gleam-lang/gleam): The official formatter for Gleam code.
-19. [Gofmt](https://pkg.go.dev/cmd/gofmt): A tool that formats Go code according to the Go Programming Language style guide.
-20. [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports): A tool that automatically updates your Go import lines and removes unreferenced ones.
-21. [Gofumpt](https://github.com/mvdan/gofumpt): A stricter, opinionated fork of gofmt that enforces additional formatting rules for Go code.
-22. [Google Java Format](https://github.com/google/google-java-format): A tool that reformats Java code to comply with the Google Java Style Guide.
-23. [Hindent](https://github.com/mihaimaruseac/hindent): A Haskell code formatter that formats code according to a consistent style guide.
-24. [HTMLMinifier](https://github.com/kangax/html-minifier): A tool to minify HTML code by removing unnecessary white spaces, comments, etc.
-25. [HTML Tidy](https://github.com/htacg/tidy-html5): A library and command-line tool for cleaning up and formatting HTML code.
-26. [Isort](https://github.com/pycqa/isort): A Python utility to sort imports alphabetically and automatically separated into sections.
-27. [JS Beautifier](https://github.com/beautify-web/js-beautify): A tool to beautify and format JavaScript, JSON, and CSS code.
-28. JSON max (built-in): A JSON beautifier (Not JSON5 with comments).
-29. JSON min (built-in): A JSON minifier (Not JSON5 with comments).
-30. [Ktlint](https://github.com/pinterest/ktlint): A Kotlin-specific code formatter and linter.
-31. [LaTeXindent](https://www.ctan.org/pkg/latexindent): A tool for formatting LaTeX code.
-32. [LuaFormatter](https://github.com/Koihik/LuaFormatter): A code formatter for Lua programming language.
-33. [NASMfmt](https://github.com/yamnikov-oleg/nasmfmt): A tool for formatting NASM (Netwide Assembler) assembly code.
-34. [OCamlformat](https://github.com/ocaml-ppx/ocamlformat): An OCaml code opinionated formatter with customizable formatting rules.
-35. [OCP-indent](https://github.com/OCamlPro/ocp-indent): A tool for formatting OCaml code with various configuration options.
-36. [Ormolu](https://github.com/tweag/ormolu): A formatter for Haskell source code, with a focus on strict and consistent style.
-37. [Perltidy](https://github.com/perltidy/perltidy): A code formatter for Perl, which indents and aligns Perl code according to specified rules.
-38. [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer): A tool that fixes PHP coding standards issues and enforces a consistent coding style.
-39. [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer): A tool to fix coding standard violations in PHP.
-40. [Prettier](https://github.com/prettier/prettier): An opinionated code formatter that supports various languages and focuses on code consistency.
-41. [Pretty Diff](https://github.com/prettydiff/prettydiff): A language-aware code comparison tool that can also format and minify code.
-42. [PrettyTable](https://github.com/jazzband/prettytable): A Python library for displaying tabular data in a visually appealing ASCII table format.
-43. [Python Minifier](https://github.com/dflook/python-minifier): A tool to minify Python code, making it smaller and harder to read.
-44. [RuboCop](https://github.com/rubocop-hq/rubocop): A code analyzer and formatter for Ruby, enforcing various style guidelines and best practices.
-45. [Rubyfmt](https://github.com/fables-tales/rubyfmt): A Ruby code formatter that aims to provide consistent formatting for Ruby code.
-46. [Rufo](https://github.com/ruby-formatter/rufo): An opinionated Ruby formatter.
-47. [Ruff](https://github.com/astral-sh/ruff): An extremely fast Python linter and code formatter, written in Rust.
-48. [Rustfmt](https://github.com/rust-lang/rustfmt): A tool for formatting Rust code.
-49. [Scalafmt](https://github.com/scalameta/scalafmt): A code formatter for Scala that follows the official Scala style guide.
-50. [ShellCheck](https://github.com/koalaman/shellcheck): A shell script static analysis tool that provides warnings and suggestions for shell scripts.
-51. [Shfmt](https://github.com/mvdan/sh): A shell script formatter that helps maintain consistent formatting and style in shell scripts.
-52. [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter): A library and command-line tool for formatting SQL queries to improve readability.
-53. SQLMin (built-in): A SQL minifier to reduce size and improve performance.
-54. [StyLua](https://github.com/JohnnyMorganz/StyLua): A Lua code formatter focusing on both aesthetics and consistency.
-55. [Standard JS](https://github.com/standard/standard): A JavaScript style guide, linter, and formatter.
-56. [Standard RB](https://github.com/standardrb/standard): A Ruby style guide and formatter.
-57. [Standardx JS](https://github.com/standard/standardx): An extended version of the JavaScript Standard Style with additional features.
-58. [Semistandard JS](https://github.com/standard/semistandard): A JavaScript style guide and linter with semicolons.
-59. [Stylelint](https://github.com/stylelint/stylelint): A linter for CSS and SCSS code that helps maintain a consistent style and avoid errors.
-60. [Stylish-Haskell](https://github.com/haskell/stylish-haskell): A Haskell code stylist that formats Haskell source code according to a set of rules.
-61. [SVGO](https://github.com/svg/svgo): A Node.js tool for optimizing SVG files, removing unnecessary data for better performance.
-62. [SwiftFormat](https://github.com/nicklockwood/SwiftFormat): A code formatter and linter that automatically formats Apple Swift code.
-63. [Terser](https://github.com/terser-js/terser): A JavaScript minifier that removes unnecessary characters and renames variables, etc.
-64. [Topiary](https://github.com/tweag/topiary): A tool for formatting and shaping trees and shrubs into artistic forms.
-65. [TS-standard](https://github.com/standard/ts-standard): JavaScript Standard Style with TypeScript support.
-66. [TSfmt](https://github.com/vvakame/typescript-formatter): A TypeScript code formatter.
-67. [Uncrustify](https://github.com/uncrustify/uncrustify): A configurable source code beautifier for C, C++, Objective-C, and other related languages.
-68. [YAPF](https://github.com/google/yapf): Yet Another Python Formatter, a tool to format Python code according to specified style guidelines.
-
-And now the same table sorted by languages. Note: This table does not contain the complete languages that each plugin does support.
+Note: This table does not contain the complete languages that each plugin does support.
 For example, Pretty Diff supports 45 languages, that would blow up the frame of this list here.<br/>
 `build-in` plugins are integrated plugins that do not need to install by end-users.
 
 | Languages | Beautify | Minify | Requirements | Config-Online |
 | ------ | :------: | :------: | :------: | :------: |
-| CSS, SCSS, Sass, Less, SugarSS | [Stylelint](https://github.com/stylelint/stylelint), [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [CSScomb](https://github.com/csscomb/csscomb.js) | [CleanCSS CLI](https://github.com/jakubpawlowicz/clean-css-cli), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
-| HTML, XML | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [HTML Tidy](https://github.com/htacg/tidy-html5) | [HTMLMinifier](https://github.com/kangax/html-minifier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
-| SVG | [SVGO max](https://github.com/svg/svgo) | [SVGO min](https://github.com/svg/svgo) | Node.js | -- |
-| JavaScript | [ESLint](https://github.com/eslint/eslint), [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [standard JS](https://github.com/standard/standard), [standardx JS](https://github.com/standard/standardx), [semistandard JS](https://github.com/standard/semistandard), [Pretty Diff](https://github.com/prettydiff/prettydiff), [`ClangFormat`](https://clang.llvm.org/docs/ClangFormat.html), [Deno](https://github.com/denoland/deno), [Dprint](https://github.com/dprint/dprint) | [Terser](https://github.com/terser-js/terser), [Pretty Diff](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://zed0.co.uk/clang-format-configurator) |
-| JSON | [JS Beautifier](https://github.com/beautify-web/js-beautify), [Prettier](https://github.com/prettier/prettier), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [Deno](https://github.com/denoland/deno), [Topiary](https://github.com/tweag/topiary), [Dprint](https://github.com/dprint/dprint), JSONMax (build-in) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff), JSONMin (build-in) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
-| GraphQL | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
-| Markdown | [Prettier](https://github.com/prettier/prettier), [`Deno`](https://github.com/denoland/deno), [Dprint](https://github.com/dprint/dprint) | -- | Node.js, `None` | -- |
-| TypeScript | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify), [TS-standard](https://github.com/standard/ts-standard), [`Pretty Diff`](https://github.com/prettydiff/prettydiff), [tsfmt](https://github.com/vvakame/typescript-formatter), [Deno](https://github.com/denoland/deno), [Dprint](https://github.com/dprint/dprint) | [`Pretty Diff`](https://github.com/prettydiff/prettydiff) | Node.js | [`Yes`](https://prettydiff.com/tool.xhtml) |
-| Vue | [Prettier](https://github.com/prettier/prettier), [JS Beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
-| YAML | [Prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
-| TOML | [Topiary](https://github.com/tweag/topiary), [Dprint](https://github.com/dprint/dprint) | -- | None | -- |
-| Lua | [StyLua](https://github.com/JohnnyMorganz/StyLua), [LuaFormatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
-| Go | [Gofmt](https://pkg.go.dev/cmd/gofmt), [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [Gofumpt](https://github.com/mvdan/gofumpt) | -- | None | -- |
-| Perl | [Perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
-| PHP | [`PHP-CS-Fixer`](https://github.com/FriendsOfPHP/PHP-CS-Fixer), [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | PHP >=`7.4.0` | [Yes](https://mlocati.github.io/php-cs-fixer-configurator) |
-| Python | [Ruff](https://github.com/astral-sh/ruff), [YAPF](https://github.com/google/yapf), [`Black`](https://github.com/ambv/black), [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort) | [Python Minifier](https://github.com/dflook/python-minifier) | Python `>=3.7.0` | [Yes](https://python-minifier.com) |
-| Ruby | [`RuboCop`](https://github.com/rubocop-hq/rubocop), [rubyfmt](https://github.com/fables-tales/rubyfmt), [standard RB](https://github.com/standardrb/standard), [`Rufo`](https://github.com/ruby-formatter/rufo) | -- | `Ruby`, None | -- |
-| Rust | [Rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
-| Haskell | [Ormolu](https://github.com/tweag/ormolu), [`Fourmolu`](https://github.com/fourmolu/fourmolu), [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell) | -- | Haskell | [`Yes`](https://fourmolu.github.io) |
-| Java | [`Google Java Format`](https://github.com/google/google-java-format), [Uncrustify](https://github.com/uncrustify/uncrustify), [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html), [Artistic Style](https://sourceforge.net/projects/astyle) | -- | `Java`, None | -- |
+| Arduino | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
+| Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | None | -- |
+| Angular | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Astro | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
+| Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
+| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) (build-in), [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
+| Elixir | [elixir mix format](https://github.com/elixir-lang/elixir) | -- | Erlang | -- |
+| Gleam | [gleam format](https://github.com/gleam-lang/gleam) | -- | None | -- |
+| GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | None | -- |
+| GraphQL | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Haskell | [ormolu](https://github.com/tweag/ormolu), [fourmolu](https://github.com/fourmolu/fourmolu)[1], [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell) | -- | Haskell | [[1]](https://fourmolu.github.io) |
+| HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| Java | [google java format](https://github.com/google/google-java-format)[1], [uncrustify](https://github.com/uncrustify/uncrustify)[2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[3], [artistic style](https://sourceforge.net/projects/astyle) | -- | Java[1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
+| JavaScript | [eslint](https://github.com/eslint/eslint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1][2], [deno](https://github.com/denoland/deno)[2], [dprint](https://github.com/dprint/dprint)[2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | Node.js, None[2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [deno](https://github.com/denoland/deno)[2], [topiary](https://github.com/tweag/topiary)[2], [dprint](https://github.com/dprint/dprint)[2], JSON max (build-in) | [prettydiff](https://github.com/prettydiff/prettydiff)[1], JSON min (build-in) | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | Java | -- |
-| OCaml | [OCamlformat](https://github.com/ocaml-ppx/ocamlformat), [OCP-indent](https://github.com/OCamlPro/ocp-indent), [Topiary](https://github.com/tweag/topiary) | -- | None | -- |
-| Nickel | [Topiary](https://github.com/tweag/topiary) | -- | None | -- |
-| Gleam | [Gleam](https://github.com/gleam-lang/gleam) | -- | None | -- |
-| Elixir | [Elixir Mix Format](https://github.com/elixir-lang/elixir) | -- | Erlang | -- |
-| Dart | [Dart Format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
-| Swift | [Apple swift-format](https://github.com/apple/swift-format), [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
-| Crystal | [Crystal](https://github.com/crystal-lang/crystal) | -- | None | -- |
+| LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | Perl, None | -- |
+| Lua | [stylua](https://github.com/JohnnyMorganz/StyLua), [luaformatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
+| Markdown | [prettier](https://github.com/prettier/prettier), [deno](https://github.com/denoland/deno)[1], [dprint](https://github.com/dprint/dprint)[1] | -- | Node.js, None[1] | -- |
+| Nickel | [topiary](https://github.com/tweag/topiary) | -- | None | -- |
+| OCaml | [ocamlformat](https://github.com/ocaml-ppx/ocamlformat), [ocp-indent](https://github.com/OCamlPro/ocp-indent), [topiary](https://github.com/tweag/topiary) | -- | None | -- |
+| Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
+| Pawn | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | PHP >=7.4.0[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
+| Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort) | [python-minifier](https://github.com/dflook/python-minifier)[2] | Python >=3.7.0[1] | [[2]](https://python-minifier.com) |
+| Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standard rb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | Ruby[1], None | -- |
+| Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
 | Scala | [scalafmt](https://github.com/scalameta/scalafmt) | -- | None | -- |
-| LaTeX | [LaTeXindent](https://github.com/cmhughes/latexindent.pl) | -- | Perl, None | -- |
-| Bash, Shell | [`Beautysh`](https://github.com/lovesegfault/beautysh), [shfmt](https://github.com/mvdan/sh), [ShellCheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | `Python` | -- |
-| SQL, SQL dialects | [SQL Formatter](https://github.com/sql-formatter-org/sql-formatter) | SQLMin (build-in) | Node.js | [Yes](https://sql-formatter-org.github.io/sql-formatter) |
-| CSV, TSV, DSV, Text | [PrettyTable](https://github.com/jazzband/prettytable) (build-in) | -- | Python | -- |
-| ASM assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | None | -- |
-| C, C++, C#, Objective-C, D, Java, Pawn, VALA | [Uncrustify](https://github.com/uncrustify/uncrustify) | -- | None | [Yes](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| C, C++, C#, Objective-C, Java, Json, JavaScript, Proto, TableGen, TextProto, Verilog | [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) | -- | None | [Yes](https://zed0.co.uk/clang-format-configurator) |
-| C, C++, C#, Objective-C, Java, JavaScript | [Artistic Style](https://sourceforge.net/projects/astyle) | -- | None | -- |
+| Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh)[1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | Python[1], None | -- |
+| SQL, SQL dialects | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1] | SQL min (build-in) | Node.js[1] | [[1]](https://sql-formatter-org.github.io/sql-formatter) |
+| Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
+| SVG | [SVGO max](https://github.com/svg/svgo) | [SVGO min](https://github.com/svg/svgo) | Node.js | -- |
+| TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| TextProto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| TOML | [topiary](https://github.com/tweag/topiary), [dprint](https://github.com/dprint/dprint) | -- | None | -- |
+| TypeScript | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify), [ts-standard](https://github.com/standard/ts-standard), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [tsfmt](https://github.com/vvakame/typescript-formatter), [deno](https://github.com/denoland/deno), [dprint](https://github.com/dprint/dprint) | [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| VALA | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| Vue | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
+| Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| YAML | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 
 💡 **Tips**:
 
