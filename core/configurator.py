@@ -378,7 +378,7 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             comment = config.get('comment', None)
             if comment is not None and isinstance(comment, str) and len(comment) > 0:
-                truncated_comment = comment[:80] + '...' if len(comment) > 80 else comment
+                truncated_comment = comment[:200] + '...' if len(comment) > 200 else comment
                 child['__COMMENT__child'] = '/* ' + truncated_comment.replace('/*', '').replace('*/', '') + ' */'  # '/* ' is marker for pattern_comma_before_comment
 
             target_list = type_to_list.get(config['type'], custom)
@@ -629,6 +629,7 @@ def build_formatter_sublime_settings(formatter_map):
     pattern_comment_linebreaks = re.compile(r'^(.*?//.*)$', re.MULTILINE)
     pattern_comma_before_comment = re.compile(r',([\s\n]+)(/\*)')
     json_text = pattern_comment_and_commas.sub(r'\1', json_text)
+    json_text = json_text.replace('\\"', '"')
     json_text = pattern_comma_before_comment.sub(r'\1\2', json_text)
     matched_lines = pattern_comment_linebreaks.findall(json_text)
     for line in matched_lines:

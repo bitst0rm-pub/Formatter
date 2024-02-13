@@ -584,7 +584,7 @@ MODULE_CONFIG = {                                           # REQUIRED: template
         'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
         'default': 'my_first_plugin_rc.json'                # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
     },
-    'comment': 'build-in, no executable'                    # optional: a single short comment, limited to 80 chars or just omit it
+    'comment': 'build-in, no executable'                    # optional: a single short comment, limited to 200 chars or just omit it
 }
 
 
