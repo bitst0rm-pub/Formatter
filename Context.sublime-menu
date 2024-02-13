@@ -115,6 +115,14 @@
                 }
             },
             {
+                "caption": "Elixir mix",
+                "command": "run_format",
+                "args": {
+                    "uid": "elixirmix",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ESLint",
                 "command": "run_format",
                 "args": {

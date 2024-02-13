@@ -135,6 +135,15 @@
                         }
                     },
                     {
+                        "caption": "Elixir mix",
+                        "mnemonic": "E",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "elixirmix",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ESLint",
                         "mnemonic": "E",
                         "command": "run_format",

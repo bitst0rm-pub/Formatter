@@ -116,6 +116,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Elixir mix",
+        "command": "run_format",
+        "args": {
+            "uid": "elixirmix",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ESLint",
         "command": "run_format",
         "args": {
