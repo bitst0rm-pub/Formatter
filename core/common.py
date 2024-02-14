@@ -192,7 +192,7 @@ class Module(object):
 
     def timeout(self):
         timeout = config.get('timeout')
-        return timeout if isinstance(timeout, int) else None
+        return timeout if not isinstance(timeout, bool) and isinstance(timeout, int) else None
 
     def exec_com(self, cmd):
         timeout = self.timeout()
