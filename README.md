@@ -46,9 +46,9 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 
 | Languages | Beautify | Minify | Requirements | Config-Online |
 | ------ | :------: | :------: | :------: | :------: |
+| Angular | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Arduino | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | None | -- |
-| Angular | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | Astro | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
@@ -90,9 +90,10 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | TOML | [topiary](https://github.com/tweag/topiary), [dprint](https://github.com/dprint/dprint) | -- | None | -- |
 | TypeScript | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify), [ts-standard](https://github.com/standard/ts-standard), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [tsfmt](https://github.com/vvakame/typescript-formatter), [deno](https://github.com/denoland/deno), [dprint](https://github.com/dprint/dprint) | [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | VALA | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| Vue | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
 | Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| Vue | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
 | YAML | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+
 
 💡 **Tips**:
 
