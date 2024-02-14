@@ -38,7 +38,7 @@ _Formatter in action..._
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
-**The complete list of compatible plugins (68):** _Need more? see_ [Development](#development)
+**The complete list of compatible plugins (69):** _Need more? see_ [Development](#development)
 
 Note: This table does not contain the complete languages that each plugin does support.
 For example, Pretty Diff supports 45 languages, that would blow up the frame of this list here.<br/>
@@ -58,6 +58,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Elixir | [elixir mix format](https://github.com/elixir-lang/elixir) | -- | Erlang | -- |
+| Erlang | [efmt](https://github.com/sile/efmt) | -- | None | -- |
 | Gleam | [gleam format](https://github.com/gleam-lang/gleam) | -- | None | -- |
 | GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | None | -- |
