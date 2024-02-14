@@ -22,7 +22,7 @@ if sys.version_info < (3, 4):
 else:
     from importlib import reload
 
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, TimeoutExpired
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     normcase, normpath, pathsep, split, splitext, dirname)
 
@@ -190,15 +190,31 @@ class Module(object):
     def is_alive(self, process):
         return process.poll() is None
 
+    def timeout(self):
+        timeout = config.get('timeout')
+        return timeout if isinstance(timeout, int) else None
+
     def exec_com(self, cmd):
+        timeout = self.timeout()
         process = self.popen(cmd)
-        stdout, stderr = process.communicate()
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        except TimeoutExpired:
+            self.kill(process)
+            return 1, None, 'Aborted due to expired timeout=' + str(timeout)
+
         self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def exec_cmd(self, cmd):
+        timeout = self.timeout()
         process = self.popen(cmd)
-        stdout, stderr = process.communicate(self.get_text_from_region(self.region).encode('utf-8'))
+        try:
+            stdout, stderr = process.communicate(self.get_text_from_region(self.region).encode('utf-8'), timeout=timeout)
+        except TimeoutExpired:
+            self.kill(process)
+            return 1, None, 'Aborted due to expired timeout=' + str(timeout)
+
         self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
@@ -569,6 +585,7 @@ class Base(Module):
                 'debug': settings.get('debug', False),
                 'dev': settings.get('dev', False),
                 'open_console_on_failure': settings.get('open_console_on_failure', False),
+                'timeout': settings.get('timeout', 10),
                 'show_statusbar': settings.get('show_statusbar', True),
                 'show_words_count': {
                     'enable': self.query(settings, True, 'show_words_count', 'enable'),

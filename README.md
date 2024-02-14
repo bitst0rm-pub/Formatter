@@ -38,7 +38,7 @@ _Formatter in action..._
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
 
-**The complete list of compatible plugins (69):** _Need more? see_ [Development](#development)
+**The complete list of compatible plugins (70):** _Need more? see_ [Development](#development)
 
 Note: This table does not contain the complete languages that each plugin does support.
 For example, Pretty Diff supports 45 languages, that would blow up the frame of this list here.<br/>
@@ -145,6 +145,10 @@ The following setting details, along with their default values and examples, are
     // Auto open the console panel whenever formatting failed.
     // This is useful when combined with "debug": true
     "open_console_on_failure": false,
+
+    // Timeout to abort subprocess in seconds.
+    // Default to 10 seconds. Set to false to disable the timeout.
+    "timeout": 10,
 
     // Integrate your custom modules into the Formatter ecosystem.
     // This option ensures that your own modules won't be automatically removed

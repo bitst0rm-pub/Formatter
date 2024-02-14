@@ -394,6 +394,10 @@ def build_formatter_sublime_settings(formatter_map):
     // Auto open the console panel whenever formatting failed.
     // This is useful when combined with "debug": true'''),
             ('open_console_on_failure', False),
+            ('__COMMENT__timeout', '''
+    // Timeout to abort subprocess in seconds.
+    // Default to 10 seconds. Set to false to disable the timeout.'''),
+            ('timeout', 10),
             ('__COMMENT__custom_modules', '''
     // Integrate your custom modules into the Formatter ecosystem.
     // This option ensures that your own modules won't be automatically removed
@@ -432,7 +436,7 @@ def build_formatter_sublime_settings(formatter_map):
     // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
     // View > Layout > Single
-    // Accepted values: "2cols", "2rows", "single" or false'''),
+    // Accepted values: "2cols", "2rows", "single" OR false'''),
             ('layout', OrderedDict([
                 ('enable', '2cols'),
                 ('sync_scroll', True)
