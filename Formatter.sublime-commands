@@ -116,10 +116,26 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Erlang efmt",
+        "command": "run_format",
+        "args": {
+            "uid": "efmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Elixir mix",
         "command": "run_format",
         "args": {
             "uid": "elixirmix",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Erlang erlfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "erlfmt",
             "type": "beautifier"
         }
     },

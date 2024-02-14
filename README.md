@@ -58,7 +58,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Elixir | [elixir mix format](https://github.com/elixir-lang/elixir) | -- | Erlang | -- |
-| Erlang | [efmt](https://github.com/sile/efmt) | -- | None | -- |
+| Erlang | [whatsapp erlfmt](https://github.com/WhatsApp/erlfmt)[1], [efmt](https://github.com/sile/efmt) | -- | rebar3[1], None | -- |
 | Gleam | [gleam format](https://github.com/gleam-lang/gleam) | -- | None | -- |
 | GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | None | -- |
@@ -204,7 +204,7 @@ The following setting details, along with their default values and examples, are
     // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
     // as path separators for all other options as well.
     "environ": {
-        "PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"],
+        "PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin", "/path/to/.cache/rebar3/bin:$PATH"],
         "GEM_PATH": ["${HOME}/to/my/ruby"],
         "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"],
         "OLALA": ["$HOME/.cabal/bin:$PATH", "~/.olala/bin:$PATH"]

@@ -135,11 +135,29 @@
                         }
                     },
                     {
+                        "caption": "Erlang efmt",
+                        "mnemonic": "E",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "efmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Elixir mix",
                         "mnemonic": "E",
                         "command": "run_format",
                         "args": {
                             "uid": "elixirmix",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Erlang erlfmt",
+                        "mnemonic": "E",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "erlfmt",
                             "type": "beautifier"
                         }
                     },

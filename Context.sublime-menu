@@ -115,10 +115,26 @@
                 }
             },
             {
+                "caption": "Erlang efmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "efmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Elixir mix",
                 "command": "run_format",
                 "args": {
                     "uid": "elixirmix",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Erlang erlfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "erlfmt",
                     "type": "beautifier"
                 }
             },
