@@ -9,7 +9,7 @@ import logging
 from ..core import common
 
 log = logging.getLogger(__name__)
-EXECUTABLES = ['efmt']
+EXECUTABLES = ['rebar3', 'efmt']
 MODULE_CONFIG = {
     'source': 'https://github.com/sile/efmt',
     'name': 'Erlang efmt',
@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['erlang'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/efmt",
+    "executable_path": "/path/to/efmt (standalone bin) or /path/to/rebar3",
     'args': None,
     'config_path': None,
     'comment': 'opinionated, no config'
@@ -33,7 +33,10 @@ class EfmtFormatter(common.Module):
         if not executable:
             return None
 
-        cmd = [executable]
+        if common.basename(executable) == 'rebar3':
+            cmd = [executable, 'efmt']
+        else:
+            cmd = [executable]
 
         cmd.extend(self.get_args())
 
