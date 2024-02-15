@@ -567,6 +567,15 @@
                         }
                     },
                     {
+                        "caption": "Terraform fmt",
+                        "mnemonic": "T",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "terraformfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Topiary",
                         "mnemonic": "T",
                         "command": "run_format",

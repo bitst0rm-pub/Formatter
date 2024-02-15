@@ -499,6 +499,14 @@
                 }
             },
             {
+                "caption": "Terraform fmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "terraformfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Topiary",
                 "command": "run_format",
                 "args": {

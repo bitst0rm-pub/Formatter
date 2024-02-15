@@ -1362,6 +1362,23 @@
                 "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
             }
         },
+        "terraformfmt": {
+            "info": "https://developer.hashicorp.com/terraform/cli/commands/fmt",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["terraform"],
+            "executable_path": "/path/to/terraform"
+            /* opinionated, no config */
+        },
         "topiary": {
             "info": "https://github.com/tweag/topiary",
             "disable": true,

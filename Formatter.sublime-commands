@@ -500,6 +500,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Terraform fmt",
+        "command": "run_format",
+        "args": {
+            "uid": "terraformfmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Topiary",
         "command": "run_format",
         "args": {
