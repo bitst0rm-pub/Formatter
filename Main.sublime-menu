@@ -576,6 +576,15 @@
                         }
                     },
                     {
+                        "caption": "Taplo",
+                        "mnemonic": "T",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "taplo",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Terraform fmt",
                         "mnemonic": "T",
                         "command": "run_format",

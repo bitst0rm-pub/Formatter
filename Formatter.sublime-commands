@@ -508,6 +508,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Taplo",
+        "command": "run_format",
+        "args": {
+            "uid": "taplo",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Terraform fmt",
         "command": "run_format",
         "args": {

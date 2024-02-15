@@ -507,6 +507,14 @@
                 }
             },
             {
+                "caption": "Taplo",
+                "command": "run_format",
+                "args": {
+                    "uid": "taplo",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Terraform fmt",
                 "command": "run_format",
                 "args": {

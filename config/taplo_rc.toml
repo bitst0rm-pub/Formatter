@@ -1,0 +1,77 @@
+# https://taplo.tamasfe.dev/configuration/formatter-options.html
+# Update: 2024.02.15
+
+[formatting]
+# Align entries vertically. Entries that have table headers,
+# comments, or blank lines between them are not aligned.
+# Default value: false
+align_entries = false
+
+# Align consecutive comments after entries and items vertically.
+# This applies to comments that are after entries or array items.
+# Default value: true
+align_comments = true
+
+# Put trailing commas for multiline arrays.
+# Default value: true
+array_trailing_comma = true
+
+# Automatically expand arrays to multiple lines when they exceed column_width characters.
+# Default value: true
+array_auto_expand = true
+
+# Automatically collapse arrays if they fit in one line.
+# Default value: true
+array_auto_collapse = true
+
+# Omit whitespace padding inside single-line arrays.
+# Default value: true
+compact_arrays = true
+
+# Omit whitespace padding inside inline tables.
+# Default value: false
+compact_inline_tables = false
+
+# Expand values (e.g. arrays) inside inline tables.
+# Default value: true
+inline_table_expand = true
+
+# Omit whitespace around =.
+# Default value: false
+compact_entries = false
+
+# Target maximum column width after which arrays are expanded into new lines.
+# Default value: 80
+column_width = 80
+
+# Indent subtables if they come in order.
+# Default value: false
+indent_tables = false
+
+# Indent entries under tables.
+# Default value: false
+indent_entries = false
+
+# Indentation to use, should be tabs or spaces but technically could be anything.
+# Default value: 2 spaces (" ")
+indent_string = "  "
+
+# Add trailing newline to the source.
+# Default value: true
+trailing_newline = true
+
+# Alphabetically reorder keys that are not separated by blank lines.
+# Default value: false
+reorder_keys = false
+
+# Alphabetically reorder array values that are not separated by blank lines.
+# Default value: false
+reorder_arrays = false
+
+# The maximum amount of consecutive blank lines allowed.
+# Default value: 2
+allowed_blank_lines = 2
+
+# Use CRLF line endings.
+# Default value: false
+crlf = false
