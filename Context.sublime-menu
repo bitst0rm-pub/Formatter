@@ -339,6 +339,14 @@
                 }
             },
             {
+                "caption": "Racofmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "racofmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "RuboCop",
                 "command": "run_format",
                 "args": {

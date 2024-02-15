@@ -340,6 +340,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Racofmt",
+        "command": "run_format",
+        "args": {
+            "uid": "racofmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with RuboCop",
         "command": "run_format",
         "args": {

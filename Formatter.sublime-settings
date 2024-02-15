@@ -6,6 +6,10 @@
     // This is useful when combined with "debug": true
     "open_console_on_failure": false,
 
+    // Timeout to abort subprocess in seconds.
+    // Default to 10 seconds. Set to false to disable the timeout.
+    "timeout": 10,
+
     // Integrate your custom modules into the Formatter ecosystem.
     // This option ensures that your own modules won't be automatically removed
     // from Packages Control during any release updates. It also spares you the trouble
@@ -43,7 +47,7 @@
     // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
     // View > Layout > Single
-    // Accepted values: "2cols", "2rows", "single" or false
+    // Accepted values: "2cols", "2rows", "single" OR false
     "layout": {
         "enable": "2cols",
         "sync_scroll": true
@@ -350,7 +354,7 @@
                 "exclude_extensions": [],
                 "exclude_syntaxes": []
             },
-            "syntaxes": ["c", "cs", "c++", "objc", "objc++", "js", "tsx", "jsx", "json", "java", "proto", "protodevel", "td", "sv", "svh", "v", "vh"],
+            "syntaxes": ["c", "cs", "c++", "objc", "objc++", "js", "tsx", "jsx", "json", "java", "proto", "protodevel", "td", "sv", "svh", "v", "vh", "glsl"],
             "executable_path": "",
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"
@@ -988,6 +992,24 @@
                 "default": "${packages}/User/formatter.assets/config/prettytable_rc.json"
             }
             /* build-in, no executable */
+        },
+        "racofmt": {
+            "info": "https://github.com/sorawee/fmt",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["racket"],
+            "executable_path": "/path/to/bin/raco",
+            "args": ["--width", "102", "--limit", "120", "--max-blank-lines", "1", "--indent", "0"]
+            /* undocumented --config config_path, use args instead */
         },
         "rubocop": {
             "info": "https://github.com/rubocop-hq/rubocop",

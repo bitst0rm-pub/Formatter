@@ -387,6 +387,15 @@
                         }
                     },
                     {
+                        "caption": "Racofmt",
+                        "mnemonic": "R",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "racofmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "RuboCop",
                         "mnemonic": "R",
                         "command": "run_format",
