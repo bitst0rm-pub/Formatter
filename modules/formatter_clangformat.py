@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'name': 'ClangFormat',
     'uid': 'clangformat',
     'type': 'beautifier',
-    'syntaxes': ['c', 'cs', 'c++', 'objc', 'objc++', 'js', 'tsx', 'jsx', 'json', 'java', 'proto', 'protodevel', 'td', 'sv', 'svh', 'v', 'vh'],
+    'syntaxes': ['c', 'cs', 'c++', 'objc', 'objc++', 'js', 'tsx', 'jsx', 'json', 'java', 'proto', 'protodevel', 'td', 'sv', 'svh', 'v', 'vh', 'glsl'],
     'exclude_syntaxes': None,
     "executable_path": "",
     'args': None,
@@ -64,7 +64,8 @@ class ClangformatFormatter(common.Module):
             ('sv', 'sv'),
             ('svh', 'svh'),
             ('v', 'v'),
-            ('vh', 'vh')
+            ('vh', 'vh'),
+            ('glsl', 'glsl')
         }
         syntax = self.get_assigned_syntax()
         syntax = next(value for key, value in extmap if key == syntax)
