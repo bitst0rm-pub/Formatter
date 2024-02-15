@@ -204,6 +204,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with HCLfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "hclfmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Hindent",
         "command": "run_format",
         "args": {

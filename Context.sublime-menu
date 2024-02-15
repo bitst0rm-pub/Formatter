@@ -203,6 +203,14 @@
                 }
             },
             {
+                "caption": "HCLfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "hclfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Hindent",
                 "command": "run_format",
                 "args": {

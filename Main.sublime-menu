@@ -234,6 +234,15 @@
                         }
                     },
                     {
+                        "caption": "HCLfmt",
+                        "mnemonic": "H",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "hclfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Hindent",
                         "mnemonic": "H",
                         "command": "run_format",

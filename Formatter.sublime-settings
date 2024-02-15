@@ -669,6 +669,23 @@
                 "default": "${packages}/User/formatter.assets/config/google_java_format_rc.yaml"
             }
         },
+        "hclfmt": {
+            "info": "https://github.com/hashicorp/hcl",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["hcl"],
+            "executable_path": "/path/to/go/bin/hclfmt"
+            /* opinionated, no config */
+        },
         "hindent": {
             "info": "https://github.com/mihaimaruseac/hindent",
             "disable": true,
