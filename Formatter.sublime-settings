@@ -379,6 +379,25 @@
                 "default": "${packages}/User/formatter.assets/config/cljfmt_rc.edn"
             }
         },
+        "cmakeformat": {
+            "info": "https://github.com/cheshirekow/cmake_format",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["cmake"],
+            "executable_path": "/path/to/cmake-format",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/cmakeformat_rc.py"
+            }
+        },
         "crystal": {
             "info": "https://github.com/crystal-lang/crystal",
             "disable": true,

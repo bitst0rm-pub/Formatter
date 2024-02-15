@@ -76,6 +76,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with CMake-format",
+        "command": "run_format",
+        "args": {
+            "uid": "cmakeformat",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Crystal",
         "command": "run_format",
         "args": {

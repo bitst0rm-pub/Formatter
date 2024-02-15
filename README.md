@@ -52,6 +52,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Astro | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
+| CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) (build-in), [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |

@@ -75,6 +75,14 @@
                 }
             },
             {
+                "caption": "CMake-format",
+                "command": "run_format",
+                "args": {
+                    "uid": "cmakeformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Crystal",
                 "command": "run_format",
                 "args": {

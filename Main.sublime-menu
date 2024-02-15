@@ -90,6 +90,15 @@
                         }
                     },
                     {
+                        "caption": "CMake-format",
+                        "mnemonic": "C",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "cmakeformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Crystal",
                         "mnemonic": "C",
                         "command": "run_format",
