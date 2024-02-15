@@ -991,6 +991,25 @@
                 "default": "${packages}/User/formatter.assets/config/prettier_rc.json"
             }
         },
+        "prettierd": {
+            "info": "https://github.com/fsouza/prettierd",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
+            "executable_path": "/path/to/node_modules/.bin/prettierd",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/prettierd_rc.json"
+            }
+        },
         "prettydiffmax": {
             "info": "https://github.com/prettydiff/prettydiff",
             "disable": true,

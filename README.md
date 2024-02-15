@@ -46,15 +46,15 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 
 | Languages | Beautify | Minify | Requirements | Config-Online |
 | ------ | :------: | :------: | :------: | :------: |
-| Angular | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Angular | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
 | Arduino | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | None | -- |
-| Astro | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Astro | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
-| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) (build-in), [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
@@ -63,17 +63,17 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Gleam | [gleam format](https://github.com/gleam-lang/gleam) | -- | None | -- |
 | GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | None | -- |
-| GraphQL | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| GraphQL | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
 | Haskell | [ormolu](https://github.com/tweag/ormolu), [fourmolu](https://github.com/fourmolu/fourmolu)[1], [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell) | -- | Haskell | [[1]](https://fourmolu.github.io) |
 | HCL | [hclfmt](https://github.com/hashicorp/hcl) | -- | None | -- |
-| HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | Java | [google java format](https://github.com/google/google-java-format)[1], [uncrustify](https://github.com/uncrustify/uncrustify)[2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[3], [artistic style](https://sourceforge.net/projects/astyle) | -- | Java[1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
-| JavaScript | [eslint](https://github.com/eslint/eslint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1][2], [deno](https://github.com/denoland/deno)[2], [dprint](https://github.com/dprint/dprint)[2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | Node.js, None[2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [deno](https://github.com/denoland/deno)[2], [topiary](https://github.com/tweag/topiary)[2], [dprint](https://github.com/dprint/dprint)[2], JSON max (build-in) | [prettydiff](https://github.com/prettydiff/prettydiff)[1], JSON min (build-in) | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| JavaScript | [eslint](https://github.com/eslint/eslint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1][2], [deno](https://github.com/denoland/deno)[2], [dprint](https://github.com/dprint/dprint)[2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | Node.js, None[2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [deno](https://github.com/denoland/deno)[2], [topiary](https://github.com/tweag/topiary)[2], [dprint](https://github.com/dprint/dprint)[2], JSON max (build-in) | [prettydiff](https://github.com/prettydiff/prettydiff)[1], JSON min (build-in) | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | Java | -- |
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | Perl, None | -- |
 | Lua | [stylua](https://github.com/JohnnyMorganz/StyLua), [luaformatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
-| Markdown | [prettier](https://github.com/prettier/prettier), [deno](https://github.com/denoland/deno)[1], [dprint](https://github.com/dprint/dprint)[1] | -- | Node.js, None[1] | -- |
+| Markdown | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [deno](https://github.com/denoland/deno)[1], [dprint](https://github.com/dprint/dprint)[1] | -- | Node.js, None[1] | -- |
 | Nickel | [topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | OCaml | [ocamlformat](https://github.com/ocaml-ppx/ocamlformat), [ocp-indent](https://github.com/OCamlPro/ocp-indent), [topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
@@ -93,23 +93,23 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Terraform | [terraform fmt](https://developer.hashicorp.com/terraform/cli/commands/fmt) | -- | None | -- |
 | TextProto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | TOML | [taplo](https://github.com/tamasfe/taplo), [topiary](https://github.com/tweag/topiary), [dprint](https://github.com/dprint/dprint) | -- | None | -- |
-| TypeScript | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify), [ts-standard](https://github.com/standard/ts-standard), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [tsfmt](https://github.com/vvakame/typescript-formatter), [deno](https://github.com/denoland/deno), [dprint](https://github.com/dprint/dprint) | [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| TypeScript | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify), [ts-standard](https://github.com/standard/ts-standard), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [tsfmt](https://github.com/vvakame/typescript-formatter), [deno](https://github.com/denoland/deno), [dprint](https://github.com/dprint/dprint) | [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | VALA | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| Vue | [prettier](https://github.com/prettier/prettier), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
-| YAML | [prettier](https://github.com/prettier/prettier) | -- | Node.js | -- |
+| Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
+| YAML | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
 
 
 💡 **Tips**:
 
-- [Prettier](https://github.com/prettier/prettier) and [Stylelint](https://github.com/stylelint/stylelint) and can cooperate together to format CSS. Config example:
+- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) and can cooperate together to format CSS. Config example:
 
         stylelint_rc.json:
         {"extends":["stylelint-config-recommended","stylelint-config-standard"],"plugins":["stylelint-group-selectors","stylelint-no-indistinguishable-colors","@double-great/stylelint-a11y","stylelint-prettier"],"rules":{"plugin/stylelint-group-selectors":true,"plugin/stylelint-no-indistinguishable-colors":true,"a11y/content-property-no-static-value":false,"a11y/font-size-is-readable":false,"a11y/line-height-is-vertical-rhythmed":[true,{"severity":"warning"}],"a11y/media-prefers-color-scheme":false,"a11y/media-prefers-reduced-motion":false,"a11y/no-display-none":false,"a11y/no-obsolete-attribute":[true,{"severity":"warning"}],"a11y/no-obsolete-element":[true,{"severity":"warning"}],"a11y/no-outline-none":false,"a11y/no-spread-text":false,"a11y/no-text-align-justify":false,"a11y/selector-pseudo-class-focus":false,"prettier/prettier":[true,{"parser":"css","printWidth":120,"semi":true,"singleQuote":false,"tabWidth":4,"useTabs":false}]}}
 
         Then in Formatter settings > "stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }
 
-- [Prettier](https://github.com/prettier/prettier) and [ESLint](https://github.com/eslint/eslint) can cooperate together to format JS. Config example:
+- [prettier](https://github.com/prettier/prettier) and [eslint](https://github.com/eslint/eslint) can cooperate together to format JS. Config example:
 
         eslint_rc.json:
         {"env":{"es2022":true,"node":true,"browser":true},"parserOptions":{"ecmaVersion":13,"sourceType":"module","ecmaFeatures":{"jsx":true}},"extends":["../javascript/node_modules/eslint-config-prettier","../javascript/node_modules/eslint-config-airbnb-base"],"plugins":["eslint-plugin-prettier"],"rules":{"prettier/prettier":["error",{"bracketSpacing":true,"jsxSingleQuote":true,"parser":"babel","printWidth":120,"semi":true,"singleQuote":true,"tabWidth":4,"useTabs":false},{"usePrettierrc":false}],"indent":["error",4]}}

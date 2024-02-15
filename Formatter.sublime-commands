@@ -340,6 +340,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Prettierd",
+        "command": "run_format",
+        "args": {
+            "uid": "prettierd",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Pretty Diff",
         "command": "run_format",
         "args": {

@@ -57,6 +57,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "phpcbf", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "phpcsfixer", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettier", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettierd", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettydiffmax", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettytable", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "racofmt", "type": "beautifier"}},

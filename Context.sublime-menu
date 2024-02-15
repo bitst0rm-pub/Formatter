@@ -339,6 +339,14 @@
                 }
             },
             {
+                "caption": "Prettierd",
+                "command": "run_format",
+                "args": {
+                    "uid": "prettierd",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Pretty Diff",
                 "command": "run_format",
                 "args": {
