@@ -35,6 +35,8 @@ class PrettierdFormatter(common.Module):
         if not cmd:
             return None
 
+        cmd.extend(['--no-color'])
+
         path = self.get_config_path()
         if path:
             common.config.get('environ').update({'PRETTIERD_DEFAULT_CONFIG': [path]})
