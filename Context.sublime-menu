@@ -59,6 +59,14 @@
                 }
             },
             {
+                "caption": "Cabal-fmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "cabalfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ClangFormat",
                 "command": "run_format",
                 "args": {
@@ -139,6 +147,14 @@
                 }
             },
             {
+                "caption": "Elm-format",
+                "command": "run_format",
+                "args": {
+                    "uid": "elmformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Erlang erlfmt",
                 "command": "run_format",
                 "args": {
@@ -159,6 +175,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "fourmolu",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Fortran fprettify",
+                "command": "run_format",
+                "args": {
+                    "uid": "fprettify",
                     "type": "beautifier"
                 }
             },

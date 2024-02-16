@@ -346,6 +346,24 @@
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
         },
+        "cabalfmt": {
+            "info": "https://github.com/phadej/cabal-fmt",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["cabal"],
+            "executable_path": "/path/to/.cabal/bin/cabal-fmt",
+            "args": ["--tabular", "--indent", "4"]
+            /* requires haskell. use args instead of config_path */
+        },
         "clangformat": {
             "info": "https://clang.llvm.org/docs/ClangFormat.html",
             "disable": true,
@@ -534,6 +552,23 @@
             }
             /* no interpreter_path, instead use "environ": {"PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"]} */
         },
+        "elmformat": {
+            "info": "https://github.com/avh4/elm-format",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["elm"],
+            "executable_path": "/path/to/bin/elm-format"
+            /* opinionated, no config */
+        },
         "erlfmt": {
             "info": "https://github.com/WhatsApp/erlfmt",
             "disable": true,
@@ -590,6 +625,26 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/fourmolu_rc.yaml"
             }
+        },
+        "fprettify": {
+            "info": "https://github.com/pseewald/fprettify",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["fortran"],
+            "executable_path": "/path/to/bin/fprettify",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/fprettify_rc.cfg"
+            }
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
         },
         "gleam": {
             "info": "https://github.com/gleam-lang/gleam",

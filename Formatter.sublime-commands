@@ -60,6 +60,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Cabal-fmt",
+        "command": "run_format",
+        "args": {
+            "uid": "cabalfmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with ClangFormat",
         "command": "run_format",
         "args": {
@@ -140,6 +148,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Elm-format",
+        "command": "run_format",
+        "args": {
+            "uid": "elmformat",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Erlang erlfmt",
         "command": "run_format",
         "args": {
@@ -160,6 +176,14 @@
         "command": "run_format",
         "args": {
             "uid": "fourmolu",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Fortran fprettify",
+        "command": "run_format",
+        "args": {
+            "uid": "fprettify",
             "type": "beautifier"
         }
     },

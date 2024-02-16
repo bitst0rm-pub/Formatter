@@ -72,6 +72,15 @@
                         }
                     },
                     {
+                        "caption": "Cabal-fmt",
+                        "mnemonic": "C",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "cabalfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ClangFormat",
                         "mnemonic": "C",
                         "command": "run_format",
@@ -162,6 +171,15 @@
                         }
                     },
                     {
+                        "caption": "Elm-format",
+                        "mnemonic": "E",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "elmformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Erlang erlfmt",
                         "mnemonic": "E",
                         "command": "run_format",
@@ -185,6 +203,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "fourmolu",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Fortran fprettify",
+                        "mnemonic": "F",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "fprettify",
                             "type": "beautifier"
                         }
                     },
