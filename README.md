@@ -60,6 +60,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Elixir | [mix format](https://github.com/elixir-lang/elixir) | -- | Erlang | -- |
+| Elm | [elm-format](https://github.com/avh4/elm-format) | -- | None | -- |
 | Erlang | [erlfmt](https://github.com/WhatsApp/erlfmt)[1], [efmt](https://github.com/sile/efmt) | -- | rebar3[1], None | -- |
 | Gleam | [gleam format](https://github.com/gleam-lang/gleam) | -- | None | -- |
 | GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
