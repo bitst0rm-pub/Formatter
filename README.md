@@ -51,6 +51,7 @@ For example, Pretty Diff supports 45 languages, that would blow up the frame of 
 | Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | None | -- |
 | Astro | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
+| Cabal | [cabal-fmt](https://github.com/phadej/cabal-fmt) | -- | Haskell | -- |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
