@@ -17,12 +17,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['elixir'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/elixir/bin/mix",
+    'executable_path': '/path/to/elixir/bin/mix',
     'args': None,
     'config_path': {
         'default': 'elixirmix_rc.exs'
     },
-    'comment': 'no interpreter_path, use "environ": {"PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"]}'
+    'comment': 'no interpreter_path, instead use "environ": {"PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"]}'
 }
 
 

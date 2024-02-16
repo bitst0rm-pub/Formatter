@@ -18,10 +18,10 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['ts'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/ts-standard',
     'args': None,
     'config_path': None,
-    'comment': 'no config'
+    'comment': 'requires node on PATH if omit interpreter_path. opinionated, no config'
 }
 
 

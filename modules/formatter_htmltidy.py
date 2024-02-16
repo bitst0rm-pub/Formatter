@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['html', 'xml'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/tidy',
     'args': None,
     'config_path': {
         'html': 'htmltidy_html_rc.cfg',

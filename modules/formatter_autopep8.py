@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['python'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/autopep8',
     'args': None,
     'config_path': {
         'default': 'autopep8_rc.cfg'
-    }
+    },
+    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}'
 }
 
 

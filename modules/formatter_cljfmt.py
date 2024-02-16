@@ -18,11 +18,13 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['clojure'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'interpreter_path': '/path/to/bin/java.exe',
+    'executable_path': '/path/to/bin/cljfmt',
     'args': None,
     'config_path': {
         'default': 'cljfmt_rc.edn'
-    }
+    },
+    'comment': 'requires java on PATH if omit interpreter_path'
 }
 
 

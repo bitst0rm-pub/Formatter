@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['js', 'jsx', 'ts', 'tsx', 'json', 'markdown', 'toml'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/dprint',
     'args': None,
     'config_path': {
         'default': 'dprint_rc.json'

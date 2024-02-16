@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['hcl'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/go/bin/hclfmt",
+    'executable_path': '/path/to/go/bin/hclfmt',
     'args': None,
     'config_path': None,
     'comment': 'opinionated, no config'

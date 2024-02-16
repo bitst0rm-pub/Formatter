@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'minifier',
     'syntaxes': ['json'],
     'exclude_syntaxes': None,
-    "executable_path": None,
+    'executable_path': None,
     'args': None,
     'config_path': None,
     'comment': 'build-in, no executable, no config'

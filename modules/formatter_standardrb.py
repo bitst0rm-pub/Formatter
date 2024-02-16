@@ -18,10 +18,10 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['ruby'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/standardrb',
     'args': None,
     'config_path': None,
-    'comment': 'no config'
+    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config'
 }
 
 

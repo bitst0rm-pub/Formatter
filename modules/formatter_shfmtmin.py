@@ -17,10 +17,10 @@ MODULE_CONFIG = {
     'type': 'minifier',
     'syntaxes': ['bash'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/shfmt',
     'args': None,
     'config_path': None,
-    'comment': 'no config'
+    'comment': 'opinionated, no config'
 }
 
 

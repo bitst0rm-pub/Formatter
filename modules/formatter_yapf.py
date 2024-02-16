@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['python'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/yapf',
     'args': None,
     'config_path': {
         'default': 'yapf_rc.yapf'
-    }
+    },
+    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}'
 }
 
 

@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['csv', 'text'],
     'exclude_syntaxes': None,
-    "executable_path": None,
+    'executable_path': None,
     'args': None,
     'config_path': {
         'default': 'prettytable_rc.json'

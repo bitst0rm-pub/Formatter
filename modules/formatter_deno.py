@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['js', 'jsx', 'ts', 'tsx', 'json', 'markdown', 'ipynb'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/deno',
     'args': None,
     'config_path': {
         'default': 'deno_rc.json'

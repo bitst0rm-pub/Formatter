@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['swift'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/swift-format',
     'args': None,
     'config_path': {
         'default': 'apple_swift_format_rc.json'

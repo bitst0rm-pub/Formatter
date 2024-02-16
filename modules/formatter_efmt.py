@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['erlang'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/efmt (standalone bin) or /path/to/rebar3",
+    'executable_path': '/path/to/bin/efmt (standalone bin) or /path/to/rebar3',
     'args': None,
     'config_path': None,
     'comment': 'opinionated, no config'

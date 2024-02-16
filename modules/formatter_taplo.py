@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['toml'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/taplo",
+    'executable_path': '/path/to/bin/taplo',
     'args': None,
     'config_path': {
         'default': 'taplo_rc.toml'

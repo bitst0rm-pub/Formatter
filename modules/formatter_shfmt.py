@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['bash'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/shfmt',
     'args': None,
     'config_path': {
         'default': 'shfmt_rc.json'

@@ -19,11 +19,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['python'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/black',
     'args': None,
     'config_path': {
         'default': 'black_rc.toml'
-    }
+    },
+    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}'
 }
 
 

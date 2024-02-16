@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['haskell'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/hindent',
     'args': None,
     'config_path': {
         'default': 'hindent_rc.yaml'

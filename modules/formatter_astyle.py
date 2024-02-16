@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['c', 'c++', 'cs', 'objc', 'objc++', 'java', 'js'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/astyle',
     'args': None,
     'config_path': {
         'java': 'artistic_style_java_rc.ini',

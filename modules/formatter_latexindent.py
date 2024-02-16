@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['tex', 'latex'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/latexindent or /path/to/latexindent.pl',
     'args': None,
     'config_path': {
         'default': 'latexindent_rc.yaml'
-    }
+    },
+    'comment': 'requires perl on PATH if omit interpreter_path'
 }
 
 

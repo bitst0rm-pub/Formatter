@@ -18,9 +18,10 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['kotlin'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'interpreter_path': '/path/to/bin/java.exe',
+    'executable_path': '/path/to/bin/ktlint or path/to/ktlint.bat',
     'args': None,
-    'comment': 'no config'
+    'comment': 'requires java on PATH if omit interpreter_path. opinionated, no config'
 }
 
 

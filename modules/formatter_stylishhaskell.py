@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['haskell'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/stylish-haskell',
     'args': None,
     'config_path': {
         'default': 'stylish_haskell_rc.yaml'

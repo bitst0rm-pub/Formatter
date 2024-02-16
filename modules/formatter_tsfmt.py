@@ -18,12 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['ts', 'tsx'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/tsfmt',
     'args': None,
     'config_path': {
         'default': 'tsfmt.json'
     },
-    'comment': 'hardcoded config file name'
+    'comment': 'hardcoded config file name (tsfmt.json). requires node on PATH if omit interpreter_path'
 }
 
 

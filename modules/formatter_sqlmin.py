@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'minifier',
     'syntaxes': ['sql'],
     'exclude_syntaxes': None,
-    "executable_path": None,
+    'executable_path': None,
     'args': None,
     'config_path': {
         'default': 'sqlmin_rc.json'

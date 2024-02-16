@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['ocaml', 'ocamlyacc', 'ocamllex'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/ocamlformat',
     'args': None,
     'config_path': {
         'default': 'ocamlformat_rc.cfg'

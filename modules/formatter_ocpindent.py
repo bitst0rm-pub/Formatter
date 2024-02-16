@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['ocaml', 'ocamlyacc', 'ocamllex'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/ocp-indent',
     'args': None,
     'config_path': {
         'default': 'ocpindent_rc.cfg'

@@ -21,11 +21,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['php'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/php-cs-fixer.phar',
     'args': None,
     'config_path': {
         'default': 'php_cs_fixer_rc.php'
-    }
+    },
+    'comment': 'requires php on PATH if omit interpreter_path'
 }
 
 

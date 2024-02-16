@@ -20,11 +20,12 @@ MODULE_CONFIG = {
     'exclude_syntaxes': {
         'html': ['markdown']
     },
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/js-beautify',
     'args': None,
     'config_path': {
         'default': 'jsbeautify_rc.json'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

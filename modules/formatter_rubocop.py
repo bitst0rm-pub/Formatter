@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['ruby'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/rubocop',
     'args': None,
     'config_path': {
         'default': 'rubocop_rc.yml'
-    }
+    },
+    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}'
 }
 
 

@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['sql'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/sql-formatter',
     'args': None,
     'config_path': {
         'default': 'sql_formatter_rc.json'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

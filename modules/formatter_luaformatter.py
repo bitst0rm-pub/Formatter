@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['lua'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/lua-format',
     'args': None,
     'config_path': {
         'default': 'luaformatter_rc.yaml'

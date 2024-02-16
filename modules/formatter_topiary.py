@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['json', 'nickel', 'ocaml', 'ocamllex', 'toml'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/topiary',
     'args': None,
     'config_path': {
         'default': 'topiary_rc.toml'

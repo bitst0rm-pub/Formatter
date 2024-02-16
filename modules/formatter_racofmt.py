@@ -17,10 +17,10 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['racket'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/bin/raco",
+    'executable_path': '/path/to/bin/raco',
     'args': ['--width', '102', '--limit', '120', '--max-blank-lines', '1', '--indent', '0'],
-    'config_path': None,
-    'comment': 'undocumented --config config_path, use args instead'
+    'config_path': '',
+    'comment': 'undocumented --config <config_path>, use args instead. config_path can be still used in place of --config'
 }
 
 

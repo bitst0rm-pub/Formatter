@@ -19,11 +19,13 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['java'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'interpreter_path': '/path/to/bin/java.exe',
+    'executable_path': '/path/to/bin/google-java-format-all-deps.jar',
     'args': None,
     'config_path': {
         'default': 'google_java_format_rc.yaml'
-    }
+    },
+    'comment': 'requires java on PATH if omit interpreter_path'
 }
 
 

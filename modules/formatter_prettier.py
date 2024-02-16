@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/prettier or /path/to/node_modules/.bin/bin-prettier.js',
     'args': None,
     'config_path': {
         'default': 'prettier_rc.json'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

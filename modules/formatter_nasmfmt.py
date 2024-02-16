@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['asm'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/nasmfmt',
     'args': None,
     'config_path': {
         'default': 'nasmfmt_rc.yaml'

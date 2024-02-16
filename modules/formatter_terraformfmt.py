@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['terraform'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/terraform",
+    'executable_path': '/path/to/bin/terraform',
     'args': None,
     'config_path': None,
     'comment': 'opinionated, no config'

@@ -18,12 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['php'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/phpcbf.phar',
     'args': None,
     'config_path': {
         'default': 'phpcbf_rc.xml'
     },
-    'comment': 'use phpcbf.phar, not phpcs.phar'
+    'comment': 'use phpcbf.phar, not phpcs.phar. requires php on PATH if omit interpreter_path'
 }
 
 

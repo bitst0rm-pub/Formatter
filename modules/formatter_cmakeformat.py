@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['cmake'],
     'exclude_syntaxes': None,
-    "executable_path": "/path/to/cmake-format",
+    'executable_path': '/path/to/bin/cmake-format',
     'args': None,
     'config_path': {
         'default': 'cmakeformat_rc.py'
-    }
+    },
+    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}'
 }
 
 

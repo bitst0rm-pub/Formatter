@@ -17,10 +17,10 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['asm'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/asmfmt',
     'args': None,
     'config_path': None,
-    'comment': 'no config'
+    'comment': 'opinionated, no config'
 }
 
 

@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['svg'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/svgo',
     'args': None,
     'config_path': {
         'default': 'svgomax_rc.js'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

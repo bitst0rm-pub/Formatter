@@ -19,11 +19,12 @@ MODULE_CONFIG = {
     'type': 'minifier',
     'syntaxes': ['css', 'scss', 'sass', 'less'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/cleancss',
     'args': None,
     'config_path': {
         'default': 'cleancss_rc.json'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'sass', 'less', 'sss', 'sugarss'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/stylelint',
     'args': ['--config-basedir', '/path/to/javascript/node_modules'],
     'config_path': {
         'default': 'stylelint_rc.json'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

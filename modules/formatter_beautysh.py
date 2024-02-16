@@ -19,11 +19,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['bash'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/beautysh',
     'args': None,
     'config_path': {
         'default': 'beautysh_rc.json'
-    }
+    },
+    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}'
 }
 
 

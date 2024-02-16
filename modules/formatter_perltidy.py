@@ -18,11 +18,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['perl'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/perltidy or /path/to/perltidy.pl',
     'args': None,
     'config_path': {
         'default': 'perltidy_rc.cfg'
-    }
+    },
+    'comment': 'requires perl on PATH if omit interpreter_path'
 }
 
 

@@ -19,11 +19,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['js'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/node_modules/.bin/eslint or /path/to/node_modules/.bin/eslint.js',
     'args': ['--resolve-plugins-relative-to', '/path/to/javascript/node_modules'],
     'config_path': {
         'default': 'eslint_rc.json'
-    }
+    },
+    'comment': 'requires node on PATH if omit interpreter_path'
 }
 
 

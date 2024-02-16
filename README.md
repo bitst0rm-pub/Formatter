@@ -205,7 +205,7 @@ The following setting details, along with their default values and examples, are
     // from terminal. But it is only temporary in the memory and will only apply
     // for the current formatting session. Your system environment remains untouched.
     // Non-existent environment directories and files will be silently ignored.
-    // This option can be ommitted, but for python and ruby you probably need
+    // This option can be ommitted, but for python, ruby and erlang you probably need
     // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
     // In debug mode, Formatter will display your current system environments
     // to assist you in configuration. On Windows, you can use either escaped
@@ -346,11 +346,13 @@ The following setting details, along with their default values and examples, are
             },
 
             // Array of additional arguments for the command line.
-            "args": ["--basedir", "./example/my/baseball", "--show-bobs", "yes"],
+            "args": ["--basedir", "./example/my/foo", "--show-bar", "yes"],
 
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the source code.
+            // This feature is primarily intended to temporarily fix the bug until
+            // an official solution is implemented. Therefore bug report is required.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
             // Use "args" option above to add, this option to remove or manipulate.
@@ -369,7 +371,7 @@ The following setting details, along with their default values and examples, are
                 ["css", 5, 0, 7], // replace the value in index 5 with "css", move it to pos 7
                 [3, 0, 4], // just move index 3 to the new pos 4. (count 0 irrelevant)
                 [2, 0, -1], // just delete the index 2. (count 0 irrelevant)
-                ["--show-bobs", "xxx", 2, 0, -1] // enough bobs, pop it out. ("xxx", 2, 0 irrelevant)
+                ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
         "stylelint": {
@@ -386,8 +388,8 @@ The following setting details, along with their default values and examples, are
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
-            "executable_path": "${packages}/User/MyFolder/javascript/node_modules/.bin/stylelint",
-            "args": ["--config-basedir", "/path/to/javascript/node_modules"],
+            "executable_path": "${packages}/User/myjs/node_modules/.bin/stylelint",
+            "args": ["--config-basedir", "/path/to/js/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
@@ -530,7 +532,7 @@ MODULE_CONFIG = {                                           # REQUIRED: template
     'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
         'html': ['markdown']
     },
-    "executable_path": "",                                  # optional: use an empty string "" to include this key in config files or None to omit it
+    "executable_path": "/path/to/bin/terser",               # optional: use an empty string "" to include this key in config files or None to omit it
     'args': None,                                           # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
     'config_path': {                                        # optional: a dictionary to include this key in config files or None to omit it
         'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation

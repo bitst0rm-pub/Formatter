@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['rust'],
     'exclude_syntaxes': None,
-    "executable_path": "",
+    'executable_path': '/path/to/bin/rustfmt',
     'args': None,
     'config_path': {
         'default': 'rustfmt_rc.toml'

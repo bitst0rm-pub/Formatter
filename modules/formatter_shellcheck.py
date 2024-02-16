@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['bash'],
     'exclude_syntaxes': None,
-    'executable_path': '',
+    'executable_path': '/path/to/bin/shellcheck',
     'args': None,
     'config_path': {
         'default': 'shellcheck_rc.cfg'
