@@ -1,0 +1,115 @@
+{
+    "extensions": [],
+    "fixities": [],
+    "formatting": {
+        "align": {
+            "case": true,
+            "class": false,
+            "import-module": true,
+            "import-spec": false,
+            "let-binds": false,
+            "limits": [
+                10,
+                25
+            ],
+            "matches": false,
+            "record-fields": false,
+            "where": false
+        },
+        "group": {
+            "default": {
+                "force-linebreak": false,
+                "linebreaks": "none",
+                "spaces": "none"
+            },
+            "{": {
+                "force-linebreak": false,
+                "linebreaks": "after",
+                "spaces": "both"
+            }
+        },
+        "indent": {
+            "app": "indent-by 2",
+            "case": "indent-by 2",
+            "class": "indent-by 2",
+            "deriving": 2,
+            "do": "indent-by 2",
+            "export-spec-list": "indent-by 4",
+            "if": "align",
+            "import-spec-list": "align",
+            "let": "align",
+            "let-binds": "align",
+            "let-in": "align",
+            "multi-if": "indent-by 2",
+            "onside": 2,
+            "typesig": "align",
+            "where": 2,
+            "where-binds": "indent-by 2"
+        },
+        "layout": {
+            "app": "try-oneline",
+            "con-decls": "vertical",
+            "declaration": "flex",
+            "export-spec-list": "try-oneline",
+            "if": "vertical",
+            "import-spec-list": "flex",
+            "infix-app": "try-oneline",
+            "let": "vertical",
+            "list-comp": "try-oneline",
+            "record": "try-oneline",
+            "type": "try-oneline"
+        },
+        "op": {
+            ",": {
+                "force-linebreak": false,
+                "linebreaks": "before",
+                "spaces": "after"
+            },
+            ". in type": {
+                "force-linebreak": false,
+                "linebreaks": "after",
+                "spaces": "after"
+            },
+            ":": {
+                "force-linebreak": false,
+                "linebreaks": "before",
+                "spaces": "none"
+            },
+            "=": {
+                "force-linebreak": false,
+                "linebreaks": "after",
+                "spaces": "both"
+            },
+            "default": {
+                "force-linebreak": false,
+                "linebreaks": "before",
+                "spaces": "both"
+            },
+            "record": {
+                "force-linebreak": false,
+                "linebreaks": "none",
+                "spaces": "after"
+            }
+        },
+        "options": {
+            "align-let-binds-and-in-expr": false,
+            "align-sum-type-decl": false,
+            "decl-no-blank-lines": [],
+            "flexible-oneline": false,
+            "preserve-vertical-space": false,
+            "sort-import-lists": false,
+            "sort-imports": false,
+            "sort-pragmas": false,
+            "split-language-pragmas": false
+        },
+        "penalty": {
+            "indent": 1,
+            "linebreak": 100,
+            "max-line-length": 80,
+            "overfull": 10,
+            "overfull-once": 200
+        }
+    },
+    "language": "Haskell2010",
+    "style": "gibiansky"
+}
