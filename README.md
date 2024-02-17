@@ -59,6 +59,7 @@ For example, Prettydiff supports 45 languages, that would blow up the frame of t
 | CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) (build-in), [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
+| Dhall | [dhall format](https://github.com/dhall-lang/dhall-haskell) | -- | None | -- |
 | Dockerfile | [dockfmt](https://github.com/jessfraz/dockfmt) | -- | None | -- |
 | Elixir | [mix format](https://github.com/elixir-lang/elixir) | -- | Erlang | -- |
 | Elm | [elm-format](https://github.com/avh4/elm-format) | -- | None | -- |
