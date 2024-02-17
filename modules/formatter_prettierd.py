@@ -40,6 +40,7 @@ class PrettierdFormatter(common.Module):
 
         path = self.get_config_path()
         if path:
+            cmd.extend(['--no-config'])
             common.config.get('environ').update({'PRETTIERD_DEFAULT_CONFIG': [path]})
 
         file = self.get_pathinfo()['path']
