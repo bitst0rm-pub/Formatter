@@ -46,9 +46,11 @@ class PrettierFormatter(common.Module):
         if not self.is_valid_cmd(cmd):
             return None
 
+        cmd.extend(['--no-color'])
+
         path = self.get_config_path()
         if path:
-            cmd.extend(['--config', path])
+            cmd.extend(['--no-config', '--config', path])
 
         file = self.get_pathinfo()['path']
         if file:
