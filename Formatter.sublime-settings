@@ -496,6 +496,40 @@
                 "default": "${packages}/User/formatter.assets/config/deno_rc.json"
             }
         },
+        "dhallformat": {
+            "info": "https://github.com/dhall-lang/dhall-haskell",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["dhall"],
+            "executable_path": "/path/to/bin/dhall"
+            /* opinionated, no config */
+        },
+        "dockfmt": {
+            "info": "https://github.com/jessfraz/dockfmt",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["dockerfile"],
+            "executable_path": "/path/to/bin/dockfmt"
+            /* opinionated, no config */
+        },
         "dprint": {
             "info": "https://github.com/dprint/dprint",
             "disable": true,
@@ -606,6 +640,46 @@
                 "default": "${packages}/User/formatter.assets/config/eslint_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
+        },
+        "eslintd": {
+            "info": "https://github.com/mantoni/eslint_d.js",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["js"],
+            "executable_path": "/path/to/node_modules/.bin/eslint_d or /path/to/node_modules/.bin/eslint_d.js",
+            "args": ["--resolve-plugins-relative-to", "/path/to/javascript/node_modules"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/eslintd_rc.json"
+            }
+            /* requires node on PATH if omit interpreter_path */
+        },
+        "floskell": {
+            "info": "https://github.com/ennocramer/floskell",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["haskell"],
+            "executable_path": "/path/to/.cabal/bin/floskell",
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/floskell_rc.json"
+            }
         },
         "fourmolu": {
             "info": "https://github.com/fourmolu/fourmolu",

@@ -144,6 +144,24 @@
                         }
                     },
                     {
+                        "caption": "Dhall format",
+                        "mnemonic": "D",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "dhallformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Dockfmt",
+                        "mnemonic": "D",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "dockfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Dprint",
                         "mnemonic": "D",
                         "command": "run_format",
@@ -194,6 +212,24 @@
                         "command": "run_format",
                         "args": {
                             "uid": "eslint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "ESLintd",
+                        "mnemonic": "E",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "eslintd",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Floskell",
+                        "mnemonic": "F",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "floskell",
                             "type": "beautifier"
                         }
                     },

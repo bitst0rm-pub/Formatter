@@ -124,6 +124,22 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Dhall format",
+        "command": "run_format",
+        "args": {
+            "uid": "dhallformat",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Dockfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "dockfmt",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Dprint",
         "command": "run_format",
         "args": {
@@ -168,6 +184,22 @@
         "command": "run_format",
         "args": {
             "uid": "eslint",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with ESLintd",
+        "command": "run_format",
+        "args": {
+            "uid": "eslintd",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Floskell",
+        "command": "run_format",
+        "args": {
+            "uid": "floskell",
             "type": "beautifier"
         }
     },
