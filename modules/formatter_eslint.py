@@ -39,9 +39,9 @@ class EslintFormatter(common.Module):
 
         path = self.get_config_path()
         if path:
-            cmd.extend(['--config', path])
+            cmd.extend(['--no-eslintrc', '--config', path])
 
-        cmd.extend(['--stdin', '--fix-dry-run', '--format=json'])
+        cmd.extend(['--no-color', '--stdin', '--fix-dry-run', '--format=json'])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)
