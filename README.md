@@ -40,9 +40,10 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
 **The complete list of compatible plugins:** _Need more? see_ [Development](#development)
 
-Note: This table does not contain the complete languages that each plugin does support.
-For example, Prettydiff supports 45 languages, that would blow up the frame of this list here.<br/>
-`build-in` plugins are integrated plugins that do not need to install by end-users.
+  - This table does not contain the complete languages that each plugin does support.
+  For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
+  - `build-in` = do not need to install by end-users.
+  - `None` = mostly standalone binary
 
 | Languages | Beautify | Minify | Requirements | Config-Online |
 | ------ | :------: | :------: | :------: | :------: |
