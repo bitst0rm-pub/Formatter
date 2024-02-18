@@ -18,13 +18,13 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['clojure'],
     'exclude_syntaxes': None,
-    'interpreter_path': '/path/to/bin/java.exe',
+    'interpreter_path': '/path/to/bin/java.exe or /path/to/bin/lein',
     'executable_path': '/path/to/bin/cljfmt',
     'args': None,
     'config_path': {
         'default': 'cljfmt_rc.edn'
     },
-    'comment': 'requires java on PATH if omit interpreter_path'
+    'comment': 'omit interpreter_path if use cljfmt standalone version'
 }
 
 
@@ -38,8 +38,14 @@ class CljfmtFormatter(common.Module):
             return None
 
         interpreter = self.get_interpreter()
-        if executable.endswith('jar') and interpreter:
-            cmd = [interpreter, '-jar', executable]
+        if interpreter:
+            interpreter_base = common.basename(interpreter).lower()
+            if 'java' in interpreter_base and executable.endswith('jar'):
+                cmd = [interpreter, '-jar', executable]
+            elif 'lein' in interpreter_base:
+                cmd = [interpreter, executable]
+            else:
+                cmd = [executable]
         else:
             cmd = [executable]
 
