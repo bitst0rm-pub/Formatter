@@ -53,6 +53,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Astro | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Cabal | [cabal-fmt](https://github.com/phadej/cabal-fmt) | -- | Haskell | -- |
+| Caddyfile | [caddy-fmt](https://github.com/caddyserver/caddy) | -- | None | -- |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
