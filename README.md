@@ -86,6 +86,7 @@ For example, Prettydiff supports 45 languages, that would blow up the frame of t
 | PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | PHP >=7.4.0[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
 | Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort) | [python-minifier](https://github.com/dflook/python-minifier)[2] | Python >=3.7.0[1] | [[2]](https://python-minifier.com) |
+| R | [styler](https://github.com/r-lib/styler) | -- | R | -- |
 | Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | None | -- |
 | Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | Ruby[1], None | -- |
 | Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
