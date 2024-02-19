@@ -298,8 +298,7 @@ class Module(object):
         if isinstance(user_files, str):
             user_files = [user_files]
         elif not isinstance(user_files, list):
-            log.error('%s_path must be of type string or list: %s', what, user_files)
-            return None
+            user_files = []
 
         for user_file in user_files:
             a = self.get_pathinfo(user_file)
