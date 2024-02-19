@@ -321,12 +321,18 @@ The following setting details, along with their default values and examples, are
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.
+            // Alternatively, you can set the basename as the interpreter name to search on
+            // PATH, similar to how it is done with the executable_path option.
             "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
 
             // Path to the third-party plugin executable to process formatting.
+            // This option can be either a string or a list of executable paths.
+            // - If this option is omitted or set to null, then the global executable
+            //   on PATH will be used, if found.
+            // - If this option is exactly the basename, then it will be used as the
+            //   executable name and searched for on the PATH.
             // System variable expansions like ${HOME} and Sublime Text specific
-            // ${packages}, ${file_path} etc. can be used to assign paths. More:
-            // https://www.sublimetext.com/docs/build_systems.html#variables
+            // ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".
             "executable_path": "${HOME}/example/path/to\\$my/php-cs-fixer.phar",
@@ -540,7 +546,8 @@ MODULE_CONFIG = {                                           # REQUIRED: template
     'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
         'html': ['markdown']
     },
-    "executable_path": "/path/to/bin/terser",               # optional: use an empty string "" to include this key in config files or None to omit it
+    "interpreter_path": ["/path/to/bin/node"],              # optional: use an empty string "" to include this key in config files or None to omit it
+    "executable_path": ["/path/to/bin/terser"],             # optional: use an empty string "" to include this key in config files or None to omit it
     'args': None,                                           # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
     'config_path': {                                        # optional: a dictionary to include this key in config files or None to omit it
         'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation

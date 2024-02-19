@@ -293,23 +293,33 @@ class Module(object):
         else:
             return None
 
-        user_file = self.query(config, None, 'formatters', self.uid, what + '_path')
+        user_files = self.query(config, None, 'formatters', self.uid, what + '_path')
 
-        if user_file and not isfile(user_file):
-            log.error('File %s does not exist: %s', what, user_file)
+        if isinstance(user_files, str):
+            user_files = [user_files]
+        elif not isinstance(user_files, list):
+            log.error('%s_path must be of type string or list: %s', what, user_files)
             return None
 
-        if self.is_executeable(user_file):
-            log.debug('User %s found: %s', what, user_file)
-            return user_file
+        for user_file in user_files:
+            a = self.get_pathinfo(user_file)
+            if a['path'] == a['base'] and not a['cwd']:
+                global_file = self.get_environ_path([user_file])
+                if global_file:
+                    log.debug('Global %s found: %s', what, global_file)
+                    return global_file
+
+            if self.is_executeable(user_file):
+                log.debug('User %s found: %s', what, user_file)
+                return user_file
 
         global_file = self.get_environ_path(fnames_list)
         if global_file:
             log.debug('Global %s found: %s', what, global_file)
             return global_file
-
-        log.error('Could not find %s: %s', what, fnames_list)
-        return None
+        else:
+            log.error('Files %s do not exist: %s', what, user_files)
+            return None
 
     def get_executable(self, runtime_type=None):
         local_executable = self.get_local_executable(runtime_type)

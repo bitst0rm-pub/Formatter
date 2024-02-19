@@ -81,6 +81,15 @@
                         }
                     },
                     {
+                        "caption": "Caddy-fmt",
+                        "mnemonic": "C",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "caddyfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ClangFormat",
                         "mnemonic": "C",
                         "command": "run_format",
@@ -230,6 +239,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "floskell",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "formatR",
+                        "mnemonic": "F",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "formatr",
                             "type": "beautifier"
                         }
                     },
@@ -608,6 +626,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "stylelint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Styler",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "styler",
                             "type": "beautifier"
                         }
                     },

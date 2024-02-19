@@ -67,6 +67,14 @@
                 }
             },
             {
+                "caption": "Caddy-fmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "caddyfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ClangFormat",
                 "command": "run_format",
                 "args": {
@@ -199,6 +207,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "floskell",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "formatR",
+                "command": "run_format",
+                "args": {
+                    "uid": "formatr",
                     "type": "beautifier"
                 }
             },
@@ -535,6 +551,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "stylelint",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Styler",
+                "command": "run_format",
+                "args": {
+                    "uid": "styler",
                     "type": "beautifier"
                 }
             },

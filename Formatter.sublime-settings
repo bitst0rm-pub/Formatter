@@ -169,12 +169,18 @@
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.
+            // Alternatively, you can set the basename as the interpreter name to search on
+            // PATH, similar to how it is done with the executable_path option.
             "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
 
             // Path to the third-party plugin executable to process formatting.
+            // This option can be either a string or a list of executable paths.
+            // - If this option is omitted or set to null, then the global executable
+            //   on PATH will be used, if found.
+            // - If this option is exactly the basename, then it will be used as the
+            //   executable name and searched for on the PATH.
             // System variable expansions like ${HOME} and Sublime Text specific
-            // ${packages}, ${file_path} etc. can be used to assign paths. More:
-            // https://www.sublimetext.com/docs/build_systems.html#variables
+            // ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".
             "executable_path": "${HOME}/example/path/to\\$my/php-cs-fixer.phar",
@@ -244,7 +250,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["swift"],
-            "executable_path": "/path/to/bin/swift-format",
+            "executable_path": ["/path/to/bin/swift-format"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/apple_swift_format_rc.json"
             }
@@ -263,7 +269,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["asm"],
-            "executable_path": "/path/to/bin/asmfmt"
+            "executable_path": ["/path/to/bin/asmfmt"]
             /* opinionated, no config */
         },
         "astyle": {
@@ -280,7 +286,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "java", "js"],
-            "executable_path": "/path/to/bin/astyle",
+            "executable_path": ["/path/to/bin/astyle"],
             "config_path": {
                 "java": "${packages}/User/formatter.assets/config/artistic_style_java_rc.ini",
                 "default": "${packages}/User/formatter.assets/config/artistic_style_astyle_rc.ini"
@@ -300,7 +306,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["python"],
-            "executable_path": "/path/to/bin/autopep8",
+            "executable_path": ["/path/to/bin/autopep8"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/autopep8_rc.cfg"
             }
@@ -320,7 +326,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["bash"],
-            "executable_path": "/path/to/bin/beautysh",
+            "executable_path": ["/path/to/bin/beautysh"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/beautysh_rc.json"
             }
@@ -340,7 +346,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["python"],
-            "executable_path": "/path/to/bin/black",
+            "executable_path": ["/path/to/bin/black"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/black_rc.toml"
             }
@@ -360,9 +366,26 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["cabal"],
-            "executable_path": "/path/to/.cabal/bin/cabal-fmt",
+            "executable_path": ["/path/to/.cabal/bin/cabal-fmt"],
             "args": ["--tabular", "--indent", "4"]
             /* requires haskell. use args instead of config_path */
+        },
+        "caddyfmt": {
+            "info": "https://github.com/caddyserver/caddy",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["Caddyfile"],
+            "executable_path": ["/path/to/bin/caddy"]
+            /* opinionated, no config */
         },
         "clangformat": {
             "info": "https://clang.llvm.org/docs/ClangFormat.html",
@@ -378,7 +401,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["c", "cs", "c++", "objc", "objc++", "js", "tsx", "jsx", "json", "java", "proto", "protodevel", "td", "sv", "svh", "v", "vh", "glsl"],
-            "executable_path": "/path/to/bin/clang-format",
+            "executable_path": ["/path/to/bin/clang-format"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"
             }
@@ -397,11 +420,12 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["clojure"],
-            "executable_path": "/path/to/bin/cljfmt",
+            "interpreter_path": ["/path/to/bin/java.exe or /path/to/bin/lein"],
+            "executable_path": ["/path/to/bin/cljfmt"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/cljfmt_rc.edn"
             }
-            /* requires java on PATH if omit interpreter_path */
+            /* omit interpreter_path if use cljfmt standalone version */
         },
         "cmakeformat": {
             "info": "https://github.com/cheshirekow/cmake_format",
@@ -417,7 +441,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["cmake"],
-            "executable_path": "/path/to/bin/cmake-format",
+            "executable_path": ["/path/to/bin/cmake-format"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/cmakeformat_rc.py"
             }
@@ -437,7 +461,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["crystal"],
-            "executable_path": "/path/to/bin/crystal"
+            "executable_path": ["/path/to/bin/crystal"]
             /* opinionated, no config */
         },
         "csscomb": {
@@ -454,7 +478,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "sass", "less"],
-            "executable_path": "/path/to/node_modules/.bin/csscomb",
+            "executable_path": ["/path/to/node_modules/.bin/csscomb"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/csscomb_rc.json"
             }
@@ -474,7 +498,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["dart"],
-            "executable_path": "/path/to/bin/dart"
+            "executable_path": ["/path/to/bin/dart"]
             /* opinionated, no config */
         },
         "deno": {
@@ -491,7 +515,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown", "ipynb"],
-            "executable_path": "/path/to/bin/deno",
+            "executable_path": ["/path/to/bin/deno"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/deno_rc.json"
             }
@@ -510,7 +534,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["dhall"],
-            "executable_path": "/path/to/bin/dhall"
+            "executable_path": ["/path/to/bin/dhall"]
             /* opinionated, no config */
         },
         "dockfmt": {
@@ -527,7 +551,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["dockerfile"],
-            "executable_path": "/path/to/bin/dockfmt"
+            "executable_path": ["/path/to/bin/dockfmt"]
             /* opinionated, no config */
         },
         "dprint": {
@@ -544,7 +568,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown", "toml"],
-            "executable_path": "/path/to/bin/dprint",
+            "executable_path": ["/path/to/bin/dprint"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/dprint_rc.json"
             }
@@ -563,7 +587,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["erlang"],
-            "executable_path": "/path/to/bin/efmt (standalone bin) or /path/to/rebar3"
+            "executable_path": ["/path/to/bin/efmt (standalone bin) or /path/to/rebar3"]
             /* opinionated, no config */
         },
         "elixirmix": {
@@ -580,7 +604,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["elixir"],
-            "executable_path": "/path/to/elixir/bin/mix",
+            "executable_path": ["/path/to/elixir/bin/mix"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/elixirmix_rc.exs"
             }
@@ -600,7 +624,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["elm"],
-            "executable_path": "/path/to/bin/elm-format"
+            "executable_path": ["/path/to/bin/elm-format"]
             /* opinionated, no config */
         },
         "erlfmt": {
@@ -617,7 +641,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["erlang"],
-            "executable_path": "/path/to/erlfmt (standalone bin) or /path/to/rebar3"
+            "executable_path": ["/path/to/erlfmt (standalone bin) or /path/to/rebar3"]
             /* opinionated, no config */
         },
         "eslint": {
@@ -634,7 +658,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js"],
-            "executable_path": "/path/to/node_modules/.bin/eslint or /path/to/node_modules/.bin/eslint.js",
+            "executable_path": ["/path/to/node_modules/.bin/eslint or /path/to/node_modules/.bin/eslint.js"],
             "args": ["--resolve-plugins-relative-to", "/path/to/javascript/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/eslint_rc.json"
@@ -655,7 +679,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js"],
-            "executable_path": "/path/to/node_modules/.bin/eslint_d or /path/to/node_modules/.bin/eslint_d.js",
+            "executable_path": ["/path/to/node_modules/.bin/eslint_d or /path/to/node_modules/.bin/eslint_d.js"],
             "args": ["--resolve-plugins-relative-to", "/path/to/javascript/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/eslintd_rc.json"
@@ -676,9 +700,28 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["haskell"],
-            "executable_path": "/path/to/.cabal/bin/floskell",
+            "executable_path": ["/path/to/.cabal/bin/floskell"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/floskell_rc.json"
+            }
+        },
+        "formatr": {
+            "info": "https://github.com/yihui/formatR",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["r"],
+            "executable_path": ["/path/to/bin/R"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/formatr_rc.cfg"
             }
         },
         "fourmolu": {
@@ -695,7 +738,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["haskell"],
-            "executable_path": "/path/to/bin/fourmolu",
+            "executable_path": ["/path/to/bin/fourmolu"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/fourmolu_rc.yaml"
             }
@@ -714,7 +757,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["fortran"],
-            "executable_path": "/path/to/bin/fprettify",
+            "executable_path": ["/path/to/bin/fprettify"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/fprettify_rc.cfg"
             }
@@ -734,7 +777,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["gleam"],
-            "executable_path": "/path/to/bin/gleam"
+            "executable_path": ["/path/to/bin/gleam"]
             /* opinionated, no config */
         },
         "gofmt": {
@@ -751,7 +794,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["go"],
-            "executable_path": "/path/to/bin/gofmt"
+            "executable_path": ["/path/to/bin/gofmt"]
             /* opinionated, no config */
         },
         "gofumpt": {
@@ -768,7 +811,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["go"],
-            "executable_path": "/path/to/bin/gofumpt"
+            "executable_path": ["/path/to/bin/gofumpt"]
             /* opinionated, no config */
         },
         "goimports": {
@@ -785,7 +828,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["go"],
-            "executable_path": "/path/to/bin/goimports"
+            "executable_path": ["/path/to/bin/goimports"]
             /* opinionated, no config */
         },
         "googlejavaformat": {
@@ -802,7 +845,8 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["java"],
-            "executable_path": "/path/to/bin/google-java-format-all-deps.jar",
+            "interpreter_path": ["/path/to/bin/java.exe"],
+            "executable_path": ["/path/to/bin/google-java-format-all-deps.jar"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/google_java_format_rc.yaml"
             }
@@ -822,7 +866,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["hcl"],
-            "executable_path": "/path/to/go/bin/hclfmt"
+            "executable_path": ["/path/to/go/bin/hclfmt"]
             /* opinionated, no config */
         },
         "hindent": {
@@ -839,7 +883,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["haskell"],
-            "executable_path": "/path/to/bin/hindent",
+            "executable_path": ["/path/to/bin/hindent"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/hindent_rc.yaml"
             }
@@ -858,7 +902,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["html", "xml"],
-            "executable_path": "/path/to/bin/tidy",
+            "executable_path": ["/path/to/bin/tidy"],
             "config_path": {
                 "html": "${packages}/User/formatter.assets/config/htmltidy_html_rc.cfg",
                 "xml": "${packages}/User/formatter.assets/config/htmltidy_xml_rc.cfg"
@@ -878,7 +922,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["python"],
-            "executable_path": "/path/to/bin/isort",
+            "executable_path": ["/path/to/bin/isort"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/isort_rc.toml"
             }
@@ -901,7 +945,7 @@
             "exclude_syntaxes": {
                 "html": ["markdown"]
             },
-            "executable_path": "/path/to/node_modules/.bin/js-beautify",
+            "executable_path": ["/path/to/node_modules/.bin/js-beautify"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/jsbeautify_rc.json"
             }
@@ -940,7 +984,8 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["kotlin"],
-            "executable_path": "/path/to/bin/ktlint or path/to/ktlint.bat"
+            "interpreter_path": ["/path/to/bin/java.exe"],
+            "executable_path": ["/path/to/bin/ktlint or path/to/ktlint.bat"]
             /* requires java on PATH if omit interpreter_path. opinionated, no config */
         },
         "latexindent": {
@@ -957,7 +1002,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["tex", "latex"],
-            "executable_path": "/path/to/latexindent or /path/to/latexindent.pl",
+            "executable_path": ["/path/to/latexindent or /path/to/latexindent.pl"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/latexindent_rc.yaml"
             }
@@ -977,7 +1022,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["lua"],
-            "executable_path": "/path/to/bin/lua-format",
+            "executable_path": ["/path/to/bin/lua-format"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/luaformatter_rc.yaml"
             }
@@ -996,7 +1041,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["asm"],
-            "executable_path": "/path/to/bin/nasmfmt",
+            "executable_path": ["/path/to/bin/nasmfmt"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/nasmfmt_rc.yaml"
             }
@@ -1015,7 +1060,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ocaml", "ocamlyacc", "ocamllex"],
-            "executable_path": "/path/to/bin/ocamlformat",
+            "executable_path": ["/path/to/bin/ocamlformat"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/ocamlformat_rc.cfg"
             }
@@ -1034,7 +1079,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ocaml", "ocamlyacc", "ocamllex"],
-            "executable_path": "/path/to/bin/ocp-indent",
+            "executable_path": ["/path/to/bin/ocp-indent"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/ocpindent_rc.cfg"
             }
@@ -1053,7 +1098,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["haskell"],
-            "executable_path": "/path/to/bin/ormolu"
+            "executable_path": ["/path/to/bin/ormolu"]
             /* opinionated, no config */
         },
         "perltidy": {
@@ -1070,7 +1115,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["perl"],
-            "executable_path": "/path/to/bin/perltidy or /path/to/perltidy.pl",
+            "executable_path": ["/path/to/bin/perltidy or /path/to/perltidy.pl"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/perltidy_rc.cfg"
             }
@@ -1090,7 +1135,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["php"],
-            "executable_path": "/path/to/bin/phpcbf.phar",
+            "executable_path": ["/path/to/bin/phpcbf.phar"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/phpcbf_rc.xml"
             }
@@ -1110,7 +1155,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["php"],
-            "executable_path": "/path/to/bin/php-cs-fixer.phar",
+            "executable_path": ["/path/to/bin/php-cs-fixer.phar"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/php_cs_fixer_rc.php"
             }
@@ -1130,7 +1175,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
-            "executable_path": "/path/to/node_modules/.bin/prettier or /path/to/node_modules/.bin/bin-prettier.js",
+            "executable_path": ["/path/to/node_modules/.bin/prettier or /path/to/node_modules/.bin/bin-prettier.js"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/prettier_rc.json"
             }
@@ -1150,7 +1195,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "tsx", "vue", "yaml"],
-            "executable_path": "/path/to/node_modules/.bin/prettierd",
+            "executable_path": ["/path/to/node_modules/.bin/prettierd"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/prettierd_rc.json"
             }
@@ -1170,7 +1215,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
-            "executable_path": "/path/to/node_modules/.bin/prettydiff",
+            "executable_path": ["/path/to/node_modules/.bin/prettydiff"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/prettydiffmax_rc.json"
             }
@@ -1209,7 +1254,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["racket"],
-            "executable_path": "/path/to/bin/raco",
+            "executable_path": ["/path/to/bin/raco"],
             "args": ["--width", "102", "--limit", "120", "--max-blank-lines", "1", "--indent", "0"]
             /* undocumented --config <config_path>, use args instead. config_path can be still used in place of --config */
         },
@@ -1227,7 +1272,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ruby"],
-            "executable_path": "/path/to/bin/rubocop",
+            "executable_path": ["/path/to/bin/rubocop"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
@@ -1247,7 +1292,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ruby"],
-            "executable_path": "/path/to/bin/rubyfmt"
+            "executable_path": ["/path/to/bin/rubyfmt"]
             /* opinionated, no config */
         },
         "ruff": {
@@ -1264,7 +1309,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["python"],
-            "executable_path": "/path/to/bin/ruff",
+            "executable_path": ["/path/to/bin/ruff"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/ruff_rc.toml"
             }
@@ -1283,7 +1328,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ruby"],
-            "executable_path": "/path/to/bin/rufo"
+            "executable_path": ["/path/to/bin/rufo"]
             /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config */
         },
         "rustfmt": {
@@ -1300,7 +1345,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["rust"],
-            "executable_path": "/path/to/bin/rustfmt",
+            "executable_path": ["/path/to/bin/rustfmt"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/rustfmt_rc.toml"
             }
@@ -1319,7 +1364,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["scala"],
-            "executable_path": "/path/to/bin/scalafmt",
+            "executable_path": ["/path/to/bin/scalafmt"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/scalafmt_rc.conf"
             }
@@ -1338,7 +1383,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js"],
-            "executable_path": "/path/to/node_modules/.bin/semistandard"
+            "executable_path": ["/path/to/node_modules/.bin/semistandard"]
             /* requires node on PATH if omit interpreter_path. opinionated, no config */
         },
         "shellcheck": {
@@ -1355,7 +1400,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["bash"],
-            "executable_path": "/path/to/bin/shellcheck",
+            "executable_path": ["/path/to/bin/shellcheck"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/shellcheck_rc.cfg"
             }
@@ -1375,7 +1420,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["bash"],
-            "executable_path": "/path/to/bin/shfmt",
+            "executable_path": ["/path/to/bin/shfmt"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/shfmt_rc.json"
             }
@@ -1394,7 +1439,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["sql"],
-            "executable_path": "/path/to/node_modules/.bin/sql-formatter",
+            "executable_path": ["/path/to/node_modules/.bin/sql-formatter"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/sql_formatter_rc.json"
             }
@@ -1414,7 +1459,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js"],
-            "executable_path": "/path/to/node_modules/.bin/standard"
+            "executable_path": ["/path/to/node_modules/.bin/standard"]
             /* requires node on PATH if omit interpreter_path. opinionated, no config */
         },
         "standardrb": {
@@ -1431,7 +1476,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ruby"],
-            "executable_path": "/path/to/bin/standardrb"
+            "executable_path": ["/path/to/bin/standardrb"]
             /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config */
         },
         "standardxjs": {
@@ -1448,7 +1493,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js"],
-            "executable_path": "/path/to/node_modules/.bin/standardx"
+            "executable_path": ["/path/to/node_modules/.bin/standardx"]
             /* requires node on PATH if omit interpreter_path. opinionated, no config */
         },
         "stylelint": {
@@ -1465,12 +1510,31 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
-            "executable_path": "/path/to/node_modules/.bin/stylelint",
+            "executable_path": ["/path/to/node_modules/.bin/stylelint"],
             "args": ["--config-basedir", "/path/to/javascript/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
+        },
+        "styler": {
+            "info": "https://github.com/r-lib/styler",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["r"],
+            "executable_path": ["/path/to/bin/R"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/styler_rc.cfg"
+            }
         },
         "stylishhaskell": {
             "info": "https://github.com/haskell/stylish-haskell",
@@ -1486,7 +1550,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["haskell"],
-            "executable_path": "/path/to/bin/stylish-haskell",
+            "executable_path": ["/path/to/bin/stylish-haskell"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylish_haskell_rc.yaml"
             }
@@ -1505,7 +1569,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["lua"],
-            "executable_path": "/path/to/bin/stylua",
+            "executable_path": ["/path/to/bin/stylua"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylua_rc.toml"
             }
@@ -1524,7 +1588,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["svg"],
-            "executable_path": "/path/to/node_modules/.bin/svgo",
+            "executable_path": ["/path/to/node_modules/.bin/svgo"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/svgomax_rc.js"
             }
@@ -1544,7 +1608,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["swift"],
-            "executable_path": "/path/to/bin/swiftformat",
+            "executable_path": ["/path/to/bin/swiftformat"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
             }
@@ -1563,7 +1627,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["toml"],
-            "executable_path": "/path/to/bin/taplo",
+            "executable_path": ["/path/to/bin/taplo"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/taplo_rc.toml"
             }
@@ -1582,7 +1646,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["terraform"],
-            "executable_path": "/path/to/bin/terraform"
+            "executable_path": ["/path/to/bin/terraform"]
             /* opinionated, no config */
         },
         "topiary": {
@@ -1599,7 +1663,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["json", "nickel", "ocaml", "ocamllex", "toml"],
-            "executable_path": "/path/to/bin/topiary",
+            "executable_path": ["/path/to/bin/topiary"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/topiary_rc.toml"
             }
@@ -1618,7 +1682,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ts", "tsx"],
-            "executable_path": "/path/to/node_modules/.bin/tsfmt",
+            "executable_path": ["/path/to/node_modules/.bin/tsfmt"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/tsfmt.json"
             }
@@ -1638,7 +1702,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["ts"],
-            "executable_path": "/path/to/node_modules/.bin/ts-standard"
+            "executable_path": ["/path/to/node_modules/.bin/ts-standard"]
             /* requires node on PATH if omit interpreter_path. opinionated, no config */
         },
         "uncrustify": {
@@ -1655,7 +1719,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["c", "c++", "cs", "d", "es", "objc", "objc++", "java", "pawn", "vala"],
-            "executable_path": "/path/to/bin/uncrustify",
+            "executable_path": ["/path/to/bin/uncrustify"],
             "config_path": {
                 "java": "${packages}/User/formatter.assets/config/uncrustify_sun_java_rc.cfg",
                 "objc": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
@@ -1677,7 +1741,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["python"],
-            "executable_path": "/path/to/bin/yapf",
+            "executable_path": ["/path/to/bin/yapf"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/yapf_rc.yapf"
             }
@@ -1697,7 +1761,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "sass", "less"],
-            "executable_path": "/path/to/node_modules/.bin/cleancss",
+            "executable_path": ["/path/to/node_modules/.bin/cleancss"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/cleancss_rc.json"
             }
@@ -1717,7 +1781,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["html", "xml"],
-            "executable_path": "/path/to/node_modules/.bin/html-minifier",
+            "executable_path": ["/path/to/node_modules/.bin/html-minifier"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/htmlminifier_rc.json"
             }
@@ -1753,7 +1817,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
-            "executable_path": "/path/to/node_modules/.bin/prettydiff",
+            "executable_path": ["/path/to/node_modules/.bin/prettydiff"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/prettydiffmin_rc.json"
             }
@@ -1773,7 +1837,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["python"],
-            "executable_path": "/path/to/bin/pyminify",
+            "executable_path": ["/path/to/bin/pyminify"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/python_minifier_rc.json"
             }
@@ -1793,7 +1857,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["bash"],
-            "executable_path": "/path/to/bin/shfmt"
+            "executable_path": ["/path/to/bin/shfmt"]
             /* opinionated, no config */
         },
         "sqlmin": {
@@ -1829,7 +1893,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["svg"],
-            "executable_path": "/path/to/node_modules/.bin/svgo",
+            "executable_path": ["/path/to/node_modules/.bin/svgo"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/svgomin_rc.js"
             }
@@ -1849,7 +1913,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["js"],
-            "executable_path": "/path/to/node_modules/.bin/terser",
+            "executable_path": ["/path/to/node_modules/.bin/terser"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/terser_rc.json"
             }

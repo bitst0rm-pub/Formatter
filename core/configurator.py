@@ -359,9 +359,19 @@ def build_formatter_sublime_settings_children(formatter_map):
             if exclude_syntaxes is not None and isinstance(exclude_syntaxes, dict):
                 child['exclude_syntaxes'] = {key: NoIndent(value) for key, value in exclude_syntaxes.items()}
 
+            interpreter_path = config.get('interpreter_path', None)
+            if interpreter_path is not None:
+                if isinstance(interpreter_path, str):
+                    child['interpreter_path'] = NoIndent([interpreter_path])
+                elif isinstance(interpreter_path, list):
+                    child['interpreter_path'] = NoIndent(interpreter_path)
+
             executable_path = config.get('executable_path', None)
-            if executable_path is not None and isinstance(executable_path, str):
-                child['executable_path'] = executable_path
+            if executable_path is not None:
+                if isinstance(executable_path, str):
+                    child['executable_path'] = NoIndent([executable_path])
+                elif isinstance(executable_path, list):
+                    child['executable_path'] = NoIndent(executable_path)
 
             args = config.get('args', None)
             if args is not None and isinstance(args, list) and len(args) > 0:
@@ -557,13 +567,19 @@ def build_formatter_sublime_settings(formatter_map):
             // to use this option. Most of the programs you have installed are usually set
             // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
             // Formatter is able to detect and automatically set them for you.
-            // However, if you do need to use a specific interpreter, you can provide the path.'''),
+            // However, if you do need to use a specific interpreter, you can provide the path.
+            // Alternatively, you can set the basename as the interpreter name to search on
+            // PATH, similar to how it is done with the executable_path option.'''),
                     ('interpreter_path', '${HOME}/example/path/to\\$my/java.exe'),
                     ('__COMMENT__executable_path', '''
             // Path to the third-party plugin executable to process formatting.
+            // This option can be either a string or a list of executable paths.
+            // - If this option is omitted or set to null, then the global executable
+            //   on PATH will be used, if found.
+            // - If this option is exactly the basename, then it will be used as the
+            //   executable name and searched for on the PATH.
             // System variable expansions like ${HOME} and Sublime Text specific
-            // ${packages}, ${file_path} etc. can be used to assign paths. More:
-            // https://www.sublimetext.com/docs/build_systems.html#variables
+            // ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".'''),
                     ('executable_path', '${HOME}/example/path/to\\$my/php-cs-fixer.phar'),
