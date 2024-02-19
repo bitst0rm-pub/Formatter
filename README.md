@@ -81,6 +81,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | Perl, None | -- |
 | Lua | [stylua](https://github.com/JohnnyMorganz/StyLua), [luaformatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
 | Markdown | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [deno](https://github.com/denoland/deno)[1], [dprint](https://github.com/dprint/dprint)[1] | -- | Node.js, None[1] | -- |
+| Nginx | [nginxfmt](https://github.com/slomkowski/nginx-config-formatter) | -- | Python >= 3.4 | -- |
 | Nickel | [topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | OCaml | [ocamlformat](https://github.com/ocaml-ppx/ocamlformat), [ocp-indent](https://github.com/OCamlPro/ocp-indent), [topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
