@@ -738,6 +738,15 @@
                         }
                     },
                     {
+                        "caption": "Zprint",
+                        "mnemonic": "Z",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "zprint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "-"
                     },
                     {

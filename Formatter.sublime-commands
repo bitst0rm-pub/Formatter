@@ -652,6 +652,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Zprint",
+        "command": "run_format",
+        "args": {
+            "uid": "zprint",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Minify with Clean CSS",
         "command": "run_format",
         "args": {

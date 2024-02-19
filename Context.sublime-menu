@@ -651,6 +651,14 @@
                 }
             },
             {
+                "caption": "Zprint",
+                "command": "run_format",
+                "args": {
+                    "uid": "zprint",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "-"
             },
             {

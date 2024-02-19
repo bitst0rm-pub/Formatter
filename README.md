@@ -54,7 +54,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Cabal | [cabal-fmt](https://github.com/phadej/cabal-fmt) | -- | Haskell | -- |
 | Caddyfile | [caddy-fmt](https://github.com/caddyserver/caddy) | -- | None | -- |
-| Clojure | [cljfmt](https://github.com/weavejester/cljfmt) | -- | None, (Java) | -- |
+| Clojure | [cljfmt](https://github.com/weavejester/cljfmt), [zprint](https://github.com/kkinnear/zprint) | -- | None, (Java) | -- |
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
@@ -335,7 +335,7 @@ The following setting details, along with their default values and examples, are
             // ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".
-            "executable_path": "${HOME}/example/path/to\\$my/php-cs-fixer.phar",
+            "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
 
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
@@ -402,7 +402,7 @@ The following setting details, along with their default values and examples, are
                 "exclude_syntaxes": []
             },
             "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
-            "executable_path": "${packages}/User/myjs/node_modules/.bin/stylelint",
+            "executable_path": ["${packages}/User/myjs/node_modules/.bin/stylelint"],
             "args": ["--config-basedir", "/path/to/js/node_modules"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
@@ -413,7 +413,7 @@ The following setting details, along with their default values and examples, are
             "disable": false,
             "format_on_save": false,
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
-            "executable_path": "${HOME}/path/to/bin/uncrustify",
+            "executable_path": ["${HOME}/path/to/bin/uncrustify"],
             "config_path": {
                 "objc": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
                 "objc++": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",

@@ -1747,6 +1747,27 @@
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
         },
+        "zprint": {
+            "info": "https://github.com/kkinnear/zprint",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["clojure"],
+            "interpreter_path": ["/path/to/bin/java.exe if use zprint-filter OR /path/to/bin/bb if use babashka OR just omid"],
+            "executable_path": ["/path/to/bin/zprint[l|m|ma|] or /path/to/bin/zprint-filter if use java"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/zprint_rc.edn"
+            }
+            /* requires java on PATH if use zprint-filter. macosx: a zprint already exists, avoid to use this same name */
+        },
         "cleancss": {
             "info": "https://github.com/jakubpawlowicz/clean-css-cli",
             "disable": true,
