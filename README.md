@@ -331,8 +331,8 @@ The following setting details, along with their default values and examples, are
             //   on PATH will be used, if found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
-            // System variable expansions like ${HOME} and Sublime Text specific
-            // ${packages} can be used to assign paths.
+            // System variable expansions like ${HOME}, ${USER} etc... and the Sublime Text
+            // specific ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".
             "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],

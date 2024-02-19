@@ -1,0 +1,22 @@
+                CHANGELOG
+
+1.1.10:
+    - Changes in settings (ref #45):
+      "interpreter_path" and "executable_path" can now be either a string or a list:
+      You do not need to take any action, if they are still of type string in previous versions.
+      Formatter will convert string to list internally.
+      Using a list provides more flexibility in searching the path on various systems.
+      Here the updated settings with explantation:
+
+      // Path to the third-party plugin executable to process formatting.
+      // This option can be either a string or a list of executable paths.
+      // - If this option is omitted or set to null, then the global executable
+      //   on PATH will be used, if found.
+      // - If this option is exactly the basename, then it will be used as the
+      //   executable name and searched for on the PATH.
+      "executable_path": "/path/to/bin/foo", previous versions OR
+      "executable_path": ["/path/to/bin/foo"], newer versions
+      "executable_path": ["foo", "bar"], Using basename (e.g: foo for Win, bar for Mac)
+
+    - Added new modules:
+      R styler, formatR, caddy-fmt, Clojure zprint
