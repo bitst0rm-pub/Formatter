@@ -51,6 +51,14 @@
                 }
             },
             {
+                "caption": "BibTeX-tidy",
+                "command": "run_format",
+                "args": {
+                    "uid": "bibtextidy",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Black",
                 "command": "run_format",
                 "args": {
@@ -351,6 +359,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "nasmfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "NGINXfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "nginxfmt",
                     "type": "beautifier"
                 }
             },

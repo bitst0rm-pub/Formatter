@@ -1,0 +1,177 @@
+# https://github.com/FlamingTempura/bibtex-tidy/blob/master/src/optionDefinitions.ts
+# Update: 2024-02-20
+
+# Remove specified fields from bibliography entries.
+# Examples: omit: ["id", "name"]
+# Type array, default: []
+omit: []
+
+# Enclose all property values in braces. Quoted values will be converted to
+# braces. For example, "Journal of Tea" will become {Journal of Tea}.
+# Type: boolean, default: false
+curly: false
+
+# Strip quotes and braces from numeric/month values. For example, {1998} will
+# become 1998.
+# Type: boolean, default: false
+numeric: false
+
+# Convert all months to three letter abbreviations (jan, feb, etc).
+# Type: boolean, default: false
+months: false
+
+# Indent all fields with the specified number of spaces. Ignored if tab is set.
+# Examples: space: 4
+# Type: boolean|integer, default: true (2)
+space: true
+
+# Indent all fields with a tab.
+# Type: boolean, default: false
+tab: false
+
+# Insert whitespace between fields and values so that values are visually aligned.
+# Examples: align: 18
+# Type: boolean|integer, default: true (14)
+align: true
+
+# Insert an empty line between each entry.
+# Type: boolean, default: true
+blank-lines: true
+
+# Sort entries by the specified field names (citation key is used if no fields
+# are specified). For descending order, prefix the field with a dash (-).
+#
+# Multiple fields may be specified to sort everything by first field, then by
+# the second field whenever the first field for entries are equal, etc.
+#
+# The following additional fields are also permitted: key (entry citation key),
+# type (sorts by the type of entry, e.g. article), and special (ensures that
+# @string, @preamble, @set, and @xdata entries are first).
+#
+# Examples:
+# sort: true (sort by citation key), sort: ["-year", "name"] (sort year descending then
+# name ascending), sort: ["name", "year"]
+# Type boolean|array, default: false
+sort: false
+
+# Warn if duplicates are found, which are entries where DOI, abstract, or
+# author and title are the same.
+#
+# Examples:
+# duplicates: ["doi"] (same DOIs), duplicates: ["key"] (same IDs), duplicates:
+# ["abstract"] (similar abstracts), duplicates: ["citation"] (similar author and
+# titles), duplicates: ["doi", "key"] (identical DOI or keys), duplicates: true (same
+# DOI, key, abstract, or citation)
+# Type boolean|array, default: true
+duplicates: true
+
+# Merge duplicates entries. Use the duplicates option to determine how
+# duplicates are identified. There are different ways to merge:
+#
+# - "first": only keep the original entry
+#
+# - "last": only keep the last found duplicate
+#
+# - "combine": keep original entry and merge in fields of duplicates if they do
+# not already exist
+#
+# - "overwrite": keep original entry and merge in fields of duplicates,
+# overwriting existing fields if they exist
+#
+# Examples: merge: "first", merge: "combine"
+# Type false | "first" | "last" | "combine" | "overwrite", default: "combine"
+merge: "combine"
+
+# Where an entire value is enclosed in double braces, remove the extra braces.
+# For example, {{Journal of Tea}} will become {Journal of Tea}.
+# Type boolean, default: false
+strip-enclosing-braces: false
+
+# Where values are all caps, make them title case. For example, {JOURNAL OF
+# TEA} will become {Journal of Tea}. Roman numerals will be left unchanged.
+# Type boolean, default: false
+drop-all-caps: false
+
+# Escape special characters, such as umlaut. This ensures correct typesetting
+# with latex. Enabled by default.
+# Type boolean, default: true
+escape: true
+
+# Sort the fields within entries.
+# If no fields are specified fields will be sorted by: title, shorttitle,
+# author, year, month, day, journal, booktitle, location, on, publisher,
+# address, series, volume, number, pages, doi, isbn, issn, url, urldate,
+# copyright, category, note, metadata
+#
+# Examples:
+# sort-fields: ["name", "author"]
+# Type boolean|array, default: false
+sort-fields: false
+
+# Alias of the deprecated sort-fields (legacy)
+# Type boolean|array, default: false
+# sort-properties: false
+
+# Remove all comments from the bibtex source.
+# Type boolean, default: false
+strip-comments: false
+
+# End the last key value pair in each entry with a comma.
+# Type boolean, default: false
+trailing-commas: false
+
+# Replace invalid URL characters with percent encoded values.
+# Type boolean, default: false
+encode-urls: false
+
+# Remove whitespace surrounding comments.
+# Type boolean, default: false
+tidy-comments: true
+
+# Remove any fields that have empty values.
+# Type boolean, default: false
+remove-empty-fields: false
+
+# Only allow one of each field in each entry. Enabled by default.
+# Type boolean, default: true
+remove-dupe-fields: true
+
+# For all entries replace the key with a new key of the form
+# <author><year><title>. A JabRef citation pattern can be provided. This is an
+# experimental option that may change without warning.
+# Type boolean|string, default: false
+generate-keys: false
+
+# Truncate authors if above a given number into "and others".
+# Type boolean|interger, default: false
+max-authors: false
+
+# Lowercase field names and entry type. Enabled by default.
+# Type boolean, default: true
+no-lowercase: true
+
+# Enclose the given fields in double braces, such that case is preserved during
+# BibTeX compilation.
+#
+# Examples:
+# enclosing-braces: ["title", "journal"] (output title and journal fields will be of
+# the form {{This is a title}}), enclosing-braces: true (equivalent to
+# enclosing-braces: ["title"])
+#
+# Type boolean|array, default: false
+enclosing-braces: false
+
+# Remove any curly braces within the value, unless they are part of a command.
+#
+# Examples:
+# remove-braces: ["title", "journal"], remove-braces: true (equivalent to
+# remove-braces: ["title"])
+# Type boolean|array, default: false
+remove-braces: false
+
+# Wrap long values at the given column
+#
+# Examples:
+# wrap: true (80 by default), wrap: 82
+# Type boolean|integer, default: false
+wrap: false

@@ -63,6 +63,15 @@
                         }
                     },
                     {
+                        "caption": "BibTeX-tidy",
+                        "mnemonic": "B",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "bibtextidy",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Black",
                         "mnemonic": "B",
                         "command": "run_format",
@@ -401,6 +410,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "nasmfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "NGINXfmt",
+                        "mnemonic": "N",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "nginxfmt",
                             "type": "beautifier"
                         }
                     },

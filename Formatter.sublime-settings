@@ -332,6 +332,26 @@
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
         },
+        "bibtextidy": {
+            "info": "https://github.com/FlamingTempura/bibtex-tidy",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["bibtex"],
+            "executable_path": ["/path/to/node_modules/.bin/bibtex-tidy"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/bibtex_tidy_rc.yaml"
+            }
+            /* requires node on PATH if omit interpreter_path. */
+        },
         "black": {
             "info": "https://github.com/ambv/black",
             "disable": true,
@@ -1045,6 +1065,24 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/nasmfmt_rc.yaml"
             }
+        },
+        "nginxfmt": {
+            "info": "https://github.com/slomkowski/nginx-config-formatter",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["nginx"],
+            "executable_path": ["/path/to/bin/nginxfmt"],
+            "args": ["--indent", "4"]
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. no config, use args instead */
         },
         "ocamlformat": {
             "info": "https://github.com/ocaml-ppx/ocamlformat",
