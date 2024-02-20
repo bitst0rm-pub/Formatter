@@ -42,7 +42,13 @@ class TaploFormatter(common.Module):
 
         path = self.get_config_path()
         if path:
-            cmd.extend(['--config', path])
+            cmd.extend(['--no-auto-config', '--config', path])
+
+        file = self.get_pathinfo()['path']
+        if file:
+            cmd.extend(['--stdin-filepath', file])
+        else:
+            cmd.extend(['--stdin-filepath', 'dummy.' + self.get_assigned_syntax()])
 
         cmd.extend(['-'])
 
