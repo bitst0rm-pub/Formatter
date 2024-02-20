@@ -36,12 +36,14 @@ _Formatter in action..._
 
 ## Plugins
 
-Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user.
+Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user. This means, Formatter is not responsible for:
+  - The quality of formatted code.
+  - The speed of the formatting process.
 
 **The complete list of compatible plugins:** _Need more? see_ [Development](#development)
 
-  - This table does not contain the complete languages that each plugin does support.
-  For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
+  - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
+  - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte) with Formatter. [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
   - `build-in` = do not need to install by end-users.
   - `None` = mostly standalone binary
 
@@ -58,7 +60,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
-| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) (build-in), [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) `(build-in)`, [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Dhall | [dhall format](https://github.com/dhall-lang/dhall-haskell) | -- | None | -- |
@@ -76,7 +78,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | Java | [google java format](https://github.com/google/google-java-format)[1], [uncrustify](https://github.com/uncrustify/uncrustify)[2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[3], [artistic style](https://sourceforge.net/projects/astyle) | -- | Java[1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
 | JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1][2], [deno](https://github.com/denoland/deno)[2], [dprint](https://github.com/dprint/dprint)[2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | Node.js, None[2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [deno](https://github.com/denoland/deno)[2], [topiary](https://github.com/tweag/topiary)[2], [dprint](https://github.com/dprint/dprint)[2], jsonmax (build-in) | [prettydiff](https://github.com/prettydiff/prettydiff)[1], jsonmin (build-in) | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [deno](https://github.com/denoland/deno)[2], [topiary](https://github.com/tweag/topiary)[2], [dprint](https://github.com/dprint/dprint)[2], jsonmax `(build-in)` | [prettydiff](https://github.com/prettydiff/prettydiff)[1], jsonmin `(build-in)` | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | Java | -- |
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | Perl, None | -- |
 | Lua | [stylua](https://github.com/JohnnyMorganz/StyLua), [luaformatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
@@ -95,7 +97,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
 | Scala | [scalafmt](https://github.com/scalameta/scalafmt) | -- | None | -- |
 | Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh)[1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | Python[1], None | -- |
-| SQL, SQL dialects | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1] | sqlmin (build-in) | Node.js[1] | [[1]](https://sql-formatter-org.github.io/sql-formatter) |
+| SQL, SQL dialects | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1] | sqlmin `(build-in)` | Node.js[1] | [[1]](https://sql-formatter-org.github.io/sql-formatter) |
 | Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
 | SVG | [svgo max](https://github.com/svg/svgo) | [svgo min](https://github.com/svg/svgo) | Node.js | -- |
 | TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
