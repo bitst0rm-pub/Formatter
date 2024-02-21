@@ -327,7 +327,7 @@ The following setting details, along with their default values and examples, are
             // However, if you do need to use a specific interpreter, you can provide the path.
             // Alternatively, you can set the basename as the interpreter name to search on
             // PATH, similar to how it is done with the executable_path option.
-            "interpreter_path": "${HOME}/example/path/to\\$my/java.exe",
+            "interpreter_path": ["${HOME}/example/path/to\\$my/java.exe"],
 
             // Path to the third-party plugin executable to process formatting.
             // This option can be either a string or a list of executable paths.
@@ -335,6 +335,8 @@ The following setting details, along with their default values and examples, are
             //   on PATH will be used, if found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
+            //   Basename can be with or without dot.extension as both variants are the same.
+            //   For example: "fiLe.exe" (Windows only), "fiLe" (Windows + Unix + Linux)
             // System variable expansions like ${HOME}, ${USER} etc... and the Sublime Text
             // specific ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish

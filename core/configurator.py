@@ -578,6 +578,8 @@ def build_formatter_sublime_settings(formatter_map):
             //   on PATH will be used, if found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
+            //   Basename can be with or without dot.extension as both variants are the same.
+            //   For example: "fiLe.exe" (Windows only), "fiLe" (Windows + Unix + Linux)
             // System variable expansions like ${HOME}, ${USER} etc... and the Sublime Text
             // specific ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish

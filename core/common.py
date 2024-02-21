@@ -134,9 +134,9 @@ class Module(object):
 
                     if IS_WINDOWS:
                         pathext = os.environ.get('PATHEXT', '').split(pathsep)
-                        final = [[fn, ext] for fn in fnames for ext in pathext if any([fn.lower().endswith(ext.lower())])]
-                        if final:
-                            files = [final[0][0]]
+                        match = [[fn, ext] for fn in fnames for ext in pathext if any([fn.lower().endswith(ext.lower())])]
+                        if match:
+                            files = [match[0][0]]
                         else:
                             files = [fn + ext for fn in fnames for ext in pathext]
                     else:
