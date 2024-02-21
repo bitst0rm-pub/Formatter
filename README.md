@@ -43,7 +43,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 **The complete list of compatible plugins:** _Need more? see_ [Development](#development)
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
-  - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte) with Formatter. [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
+  - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
   - `build-in` = do not need to install by end-users.
   - `None` = mostly standalone binary
 
@@ -146,7 +146,7 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Some exotic plugins do not handle input config file. You need these _example_ files as reference to configure them.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Some exotic plugins do not handle input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
@@ -629,6 +629,7 @@ Starting from version 1.1.0, all previous APIs have been deprecated. Please upda
 ```py
 # An alias for get_interpreter(), get_executable() and get_args() together
 # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search
+# Currently only None|node makes sense. 'python'|'perl'|'ruby' are just placeholder for future.
 cmd = self.get_combo_cmd(runtime_type=None)
 
 # Get the interpreter path or None
