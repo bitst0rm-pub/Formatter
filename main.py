@@ -931,7 +931,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
 
     def on_pre_save(self, view):
         p = self.get_pathinfo(view.file_name())
-        if p['ext'] != 'sublime-settings':
+        if p['ext'] not in ['sublime-settings']:
             self._on_paste_or_save(view, opkey='format_on_save')
 
     def _on_paste_or_save(self, view, opkey=None):
@@ -1018,5 +1018,5 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.set_abort_sync_scroll()
-            self.reload_modules(print_tree=True)  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
+            self.reload_modules(print_tree=False)  # might need hit save twice for python < 3.4 (imp.reload upstream bug)
             self.sync_scroll.reset_run()
