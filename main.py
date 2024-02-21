@@ -930,7 +930,9 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             return None
 
     def on_pre_save(self, view):
-        self._on_paste_or_save(view, opkey='format_on_save')
+        p = self.get_pathinfo(view.file_name())
+        if p['ext'] != 'sublime-settings':
+            self._on_paste_or_save(view, opkey='format_on_save')
 
     def _on_paste_or_save(self, view, opkey=None):
         if not opkey:
