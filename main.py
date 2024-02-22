@@ -206,7 +206,6 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
         'prioritize_project_config': 'Prioritize Per-project Basis Config',
-        'format_on_unique': 'Enable Format on Unique',
         'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
@@ -377,9 +376,6 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     common.enable_logging()
                 else:
                     common.disable_logging()
-            if config_key == 'format_on_unique':
-                if option_value:
-                    self.popup_message('Format on Unique requires at least an enabled Format on Save and/or Format on Paste in this Quick Options mode.\n\nDue to the limited UI design of Sublime Text panel, you must input your unique syntaxes through References > Package Settings > Formatter > Settings > "format_on_unique" if not already done before.', 'INFO', dialog=True)
             if config_key == 'recursive_folder_format':
                 is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_paste')
                 if option_value and is_fos_on:
@@ -939,10 +935,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             return None
 
         unique = common.config.get('format_on_unique', None)
-        is_qo_mode = self.is_quick_options_mode()
-        is_fou_on = self.query(common.config, False, 'quick_options', 'format_on_unique')
-
-        if unique and isinstance(unique, dict) and ((is_qo_mode and is_fou_on) or unique.get('enable', False)):
+        if unique and isinstance(unique, dict) and unique.get('enable', False):
             self._on_paste_or_save__unique(view, unique, opkey)
         else:
             self._on_paste_or_save__regular(view, opkey)

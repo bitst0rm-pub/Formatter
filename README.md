@@ -230,18 +230,16 @@ The following setting details, along with their default values and examples, are
         "OLALA": ["$HOME/.cabal/bin:$PATH", "~/.olala/bin:$PATH"]
     },
 
-    // This option addresses the syntaxes impact described in "format_on_save".
-    // It serves as a global helper and only applies to the following options:
+    // This option addresses the syntaxes conflict described in "format_on_save".
+    // It serves as a takeover and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"
-    // To use this option the "format_on_save" and/or "format_on_paste" options
-    // at the "formatters" plugin level must also be enabled. This option
-    // takes precedence over the syntaxes specified there.
-    // All syntaxes in this option must be unique without any duplicates.
+    // Syntaxes in this option always take precedence over the syntaxes specified there.
+    // All syntaxes must be unique without any duplicates.
     "format_on_unique": {
         "enable": false,
-        "jsbeautifier": ["css", "js"],
-        "black": ["python"]
+        "csscomb": ["css"],
+        "jsbeautifier": ["js"]
     },
 
     // THIRD-PARTY PLUGINS LEVEL
@@ -261,8 +259,7 @@ The following setting details, along with their default values and examples, are
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
-            // Solution: Use the Quick Options feature or the "format_on_unique" option,
-            // as both are designed for this purpose to help in this scenario.
+            // Solution: Use the "format_on_unique" option to workaround this.
             "format_on_save": false,
 
             // Auto formatting whenever code is pasted into the current file/view.
