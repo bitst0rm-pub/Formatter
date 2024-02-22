@@ -8,7 +8,6 @@
 import os
 import logging
 import tempfile
-from distutils.version import StrictVersion
 from ..core import common
 
 log = logging.getLogger(__name__)
@@ -34,24 +33,6 @@ class PhpcsfixerFormatter(common.Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def is_compat(self):
-        try:
-            php = self.get_interpreter()
-            if php:
-                process = self.popen([php, '-v'])
-                stdout = process.communicate()[0]
-                string = stdout.decode('utf-8')
-                version = string.splitlines()[0].split(' ')[1]
-
-                if StrictVersion(version) >= StrictVersion('7.4.0'):
-                    return True
-                self.popup_message('Current PHP version: %s\nPHP CS Fixer requires a minimum PHP 7.4.0.' % version, 'ID:' + self.uid)
-            return False
-        except OSError:
-            log.error('Error occurred while validating PHP compatibility.')
-
-        return False
-
     def get_cmd(self):
         cmd = self.get_combo_cmd(runtime_type=None)
         if not cmd:
@@ -70,9 +51,6 @@ class PhpcsfixerFormatter(common.Module):
         return cmd, tmp_file
 
     def format(self):
-        if not self.is_compat():
-            return None
-
         cmd, tmp_file = self.get_cmd()
         if not self.is_valid_cmd(cmd):
             self.remove_tmp_file(tmp_file)
