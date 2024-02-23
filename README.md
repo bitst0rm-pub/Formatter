@@ -13,7 +13,7 @@ Key features:
 - Shared config files available for each 3rd-party plugin.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
-- Customizable through 2 methods:
+- Customizable through 2 methods to add 3rd-party plugins:
     - Generic: Adding json settings (no coding needed). _see_ [Configuration](#configuration)
     - Modules: The integration of your own modules. _see_ [Development](#development)
 - Open source and works offline.

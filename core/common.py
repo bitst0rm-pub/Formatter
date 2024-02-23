@@ -850,9 +850,12 @@ Static helper APIs
 '''
 
 def read_settings_file(settings_file):
-    with open(settings_file, 'r', encoding='utf-8') as f:
-        file_content = f.read()
-        return sublime.decode_value(file_content)
+    try:
+        with open(settings_file, 'r', encoding='utf-8') as f:
+            file_content = f.read()
+            return sublime.decode_value(file_content)
+    except:
+        return {}
 
 def run_once(func):
     def wrapper(*args, **kwargs):
