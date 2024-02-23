@@ -13,7 +13,9 @@ Key features:
 - Shared config files available for each 3rd-party plugin.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
-- Customizable through the integration of your own modules. _see_ [Development](#development)
+- Customizable through 2 methods:
+    - Generic: Adding json settings (no coding needed). _see_ [Configuration](#configuration)
+    - Modules: The integration of your own modules. _see_ [Development](#development)
 - Open source and works offline.
 
 
@@ -151,7 +153,13 @@ It is recommended to explore this folder, as it may contain additional config fi
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact:
+The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
+
+Starting from version 1.2.0, Formatter provides 2 methods to adding third-party plugins:
+- Generic: simple, no need coding, using just a simple json dict.
+- Modules: advanced, more powerful but needs writing and adding python modules to hack.
+
+Both methods with examples are in this settings guide:
 
 ```js
 {
@@ -244,7 +252,60 @@ The following setting details, along with their default values and examples, are
 
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
-        "example": {
+        "examplegeneric": {
+            // Formatter provides 2 methods to adding plugins:
+            // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
+            // - Modules: hacking on commands where generic cannot, needs writing python modules.
+            // Note: Generic method requires an Sublime Text restart after each setting changes!
+
+            // Plugin name. REQUIRED!
+            // This will appear on the sublime menu and on other commands.
+            "name": "Example Generic",
+            // Plugin type. REQUIRED!
+            // This will be assigned to a category. Accepted values:
+            // "minifier" OR "beautifier" OR "converter" OR any string of your choice.
+            "type": "beautifier",
+            // The exit code of the third-party plugin.
+            // This option can be omitted. Type integer, default to 0.
+            "success_code": 0,
+
+            // Same as examplemodules options.
+            "disable": true,
+            // Same as examplemodules options.
+            "format_on_save": false,
+            // Same as examplemodules options.
+            "format_on_paste": false,
+            // Same as examplemodules options.
+            "new_file_on_format": false,
+            // Same as examplemodules options.
+            "recursive_folder_format": {},
+            // Same as examplemodules options.
+            "syntaxes": ["css", "html", "js", "php"],
+            // Same as examplemodules options.
+            "exclude_syntaxes": {},
+            // Same as examplemodules options.
+            "interpreter_path": ["${HOME}/example/path/to\\$my/php.exe"],
+            // Same as examplemodules options.
+            "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
+            // Same as examplemodules options.
+            "config_path": {
+                "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
+                "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
+                "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
+            },
+
+            // These are the commands to trigger the formatting process.
+            // You can either pass paths directly or use variable substitution for the following options:
+            // - "interpreter_path": "{{i}}"
+            // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
+            // - "config_path"     : "{{c}}"
+            // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
+            "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
+
+            // Same as examplemodules options.
+            "fix_commands": []
+        },
+        "examplemodules": {
             // Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.
             "disable": true,
@@ -391,7 +452,7 @@ The following setting details, along with their default values and examples, are
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
-        "stylelint": {
+        "stylelint": { // Module method
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
             "format_on_paste": false,
@@ -411,10 +472,17 @@ The following setting details, along with their default values and examples, are
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
-        "uncrustify": {
+        "mygeneric": { // Generic method. Restart ST after adding this setting dict
+            "name": "Uncrustify",
+            "type": "beautifier",
+            "success_code": 0,
+            "args": ["{{e}}", " --style=file:{{c}} ", "--"],
+
             "info": "https://github.com/uncrustify/uncrustify",
             "disable": false,
             "format_on_save": false,
+            // "new_file_on_format": false, // Add this, if needed
+            // "recursive_folder_format": {...} // Add this, if needed
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
             "executable_path": ["${HOME}/path/to/bin/uncrustify"],
             "config_path": {

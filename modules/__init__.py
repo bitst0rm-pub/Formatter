@@ -41,7 +41,7 @@ def load_formatter_modules(module_dir):
         update_sys_path(environ, packages_path)
 
         for filename in os.listdir(module_dir):
-            if filename.startswith(formatter_prefix) and filename.endswith('.py'):
+            if filename.startswith(formatter_prefix) and filename.endswith('.py') and formatter_prefix + 'generic.py' != filename:
                 module_name = filename[:-3]
                 module_path = os.path.join(module_dir, filename)
 

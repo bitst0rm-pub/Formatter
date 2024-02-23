@@ -18,6 +18,9 @@ from ..modules import __all__ as formatter_map
 
 log = logging.getLogger(__name__)
 
+settings_file = common.join(sublime.packages_path(), 'User', common.PACKAGE_NAME + '.sublime-settings')
+settings = common.read_settings_file(settings_file)
+
 
 class NoIndent(object):
     def __init__(self, value):
@@ -69,6 +72,23 @@ def build_sublime_menu_children(formatter_map):
             ])
 
             target_list = type_to_list.get(config['type'], custom)
+            target_list.append(child)
+
+    formatters = settings.get('formatters', {})
+    for uid, v in formatters.items():
+        name = v.get('name', None)
+        typ = v.get('type', None)
+        if name and typ:
+            child = OrderedDict([
+                ('caption', name + (' (min)' if typ == 'minifier' else '')),
+                ('command', 'run_format'),
+                ('args', OrderedDict([
+                    ('uid', uid),
+                    ('type', typ)
+                ]))
+            ])
+
+            target_list = type_to_list.get(typ, custom)
             target_list.append(child)
 
     return beautifiers, minifiers, converters, custom
@@ -251,6 +271,23 @@ def build_formatter_sublime_commands_children(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
+    formatters = settings.get('formatters', {})
+    for uid, v in formatters.items():
+        name = v.get('name', None)
+        typ = v.get('type', None)
+        if name and typ:
+            child = OrderedDict([
+                ('caption', 'Formatter: ' + type_to_action.get(typ, 'Customize') + ' with ' + name),
+                ('command', 'run_format'),
+                ('args', OrderedDict([
+                    ('uid', uid),
+                    ('type', typ)
+                ]))
+            ])
+
+            target_list = type_to_list.get(typ, custom)
+            target_list.append(child)
+
     return beautifiers, minifiers, converters, custom
 
 def build_formatter_sublime_commands(formatter_map):
@@ -301,6 +338,23 @@ def build_example_sublime_keymap(formatter_map):
                     ])
 
             target_list = type_to_list.get(config['type'], custom)
+            target_list.append(child)
+
+    formatters = settings.get('formatters', {})
+    for uid, v in formatters.items():
+        name = v.get('name', None)
+        typ = v.get('type', None)
+        if name and typ:
+            child = OrderedDict([
+                        ('keys', ['ctrl+super+?']),
+                        ('command', 'run_format'),
+                        ('args', OrderedDict([
+                            ('uid', uid),
+                            ('type', typ)
+                        ]))
+                    ])
+
+            target_list = type_to_list.get(typ, custom)
             target_list.append(child)
 
     sort_key = lambda x: x['args']['uid']
@@ -487,7 +541,60 @@ def build_formatter_sublime_settings(formatter_map):
             ('__COMMENT__formatters', '''
     // THIRD-PARTY PLUGINS LEVEL'''),
             ('formatters', OrderedDict([
-                ('example', OrderedDict([
+                ('examplegeneric', OrderedDict([
+                    ('__COMMENT__generic', '''// Formatter provides 2 methods to adding plugins:
+            // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
+            // - Modules: hacking on commands where generic cannot, needs writing python modules.
+            // Note: Generic method requires an Sublime Text restart after each setting changes!'''),
+                    ('__COMMENT__name', '''
+            // Plugin name. REQUIRED!
+            // This will appear on the sublime menu and on other commands.'''),
+                    ('name', 'Example Generic'),
+                    ('__COMMENT__type', '''// Plugin type. REQUIRED!
+            // This will be assigned to a category. Accepted values:
+            // "minifier" OR "beautifier" OR "converter" OR any string of your choice.'''),
+                    ('type', 'beautifier'),
+                    ('__COMMENT__success_code', '''// The exit code of the third-party plugin.
+            // This option can be omitted. Type integer, default to 0.'''),
+                    ('success_code', 0),
+                    ('__COMMENT__disable', '''
+            // Same as examplemodules options.'''),
+                    ('disable', True),
+                    ('__COMMENT__format_on_save', '''// Same as examplemodules options.'''),
+                    ('format_on_save', False),
+                    ('__COMMENT__format_on_paste', '''// Same as examplemodules options.'''),
+                    ('format_on_paste', False),
+                    ('__COMMENT__new_file_on_format', '''// Same as examplemodules options.'''),
+                    ('new_file_on_format', False),
+                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodules options.'''),
+                    ('recursive_folder_format', {}),
+                    ('__COMMENT__syntaxes', '''// Same as examplemodules options.'''),
+                    ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
+                    ('__COMMENT__exclude_syntaxes', '''// Same as examplemodules options.'''),
+                    ('exclude_syntaxes', {}),
+                    ('__COMMENT__interpreter_path', '''// Same as examplemodules options.'''),
+                    ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
+                    ('__COMMENT__executable_path', '''// Same as examplemodules options.'''),
+                    ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
+                    ('__COMMENT__config_path', '''// Same as examplemodules options.'''),
+                    ('config_path', OrderedDict([
+                        ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
+                        ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
+                        ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
+                    ])),
+                    ('__COMMENT__args', '''
+            // These are the commands to trigger the formatting process.
+            // You can either pass paths directly or use variable substitution for the following options:
+            // - "interpreter_path": "{{i}}"
+            // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
+            // - "config_path"     : "{{c}}"
+            // Variable substitution offers more advanced mechanisms such as auto-search path, etc.'''),
+                    ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
+                    ('__COMMENT__fix_commands', '''
+            // Same as examplemodules options.'''),
+                    ('fix_commands', [])
+                ])),
+                ('examplemodules', OrderedDict([
                     ('__COMMENT__disable', '''// Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.'''),
                     ('disable', True),
@@ -567,7 +674,7 @@ def build_formatter_sublime_settings(formatter_map):
             // However, if you do need to use a specific interpreter, you can provide the path.
             // Alternatively, you can set the basename as the interpreter name to search on
             // PATH, similar to how it is done with the executable_path option.'''),
-                    ('interpreter_path', '${HOME}/example/path/to\\$my/java.exe'),
+                    ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
                     ('__COMMENT__executable_path', '''
             // Path to the third-party plugin executable to process formatting.
             // This option can be either a string or a list of executable paths.
@@ -581,7 +688,7 @@ def build_formatter_sublime_settings(formatter_map):
             // specific ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".'''),
-                    ('executable_path', '${HOME}/example/path/to\\$my/php-cs-fixer.phar'),
+                    ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
                     ('__COMMENT__config_path', '''
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.

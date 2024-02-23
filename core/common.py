@@ -245,6 +245,12 @@ class Module(object):
         if tmp_file and os.path.isfile(tmp_file):
             os.unlink(tmp_file)
 
+    def is_generic_mode(self):
+        formatter = self.query(config, {}, 'formatters', self.uid)
+        name = formatter.get('name', None)
+        typ = formatter.get('type', None)
+        return bool(name and typ)
+
     def _get_active_view_parent_folders(self, max_depth=30):
         active_file_path = self.view.file_name()
         parent_folders = []
@@ -260,7 +266,15 @@ class Module(object):
 
         return parent_folders
 
+    def set_generic_local_executables(self):
+        is_generic = self.is_generic_mode()
+        path = self.query(config, None, 'formatters', self.uid, 'executable_path')
+        if is_generic and path:
+            self.executables = [self.get_pathinfo(path)['base']]
+
     def get_local_executable(self, runtime_type=None):
+        self.set_generic_local_executables()
+
         if not runtime_type or not self.executables:
             return None
 
@@ -437,6 +451,9 @@ class Module(object):
         args = self.query(config, None, 'formatters', self.uid, 'args')
         return list(map(str, args)) if args and isinstance(args, list) else []
 
+    def get_success_code(self):
+        return int(self.query(config, 0, 'formatters', self.uid, 'success_code'))
+
     def fix_cmd(self, cmd):
         fix_cmds = self.query(config, None, 'formatters', self.uid, 'fix_commands')
 
@@ -610,7 +627,8 @@ class Base(Module):
                 'formatters': settings.get('formatters', {})
             }
 
-            config['formatters'].pop('example', None)
+            config['formatters'].pop('examplegeneric', None)
+            config['formatters'].pop('examplemodules', None)
             config = self.recursive_map(self.expand_path, config)
             return config
         except Exception as e:
