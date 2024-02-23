@@ -156,6 +156,7 @@ Formatter settings can be accessed from: `Preferences > Package Settings > Forma
 The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
 
 Starting from version 1.2.0, Formatter provides 2 methods to adding third-party plugins:
+
 - Generic: simple, no need coding, using just a simple json dict.
 - Modules: advanced, more powerful but needs writing and adding python modules to hack.
 
