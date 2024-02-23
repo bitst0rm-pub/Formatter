@@ -545,7 +545,8 @@ def build_formatter_sublime_settings(formatter_map):
                     ('__COMMENT__generic', '''// Formatter provides 2 methods to adding plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
             // - Modules: hacking on commands where generic cannot, needs writing python modules.
-            // Note: Generic method requires an Sublime Text restart after each setting changes!'''),
+            // Note: Generic method requires an Sublime Text restart after adding an new generic
+            // plugin or making changes to the keys: "name" and "type"!'''),
                     ('__COMMENT__name', '''
             // Plugin name. REQUIRED!
             // This will appear on the sublime menu and on other commands.'''),
