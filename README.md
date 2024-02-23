@@ -252,7 +252,7 @@ Both methods with examples are in this settings guide:
 
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
-        "examplegeneric": {
+        "examplegeneric": { // GENERIC METHOD
             // Formatter provides 2 methods to adding plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
             // - Modules: hacking on commands where generic cannot, needs writing python modules.
@@ -305,7 +305,7 @@ Both methods with examples are in this settings guide:
             // Same as examplemodules options.
             "fix_commands": []
         },
-        "examplemodules": {
+        "examplemodules": { // MODULE METHOD
             // Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.
             "disable": true,
@@ -452,7 +452,7 @@ Both methods with examples are in this settings guide:
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
-        "stylelint": { // Module method
+        "stylelint": { // MODULE METHOD
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
             "format_on_paste": false,
@@ -472,7 +472,7 @@ Both methods with examples are in this settings guide:
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
-        "mygeneric": { // Generic method. Restart ST after adding this setting dict
+        "mygeneric": { // GENERIC METHOD. Restart ST after adding this setting dict
             "name": "Uncrustify",
             "type": "beautifier",
             "success_code": 0,
