@@ -736,7 +736,7 @@ class Base(Module):
                         if not hash_dst_master or (hash_dst_master and hash_src != hash_dst_master):
                             with open(master_path, 'wb') as f:
                                 f.write(res)
-                            log.debug('Setup shared master config: %s', master_path)
+                            #log.debug('Setup shared master config: %s', master_path)
                     except Exception as e:
                         log.warning('Could not setup shared master config: %s\n%s', master_path, e)
                 else:
@@ -744,7 +744,7 @@ class Base(Module):
                         res = sublime.load_binary_resource(resource)
                         with open(path, 'wb') as f:
                             f.write(res)
-                        log.debug('Setup shared config: %s', path)
+                        #log.debug('Setup shared config: %s', path)
                     except Exception as e:
                         log.warning('Could not setup shared config: %s\n%s', path, e)
 
