@@ -44,7 +44,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
   - The quality of formatted code.
   - The speed of the formatting process.
 
-**The complete list of compatible plugins:** _Need more? _see_ [Configuration](#configuration)_(Generic method)_, see_ [Development](#development) _(Module method)_
+**The complete list of compatible plugins:** _Need more? see:_ [Configuration](#configuration) (Generic method), [Development](#development) (Module method)
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
   - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
