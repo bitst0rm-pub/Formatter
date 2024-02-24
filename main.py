@@ -16,7 +16,6 @@ import tempfile
 import traceback
 import importlib
 import threading
-from threading import Event
 from datetime import datetime
 
 import sublime
