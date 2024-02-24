@@ -44,7 +44,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
   - The quality of formatted code.
   - The speed of the formatting process.
 
-**The complete list of compatible plugins:** _Need more? see:_ [Configuration](#configuration) (Generic), [Development](#development) (Module)
+**The complete list of compatible plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development)
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
   - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
@@ -157,7 +157,7 @@ Formatter settings can be accessed from: `Preferences > Package Settings > Forma
 
 The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
 
-Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins:
+Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins, in the Do-it-Yourself fashion:
 
 - Generic: simple, no need coding, using just a simple portion of JSON dict.
 - Modules: advanced, more powerful but needs writing and adding python modules to hack deeper.
