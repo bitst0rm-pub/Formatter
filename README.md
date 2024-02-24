@@ -4,18 +4,19 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 
 Key features:
 
-- Support for more than 2 major programming languages.
-- Capability to format entire file, single or multi selections.
-- Capability to format entire folder recursively.
+- Supports more than 2 major programming languages.
+- Capable to format entire files, single or multiple selections.
+- Capable to format entire folder recursively.
+- Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
-- Capability to format on Save.
-- Capability to format on Paste.
+- Capable to format on Save.
+- Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
-- Customizable through 2 methods to add 3rd-party plugins:
-    - Generic: Adding json settings (no coding needed). _see_ [Configuration](#configuration)
-    - Modules: The integration of your own modules. _see_ [Development](#development)
+- Customizable and extendable through 2 methods to add 3rd-party plugins:
+    - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
+    - Modules: Integration of your own modules. _see_ [Development](#development)
 - Open source and works offline.
 
 
@@ -39,10 +40,11 @@ _Formatter in action..._
 ## Plugins
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user. This means, Formatter is not responsible for:
+
   - The quality of formatted code.
   - The speed of the formatting process.
 
-**The complete list of compatible plugins:** _Need more? see_ [Development](#development)
+**The complete list of compatible plugins:** _Need more? _see_ [Configuration](#configuration)_(Generic method)_, see_ [Development](#development) _(Module method)_
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
   - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
@@ -155,10 +157,10 @@ Formatter settings can be accessed from: `Preferences > Package Settings > Forma
 
 The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
 
-Starting from version 1.2.0, Formatter provides 2 methods to adding third-party plugins:
+Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins:
 
-- Generic: simple, no need coding, using just a simple json dict.
-- Modules: advanced, more powerful but needs writing and adding python modules to hack.
+- Generic: simple, no need coding, using just a simple portion of JSON dict.
+- Modules: advanced, more powerful but needs writing and adding python modules to hack deeper.
 
 Both methods with examples are in this settings guide:
 
