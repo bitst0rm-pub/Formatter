@@ -612,6 +612,7 @@ class Base(Module):
                 'dev': settings.get('dev', False),
                 'open_console_on_failure': settings.get('open_console_on_failure', False),
                 'timeout': settings.get('timeout', 10),
+                'custom_modules': settings.get('custom_modules', {}),
                 'show_statusbar': settings.get('show_statusbar', True),
                 'show_words_count': {
                     'enable': self.query(settings, True, 'show_words_count', 'enable'),

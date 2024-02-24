@@ -48,9 +48,7 @@ def has_package_control():
 
 def copyfiles(api):
     packages_path = sublime.packages_path()
-    settings_file = os.path.join(packages_path, 'User', common.PACKAGE_NAME + '.sublime-settings')
-    settings = common.read_settings_file(settings_file)
-    custom_modules = settings.get('custom_modules', {})
+    custom_modules = common.config.get('custom_modules', {})
 
     for k, v in custom_modules.items():
         if k in ['config', 'modules', 'libs'] and isinstance(v, list):

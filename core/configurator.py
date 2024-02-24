@@ -18,9 +18,6 @@ from ..modules import __all__ as formatter_map
 
 log = logging.getLogger(__name__)
 
-settings_file = common.join(sublime.packages_path(), 'User', common.PACKAGE_NAME + '.sublime-settings')
-settings = common.read_settings_file(settings_file)
-
 
 class NoIndent(object):
     def __init__(self, value):
@@ -74,7 +71,7 @@ def build_sublime_menu_children(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    formatters = settings.get('formatters', {})
+    formatters = common.config.get('formatters', {})
     for uid, v in formatters.items():
         name = v.get('name', None)
         typ = v.get('type', None)
@@ -271,7 +268,7 @@ def build_formatter_sublime_commands_children(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    formatters = settings.get('formatters', {})
+    formatters = common.config.get('formatters', {})
     for uid, v in formatters.items():
         name = v.get('name', None)
         typ = v.get('type', None)
@@ -340,7 +337,7 @@ def build_example_sublime_keymap(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    formatters = settings.get('formatters', {})
+    formatters = common.config.get('formatters', {})
     for uid, v in formatters.items():
         name = v.get('name', None)
         typ = v.get('type', None)
