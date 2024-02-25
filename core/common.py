@@ -118,6 +118,7 @@ class Module(object):
                         else:
                             environ[key] = pathsep.join(map(normpath, items))
 
+            environ.update({'NO_COLOR': '1'})
             return environ
         except Exception as error:
             log.warning('Could not clone system environment: %s', error)
