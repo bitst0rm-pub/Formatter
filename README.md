@@ -157,10 +157,10 @@ Formatter settings can be accessed from: `Preferences > Package Settings > Forma
 
 The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
 
-Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins, in the Do-it-Yourself fashion:
+Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins:
 
 - Generic: simple, no need coding, using just a simple portion of JSON dict.
-- Modules: advanced, more powerful but needs writing and adding python modules to hack deeper.
+- Modules: advanced, more powerful but needs writing and integrating python modules to hack deeper.
 
 Both methods with examples are in this settings guide:
 
@@ -256,11 +256,11 @@ Both methods with examples are in this settings guide:
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "examplegeneric": { // GENERIC METHOD
-            // Formatter provides 2 methods to adding plugins:
+            // Formatter provides 2 methods to add custom plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
-            // - Modules: hacking on commands where generic cannot, needs writing python modules.
+            // - Modules: hacking deeper where generic cannot, needs writing python modules.
             // Note: Generic method requires an Sublime Text restart after adding or changing
-            // the keys: "name" and "type". Avoid using the same existing uid in JSON, too.
+            // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
 
             // Plugin name. REQUIRED!
             // This will appear on the sublime menu and on other commands.
@@ -306,7 +306,7 @@ Both methods with examples are in this settings guide:
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"]
         },
-        "examplemodules": { // MODULE METHOD
+        "examplemodule": { // MODULE METHOD
             // Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.
             "disable": true,
@@ -453,7 +453,7 @@ Both methods with examples are in this settings guide:
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
-        "stylelint": { // MODULE METHOD
+        "stylelint": { // MODULE METHOD EXAMPLE
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
             "format_on_paste": false,
@@ -473,7 +473,7 @@ Both methods with examples are in this settings guide:
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
-        "mygeneric": { // GENERIC METHOD. Restart ST after adding this setting dict
+        "mygeneric": { // GENERIC METHOD EXAMPLE. Restart ST after adding this setting dict
             "name": "Uncrustify",
             "type": "beautifier",
             "success_code": 0,

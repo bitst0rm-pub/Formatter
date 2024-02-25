@@ -539,11 +539,11 @@ def build_formatter_sublime_settings(formatter_map):
     // THIRD-PARTY PLUGINS LEVEL'''),
             ('formatters', OrderedDict([
                 ('examplegeneric', OrderedDict([
-                    ('__COMMENT__generic', '''// Formatter provides 2 methods to adding plugins:
+                    ('__COMMENT__generic', '''// Formatter provides 2 methods to add custom plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
-            // - Modules: hacking on commands where generic cannot, needs writing python modules.
+            // - Modules: hacking deeper where generic cannot, needs writing python modules.
             // Note: Generic method requires an Sublime Text restart after adding or changing
-            // the keys: "name" and "type". Avoid using the same existing uid in JSON, too.'''),
+            // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.'''),
                     ('__COMMENT__name', '''
             // Plugin name. REQUIRED!
             // This will appear on the sublime menu and on other commands.'''),
@@ -589,7 +589,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.'''),
                     ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--']))
                 ])),
-                ('examplemodules', OrderedDict([
+                ('examplemodule', OrderedDict([
                     ('__COMMENT__disable', '''// Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.'''),
                     ('disable', True),

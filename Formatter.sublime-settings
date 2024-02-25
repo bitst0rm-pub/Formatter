@@ -89,11 +89,11 @@
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "examplegeneric": {
-            // Formatter provides 2 methods to adding plugins:
+            // Formatter provides 2 methods to add custom plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
-            // - Modules: hacking on commands where generic cannot, needs writing python modules.
+            // - Modules: hacking deeper where generic cannot, needs writing python modules.
             // Note: Generic method requires an Sublime Text restart after adding or changing
-            // the keys: "name" and "type". Avoid using the same existing uid in JSON, too.
+            // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
 
             // Plugin name. REQUIRED!
             // This will appear on the sublime menu and on other commands.
@@ -139,7 +139,7 @@
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"]
         },
-        "examplemodules": {
+        "examplemodule": {
             // Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.
             "disable": true,

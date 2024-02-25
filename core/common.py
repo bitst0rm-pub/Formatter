@@ -523,17 +523,17 @@ class Base(Module):
         super().__init__(view=view, uid=uid, region=region, interpreters=interpreters, executables=executables, **kwargs)
 
     def remove_junk(self):
-        parent_dir = dirname(dirname(__file__))
-        items = [join(parent_dir, item) for item in ['.DS_Store', '.git']]
+        try:
+            parent_dir = dirname(dirname(__file__))
+            items = [join(parent_dir, item) for item in ['.DS_Store', '.editorconfig', '.gitattributes', '.gitignore', '.git']]
 
-        for item in items:
-            try:
+            for item in items:
                 if isfile(item):
                     os.remove(item)
                 elif isdir(item):
                     shutil.rmtree(item)
-            except Exception as e:
-                log.error('Error removing junk %s: %s', item, e)
+        except Exception as e:
+            pass
 
     def generate_ascii_tree(self, reloaded_modules, package_name):
         tree = {}
@@ -630,7 +630,7 @@ class Base(Module):
             }
 
             config['formatters'].pop('examplegeneric', None)
-            config['formatters'].pop('examplemodules', None)
+            config['formatters'].pop('examplemodule', None)
             config = self.recursive_map(self.expand_path, config)
             return config
         except Exception as e:
@@ -856,7 +856,7 @@ def read_settings_file(settings_file):
         with open(settings_file, 'r', encoding='utf-8') as f:
             file_content = f.read()
             return sublime.decode_value(file_content)
-    except:
+    except Exception as e:
         return {}
 
 def run_once(func):
