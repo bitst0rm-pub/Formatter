@@ -259,8 +259,8 @@ Both methods with examples are in this settings guide:
             // Formatter provides 2 methods to adding plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
             // - Modules: hacking on commands where generic cannot, needs writing python modules.
-            // Note: Generic method requires an Sublime Text restart after adding an new generic
-            // plugin or making changes to the keys: "name" and "type"!
+            // Note: Generic method requires an Sublime Text restart after adding or changing
+            // the keys: "name" and "type". Avoid using the same existing uid in JSON, too.
 
             // Plugin name. REQUIRED!
             // This will appear on the sublime menu and on other commands.
@@ -304,10 +304,7 @@ Both methods with examples are in this settings guide:
             // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
             // - "config_path"     : "{{c}}"
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
-            "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
-
-            // Same as examplemodules options.
-            "fix_commands": []
+            "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"]
         },
         "examplemodules": { // MODULE METHOD
             // Plugin activation.

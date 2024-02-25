@@ -60,7 +60,6 @@ class GenericFormatter(common.Module):
         cmd = new_cmd
 
         log.debug('Current arguments: %s', cmd)
-        cmd = self.fix_cmd(cmd)
 
         return cmd
 

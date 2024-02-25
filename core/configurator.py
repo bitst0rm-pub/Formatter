@@ -542,8 +542,8 @@ def build_formatter_sublime_settings(formatter_map):
                     ('__COMMENT__generic', '''// Formatter provides 2 methods to adding plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
             // - Modules: hacking on commands where generic cannot, needs writing python modules.
-            // Note: Generic method requires an Sublime Text restart after adding an new generic
-            // plugin or making changes to the keys: "name" and "type"!'''),
+            // Note: Generic method requires an Sublime Text restart after adding or changing
+            // the keys: "name" and "type". Avoid using the same existing uid in JSON, too.'''),
                     ('__COMMENT__name', '''
             // Plugin name. REQUIRED!
             // This will appear on the sublime menu and on other commands.'''),
@@ -587,10 +587,7 @@ def build_formatter_sublime_settings(formatter_map):
             // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
             // - "config_path"     : "{{c}}"
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.'''),
-                    ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
-                    ('__COMMENT__fix_commands', '''
-            // Same as examplemodules options.'''),
-                    ('fix_commands', [])
+                    ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--']))
                 ])),
                 ('examplemodules', OrderedDict([
                     ('__COMMENT__disable', '''// Plugin activation.
