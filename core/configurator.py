@@ -512,8 +512,7 @@ def build_formatter_sublime_settings(formatter_map):
     // for the current formatting session. Your system environment remains untouched.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python, ruby and erlang you probably need
-    // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
-    // In debug mode, Formatter will display your current system environments
+    // to add it. In debug mode, Formatter will display your current system environments
     // to assist you in configuration. On Windows, you can use either escaped
     // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
     // as path separators for all other options as well.'''),
@@ -556,25 +555,25 @@ def build_formatter_sublime_settings(formatter_map):
             // This option can be omitted. Type integer, default to 0.'''),
                     ('success_code', 0),
                     ('__COMMENT__disable', '''
-            // Same as examplemodules options.'''),
+            // Same as examplemodule options.'''),
                     ('disable', True),
-                    ('__COMMENT__format_on_save', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__format_on_save', '''// Same as examplemodule options.'''),
                     ('format_on_save', False),
-                    ('__COMMENT__format_on_paste', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__format_on_paste', '''// Same as examplemodule options.'''),
                     ('format_on_paste', False),
-                    ('__COMMENT__new_file_on_format', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options.'''),
                     ('new_file_on_format', False),
-                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options.'''),
                     ('recursive_folder_format', {}),
-                    ('__COMMENT__syntaxes', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__syntaxes', '''// Same as examplemodule options.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
-                    ('__COMMENT__exclude_syntaxes', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__exclude_syntaxes', '''// Same as examplemodule options.'''),
                     ('exclude_syntaxes', {}),
-                    ('__COMMENT__interpreter_path', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__interpreter_path', '''// Same as examplemodule options.'''),
                     ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
-                    ('__COMMENT__executable_path', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__executable_path', '''// Same as examplemodule options.'''),
                     ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
-                    ('__COMMENT__config_path', '''// Same as examplemodules options.'''),
+                    ('__COMMENT__config_path', '''// Same as examplemodule options.'''),
                     ('config_path', OrderedDict([
                         ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
                         ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
@@ -713,8 +712,8 @@ def build_formatter_sublime_settings(formatter_map):
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the source code.
-            // This feature is primarily intended to temporarily fix the bug until
-            // an official solution is implemented. Therefore bug report is required.
+            // This feature is primarily intended to temporarily fix bugs until
+            // an official solution is implemented.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
             // Use "args" option above to add, this option to remove or manipulate.

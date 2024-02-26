@@ -155,7 +155,7 @@ It is recommended to explore this folder, as it may contain additional config fi
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following setting details, along with their default values and examples, are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
+The following setting details - along with their default values and examples - are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
 
 Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins:
 
@@ -229,8 +229,7 @@ Both methods with examples are in this settings guide:
     // for the current formatting session. Your system environment remains untouched.
     // Non-existent environment directories and files will be silently ignored.
     // This option can be ommitted, but for python, ruby and erlang you probably need
-    // to add it, either persistently via ~/.bashrc, ~/.zshrc, ~/.profile or here.
-    // In debug mode, Formatter will display your current system environments
+    // to add it. In debug mode, Formatter will display your current system environments
     // to assist you in configuration. On Windows, you can use either escaped
     // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
     // as path separators for all other options as well.
@@ -273,25 +272,25 @@ Both methods with examples are in this settings guide:
             // This option can be omitted. Type integer, default to 0.
             "success_code": 0,
 
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "disable": true,
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "format_on_save": false,
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "new_file_on_format": false,
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "recursive_folder_format": {},
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "exclude_syntaxes": {},
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "interpreter_path": ["${HOME}/example/path/to\\$my/php.exe"],
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
-            // Same as examplemodules options.
+            // Same as examplemodule options.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
@@ -430,8 +429,8 @@ Both methods with examples are in this settings guide:
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the source code.
-            // This feature is primarily intended to temporarily fix the bug until
-            // an official solution is implemented. Therefore bug report is required.
+            // This feature is primarily intended to temporarily fix bugs until
+            // an official solution is implemented.
             // Note: Hardcoded args can be changed (rarely) by any release updates.
             // Enable debug mode will help to find all current hardcoded args.
             // Use "args" option above to add, this option to remove or manipulate.
