@@ -47,10 +47,10 @@ class SqlminFormatter(common.Module):
             result = output['result']
 
             if exitcode > 0:
-                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, result)
+                self.print_exiterr(exitcode, result)
             else:
                 return result
         except OSError:
-            log.error('An error occurred while executing the command: %s', ' '.join(json))
+            self.print_oserr(json)
 
         return None

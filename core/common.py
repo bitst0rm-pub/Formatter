@@ -512,6 +512,13 @@ class Module(object):
         else:
             sublime.error_message(message)
 
+    def print_exiterr(self, exitcode, stderr):
+        sep = '=========================================================================================='
+        log.error('File not formatted due to an error (exitcode=%d):\n%s\n%s\n%s', exitcode, sep, stderr, sep)
+
+    def print_oserr(self, cmd):
+        log.error('An error occurred while executing the command: %s', ' '.join(cmd))
+
 
 class Base(Module):
     '''

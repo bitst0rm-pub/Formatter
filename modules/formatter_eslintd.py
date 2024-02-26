@@ -57,15 +57,15 @@ class EslintdFormatter(common.Module):
             exitcode, stdout, stderr = self.exec_cmd(cmd)
 
             if exitcode > 1:
-                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
+                self.print_exiterr(exitcode, stderr)
             else:
                 obj = sublime.decode_value(stdout)[0]
                 if 'output' in obj:
                     return obj.get('output', None)
-                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
+                self.print_exiterr(exitcode, stderr)
                 for i in obj.get('messages', []):
                     print(i)
         except OSError:
-            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
+            self.print_oserr(cmd)
 
         return None

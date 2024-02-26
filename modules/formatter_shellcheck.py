@@ -173,12 +173,12 @@ class ShellcheckFormatter(common.Module):
                 if stdout:
                     return out
                 else:
-                    log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
+                    self.print_exiterr(exitcode, stderr)
                     _, stdout, _ = self.exec_cmd([s.replace('diff', 'tty') for s in cmd])
                     log.debug(stdout)
             else:
                 return out
         except OSError:
-            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
+            self.print_oserr(cmd)
 
         return None

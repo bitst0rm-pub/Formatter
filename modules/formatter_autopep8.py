@@ -56,10 +56,10 @@ class Autopep8Formatter(common.Module):
             exitcode, stdout, stderr = self.exec_cmd(cmd)
 
             if exitcode > 0:
-                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
+                self.print_exiterr(exitcode, stderr)
             else:
                 return stdout
         except OSError:
-            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
+            self.print_oserr(cmd)
 
         return None

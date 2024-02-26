@@ -62,13 +62,13 @@ class PhpcsfixerFormatter(common.Module):
             result = None
 
             if exitcode > 0 or not stdout:
-                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
+                self.print_exiterr(exitcode, stderr)
             else:
                 with open(tmp_file, 'r', encoding='utf-8') as file:
                     result = file.read()
                     file.close()
         except OSError:
-            log.error('An error occurred while executing the command: %s', ' '.join(cmd))
+            self.print_oserr(cmd)
 
         self.remove_tmp_file(tmp_file)
 

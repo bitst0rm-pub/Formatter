@@ -658,11 +658,11 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
             exitcode, stdout, stderr = self.exec_cmd(cmd)   # REQUIRED: process command
 
             if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
-                log.error('File not formatted due to an error (exitcode=%d): "%s"', exitcode, stderr)
+                self.print_exiterr(exitcode, stderr)
             else:
                 return stdout                               # REQUIRED: return the formatted code on success
         except OSError:
-            log.error('Error occurred while running: %s', ' '.join(cmd))
+            self.print_oserr(cmd)
 
         return None                                         # REQUIRED: return None to indicate failure
 
@@ -693,50 +693,56 @@ Starting from version 1.1.0, all previous APIs have been deprecated. Please upda
 - Essentially for the `def get_cmd(self)` function:
 
 ```py
-# An alias for get_interpreter(), get_executable() and get_args() together
-# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search
+# An alias for get_interpreter(), get_executable() and get_args() together.
+# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
 # Currently only None|node makes sense. 'python'|'perl'|'ruby' are just placeholder for future.
 cmd = self.get_combo_cmd(runtime_type=None)
 
-# Get the interpreter path or None
+# Get the interpreter path or None.
 interpreter = self.get_interpreter()
 
-# Get the executable path or None
-# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search
+# Get the executable path or None.
+# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
 executable = self.get_executable(runtime_type=None)
 
-# Get the input arguments "args" from the User settings or None
+# Get the input arguments "args" from the User settings or None.
 args = self.get_args()
 
-# Get the input "config_path" from the User settings or None
+# Get the input "config_path" from the User settings or None.
 path = self.get_config_path()
 
-# Get the detected syntax of the current file or None
+# Get the detected syntax of the current file or None.
 syntax = self.get_assigned_syntax()
 
 # Get a dictionary of file path components:
-# {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None
+# {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None.
 components = self.get_pathinfo()
 
-# Create and get the temp file path
-# Useful for plugins lacking a built-in mechanism to fix files inplace
+# Create and get the temp file path.
+# Useful for plugins lacking a built-in mechanism to fix files inplace.
 tmp_file = self.create_tmp_file(suffix=None)
 
-# Remove temp file
+# Remove temp file.
 self.remove_tmp_file(tmp_file)
 
-# To finally process the "fix_commands" option, just right before exec_cmd()
+# To finally process the "fix_commands" option, just right before exec_cmd().
 cmd = self.fix_cmd(cmd)
 ```
 
 - Essentially for the `def format(self)` function:
 
 ```py
-# To quickly perform a formal test on the command
+# To quickly perform a formal test on the command.
 is_valid = self.is_valid_cmd(cmd)
 
-# To process the formatting with all input (fixed) arguments
+# To process the formatting with all input (fixed) arguments.
 exitcode, stdout, stderr = self.exec_cmd(cmd)
+
+# To print formatting exit error.
+self.print_exiterr(exitcode, stderr)
+
+# To print executing commands error.
+self.print_oserr(cmd)
 ```
 
 ## License
