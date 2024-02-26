@@ -202,7 +202,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
         'debug': 'Enable Debugging',
         'layout': 'Choose Layout',
-        'prioritize_project_config': 'Prioritize Per-project Basis Config',
+        'prioritize_project_config': 'Prioritize Per-project Config',
         'format_on_paste': 'Enable Format on Paste',
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
@@ -331,7 +331,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             selected_option = self.options[index]
             if 'Choose Layout' in selected_option:
                 self.show_layout_menu()
-            elif 'Prioritize Per-project Basis Config' in selected_option:
+            elif 'Prioritize Per-project Config' in selected_option:
                 self.show_prioritize_project_config_menu()
             elif 'Enable Format on Paste' in selected_option:
                 is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
