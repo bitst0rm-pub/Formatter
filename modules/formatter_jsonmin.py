@@ -36,6 +36,6 @@ class JsonminFormatter(common.Module):
             result = json.dumps(obj, ensure_ascii=False, separators=(',', ':'), indent=None)
             return result
         except ValueError as err:
-            log.error('File not formatted due to ValueError: "%s"', err)
+            log.status('File not formatted due to ValueError: "%s"', err)
 
         return None

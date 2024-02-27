@@ -92,5 +92,5 @@ class PrettytableFormatter(common.Module):
         if out:
             return out
         else:
-            log.error('File not formatted due to an error.')
+            log.status('File not formatted due to an error.')
         return None
