@@ -512,9 +512,13 @@ class Module(object):
         else:
             sublime.error_message(message)
 
+    def is_empty_or_whitespace(self, s):
+        return s is not None and not s.strip()
+
     def print_exiterr(self, exitcode, stderr):
-        sep = '=========================================================================================='
-        log.status('File not formatted due to an error (exitcode=%d):\n%s\n%s\n%s', exitcode, sep, stderr, sep)
+        sep = '======================================================================================='
+        s = 'File not formatted due to an error (exitcode=%d)' % exitcode
+        log.status(s + '.' if self.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
 
     def print_oserr(self, cmd):
         log.status('An error occurred while executing the command: %s', ' '.join(cmd))
