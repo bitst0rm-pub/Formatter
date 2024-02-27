@@ -449,11 +449,12 @@ def build_formatter_sublime_settings_children(formatter_map):
 
 def build_formatter_sublime_settings(formatter_map):
     sublime_settings = OrderedDict([
-            ('__COMMENT__debug', '''// Enable debug mode to view errors in the console.'''),
+            ('__COMMENT__debug', '''// Enable debug mode to view errors in the console.
+    // Accepted values: true (verbose), false, OR "status" (minimal info)'''),
             ('debug', False),
             ('__COMMENT__open_console_on_failure', '''
     // Auto open the console panel whenever formatting failed.
-    // This is useful when combined with "debug": true'''),
+    // This is useful when combined with "debug": true or "status"'''),
             ('open_console_on_failure', False),
             ('__COMMENT__timeout', '''
     // Timeout to abort subprocess in seconds.

@@ -80,12 +80,8 @@ def entry(api):
     if ready:
         api.get_config()
         api.setup_shared_config_files()
+        api.set_debug_mode()
 
-        if api.is_quick_options_mode():
-            is_enabled = api.query(common.config, False, 'quick_options', 'debug')
-        else:
-            is_enabled = common.config.get('debug')
-        common.enable_logging() if is_enabled else common.disable_logging()
     log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
@@ -200,7 +196,7 @@ class ConfigManagerCommand(sublime_plugin.WindowCommand, common.Base):
 
 class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = {
-        'debug': 'Enable Debugging',
+        'debug': 'Enable Debug',
         'layout': 'Choose Layout',
         'prioritize_project_config': 'Prioritize Per-project Config',
         'format_on_paste': 'Enable Format on Paste',
@@ -222,7 +218,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 option_status = '[-]' if config_values else '[x]'
             if key == 'save_quick_options':
                 option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
-            if key in ['layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format'] and option_value:
+            if key in ['debug', 'layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
             else:
                 option_label = '{} {}'.format(option_status, title)
@@ -232,6 +228,30 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
 
     def show_main_menu(self):
         self.window.show_quick_panel(self.options, self.on_done)
+
+    def show_debug_menu(self):
+        debugs = ['true', 'status', 'false', '<< Back']
+        self.window.show_quick_panel(debugs, lambda debug_index: self.on_debug_menu_done(debugs, debug_index))
+
+    def on_debug_menu_done(self, debugs, debug_index):
+        if debug_index != -1:
+            debug_value = debugs[debug_index]
+            if debug_value == '<< Back':
+                self.show_main_menu()
+            else:
+                current_debug_value = common.config.setdefault('quick_options', {}).get('debug', False)
+                if debug_value == current_debug_value:
+                    current_debug_value = False
+                else:
+                    if debug_value == 'status':
+                        common.enable_status()
+                    elif debug_value == 'true':
+                        common.enable_logging()
+                    else:
+                        common.disable_logging()
+                    current_debug_value = debug_value
+                common.config.setdefault('quick_options', {})['debug'] = current_debug_value
+                self.run()
 
     def show_layout_menu(self):
         layouts = ['single', '2cols', '2rows', '<< Back']
@@ -329,7 +349,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     def on_done(self, index):
         if index != -1:
             selected_option = self.options[index]
-            if 'Choose Layout' in selected_option:
+            if 'Enable Debug' in selected_option:
+                self.show_debug_menu()
+            elif 'Choose Layout' in selected_option:
                 self.show_layout_menu()
             elif 'Prioritize Per-project Config' in selected_option:
                 self.show_prioritize_project_config_menu()
@@ -368,11 +390,6 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         elif config_key == 'save_quick_options':
             self.save_quick_options_config()
         else:
-            if config_key == 'debug':
-                if option_value:
-                    common.enable_logging()
-                else:
-                    common.disable_logging()
             if config_key == 'recursive_folder_format':
                 is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_paste')
                 if option_value and is_fos_on:
@@ -415,8 +432,7 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
         return not bool(self.view.settings().get('is_widget', False))
 
     def is_visible(self, **kwargs):
-        is_debug_enabled = self.is_debug_enabled()
-        common.enable_logging() if is_debug_enabled else common.disable_logging()
+        self.set_debug_mode()
 
         is_disabled = self.query(common.config, True, 'formatters', kwargs.get('uid', None), 'disable')
         return not is_disabled
@@ -443,12 +459,6 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
             single_format = SingleFormat(self.view, **kwargs)
             single_format_thread = threading.Thread(target=single_format.run)
             single_format_thread.start()
-
-    def is_debug_enabled(self):
-        if self.is_quick_options_mode():
-            return self.query(common.config, False, 'quick_options', 'debug')
-        else:
-            return common.config.get('debug')
 
 
 class SingleFormat(common.Base):
@@ -482,10 +492,10 @@ class SingleFormat(common.Base):
     def print_status(self, is_success):
         if is_success:
             self.success += 1
-            log.debug('Formatting successful. 🎉😃🍰\n')
+            log.status('Formatting successful. 🎉😃🍰\n')
         else:
             self.failure += 1
-            log.debug('Formatting failed. 💔😢💔\n')
+            log.status('Formatting failed. 💔😢💔\n')
 
         if common.config.get('show_statusbar'):
             self.set_status_bar_text()
@@ -731,10 +741,10 @@ class RecursiveFormat(common.Base):
     def show_result(self, is_success):
         if is_success:
             self.CONTEXT['success_count'] += 1
-            log.debug('Formatting successful. 🎉😃🍰\n')
+            log.status('Formatting successful. 🎉😃🍰\n')
         else:
             self.CONTEXT['failure_count'] += 1
-            log.debug('Formatting failed. 💔😢💔\n')
+            log.status('Formatting failed. 💔😢💔\n')
 
     def save_formatted_file(self, new_view, new_cwd, is_success):
         file_path = new_view.file_name()

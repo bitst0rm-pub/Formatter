@@ -514,10 +514,10 @@ class Module(object):
 
     def print_exiterr(self, exitcode, stderr):
         sep = '=========================================================================================='
-        log.error('File not formatted due to an error (exitcode=%d):\n%s\n%s\n%s', exitcode, sep, stderr, sep)
+        log.status('File not formatted due to an error (exitcode=%d):\n%s\n%s\n%s', exitcode, sep, stderr, sep)
 
     def print_oserr(self, cmd):
-        log.error('An error occurred while executing the command: %s', ' '.join(cmd))
+        log.status('An error occurred while executing the command: %s', ' '.join(cmd))
 
 
 class Base(Module):
@@ -853,6 +853,19 @@ class Base(Module):
             path = sublime.expand_variables(path, sublime.active_window().extract_variables())
         return path
 
+    def set_debug_mode(self):
+        if self.is_quick_options_mode():
+            debug = self.query(config, False, 'quick_options', 'debug')
+        else:
+            debug = config.get('debug')
+
+        if debug == 'status':
+            enable_status()
+        elif (isinstance(debug, str) and debug.strip().lower() == 'true') or (debug == True):
+            enable_logging()
+        else:
+            disable_logging()
+
 
 '''
 Static helper APIs
@@ -878,6 +891,18 @@ def run_once(func):
     wrapper.reset_run = reset_run
     return wrapper
 
+# Define a new custom logging level called STATUS
+STATUS = 42
+logging.addLevelName(STATUS, 'STATUS')
+
+# Define a custom status method
+def status(self, message, *args, **kwargs):
+    if self.isEnabledFor(STATUS):
+        self._log(STATUS, message, args, **kwargs)
+
+# Add the custom status method to the Logger class
+logging.Logger.status = status
+
 def setup_logger(name):
     formatter = logging.Formatter(fmt='▋[' + PACKAGE_NAME + '](%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
     handler = logging.StreamHandler()
@@ -892,6 +917,10 @@ def setup_logger(name):
 def enable_logging():
     root_logger = logging.getLogger(PACKAGE_NAME)
     root_logger.setLevel(logging.DEBUG)
+
+def enable_status():
+    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger.setLevel(STATUS)
 
 def disable_logging():
     root_logger = logging.getLogger(PACKAGE_NAME)

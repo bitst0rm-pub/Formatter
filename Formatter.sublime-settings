@@ -1,9 +1,10 @@
 {
     // Enable debug mode to view errors in the console.
+    // Accepted values: true (verbose), false, OR "status" (minimal info)
     "debug": false,
 
     // Auto open the console panel whenever formatting failed.
-    // This is useful when combined with "debug": true
+    // This is useful when combined with "debug": true or "status"
     "open_console_on_failure": false,
 
     // Timeout to abort subprocess in seconds.
