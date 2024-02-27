@@ -459,6 +459,14 @@
                 }
             },
             {
+                "caption": "Pyment",
+                "command": "run_format",
+                "args": {
+                    "uid": "pyment",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Racofmt",
                 "command": "run_format",
                 "args": {

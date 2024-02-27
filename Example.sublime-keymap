@@ -72,6 +72,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettierd", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettydiffmax", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "prettytable", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "pyment", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "racofmt", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "rubocop", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "rubyfmt", "type": "beautifier"}},

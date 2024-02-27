@@ -460,6 +460,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Pyment",
+        "command": "run_format",
+        "args": {
+            "uid": "pyment",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Racofmt",
         "command": "run_format",
         "args": {

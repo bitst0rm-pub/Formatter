@@ -1,10 +1,12 @@
 # Formatter
 
-Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
+Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.<br/>
+As the pioneering and oldest plugin of its kind for Sublime Text, its concepts and innovations have inspired numerous other plugins.
 
 Key features:
 
-- Supports more than 2 major programming languages.
+- Supports more than 70 major programming languages.
+- Comes with more than 80 preset adapters for various plugins.
 - Capable to format entire files, single or multiple selections.
 - Capable to format entire folder recursively.
 - Operates based on syntax scope, not file extension.
@@ -44,7 +46,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
   - The quality of formatted code.
   - The speed of the formatting process.
 
-**The complete list of compatible plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
+**The complete list preset of compatible plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
   - Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
@@ -95,7 +97,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Pawn | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | PHP >=7.4.0[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
 | Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter) | [python-minifier](https://github.com/dflook/python-minifier)[2] | Python >=3.7.0[1] | [[2]](https://python-minifier.com) |
+| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | Python >=3.7.0[1] | [[2]](https://python-minifier.com) |
 | R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR)[1] | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
 | Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | Racket >= 8.0 | -- |
 | Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | Ruby[1], None | -- |

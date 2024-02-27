@@ -522,6 +522,15 @@
                         }
                     },
                     {
+                        "caption": "Pyment",
+                        "mnemonic": "P",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "pyment",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Racofmt",
                         "mnemonic": "R",
                         "command": "run_format",
