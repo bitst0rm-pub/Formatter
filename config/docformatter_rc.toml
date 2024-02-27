@@ -1,0 +1,68 @@
+# https://docformatter.readthedocs.io/en/latest/configuration.html
+# Update: 2024.02.27
+
+[tool.docformatter]
+# Specify the docstring style to use when formatting parameter lists.
+# One of epytext, sphinx. (default: sphinx)
+style = "sphinx"
+
+# Regular expression for identifying reST section adornments
+# (default: [!\"#$%&'()*+,-./\\:;<=>?@[]^_`{|}~]{4,})
+rest-section-adorns = "[!\"#$%&'()*+,-./\\:;<=>?@[]^_`{|}~]{4,}"
+
+# Make formatting compatible with standard black options
+# (default: false)
+black = false
+
+# Wrap long summary lines at this length; set to 0 to disable wrapping.
+# (default: 79, 88 with black option)
+wrap-summaries = 79
+
+# Wrap descriptions at this length; set to 0 to disable wrapping.
+# (default: 72, 88 with black option)
+wrap-descriptions = 72
+
+# Force descriptions to be wrapped even if it may result in a mess
+# (default: false)
+force-wrap = false
+
+# Tabs in indentation are this many characters when wrapping lines
+# (default: 1)
+tab_width = 1
+
+# Add blank line after elaborate description
+# (default: false)
+blank = false
+
+# Add a newline before one-line or the summary of a multi-line docstring.
+# (default: false)
+pre-summary-newline = false
+
+# Add a space between the opening triple quotes and the first word in a
+# one-line or summary line of a multi-line docstring.
+# (default: false)
+pre-summary-space = false
+
+# Add a newline before and after a one-line docstring.
+# (default: false)
+make-summary-multi-line = false
+
+# Place closing triple quotes on a new-line when a one-line docstring
+# wraps to two or more lines.
+# (default: false)
+close-quotes-on-newline = false
+
+# Apply docformatter to docstrings between these lines;
+# Line numbers are indexed at 1
+# range = "start_line end_line"
+
+# Apply docformatter to docstrings of given length range.
+# docstring-length = "min_length max_length"
+
+# Do not strictly follow reST syntax to identify lists (see issue #67)
+# (default: false)
+non-strict = false
+
+# Whether to format recursively within directories
+# (default: false)
+recursive = false

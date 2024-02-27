@@ -607,6 +607,26 @@
             "executable_path": ["/path/to/bin/dhall"]
             /* opinionated, no config */
         },
+        "docformatter": {
+            "info": "https://github.com/PyCQA/docformatter",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["python"],
+            "executable_path": ["/path/to/bin/docformatter"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/docformatter_rc.toml"
+            }
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+        },
         "dockfmt": {
             "info": "https://github.com/jessfraz/dockfmt",
             "disable": true,

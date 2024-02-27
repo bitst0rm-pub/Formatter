@@ -171,6 +171,15 @@
                         }
                     },
                     {
+                        "caption": "Docformatter",
+                        "mnemonic": "D",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "docformatter",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Dockfmt",
                         "mnemonic": "D",
                         "command": "run_format",

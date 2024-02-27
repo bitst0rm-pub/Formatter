@@ -147,6 +147,14 @@
                 }
             },
             {
+                "caption": "Docformatter",
+                "command": "run_format",
+                "args": {
+                    "uid": "docformatter",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Dockfmt",
                 "command": "run_format",
                 "args": {
