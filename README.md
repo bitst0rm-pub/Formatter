@@ -47,7 +47,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 **The complete list of compatible plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
-  - Languages such as `Svelte` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
+  - Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
   - `build-in` = do not need to install by end-users.
   - `None` = mostly standalone binary
 
@@ -118,14 +118,14 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
 💡 **Tips**:
 
-- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) and can cooperate together to format CSS. Config example:
+- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) and can collaborate to format CSS. Config example:
 
         stylelint_rc.json:
         {"extends":["stylelint-config-recommended","stylelint-config-standard"],"plugins":["stylelint-group-selectors","stylelint-no-indistinguishable-colors","@double-great/stylelint-a11y","stylelint-prettier"],"rules":{"plugin/stylelint-group-selectors":true,"plugin/stylelint-no-indistinguishable-colors":true,"a11y/content-property-no-static-value":false,"a11y/font-size-is-readable":false,"a11y/line-height-is-vertical-rhythmed":[true,{"severity":"warning"}],"a11y/media-prefers-color-scheme":false,"a11y/media-prefers-reduced-motion":false,"a11y/no-display-none":false,"a11y/no-obsolete-attribute":[true,{"severity":"warning"}],"a11y/no-obsolete-element":[true,{"severity":"warning"}],"a11y/no-outline-none":false,"a11y/no-spread-text":false,"a11y/no-text-align-justify":false,"a11y/selector-pseudo-class-focus":false,"prettier/prettier":[true,{"parser":"css","printWidth":120,"semi":true,"singleQuote":false,"tabWidth":4,"useTabs":false}]}}
 
         Then in Formatter settings > "stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }
 
-- [prettier](https://github.com/prettier/prettier) and [eslint](https://github.com/eslint/eslint) can cooperate together to format JS. Config example:
+- [prettier](https://github.com/prettier/prettier) and [eslint](https://github.com/eslint/eslint) can collaborate to format JS. Config example:
 
         eslint_rc.json:
         {"env":{"es2022":true,"node":true,"browser":true},"parserOptions":{"ecmaVersion":13,"sourceType":"module","ecmaFeatures":{"jsx":true}},"extends":["../javascript/node_modules/eslint-config-prettier","../javascript/node_modules/eslint-config-airbnb-base"],"plugins":["eslint-plugin-prettier"],"rules":{"prettier/prettier":["error",{"bracketSpacing":true,"jsxSingleQuote":true,"parser":"babel","printWidth":120,"semi":true,"singleQuote":true,"tabWidth":4,"useTabs":false},{"usePrettierrc":false}],"indent":["error",4]}}
@@ -163,6 +163,8 @@ Starting from version 1.2.0, Formatter provides 2 methods to add third-party plu
 - Modules: advanced, more powerful but needs writing and integrating python modules to hack deeper.
 
 Both methods with examples are in this settings guide:
+
+💡 **Tips**: You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
 
 ```js
 {
