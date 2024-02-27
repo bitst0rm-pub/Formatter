@@ -6,7 +6,7 @@ As the pioneering and oldest plugin of its kind for Sublime Text, its concepts a
 Key features:
 
 - Supports more than 70 major programming languages.
-- Comes with more than 80 preset adapters for various plugins.
+- Includes over 80 preset adapters for various [Plugins](#plugins).
 - Capable to format entire files, single or multiple selections.
 - Capable to format entire folder recursively.
 - Operates based on syntax scope, not file extension.
@@ -46,7 +46,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
   - The quality of formatted code.
   - The speed of the formatting process.
 
-**The complete list preset of compatible plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
+**The complete list of compatible plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
   - Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
