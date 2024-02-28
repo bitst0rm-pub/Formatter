@@ -11,6 +11,7 @@ Key features:
 - Capable to format entire folder recursively.
 - Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
+- Unified settings across different systems.
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
@@ -116,6 +117,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | Node.js | -- |
 | YAML | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
+| Zig | [zigfmt](https://github.com/ziglang/zig) | -- | None | -- |
 
 
 💡 **Tips**:
