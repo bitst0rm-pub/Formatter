@@ -1614,6 +1614,26 @@
             }
             /* requires node on PATH if omit interpreter_path */
         },
+        "sqlparse": {
+            "info": "https://github.com/andialbrecht/sqlparse",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["sql"],
+            "executable_path": ["/path/to/bin/sqlformat"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/sqlparse_rc.yaml"
+            }
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+        },
         "standardjs": {
             "info": "https://github.com/standard/standard",
             "disable": true,

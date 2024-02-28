@@ -59,7 +59,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Arduino | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | None | -- |
 | Astro | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | Node.js | -- |
-| BibTeX | [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy)[1] | -- | Node.js >= 12.0 | [[1]](https://flamingtempura.github.io/bibtex-tidy/) |
+| BibTeX | [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy)[1] | -- | Node.js 12.0+ | [[1]](https://flamingtempura.github.io/bibtex-tidy/) |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Cabal | [cabal-fmt](https://github.com/phadej/cabal-fmt) | -- | Haskell | -- |
 | Caddyfile | [caddy-fmt](https://github.com/caddyserver/caddy) | -- | None | -- |
@@ -90,21 +90,21 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | Perl, None | -- |
 | Lua | [stylua](https://github.com/JohnnyMorganz/StyLua), [luaformatter](https://github.com/Koihik/LuaFormatter) | -- | None | -- |
 | Markdown | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [deno](https://github.com/denoland/deno)[1], [dprint](https://github.com/dprint/dprint)[1] | -- | Node.js, None[1] | -- |
-| Nginx | [nginxfmt](https://github.com/slomkowski/nginx-config-formatter) | -- | Python >= 3.4 | -- |
+| Nginx | [nginxfmt](https://github.com/slomkowski/nginx-config-formatter) | -- | Python 3.4+ | -- |
 | Nickel | [topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | OCaml | [ocamlformat](https://github.com/ocaml-ppx/ocamlformat), [ocp-indent](https://github.com/OCamlPro/ocp-indent), [topiary](https://github.com/tweag/topiary) | -- | None | -- |
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | Perl | -- |
 | Pawn | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | PHP >=7.4.0[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
+| PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | PHP 7.4+[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
 | Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | Python >=3.7.0[1] | [[2]](https://python-minifier.com) |
+| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | Python 3.7+[1] | [[2]](https://python-minifier.com) |
 | R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR)[1] | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
-| Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | Racket >= 8.0 | -- |
+| Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | Racket 8.0+ | -- |
 | Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | Ruby[1], None | -- |
-| Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
+| Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust 1.24+ | -- |
 | Scala | [scalafmt](https://github.com/scalameta/scalafmt), [scalariform](https://github.com/scala-ide/scalariform)[1] | -- | None, Java[1] | -- |
 | Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh)[1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | Python[1], None | -- |
-| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1], [pg_format](https://github.com/darold/pgFormatter)[2] | sqlmin `(build-in)` | Node.js[1], Perl[2] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
+| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1], [pg_format](https://github.com/darold/pgFormatter)[2], [sqlparse](https://github.com/andialbrecht/sqlparse)[3] | sqlmin `(build-in)` | Node.js[1], Perl[2], Python 3.6+[3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
 | Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
 | SVG | [svgo max](https://github.com/svg/svgo) | [svgo min](https://github.com/svg/svgo) | Node.js | -- |
 | TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |

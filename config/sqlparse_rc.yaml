@@ -1,0 +1,50 @@
+# https://github.com/andialbrecht/sqlparse
+# Update: 2024-02-28
+
+# Change case of keywords
+# Allowed value: "upper", "lower", "capitalize" or false (Unchanged)
+keywords: "upper"
+
+# Change case of identifiers
+# Allowed value: "upper", "lower", "capitalize" or false (Unchanged)
+identifiers: false
+
+# Remove comments
+# Allowed value: false or true
+strip-comments: false
+
+# Reindent statements
+# Allowed value: false or true
+reindent: true
+
+# Indentation width (defaults to 2 spaces)
+# Allowed value: integer
+indent_width: 2
+
+# Indent after first line of statement (e.g. SELECT)
+# Allowed value: false or true
+indent_after_first: true
+
+# Indent all columns by indent_width instead of keyword length
+# Allowed value: false or true
+indent_columns: true
+
+# Reindent statements to aligned format
+# Allowed value: false or true
+reindent_aligned: true
+
+# Place spaces around mathematical operators
+# Allowed value: false or true
+use_space_around_operators: true
+
+# Column after which lists should be wrapped
+# Allowed value: integer
+wrap_after: 80
+
+# Insert linebreak before comma (default False)
+# Allowed value: false or "true" (string)
+comma_first: false
+
+# Specify the input encoding (default utf-8)
+# Allowed value: string
+encoding: "utf-8"

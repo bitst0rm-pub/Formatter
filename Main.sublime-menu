@@ -648,6 +648,15 @@
                         }
                     },
                     {
+                        "caption": "SQLparse",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sqlparse",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Standard JS",
                         "mnemonic": "S",
                         "command": "run_format",

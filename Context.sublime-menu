@@ -571,6 +571,14 @@
                 }
             },
             {
+                "caption": "SQLparse",
+                "command": "run_format",
+                "args": {
+                    "uid": "sqlparse",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Standard JS",
                 "command": "run_format",
                 "args": {
