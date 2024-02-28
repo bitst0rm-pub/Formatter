@@ -103,7 +103,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | Racket >= 8.0 | -- |
 | Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | Ruby[1], None | -- |
 | Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | Rust >= 1.24 | -- |
-| Scala | [scalafmt](https://github.com/scalameta/scalafmt) | -- | None | -- |
+| Scala | [scalafmt](https://github.com/scalameta/scalafmt), [scalariform](https://github.com/scala-ide/scalariform)[1] | -- | None, Java[1] | -- |
 | Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh)[1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | Python[1], None | -- |
 | SQL, SQL dialects | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1] | sqlmin `(build-in)` | Node.js[1] | [[1]](https://sql-formatter-org.github.io/sql-formatter) |
 | Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | None | -- |
