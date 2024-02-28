@@ -1,0 +1,13 @@
+                CHANGELOG
+
+1.2.1:
+    - NEW:
+      - Added a "status" flag to the "debug" option. You might want to use this
+        flag as it only displays results regarding to the actual formatting.
+        Accepted values: true (verbose), false, OR "status" (minimal info)
+
+    - FIX:
+      - Minor code optimization.
+
+    - Added new modules:
+      sqlparse, pg_format, stylefmt, scalariform, zigfmt, pyment, docformatter
