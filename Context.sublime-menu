@@ -411,6 +411,14 @@
                 }
             },
             {
+                "caption": "pgFormatter",
+                "command": "run_format",
+                "args": {
+                    "uid": "pgformat",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "PHP CodeSniffer",
                 "command": "run_format",
                 "args": {

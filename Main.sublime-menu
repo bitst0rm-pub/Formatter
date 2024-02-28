@@ -468,6 +468,15 @@
                         }
                     },
                     {
+                        "caption": "pgFormatter",
+                        "mnemonic": "P",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "pgformat",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "PHP CodeSniffer",
                         "mnemonic": "P",
                         "command": "run_format",
