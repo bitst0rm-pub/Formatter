@@ -6,8 +6,8 @@
 # @license      The MIT License (MIT)
 
 import logging
-from ..core import common
 from ..libs import yaml
+from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['stylish-haskell']
