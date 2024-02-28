@@ -1,7 +1,6 @@
 # Formatter
 
-Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.<br/>
-As the pioneering and oldest plugin of its kind for Sublime Text, its concepts and innovations have inspired numerous other plugins.
+Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
 Key features:
 
@@ -67,7 +66,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt), [zprint](https://github.com/kkinnear/zprint) | -- | None, (Java) | -- |
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | None | -- |
-| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint)[1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[2] | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
 | CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) `(build-in)`, [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |

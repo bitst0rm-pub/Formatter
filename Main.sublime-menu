@@ -594,6 +594,15 @@
                         }
                     },
                     {
+                        "caption": "Scalariform",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "scalariform",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Semistandard JS",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -653,6 +662,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "standardxjs",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Stylefmt",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "stylefmt",
                             "type": "beautifier"
                         }
                     },
@@ -770,6 +788,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "yapf",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Zigfmt",
+                        "mnemonic": "Z",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "zigfmt",
                             "type": "beautifier"
                         }
                     },

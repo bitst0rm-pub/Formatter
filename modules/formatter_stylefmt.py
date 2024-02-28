@@ -40,9 +40,9 @@ class StylefmtFormatter(common.Module):
         if path:
             cmd.extend(['--config', path])
 
-        f = self.view.file_name()
-        a = f if f else 'dummy.' + self.get_assigned_syntax()
-        cmd.extend(['--stdin-filename', a, '--'])
+        file = self.get_pathinfo()['path']
+        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        cmd.extend(['--stdin-filename', dummy, '--'])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)

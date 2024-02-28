@@ -53,12 +53,8 @@ class PrettierFormatter(common.Module):
             cmd.extend(['--no-config', '--config', path])
 
         file = self.get_pathinfo()['path']
-        if file:
-            cmd.extend(['--stdin-filepath', file])
-        else:
-            # Prettier automatically infers which parser to use based on the file extension.
-            syntax = self.get_assigned_syntax()
-            cmd.extend(['--stdin-filepath', 'dummy.' + syntax])
+        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        cmd.extend(['--stdin-filepath', dummy])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)

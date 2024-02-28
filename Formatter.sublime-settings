@@ -1497,6 +1497,26 @@
                 "default": "${packages}/User/formatter.assets/config/scalafmt_rc.conf"
             }
         },
+        "scalariform": {
+            "info": "https://github.com/scala-ide/scalariform",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["scala"],
+            "interpreter_path": ["/path/to/bin/java.exe or just omit"],
+            "executable_path": ["/path/to/bin/scalariform or /path/to/bin/scalariform.jar"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/scalariform_rc.cfg"
+            }
+        },
         "semistandardjs": {
             "info": "https://github.com/standard/semistandard",
             "disable": true,
@@ -1623,6 +1643,27 @@
             "syntaxes": ["js"],
             "executable_path": ["/path/to/node_modules/.bin/standardx"]
             /* requires node on PATH if omit interpreter_path. opinionated, no config */
+        },
+        "stylefmt": {
+            "info": "https://github.com/masaakim/stylefmt",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["css", "scss", "sass", "less"],
+            "executable_path": ["/path/to/node_modules/.bin/stylefmt"],
+            "args": ["--config-basedir", "/path/to/javascript/node_modules"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/stylefmt_rc.json"
+            }
+            /* requires node on PATH if omit interpreter_path */
         },
         "stylelint": {
             "info": "https://github.com/stylelint/stylelint",
@@ -1874,6 +1915,23 @@
                 "default": "${packages}/User/formatter.assets/config/yapf_rc.yapf"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+        },
+        "zigfmt": {
+            "info": "https://github.com/ziglang/zig",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["zig"],
+            "executable_path": ["/path/to/bin/zig"]
+            /* opinionated, no config */
         },
         "zprint": {
             "info": "https://github.com/kkinnear/zprint",

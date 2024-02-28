@@ -40,8 +40,7 @@ class HtmlminifierFormatter(common.Module):
         if path:
             cmd.extend(['--config-file', path])
 
-        ext = self.get_assigned_syntax()
-        cmd.extend(['--file-ext', ext])
+        cmd.extend(['--file-ext', self.get_assigned_syntax()])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)

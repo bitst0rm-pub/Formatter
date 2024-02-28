@@ -40,9 +40,9 @@ class StylelintFormatter(common.Module):
         if path:
             cmd.extend(['--config', path])
 
-        # Stylelint automatically infers syntax to use based on the file extension.
-        syntax = self.get_assigned_syntax()
-        cmd.extend(['--fix', '--stdin', '--stdin-filename', 'dummy.' + syntax])
+        file = self.get_pathinfo()['path']
+        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        cmd.extend(['--fix', '--stdin', '--stdin-filename', dummy])
 
         log.debug('Current arguments: %s', cmd)
         cmd = self.fix_cmd(cmd)

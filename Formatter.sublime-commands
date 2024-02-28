@@ -524,6 +524,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Scalariform",
+        "command": "run_format",
+        "args": {
+            "uid": "scalariform",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Semistandard JS",
         "command": "run_format",
         "args": {
@@ -576,6 +584,14 @@
         "command": "run_format",
         "args": {
             "uid": "standardxjs",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Stylefmt",
+        "command": "run_format",
+        "args": {
+            "uid": "stylefmt",
             "type": "beautifier"
         }
     },
@@ -680,6 +696,14 @@
         "command": "run_format",
         "args": {
             "uid": "yapf",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Zigfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "zigfmt",
             "type": "beautifier"
         }
     },
