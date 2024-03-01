@@ -565,7 +565,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         self.show_status_on_new_file(dst_view)
 
     def create_or_reuse_view(self, path, src_view):
-        ref_name = 'untitled-%s' % src_view.id()
+        ref = src_view.id()
         window = src_view.window()
 
         if path:
@@ -580,14 +580,14 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
                 dst_view.set_scratch(True)
         else:
             # Reuse the same view
-            dst_view = next((v for v in window.views() if v.name() == ref_name), None)
+            dst_view = next((v for v in window.views() if v.settings().get('ref', None) == ref), None)
             if dst_view:
                 # Reuse the same view
                 dst_view.run_command('select_all')
                 dst_view.run_command('right_delete')
             else:
                 dst_view = self.create_new_file(window, src_view.settings().get('syntax', None))
-                dst_view.set_name(ref_name)
+                dst_view.settings().set('ref', ref)
                 dst_view.set_scratch(False)
 
         return dst_view
@@ -599,7 +599,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         return dst_view
 
     def copy_content_and_selections(self, edit, src_view, dst_view):
-        # edit is broken with upgrade to 4166 and beyond
+        # edit is broken again with upgrade to 4166 and beyond:
         # dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
 
         dst_view.run_command('append', {'characters': src_view.substr(sublime.Region(0, src_view.size()))})
