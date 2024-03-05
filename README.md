@@ -2,8 +2,6 @@
 
 Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
-_UPDATE 2024-03-05: Text-to-Image is fully implemented and is ready, but do not use it yet until i add some modules as example for you. Expected within a few days, if i have time._
-
 Key features:
 
 - Supports more than 70 major programming languages.
@@ -30,12 +28,11 @@ Key features:
 Limitations:
 
 - Text-to-Image:
+Third-party plugins often rely on a headless browser to generate images, making the process time-consuming. Consequently:
 
-  Third-party plugins often rely on a headless browser to generate images, making the process very time-consuming. Consequently:
-
-    - `"recursive_folder_format"` will not be implemented or is disabled.
-    - `"new_file_on_format"` will not be implemented or is disabled.
-    - Outputs are available only in `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
+  - `"recursive_folder_format"` will not be implemented or is disabled.
+  - `"new_file_on_format"` will not be implemented or is disabled.
+  - Outputs are available only in `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 
 _Formatter in action: Text-to-Text fashion..._
@@ -292,7 +289,7 @@ Both methods with examples are in this settings guide:
             "name": "Example Generic",
             // Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
-            // "minifier" OR "beautifier" OR "converter" OR "graphic" OR any string of your choice.
+            // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.
             "type": "beautifier",
             // The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.
@@ -590,17 +587,15 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
 1. Create a file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder. Ensure to follow these conventions:
 
-    - Create only **one** file per plugin in the `Formatter > modules` folder:
-        - All functions and other necessary components should reside inside this file.
-
-    - The file name is all **lowercase** and contains only **alphanumeric** characters (no spaces or underscores):
-        - Prefix: `formatter_` (indicating that it's a module for a third-party plugin)
-        - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as uid)
-        - Extension: `.py`
-
-    - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
-        - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
-        - No communication over the Internet.
+  - Create only **one** file per plugin in the `Formatter > modules` folder:
+    - All functions and other necessary components should reside inside this file.
+  - The file name is all **lowercase** and contains only **alphanumeric** characters (no spaces or underscores):
+    - Prefix: `formatter_` (indicating that it's a module for a third-party plugin)
+    - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as uid)
+    - Extension: `.py`
+  - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
+    - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
+    - No communication over the Internet.
 
 2. The content of this module file should follow the structure outlined below:
 
@@ -642,7 +637,7 @@ MODULE_CONFIG = {                                           # REQUIRED: template
     'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
     'name': 'My First Plugin',                              # REQUIRED: a freely chosen plugin name, preferably short and comprehensive
     'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
-    'type': 'minifier',                                     # REQUIRED: "minifier" OR "beautifier" OR "converter" OR "graphic",
+    'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
                                                             #           OR any string of your choice (for private purposes).
     'syntaxes': ['js', 'html'],                             # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
     'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
@@ -662,7 +657,6 @@ MODULE_CONFIG = {                                           # REQUIRED: template
 class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
     def __init__(self, *args, **kwargs):                    # REQUIRED: initialization
         super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
-        # self.kwargs = kwargs                              # REQUIRED: only for special case "type": "graphic"
 
     def get_cmd(self):                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
         cmd = self.get_combo_cmd(runtime_type='node')       # See API below
@@ -675,7 +669,7 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 
         cmd.extend(['--compress', '--mangle', '--'])
 
-        # cmd.extend(['--output', self.get_output_file()])  # REQUIRED: only for special case "type": "graphic"
+        # cmd.extend(['--output', self.get_output_image()])  # REQUIRED: only for special case of "type": "graphic"
 
         log.debug('Current arguments: %s', cmd)             # REQUIRED: to debug the input command
         cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return
@@ -702,6 +696,7 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 ```
 **That's all**. Happy coding o_O
 
+Restart Sublime Text.<br/>
 New keys will be automatically created in the _Default_ settings.<br/>
 Do not forget to update/adjust your _User_ settings:<br/>
 `Preferences > Package Settings > Formatter > Settings`
@@ -748,7 +743,7 @@ path = self.get_config_path()
 syntax = self.get_assigned_syntax()
 
 # Get the path to the output image. Only for special case of type: graphic
-output_image = self.get_output_file()
+output_image = self.get_output_image()
 
 # Get a dictionary of file path components:
 # {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None.

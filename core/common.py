@@ -453,14 +453,14 @@ class Module(object):
         args = self.query(config, None, 'formatters', self.uid, 'args')
         return list(map(str, args)) if args and isinstance(args, list) else []
 
-    def get_output_file(self):
+    def get_output_image(self):
         temp_dir = self.kwargs.get('temp_dir', None)
         if temp_dir and self.kwargs.get('type', None) == 'graphic':
             temp_dir = join(temp_dir, 'out.png')
             return temp_dir
         else:
-            log.error('Wrong args param: get_output_file() is only applicable to type: graphic')
-            return '---wrong_args_param---'
+            log.error('Wrong args param: get_output_image() is only applicable to type: graphic')
+            return '!wrong_args_param!'
 
     def get_success_code(self):
         return int(self.query(config, 0, 'formatters', self.uid, 'success_code'))
@@ -937,16 +937,14 @@ def run_once(func):
     wrapper.reset_run = reset_run
     return wrapper
 
-# Define a new custom logging level called STATUS
+# Custom level called STATUS
 STATUS = 42
 logging.addLevelName(STATUS, 'STATUS')
 
-# Define a custom status method
 def status(self, message, *args, **kwargs):
     if self.isEnabledFor(STATUS):
         self._log(STATUS, message, args, **kwargs)
 
-# Add the custom status method to the Logger class
 logging.Logger.status = status
 
 def setup_logger(name):
