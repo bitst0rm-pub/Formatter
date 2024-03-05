@@ -460,6 +460,7 @@ class Module(object):
             return temp_dir
         else:
             log.error('Wrong args param: get_output_file() is only applicable to type: graphic')
+            return '---wrong_args_param---'
 
     def get_success_code(self):
         return int(self.query(config, 0, 'formatters', self.uid, 'success_code'))
