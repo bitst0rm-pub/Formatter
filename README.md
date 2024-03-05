@@ -28,17 +28,20 @@ Key features:
 Limitations:
 
 - Text-to-Image:
+
   Third-party plugins often rely on a headless browser to generate images, making the process very time-consuming. Consequently:
     - `"recursive_folder_format"` will not be implemented or is disabled.
     - `"new_file_on_format"` will not be implemented or is disabled.
     - Outputs are available only in `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 
-_Formatter in action..._
+_Formatter in action: Text-to-Text..._
 
-![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot.png)
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
 
-_Placeholder: Screenshot for Text-to-Image comming soon..._
+_Formatter in action: Text-to-Image..._
+
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
 
 
 ## Guides
