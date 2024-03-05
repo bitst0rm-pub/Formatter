@@ -30,16 +30,17 @@ Limitations:
 - Text-to-Image:
 
   Third-party plugins often rely on a headless browser to generate images, making the process very time-consuming. Consequently:
+
     - `"recursive_folder_format"` will not be implemented or is disabled.
     - `"new_file_on_format"` will not be implemented or is disabled.
     - Outputs are available only in `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 
-_Formatter in action: Text-to-Text..._
+_Formatter in action: Text-to-Text fashion..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
 
-_Formatter in action: Text-to-Image..._
+_Formatter in action: Text-to-Image fashion..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
 
@@ -289,7 +290,7 @@ Both methods with examples are in this settings guide:
             "name": "Example Generic",
             // Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
-            // "minifier" OR "beautifier" OR "converter" OR any string of your choice.
+            // "minifier" OR "beautifier" OR "converter" OR "graphic" OR any string of your choice.
             "type": "beautifier",
             // The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.
