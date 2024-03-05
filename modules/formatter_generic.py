@@ -15,8 +15,15 @@ log = logging.getLogger(__name__)
 class GenericFormatter(common.Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.kwargs = kwargs
 
     def get_cmd(self):
+        temp_dir = self.kwargs.get('temp_dir', None)
+        if temp_dir and self.kwargs.get('type', None) == 'graphic':
+            temp_dir = common.join(temp_dir, 'out.png')
+        else:
+            temp_dir = None
+
         cmd = self.get_args()
 
         runtime = None
@@ -54,6 +61,10 @@ class GenericFormatter(common.Module):
                     item = item.replace(match.group(1), config)
                 else:
                     continue
+
+            match = re.search(r'.*?(\{\{\s*o\s*\}\})', item)
+            if match and temp_dir:
+                item = item.replace(match.group(1), temp_dir)
 
             new_cmd.append(item)
 

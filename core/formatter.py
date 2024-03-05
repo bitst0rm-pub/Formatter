@@ -25,8 +25,15 @@ class Formatter(common.Module):
         log.debug('Syntax: %s', syntax)
         log.debug('UID: %s (method: %s)', self.uid, method)
 
-    def _replace_view_content(self, result):
-        self.view.run_command('replace_view_content', {'result': result, 'region': [self.region.a, self.region.b]})
+    def is_success(self, result):
+        if self.kwargs.get('type', None) == 'graphic' and result is not None:
+            return True
+
+        if result:
+            self.view.run_command('replace_view_content', {'result': result, 'region': [self.region.a, self.region.b]})
+            return True
+
+        return False
 
     def run(self):
         if self.view.is_read_only() or not self.view.window() or self.view.size() == 0:
@@ -42,17 +49,10 @@ class Formatter(common.Module):
         if formatter_plugin:
             self.kwargs.update(formatter_plugin['const'])
             self._log_debug_info('module', syntax)
-            worker = formatter_plugin['class'](**self.kwargs)
-            result = worker.format()
-            if result:
-                self._replace_view_content(result)
-                return True
+            result = formatter_plugin['class'](**self.kwargs).format()
         else:
             #log.error('UID not found: %s', self.uid)
             self._log_debug_info('generic', syntax)
             result = formatter_generic.GenericFormatter(**self.kwargs).format()
-            if result:
-                self._replace_view_content(result)
-                return True
 
-        return False
+        return self.is_success(result)

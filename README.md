@@ -6,6 +6,9 @@ Key features:
 
 - Supports more than 70 major programming languages.
 - Includes over 80 preset adapters for various [Plugins](#plugins).
+- Formats text in multiple ways:
+    - Text-to-Text (Text diagramms, ASCII art, etc.)
+    - Text-to-Image (Image diagramms, QR-code images, etc.)
 - Capable to format entire files, single or multiple selections.
 - Capable to format entire folder recursively.
 - Operates based on syntax scope, not file extension.
@@ -16,15 +19,26 @@ Key features:
 - Shared config files available for each 3rd-party plugin.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
-- Customizable and extendable through 2 methods to add custom plugins:
+- Customizable and extendable through 2 methods to add _your_ custom plugins:
     - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
     - Modules: Integration of your own modules. _see_ [Development](#development)
 - Open source and works offline.
 
 
+Limitations:
+
+- Text-to-Image:
+  Third-party plugins often rely on a headless browser to generate images, making the process very time-consuming. Consequently:
+    - `"recursive_folder_format"` will not be implemented or is disabled.
+    - `"new_file_on_format"` will not be implemented or is disabled.
+    - Outputs are available only in `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
+
+
 _Formatter in action..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot.png)
+
+_Placeholder: Screenshot for Text-to-Image comming soon..._
 
 
 ## Guides
@@ -267,10 +281,10 @@ Both methods with examples are in this settings guide:
             // Note: Generic method requires an Sublime Text restart after adding or changing
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
 
-            // Plugin name. REQUIRED!
+            // Plugin name. REQUIRED! REQUIRED! REQUIRED!
             // This will appear on the sublime menu and on other commands.
             "name": "Example Generic",
-            // Plugin type. REQUIRED!
+            // Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
             // "minifier" OR "beautifier" OR "converter" OR any string of your choice.
             "type": "beautifier",
@@ -308,7 +322,10 @@ Both methods with examples are in this settings guide:
             // - "interpreter_path": "{{i}}"
             // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
             // - "config_path"     : "{{c}}"
+            // - SPECIAL CASE      : "{{o}}" (output image for type: graphic, e.g: "args": [... "--output", "{{o}}"])
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
+            // Special case: for "type":"graphic", the hardcoded "{{o}}" MUST ALWAYS be set inside "args"!
+            // You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"]
         },
         "examplemodule": { // MODULE METHOD
@@ -458,6 +475,8 @@ Both methods with examples are in this settings guide:
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
+        // -- END of explanation, BEGINNING of life --
+
         "stylelint": { // MODULE METHOD EXAMPLE
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
@@ -617,7 +636,7 @@ MODULE_CONFIG = {                                           # REQUIRED: template
     'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
     'name': 'My First Plugin',                              # REQUIRED: a freely chosen plugin name, preferably short and comprehensive
     'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
-    'type': 'minifier',                                     # REQUIRED: "minifier" OR "beautifier" (both defaults), OR "converter" (for other purposes, e.g., Text-to-QR),
+    'type': 'minifier',                                     # REQUIRED: "minifier" OR "beautifier" OR "converter" OR "graphic",
                                                             #           OR any string of your choice (for private purposes).
     'syntaxes': ['js', 'html'],                             # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
     'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
@@ -637,6 +656,7 @@ MODULE_CONFIG = {                                           # REQUIRED: template
 class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
     def __init__(self, *args, **kwargs):                    # REQUIRED: initialization
         super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
+        # self.kwargs = kwargs                              # REQUIRED: only for special case "type": "graphic"
 
     def get_cmd(self):                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
         cmd = self.get_combo_cmd(runtime_type='node')       # See API below
@@ -648,6 +668,11 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
             cmd.extend(['--config-file', path])             # an array of args to run the third-party plugin
 
         cmd.extend(['--compress', '--mangle', '--'])
+
+        # temp_dir = self.kwargs.get('temp_dir', None)      # REQUIRED: only for special case "type": "graphic"
+        # if temp_dir and self.kwargs.get('type', None) == 'graphic':
+        #     temp_dir = common.join(temp_dir, 'out.png')   # 'out.png' is a hardcoded name, you must use it.
+        #     cmd.extend(['--output', 'temp_dir'])
 
         log.debug('Current arguments: %s', cmd)             # REQUIRED: to debug the input command
         cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return

@@ -53,8 +53,9 @@ def build_sublime_menu_children(formatter_map):
     beautifiers = []
     minifiers = []
     converters = []
+    graphics = []
     custom = []
-    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters, 'graphic': graphics}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -88,7 +89,7 @@ def build_sublime_menu_children(formatter_map):
             target_list = type_to_list.get(typ, custom)
             target_list.append(child)
 
-    return beautifiers, minifiers, converters, custom
+    return beautifiers, minifiers, converters, graphics, custom
 
 def build_context_sublime_menu(formatter_map):
     context_menu = [
@@ -104,13 +105,14 @@ def build_context_sublime_menu(formatter_map):
         ])
     ]
 
-    beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
+    beautifiers, minifiers, converters, graphics, custom = build_sublime_menu_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: context_menu[0]['children'].extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
     )
     sort_and_extend(beautifiers, '-')
     sort_and_extend(minifiers, '-')
     sort_and_extend(converters, '-')
+    sort_and_extend(graphics, '-')
     sort_and_extend(custom, '-')
 
     json_text = json.dumps(context_menu, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
@@ -232,13 +234,14 @@ def build_main_sublime_menu(formatter_map):
             if children:
                 add_mnemonic_recursive(children, mnemonic_prefix)
 
-    beautifiers, minifiers, converters, custom = build_sublime_menu_children(formatter_map)
+    beautifiers, minifiers, converters, graphics, custom = build_sublime_menu_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: main_menu[0]['children'][0]['children'].extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
     )
     sort_and_extend(beautifiers, '-')
     sort_and_extend(minifiers, '-')
     sort_and_extend(converters, '-')
+    sort_and_extend(graphics, '-')
     sort_and_extend(custom, '-')
     add_mnemonic_recursive(main_menu, mnemonic_prefix='')
 
@@ -249,9 +252,10 @@ def build_formatter_sublime_commands_children(formatter_map):
     beautifiers = []
     minifiers = []
     converters = []
+    graphics = []
     custom = []
-    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
-    type_to_action = {'beautifier': 'Beautify', 'minifier': 'Minify', 'converter': 'Convert'}
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters, 'graphic': graphics}
+    type_to_action = {'beautifier': 'Beautify', 'minifier': 'Minify', 'converter': 'Convert', 'graphic': 'Visualize'}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -285,7 +289,7 @@ def build_formatter_sublime_commands_children(formatter_map):
             target_list = type_to_list.get(typ, custom)
             target_list.append(child)
 
-    return beautifiers, minifiers, converters, custom
+    return beautifiers, minifiers, converters, graphics, custom
 
 def build_formatter_sublime_commands(formatter_map):
     sublime_commands = [
@@ -303,13 +307,14 @@ def build_formatter_sublime_commands(formatter_map):
         ])
     ]
 
-    beautifiers, minifiers, converters, custom = build_formatter_sublime_commands_children(formatter_map)
+    beautifiers, minifiers, converters, graphics, custom = build_formatter_sublime_commands_children(formatter_map)
     sort_and_extend = lambda lst, caption=None: sublime_commands.extend(
         ([{'caption': caption}] if (caption and lst) else []) + sorted(lst, key=lambda x: x['args']['uid'])
     )
     sort_and_extend(beautifiers, None)
     sort_and_extend(minifiers, None)
     sort_and_extend(converters, None)
+    sort_and_extend(graphics, None)
     sort_and_extend(custom, None)
 
     json_text = json.dumps(sublime_commands, cls=NoIndentEncoder, ensure_ascii=False, indent=4)
@@ -319,8 +324,9 @@ def build_example_sublime_keymap(formatter_map):
     beautifiers = []
     minifiers = []
     converters = []
+    graphics = []
     custom = []
-    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters, 'graphic': graphics}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -355,10 +361,10 @@ def build_example_sublime_keymap(formatter_map):
             target_list.append(child)
 
     sort_key = lambda x: x['args']['uid']
-    sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, custom]]
+    sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_graphics, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, graphics, custom]]
 
     quick_options = '{"keys": ["ctrl+super+?"], "command": "quick_options"},\n    '
-    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_custom]) + '\n]'
+    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_graphics + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:
@@ -384,8 +390,9 @@ def build_formatter_sublime_settings_children(formatter_map):
     beautifiers = []
     minifiers = []
     converters = []
+    graphics = []
     custom = []
-    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters}
+    type_to_list = {'beautifier': beautifiers, 'minifier': minifiers, 'converter': converters, 'graphic': graphics}
 
     for uid, module_info in formatter_map.items():
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
@@ -405,6 +412,12 @@ def build_formatter_sublime_settings_children(formatter_map):
                 ])),
                 ('syntaxes', NoIndent(config['syntaxes']))
             ])
+
+            typ = config.get('type', None)
+            if typ == 'graphic':
+                child.pop('new_file_on_format')
+                child.pop('recursive_folder_format')
+                child['type'] = 'graphic'
 
             exclude_syntaxes = config.get('exclude_syntaxes', None)
             if exclude_syntaxes is not None and isinstance(exclude_syntaxes, dict):
@@ -445,7 +458,7 @@ def build_formatter_sublime_settings_children(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append({uid:child})
 
-    return beautifiers, minifiers, converters, custom
+    return beautifiers, minifiers, converters, graphics, custom
 
 def build_formatter_sublime_settings(formatter_map):
     sublime_settings = OrderedDict([
@@ -545,12 +558,12 @@ def build_formatter_sublime_settings(formatter_map):
             // Note: Generic method requires an Sublime Text restart after adding or changing
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.'''),
                     ('__COMMENT__name', '''
-            // Plugin name. REQUIRED!
+            // Plugin name. REQUIRED! REQUIRED! REQUIRED!
             // This will appear on the sublime menu and on other commands.'''),
                     ('name', 'Example Generic'),
-                    ('__COMMENT__type', '''// Plugin type. REQUIRED!
+                    ('__COMMENT__type', '''// Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
-            // "minifier" OR "beautifier" OR "converter" OR any string of your choice.'''),
+            // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.'''),
                     ('type', 'beautifier'),
                     ('__COMMENT__success_code', '''// The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.'''),
@@ -586,7 +599,10 @@ def build_formatter_sublime_settings(formatter_map):
             // - "interpreter_path": "{{i}}"
             // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
             // - "config_path"     : "{{c}}"
-            // Variable substitution offers more advanced mechanisms such as auto-search path, etc.'''),
+            // - SPECIAL CASE      : "{{o}}" (output image for type: graphic, e.g: "args": [... "--output", "{{o}}"])
+            // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
+            // Special case: for "type":"graphic", the hardcoded "{{o}}" MUST ALWAYS be set inside "args"!
+            // You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.'''),
                     ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--']))
                 ])),
                 ('examplemodule', OrderedDict([
@@ -735,12 +751,14 @@ def build_formatter_sublime_settings(formatter_map):
                         NoIndent([2, 0, -1]),
                         NoIndent(['--show-bar', 'xxx', 2, 0, -1])
                     ])
-                ]))
+                ])),
+                ('__COMMENT__end_explanation', '''// -- END of explanation, BEGINNING of life --
+                ''')
             ]))
         ])
 
-    beautifiers, minifiers, converters, custom = build_formatter_sublime_settings_children(formatter_map)
-    categories = [beautifiers, minifiers, converters, custom]
+    beautifiers, minifiers, converters, graphics, custom = build_formatter_sublime_settings_children(formatter_map)
+    categories = [beautifiers, minifiers, converters, graphics, custom]
     for category in categories:
         sorted_category = sorted(category, key=lambda x: list(x.keys())[0])
         for x in sorted_category:

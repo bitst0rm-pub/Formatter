@@ -10,12 +10,14 @@ import sys
 import time
 import json
 import shutil
+import base64
 import logging
 import zipfile
 import tempfile
 import traceback
 import importlib
 import threading
+import urllib.request
 from datetime import datetime
 
 import sublime
@@ -424,7 +426,10 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
 
         is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
         if is_recursive:
-            self.run_recursive_formatting(has_cfgignore=has_cfgignore, **kwargs)
+            if kwargs.get('type', None) == 'graphic':
+                log.info('Recursive formatting is not supported for plugins of type: graphic')
+            else:
+                self.run_recursive_formatting(has_cfgignore=has_cfgignore, **kwargs)
         else:
             self.run_single_formatting(has_cfgignore=has_cfgignore, **kwargs)
 
@@ -466,10 +471,12 @@ class SingleFormat(common.Base):
         self.view = view
         self.kwargs = kwargs
         self.kwargs.update(view=self.view)
+        self.temp_dir = None
         self.success, self.failure = 0, 0
         self.cycles = []
 
     def run(self):
+        self.create_graphic_temp_dir()
         self.print_sysinfo()
         try:
             for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
@@ -485,6 +492,11 @@ class SingleFormat(common.Base):
                 self.open_console_on_failure()
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+
+    def create_graphic_temp_dir(self):
+        if self.kwargs.get('type', None) == 'graphic':
+            self.temp_dir = tempfile.TemporaryDirectory()
+            self.kwargs.update(temp_dir=self.temp_dir.name)
 
     def has_selection(self):
         return any(not sel.empty() for sel in self.view.sel())
@@ -509,23 +521,104 @@ class SingleFormat(common.Base):
             self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def handle_successful_formatting(self):
+        if self.kwargs.get('type', None) == 'graphic':
+            self.handle_graphic_formatting()
+        else:
+            self.handle_text_formatting()
+
+    def handle_graphic_formatting(self):
+        window = self.view.window()
+        window.focus_group(0)
+        layout = self.query(common.config, '2cols', 'layout', 'enable')
+        layout = layout if layout in ['2cols', '2rows'] else '2cols'
+        window.set_layout(self.assign_layout(layout))
+        self.create_or_reuse_view()
+
+    def handle_text_formatting(self):
         uid = self.kwargs.get('uid', None)
         mode = 'qo' if self.is_quick_options_mode() else 'user'
         layout, suffix = self.get_layout_and_suffix(uid, mode)
 
         if suffix and isinstance(suffix, str):
             window = self.view.window()
+            window.focus_group(0)
+
             if mode == 'qo':
                 window.set_layout(self.assign_layout(layout))
-                window.focus_group(0)
             elif self.want_layout():
                 self.setup_layout(self.view)
-                window.focus_group(0)
 
             file_path = self.view.file_name()
             new_path = '{0}.{2}{1}'.format(*os.path.splitext(file_path) + (suffix,)) if file_path and os.path.isfile(file_path) else None
             self.view.run_command('transfer_view_content', {'path': new_path})
             sublime.set_timeout(self.undo_history, 250)
+
+    def create_or_reuse_view(self):
+        path = self.view.file_name()
+        src_window = self.view.window()
+        ref = self.view.id()
+
+        for window in sublime.windows():
+            dst_view = next((v for v in window.views() if v.settings().get('ref', None) == ref), None)
+
+        if dst_view:
+            window.focus_view(dst_view)
+            dst_view.set_read_only(False)
+            self.set_graphic_phantom(dst_view)
+        else:
+            src_window.focus_group(1)
+            dst_view = src_window.new_file(syntax=self.view.settings().get('syntax', None))
+            dst_view.settings().set('ref', ref)
+            self.set_graphic_phantom(dst_view)
+            dst_view.set_scratch(True)
+            if path:
+                dst_view.retarget(path)
+
+        dst_view.set_read_only(True)
+
+    @staticmethod
+    def image_scale_fit(view):
+        image_width, image_height = 100, 100  # default dimensions
+        scrollbar_width = 20  # adjust this if needed
+
+        view_width, view_height = view.viewport_extent()
+        width_scale = view_width / image_width
+        height_scale = view_height / image_height
+        scale_factor = min(width_scale, height_scale)
+        image_width = round(int(image_width * scale_factor)) - scrollbar_width
+        image_height = round(int(image_height * scale_factor)) - scrollbar_width
+
+        return image_width, image_height
+
+    def set_graphic_phantom(self, dst_view):
+        try:
+            image_path = os.path.join(self.temp_dir.name, 'out.png')
+            with open(image_path, 'rb') as image_file:
+                image_data = base64.b64encode(image_file.read()).decode('utf-8')
+
+            image_width, image_height = self.image_scale_fit(dst_view)
+            html = self.html_phantom(dst_view.viewport_extent(), image_data, image_width, image_height)
+            data = {'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'dst_view_id': dst_view.id()}
+
+            dst_view.erase_phantoms('graphic')
+            dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_BLOCK, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
+        except Exception as e:
+            log.error('Error creating phantom: %s', e)
+        finally:
+            self.temp_dir.cleanup()
+
+    def on_navigate(self, href, data, dst_view):
+        if href == 'zoom_image':
+            dst_view.window().run_command('zoom', data)
+        else:
+            stem = self.get_pathinfo()['stem'] or 'out'
+            save_path = os.path.join(self.get_downloads_folder(), stem + '.png')
+
+            try:
+                urllib.request.urlretrieve(href, save_path)
+                self.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
+            except Exception as e:
+                self.popup_message('Could not save file:\n%s' % save_path, 'ERROR')
 
     def get_layout_and_suffix(self, uid, mode):
         if mode == 'qo':
@@ -549,6 +642,57 @@ class ReplaceViewContentCommand(sublime_plugin.TextCommand):
         self.view.replace(edit, sublime.Region(region[0], region[1]), result)
 
 
+class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
+    ZOOM_LEVELS = ['10%', '25%', '50%', '75%', '100%', '125%', '150%', '175%', '200%', '225%', '250%', '275%', '300%']
+
+    def run(self, **kwargs):
+        self.window.show_quick_panel(self.ZOOM_LEVELS, lambda index: self.on_done(index, **kwargs))
+
+    def on_done(self, index, **kwargs):
+        if index != -1:
+            zoom_level = self.ZOOM_LEVELS[index]
+            if zoom_level == '100%' or zoom_level == '-100%':
+                zoom_factor = 1.0
+            else:
+                zoom_factor = float(zoom_level[:-1]) / 100
+
+            dst_view_id = kwargs.get('dst_view_id')
+            image_data = kwargs.get('image_data')
+            image_width = kwargs.get('image_width')
+            image_height = kwargs.get('image_height')
+
+            dst_view = self.find_view_by_id(dst_view_id) or self.window.active_view()
+
+            try:
+                html = self.html_phantom(dst_view.viewport_extent(), image_data, image_width * zoom_factor, image_height * zoom_factor)
+                data = {'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'dst_view_id': dst_view.id()}
+
+                dst_view.erase_phantoms('graphic')
+                dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_BLOCK, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
+            except Exception as e:
+                log.error('Error creating phantom: %s', e)
+
+    def on_navigate(self, href, data, dst_view):
+        if href == 'zoom_image':
+            dst_view.window().run_command('zoom', data)
+        else:
+            stem = self.get_pathinfo(path=dst_view.file_name())['stem'] or 'out'
+            save_path = os.path.join(self.get_downloads_folder(), stem + '.png')
+
+            try:
+                urllib.request.urlretrieve(href, save_path)
+                self.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
+            except Exception as e:
+                self.popup_message('Could not save file:\n%s' % save_path, 'ERROR')
+
+    def find_view_by_id(self, dst_view_id):
+        for window in sublime.windows():
+            for view in window.views():
+                if view.id() == dst_view_id:
+                    return view
+        return None
+
+
 class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
         path = kwargs.get('path', None)
@@ -565,37 +709,26 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         self.show_status_on_new_file(dst_view)
 
     def create_or_reuse_view(self, path, src_view):
+        src_window = src_view.window()
         ref = src_view.id()
-        window = src_view.window()
 
-        if path:
-            # Reuse the same file
-            dst_view = window.find_open_file(path)
-            if dst_view:
-                dst_view.run_command('select_all')
-                dst_view.run_command('right_delete')
-            else:
-                dst_view = self.create_new_file(window, src_view.settings().get('syntax', None))
+        for window in sublime.windows():
+            dst_view = next((v for v in window.views() if v.settings().get('ref', None) == ref), None)
+
+        if dst_view:
+            window.focus_view(dst_view)
+            dst_view.run_command('select_all')
+            dst_view.run_command('right_delete')
+        else:
+            src_window.focus_group(1)
+            dst_view = src_window.new_file(syntax=src_view.settings().get('syntax', None))
+            dst_view.settings().set('ref', ref)
+            if path:
                 dst_view.retarget(path)
                 dst_view.set_scratch(True)
-        else:
-            # Reuse the same view
-            dst_view = next((v for v in window.views() if v.settings().get('ref', None) == ref), None)
-            if dst_view:
-                # Reuse the same view
-                dst_view.run_command('select_all')
-                dst_view.run_command('right_delete')
             else:
-                dst_view = self.create_new_file(window, src_view.settings().get('syntax', None))
-                dst_view.settings().set('ref', ref)
                 dst_view.set_scratch(False)
 
-        return dst_view
-
-    def create_new_file(self, window, syntax=None):
-        if self.want_layout():
-            window.focus_group(1)
-        dst_view = window.new_file(syntax=syntax)
         return dst_view
 
     def copy_content_and_selections(self, edit, src_view, dst_view):
@@ -609,7 +742,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         dst_view.sel().add_all(selections)
 
         dst_view.set_viewport_position(src_view.viewport_position(), False)
-        src_view.window().focus_view(dst_view)
+        dst_view.window().focus_view(dst_view)
 
     def sync_scroll_views(self, src_view, dst_view):
         SYNC_SCROLL['view_pairs'].append([src_view, dst_view])
@@ -913,6 +1046,12 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             self.scroll_thread = None
 
     def on_pre_close(self, view):
+        def _set_single_layout(window, view):
+            # Auto switching to single layout upon closing the latest view
+            group, _ = window.get_view_index(view)
+            if len(window.views_in_group(group)) == 1:
+                sublime.set_timeout(lambda: window.set_layout(self.assign_layout('single')), 0)
+
         window = view.window()
         if window and self.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
             if self.query(common.config, False, 'layout', 'sync_scroll'):
@@ -922,10 +1061,10 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
                         SYNC_SCROLL['view_pairs'].remove(view_pair)
                         break
 
-            # Auto switching to single layout upon closing the latest view
-            group, _ = window.get_view_index(view)
-            if len(window.views_in_group(group)) == 1:
-                sublime.set_timeout(lambda: window.set_layout(self.assign_layout('single')), 0)
+            _set_single_layout(window, view)
+
+        if view.settings().get('ref', None):
+            _set_single_layout(window, view)  # for type graphic
 
     def on_post_text_command(self, view, command_name, args):
         if command_name in ['paste', 'paste_and_indent']:
@@ -965,7 +1104,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
 
                 syntax = self._on_paste_or_save__get_syntax(view, uid)
                 if syntax in value:
-                    SingleFormat(view, uid=uid).run()
+                    SingleFormat(view, uid=uid, type=value.get('type', None)).run()
                     break
         else:
             self.popup_message('There are duplicate syntaxes in your "format_on_unique" option setting. Please sort them out.', 'ERROR')
@@ -981,7 +1120,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             syntax = self._on_paste_or_save__get_syntax(view, uid)
             if syntax in value.get('syntaxes', []) and syntax not in seen:
                 log.debug('"%s" enabled for ID: %s, using syntax: %s', opkey, uid, syntax)
-                SingleFormat(view, uid=uid).run()
+                SingleFormat(view, uid=uid, type=value.get('type', None)).run()
                 seen.add(syntax)
 
     def _on_paste_or_save__should_skip_formatter(self, uid, value, opkey):

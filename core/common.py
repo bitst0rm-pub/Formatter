@@ -648,6 +648,28 @@ class Base(Module):
             self.reload_modules(print_tree=False)
             sublime.set_timeout_async(self.load_config, 100)
 
+    @staticmethod
+    def html_phantom(viewport, image_data, image_width, image_height):
+        image_tag = '<img class="image" src="data:image/png;base64,' + image_data + '" width="' + str(image_width) + '" height="' + str(image_height) + '">'
+        download_link = '<div class="download-link"><a href="data:image/png;base64,' + image_data + '" download>[Download]</a></div>'
+        zoom_link = '<div class="zoom-link"><a href="zoom_image">[Zoom]</a></div>'
+
+        html = '''
+        <body id="phantom-body">
+            <style>
+                html, body {display: block; margin: 0; padding: 0; text-align: center; border-style: none; width: ''' + str(viewport[0]) + '''px;}
+                .container {display: block; margin: 0 auto; text-align: center; text-decoration: none; font-weight: bold;}
+                .image {margin: 0 auto;}
+                .download-link {margin-top: 0.625rem;}
+                .zoom-link {margin-top: 0.625rem; margin-bottom: 2rem;}
+            </style>
+            <div class="container">
+                ''' + image_tag + download_link + zoom_link + '''
+            </div>
+        </body>
+        '''
+        return html
+
     def is_quick_options_mode(self):
         return self.query(config, {}, 'quick_options')
 
@@ -856,6 +878,16 @@ class Base(Module):
             path = normpath(expanduser(expandvars(path)))
             path = sublime.expand_variables(path, sublime.active_window().extract_variables())
         return path
+
+    def get_downloads_folder(self):
+        downloads_folder = join(expanduser('~'), 'Downloads')
+
+        try:
+            os.makedirs(downloads_folder, exist_ok=True)
+        except Exception as e:
+            return tempfile.TemporaryDirectory()
+
+        return downloads_folder
 
     def set_debug_mode(self):
         if self.is_quick_options_mode():

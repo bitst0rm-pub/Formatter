@@ -95,12 +95,12 @@
             // Note: Generic method requires an Sublime Text restart after adding or changing
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
 
-            // Plugin name. REQUIRED!
+            // Plugin name. REQUIRED! REQUIRED! REQUIRED!
             // This will appear on the sublime menu and on other commands.
             "name": "Example Generic",
-            // Plugin type. REQUIRED!
+            // Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
-            // "minifier" OR "beautifier" OR "converter" OR any string of your choice.
+            // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.
             "type": "beautifier",
             // The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.
@@ -136,7 +136,10 @@
             // - "interpreter_path": "{{i}}"
             // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
             // - "config_path"     : "{{c}}"
+            // - SPECIAL CASE      : "{{o}}" (output image for type: graphic, e.g: "args": [... "--output", "{{o}}"])
             // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
+            // Special case: for "type":"graphic", the hardcoded "{{o}}" MUST ALWAYS be set inside "args"!
+            // You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"]
         },
         "examplemodule": {
@@ -286,6 +289,8 @@
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
+        // -- END of explanation, BEGINNING of life --
+
         "appleswiftformat": {
             "info": "https://github.com/apple/swift-format",
             "disable": true,
