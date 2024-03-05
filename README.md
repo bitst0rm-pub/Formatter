@@ -2,6 +2,8 @@
 
 Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
+_UPDATE 2024-03-05: Text-to-Image is fully implemented and is ready, but do not use it yet until i add some modules as example for you. Expected within a few days, if i have time._
+
 Key features:
 
 - Supports more than 70 major programming languages.
@@ -673,10 +675,7 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 
         cmd.extend(['--compress', '--mangle', '--'])
 
-        # temp_dir = self.kwargs.get('temp_dir', None)      # REQUIRED: only for special case "type": "graphic"
-        # if temp_dir and self.kwargs.get('type', None) == 'graphic':
-        #     temp_dir = common.join(temp_dir, 'out.png')   # 'out.png' is a hardcoded name, you must use it.
-        #     cmd.extend(['--output', 'temp_dir'])
+        # cmd.extend(['--output', self.get_output_file()])  # REQUIRED: only for special case "type": "graphic"
 
         log.debug('Current arguments: %s', cmd)             # REQUIRED: to debug the input command
         cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return
@@ -747,6 +746,9 @@ path = self.get_config_path()
 
 # Get the detected syntax of the current file or None.
 syntax = self.get_assigned_syntax()
+
+# Get the path to the output image. Only for special case of type: graphic
+output_image = self.get_output_file()
 
 # Get a dictionary of file path components:
 # {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None.

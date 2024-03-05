@@ -481,7 +481,6 @@ class SingleFormat(common.Base):
         try:
             for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
                 self.kwargs.update(region=region)
-                super().__init__(**self.kwargs)
                 is_success = Formatter(**self.kwargs).run()
                 self.cycles.append(is_success)
                 self.print_status(is_success)

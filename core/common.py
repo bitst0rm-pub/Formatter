@@ -68,6 +68,7 @@ class Module(object):
         self.interpreters = interpreters
         self.executables = executables
         self.has_cfgignore = has_cfgignore
+        self.kwargs = kwargs or {}
 
     def is_executeable(self, file):
         if file and isinstance(file, str) and isfile(file):
@@ -451,6 +452,14 @@ class Module(object):
     def get_args(self):
         args = self.query(config, None, 'formatters', self.uid, 'args')
         return list(map(str, args)) if args and isinstance(args, list) else []
+
+    def get_output_file(self):
+        temp_dir = self.kwargs.get('temp_dir', None)
+        if temp_dir and self.kwargs.get('type', None) == 'graphic':
+            temp_dir = join(temp_dir, 'out.png')
+            return temp_dir
+        else:
+            log.error('Wrong args param: get_output_file() is only applicable to type: graphic')
 
     def get_success_code(self):
         return int(self.query(config, 0, 'formatters', self.uid, 'success_code'))
