@@ -203,7 +203,7 @@ class Module(object):
             stdout, stderr = process.communicate(timeout=timeout)
         except TimeoutExpired:
             self.kill(process)
-            return 1, None, 'Aborted due to expired timeout=' + str(timeout)
+            return 1, None, 'Aborted due to expired timeout=%s (adjust this in Formatter settings)' % str(timeout)
 
         self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
@@ -215,7 +215,7 @@ class Module(object):
             stdout, stderr = process.communicate(self.get_text_from_region(self.region).encode('utf-8'), timeout=timeout)
         except TimeoutExpired:
             self.kill(process)
-            return 1, None, 'Aborted due to expired timeout=' + str(timeout)
+            return 1, None, 'Aborted due to expired timeout=%s (adjust this in Formatter settings)' % str(timeout)
 
         self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')

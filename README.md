@@ -29,7 +29,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 
 - Text-to-Image:
 
-  Third-party plugins often rely on a headless browser to generate images, making the process time-consuming. Consequently:
+  Third-party plugins often rely on a headless browser to render images, making the process time-consuming. Consequently:
 
   - `"recursive_folder_format"` will not be implemented or is disabled.
   - `"new_file_on_format"` will not be implemented or is disabled.
