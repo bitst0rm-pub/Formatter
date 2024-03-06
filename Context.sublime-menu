@@ -123,6 +123,14 @@
                 }
             },
             {
+                "caption": "D2-fmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "d2fmt",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Dart Format",
                 "command": "run_format",
                 "args": {
@@ -227,7 +235,7 @@
                 }
             },
             {
-                "caption": "formatR",
+                "caption": "FormatR",
                 "command": "run_format",
                 "args": {
                     "uid": "formatr",
@@ -411,7 +419,7 @@
                 }
             },
             {
-                "caption": "pgFormatter",
+                "caption": "PgFormatter",
                 "command": "run_format",
                 "args": {
                     "uid": "pgformat",

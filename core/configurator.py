@@ -61,7 +61,7 @@ def build_sublime_menu_children(formatter_map):
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
-                ('caption', config['name'] + (' (min)' if config['type'] == 'minifier' else '')),
+                ('caption', (config['name'][0].upper() + config['name'][1:]) + (' (min)' if config['type'] == 'minifier' else '')),
                 ('command', 'run_format'),
                 ('args', OrderedDict([
                     ('uid', config['uid']),
@@ -261,7 +261,7 @@ def build_formatter_sublime_commands_children(formatter_map):
         config = getattr(module_info['module'], 'MODULE_CONFIG', None)
         if config:
             child = OrderedDict([
-                ('caption', 'Formatter: ' + type_to_action.get(config['type'], 'Customize') + ' with ' + config['name']),
+                ('caption', 'Formatter: ' + type_to_action.get(config['type'], 'Customize') + ' with ' + (config['name'][0].upper() + config['name'][1:])),
                 ('command', 'run_format'),
                 ('args', OrderedDict([
                     ('uid', config['uid']),
@@ -558,7 +558,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Note: Generic method requires an Sublime Text restart after adding or changing
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.'''),
                     ('__COMMENT__name', '''
-            // Plugin name. REQUIRED! REQUIRED! REQUIRED!
+            // Capitalized Plugin name. REQUIRED! REQUIRED! REQUIRED!
             // This will appear on the sublime menu and on other commands.'''),
                     ('name', 'Example Generic'),
                     ('__COMMENT__type', '''// Plugin type. REQUIRED! REQUIRED! REQUIRED!

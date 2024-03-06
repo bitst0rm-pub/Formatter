@@ -13,7 +13,7 @@ INTERPRETERS = ['perl']
 EXECUTABLES = ['pg_format']
 MODULE_CONFIG = {
     'source': 'https://github.com/darold/pgFormatter',
-    'name': 'pgFormatter',
+    'name': 'PgFormatter',
     'uid': 'pgformat',
     'type': 'beautifier',
     'syntaxes': ['sql'],

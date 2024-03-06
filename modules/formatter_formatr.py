@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 EXECUTABLES = ['R']
 MODULE_CONFIG = {
     'source': 'https://github.com/yihui/formatR',
-    'name': 'formatR',
+    'name': 'FormatR',
     'uid': 'formatr',
     'type': 'beautifier',
     'syntaxes': ['r'],

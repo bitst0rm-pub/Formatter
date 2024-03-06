@@ -286,7 +286,7 @@ Both methods with examples are in this settings guide:
             // Note: Generic method requires an Sublime Text restart after adding or changing
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
 
-            // Plugin name. REQUIRED! REQUIRED! REQUIRED!
+            // Capitalized plugin name. REQUIRED! REQUIRED! REQUIRED!
             // This will appear on the sublime menu and on other commands.
             "name": "Example Generic",
             // Plugin type. REQUIRED! REQUIRED! REQUIRED!
@@ -637,7 +637,7 @@ INTERPRETERS = ['node']                                     # optional: case-sen
 EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
 MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
     'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
-    'name': 'My First Plugin',                              # REQUIRED: a freely chosen plugin name, preferably short and comprehensive
+    'name': 'My First Plugin',                              # REQUIRED: a Capitalized plugin name of your choice, preferably short and comprehensive
     'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
     'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
                                                             #           OR any string of your choice (for private purposes).

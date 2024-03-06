@@ -144,6 +144,15 @@
                         }
                     },
                     {
+                        "caption": "D2-fmt",
+                        "mnemonic": "D",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "d2fmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Dart Format",
                         "mnemonic": "D",
                         "command": "run_format",
@@ -261,7 +270,7 @@
                         }
                     },
                     {
-                        "caption": "formatR",
+                        "caption": "FormatR",
                         "mnemonic": "F",
                         "command": "run_format",
                         "args": {
@@ -468,7 +477,7 @@
                         }
                     },
                     {
-                        "caption": "pgFormatter",
+                        "caption": "PgFormatter",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {
