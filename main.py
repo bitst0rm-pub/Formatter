@@ -11,6 +11,7 @@ import time
 import json
 import shutil
 import base64
+import struct
 import logging
 import zipfile
 import tempfile
@@ -576,8 +577,20 @@ class SingleFormat(common.Base):
         dst_view.set_read_only(True)
 
     @staticmethod
-    def image_scale_fit(view):
-        image_width, image_height = 100, 100  # default dimensions
+    def get_image_size(data):
+        if data.startswith(b'\211PNG\r\n\032\n') and (data[12:16] == b'IHDR'):
+            width, height = struct.unpack('>LL', data[16:24])
+            return int(width), int(height)
+        elif data.startswith(b'\211PNG\r\n\032\n'):
+            width, height = struct.unpack('>LL', data[8:16])
+            return int(width), int(height)
+        else:
+            return None, None
+
+    @staticmethod
+    def image_scale_fit(view, image_width, image_height):
+        image_width = image_width or 100  # default to 100
+        image_height = image_height or 100
         scrollbar_width = 20  # adjust this if needed
 
         view_width, view_height = view.viewport_extent()
@@ -593,9 +606,11 @@ class SingleFormat(common.Base):
         try:
             image_path = os.path.join(self.temp_dir.name, 'out.png')
             with open(image_path, 'rb') as image_file:
-                image_data = base64.b64encode(image_file.read()).decode('utf-8')
+                data = image_file.read()
+                image_width, image_height = self.get_image_size(data)
+                image_data = base64.b64encode(data).decode('utf-8')
 
-            image_width, image_height = self.image_scale_fit(dst_view)
+            image_width, image_height = self.image_scale_fit(dst_view, image_width, image_height)
             html = self.html_phantom(dst_view.viewport_extent(), image_data, image_width, image_height)
             data = {'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'dst_view_id': dst_view.id()}
 
