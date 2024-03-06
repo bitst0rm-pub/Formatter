@@ -114,5 +114,6 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "shfmtmin", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sqlmin", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "svgomin", "type": "minifier"}},
-    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}}
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "d2", "type": "graphic"}}
 ]

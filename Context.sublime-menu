@@ -804,6 +804,17 @@
                     "uid": "terser",
                     "type": "minifier"
                 }
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "D2",
+                "command": "run_format",
+                "args": {
+                    "uid": "d2",
+                    "type": "graphic"
+                }
             }
         ]
     }

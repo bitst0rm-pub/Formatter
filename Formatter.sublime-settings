@@ -2171,6 +2171,19 @@
                 "default": "${packages}/User/formatter.assets/config/terser_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
+        },
+        "d2": {
+            "info": "https://github.com/terrastruct/d2",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "syntaxes": ["d2"],
+            "type": "graphic",
+            "executable_path": ["/path/to/bin/d2"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/d2_rc.yaml"
+            }
+            /* uses headless browser to convert images, therefore dark-theme not available. */
         }
     }
 }

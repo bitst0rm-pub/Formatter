@@ -802,5 +802,13 @@
             "uid": "terser",
             "type": "minifier"
         }
+    },
+    {
+        "caption": "Formatter: Visualize with D2",
+        "command": "run_format",
+        "args": {
+            "uid": "d2",
+            "type": "graphic"
+        }
     }
 ]

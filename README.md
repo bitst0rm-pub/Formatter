@@ -2,11 +2,11 @@
 
 Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
-Key features:
+**Key features:**
 
 - Supports more than 70 major programming languages.
 - Includes over 80 preset adapters for various [Plugins](#plugins).
-- Formats text in multiple ways:
+- Formats text in various ways:
     - Text-to-Text (Text diagramms, ASCII art, etc.)
     - Text-to-Image (Image diagramms, QR-code images, etc.)
 - Capable to format entire files, single or multiple selections.
@@ -25,10 +25,10 @@ Key features:
 - Open source and works offline.
 
 
-Limitations:
+**Limitations:**
 
 - Text-to-Image:
-Third-party plugins often rely on a headless browser to generate images, making the process time-consuming. Consequently:
+  Third-party plugins often rely on a headless browser to generate images, making the process time-consuming. Consequently:
 
   - `"recursive_folder_format"` will not be implemented or is disabled.
   - `"new_file_on_format"` will not be implemented or is disabled.
@@ -86,6 +86,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint)[1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[2], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[2] | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
 | CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) `(build-in)`, [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| D2 | [d2](https://github.com/terrastruct/d2) | -- | None | -- |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Dhall | [dhall format](https://github.com/dhall-lang/dhall-haskell) | -- | None | -- |
 | Dockerfile | [dockfmt](https://github.com/jessfraz/dockfmt) | -- | None | -- |
@@ -548,13 +549,13 @@ Formatting actions can be triggered in different ways:
 This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file. It comprises 3 modes:
 
 - **Temporary Quick Options (TQO)**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
-- **Persistent User Settings (PUS)**: Clicking the `Reset` option will reset all current Temporary Quick Options and switch to using your User Settings from `Formatter.sublime-settings`.
-- **Persistent Quick Options (PQO)**: Clicking the `Save` option will make all current Temporary Quick Options persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
+- **Persistent User Settings (PUS)**: Clicking the `Reset` option will reset all current `Temporary Quick Options` and switch to using your User Settings from `Formatter.sublime-settings`.
+- **Persistent Quick Options (PQO)**: Clicking the `Save` option will make all current `Temporary Quick Options` persistently. This means that closing and reopening Sublime will retain these options. To exit this mode just clicking the `Reset` option.
 
-Summary:
+**Summary:**
 
 - The `Reset` option is the exclusive method to exit any mode.
-- Clicking on the same selected item will remove it from the list.
+- Clicking on the *same* selected item will remove it from the list.
 - None of the modes will ever modify your Settings file.
 - The current mode is indicated on the status bar for your reference.
 
@@ -669,7 +670,7 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 
         cmd.extend(['--compress', '--mangle', '--'])
 
-        # cmd.extend(['--output', self.get_output_image()])  # REQUIRED: only for special case of "type": "graphic"
+        # cmd.extend(['--output', self.get_output_image()]) # REQUIRED: only for special case of "type": "graphic"
 
         log.debug('Current arguments: %s', cmd)             # REQUIRED: to debug the input command
         cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return
