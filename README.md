@@ -86,7 +86,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint)[1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[2], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[2] | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
 | CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) `(build-in)`, [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| D2 | [d2](https://github.com/terrastruct/d2) | -- | None | -- |
+| D2 | [d2](https://github.com/terrastruct/d2), [d2 fmt](https://github.com/terrastruct/d2) | -- | None | -- |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | Dart | -- |
 | Dhall | [dhall format](https://github.com/dhall-lang/dhall-haskell) | -- | None | -- |
 | Dockerfile | [dockfmt](https://github.com/jessfraz/dockfmt) | -- | None | -- |
