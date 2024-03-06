@@ -657,7 +657,7 @@ class ReplaceViewContentCommand(sublime_plugin.TextCommand):
 
 
 class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
-    ZOOM_LEVELS = ['10%', '25%', '50%', '75%', '100%', '125%', '150%', '175%', '200%', '225%', '250%', '275%', '300%']
+    ZOOM_LEVELS = ['10%', '25%', '50%', '75%', '100%', '125%', '150%', '175%', '200%', '225%', '250%', '275%', '300%', '325%', '350%', '375%', '400%']
 
     def run(self, **kwargs):
         self.window.show_quick_panel(self.ZOOM_LEVELS, lambda index: self.on_done(index, **kwargs))

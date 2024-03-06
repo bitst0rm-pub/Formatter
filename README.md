@@ -7,8 +7,8 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Supports more than 70 major programming languages.
 - Includes over 80 preset adapters for various [Plugins](#plugins).
 - Formats text in various ways:
-    - Text-to-Text (Text diagramms, ASCII art, etc.)
-    - Text-to-Image (Image diagramms, QR-code images, etc.)
+  - Text-to-Text (Text diagramms, ASCII art, etc.)
+  - Text-to-Image (Image diagramms, QR-code images, etc.)
 - Capable to format entire files, single or multiple selections.
 - Capable to format entire folder recursively.
 - Operates based on syntax scope, not file extension.
@@ -20,14 +20,15 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
 - Customizable and extendable through 2 methods to add _your_ custom plugins:
-    - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
-    - Modules: Integration of your own modules. _see_ [Development](#development)
+  - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
+  - Modules: Integration of your own modules. _see_ [Development](#development)
 - Open source and works offline.
 
 
 **Limitations:**
 
 - Text-to-Image:
+
   Third-party plugins often rely on a headless browser to generate images, making the process time-consuming. Consequently:
 
   - `"recursive_folder_format"` will not be implemented or is disabled.
@@ -562,7 +563,7 @@ This feature is designed to help users quickly access and switch between options
 
 ## Development:
 
-Starting from version 1.0.6, you now have the ability to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert **_any_** form of text, as long as third-party plugins operate in a text-to-text manner, such as Text-to-QR code, text-to-ASCII image conversion.
+Starting from version 1.0.6, you now are able to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert **_any_** form of text, as long as third-party plugins operate in a text-to-text manner, such as Text-to-QR code, text-to-ASCII image conversion.
 
 ### 1. Prerequisite:
 
@@ -716,8 +717,7 @@ You have the choice to either submit a pull request or integrate your modules yo
 ### 4. APIs:
 
 The entire set of Formatter APIs can be found in the file: `core > common.py`<br/>
-Responsible for handling plugin modules is the class: `class Module(object)`<br/>
-Starting from version 1.1.0, all previous APIs have been deprecated. Please update to the new APIs accordingly:
+Responsible for handling plugin modules is the class: `class Module(object)`:
 
 - Essentially for the `def get_cmd(self)` function:
 
