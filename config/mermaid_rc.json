@@ -1,0 +1,33 @@
+{
+    "__comment_1__": "Properties taken from: https://github.com/mermaid-js/mermaid/blob/develop/packages/mermaid/src/schemas/config.schema.yaml",
+    "__comment_2__": "Example themeVariables from: https://github.com/mermaid-js/mermaid/blob/develop/packages/mermaid/src/themes/theme-default.js",
+    "theme": "default",
+    "maxTextSize": 50000,
+    "maxEdges": 500,
+    "darkMode": false,
+    "fontFamily": "'trebuchet ms', verdana, arial, sans-serif;",
+    "startOnLoad": true,
+    "arrowMarkerAbsolute": false,
+    "fontSize": 16,
+    "themeVariables": {
+        "primaryColor": "#ECECFF"
+    },
+    "flowchart": {
+        "titleTopMargin": 25,
+        "diagramPadding": 8,
+        "htmlLabels": true,
+        "nodeSpacing": 50,
+        "rankSpacing": 50,
+        "curve": "basis",
+        "padding": 15,
+        "wrappingWidth": 200
+    },
+    "sequence": {
+        "mirrorActors": true,
+        "showSequenceNumbers": false
+    },
+    "gantt": {
+        "topPadding": 50,
+        "numberSectionStyles": 4
+    }
+}

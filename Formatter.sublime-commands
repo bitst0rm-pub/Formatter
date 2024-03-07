@@ -818,5 +818,13 @@
             "uid": "d2",
             "type": "graphic"
         }
+    },
+    {
+        "caption": "Formatter: Visualize with Mermaid",
+        "command": "run_format",
+        "args": {
+            "uid": "mermaid",
+            "type": "graphic"
+        }
     }
 ]

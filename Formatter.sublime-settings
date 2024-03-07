@@ -2201,6 +2201,19 @@
                 "default": "${packages}/User/formatter.assets/config/d2_rc.yaml"
             }
             /* uses headless browser to convert images, therefore dark-theme not available. */
+        },
+        "mermaid": {
+            "info": "https://github.com/mermaid-js/mermaid-cli",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "syntaxes": ["mermaid"],
+            "type": "graphic",
+            "executable_path": ["/path/to/node_modules/.bin/mmdc"],
+            "args": ["--width", "800", "--height", "600", "--backgroundColor", "white"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/mermaid_rc.json"
+            }
         }
     }
 }

@@ -823,6 +823,14 @@
                     "uid": "d2",
                     "type": "graphic"
                 }
+            },
+            {
+                "caption": "Mermaid",
+                "command": "run_format",
+                "args": {
+                    "uid": "mermaid",
+                    "type": "graphic"
+                }
             }
         ]
     }

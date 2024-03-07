@@ -931,6 +931,15 @@
                             "uid": "d2",
                             "type": "graphic"
                         }
+                    },
+                    {
+                        "caption": "Mermaid",
+                        "mnemonic": "M",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "mermaid",
+                            "type": "graphic"
+                        }
                     }
                 ]
             }
