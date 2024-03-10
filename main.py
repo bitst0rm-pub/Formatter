@@ -589,7 +589,7 @@ class SingleFormat(common.Base):
 
     @staticmethod
     def image_scale_fit(view, image_width, image_height):
-        image_width = image_width or 100  # default to 100
+        image_width = image_width or 100  # default to 100 if None
         image_height = image_height or 100
         scrollbar_width = 20  # adjust this if needed
 
@@ -602,17 +602,35 @@ class SingleFormat(common.Base):
 
         return image_width, image_height
 
+    def get_extended_data(self):
+        try:
+            extended_data = {}
+            image_extensions = ['svg'] if not self.is_generic_method() else list(self.query(common.config, {}, 'formatters', self.kwargs.get('uid', None), 'args_extended').keys())
+
+            for ext in image_extensions:
+                ext = ext.strip().lower()
+                image_path = os.path.join(self.temp_dir.name, common.GFX_OUT_NAME + '.' + ext)
+                if os.path.exists(image_path):
+                    with open(image_path, 'rb') as image_file:
+                        extended_data[ext] = base64.b64encode(image_file.read()).decode('utf-8')
+
+            return extended_data
+        except Exception as e:
+            return {}
+
     def set_graphic_phantom(self, dst_view):
         try:
-            image_path = os.path.join(self.temp_dir.name, 'out.png')
+            image_path = os.path.join(self.temp_dir.name, common.GFX_OUT_NAME + '.png')
             with open(image_path, 'rb') as image_file:
                 data = image_file.read()
                 image_width, image_height = self.get_image_size(data)
                 image_data = base64.b64encode(data).decode('utf-8')
 
             image_width, image_height = self.image_scale_fit(dst_view, image_width, image_height)
-            html = self.html_phantom(dst_view, image_data, image_width, image_height)
-            data = {'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'dst_view_id': dst_view.id()}
+            extended_data = self.get_extended_data()
+
+            html = self.html_phantom(dst_view, image_data, image_width, image_height, extended_data)
+            data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
             dst_view.erase_phantoms('graphic')
             dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_BLOCK, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
@@ -625,8 +643,8 @@ class SingleFormat(common.Base):
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
-            stem = self.get_pathinfo()['stem'] or 'out'
-            save_path = os.path.join(self.get_downloads_folder(), stem + '.png')
+            stem = self.get_pathinfo()['stem'] or common.GFX_OUT_NAME
+            save_path = os.path.join(self.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
                 urllib.request.urlretrieve(href, save_path)
@@ -674,12 +692,13 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
             image_data = kwargs.get('image_data')
             image_width = kwargs.get('image_width')
             image_height = kwargs.get('image_height')
+            extended_data = kwargs.get('extended_data')
 
             dst_view = self.find_view_by_id(dst_view_id) or self.window.active_view()
 
             try:
-                html = self.html_phantom(dst_view, image_data, image_width * zoom_factor, image_height * zoom_factor)
-                data = {'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'dst_view_id': dst_view.id()}
+                html = self.html_phantom(dst_view, image_data, image_width * zoom_factor, image_height * zoom_factor, extended_data)
+                data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
                 dst_view.erase_phantoms('graphic')
                 dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_BLOCK, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
@@ -690,8 +709,8 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
-            stem = self.get_pathinfo(path=dst_view.file_name())['stem'] or 'out'
-            save_path = os.path.join(self.get_downloads_folder(), stem + '.png')
+            stem = os.path.splitext(os.path.basename(dst_view.file_name() or common.GFX_OUT_NAME))[0]
+            save_path = os.path.join(self.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
                 urllib.request.urlretrieve(href, save_path)

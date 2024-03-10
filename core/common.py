@@ -14,6 +14,7 @@ import shutil
 import hashlib
 import logging
 import tempfile
+from datetime import datetime
 
 import sublime
 
@@ -35,6 +36,7 @@ QUICK_OPTIONS_SETTING_FILE = 'Formatter.quick-options'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
 RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
 STATUS_KEY = '@!' + PACKAGE_NAME.lower()
+GFX_OUT_NAME = 'out_%s' % datetime.now().strftime('%Y%m%d')
 
 LAYOUTS = {
     'single': {
@@ -449,18 +451,39 @@ class Module(object):
     def is_valid_path(self, path):
         return path and isinstance(path, str) and isfile(path) and os.access(path, os.R_OK)
 
+    @staticmethod
+    def convert_list_items_to_string(lst):
+        return list(map(str, lst)) if lst and isinstance(lst, list) else []
+
     def get_args(self):
         args = self.query(config, None, 'formatters', self.uid, 'args')
-        return list(map(str, args)) if args and isinstance(args, list) else []
+        return self.convert_list_items_to_string(args)
+
+    def get_args_extended(self):
+        formatter = self.query(config, {}, 'formatters', self.uid)
+        render_extended = formatter.get('render_extended', False)
+
+        if isinstance(render_extended, bool) and render_extended:
+            args_extended = formatter.get('args_extended', {})
+            valid = {}
+            for k, v in args_extended.items():
+                valid[k.strip().lower()] = self.convert_list_items_to_string(v)
+            return valid
+        else:
+            return {}
+
+    @staticmethod
+    def ext_png_to_svg_cmd(cmd):
+        return [x.replace(GFX_OUT_NAME + '.png', GFX_OUT_NAME+ '.svg') for x in cmd]
 
     def get_output_image(self):
         temp_dir = self.kwargs.get('temp_dir', None)
         if temp_dir and self.kwargs.get('type', None) == 'graphic':
-            temp_dir = join(temp_dir, 'out.png')
+            temp_dir = join(temp_dir, GFX_OUT_NAME + '.png')
             return temp_dir
         else:
             log.error('Wrong args param: get_output_image() is only applicable to type: graphic')
-            return '!wrong_args_param!'
+            return '!wrong_param!'
 
     def get_success_code(self):
         return int(self.query(config, 0, 'formatters', self.uid, 'success_code'))
@@ -659,7 +682,7 @@ class Base(Module):
             sublime.set_timeout_async(self.load_config, 100)
 
     @staticmethod
-    def html_phantom(dst_view, image_data, image_width, image_height):
+    def html_phantom(dst_view, image_data, image_width, image_height, extended_data):
         dst_window = dst_view.window()
         if dst_window.is_minimap_visible():
             dst_window.set_minimap_visible(False)
@@ -667,8 +690,12 @@ class Base(Module):
             dst_view.settings().set('gutter', False)
 
         image_tag = '<img class="image" src="data:image/png;base64,' + image_data + '" width="' + str(image_width) + '" height="' + str(image_height) + '">'
-        download_link = '<div class="download-link"><a href="data:image/png;base64,' + image_data + '" download>[Download]</a></div>'
+        download_link = '<div class="download-link"><a href="data:application/png;base64,' + image_data + '" download>[Save PNG]</a></div>'
         zoom_link = '<div class="zoom-link"><a href="zoom_image">[Zoom]</a></div>'
+
+        extended_download_link = []
+        for ext, image_data in extended_data.items():
+            extended_download_link.append('<div class="download-link"><a href="data:application/' + ext + ';base64,' + image_data + '" download>[Save ' + ext.upper() + ']</a></div>')
 
         html = '''
         <body id="phantom-body">
@@ -680,11 +707,15 @@ class Base(Module):
                 .zoom-link {margin-top: 0.625rem; margin-bottom: 2rem;}
             </style>
             <div class="container">
-                ''' + image_tag + download_link + zoom_link + '''
+                ''' + image_tag + zoom_link + download_link + ''.join(extended_download_link) + '''
             </div>
         </body>
         '''
         return html
+
+    def is_generic_method(self):
+        name = self.query(config, None, 'formatters', self.kwargs.get('uid'), 'name')
+        return name is not None
 
     def is_quick_options_mode(self):
         return self.query(config, {}, 'quick_options')

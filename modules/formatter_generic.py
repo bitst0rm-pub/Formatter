@@ -17,14 +17,12 @@ class GenericFormatter(common.Module):
         super().__init__(*args, **kwargs)
         self.kwargs = kwargs
 
-    def get_cmd(self):
+    def rebuild_cmd(self, cmd):
         temp_dir = self.kwargs.get('temp_dir', None)
         if temp_dir and self.kwargs.get('type', None) == 'graphic':
-            temp_dir = common.join(temp_dir, 'out.png')
+            temp_dir = common.join(temp_dir, common.GFX_OUT_NAME + '.png')
         else:
             temp_dir = None
-
-        cmd = self.get_args()
 
         runtime = None
         pattern = r'\{\{\s*e\s*=\s*(.*?)\s*\}\}'
@@ -68,11 +66,25 @@ class GenericFormatter(common.Module):
 
             new_cmd.append(item)
 
-        cmd = new_cmd
+        return new_cmd
+
+    def get_cmd(self):
+        cmd = self.get_args()
+        cmd = self.rebuild_cmd(cmd)
 
         log.debug('Current arguments: %s', cmd)
 
         return cmd
+
+    def get_extended_cmd(self):
+        cmd_list = []
+        for k, v in self.get_args_extended().items():
+            if isinstance(v, list):
+                cmd_list.append([item.replace(common.GFX_OUT_NAME + '.png', common.GFX_OUT_NAME + '.' + k) for item in self.rebuild_cmd(v)])
+
+        log.debug('Current extended arguments: %s', cmd_list)
+
+        return cmd_list
 
     def format(self):
         cmd = self.get_cmd()
@@ -83,6 +95,13 @@ class GenericFormatter(common.Module):
             exitcode, stdout, stderr = self.exec_cmd(cmd)
 
             if exitcode == self.get_success_code():
+
+                for cmd in self.get_extended_cmd():
+                    try:
+                        self.exec_cmd(cmd)
+                    except Exception as e:
+                        log.error('An error occurred while executing extended cmd: %s', e)
+
                 return stdout
             else:
                 self.print_exiterr(exitcode, stderr)

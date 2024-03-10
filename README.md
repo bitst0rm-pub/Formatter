@@ -33,7 +33,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 
   - `"recursive_folder_format"` will not be implemented or is disabled.
   - `"new_file_on_format"` will not be implemented or is disabled.
-  - Outputs are available only in `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
+  - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 
 _Formatter in action: Text-to-Text fashion..._
@@ -206,8 +206,8 @@ Both methods with examples are in this settings guide:
     // Integrate your custom modules into the Formatter ecosystem.
     // This option ensures that your own modules won't be automatically removed
     // from Packages Control during any release updates. It also spares you the trouble
-    // of having to submit pull requests on GitHub to have your own modules integrated.
-    // For security reasons, Formatter never communicates over the Internet.
+    // of having to submit pull requests to get your own modules integrated.
+    // For security reasons, Formatter never communicates over the Internet:
     // All paths to files and folders must be local.
     "custom_modules": {
         "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
@@ -240,7 +240,7 @@ Both methods with examples are in this settings guide:
     // Available choices include 2-columns, 2-rows or single layout.
     // To revert to the Sublime default layout:
     // View > Layout > Single
-    // Accepted values: "2cols", "2rows", "single" or false
+    // Accepted values: "2cols", "2rows", "single" OR false
     "layout": {
         "enable": "2cols",
         "sync_scroll": true
@@ -258,7 +258,7 @@ Both methods with examples are in this settings guide:
     // to add it. In debug mode, Formatter will display your current system environments
     // to assist you in configuration. On Windows, you can use either escaped
     // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
-    // as path separators for all other options as well.
+    // as path separators for all other options in this file as well.
     "environ": {
         "PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin", "/path/to/.cache/rebar3/bin:$PATH"],
         "GEM_PATH": ["${HOME}/to/my/ruby"],
@@ -287,13 +287,19 @@ Both methods with examples are in this settings guide:
             // Note: Generic method requires an Sublime Text restart after adding or changing
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
 
-            // Capitalized plugin name. REQUIRED! REQUIRED! REQUIRED!
-            // This will appear on the sublime menu and on other commands.
+            // Capitalized Plugin name. REQUIRED! REQUIRED! REQUIRED!
+            // This will appear on the sublime menu and on other important commands.
             "name": "Example Generic",
+
             // Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
             // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.
             "type": "beautifier",
+
+            // This will activate the option "args_extended" of type graphic
+            // to generate extended files like SVG to download.
+            "render_extended": false,
+
             // The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.
             "success_code": 0,
@@ -323,16 +329,31 @@ Both methods with examples are in this settings guide:
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // These are the commands to trigger the formatting process.
-            // You can either pass paths directly or use variable substitution for the following options:
-            // - "interpreter_path": "{{i}}"
-            // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
-            // - "config_path"     : "{{c}}"
-            // - SPECIAL CASE      : "{{o}}" (output image for type: graphic, e.g: "args": [... "--output", "{{o}}"])
-            // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
-            // Special case: for "type":"graphic", the hardcoded "{{o}}" MUST ALWAYS be set inside "args"!
-            // You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
-            "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"]
+            // These are the main commands to trigger the formatting process.
+            // You can either pass the paths directly or use variable substitution for the following options:
+            // - "interpreter_path"   : "{{i}}"
+            // - "executable_path"    : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
+            // - "config_path"        : "{{c}}"
+            // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
+            // Variable substitution offers more advanced mechanisms such as auto-search path, auto-config, etc.
+            // Important requirements to use the SPECIAL CASE GRAPHIC:
+            // 1. Third-party plugins MUST support exporting PNG format.
+            // 2. The hardcoded "{{o}}" MUST ALWAYS be set inside "args".
+            //    You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
+            // All other cases do not need output as file, use "-" or "--" instead.
+            "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
+
+            // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
+            // To use this, the option "render_extended" above must be activated.
+            // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
+            // image in view and generate the same image in various formats for you.
+            // WARNING: Formatter will loop subprocess to render extended files. This means, process
+            // will takes more time. This option is only recommended for the final step to production.
+            // key:[value,..], where key is the output file extension, value is the command arguments.
+            "args_extended": {
+                "svg": ["{{e}}", "--config", "{{c}}", "--blabla-format", "svgv5", "--output", "{{o}}"],
+                "pdf": ["{{e}}", "--config", "{{c}}", "--blabla-format", "pdf2001", "--output", "{{o}}"]
+            }
         },
         "examplemodule": { // MODULE METHOD
             // Plugin activation.
@@ -353,7 +374,7 @@ Both methods with examples are in this settings guide:
             "format_on_save": false,
 
             // Auto formatting whenever code is pasted into the current file/view.
-            // This option is affected by the same syntax impact, and its solutions
+            // This option is affected by the same syntax conflict, so its solutions
             // are identical to those mentioned above for the "format_on_save" option.
             "format_on_paste": false,
 
@@ -369,11 +390,11 @@ Both methods with examples are in this settings guide:
 
             // Recursively format the entire folder with unlimited depth.
             // This option requires an existing and currently opened file
-            // to serve as the starting point.
+            // to serve as the starting point. Files will be opened and closed.
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // might be useful for renaming at the same time if needed.
+            // can be used for renaming files if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.
@@ -419,12 +440,12 @@ Both methods with examples are in this settings guide:
             // Path to the third-party plugin executable to process formatting.
             // This option can be either a string or a list of executable paths.
             // - If this option is omitted or set to null, then the global executable
-            //   on PATH will be used, if found.
+            //   on PATH will be used, if automatically found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
             //   Basename can be with or without dot.extension as both variants are the same.
             //   For example: "fiLe.exe" (Windows only), "fiLe" (Windows + Unix + Linux)
-            // System variable expansions like ${HOME}, ${USER} etc... and the Sublime Text
+            // System variable expansions like ${HOME}, ${USER} etc. and the Sublime Text
             // specific ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".
@@ -455,6 +476,12 @@ Both methods with examples are in this settings guide:
             // Array of additional arguments for the command line.
             "args": ["--basedir", "./example/my/foo", "--show-bar", "yes"],
 
+            // This option is specifically designed for type graphic.
+            // It enables SVG image generation for download.
+            // Enable it if you need SVG beside PNG images at the cost of processing time.
+            // Unlike the generic method, this method only supports SVG generation.
+            "render_extended": false,
+
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
             // their positions without digging into the source code.
@@ -483,7 +510,7 @@ Both methods with examples are in this settings guide:
         },
         // -- END of explanation, BEGINNING of life --
 
-        "stylelint": { // MODULE METHOD EXAMPLE
+        "stylelint": {  // EXAMPLE: MODULE METHOD
             "info": "https://github.com/stylelint/stylelint",
             "disable": false,
             "format_on_paste": false,
@@ -503,7 +530,7 @@ Both methods with examples are in this settings guide:
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
         },
-        "mygeneric": { // GENERIC METHOD EXAMPLE. Restart ST after adding this setting dict
+        "uncrustify": {  // EXAMPLE: GENERIC METHOD: Text-to-Text. Restart ST.
             "name": "Uncrustify",
             "type": "beautifier",
             "success_code": 0,
@@ -522,6 +549,27 @@ Both methods with examples are in this settings guide:
                 "java": "${packages}/User/formatter.assets/config/uncrustify_sun_java_rc.cfg",
                 "default": "${packages}/User/formatter.assets/config/uncrustify_rc.cfg"
             }
+        },
+        "d2": {  // EXAMPLE: GENERIC METHOD: Text-to-Image. Restart ST.
+          "name": "D2",
+          "type": "graphic",
+          "success_code": 0,
+          "render_extended": true,
+
+          "info": "https://github.com/terrastruct/d2",
+          "disable": false,
+          "format_on_save": false,
+          "format_on_paste": false,
+          "syntaxes": ["d2"],
+          "args": ["{{e}}", "--theme", "300", "--dark-theme", "200", "-l", "elk", "--pad", "0", "-", "{{o}}"],
+          "args_extended": {
+              "svg": ["{{e}}", "--theme", "300", "--dark-theme", "200", "-l", "elk", "--pad", "0", "-", "{{o}}"],
+              "pdf": ["{{e}}", "--theme", "300", "--dark-theme", "200", "-l", "elk", "--pad", "0", "-", "{{o}}"]
+          },
+          "executable_path": "/path/to/bin/d2",
+          "config_path": {
+              "default": "${packages}/User/formatter.assets/config/d2_rc.yaml"
+          }
         },
         ...
     }
@@ -690,6 +738,12 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
             if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
                 self.print_exiterr(exitcode, stderr)
             else:
+                # cmd = self.ext_png_to_svg_cmd(cmd)
+                # try:
+                #     self.exec_cmd(cmd)                    # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
+                # except Exception as e:
+                #     log.error('Error: %s', e)
+
                 return stdout                               # REQUIRED: return the formatted code on success
         except OSError:
             self.print_oserr(cmd)
@@ -744,7 +798,7 @@ path = self.get_config_path()
 # Get the detected syntax of the current file or None.
 syntax = self.get_assigned_syntax()
 
-# Get the path to the output image. Only for special case of type: graphic
+# Get the path to the output PNG image. Applicable only to the special case of type: graphic
 output_image = self.get_output_image()
 
 # Get a dictionary of file path components:
@@ -767,6 +821,12 @@ cmd = self.fix_cmd(cmd)
 ```py
 # To quickly perform a formal test on the command.
 is_valid = self.is_valid_cmd(cmd)
+
+# To replace file extension from png to svg to generate SVG file for download.
+# This might not always cover all cases and is applicable only to the special
+# case of type: graphic.
+# Note: extended_cmd MUST be executed right before return stdout (=success)!
+extended_cmd = self.ext_png_to_svg_cmd(cmd)
 
 # To process the formatting with all input (fixed) arguments.
 exitcode, stdout, stderr = self.exec_cmd(cmd)

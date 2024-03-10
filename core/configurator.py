@@ -418,6 +418,7 @@ def build_formatter_sublime_settings_children(formatter_map):
                 child.pop('new_file_on_format')
                 child.pop('recursive_folder_format')
                 child['type'] = 'graphic'
+                child['render_extended'] = False
 
             exclude_syntaxes = config.get('exclude_syntaxes', None)
             if exclude_syntaxes is not None and isinstance(exclude_syntaxes, dict):
@@ -477,8 +478,8 @@ def build_formatter_sublime_settings(formatter_map):
     // Integrate your custom modules into the Formatter ecosystem.
     // This option ensures that your own modules won't be automatically removed
     // from Packages Control during any release updates. It also spares you the trouble
-    // of having to submit pull requests on GitHub to have your own modules integrated.
-    // For security reasons, Formatter never communicates over the Internet.
+    // of having to submit pull requests to get your own modules integrated.
+    // For security reasons, Formatter never communicates over the Internet:
     // All paths to files and folders must be local.'''),
             ('custom_modules', OrderedDict([
                 ('config', []),
@@ -529,7 +530,7 @@ def build_formatter_sublime_settings(formatter_map):
     // to add it. In debug mode, Formatter will display your current system environments
     // to assist you in configuration. On Windows, you can use either escaped
     // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
-    // as path separators for all other options as well.'''),
+    // as path separators for all other options in this file as well.'''),
             ('environ', OrderedDict([
                 ('PATH', []),
                 ('GEM_PATH', []),
@@ -559,13 +560,19 @@ def build_formatter_sublime_settings(formatter_map):
             // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.'''),
                     ('__COMMENT__name', '''
             // Capitalized Plugin name. REQUIRED! REQUIRED! REQUIRED!
-            // This will appear on the sublime menu and on other commands.'''),
+            // This will appear on the sublime menu and on other important commands.'''),
                     ('name', 'Example Generic'),
-                    ('__COMMENT__type', '''// Plugin type. REQUIRED! REQUIRED! REQUIRED!
+                    ('__COMMENT__type', '''
+            // Plugin type. REQUIRED! REQUIRED! REQUIRED!
             // This will be assigned to a category. Accepted values:
             // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.'''),
                     ('type', 'beautifier'),
-                    ('__COMMENT__success_code', '''// The exit code of the third-party plugin.
+                    ('__COMMENT__render_extended', '''
+            // This will activate the option "args_extended" of type graphic
+            // to generate extended files like SVG to download.'''),
+                    ('render_extended', False),
+                    ('__COMMENT__success_code', '''
+            // The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.'''),
                     ('success_code', 0),
                     ('__COMMENT__disable', '''
@@ -594,16 +601,31 @@ def build_formatter_sublime_settings(formatter_map):
                         ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
                     ])),
                     ('__COMMENT__args', '''
-            // These are the commands to trigger the formatting process.
-            // You can either pass paths directly or use variable substitution for the following options:
-            // - "interpreter_path": "{{i}}"
-            // - "executable_path" : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
-            // - "config_path"     : "{{c}}"
-            // - SPECIAL CASE      : "{{o}}" (output image for type: graphic, e.g: "args": [... "--output", "{{o}}"])
-            // Variable substitution offers more advanced mechanisms such as auto-search path, etc.
-            // Special case: for "type":"graphic", the hardcoded "{{o}}" MUST ALWAYS be set inside "args"!
-            // You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.'''),
-                    ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--']))
+            // These are the main commands to trigger the formatting process.
+            // You can either pass the paths directly or use variable substitution for the following options:
+            // - "interpreter_path"   : "{{i}}"
+            // - "executable_path"    : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
+            // - "config_path"        : "{{c}}"
+            // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
+            // Variable substitution offers more advanced mechanisms such as auto-search path, auto-config, etc.
+            // Important requirements to use the SPECIAL CASE GRAPHIC:
+            // 1. Third-party plugins MUST support exporting PNG format.
+            // 2. The hardcoded "{{o}}" MUST ALWAYS be set inside "args".
+            //    You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
+            // All other cases do not need output as file, use "-" or "--" instead.'''),
+                    ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
+                    ('__COMMENT__args_extended', '''
+            // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
+            // To use this, the option "render_extended" above must be activated.
+            // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
+            // image in view and generate the same image in various formats for you.
+            // WARNING: Formatter will loop subprocess to render extended files. This means, process
+            // will takes more time. This option is only recommended for the final step to production.
+            // key:[value,..], where key is the output file extension, value is the command arguments.'''),
+                    ('args_extended', OrderedDict([
+                        ('svg', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'svgv5', '--output', '{{o}}'])),
+                        ('pdf', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'pdf2001', '--output', '{{o}}']))
+                    ]))
                 ])),
                 ('examplemodule', OrderedDict([
                     ('__COMMENT__disable', '''// Plugin activation.
@@ -624,7 +646,7 @@ def build_formatter_sublime_settings(formatter_map):
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file/view.
-            // This option is affected by the same syntax impact, and its solutions
+            // This option is affected by the same syntax conflict, so its solutions
             // are identical to those mentioned above for the "format_on_save" option.'''),
                     ('format_on_paste', False),
                     ('__COMMENT__new_file_on_format', '''
@@ -640,11 +662,11 @@ def build_formatter_sublime_settings(formatter_map):
                     ('__COMMENT__recursive_folder_format', '''
             // Recursively format the entire folder with unlimited depth.
             // This option requires an existing and currently opened file
-            // to serve as the starting point.
+            // to serve as the starting point. Files will be opened and closed.
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // might be useful for renaming at the same time if needed.
+            // can be used for renaming files if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.
@@ -690,12 +712,12 @@ def build_formatter_sublime_settings(formatter_map):
             // Path to the third-party plugin executable to process formatting.
             // This option can be either a string or a list of executable paths.
             // - If this option is omitted or set to null, then the global executable
-            //   on PATH will be used, if found.
+            //   on PATH will be used, if automatically found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
             //   Basename can be with or without dot.extension as both variants are the same.
             //   For example: "fiLe.exe" (Windows only), "fiLe" (Windows + Unix + Linux)
-            // System variable expansions like ${HOME}, ${USER} etc... and the Sublime Text
+            // System variable expansions like ${HOME}, ${USER} etc. and the Sublime Text
             // specific ${packages} can be used to assign paths.
             // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
             // it from the variable expansion "${...}".'''),
@@ -725,6 +747,12 @@ def build_formatter_sublime_settings(formatter_map):
                     ('__COMMENT__args', '''
             // Array of additional arguments for the command line.'''),
                     ('args', NoIndent(['--basedir', './example/my/foo', '--show-bar', 'yes'])),
+                    ('__COMMENT__render_extended', '''
+            // This option is specifically designed for type graphic.
+            // It enables SVG image generation for download.
+            // Enable it if you need SVG beside PNG images at the cost of processing time.
+            // Unlike the generic method, this method only supports SVG generation.'''),
+                    ('render_extended', False),
                     ('__COMMENT__fix_commands', '''
             // Manipulate hardcoded command-line arguments.
             // This option allow you to modify hardcoded parameters, values and
