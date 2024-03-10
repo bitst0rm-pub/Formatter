@@ -822,11 +822,12 @@ cmd = self.fix_cmd(cmd)
 # To quickly perform a formal test on the command.
 is_valid = self.is_valid_cmd(cmd)
 
-# To replace file extension from png to svg to generate SVG file for download.
+# To replace cmd items from "png" to "svg" to generate SVG file for download.
 # This might not always cover all cases and is applicable only to the special
 # case of type: graphic.
 # Note: extended_cmd MUST be executed right before return stdout (=success)!
-extended_cmd = self.ext_png_to_svg_cmd(cmd)
+extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension png->svg
+extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all png>svg
 
 # To process the formatting with all input (fixed) arguments.
 exitcode, stdout, stderr = self.exec_cmd(cmd)

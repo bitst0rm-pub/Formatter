@@ -686,7 +686,7 @@ class Base(Module):
             sublime.set_timeout_async(self.load_config, 100)
 
     @staticmethod
-    def html_phantom(dst_view, image_data, image_width, image_height, extended_data):
+    def set_html_phantom(dst_view, image_data, image_width, image_height, extended_data):
         dst_window = dst_view.window()
         if dst_window.is_minimap_visible():
             dst_window.set_minimap_visible(False)
@@ -707,8 +707,8 @@ class Base(Module):
                 html, body {display: block; margin: 0; padding: 0; text-align: center; border-style: none; width: ''' + str(dst_view.viewport_extent()[0]) + '''px;}
                 .container {display: block; margin: 0 auto; text-align: center; text-decoration: none; font-weight: bold;}
                 .image {margin: 0 auto;}
-                .download-link {margin-top: 0.625rem;}
-                .zoom-link {margin-top: 0.625rem; margin-bottom: 2rem;}
+                .download-link {display: inline; padding: 0 0.25rem;}
+                .zoom-link {margin-top: 0.625rem; margin-bottom: 1rem;}
             </style>
             <div class="container">
                 ''' + image_tag + zoom_link + download_link + ''.join(extended_download_link) + '''
