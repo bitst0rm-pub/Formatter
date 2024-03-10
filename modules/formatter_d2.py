@@ -23,7 +23,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'd2_rc.yaml'
     },
-    'comment': 'uses headless browser to convert images, therefore dark-theme not available.'
+    'comment': 'uses headless browser to convert images, no dark-theme for png.'
 }
 
 
@@ -77,6 +77,14 @@ class D2Formatter(common.Module):
             if exitcode > 0:
                 self.print_exiterr(exitcode, stderr)
             else:
+                cmd = self.ext_png_to_svg_cmd(cmd)
+                log.debug('Current extended arguments: %s', cmd)
+
+                try:
+                    self.exec_cmd(cmd)
+                except Exception as e:
+                    log.error('An error occurred while executing extended cmd: %s Details: %s', cmd, e)
+
                 return stdout
         except OSError:
             self.print_oserr(cmd)

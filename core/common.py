@@ -476,6 +476,10 @@ class Module(object):
     def ext_png_to_svg_cmd(cmd):
         return [x.replace(GFX_OUT_NAME + '.png', GFX_OUT_NAME+ '.svg') for x in cmd]
 
+    @staticmethod
+    def all_png_to_svg_cmd(cmd):
+        return [x.replace('png', 'svg') for x in cmd]
+
     def get_output_image(self):
         temp_dir = self.kwargs.get('temp_dir', None)
         if temp_dir and self.kwargs.get('type', None) == 'graphic':
