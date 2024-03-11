@@ -196,7 +196,7 @@ Both methods with examples are in this settings guide:
     "debug": false,
 
     // Auto open the console panel whenever formatting failed.
-    // This is useful when combined with "debug": true or "status"
+    // This is useful when combined with "debug": "status" or true
     "open_console_on_failure": false,
 
     // Timeout to abort subprocess in seconds.
@@ -232,7 +232,7 @@ Both methods with examples are in this settings guide:
     // Remember and restore cursor position, selections and bookmarks
     // each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
-    // It does not remember the whole session as one might assume.
+    // It does not remember the whole session as name might suggest.
     "remember_session": true,
 
     // Configure the layout when opening new files.
@@ -296,7 +296,7 @@ Both methods with examples are in this settings guide:
             // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.
             "type": "beautifier",
 
-            // This will activate the option "args_extended" of type graphic
+            // This will activate the option "args_extended" for type graphic
             // to generate extended files like SVG to download.
             "render_extended": false,
 
@@ -336,19 +336,19 @@ Both methods with examples are in this settings guide:
             // - "config_path"        : "{{c}}"
             // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
             // Variable substitution offers more advanced mechanisms such as auto-search path, auto-config, etc.
-            // Important requirements to use the SPECIAL CASE GRAPHIC:
+            // Requirements to use the SPECIAL CASE GRAPHIC:
             // 1. Third-party plugins MUST support exporting PNG format.
             // 2. The hardcoded "{{o}}" MUST ALWAYS be set inside "args".
-            //    You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
-            // All other cases do not need output as file, use "-" or "--" instead.
+            //    You might regret using your own path instead of "{{o}}" or daring to omit "{{o}}" in this case.
+            // In all other cases, output may not be as a file; use "-" or "--" instead.
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
 
             // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
             // To use this, the option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
-            // image in view and generate the same image in various formats for you.
+            // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
-            // will takes more time. This option is only recommended for the final step to production.
+            // will takes more time. This option is recommended only for the final step to production.
             // key:[value,..], where key is the output file extension, value is the command arguments.
             "args_extended": {
                 "svg": ["{{e}}", "--config", "{{c}}", "--blabla-format", "svgv5", "--output", "{{o}}"],
@@ -394,7 +394,7 @@ Both methods with examples are in this settings guide:
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // can be used for renaming files if needed.
+            // can be used to rename files if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.
@@ -434,7 +434,7 @@ Both methods with examples are in this settings guide:
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.
             // Alternatively, you can set the basename as the interpreter name to search on
-            // PATH, similar to how it is done with the executable_path option.
+            // PATH, similar to how it is done with the "executable_path" option.
             "interpreter_path": ["${HOME}/example/path/to\\$my/java.exe"],
 
             // Path to the third-party plugin executable to process formatting.
@@ -478,7 +478,7 @@ Both methods with examples are in this settings guide:
 
             // This option is specifically designed for type graphic.
             // It enables SVG image generation for download.
-            // Enable it if you need SVG beside PNG images at the cost of processing time.
+            // Enable it if you need SVG image at the cost of processing time.
             // Unlike the generic method, this method only supports SVG generation.
             "render_extended": false,
 
@@ -738,7 +738,7 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
             if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
                 self.print_exiterr(exitcode, stderr)
             else:
-                # cmd = self.ext_png_to_svg_cmd(cmd)
+                # cmd = self.all_png_to_svg_cmd(cmd)
                 # try:
                 #     self.exec_cmd(cmd)                    # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
                 # except Exception as e:
@@ -819,15 +819,14 @@ cmd = self.fix_cmd(cmd)
 - Essentially for the `def format(self)` function:
 
 ```py
-# To quickly perform a formal test on the command.
+# To quickly test the command.
 is_valid = self.is_valid_cmd(cmd)
 
-# To replace cmd items from "png" to "svg" to generate SVG file for download.
-# This might not always cover all cases and is applicable only to the special
-# case of type: graphic.
+# To replace cmd items to generate SVG file for download.
+# It is applicable only to the special case of type: graphic.
 # Note: extended_cmd MUST be executed right before return stdout (=success)!
-extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension png->svg
-extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all png>svg
+extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension .png -> .svg
+extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
 
 # To process the formatting with all input (fixed) arguments.
 exitcode, stdout, stderr = self.exec_cmd(cmd)

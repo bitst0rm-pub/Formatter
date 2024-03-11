@@ -468,7 +468,7 @@ def build_formatter_sublime_settings(formatter_map):
             ('debug', False),
             ('__COMMENT__open_console_on_failure', '''
     // Auto open the console panel whenever formatting failed.
-    // This is useful when combined with "debug": true or "status"'''),
+    // This is useful when combined with "debug": "status" or true'''),
             ('open_console_on_failure', False),
             ('__COMMENT__timeout', '''
     // Timeout to abort subprocess in seconds.
@@ -504,7 +504,7 @@ def build_formatter_sublime_settings(formatter_map):
     // Remember and restore cursor position, selections and bookmarks
     // each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
-    // It does not remember the whole session as one might assume.'''),
+    // It does not remember the whole session as name might suggest.'''),
             ('remember_session', True),
             ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
@@ -568,7 +568,7 @@ def build_formatter_sublime_settings(formatter_map):
             // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.'''),
                     ('type', 'beautifier'),
                     ('__COMMENT__render_extended', '''
-            // This will activate the option "args_extended" of type graphic
+            // This will activate the option "args_extended" for type graphic
             // to generate extended files like SVG to download.'''),
                     ('render_extended', False),
                     ('__COMMENT__success_code', '''
@@ -608,19 +608,19 @@ def build_formatter_sublime_settings(formatter_map):
             // - "config_path"        : "{{c}}"
             // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
             // Variable substitution offers more advanced mechanisms such as auto-search path, auto-config, etc.
-            // Important requirements to use the SPECIAL CASE GRAPHIC:
+            // Requirements to use the SPECIAL CASE GRAPHIC:
             // 1. Third-party plugins MUST support exporting PNG format.
             // 2. The hardcoded "{{o}}" MUST ALWAYS be set inside "args".
-            //    You will regret using your own path instead of "{{o}}" or daring to omid "{{o}}" in this case.
-            // All other cases do not need output as file, use "-" or "--" instead.'''),
+            //    You might regret using your own path instead of "{{o}}" or daring to omit "{{o}}" in this case.
+            // In all other cases, output may not be as a file; use "-" or "--" instead.'''),
                     ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
                     ('__COMMENT__args_extended', '''
             // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
             // To use this, the option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
-            // image in view and generate the same image in various formats for you.
+            // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
-            // will takes more time. This option is only recommended for the final step to production.
+            // will takes more time. This option is recommended only for the final step to production.
             // key:[value,..], where key is the output file extension, value is the command arguments.'''),
                     ('args_extended', OrderedDict([
                         ('svg', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'svgv5', '--output', '{{o}}'])),
@@ -666,7 +666,7 @@ def build_formatter_sublime_settings(formatter_map):
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // can be used for renaming files if needed.
+            // can be used to rename files if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.
@@ -706,7 +706,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.
             // Alternatively, you can set the basename as the interpreter name to search on
-            // PATH, similar to how it is done with the executable_path option.'''),
+            // PATH, similar to how it is done with the "executable_path" option.'''),
                     ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
                     ('__COMMENT__executable_path', '''
             // Path to the third-party plugin executable to process formatting.
@@ -750,7 +750,7 @@ def build_formatter_sublime_settings(formatter_map):
                     ('__COMMENT__render_extended', '''
             // This option is specifically designed for type graphic.
             // It enables SVG image generation for download.
-            // Enable it if you need SVG beside PNG images at the cost of processing time.
+            // Enable it if you need SVG image at the cost of processing time.
             // Unlike the generic method, this method only supports SVG generation.'''),
                     ('render_extended', False),
                     ('__COMMENT__fix_commands', '''
