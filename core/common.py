@@ -705,7 +705,7 @@ class Base(Module):
         <body id="phantom-body">
             <style>
                 html, body {display: block; margin: 0; padding: 0; text-align: center; border-style: none; width: ''' + str(dst_view.viewport_extent()[0]) + '''px;}
-                .container {display: block; margin: 0 auto; text-align: center; text-decoration: none; font-weight: bold;}
+                .container {display: block; margin: 0 auto; text-align: center; font-weight: bold;}
                 .image {margin: 0 auto;}
                 .download-link {display: inline; padding: 0 0.25rem;}
                 .zoom-link {margin-top: 0.625rem; margin-bottom: 1rem;}

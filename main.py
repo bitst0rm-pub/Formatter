@@ -206,6 +206,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
         'recursive_folder_format': 'Enable Recursive Folder Format',
+        'render_extended': 'Render Extended Images',
         'use_user_settings': 'Reset (persistent User Settings use)',
         'save_quick_options': 'Save (persistent Quick Options use)'
     }
@@ -221,7 +222,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 option_status = '[-]' if config_values else '[x]'
             if key == 'save_quick_options':
                 option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
-            if key in ['debug', 'layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format'] and option_value:
+            if key in ['debug', 'layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format', 'render_extended'] and option_value:
                 option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
             else:
                 option_label = '{} {}'.format(option_status, title)
@@ -345,6 +346,25 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             common.config.setdefault('quick_options', {})['new_file_on_format'] = value
         self.run()
 
+    def show_render_extended_menu(self):
+        uid_list = [uid for uid, formatter in common.config.get('formatters', {}).items() if 'render_extended' in formatter]
+        uid_list.append('<< Back')
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_render_extended_menu_done(uid_list, uid_index))
+
+    def on_render_extended_menu_done(self, uid_list, uid_index):
+        if uid_index != -1:
+            uid_value = uid_list[uid_index]
+            if uid_value == '<< Back':
+                self.show_main_menu()
+            else:
+                current_render_extended = common.config.setdefault('quick_options', {}).get('render_extended', [])
+                if uid_value in current_render_extended:
+                    current_render_extended.remove(uid_value)
+                else:
+                    current_render_extended.append(uid_value)
+                common.config.setdefault('quick_options', {})['render_extended'] = current_render_extended
+                self.run()
+
     def save_quick_options_config(self):
         config_json = common.config.get('quick_options', {})
         self.save_qo_config_file(config_json)
@@ -374,6 +394,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     self.show_format_on_save_menu()
             elif 'Enable New File on Format' in selected_option:
                 self.show_new_file_format_input()
+            elif 'Render Extended Images' in selected_option:
+                self.show_render_extended_menu()
             else:
                 self.toggle_option_status(index)
 
@@ -603,6 +625,10 @@ class SingleFormat(common.Base):
         return image_width, image_height
 
     def get_extended_data(self):
+        if self.is_quick_options_mode():
+            if self.kwargs.get('uid', None) not in self.query(common.config, [], 'quick_options', 'render_extended'):
+                return {}
+
         try:
             extended_data = {}
             image_extensions = ['svg'] if not self.is_generic_method() else list(self.query(common.config, {}, 'formatters', self.kwargs.get('uid', None), 'args_extended').keys())
