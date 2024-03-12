@@ -164,7 +164,7 @@ class Module(object):
 
         return None
 
-    def popen(self, cmd):
+    def popen(self, cmd, stdout=PIPE):
         info = None
         if IS_WINDOWS:
             from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, SW_HIDE
@@ -175,7 +175,7 @@ class Module(object):
             info.wShowWindow = SW_HIDE
 
         # Input cmd must be a list of strings
-        process = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=self.get_pathinfo()['cwd'],
+        process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=self.get_pathinfo()['cwd'],
                         env=self.update_environ(), shell=False, startupinfo=info)
         return process
 
@@ -210,9 +210,9 @@ class Module(object):
         self.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
-    def exec_cmd(self, cmd):
+    def _exec_file_or_pipe_cmd(self, cmd, outfile=None):
         timeout = self.timeout()
-        process = self.popen(cmd)
+        process = self.popen(cmd, outfile or PIPE)
         try:
             stdout, stderr = process.communicate(self.get_text_from_region(self.region).encode('utf-8'), timeout=timeout)
         except TimeoutExpired:
@@ -220,7 +220,16 @@ class Module(object):
             return 1, None, 'Aborted due to expired timeout=%s (adjust this in Formatter settings)' % str(timeout)
 
         self.kill(process)
-        return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
+        return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')
+
+    def exec_cmd(self, cmd, outfile=None):
+        if outfile:
+            with open(outfile, 'wb') as file:
+                returncode, stdout, stderr = self._exec_file_or_pipe_cmd(cmd, file)
+        else:
+            returncode, stdout, stderr = self._exec_file_or_pipe_cmd(cmd)
+
+        return returncode, stdout, stderr
 
     def get_text_from_region(self, region):
         return self.view.substr(region)

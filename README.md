@@ -829,7 +829,11 @@ extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension .png -> .svg
 extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
 
 # To process the formatting with all input (fixed) arguments.
+# stdout as PIPE
 exitcode, stdout, stderr = self.exec_cmd(cmd)
+
+# stdout as file
+exitcode, stdout, stderr = self.exec_cmd(cmd, outfile='/path/to/save/outfile')
 
 # To print formatting exit error.
 self.print_exiterr(exitcode, stderr)
