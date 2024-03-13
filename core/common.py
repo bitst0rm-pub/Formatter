@@ -469,7 +469,11 @@ class Module(object):
         return self.convert_list_items_to_string(args)
 
     def is_render_extended(self):
-        render_extended = self.query(config, False, 'formatters', self.uid, 'render_extended')
+        if self.query(config, {}, 'quick_options'):
+            render_extended = self.uid in self.query(config, False, 'quick_options', 'render_extended')
+        else:
+            render_extended = self.query(config, False, 'formatters', self.uid, 'render_extended')
+
         return isinstance(render_extended, bool) and render_extended
 
     def get_args_extended(self):
