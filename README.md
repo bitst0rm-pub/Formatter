@@ -70,6 +70,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
   - Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
   - `build-in` = do not need to install by end-users.
   - `None` = mostly standalone binary
+  - `Req.` = Requirements might not be up-to-date.
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: | :------: |
@@ -116,6 +117,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | -- | Perl | -- |
 | Pawn | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | -- | PHP 7.4+[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
+| Plantuml | -- | -- | [plantuml](https://github.com/plantuml/plantuml) | Java | -- |
 | Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | -- | Python 3.7+[1] | [[2]](https://python-minifier.com) |
 | R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR)[1] | -- | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
@@ -173,7 +175,7 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Some exotic plugins do not handle input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates: Some exotic, even stupid plugins do not handle input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
@@ -738,11 +740,12 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
             if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
                 self.print_exiterr(exitcode, stderr)
             else:
-                # cmd = self.all_png_to_svg_cmd(cmd)
-                # try:
-                #     self.exec_cmd(cmd)                    # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
-                # except Exception as e:
-                #     log.error('Error: %s', e)
+                # if self.is_render_extended():             # is render extended mode activated?
+                #     cmd = self.all_png_to_svg_cmd(cmd)
+                #     try:
+                #         self.exec_cmd(cmd)                # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
+                #     except Exception as e:
+                #         log.error('Error: %s', e)
 
                 return stdout                               # REQUIRED: return the formatted code on success
         except OSError:
@@ -822,17 +825,17 @@ cmd = self.fix_cmd(cmd)
 # To quickly test the command.
 is_valid = self.is_valid_cmd(cmd)
 
-# To replace cmd items to generate SVG file for download.
+# To replace cmd list items to generate SVG file for download.
 # It is applicable only to the special case of type: graphic.
 # Note: extended_cmd MUST be executed right before return stdout (=success)!
 extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension .png -> .svg
 extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
 
 # To process the formatting with all input (fixed) arguments.
-# stdout as PIPE
+# stdout as PIPE. 99% of plugins use this.
 exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-# stdout as file
+# stdout as file. 1% are stupid ones. Yes, Formatter f them all.
 exitcode, stdout, stderr = self.exec_cmd(cmd, outfile='/path/to/save/outfile')
 
 # To print formatting exit error.
