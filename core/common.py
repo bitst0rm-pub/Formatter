@@ -468,12 +468,13 @@ class Module(object):
         args = self.query(config, None, 'formatters', self.uid, 'args')
         return self.convert_list_items_to_string(args)
 
-    def get_args_extended(self):
-        formatter = self.query(config, {}, 'formatters', self.uid)
-        render_extended = formatter.get('render_extended', False)
+    def is_render_extended(self):
+        render_extended = self.query(config, False, 'formatters', self.uid, 'render_extended')
+        return isinstance(render_extended, bool) and render_extended
 
-        if isinstance(render_extended, bool) and render_extended:
-            args_extended = formatter.get('args_extended', {})
+    def get_args_extended(self):
+        if self.is_render_extended():
+            args_extended = self.query(config, {}, 'formatters', self.uid, 'args_extended')
             valid = {}
             for k, v in args_extended.items():
                 valid[k.strip().lower()] = self.convert_list_items_to_string(v)
