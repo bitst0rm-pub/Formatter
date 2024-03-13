@@ -170,6 +170,8 @@ The `Packages` directory is located in:
 
 ## Configuration
 
+This section is the head of Formatter. The configuration is easy, but the settings explanation is long and very detailed as Formatter does not use any external Wiki.<br/>
+
 Formatter stores third-party plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) in:
 
         Sublime Text > Packages > User > formatter.assets > config
@@ -189,7 +191,10 @@ Starting from version 1.2.0, Formatter provides 2 methods to add third-party plu
 
 Both methods with examples are in this settings guide:
 
-💡 **Tips**: You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
+💡 **Tips**:
+- You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
+- You do not need to install syntax highlighting for a specific plugin; syntaxes like `"text"` or `"plain"` work just as well.
+
 
 ```js
 {
