@@ -100,6 +100,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | -- | None | -- |
 | GraphQL | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
+| Graphviz | -- | -- | [graphviz](https://gitlab.com/graphviz/graphviz) | None | -- |
 | Haskell | [ormolu](https://github.com/tweag/ormolu), [fourmolu](https://github.com/fourmolu/fourmolu)[1], [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell), [floskell](https://github.com/ennocramer/floskell) | -- | -- | Haskell | [[1]](https://fourmolu.github.io) |
 | HCL | [hclfmt](https://github.com/hashicorp/hcl) | -- | -- | None | -- |
 | HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
@@ -194,7 +195,7 @@ Both methods with examples are in this settings guide:
 💡 **Tips**:
 
 - You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
-- You do not need to install syntax highlighting for a specific plugin; syntaxes like `"text"` or `"plain"` work just as well.
+- Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
 
 
 ```js
@@ -318,9 +319,9 @@ Both methods with examples are in this settings guide:
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options.
+            // Same as examplemodule options. Disabled for type graphic.
             "new_file_on_format": false,
-            // Same as examplemodule options.
+            // Same as examplemodule options. Disabled for type graphic.
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -356,7 +357,7 @@ Both methods with examples are in this settings guide:
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
-            // will takes more time. This option is recommended only for the final step to production.
+            // will takes more time. This option might be useful for the final step to production.
             // key:[value,..], where key is the output file extension, value is the command arguments.
             "args_extended": {
                 "svg": ["{{e}}", "--config", "{{c}}", "--blabla-format", "svgv5", "--output", "{{o}}"],

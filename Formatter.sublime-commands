@@ -444,6 +444,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Plantuml ASCII",
+        "command": "run_format",
+        "args": {
+            "uid": "plantumlascii",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Prettier",
         "command": "run_format",
         "args": {
@@ -820,10 +828,26 @@
         }
     },
     {
+        "caption": "Formatter: Visualize with Graphviz",
+        "command": "run_format",
+        "args": {
+            "uid": "graphviz",
+            "type": "graphic"
+        }
+    },
+    {
         "caption": "Formatter: Visualize with Mermaid",
         "command": "run_format",
         "args": {
             "uid": "mermaid",
+            "type": "graphic"
+        }
+    },
+    {
+        "caption": "Formatter: Visualize with Plantuml",
+        "command": "run_format",
+        "args": {
+            "uid": "plantuml",
             "type": "graphic"
         }
     }

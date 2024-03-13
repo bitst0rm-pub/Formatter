@@ -118,9 +118,9 @@
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options.
+            // Same as examplemodule options. Disabled for type graphic.
             "new_file_on_format": false,
-            // Same as examplemodule options.
+            // Same as examplemodule options. Disabled for type graphic.
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -156,7 +156,7 @@
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
-            // will takes more time. This option is recommended only for the final step to production.
+            // will takes more time. This option might be useful for the final step to production.
             // key:[value,..], where key is the output file extension, value is the command arguments.
             "args_extended": {
                 "svg": ["{{e}}", "--config", "{{c}}", "--blabla-format", "svgv5", "--output", "{{o}}"],
@@ -1339,6 +1339,24 @@
             }
             /* requires php on PATH if omit interpreter_path */
         },
+        "plantumlascii": {
+            "info": "https://github.com/plantuml/plantuml",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "recursive_folder_format": {
+                "enable": false,
+                "exclude_folders_regex": [],
+                "exclude_files_regex": [],
+                "exclude_extensions": [],
+                "exclude_syntaxes": []
+            },
+            "syntaxes": ["plantuml"],
+            "interpreter_path": ["/path/to/bin/java.exe"],
+            "executable_path": ["/path/to/bin/plantuml.jar"]
+            /* requires java on PATH if omit interpreter_path. no config, use "args" instead. tips: enable "layout" in Formatter settings for dual-panes-view. */
+        },
         "prettier": {
             "info": "https://github.com/prettier/prettier",
             "disable": true,
@@ -2230,6 +2248,19 @@
             }
             /* uses headless browser to convert images, no dark-theme for png. */
         },
+        "graphviz": {
+            "info": "https://gitlab.com/graphviz/graphviz",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "syntaxes": ["graphviz"],
+            "type": "graphic",
+            "render_extended": false,
+            "executable_path": ["/path/to/bin/dot"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/graphviz_rc.yaml"
+            }
+        },
         "mermaid": {
             "info": "https://github.com/mermaid-js/mermaid-cli",
             "disable": true,
@@ -2243,6 +2274,18 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/mermaid_rc.json"
             }
+        },
+        "plantuml": {
+            "info": "https://github.com/plantuml/plantuml",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "syntaxes": ["plantuml"],
+            "type": "graphic",
+            "render_extended": false,
+            "interpreter_path": ["/path/to/bin/java.exe"],
+            "executable_path": ["/path/to/bin/plantuml.jar"]
+            /* requires java on PATH if omit interpreter_path. no config, use args instead. */
         }
     }
 }

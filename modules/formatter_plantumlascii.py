@@ -21,7 +21,7 @@ MODULE_CONFIG = {
     'interpreter_path': '/path/to/bin/java.exe',
     'executable_path': '/path/to/bin/plantuml.jar',
     'args': None,
-    'comment': 'requires java on PATH if omit interpreter_path. no config, use "args" instead.'
+    'comment': 'requires java on PATH if omit interpreter_path. no config, use "args" instead. tips: enable "layout" in Formatter settings for dual-panes-view.'
 }
 
 

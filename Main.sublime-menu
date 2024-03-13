@@ -504,6 +504,15 @@
                         }
                     },
                     {
+                        "caption": "Plantuml ASCII",
+                        "mnemonic": "P",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "plantumlascii",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Prettier",
                         "mnemonic": "P",
                         "command": "run_format",
@@ -933,11 +942,29 @@
                         }
                     },
                     {
+                        "caption": "Graphviz",
+                        "mnemonic": "G",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "graphviz",
+                            "type": "graphic"
+                        }
+                    },
+                    {
                         "caption": "Mermaid",
                         "mnemonic": "M",
                         "command": "run_format",
                         "args": {
                             "uid": "mermaid",
+                            "type": "graphic"
+                        }
+                    },
+                    {
+                        "caption": "Plantuml",
+                        "mnemonic": "P",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "plantuml",
                             "type": "graphic"
                         }
                     }

@@ -582,9 +582,9 @@ def build_formatter_sublime_settings(formatter_map):
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''// Same as examplemodule options.'''),
                     ('format_on_paste', False),
-                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options. Disabled for type graphic.'''),
                     ('new_file_on_format', False),
-                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options. Disabled for type graphic.'''),
                     ('recursive_folder_format', {}),
                     ('__COMMENT__syntaxes', '''// Same as examplemodule options.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
@@ -620,7 +620,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
-            // will takes more time. This option is recommended only for the final step to production.
+            // will takes more time. This option might be useful for the final step to production.
             // key:[value,..], where key is the output file extension, value is the command arguments.'''),
                     ('args_extended', OrderedDict([
                         ('svg', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'svgv5', '--output', '{{o}}'])),

@@ -1,0 +1,77 @@
+# https://graphviz.org/doc/info/command.html
+# $ dot --help
+# Update: 2024-03-13
+
+# Set graph attribute 'name' to 'val'
+# Gname=val: true or false
+Gfontcolor=red: true
+Glabel="My favorite letters": true
+
+# Set node attribute 'name' to 'val'
+# Nname=val: true or false
+Nfontcolor=red: true
+Nshape=rect: true
+
+# Set edge attribute 'name' to 'val'
+# Ename=val: true or false
+Ecolor=red: true
+Earrowhead=diamond: true
+
+# Set layout engine to 'v' (overrides default based on command name)
+# Kv: true or false
+Kdot: true
+Kneato: false
+Kfdp: false
+Ksfdp: false
+Kcirco: false
+Ktwopi: false
+Knop: false
+Knop2: false
+Kosage: false
+Kpatchwork: false
+
+# Use external library 'v'
+# lv: true or false
+
+# Internally generate a graph of the current plugins.
+# P: true or false
+P: false
+
+# Scale input by 'v' (=72)
+# s[v]: true or false
+
+# Invert y coordinate in output
+# y: true or false
+y: false
+
+# No layout mode 'v' (=1)
+# n[v]: true or false
+n[1]: false
+
+# Reduce graph
+# x: true or false
+x: false
+
+# Don't use grid
+# Lg: true or false
+Lg: false
+
+# Use old attractive force
+# LO: true or false
+LO: false
+
+# Set number of iterations to i
+# Ln<i>: true or false
+
+# Set unscaled factor to i
+# LU<i>: true or false
+
+# Set overlap expansion factor to v
+# LC<v>: true or false
+
+# Set temperature (temperature factor) to v
+# LT[*]<v>: true or false
+
+# Configure plugins (Writes $prefix/lib/graphviz/config
+# with available plugin information. Needs write privilege.)
+# c: true or false
