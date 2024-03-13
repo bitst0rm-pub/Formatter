@@ -117,7 +117,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | -- | Perl | -- |
 | Pawn | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | -- | PHP 7.4+[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
-| Plantuml | -- | -- | [plantuml](https://github.com/plantuml/plantuml) | Java | -- |
+| Plantuml | [plantumlascii](https://github.com/plantuml/plantuml) | -- | [plantuml](https://github.com/plantuml/plantuml) | Java | -- |
 | Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | -- | Python 3.7+[1] | [[2]](https://python-minifier.com) |
 | R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR)[1] | -- | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
