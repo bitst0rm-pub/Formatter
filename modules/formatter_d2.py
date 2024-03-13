@@ -77,13 +77,13 @@ class D2Formatter(common.Module):
             if exitcode > 0:
                 self.print_exiterr(exitcode, stderr)
             else:
-                cmd = self.ext_png_to_svg_cmd(cmd)
-                log.debug('Current extended arguments: %s', cmd)
-
-                try:
-                    self.exec_cmd(cmd)
-                except Exception as e:
-                    log.error('An error occurred while executing extended cmd: %s Details: %s', cmd, e)
+                if self.is_render_extended():
+                    try:
+                        cmd = self.ext_png_to_svg_cmd(cmd)
+                        self.exec_cmd(cmd)
+                        log.debug('Current extended arguments: %s', cmd)
+                    except Exception as e:
+                        log.error('An error occurred while executing extended cmd: %s Details: %s', cmd, e)
 
                 return stdout
         except OSError:
