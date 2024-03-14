@@ -118,9 +118,9 @@
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options. Disabled for type graphic.
+            // Same as examplemodule options. (disabled for type graphic)
             "new_file_on_format": false,
-            // Same as examplemodule options. Disabled for type graphic.
+            // Same as examplemodule options. (disabled for type graphic)
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -316,7 +316,7 @@
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
-        // -- END of explanation, BEGINNING of life --
+        // -- END of explanation --
 
         "appleswiftformat": {
             "info": "https://github.com/apple/swift-format",

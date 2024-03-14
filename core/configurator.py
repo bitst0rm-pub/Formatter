@@ -582,9 +582,9 @@ def build_formatter_sublime_settings(formatter_map):
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''// Same as examplemodule options.'''),
                     ('format_on_paste', False),
-                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options. Disabled for type graphic.'''),
+                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options. (disabled for type graphic)'''),
                     ('new_file_on_format', False),
-                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options. Disabled for type graphic.'''),
+                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options. (disabled for type graphic)'''),
                     ('recursive_folder_format', {}),
                     ('__COMMENT__syntaxes', '''// Same as examplemodule options.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
@@ -780,7 +780,7 @@ def build_formatter_sublime_settings(formatter_map):
                         NoIndent(['--show-bar', 'xxx', 2, 0, -1])
                     ])
                 ])),
-                ('__COMMENT__end_explanation', '''// -- END of explanation, BEGINNING of life --
+                ('__COMMENT__end_explanation', '''// -- END of explanation --
                 ''')
             ]))
         ])

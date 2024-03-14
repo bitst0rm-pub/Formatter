@@ -22,6 +22,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Customizable and extendable through 2 methods to add _your_ custom plugins:
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
   - Modules: Integration of your own modules. _see_ [Development](#development)
+- Zero dependencies for installation.
 - Open source and works offline.
 
 
@@ -36,11 +37,11 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 
-_Formatter in action: Text-to-Text fashion..._
+_Formatter in action: Text-to-Text..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
 
-_Formatter in action: Text-to-Image fashion..._
+_Formatter in action: Text-to-Image..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
 
@@ -171,14 +172,14 @@ The `Packages` directory is located in:
 
 ## Configuration
 
-This section is the head of Formatter. The configuration is easy, but its explanation is long and very detailed.<br/>
+This section is the head of Formatter. While the configuration is easy and self-explained, it still needs a detailed explanation of the underlying principles and context. Hold on for a long text.<br/>
 
 Formatter stores third-party plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) in:
 
         Sublime Text > Packages > User > formatter.assets > config
 
 You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates: Some exotic, even stupid plugins do not handle input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates: Some exotic plugins do not support input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
@@ -319,9 +320,9 @@ Both methods with examples are in this settings guide:
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options. Disabled for type graphic.
+            // Same as examplemodule options. (disabled for type graphic)
             "new_file_on_format": false,
-            // Same as examplemodule options. Disabled for type graphic.
+            // Same as examplemodule options. (disabled for type graphic)
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -517,7 +518,7 @@ Both methods with examples are in this settings guide:
                 ["--show-bar", "xxx", 2, 0, -1] // enough bar, pop it out. ("xxx", 2, 0 irrelevant)
             ]
         },
-        // -- END of explanation, BEGINNING of life --
+        // -- END of explanation --
 
         "stylelint": {  // EXAMPLE: MODULE METHOD
             "info": "https://github.com/stylelint/stylelint",
@@ -839,10 +840,10 @@ extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension .png -> .svg
 extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
 
 # To process the formatting with all input (fixed) arguments.
-# stdout as PIPE. 99% of plugins use this.
+# stdout as PIPE. 99% of plugins use this way.
 exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-# stdout as file. 1% are stupid ones. Yes, Formatter f them all.
+# stdout as file. 1% are just retarded. Yes, Formatter f them all.
 exitcode, stdout, stderr = self.exec_cmd(cmd, outfile='/path/to/save/outfile')
 
 # To print formatting exit error.
