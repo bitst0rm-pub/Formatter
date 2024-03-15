@@ -470,7 +470,7 @@ class Module(object):
 
     def is_render_extended(self):
         if self.query(config, {}, 'quick_options'):
-            render_extended = self.uid in self.query(config, False, 'quick_options', 'render_extended')
+            render_extended = self.uid in self.query(config, [], 'quick_options', 'render_extended')
         else:
             render_extended = self.query(config, False, 'formatters', self.uid, 'render_extended')
 
