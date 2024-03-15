@@ -700,12 +700,21 @@ class Base(Module):
             sublime.set_timeout_async(self.load_config, 100)
 
     @staticmethod
-    def set_html_phantom(dst_view, image_data, image_width, image_height, extended_data):
-        dst_window = dst_view.window()
-        if dst_window.is_minimap_visible():
-            dst_window.set_minimap_visible(False)
-        if dst_view.settings().get('gutter'):
-            dst_view.settings().set('gutter', False)
+    def style_view(dst_view):
+        style = {
+            'highlight_line': False,
+            'highlight_gutter': False,
+            'highlight_line_number': False,
+            'block_caret': False,
+            'gutter': False
+        }
+
+        for k, v in style.items():
+            if dst_view.settings().get(k):
+                dst_view.settings().set(k, v)
+
+    def set_html_phantom(self, dst_view, image_data, image_width, image_height, extended_data):
+        self.style_view(dst_view)
 
         image_tag = '<img class="image" src="data:image/png;base64,' + image_data + '" width="' + str(image_width) + '" height="' + str(image_height) + '">'
         download_link = '<div class="download-link"><a href="data:application/png;base64,' + image_data + '" download>[Save PNG]</a></div>'
