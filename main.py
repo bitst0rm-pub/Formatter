@@ -32,14 +32,6 @@ from .core.formatter import Formatter
 
 log = logging.getLogger(__name__)
 
-SYNC_SCROLL = {
-    'view_pairs': [],
-    'view_src': None,
-    'view_dst': None,
-    'view_active': None,
-    'abort': False
-}
-
 
 def has_package_control():
     if sys.version_info < (3, 4):
@@ -759,7 +751,6 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
 
         dst_view = self.create_or_reuse_view(path, src_view)
         self.copy_content_and_selections(edit, src_view, dst_view)
-        self.sync_scroll_views(src_view, dst_view)
 
         if path:
             self.save_dst_content(dst_view, path)
@@ -793,7 +784,6 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
     def copy_content_and_selections(self, edit, src_view, dst_view):
         # edit is broken again with upgrade to 4166 and beyond:
         # dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
-
         dst_view.run_command('append', {'characters': src_view.substr(sublime.Region(0, src_view.size()))})
 
         selections = list(src_view.sel())
@@ -802,10 +792,6 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
 
         dst_view.set_viewport_position(src_view.viewport_position(), False)
         dst_view.window().focus_view(dst_view)
-
-    def sync_scroll_views(self, src_view, dst_view):
-        SYNC_SCROLL['view_pairs'].append([src_view, dst_view])
-        SYNC_SCROLL['view_pairs'] = self.get_unique(SYNC_SCROLL['view_pairs'])
 
     def save_dst_content(self, view, path):
         allcontent = view.substr(sublime.Region(0, view.size()))
@@ -1055,75 +1041,72 @@ class SequenceFormatThread(threading.Thread, common.Base):
 
 class FormatterListener(sublime_plugin.EventListener, common.Base):
     def __init__(self, *args, **kwargs):
-        self.running = threading.Event()
-        self.scroll_lock = threading.Lock()
-        self.scroll_thread = None
+        self.sync_scroll_lock = threading.Lock()
+        self.sync_scroll_running = False
+        self.sync_scroll_thread = None
 
     def on_load(self, view):
         if view == RecursiveFormat.CONTEXT['new_view']:
             RecursiveFormat(view).next_thread(view, is_ready=False)
 
     def on_activated(self, view):
-        window = view.window()
-        if self.query(common.config, False, 'layout', 'sync_scroll'):
-            do_run = any(view in view_pair for view_pair in SYNC_SCROLL['view_pairs'])
-            self.running.set() if do_run else self.running.clear()  # control pause/resume scrolling
+        if self.query(common.config, False, 'layout', 'sync_scroll') and self.want_layout():
+            self.stop_sync_scroll()
 
-            if window and self.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
-                for view_pair in SYNC_SCROLL['view_pairs']:
-                    if view in view_pair:
-                        SYNC_SCROLL['view_src'], SYNC_SCROLL['view_dst'] = view_pair
-                        SYNC_SCROLL['view_active'] = 'src' if view == SYNC_SCROLL['view_src'] else 'dst'
-                        break
-                self.start_scroll_thread()
+            src_view = self._find_src_view_by_dst_view(view)
+            if src_view:
+                self.start_sync_scroll('src', view, src_view)
+            else:
+                dst_view = self._find_dst_view_by_src_view(view)
+                if dst_view:
+                    self.start_sync_scroll('dst', view, dst_view)
 
-    def start_scroll_thread(self):
-        if not self.scroll_thread or not self.scroll_thread.is_alive():
-            self.scroll_thread = threading.Thread(target=self.sync_scroll)
-            self.scroll_thread.start()
-            log.debug('Starting a thread for scroll synchronization.')
+    def _find_src_view_by_dst_view(self, dst_view):
+        src_view_id = dst_view.settings().get('txt_vref')
+        if src_view_id:
+            for window in sublime.windows():
+                for view in window.views():
+                    if view.id() == src_view_id:
+                        return view
+        return None
 
-    @common.run_once
-    def sync_scroll(self, *args, **kwargs):
-        with self.scroll_lock:
-            self.running.set()  # start running
-            while not SYNC_SCROLL['abort']:
-                if not self.running.is_set():
-                    log.debug('Scroll synchronization paused.')
-                    self.running.wait()  # pause/resume
-                if SYNC_SCROLL['view_active'] and SYNC_SCROLL['view_dst'] and SYNC_SCROLL['view_src']:
-                    if SYNC_SCROLL['view_active'] == 'src':
-                        SYNC_SCROLL['view_dst'].set_viewport_position(SYNC_SCROLL['view_src'].viewport_position(), False)
-                    else:
-                        SYNC_SCROLL['view_src'].set_viewport_position(SYNC_SCROLL['view_dst'].viewport_position(), False)
-                time.sleep(0.25)
+    def _find_dst_view_by_src_view(self, src_view):
+        src_view_id = src_view.id()
+        for window in sublime.windows():
+            for view in window.views():
+                if view.settings().get('txt_vref') == src_view_id:
+                    return view
+        return None
 
-    def set_abort_sync_scroll(self):
-        SYNC_SCROLL['abort'] = True
-        if self.scroll_thread and self.scroll_thread.is_alive():
-            self.running.clear()
-            self.scroll_thread = None
+    def start_sync_scroll(self, target_type, active_view, target_view):
+        with self.sync_scroll_lock:
+            if not self.sync_scroll_running:
+                self.sync_scroll_running = True
+                self.sync_scroll_thread = threading.Thread(target=self.sync_scroll, args=(target_type, active_view, target_view))
+                self.sync_scroll_thread.start()
+
+    def stop_sync_scroll(self):
+        with self.sync_scroll_lock:
+            if self.sync_scroll_thread and self.sync_scroll_thread.is_alive():
+                self.sync_scroll_running = False
+                self.sync_scroll_thread.join()
+
+    def sync_scroll(self, target_type, active_view, target_view):
+        while self.sync_scroll_running:
+            #log.debug('Sync scroll target: %s', target_type)
+            target_view.set_viewport_position(active_view.viewport_position(), False)
+            time.sleep(0.25)
 
     def on_pre_close(self, view):
         def _set_single_layout(window, view):
-            # Auto switching to single layout upon closing the latest view
+            # Auto-switch to single layout upon closing the latest view
             group, _ = window.get_view_index(view)
             if len(window.views_in_group(group)) == 1:
                 sublime.set_timeout(lambda: window.set_layout(self.assign_layout('single')), 0)
 
         window = view.window()
-        if window and self.want_layout() and window.num_groups() == 2 and len(SYNC_SCROLL['view_pairs']) > 0:
-            if self.query(common.config, False, 'layout', 'sync_scroll'):
-                for view_pair in SYNC_SCROLL['view_pairs']:
-                    if view in view_pair:
-                        # Remove pair for sync scroll
-                        SYNC_SCROLL['view_pairs'].remove(view_pair)
-                        break
-
+        if window and self.want_layout() and window.num_groups() == 2:
             _set_single_layout(window, view)
-
-        if view.settings().get('gfx_vref', None):
-            _set_single_layout(window, view)  # for type graphic
 
     def on_post_text_command(self, view, command_name, args):
         if command_name in ['paste', 'paste_and_indent']:
@@ -1215,6 +1198,5 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
     def on_post_save(self, view):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
-            self.set_abort_sync_scroll()
+            self.stop_sync_scroll()
             self.reload_modules(print_tree=False)  # hitting save twice for python < 3.4 (imp.reload upstream bug)
-            self.sync_scroll.reset_run()

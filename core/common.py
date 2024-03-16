@@ -989,18 +989,6 @@ def read_settings_file(settings_file):
     except Exception as e:
         return {}
 
-def run_once(func):
-    def wrapper(*args, **kwargs):
-        if not wrapper.has_run:
-            wrapper.has_run = True
-            return func(*args, **kwargs)
-    wrapper.has_run = False
-
-    def reset_run():
-        wrapper.has_run = False
-    wrapper.reset_run = reset_run
-    return wrapper
-
 # Custom level called STATUS
 STATUS = 42
 logging.addLevelName(STATUS, 'STATUS')
