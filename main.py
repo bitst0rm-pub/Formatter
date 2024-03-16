@@ -198,9 +198,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         'format_on_save': 'Enable Format on Save',
         'new_file_on_format': 'Enable New File on Format',
         'recursive_folder_format': 'Enable Recursive Folder Format',
-        'render_extended': 'Render Extended Images',
-        'use_user_settings': 'Reset (persistent User Settings use)',
-        'save_quick_options': 'Save (persistent Quick Options use)'
+        'render_extended': 'Render Extended Graphics',
+        'use_user_settings': 'Reset',
+        'save_quick_options': 'Save'
     }
 
     def run(self):
@@ -386,7 +386,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     self.show_format_on_save_menu()
             elif 'Enable New File on Format' in selected_option:
                 self.show_new_file_format_input()
-            elif 'Render Extended Images' in selected_option:
+            elif 'Render Extended Graphics' in selected_option:
                 self.show_render_extended_menu()
             else:
                 self.toggle_option_status(index)

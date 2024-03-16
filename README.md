@@ -843,7 +843,7 @@ extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
 # stdout as PIPE. 99% of plugins use this way.
 exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-# stdout as file. 1% are just retarded. Yes, Formatter f them all.
+# stdout as file. 1% are just retarded.
 exitcode, stdout, stderr = self.exec_cmd(cmd, outfile='/path/to/save/outfile')
 
 # To print formatting exit error.
