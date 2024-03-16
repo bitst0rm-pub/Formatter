@@ -578,10 +578,10 @@ class SingleFormat(common.Base):
     def create_or_reuse_view(self):
         path = self.view.file_name()
         src_window = self.view.window()
-        ref = self.view.id()
+        gfx_vref = self.view.id()
 
         for window in sublime.windows():
-            dst_view = next((v for v in window.views() if v.settings().get('ref', None) == ref), None)
+            dst_view = next((v for v in window.views() if v.settings().get('gfx_vref', None) == gfx_vref), None)
 
         if dst_view:
             window.focus_view(dst_view)
@@ -590,7 +590,7 @@ class SingleFormat(common.Base):
         else:
             src_window.focus_group(1)
             dst_view = src_window.new_file(syntax=self.view.settings().get('syntax', None))
-            dst_view.settings().set('ref', ref)
+            dst_view.settings().set('gfx_vref', gfx_vref)
             self.set_graphic_phantom(dst_view)
             dst_view.set_scratch(True)
             if path:
@@ -769,10 +769,10 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
 
     def create_or_reuse_view(self, path, src_view):
         src_window = src_view.window()
-        ref = src_view.id()
+        txt_vref = src_view.id()
 
         for window in sublime.windows():
-            dst_view = next((v for v in window.views() if v.settings().get('ref', None) == ref), None)
+            dst_view = next((v for v in window.views() if v.settings().get('txt_vref', None) == txt_vref), None)
 
         if dst_view:
             window.focus_view(dst_view)
@@ -781,7 +781,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         else:
             src_window.focus_group(1)
             dst_view = src_window.new_file(syntax=src_view.settings().get('syntax', None))
-            dst_view.settings().set('ref', ref)
+            dst_view.settings().set('txt_vref', txt_vref)
             if path:
                 dst_view.retarget(path)
                 dst_view.set_scratch(True)
@@ -1122,7 +1122,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
 
             _set_single_layout(window, view)
 
-        if view.settings().get('ref', None):
+        if view.settings().get('gfx_vref', None):
             _set_single_layout(window, view)  # for type graphic
 
     def on_post_text_command(self, view, command_name, args):
