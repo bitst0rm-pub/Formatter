@@ -571,16 +571,16 @@ class SingleFormat(common.Base):
         src_window = self.view.window()
         gfx_vref = self.view.id()
 
-        for window in sublime.windows():
-            dst_view = next((v for v in window.views() if v.settings().get('gfx_vref', None) == gfx_vref), None)
+        dst_view = next((v for window in sublime.windows() for v in window.views() if v.settings().get('gfx_vref', None) == gfx_vref), None)
 
         if dst_view:
-            window.focus_view(dst_view)
+            dst_view.window().focus_view(dst_view)
             dst_view.set_read_only(False)
             self.set_graphic_phantom(dst_view)
         else:
             src_window.focus_group(1)
-            dst_view = src_window.new_file(syntax=self.view.settings().get('syntax', None))
+            dst_view = src_window.new_file(flags=sublime.TRANSIENT, syntax=self.view.settings().get('syntax', None))
+            dst_view.run_command('append', {'characters': ''})  # assigns a tab
             dst_view.settings().set('gfx_vref', gfx_vref)
             self.set_graphic_phantom(dst_view)
             dst_view.set_scratch(True)
@@ -769,16 +769,16 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         src_window = src_view.window()
         txt_vref = src_view.id()
 
-        for window in sublime.windows():
-            dst_view = next((v for v in window.views() if v.settings().get('txt_vref', None) == txt_vref), None)
+        dst_view = next((v for window in sublime.windows() for v in window.views() if v.settings().get('txt_vref', None) == txt_vref), None)
 
         if dst_view:
-            window.focus_view(dst_view)
+            dst_view.window().focus_view(dst_view)
             dst_view.run_command('select_all')
             dst_view.run_command('right_delete')
         else:
             src_window.focus_group(1)
-            dst_view = src_window.new_file(syntax=src_view.settings().get('syntax', None))
+            dst_view = src_window.new_file(flags=sublime.TRANSIENT, syntax=src_view.settings().get('syntax', None))
+            dst_view.run_command('append', {'characters': ''})  # assigns a tab
             dst_view.settings().set('txt_vref', txt_vref)
             if path:
                 dst_view.retarget(path)
