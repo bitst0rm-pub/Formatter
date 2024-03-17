@@ -1087,9 +1087,11 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
 
     def stop_sync_scroll(self):
         with self.sync_scroll_lock:
+            self.sync_scroll_running = False
             if self.sync_scroll_thread and self.sync_scroll_thread.is_alive():
-                self.sync_scroll_running = False
-                self.sync_scroll_thread.join()
+                self.sync_scroll_thread.join(timeout=0.4)
+                if self.sync_scroll_thread.is_alive():
+                    self.sync_scroll_thread = None
 
     def sync_scroll(self, target_type, active_view, target_view):
         while self.sync_scroll_running:
@@ -1199,4 +1201,4 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         if common.config.get('debug') and common.config.get('dev'):
             # For development only
             self.stop_sync_scroll()
-            self.reload_modules(print_tree=False)  # hitting save twice for python < 3.4 (imp.reload upstream bug)
+            self.reload_modules(print_tree=False)
