@@ -18,7 +18,6 @@ import tempfile
 import traceback
 import importlib
 import threading
-import urllib.request
 from datetime import datetime
 
 import sublime
@@ -665,10 +664,14 @@ class SingleFormat(common.Base):
             save_path = os.path.join(self.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
-                urllib.request.urlretrieve(href, save_path)
+                mime_type, base64_data = href.split(',', 1)
+                decoded_data = base64.b64decode(base64_data)
+                with open(save_path, 'wb') as f:
+                    f.write(decoded_data)
+
                 self.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
             except Exception as e:
-                self.popup_message('Could not save file:\n%s' % save_path, 'ERROR')
+                self.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
     def get_layout_and_suffix(self, uid, mode):
         if mode == 'qo':
@@ -731,10 +734,14 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
             save_path = os.path.join(self.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
-                urllib.request.urlretrieve(href, save_path)
+                mime_type, base64_data = href.split(',', 1)
+                decoded_data = base64.b64decode(base64_data)
+                with open(save_path, 'wb') as f:
+                    f.write(decoded_data)
+
                 self.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
             except Exception as e:
-                self.popup_message('Could not save file:\n%s' % save_path, 'ERROR')
+                self.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
     def find_view_by_id(self, dst_view_id):
         for window in sublime.windows():
