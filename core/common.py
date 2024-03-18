@@ -713,28 +713,32 @@ class Base(Module):
             if dst_view.settings().get(k):
                 dst_view.settings().set(k, v)
 
-    def set_html_phantom(self, dst_view, image_data, image_width, image_height, extended_data):
+    def set_html_phantom(self, dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data):
         self.style_view(dst_view)
 
-        image_tag = '<img class="image" src="data:image/png;base64,' + image_data + '" width="' + str(image_width) + '" height="' + str(image_height) + '">'
-        download_link = '<div class="download-link"><a href="data:application/png;base64,' + image_data + '" download>[Save PNG]</a></div>'
-        zoom_link = '<div class="zoom-link"><a href="zoom_image">[Zoom]</a></div>'
+        image_tag = '<img class="image" src="data:image/png;base64,' + image_data + '" width="' + str(fit_image_width) + '" height="' + str(fit_image_height) + '">'
+        dimension = '<div class="image-dimension"><span class="dimension-text">' + str(image_width) + ' x ' + str(image_height) + '</span></div>'
+        zoom_link = '<div class="zoom-link"><span class="button"><a href="zoom_image">Zoom</a></span></div>'
+        download_link = '<div class="download-link"><span class="button"><a href="data:application/png;base64,' + image_data + '" download>Save PNG</a></span></div>'
 
         extended_download_link = []
         for ext, image_data in extended_data.items():
-            extended_download_link.append('<div class="download-link"><a href="data:application/' + ext + ';base64,' + image_data + '" download>[Save ' + ext.upper() + ']</a></div>')
+            extended_download_link.append('<div class="download-link"><span class="button"><a href="data:application/' + ext + ';base64,' + image_data + '" download>Save ' + ext.upper() + '</a></span></div>')
 
         html = '''
         <body id="phantom-body">
             <style>
-                html, body {display: block; margin: 0; padding: 0; text-align: center; border-style: none; width: ''' + str(dst_view.viewport_extent()[0]) + '''px;}
-                .container {display: block; margin: 0 auto; text-align: center; font-weight: bold;}
-                .image {margin: 0 auto;}
-                .download-link {display: inline; padding: 0 0.25rem;}
-                .zoom-link {margin-top: 0.625rem; margin-bottom: 1rem;}
+                html, body {display:block;margin:0;padding:0;text-align:center;border-style:none;width:''' + str(dst_view.viewport_extent()[0]) + '''px;}
+                .container {display:block;margin:0 auto;text-align:center;font-weight:bold;padding-bottom:1rem;}
+                .image {margin:0 auto;}
+                a {text-decoration:none;color:#FF8C00;}
+                span.button {border:1px solid #FF8C00;border-radius:0.313rem;padding:.125rem .375rem;}
+                .image-dimension {font-weight:normal;font-size:0.8rem;margin-top:1rem;}
+                .zoom-link {margin-top:.625rem;margin-bottom:1.125rem;}
+                .download-link {display:inline;padding:0 .313rem;}
             </style>
             <div class="container">
-                ''' + image_tag + zoom_link + download_link + ''.join(extended_download_link) + '''
+                ''' + image_tag + dimension + zoom_link + download_link + ''.join(extended_download_link) + '''
             </div>
         </body>
         '''

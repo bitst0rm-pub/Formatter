@@ -643,10 +643,10 @@ class SingleFormat(common.Base):
                 image_width, image_height = self.get_image_size(data)
                 image_data = base64.b64encode(data).decode('utf-8')
 
-            image_width, image_height = self.image_scale_fit(dst_view, image_width, image_height)
+            fit_image_width, fit_image_height = self.image_scale_fit(dst_view, image_width, image_height)
             extended_data = self.get_extended_data()
 
-            html = self.set_html_phantom(dst_view, image_data, image_width, image_height, extended_data)
+            html = self.set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
             data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
             dst_view.erase_phantoms('graphic')
@@ -718,7 +718,7 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
             dst_view = self.find_view_by_id(dst_view_id) or self.window.active_view()
 
             try:
-                html = super().set_html_phantom(dst_view, image_data, image_width * zoom_factor, image_height * zoom_factor, extended_data)
+                html = super().set_html_phantom(dst_view, image_data, image_width, image_height, image_width * zoom_factor, image_height * zoom_factor, extended_data)
                 data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
                 dst_view.erase_phantoms('graphic')
