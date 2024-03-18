@@ -11,7 +11,6 @@ import time
 import json
 import shutil
 import base64
-import struct
 import logging
 import zipfile
 import tempfile
@@ -589,32 +588,6 @@ class SingleFormat(common.Base):
 
         dst_view.set_read_only(True)
 
-    @staticmethod
-    def get_image_size(data):
-        if data.startswith(b'\211PNG\r\n\032\n') and (data[12:16] == b'IHDR'):
-            width, height = struct.unpack('>LL', data[16:24])
-            return int(width), int(height)
-        elif data.startswith(b'\211PNG\r\n\032\n'):
-            width, height = struct.unpack('>LL', data[8:16])
-            return int(width), int(height)
-        else:
-            return None, None
-
-    @staticmethod
-    def image_scale_fit(view, image_width, image_height):
-        image_width = image_width or 100  # default to 100 if None
-        image_height = image_height or 100
-        scrollbar_width = 20  # adjust this if needed
-
-        view_width, view_height = view.viewport_extent()
-        width_scale = view_width / image_width
-        height_scale = view_height / image_height
-        scale_factor = min(width_scale, height_scale)
-        image_width = round(int(image_width * scale_factor)) - scrollbar_width
-        image_height = round(int(image_height * scale_factor)) - scrollbar_width
-
-        return image_width, image_height
-
     def get_extended_data(self):
         if self.is_quick_options_mode():
             if self.kwargs.get('uid', None) not in self.query(common.config, [], 'quick_options', 'render_extended'):
@@ -696,7 +669,7 @@ class ReplaceViewContentCommand(sublime_plugin.TextCommand):
 
 
 class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
-    ZOOM_LEVELS = ['10%', '25%', '50%', '75%', '100%', '125%', '150%', '175%', '200%', '225%', '250%', '275%', '300%', '325%', '350%', '375%', '400%']
+    ZOOM_LEVELS = ['Fit', '10%', '25%', '50%', '75%', '100%', '125%', '150%', '175%', '200%', '225%', '250%', '275%', '300%', '325%', '350%', '375%', '400%']
 
     def run(self, **kwargs):
         self.window.show_quick_panel(self.ZOOM_LEVELS, lambda index: self.on_done(index, **kwargs))
@@ -704,7 +677,7 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
     def on_done(self, index, **kwargs):
         if index != -1:
             zoom_level = self.ZOOM_LEVELS[index]
-            if zoom_level == '100%' or zoom_level == '-100%':
+            if zoom_level == 'Fit' or zoom_level == '100%' or zoom_level == '-100%':
                 zoom_factor = 1.0
             else:
                 zoom_factor = float(zoom_level[:-1]) / 100
@@ -716,9 +689,14 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
             extended_data = kwargs.get('extended_data')
 
             dst_view = self.find_view_by_id(dst_view_id) or self.window.active_view()
+            if zoom_level == 'Fit':
+                fit_image_width, fit_image_height = self.image_scale_fit(dst_view, image_width, image_height)
+            else:
+                fit_image_width = image_width * zoom_factor
+                fit_image_height = image_height * zoom_factor
 
             try:
-                html = super().set_html_phantom(dst_view, image_data, image_width, image_height, image_width * zoom_factor, image_height * zoom_factor, extended_data)
+                html = super().set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
                 data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
                 dst_view.erase_phantoms('graphic')

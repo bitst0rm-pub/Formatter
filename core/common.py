@@ -11,6 +11,7 @@ import sys
 import json
 import time
 import shutil
+import struct
 import hashlib
 import logging
 import tempfile
@@ -743,6 +744,32 @@ class Base(Module):
         </body>
         '''
         return html
+
+    @staticmethod
+    def get_image_size(data):
+        if data.startswith(b'\211PNG\r\n\032\n') and (data[12:16] == b'IHDR'):
+            width, height = struct.unpack('>LL', data[16:24])
+            return int(width), int(height)
+        elif data.startswith(b'\211PNG\r\n\032\n'):
+            width, height = struct.unpack('>LL', data[8:16])
+            return int(width), int(height)
+        else:
+            return None, None
+
+    @staticmethod
+    def image_scale_fit(view, image_width, image_height):
+        image_width = image_width or 100  # default to 100 if None
+        image_height = image_height or 100
+        scrollbar_width = 20  # adjust this if needed
+
+        view_width, view_height = view.viewport_extent()
+        width_scale = view_width / image_width
+        height_scale = view_height / image_height
+        scale_factor = min(width_scale, height_scale)
+        image_width = round(int(image_width * scale_factor)) - scrollbar_width
+        image_height = round(int(image_height * scale_factor)) - scrollbar_width
+
+        return image_width, image_height
 
     def is_generic_method(self):
         name = self.query(config, None, 'formatters', self.kwargs.get('uid'), 'name')
