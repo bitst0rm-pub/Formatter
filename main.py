@@ -38,9 +38,10 @@ def has_package_control():
         loader = importlib.util.find_spec('package_control')
     return loader is not None
 
-def copyfiles(api):
+def merge(api):
     packages_path = sublime.packages_path()
     custom_modules = common.config.get('custom_modules', {})
+    seen = set()
 
     for k, v in custom_modules.items():
         if k in ['config', 'modules', 'libs'] and isinstance(v, list):
@@ -54,20 +55,24 @@ def copyfiles(api):
                     dst_md5 = api.md5f(dst) if os.path.exists(dst) else None
                     if src_md5 != dst_md5:
                         shutil.copy2(src, dst, follow_symlinks=True)
+                        seen.add(True)
                 elif os.path.isdir(src):
                     src_sum = api.md5d(src)
                     dst_sum = api.md5d(dst) if os.path.exists(dst) else None
                     if src_sum != dst_sum:
                         try:
                             shutil.copytree(src, dst)
+                            seen.add(True)
                         except FileExistsError:
                             shutil.rmtree(dst)
                             shutil.copytree(src, dst)
+                            seen.add(True)
+
+    if any(seen):
+        api.reload_modules(print_tree=False)
 
 def entry(api):
-    copyfiles(api)
-    api.reload_modules(print_tree=False)
-
+    merge(api)
     api.remove_junk()
     ready = configurator.create_package_config_files()
     if ready:
@@ -85,11 +90,11 @@ def plugin_loaded():
 
     if has_package_control():
         from package_control import events
-        if events.post_upgrade(common.PACKAGE_NAME):
-            sublime.set_timeout_async(lambda: entry(api), 150)
+        if events.install(common.PACKAGE_NAME) or events.post_upgrade(common.PACKAGE_NAME):
+            sublime.set_timeout_async(lambda: entry(api), 100)
             done = True
     if not done:
-        sublime.set_timeout_async(lambda: entry(api), 150)
+        sublime.set_timeout_async(lambda: entry(api), 100)
 
 
 class ShowVersionCommand(sublime_plugin.WindowCommand):
@@ -464,7 +469,7 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
     def run_recursive_formatting(self, **kwargs):
         if self.view.file_name():
             with threading.Lock():
-                log.debug('Starting the main thread for recursive folder formatting ...')
+                log.debug('Starting recursive formatting ...')
                 recursive_format = RecursiveFormat(self.view, **kwargs)
                 recursive_format_thread = threading.Thread(target=recursive_format.run)
                 recursive_format_thread.start()
@@ -473,7 +478,7 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
 
     def run_single_formatting(self, **kwargs):
         with threading.Lock():
-            log.debug('Starting the main thread for single file formatting ...')
+            log.debug('Starting single file formatting ...')
             single_format = SingleFormat(self.view, **kwargs)
             single_format_thread = threading.Thread(target=single_format.run)
             single_format_thread.start()
@@ -579,7 +584,7 @@ class SingleFormat(common.Base):
         else:
             src_window.focus_group(1)
             dst_view = src_window.new_file(flags=sublime.TRANSIENT, syntax=self.view.settings().get('syntax', None))
-            dst_view.run_command('append', {'characters': ''})  # assigns a tab
+            dst_view.run_command('append', {'characters': ''})  # magic to assign a tab
             dst_view.settings().set('gfx_vref', gfx_vref)
             self.set_graphic_phantom(dst_view)
             dst_view.set_scratch(True)
@@ -756,7 +761,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         else:
             src_window.focus_group(1)
             dst_view = src_window.new_file(flags=sublime.TRANSIENT, syntax=src_view.settings().get('syntax', None))
-            dst_view.run_command('append', {'characters': ''})  # assigns a tab
+            dst_view.run_command('append', {'characters': ''})  # magic to assign a tab
             dst_view.settings().set('txt_vref', txt_vref)
             if path:
                 dst_view.retarget(path)
