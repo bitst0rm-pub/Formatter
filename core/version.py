@@ -5,4 +5,4 @@
 # @link         https://github.com/bitst0rm
 # @license      The MIT License (MIT)
 
-__version__ = '1.3.1'
+__version__ = '1.3.2'
