@@ -354,11 +354,11 @@ class Module(object):
             return local_executable
 
         user_and_global_executable = self._get_path_for('executable')
-        return user_and_global_executable if user_and_global_executable else None
+        return user_and_global_executable or None
 
     def get_interpreter(self):
         user_and_global_interpreter = self._get_path_for('interpreter')
-        return user_and_global_interpreter if user_and_global_interpreter else None
+        return user_and_global_interpreter or None
 
     def get_combo_cmd(self, runtime_type=None):
         user_files = self.query(config, None, 'formatters', self.uid, 'interpreter_path')
