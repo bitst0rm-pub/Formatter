@@ -392,7 +392,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/autopep8_rc.cfg"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "beautysh": {
             "info": "https://github.com/lovesegfault/beautysh",
@@ -412,7 +412,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/beautysh_rc.json"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "bibtextidy": {
             "info": "https://github.com/FlamingTempura/bibtex-tidy",
@@ -452,7 +452,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/black_rc.toml"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "cabalfmt": {
             "info": "https://github.com/phadej/cabal-fmt",
@@ -547,7 +547,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/cmakeformat_rc.py"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "crystal": {
             "info": "https://github.com/crystal-lang/crystal",
@@ -674,7 +674,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/docformatter_rc.toml"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "dockfmt": {
             "info": "https://github.com/jessfraz/dockfmt",
@@ -900,7 +900,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/fprettify_rc.cfg"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "gleam": {
             "info": "https://github.com/gleam-lang/gleam",
@@ -1065,7 +1065,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/isort_rc.toml"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "jsbeautifier": {
             "info": "https://github.com/beautify-web/js-beautify",
@@ -1201,7 +1201,7 @@
             "syntaxes": ["nginx"],
             "executable_path": ["/path/to/bin/nginxfmt"],
             "args": ["--indent", "4"]
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. no config, use args instead */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. no config, use args instead. requires python on PATH if omit interpreter_path */
         },
         "ocamlformat": {
             "info": "https://github.com/ocaml-ppx/ocamlformat",
@@ -1297,7 +1297,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/pg_format_rc.cfg"
             }
-            /* requires Perl on PATH if omit interpreter_path */
+            /* requires perl on PATH if omit interpreter_path */
         },
         "phpcbf": {
             "info": "https://github.com/squizlabs/PHP_CodeSniffer",
@@ -1454,7 +1454,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/pyment_rc.cfg"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "racofmt": {
             "info": "https://github.com/sorawee/fmt",
@@ -1492,7 +1492,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
-            /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]} */
+            /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. requires ruby on PATH if omit interpreter_path */
         },
         "rubyfmt": {
             "info": "https://github.com/fables-tales/rubyfmt",
@@ -1545,7 +1545,7 @@
             },
             "syntaxes": ["ruby"],
             "executable_path": ["/path/to/bin/rufo"]
-            /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config */
+            /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config. requires ruby on PATH if omit interpreter_path */
         },
         "rustfmt": {
             "info": "https://github.com/rust-lang/rustfmt",
@@ -1699,7 +1699,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/sqlparse_rc.yaml"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "standardjs": {
             "info": "https://github.com/standard/standard",
@@ -1733,7 +1733,7 @@
             },
             "syntaxes": ["ruby"],
             "executable_path": ["/path/to/bin/standardrb"]
-            /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config */
+            /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config. requires ruby on PATH if omit interpreter_path. */
         },
         "standardxjs": {
             "info": "https://github.com/standard/standardx",
@@ -2022,7 +2022,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/yapf_rc.yapf"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}, requires python on PATH if omit interpreter_path */
         },
         "zigfmt": {
             "info": "https://github.com/ziglang/zig",
@@ -2156,7 +2156,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/python_minifier_rc.json"
             }
-            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]} */
+            /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
         "shfmtmin": {
             "info": "https://github.com/mvdan/sh",
