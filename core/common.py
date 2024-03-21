@@ -361,7 +361,11 @@ class Module(object):
         return user_and_global_interpreter if user_and_global_interpreter else None
 
     def get_combo_cmd(self, runtime_type=None):
-        cmd = [self.get_interpreter(), self.get_executable(runtime_type)]
+        user_files = self.query(config, None, 'formatters', self.uid, 'interpreter_path')
+        if user_files:
+            cmd = [self.get_interpreter(), self.get_executable(runtime_type)]
+        else:
+            cmd = [self.get_executable(runtime_type)]
         cmd.extend(self.get_args())
         return cmd if all(cmd) else None
 
