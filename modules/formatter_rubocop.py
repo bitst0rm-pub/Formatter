@@ -23,7 +23,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'rubocop_rc.yml'
     },
-    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}'
+    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. requires ruby on PATH if omit interpreter_path'
 }
 
 

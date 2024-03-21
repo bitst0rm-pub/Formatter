@@ -24,7 +24,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'pg_format_rc.cfg'
     },
-    'comment': 'requires Perl on PATH if omit interpreter_path'
+    'comment': 'requires perl on PATH if omit interpreter_path'
 }
 
 

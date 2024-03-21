@@ -21,7 +21,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/bin/standardrb',
     'args': None,
     'config_path': None,
-    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config'
+    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config. requires ruby on PATH if omit interpreter_path.'
 }
 
 

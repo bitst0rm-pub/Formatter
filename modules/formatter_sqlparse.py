@@ -24,7 +24,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'sqlparse_rc.yaml'
     },
-    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}'
+    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path'
 }
 
 
