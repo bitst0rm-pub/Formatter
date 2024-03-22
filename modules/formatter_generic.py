@@ -96,11 +96,12 @@ class GenericFormatter(common.Module):
 
             if exitcode == self.get_success_code():
 
-                for cmd in self.get_extended_cmd():
-                    try:
-                        self.exec_cmd(cmd)
-                    except Exception as e:
-                        log.error('An error occurred while executing extended cmd: %s', e)
+                if self.kwargs.get('type') == 'graphic':
+                    for cmd in self.get_extended_cmd():
+                        try:
+                            self.exec_cmd(cmd)
+                        except Exception as e:
+                            log.error('An error occurred while executing extended cmd: %s', e)
 
                 return stdout
             else:
