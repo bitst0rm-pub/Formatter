@@ -271,7 +271,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 self.run()
 
     def show_prioritize_project_config_menu(self):
-        uid_list = list(common.config.get('formatters', {}).keys())
+        uid_list = [key for key in common.config.get('formatters', {}).keys()
+                    if 'name' not in common.config.get('formatters', {}).get(key, {})  # exclude generic methods
+                    and 'type' not in common.config.get('formatters', {}).get(key, {})]
         uid_list.append('<< Back')
         self.window.show_quick_panel(uid_list, lambda uid_index: self.on_prioritize_project_config_menu_done(uid_list, uid_index))
 
