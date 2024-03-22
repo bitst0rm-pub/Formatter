@@ -762,8 +762,8 @@ class Base(Module):
 
     @staticmethod
     def image_scale_fit(view, image_width, image_height):
-        image_width = image_width or 100  # default to 100 if None
-        image_height = image_height or 100
+        image_width = image_width or 300  # default to 300 if None
+        image_height = image_height or 300
         scrollbar_width = 20  # adjust this if needed
 
         view_width, view_height = view.viewport_extent()
@@ -1024,7 +1024,7 @@ def read_settings_file(settings_file):
     except Exception as e:
         return {}
 
-# Custom level called STATUS
+# Custom level STATUS
 STATUS = 42
 logging.addLevelName(STATUS, 'STATUS')
 
