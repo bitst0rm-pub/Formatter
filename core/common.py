@@ -281,10 +281,12 @@ class Module(object):
         return parent_folders
 
     def set_generic_local_executables(self):
-        if self.is_generic_mode() and isinstance(path := self.query(config, None, 'formatters', self.uid, 'executable_path'), list):
-            self.executables = [self.get_pathinfo(p)['base'] for p in path]
-        elif isinstance(path, str):
-            self.executables = [self.get_pathinfo(path)['base']]
+        if self.is_generic_mode():
+            path = self.query(config, None, 'formatters', self.uid, 'executable_path')
+            if isinstance(path, list):
+                self.executables = [self.get_pathinfo(p)['base'] for p in path]
+            elif isinstance(path, str):
+                self.executables = [self.get_pathinfo(path)['base']]
 
     def get_local_executable(self, runtime_type=None):
         self.set_generic_local_executables()
