@@ -18,6 +18,7 @@ import traceback
 import importlib
 import threading
 from datetime import datetime
+from collections import OrderedDict
 
 import sublime
 import sublime_plugin
@@ -193,40 +194,93 @@ class ConfigManagerCommand(sublime_plugin.WindowCommand, common.Base):
 
 
 class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
-    option_mapping = {
-        'debug': 'Enable Debug',
-        'layout': 'Choose Layout',
-        'prioritize_project_config': 'Prioritize Per-project Config',
-        'format_on_paste': 'Enable Format on Paste',
-        'format_on_save': 'Enable Format on Save',
-        'new_file_on_format': 'Enable New File on Format',
-        'recursive_folder_format': 'Enable Recursive Folder Format',
-        'render_extended': 'Render Extended Graphics',
-        'use_user_settings': 'Reset',
-        'save_quick_options': 'Save'
-    }
+    option_mapping = OrderedDict([
+        ('debug', 'Enable Debug'),
+        ('layout', 'Choose Layout'),
+        ('prioritize_project_config', 'Prioritize Per-project Config'),
+        ('format_on_paste', 'Enable Format on Paste'),
+        ('format_on_save', 'Enable Format on Save'),
+        ('new_file_on_format', 'Enable New File on Format'),
+        ('recursive_folder_format', 'Enable Recursive Folder Format'),
+        ('render_extended', 'Render Extended Graphics'),
+        ('use_user_settings', 'Reset'),
+        ('save_quick_options', 'Save')
+    ])
 
     def run(self):
         self.options = []
         config_values = common.config.get('quick_options', {})
-
         for key, title in self.option_mapping.items():
-            option_value = config_values.get(key, False)
-            option_status = '[x]' if option_value else '[-]'
-            if key == 'use_user_settings':
-                option_status = '[-]' if config_values else '[x]'
-            if key == 'save_quick_options':
-                option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
-            if key in ['debug', 'layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format', 'render_extended'] and option_value:
-                option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
-            else:
-                option_label = '{} {}'.format(option_status, title)
+            option_label = self.get_option_label(key, title, config_values)
             self.options.append(option_label)
-
         self.show_main_menu()
+
+    def get_option_label(self, key, title, config_values):
+        option_value = config_values.get(key, False)
+        option_status = '[x]' if option_value else '[-]'
+        if key == 'use_user_settings':
+            option_status = '[-]' if config_values else '[x]'
+        if key == 'save_quick_options':
+            option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
+        if key in ['debug', 'layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format', 'render_extended'] and option_value:
+            option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
+        else:
+            option_label = '{} {}'.format(option_status, title)
+        return option_label
 
     def show_main_menu(self):
         self.window.show_quick_panel(self.options, self.on_done)
+
+    def on_done(self, index):
+        if index != -1:
+            selected_option = list(self.option_mapping.keys())[index]
+            action_method = self.get_action_method(selected_option)
+            if action_method:
+                action_method()
+            else:
+                self.toggle_option_status(index)
+
+    def get_action_method(self, selected_option):
+        action_methods = {
+            'debug': self.show_debug_menu,
+            'layout': self.show_layout_menu,
+            'prioritize_project_config': self.show_prioritize_project_config_menu,
+            'format_on_paste': self.show_format_on_menu('format_on_paste', 'Format on Paste is not compatible with an enabled Recursive Folder Format.'),
+            'format_on_save': self.show_format_on_menu('format_on_save', 'Format on Save is not compatible with an enabled Recursive Folder Format.'),
+            'new_file_on_format': self.show_new_file_format_input,
+            'render_extended': self.show_render_extended_menu,
+        }
+        return action_methods.get(selected_option, None)
+
+    def show_format_on_menu(self, option_key, error_message):
+        def handler():
+            is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
+            if is_rff_on:
+                self.popup_message(error_message, 'ERROR')
+                self.run()
+            else:
+                self.show_format_menu(option_key)
+
+        return handler
+
+    def show_format_menu(self, option_key):
+        uid_list = list(common.config.get('formatters', {}).keys())
+        uid_list.append('<< Back')
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_menu_done(uid_list, uid_index, option_key))
+
+    def on_format_menu_done(self, uid_list, uid_index, option_key):
+        if uid_index != -1:
+            uid_value = uid_list[uid_index]
+            if uid_value == '<< Back':
+                self.show_main_menu()
+            else:
+                current_format_option = common.config.setdefault('quick_options', {}).get(option_key, [])
+                if uid_value in current_format_option:
+                    current_format_option.remove(uid_value)
+                else:
+                    current_format_option.append(uid_value)
+                common.config.setdefault('quick_options', {})[option_key] = current_format_option
+                self.run()
 
     def show_debug_menu(self):
         debugs = ['true', 'status', 'false', '<< Back']
@@ -271,9 +325,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 self.run()
 
     def show_prioritize_project_config_menu(self):
-        uid_list = [key for key in common.config.get('formatters', {}).keys()
-                    if 'name' not in common.config.get('formatters', {}).get(key, {})  # exclude generic methods
-                    and 'type' not in common.config.get('formatters', {}).get(key, {})]
+        f = common.config.get('formatters', {})
+        uid_list = [key for key in f.keys() if 'name' not in f.get(key, {}) and 'type' not in f.get(key, {})]  # exclude generic methods
         uid_list.append('<< Back')
         self.window.show_quick_panel(uid_list, lambda uid_index: self.on_prioritize_project_config_menu_done(uid_list, uid_index))
 
@@ -289,44 +342,6 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 else:
                     current_prioritize_project_config.append(uid_value)
                 common.config.setdefault('quick_options', {})['prioritize_project_config'] = current_prioritize_project_config
-                self.run()
-
-    def show_format_on_paste_menu(self):
-        uid_list = list(common.config.get('formatters', {}).keys())
-        uid_list.append('<< Back')
-        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_paste_menu_done(uid_list, uid_index))
-
-    def on_format_on_paste_menu_done(self, uid_list, uid_index):
-        if uid_index != -1:
-            uid_value = uid_list[uid_index]
-            if uid_value == '<< Back':
-                self.show_main_menu()
-            else:
-                current_format_on_paste = common.config.setdefault('quick_options', {}).get('format_on_paste', [])
-                if uid_value in current_format_on_paste:
-                    current_format_on_paste.remove(uid_value)
-                else:
-                    current_format_on_paste.append(uid_value)
-                common.config.setdefault('quick_options', {})['format_on_paste'] = current_format_on_paste
-                self.run()
-
-    def show_format_on_save_menu(self):
-        uid_list = list(common.config.get('formatters', {}).keys())
-        uid_list.append('<< Back')
-        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_format_on_save_menu_done(uid_list, uid_index))
-
-    def on_format_on_save_menu_done(self, uid_list, uid_index):
-        if uid_index != -1:
-            uid_value = uid_list[uid_index]
-            if uid_value == '<< Back':
-                self.show_main_menu()
-            else:
-                current_format_on_save = common.config.setdefault('quick_options', {}).get('format_on_save', [])
-                if uid_value in current_format_on_save:
-                    current_format_on_save.remove(uid_value)
-                else:
-                    current_format_on_save.append(uid_value)
-                common.config.setdefault('quick_options', {})['format_on_save'] = current_format_on_save
                 self.run()
 
     def show_new_file_format_input(self):
@@ -362,50 +377,10 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 common.config.setdefault('quick_options', {})['render_extended'] = current_render_extended
                 self.run()
 
-    def save_quick_options_config(self):
-        config_json = common.config.get('quick_options', {})
-        self.save_qo_config_file(config_json)
-
-    def on_done(self, index):
-        if index != -1:
-            selected_option = self.options[index]
-            if 'Enable Debug' in selected_option:
-                self.show_debug_menu()
-            elif 'Choose Layout' in selected_option:
-                self.show_layout_menu()
-            elif 'Prioritize Per-project Config' in selected_option:
-                self.show_prioritize_project_config_menu()
-            elif 'Enable Format on Paste' in selected_option:
-                is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
-                if is_rff_on:
-                    self.popup_message('Format on Paste is not compatible with an enabled Recursive Folder Format.', 'ERROR')
-                    self.run()
-                else:
-                    self.show_format_on_paste_menu()
-            elif 'Enable Format on Save' in selected_option:
-                is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
-                if is_rff_on:
-                    self.popup_message('Format on Save is not compatible with an enabled Recursive Folder Format.', 'ERROR')
-                    self.run()
-                else:
-                    self.show_format_on_save_menu()
-            elif 'Enable New File on Format' in selected_option:
-                self.show_new_file_format_input()
-            elif 'Render Extended Graphics' in selected_option:
-                self.show_render_extended_menu()
-            else:
-                self.toggle_option_status(index)
-
     def toggle_option_status(self, index):
         selected_option = self.options[index]
-        if '[-]' in selected_option:
-            selected_option = selected_option.replace('[-]', '[x]')
-            option_value = True
-        else:
-            selected_option = selected_option.replace('[x]', '[-]')
-            option_value = False
+        option_value, config_key = self.get_option_status_and_key(selected_option, index)
 
-        config_key = list(self.option_mapping.keys())[index]
         if config_key == 'use_user_settings':
             common.config['quick_options'] = {}
             self.save_qo_config_file({})
@@ -413,19 +388,38 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             self.save_quick_options_config()
         else:
             if config_key == 'recursive_folder_format':
-                is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_paste')
-                if option_value and is_fos_on:
-                    self.popup_message('Recursive Folder Format is not compatible with an enabled Format on Paste.', 'ERROR')
-                    self.run()
-                    return
-            if config_key == 'recursive_folder_format':
-                is_fos_on = self.query(common.config, [], 'quick_options', 'format_on_save')
-                if option_value and is_fos_on:
-                    self.popup_message('Recursive Folder Format is not compatible with an enabled Format on Save.', 'ERROR')
-                    self.run()
+                if self.check_recursive_folder_format(option_value):
                     return
             common.config.setdefault('quick_options', {})[config_key] = option_value
         self.run()
+
+    def get_option_status_and_key(self, selected_option, index):
+        if '[-]' in selected_option:
+            selected_option = selected_option.replace('[-]', '[x]')
+            option_value = True
+        else:
+            selected_option = selected_option.replace('[x]', '[-]')
+            option_value = False
+        config_key = list(self.option_mapping.keys())[index]
+        return option_value, config_key
+
+    def check_recursive_folder_format(self, option_value):
+        a = {
+            'format_on_save': 'Format on Save',
+            'format_on_paste': 'Format on Paste'
+        }
+        for k, v in a.items():
+            is_on = self.query(common.config, [], 'quick_options', k)
+            if option_value and is_on:
+                self.popup_message('Recursive Folder Format is not compatible with an enabled %s.' % v, 'ERROR')
+                self.run()
+                return True
+
+        return False
+
+    def save_quick_options_config(self):
+        config_json = common.config.get('quick_options', {})
+        self.save_qo_config_file(config_json)
 
     def save_qo_config_file(self, json_data):
         file = self.quick_options_config_file()
