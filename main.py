@@ -254,8 +254,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
 
     def show_format_on_menu(self, option_key, error_message):
         def handler():
-            is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
-            if is_rff_on:
+            is_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
+            if is_on:
                 self.popup_message(error_message, 'ERROR')
                 self.run()
             else:
@@ -404,17 +404,13 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         return option_value, config_key
 
     def check_recursive_folder_format(self, option_value):
-        a = {
-            'format_on_save': 'Format on Save',
-            'format_on_paste': 'Format on Paste'
-        }
+        a = {'format_on_save': 'Format on Save', 'format_on_paste': 'Format on Paste'}
         for k, v in a.items():
             is_on = self.query(common.config, [], 'quick_options', k)
             if option_value and is_on:
                 self.popup_message('Recursive Folder Format is not compatible with an enabled %s.' % v, 'ERROR')
                 self.run()
                 return True
-
         return False
 
     def save_quick_options_config(self):
@@ -452,7 +448,6 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
 
     def is_visible(self, **kwargs):
         self.set_debug_mode()
-
         is_disabled = self.query(common.config, True, 'formatters', kwargs.get('uid', None), 'disable')
         return not is_disabled
 

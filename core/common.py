@@ -574,7 +574,7 @@ class Module(object):
         return s is not None and not s.strip()
 
     def print_exiterr(self, exitcode, stderr):
-        sep = '======================================================================================='
+        sep = '=' * 87
         s = 'File not formatted due to an error (exitcode=%d)' % exitcode
         log.status(s + '.' if self.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
 
