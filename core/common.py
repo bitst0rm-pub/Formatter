@@ -373,16 +373,17 @@ class Module(object):
         return cmd if all(cmd) else None
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):
-        project_config = self.kwargs.get('project_config', {})
+        kw = self.kwargs if hasattr(self, 'kwargs') else {}
+        project_config = kw.get('project_config', {})
         if project_config:
             for uid, v in project_config.items():
                 self.uid = uid
-                kwargs = {
+                kw = {
                     'is_project': True,
                     'syntaxes': v.get('syntaxes', []),
                     'exclude_syntaxes': v.get('exclude_syntaxes', {})
                 }
-                syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
+                syntax = self._detect_assigned_syntax(view, uid, region, **kw)
                 if syntax:
                     return syntax
         else:
@@ -448,7 +449,7 @@ class Module(object):
 
             return None
 
-        log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
+        #log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
         return None
 
     def check_cfgignore(self):
