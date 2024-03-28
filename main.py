@@ -475,6 +475,23 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
             single_format_thread.start()
 
 
+class ProjectFormatFileCommand(sublime_plugin.TextCommand, common.Base):
+    def run(self, edit, **kwargs):
+        project_config = self.get_project_config_file()
+        if project_config:
+            with threading.Lock():
+                log.debug('Starting single file formatting ...')
+                single_format = SingleFormat(self.view, **project_config)
+                single_format_thread = threading.Thread(target=single_format.run)
+                single_format_thread.start()
+
+    def is_enabled(self):
+        return not bool(self.view.settings().get('is_widget', False))
+
+    def is_visible(self, **kwargs):
+        return bool(self.get_project_config_file())
+
+
 class SingleFormat(common.Base):
     def __init__(self, view, **kwargs):
         self.view = view
@@ -1093,13 +1110,23 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
 
     def on_post_text_command(self, view, command_name, args):
         if command_name in ['paste', 'paste_and_indent']:
-            self._on_paste_or_save(view, opkey='format_on_paste')
-            return None
+            p = self.get_pathinfo(view.file_name())
+            if p['ext'] not in ['sublime-settings']:
+                project_config = self.get_project_config_file(active_file_path=p['path'])
+                if project_config and self.query(project_config, False, 'project_config', 'config', 'format_on_paste'):
+                    SingleFormat(view, **project_config).run()
+                else:
+                    self._on_paste_or_save(view, opkey='format_on_paste')
+                    return None
 
     def on_pre_save(self, view):
         p = self.get_pathinfo(view.file_name())
         if p['ext'] not in ['sublime-settings']:
-            self._on_paste_or_save(view, opkey='format_on_save')
+            project_config = self.get_project_config_file(active_file_path=p['path'])
+            if project_config and self.query(project_config, False, 'project_config', 'config', 'format_on_save'):
+                SingleFormat(view, **project_config).run()
+            else:
+                self._on_paste_or_save(view, opkey='format_on_save')
 
     def _on_paste_or_save(self, view, opkey=None):
         if not opkey:

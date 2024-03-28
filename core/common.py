@@ -265,8 +265,9 @@ class Module(object):
         typ = formatter.get('type', None)
         return bool(name and typ)
 
-    def _get_active_view_parent_folders(self, max_depth=30):
-        active_file_path = self.view.file_name()
+    def _get_active_view_parent_folders(self, active_file_path=None, max_depth=30):
+        if not active_file_path:
+            active_file_path = self.view.file_name()
         parent_folders = []
 
         if active_file_path:
@@ -372,11 +373,31 @@ class Module(object):
         return cmd if all(cmd) else None
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):
+        project_config = self.kwargs.get('project_config', {})
+        if project_config:
+            for uid, v in project_config.items():
+                self.uid = uid
+                kwargs = {
+                    'is_project': True,
+                    'syntaxes': v.get('syntaxes', []),
+                    'exclude_syntaxes': v.get('exclude_syntaxes', {})
+                }
+                syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
+                if syntax:
+                    return syntax
+        else:
+            return self._detect_assigned_syntax(view, uid, region)
+
+    def _detect_assigned_syntax(self, view=None, uid=None, region=None, **kwargs):
         if not all((view, uid, region)):
             view, uid, region = self.view, self.uid, self.region
 
-        syntaxes = self.query(config, None, 'formatters', uid, 'syntaxes')
-        exclude_syntaxes = self.query(config, None, 'formatters', uid, 'exclude_syntaxes')
+        if kwargs.get('is_project', False):
+            syntaxes = kwargs.get('syntaxes')
+            exclude_syntaxes = kwargs.get('exclude_syntaxes')
+        else:
+            syntaxes = self.query(config, None, 'formatters', uid, 'syntaxes')
+            exclude_syntaxes = self.query(config, None, 'formatters', uid, 'exclude_syntaxes')
 
         def should_exclude(syntax, scope):
             return (
@@ -437,6 +458,21 @@ class Module(object):
                 log.debug('.cfgignore found at: %s', path)
                 return True
         return False
+
+    def get_project_config_file(self, active_file_path=None):
+        paths = self._get_active_view_parent_folders(active_file_path=active_file_path)
+        for path in paths:
+            for filename in ['formatter.json', '.formatter']:
+                p = join(path, filename)
+                if isfile(p):
+                    try:
+                        with open(p, 'r', encoding='utf-8') as f:
+                            file_content = f.read()
+                            return {'project_config': sublime.decode_value(file_content)}
+                    except Exception as e:
+                        log.error('Error reading %s at: %s', filename, p)
+                        return {}
+        return {}
 
     def get_config_path(self):
         if self.has_cfgignore:
