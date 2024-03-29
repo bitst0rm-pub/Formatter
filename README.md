@@ -14,6 +14,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
 - Unified settings across different systems.
+- Per-project basis configuration.
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
