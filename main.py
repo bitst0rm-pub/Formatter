@@ -1118,16 +1118,18 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         self.apply_formatting(view, 'format_on_save')
 
     def apply_formatting(self, view, operation):
-        p = self.get_pathinfo(view.file_name())
-        if p['ext'] in ['sublime-settings']:
+        path = view.file_name()
+        if path:
+            if os.path.splitext(path)[1] in ['.sublime-settings']:
             return
 
-        project_user_config = self.get_project_user_config(active_file_path=p['path'])
-        if project_user_config and self.query(project_user_config, False, operation):
-            project_config = self.get_project_config(active_file_path=p['path'])
-            if project_config:
-                SingleFormat(view, **project_config).run()
-                return
+            project_user_config = self.get_project_user_config(active_file_path=path)
+            if project_user_config and self.query(project_user_config, False, operation):
+                project_config = self.get_project_config(active_file_path=path)
+                if project_config:
+                    SingleFormat(view, **project_config).run()
+                    return
+
         self._on_paste_or_save(view, opkey=operation)
 
     def _on_paste_or_save(self, view, opkey=None):
