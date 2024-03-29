@@ -100,6 +100,10 @@ def build_context_sublime_menu(formatter_map):
                 OrderedDict([
                     ('caption', '☰ Quick Options'),
                     ('command', 'quick_options')
+                ]),
+                OrderedDict([
+                    ('caption', 'Project Format File'),
+                    ('command', 'project_format_file')
                 ])
             ])
         ])
@@ -132,6 +136,10 @@ def build_main_sublime_menu(formatter_map):
                         OrderedDict([
                             ('caption', '☰ Quick Options'),
                             ('command', 'quick_options')
+                        ]),
+                        OrderedDict([
+                            ('caption', 'Project Format File'),
+                            ('command', 'project_format_file')
                         ])
                     ])
                 ])
@@ -304,6 +312,10 @@ def build_formatter_sublime_commands(formatter_map):
         OrderedDict([
             ('caption', 'Formatter: Quick Options'),
             ('command', 'quick_options')
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Project Format File'),
+            ('command', 'project_format_file')
         ])
     ]
 
@@ -364,7 +376,8 @@ def build_example_sublime_keymap(formatter_map):
     sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_graphics, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, graphics, custom]]
 
     quick_options = '{"keys": ["ctrl+super+?"], "command": "quick_options"},\n    '
-    formatted_keymap = '[\n    ' + quick_options + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_graphics + sorted_custom]) + '\n]'
+    project_format_file = '{"keys": ["ctrl+super+?"], "command": "project_format_file"},\n    '
+    formatted_keymap = '[\n    ' + quick_options + project_format_file + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_graphics + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:

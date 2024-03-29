@@ -12,6 +12,10 @@
         "command": "quick_options"
     },
     {
+        "caption": "Formatter: Project Format File",
+        "command": "project_format_file"
+    },
+    {
         "caption": "Formatter: Beautify with Apple Swift Format",
         "command": "run_format",
         "args": {

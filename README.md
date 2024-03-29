@@ -51,6 +51,7 @@ _Formatter in action: Text-to-Image..._
   - [Plugins](#plugins)
   - [Installation](#installation)
   - [Configuration](#configuration)
+  - [Per-project Configuration](#per-project-configuration)
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
   - [Development: Guide to Create Your Own Modules](#development)
@@ -584,6 +585,40 @@ Both methods with examples are in this settings guide:
     }
 }
 ```
+
+
+## Per-project Configuration
+
+Starting from version 1.4.0, Formatter introduces a configuration mechanism to per-project basis for itself (Special thanks to @[midrare](https://github.com/midrare) for idea, tests and suggestions). Formatter will start to search up the file tree inside the project folders until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+
+```js
+{
+    // Comments are allowed.
+    "json": {
+        "uid": "jsbeautifier",
+    },
+    "html": {
+        "uid": "jsbeautifier",
+        "exclude_syntaxes": {
+            "html": ["markdown"]
+        }
+    },
+    "python": {
+        "uid": "autopep8",
+    }
+}
+```
+
+User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter.user`
+
+```js
+{
+    "format_on_save": true,
+    "format_on_paste": false
+}
+```
+
+Both the app and context menu will now indicate whether a current project is ready for Formatter with a new item: `Project Format File`
 
 
 ## Usage

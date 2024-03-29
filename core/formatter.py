@@ -45,6 +45,7 @@ class Formatter(common.Module):
             self.popup_message('Syntax out of the scope.', 'UID:' + self.uid)
             return False
 
+        self.kwargs.update(uid=self.uid)
         formatter_plugin = formatter_map.get(self.uid)
         if formatter_plugin:
             self.kwargs.update(formatter_plugin['const'])
