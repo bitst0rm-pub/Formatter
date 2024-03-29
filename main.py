@@ -1121,7 +1121,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         path = view.file_name()
         if path:
             if os.path.splitext(path)[1] in ['.sublime-settings']:
-            return
+                return
 
             project_user_config = self.get_project_user_config(active_file_path=path)
             if project_user_config and self.query(project_user_config, False, operation):
