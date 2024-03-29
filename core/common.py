@@ -475,7 +475,7 @@ class Module(object):
     def get_project_config(self, active_file_path=None):
         paths = self._get_active_view_parent_folders(active_file_path)
         config = self._read_config_file(paths, ['.sublimeformatter.json', '.sublimeformatter'])
-        return {'project_config': config}
+        return {'project_config': config} if config else {}
 
     def get_project_user_config(self, active_file_path=None):
         paths = self._get_active_view_parent_folders(active_file_path)

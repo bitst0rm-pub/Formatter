@@ -1119,7 +1119,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
 
     def apply_formatting(self, view, operation):
         p = self.get_pathinfo(view.file_name())
-        if p['ext'] not in ['sublime-settings']:
+        if p['ext'] in ['sublime-settings']:
             return
 
         project_user_config = self.get_project_user_config(active_file_path=p['path'])
