@@ -8,8 +8,8 @@
                 "command": "quick_options"
             },
             {
-                "caption": "Project Format File",
-                "command": "project_format_file"
+                "caption": "Auto Format File",
+                "command": "auto_format_file"
             },
             {
                 "caption": "-"

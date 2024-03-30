@@ -152,12 +152,12 @@
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
 
             // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
-            // To use this, the option "render_extended" above must be activated.
+            // To use this, the trigger option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
             // will takes more time. This option might be useful for the final step to production.
-            // key:[value,..], where key is the output file extension, value is the command arguments.
+            // "key":["value",..], where key is the output file extension, value is the command arguments.
             "args_extended": {
                 "svg": ["{{e}}", "--config", "{{c}}", "--blabla-format", "svgv5", "--output", "{{o}}"],
                 "pdf": ["{{e}}", "--config", "{{c}}", "--blabla-format", "pdf2001", "--output", "{{o}}"]
@@ -274,7 +274,7 @@
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
             //    the project root folder. The structure of this file is
-            //    descripted in README.md > Per-project Configuration.
+            //    descripted in README.md > Auto-detect Formatting.
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.
             "config_path": {

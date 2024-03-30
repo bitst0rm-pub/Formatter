@@ -16,7 +16,7 @@
 
 [
     {"keys": ["ctrl+super+?"], "command": "quick_options"},
-    {"keys": ["ctrl+super+?"], "command": "project_format_file"},
+    {"keys": ["ctrl+super+?"], "command": "auto_format_file"},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "appleswiftformat", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "asmfmt", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "astyle", "type": "beautifier"}},

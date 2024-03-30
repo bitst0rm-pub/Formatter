@@ -12,8 +12,8 @@
         "command": "quick_options"
     },
     {
-        "caption": "Formatter: Project Format File",
-        "command": "project_format_file"
+        "caption": "Formatter: Auto Format File",
+        "command": "auto_format_file"
     },
     {
         "caption": "Formatter: Beautify with Apple Swift Format",

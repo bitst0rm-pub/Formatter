@@ -14,7 +14,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
 - Unified settings across different systems.
-- Per-project basis configuration.
+- Auto-detect formatting.
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
@@ -52,7 +52,7 @@ _Formatter in action: Text-to-Image..._
   - [Plugins](#plugins)
   - [Installation](#installation)
   - [Configuration](#configuration)
-  - [Per-project Configuration](#per-project-configuration)
+  - [Auto-detect Formatting](#auto-detect-formatting)
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
   - [Development: Guide to Create Your Own Modules](#development)
@@ -355,12 +355,12 @@ Both methods with examples are in this settings guide:
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
 
             // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
-            // To use this, the option "render_extended" above must be activated.
+            // To use this, the trigger option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
             // will takes more time. This option might be useful for the final step to production.
-            // key:[value,..], where key is the output file extension, value is the command arguments.
+            // "key":["value",..], where key is the output file extension, value is the command arguments.
             "args_extended": {
                 "svg": ["{{e}}", "--config", "{{c}}", "--blabla-format", "svgv5", "--output", "{{o}}"],
                 "pdf": ["{{e}}", "--config", "{{c}}", "--blabla-format", "pdf2001", "--output", "{{o}}"]
@@ -477,7 +477,7 @@ Both methods with examples are in this settings guide:
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
             //    the project root folder. The structure of this file is
-            //    descripted in README.md > Per-project Configuration.
+            //    descripted in README.md > Auto-detect Formatting.
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.
             "config_path": {
@@ -590,9 +590,9 @@ Both methods with examples are in this settings guide:
 ```
 
 
-## Per-project Configuration
+## Auto-detect Formatting
 
-Starting from version 1.4.0, Formatter introduces a configuration mechanism to per-project basis for itself (Special thanks to @[midrare](https://github.com/midrare) for idea, tests and suggestions). Formatter will start to search up the file tree inside the project folders until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+Starting from version 1.4.0, Formatter introduces a configuration mechanism to Auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the project folders until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
 ```js
 {
@@ -621,8 +621,8 @@ User-specific config options can be set using `.sublimeformatter.user.json` OR `
 }
 ```
 
-To ignore a specific syntax assigned to your User's `config_path` settings, you can use `sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
-For example, if you prefer to use the standard .prettierrc in your project instead of a custom Formatter `config_path`.
+To ignore a specific syntax assigned to your User's `"config_path":` settings, you can use `sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
+For example, if you prefer to use the standard .prettierrc in your project instead of the custom Formatter `"config_path":`
 
 ```js
 {
@@ -632,7 +632,7 @@ For example, if you prefer to use the standard .prettierrc in your project inste
 }
 ```
 
-Both the app and context menu will now indicate whether a current project is ready for Formatter with a new item: `Project Format File`
+This is a one-command and one-keybinding feature. Both the app and context menu will now indicate whether a current project is ready for Formatter with a new item: `Auto Format File`
 
 
 ## Usage

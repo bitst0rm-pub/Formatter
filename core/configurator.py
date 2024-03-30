@@ -102,8 +102,8 @@ def build_context_sublime_menu(formatter_map):
                     ('command', 'quick_options')
                 ]),
                 OrderedDict([
-                    ('caption', 'Project Format File'),
-                    ('command', 'project_format_file')
+                    ('caption', 'Auto Format File'),
+                    ('command', 'auto_format_file')
                 ])
             ])
         ])
@@ -138,8 +138,8 @@ def build_main_sublime_menu(formatter_map):
                             ('command', 'quick_options')
                         ]),
                         OrderedDict([
-                            ('caption', 'Project Format File'),
-                            ('command', 'project_format_file')
+                            ('caption', 'Auto Format File'),
+                            ('command', 'auto_format_file')
                         ])
                     ])
                 ])
@@ -314,8 +314,8 @@ def build_formatter_sublime_commands(formatter_map):
             ('command', 'quick_options')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Project Format File'),
-            ('command', 'project_format_file')
+            ('caption', 'Formatter: Auto Format File'),
+            ('command', 'auto_format_file')
         ])
     ]
 
@@ -376,8 +376,8 @@ def build_example_sublime_keymap(formatter_map):
     sorted_beautifiers, sorted_minifiers, sorted_converters, sorted_graphics, sorted_custom = [sorted(lst, key=sort_key) for lst in [beautifiers, minifiers, converters, graphics, custom]]
 
     quick_options = '{"keys": ["ctrl+super+?"], "command": "quick_options"},\n    '
-    project_format_file = '{"keys": ["ctrl+super+?"], "command": "project_format_file"},\n    '
-    formatted_keymap = '[\n    ' + quick_options + project_format_file + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_graphics + sorted_custom]) + '\n]'
+    auto_format_file = '{"keys": ["ctrl+super+?"], "command": "auto_format_file"},\n    '
+    formatted_keymap = '[\n    ' + quick_options + auto_format_file + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_graphics + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
 // End-users are free to remap any key combination, but keep in mind:
@@ -629,12 +629,12 @@ def build_formatter_sublime_settings(formatter_map):
                     ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
                     ('__COMMENT__args_extended', '''
             // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
-            // To use this, the option "render_extended" above must be activated.
+            // To use this, the trigger option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
             // WARNING: Formatter will loop subprocess to render extended files. This means, process
             // will takes more time. This option might be useful for the final step to production.
-            // key:[value,..], where key is the output file extension, value is the command arguments.'''),
+            // "key":["value",..], where key is the output file extension, value is the command arguments.'''),
                     ('args_extended', OrderedDict([
                         ('svg', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'svgv5', '--output', '{{o}}'])),
                         ('pdf', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'pdf2001', '--output', '{{o}}']))
@@ -751,7 +751,7 @@ def build_formatter_sublime_settings(formatter_map):
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
             //    the project root folder. The structure of this file is
-            //    descripted in README.md > Per-project Configuration.
+            //    descripted in README.md > Auto-detect Formatting.
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),
                     ('config_path', OrderedDict([

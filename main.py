@@ -466,12 +466,12 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
             single_format_thread.start()
 
 
-class ProjectFormatFileCommand(sublime_plugin.TextCommand, common.Base):
+class AutoFormatFileCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
         project_config = self.get_project_config()
         if project_config:
             with threading.Lock():
-                log.debug('Starting per-project formatting ...')
+                log.debug('Starting auto formatting ...')
                 single_format = SingleFormat(self.view, **project_config)
                 single_format_thread = threading.Thread(target=single_format.run)
                 single_format_thread.start()
