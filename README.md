@@ -474,10 +474,12 @@ Both methods with examples are in this settings guide:
             // the options from any local project (per-project config file).
             // To disable this option in favor of the local project config:
             // 1. Set the config path of this option to null, OR
-            // 2. Use the Quick Options: Prioritize Per-project Config, OR
-            // 3. Place an empty '.cfgignore' file inside the project root folder.
+            // 2. Use the Quick Options: Ignore Config Path, OR
+            // 3. Place an '.sublimeformatter.cfgignore.json' file inside
+            //    the project root folder. The structure of this file is
+            //    descripted in README.md > Per-project Configuration.
             // Formatter will start to search up the file tree until a
-            // '.cfgignore' file is (or isn’t) found.
+            // '.sublimeformatter.cfgignore' file is found to bypass this option.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
@@ -616,6 +618,17 @@ User-specific config options can be set using `.sublimeformatter.user.json` OR `
 {
     "format_on_save": true,
     "format_on_paste": false
+}
+```
+
+To ignore a specific syntax assigned to your User's `config_path` settings, you can use `sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
+For example, if you prefer to use the standard .prettierrc in your project instead of a custom Formatter `config_path`.
+
+```js
+{
+    "json": ["jsbeautifier", "deno"],
+    "python": ["autopep8"],
+    "default": ["scalafmt", "stylelint"]
 }
 ```
 

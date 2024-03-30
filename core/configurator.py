@@ -748,10 +748,12 @@ def build_formatter_sublime_settings(formatter_map):
             // the options from any local project (per-project config file).
             // To disable this option in favor of the local project config:
             // 1. Set the config path of this option to null, OR
-            // 2. Use the Quick Options: Prioritize Per-project Config, OR
-            // 3. Place an empty '.cfgignore' file inside the project root folder.
+            // 2. Use the Quick Options: Ignore Config Path, OR
+            // 3. Place an '.sublimeformatter.cfgignore.json' file inside
+            //    the project root folder. The structure of this file is
+            //    descripted in README.md > Per-project Configuration.
             // Formatter will start to search up the file tree until a
-            // '.cfgignore' file is (or isn’t) found.'''),
+            // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),
                     ('config_path', OrderedDict([
                         ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
                         ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),

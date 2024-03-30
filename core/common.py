@@ -64,13 +64,12 @@ class Module(object):
     These APIs are strictly limited for use with files located in the 'modules' folder.
     '''
 
-    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, has_cfgignore=False, **kwargs):
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
         self.interpreters = interpreters
         self.executables = executables
-        self.has_cfgignore = has_cfgignore
         self.kwargs = kwargs or {}
 
     def is_executeable(self, file):
@@ -452,25 +451,21 @@ class Module(object):
         #log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
         return None
 
-    def check_cfgignore(self):
-        paths = self._get_active_view_parent_folders()
-        for path in paths:
-            if isfile(join(path, '.cfgignore')):
-                log.debug('.cfgignore found at: %s', path)
-                return True
-        return False
-
     def _read_config_file(self, paths, filenames):
         for path in paths:
             for filename in filenames:
-                p = os.path.join(path, filename)
-                if os.path.isfile(p):
+                p = join(path, filename)
+                if isfile(p):
                     try:
                         with open(p, 'r', encoding='utf-8') as f:
                             return sublime.decode_value(f.read())
                     except Exception as e:
                         log.error('Error reading %s at: %s', filename, p)
         return {}
+
+    def get_cfgignore(self, active_file_path=None):
+        paths = self._get_active_view_parent_folders(active_file_path)
+        return self._read_config_file(paths, ['.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore'])
 
     def get_project_config(self, active_file_path=None):
         paths = self._get_active_view_parent_folders(active_file_path)
@@ -482,13 +477,18 @@ class Module(object):
         return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter.user'])
 
     def get_config_path(self):
-        if self.has_cfgignore:
+        ignore_config_path = self.query(config, [], 'quick_options', 'ignore_config_path')
+        if self.uid in ignore_config_path:
             return None
 
         shared_config = self.query(config, None, 'formatters', self.uid, 'config_path')
 
         if shared_config and isinstance(shared_config, dict):
             syntax = self.get_assigned_syntax()
+
+            for k, v in self.get_cfgignore().items():
+                if (k.strip().lower() == syntax or k == 'default') and self.uid in v:
+                    return None
 
             for key, path in shared_config.items():
                 if key.strip().lower() == syntax and self.is_valid_path(path):

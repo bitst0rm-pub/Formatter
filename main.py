@@ -197,7 +197,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
     option_mapping = OrderedDict([
         ('debug', 'Enable Debug'),
         ('layout', 'Choose Layout'),
-        ('prioritize_project_config', 'Prioritize Per-project Config'),
+        ('ignore_config_path', 'Ignore Config Path'),
         ('format_on_paste', 'Enable Format on Paste'),
         ('format_on_save', 'Enable Format on Save'),
         ('new_file_on_format', 'Enable New File on Format'),
@@ -222,7 +222,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
             option_status = '[-]' if config_values else '[x]'
         if key == 'save_quick_options':
             option_status = '[x]' if config_values and self.load_quick_options() else '[-]'
-        if key in ['debug', 'layout', 'prioritize_project_config', 'format_on_paste', 'format_on_save', 'new_file_on_format', 'render_extended'] and option_value:
+        if key in ['debug', 'layout', 'ignore_config_path', 'format_on_paste', 'format_on_save', 'new_file_on_format', 'render_extended'] and option_value:
             option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
         else:
             option_label = '{} {}'.format(option_status, title)
@@ -244,7 +244,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         action_methods = {
             'debug': self.show_debug_menu,
             'layout': self.show_layout_menu,
-            'prioritize_project_config': self.show_prioritize_project_config_menu,
+            'ignore_config_path': self.show_ignore_config_path_menu,
             'format_on_paste': self.show_format_on_menu('format_on_paste', 'Format on Paste is not compatible with an enabled Recursive Folder Format.'),
             'format_on_save': self.show_format_on_menu('format_on_save', 'Format on Save is not compatible with an enabled Recursive Folder Format.'),
             'new_file_on_format': self.show_new_file_format_input,
@@ -324,24 +324,24 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                 common.config.setdefault('quick_options', {})['layout'] = current_layout_value
                 self.run()
 
-    def show_prioritize_project_config_menu(self):
+    def show_ignore_config_path_menu(self):
         f = common.config.get('formatters', {})
         uid_list = [key for key in f.keys() if 'name' not in f.get(key, {}) and 'type' not in f.get(key, {})]  # exclude generic methods
         uid_list.append('<< Back')
-        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_prioritize_project_config_menu_done(uid_list, uid_index))
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_ignore_config_path_menu_done(uid_list, uid_index))
 
-    def on_prioritize_project_config_menu_done(self, uid_list, uid_index):
+    def on_ignore_config_path_menu_done(self, uid_list, uid_index):
         if uid_index != -1:
             uid_value = uid_list[uid_index]
             if uid_value == '<< Back':
                 self.show_main_menu()
             else:
-                current_prioritize_project_config = common.config.setdefault('quick_options', {}).get('prioritize_project_config', [])
-                if uid_value in current_prioritize_project_config:
-                    current_prioritize_project_config.remove(uid_value)
+                current_ignore_config_path = common.config.setdefault('quick_options', {}).get('ignore_config_path', [])
+                if uid_value in current_ignore_config_path:
+                    current_ignore_config_path.remove(uid_value)
                 else:
-                    current_prioritize_project_config.append(uid_value)
-                common.config.setdefault('quick_options', {})['prioritize_project_config'] = current_prioritize_project_config
+                    current_ignore_config_path.append(uid_value)
+                common.config.setdefault('quick_options', {})['ignore_config_path'] = current_ignore_config_path
                 self.run()
 
     def show_new_file_format_input(self):
@@ -425,23 +425,14 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
 
 class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
-        # Edit object is useless here since it gets automatically
-        # destroyed before the code is reached in the new thread.
-
-        prioritize_project_config = self.query(common.config, [], 'quick_options', 'prioritize_project_config')
-        if kwargs.get('uid', None) in prioritize_project_config:
-            has_cfgignore = True
-        else:
-            has_cfgignore = self.check_cfgignore()
-
         is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
         if is_recursive:
             if kwargs.get('type', None) == 'graphic':
                 log.info('Recursive formatting is not supported for plugins of type: graphic')
             else:
-                self.run_recursive_formatting(has_cfgignore=has_cfgignore, **kwargs)
+                self.run_recursive_formatting(**kwargs)
         else:
-            self.run_single_formatting(has_cfgignore=has_cfgignore, **kwargs)
+            self.run_single_formatting(**kwargs)
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
