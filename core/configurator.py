@@ -750,7 +750,7 @@ def build_formatter_sublime_settings(formatter_map):
             // 1. Set the config path of this option to null, OR
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
-            //    the project root folder. The structure of this file is
+            //    the working root folder. The structure of this file is
             //    descripted in README.md > Auto-detect Formatting.
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),

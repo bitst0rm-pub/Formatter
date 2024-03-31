@@ -476,7 +476,7 @@ Both methods with examples are in this settings guide:
             // 1. Set the config path of this option to null, OR
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
-            //    the project root folder. The structure of this file is
+            //    the working root folder. The structure of this file is
             //    descripted in README.md > Auto-detect Formatting.
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.
@@ -592,7 +592,7 @@ Both methods with examples are in this settings guide:
 
 ## Auto-detect Formatting
 
-Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the project folders until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
 ```js
 {
@@ -622,7 +622,7 @@ User-specific config options can be set using `.sublimeformatter.user.json` OR `
 ```
 
 To ignore a specific syntax assigned to your User's `"config_path":` settings, you can use `sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
-For example, if you prefer to use the standard .prettierrc in your project instead of the custom Formatter `"config_path":`
+For example, if you prefer to use the standard .prettierrc in your working folder instead of the custom Formatter `"config_path":`
 
 ```js
 {
@@ -632,7 +632,7 @@ For example, if you prefer to use the standard .prettierrc in your project inste
 }
 ```
 
-This is a one-command and one-keybinding feature. Both the app and context menu will now indicate whether a current project is ready for Formatter with a new item: `Auto Format File`
+This is a one-command and one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
 
 
 ## Usage
