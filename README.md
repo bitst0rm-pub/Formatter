@@ -14,7 +14,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
 - Unified settings across different systems.
-- Auto-detect formatting.
+- Supports auto-detect formatting.
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
@@ -592,13 +592,13 @@ Both methods with examples are in this settings guide:
 
 ## Auto-detect Formatting
 
-Starting from version 1.4.0, Formatter introduces a configuration mechanism to Auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the project folders until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the project folders until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
 ```js
 {
     // Comments are allowed.
     "json": {
-        "uid": "jsbeautifier",
+        "uid": "jsbeautifier"
     },
     "html": {
         "uid": "jsbeautifier",
@@ -607,7 +607,7 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to A
         }
     },
     "python": {
-        "uid": "autopep8",
+        "uid": "autopep8"
     }
 }
 ```
@@ -663,7 +663,7 @@ This feature is designed to help users quickly access and switch between options
 **Summary:**
 
 - The `Reset` option is the exclusive method to exit any mode.
-- Clicking on the *same* selected item will remove it from the list.
+- Clicking on the **_same_** selected item will remove it from the list.
 - None of the modes will ever modify your Settings file.
 - The current mode is indicated on the status bar for your reference.
 
