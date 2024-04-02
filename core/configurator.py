@@ -563,8 +563,9 @@ def build_formatter_sublime_settings(formatter_map):
                 ('jsbeautifier', NoIndent(['js']))
             ])),
             ('__COMMENT__auto_format', '''
-    // This option provides auto-detect formatting for file with a single command.
-    // You can configure it either here or by using the dot files in your working folder.
+    // This option enables auto-detect formatting for file with a single command.
+    // You can configure it either here and/or by using the dot files in your working folder.
+    // If you use both methods, the config from the dot files will override the one embedded here.
     // More about this feature and its structure: see README.md > Auto-detect Formatting.'''),
             ('auto_format', OrderedDict([
                 ('__COMMENT__auto_format_a', '/*'),

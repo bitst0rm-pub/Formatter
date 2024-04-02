@@ -14,8 +14,8 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
 - Unified settings across different systems.
-- Supports auto-detect formatting.
-- Supports per-project formatting.
+- Supports [auto-detect formatting](#auto-detect-formatting).
+- Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
@@ -291,8 +291,9 @@ Both methods with examples are in this settings guide:
         "jsbeautifier": ["js"]
     },
 
-    // This option provides auto-detect formatting for file with a single command.
-    // You can configure it either here or by using the dot files in your working folder.
+    // This option enables auto-detect formatting for file with a single command.
+    // You can configure it either here and/or by using the dot files in your working folder.
+    // If you use both methods, the config from the dot files will override the one embedded here.
     // More about this feature and its structure: see README.md > Auto-detect Formatting.
     "auto_format": {
         "config": {
