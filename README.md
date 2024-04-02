@@ -289,6 +289,28 @@ Both methods with examples are in this settings guide:
         "jsbeautifier": ["js"]
     },
 
+    // This option provides auto-detect formatting for file with a single command.
+    // You can configure it either here or by using the dot files in your working folder.
+    // More about this feature and its structure: see README.md > Auto-detect Formatting.
+    "auto_format": {
+        "config": {
+            "format_on_save": false,
+            "format_on_paste": false
+        },
+        "json": {
+            "uid": "jsbeautifier"
+        },
+        "html": {
+            "uid": "jsbeautifier",
+            "exclude_syntaxes": {
+                "html": ["markdown"]
+            }
+        },
+        "python": {
+            "uid": "autopep8"
+        }
+    },
+
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "examplegeneric": { // GENERIC METHOD
@@ -592,7 +614,12 @@ Both methods with examples are in this settings guide:
 
 ## Auto-detect Formatting
 
-Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). There are 2 methods to achieve this:
+
+ - Using embedded settings in your User `Formatter.sublime-settings`
+ - Placing dot files inside the working folder, similar to per-project basis.
+
+Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
 ```js
 {
@@ -612,7 +639,7 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 }
 ```
 
-User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter.user`
+User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter-user`
 
 ```js
 {
@@ -632,7 +659,35 @@ For example, if you prefer to use the standard .prettierrc in your working folde
 }
 ```
 
-This is a one-command and one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
+Alternatively, you can embed your auto-detect config within your User `Formatter.sublime-settings`
+
+```js
+    "debug": "status",
+    ...
+
+    "auto_format": {
+        "config": {
+            "format_on_save": false,
+            "format_on_paste": false
+        },
+        "json": {
+            "uid": "jsbeautifier"
+        },
+        "html": {
+            "uid": "jsbeautifier",
+            "exclude_syntaxes": {
+                "html": ["markdown"]
+            }
+        },
+        "python": {
+            "uid": "autopep8"
+        }
+    },
+
+    "formatters": {...}
+```
+
+This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
 
 
 ## Usage
