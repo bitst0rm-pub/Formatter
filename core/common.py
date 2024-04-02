@@ -728,6 +728,12 @@ class Base(Module):
 
         return quick_options
 
+    def project_config_overwrites_config(self, config):
+        project_data = sublime.active_window().project_data()
+        project_settings = self.query(project_data, {}, 'settings', PACKAGE_NAME)
+        if project_settings:
+            self.update_json_recursive(config, project_settings)
+
     def build_config(self, settings):
         try:
             global config
@@ -758,6 +764,7 @@ class Base(Module):
 
             config['formatters'].pop('examplegeneric', None)
             config['formatters'].pop('examplemodule', None)
+            self.project_config_overwrites_config(config)
             config = self.recursive_map(self.expand_path, config)
             return config
         except Exception as e:

@@ -15,6 +15,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Works with both saved and unsaved files.
 - Unified settings across different systems.
 - Supports auto-detect formatting.
+- Supports per-project formatting.
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
@@ -53,6 +54,7 @@ _Formatter in action: Text-to-Image..._
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Auto-detect Formatting](#auto-detect-formatting)
+  - [Per-project Formatting](#per-project-formatting)
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
   - [Development: Guide to Create Your Own Modules](#development)
@@ -688,6 +690,39 @@ Alternatively, you can embed your auto-detect config within your User `Formatter
 ```
 
 This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
+
+
+## Per-project Formatting
+
+Formatter is able to add and override any setting on per-project basis using `.sublime-project` files.<br/>
+As `.sublime-project` files can be placed everywhere within your system, detecting changes automatically is not possible. Therefore, you might want to restart Sublime Text to apply the changes.
+
+_.sublime-project_
+```js
+{
+    "folders": [
+        {
+            "path": "/path/to/my/project"
+        }
+    ],
+
+    "settings": {
+        "Formatter": {
+            "debug": "status",
+            "formatters": {
+                "htmltidy": {
+                    "format_on_save": true
+                },
+                "jsbeautifier": {
+                    "config_path": {
+                        "default": "${packages}/path/to/new/jsbeautify_rc.json"
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 
 ## Usage
