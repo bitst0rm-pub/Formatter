@@ -378,7 +378,7 @@ class Module(object):
             for syntax, v in auto_format_config.items():
                 self.uid = v.get('uid', None)
                 kwargs = {
-                    'is_project': True,
+                    'is_auto_format': True,
                     'syntaxes': [syntax],
                     'exclude_syntaxes': v.get('exclude_syntaxes', {})
                 }
@@ -392,7 +392,7 @@ class Module(object):
         if not all((view, uid, region)):
             view, uid, region = self.view, self.uid, self.region
 
-        if kwargs.get('is_project', False):
+        if kwargs.get('is_auto_format', False):
             syntaxes = kwargs.get('syntaxes')
             exclude_syntaxes = kwargs.get('exclude_syntaxes')
         else:
