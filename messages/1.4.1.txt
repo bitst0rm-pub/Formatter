@@ -1,0 +1,18 @@
+                CHANGELOG
+
+1.4.1:
+    This update primarily focuses on per-project configuration.
+
+    - NEW:
+      - Added support for embedded auto-detect formatter config within the
+        "Formatter.sublime-settings" file. Auto-detect formatting will read
+        config from embedded and/or dot files.
+      - Added support for per-project formatting using ".sublime-project" files.
+
+      The README.md and Github repo were updated to reflect these changes.
+
+    - FIXES:
+      None
+
+    - Added new modules:
+      None
