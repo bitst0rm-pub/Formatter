@@ -86,6 +86,31 @@
         "jsbeautifier": ["js"]
     },
 
+    // This option enables auto-detect formatting for file with a single command.
+    // You can configure it either here and/or by using the dot files in your working folder.
+    // If you use both methods, the config from the dot files will override the one embedded here.
+    // More about this feature and its structure: see README.md > Auto-detect Formatting.
+    "auto_format": {
+        /*
+        "config": {
+            "format_on_save": false,
+            "format_on_paste": false
+        },
+        "json": {
+            "uid": "jsbeautifier"
+        },
+        "html": {
+            "uid": "jsbeautifier",
+            "exclude_syntaxes": {
+                "html": ["markdown"]
+            }
+        },
+        "python": {
+            "uid": "autopep8"
+        },
+        */
+    },
+
     // THIRD-PARTY PLUGINS LEVEL
     "formatters": {
         "examplegeneric": {

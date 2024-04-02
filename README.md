@@ -14,7 +14,8 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Operates based on syntax scope, not file extension.
 - Works with both saved and unsaved files.
 - Unified settings across different systems.
-- Supports auto-detect formatting.
+- Supports [auto-detect formatting](#auto-detect-formatting).
+- Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
 - Capable to format on Paste.
 - Shared config files available for each 3rd-party plugin.
@@ -53,6 +54,7 @@ _Formatter in action: Text-to-Image..._
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Auto-detect Formatting](#auto-detect-formatting)
+  - [Per-project Formatting](#per-project-formatting)
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
   - [Development: Guide to Create Your Own Modules](#development)
@@ -287,6 +289,29 @@ Both methods with examples are in this settings guide:
         "enable": false,
         "csscomb": ["css"],
         "jsbeautifier": ["js"]
+    },
+
+    // This option enables auto-detect formatting for file with a single command.
+    // You can configure it either here and/or by using the dot files in your working folder.
+    // If you use both methods, the config from the dot files will override the one embedded here.
+    // More about this feature and its structure: see README.md > Auto-detect Formatting.
+    "auto_format": {
+        "config": {
+            "format_on_save": false,
+            "format_on_paste": false
+        },
+        "json": {
+            "uid": "jsbeautifier"
+        },
+        "html": {
+            "uid": "jsbeautifier",
+            "exclude_syntaxes": {
+                "html": ["markdown"]
+            }
+        },
+        "python": {
+            "uid": "autopep8"
+        }
     },
 
     // THIRD-PARTY PLUGINS LEVEL
@@ -592,7 +617,12 @@ Both methods with examples are in this settings guide:
 
 ## Auto-detect Formatting
 
-Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). There are 2 methods to achieve this:
+
+ - Using embedded settings in your User `Formatter.sublime-settings`
+ - Placing dot files inside the working folder, similar to per-project basis.
+
+Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
 ```js
 {
@@ -612,7 +642,7 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 }
 ```
 
-User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter.user`
+User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter-user`
 
 ```js
 {
@@ -632,7 +662,68 @@ For example, if you prefer to use the standard .prettierrc in your working folde
 }
 ```
 
-This is a one-command and one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
+Alternatively, you can embed your auto-detect config within your User `Formatter.sublime-settings`
+
+```js
+    "debug": "status",
+    ...
+
+    "auto_format": {
+        "config": {
+            "format_on_save": false,
+            "format_on_paste": false
+        },
+        "json": {
+            "uid": "jsbeautifier"
+        },
+        "html": {
+            "uid": "jsbeautifier",
+            "exclude_syntaxes": {
+                "html": ["markdown"]
+            }
+        },
+        "python": {
+            "uid": "autopep8"
+        }
+    },
+
+    "formatters": {...}
+```
+
+This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
+
+
+## Per-project Formatting
+
+Formatter is able to add and override any setting on per-project basis using `.sublime-project` files.<br/>
+As `.sublime-project` files can be placed everywhere within your system, detecting changes automatically is not possible. Therefore, you might want to restart Sublime Text to apply the changes.
+
+_.sublime-project_
+```js
+{
+    "folders": [
+        {
+            "path": "/path/to/my/project"
+        }
+    ],
+
+    "settings": {
+        "Formatter": {
+            "debug": "status",
+            "formatters": {
+                "htmltidy": {
+                    "format_on_save": true
+                },
+                "jsbeautifier": {
+                    "config_path": {
+                        "default": "${packages}/path/to/new/jsbeautify_rc.json"
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 
 ## Usage

@@ -468,11 +468,11 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
 
 class AutoFormatFileCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
-        project_config = self.get_project_config()
-        if project_config:
+        auto_format_args = self.get_auto_format_args()
+        if auto_format_args:
             with threading.Lock():
                 log.debug('Starting auto formatting ...')
-                single_format = SingleFormat(self.view, **project_config)
+                single_format = SingleFormat(self.view, **auto_format_args)
                 single_format_thread = threading.Thread(target=single_format.run)
                 single_format_thread.start()
 
@@ -481,7 +481,7 @@ class AutoFormatFileCommand(sublime_plugin.TextCommand, common.Base):
 
     def is_visible(self, **kwargs):
         self.set_debug_mode()
-        return bool(self.get_project_config())
+        return bool(self.get_auto_format_config()) or bool(self.query(common.config, {}, 'auto_format'))
 
 
 class SingleFormat(common.Base):
@@ -1114,11 +1114,13 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
             if os.path.splitext(path)[1] in ['.sublime-settings']:
                 return
 
-            project_user_config = self.get_project_user_config(active_file_path=path)
-            if project_user_config and self.query(project_user_config, False, operation):
-                project_config = self.get_project_config(active_file_path=path)
-                if project_config:
-                    SingleFormat(view, **project_config).run()
+            auto_format_user_config = self.get_auto_format_user_config(active_file_path=path)
+            auto_format_user_operation = self.query(auto_format_user_config, False, operation)
+            auto_format_config_operation = self.query(common.config, False, 'auto_format', 'config', operation)
+            if (auto_format_user_config and auto_format_user_operation) or auto_format_config_operation:
+                get_auto_format_args = self.get_auto_format_args(active_file_path=path)
+                if get_auto_format_args:
+                    SingleFormat(view, **get_auto_format_args).run()
                     return
 
         self._on_paste_or_save(view, opkey=operation)

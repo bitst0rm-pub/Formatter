@@ -373,12 +373,12 @@ class Module(object):
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):
         kwargs = self.kwargs if hasattr(self, 'kwargs') else {}
-        project_config = kwargs.get('project_config', {})
-        if project_config:
-            for syntax, v in project_config.items():
+        auto_format_config = kwargs.get('auto_format_config', {})
+        if auto_format_config:
+            for syntax, v in auto_format_config.items():
                 self.uid = v.get('uid', None)
                 kwargs = {
-                    'is_project': True,
+                    'is_auto_format': True,
                     'syntaxes': [syntax],
                     'exclude_syntaxes': v.get('exclude_syntaxes', {})
                 }
@@ -392,7 +392,7 @@ class Module(object):
         if not all((view, uid, region)):
             view, uid, region = self.view, self.uid, self.region
 
-        if kwargs.get('is_project', False):
+        if kwargs.get('is_auto_format', False):
             syntaxes = kwargs.get('syntaxes')
             exclude_syntaxes = kwargs.get('exclude_syntaxes')
         else:
@@ -452,29 +452,43 @@ class Module(object):
         return None
 
     def _read_config_file(self, paths, filenames):
-        for path in paths:
+        config = {}
+        for path in reversed(paths):
             for filename in filenames:
                 p = join(path, filename)
                 if isfile(p):
                     try:
                         with open(p, 'r', encoding='utf-8') as f:
-                            return sublime.decode_value(f.read())
+                            self.update_json_recursive(config, sublime.decode_value(f.read()))
                     except Exception as e:
                         log.error('Error reading %s at: %s', filename, p)
-        return {}
+        return config
+
+    def update_json_recursive(self, json_data, update_data):
+        for key, value in update_data.items():
+            if key in json_data and isinstance(value, dict) and isinstance(json_data[key], dict):
+                self.update_json_recursive(json_data[key], value)
+            else:
+                json_data[key] = value
 
     def get_cfgignore(self, active_file_path=None):
         paths = self._get_active_view_parent_folders(active_file_path)
         return self._read_config_file(paths, ['.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore'])
 
-    def get_project_config(self, active_file_path=None):
+    def get_auto_format_config(self, active_file_path=None):
         paths = self._get_active_view_parent_folders(active_file_path)
         config = self._read_config_file(paths, ['.sublimeformatter.json', '.sublimeformatter'])
-        return {'project_config': config} if config else {}
+        if 'config' in config: config.pop('config')
+        return {'auto_format_config': config} if config else {}
 
-    def get_project_user_config(self, active_file_path=None):
+    def get_auto_format_user_config(self, active_file_path=None):
         paths = self._get_active_view_parent_folders(active_file_path)
-        return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter.user'])
+        return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter-user'])
+
+    def get_auto_format_args(self, active_file_path=None):
+        auto_format = self.query(config, {}, 'auto_format').copy()
+        auto_format.update(self.get_auto_format_config(active_file_path).get('auto_format_config', {}))
+        return {'auto_format_config': auto_format} if auto_format else {}
 
     def get_config_path(self):
         ignore_config_path = self.query(config, [], 'quick_options', 'ignore_config_path')
@@ -714,6 +728,12 @@ class Base(Module):
 
         return quick_options
 
+    def project_config_overwrites_config(self, config):
+        project_data = sublime.active_window().project_data()
+        project_settings = self.query(project_data, {}, 'settings', PACKAGE_NAME)
+        if project_settings:
+            self.update_json_recursive(config, project_settings)
+
     def build_config(self, settings):
         try:
             global config
@@ -738,11 +758,13 @@ class Base(Module):
                 },
                 'environ': settings.get('environ', {}),
                 'format_on_unique': settings.get('format_on_unique', {}),
+                'auto_format': settings.get('auto_format', {}),
                 'formatters': settings.get('formatters', {})
             }
 
             config['formatters'].pop('examplegeneric', None)
             config['formatters'].pop('examplemodule', None)
+            self.project_config_overwrites_config(config)
             config = self.recursive_map(self.expand_path, config)
             return config
         except Exception as e:
