@@ -5,7 +5,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 **Key features:**
 
 - Supports more than 70 major programming languages.
-- Includes over 80 preset adapters for various [Plugins](#plugins).
+- Includes over 80 preset adapters for various [plugins](#plugins).
 - Formats text in various ways:
   - Text-to-Text (Text diagramms, ASCII art, etc.)
   - Text-to-Image (Image diagramms, QR-code images, etc.)
@@ -21,7 +21,7 @@ Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify 
 - Shared config files available for each 3rd-party plugin.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
-- Customizable and extendable through 2 methods to add _your_ custom plugins:
+- Customizable and extendable through 2 methods to add **_your_** custom plugins:
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
   - Modules: Integration of your own modules. _see_ [Development](#development)
 - Zero dependencies for installation.
@@ -57,7 +57,7 @@ _Formatter in action: Text-to-Image..._
   - [Per-project Formatting](#per-project-formatting)
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
-  - [Development: Guide to Create Your Own Modules](#development)
+  - [Development: Creating Your Own Modules](#development)
   - [License](#license)
 
 
@@ -148,17 +148,27 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
 💡 **Tips**:
 
-- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) and can collaborate to format `CSS`. Config example:
+- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) and can collaborate to format `CSS`
+
+    <details>
+    <summary><sub>Config example</sub></summary>
 
         stylelint_rc.json:
         {"extends":["stylelint-config-recommended","stylelint-config-standard"],"plugins":["stylelint-group-selectors","stylelint-no-indistinguishable-colors","@double-great/stylelint-a11y","stylelint-prettier"],"rules":{"plugin/stylelint-group-selectors":true,"plugin/stylelint-no-indistinguishable-colors":true,"a11y/content-property-no-static-value":false,"a11y/font-size-is-readable":false,"a11y/line-height-is-vertical-rhythmed":[true,{"severity":"warning"}],"a11y/media-prefers-color-scheme":false,"a11y/media-prefers-reduced-motion":false,"a11y/no-display-none":false,"a11y/no-obsolete-attribute":[true,{"severity":"warning"}],"a11y/no-obsolete-element":[true,{"severity":"warning"}],"a11y/no-outline-none":false,"a11y/no-spread-text":false,"a11y/no-text-align-justify":false,"a11y/selector-pseudo-class-focus":false,"prettier/prettier":[true,{"parser":"css","printWidth":120,"semi":true,"singleQuote":false,"tabWidth":4,"useTabs":false}]}}
 
         Then in Formatter settings > "stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }
 
-- [prettier](https://github.com/prettier/prettier) and [eslint](https://github.com/eslint/eslint) can collaborate to format `JS`. Config example:
+    </details>
+
+- [prettier](https://github.com/prettier/prettier) and [eslint](https://github.com/eslint/eslint) can collaborate to format `JS`
+
+    <details>
+    <summary><sub>Config example</sub></summary>
 
         eslint_rc.json:
         {"env":{"es2022":true,"node":true,"browser":true},"parserOptions":{"ecmaVersion":13,"sourceType":"module","ecmaFeatures":{"jsx":true}},"extends":["../javascript/node_modules/eslint-config-prettier","../javascript/node_modules/eslint-config-airbnb-base"],"plugins":["eslint-plugin-prettier"],"rules":{"prettier/prettier":["error",{"bracketSpacing":true,"jsxSingleQuote":true,"parser":"babel","printWidth":120,"semi":true,"singleQuote":true,"tabWidth":4,"useTabs":false},{"usePrettierrc":false}],"indent":["error",4]}}
+
+    </details>
 
 
 ## Installation
@@ -294,7 +304,7 @@ Both methods with examples are in this settings guide:
     // This option enables auto-detect formatting for file with a single command.
     // You can configure it either here and/or by using the dot files in your working folder.
     // If you use both methods, the config from the dot files will override the one embedded here.
-    // More about this feature and its structure: see README.md > Auto-detect Formatting.
+    // More about this feature and its structure: see README.md > Auto-detect Formatting
     "auto_format": {
         "config": {
             "format_on_save": false,
@@ -491,6 +501,8 @@ Both methods with examples are in this settings guide:
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case, the key must be named: "default"
+            // Tips: You can choose another config file format as the standard one
+            // provided by Formatter if the third-party plugin supports it.
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
             // Do not use the reference files with suffix '.master.' directly.
@@ -502,7 +514,7 @@ Both methods with examples are in this settings guide:
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
             //    the working root folder. The structure of this file is
-            //    descripted in README.md > Auto-detect Formatting.
+            //    descripted in README.md > Auto-detect Formatting
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.
             "config_path": {
@@ -624,6 +636,8 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 
 Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
+_.sublimeformatter.json_
+
 ```js
 {
     // Comments are allowed.
@@ -644,6 +658,8 @@ Formatter will start to search up the file tree inside the working folder until 
 
 User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter-user`
 
+_.sublimeformatter.user.json_
+
 ```js
 {
     "format_on_save": true,
@@ -651,8 +667,10 @@ User-specific config options can be set using `.sublimeformatter.user.json` OR `
 }
 ```
 
-To ignore a specific syntax assigned to your User's `"config_path":` settings, you can use `sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
+To ignore a specific syntax assigned to your User's `"config_path":` settings, you can use `.sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
 For example, if you prefer to use the standard .prettierrc in your working folder instead of the custom Formatter `"config_path":`
+
+_.sublimeformatter.cfgignore.json_
 
 ```js
 {
@@ -662,11 +680,13 @@ For example, if you prefer to use the standard .prettierrc in your working folde
 }
 ```
 
-Alternatively, you can embed your auto-detect config within your User `Formatter.sublime-settings`
+Alternatively, you can embed your auto-detect config within your User `Formatter.sublime-settings`. In cases where both the dot files and embedded methods coexist, then the config from dot files will take precedence over the embedded one.
+
+_Formatter.sublime-settings_
 
 ```js
+{
     "debug": "status",
-    ...
 
     "auto_format": {
         "config": {
@@ -687,7 +707,8 @@ Alternatively, you can embed your auto-detect config within your User `Formatter
         }
     },
 
-    "formatters": {...}
+    "formatters": {}
+}
 ```
 
 This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
@@ -696,9 +717,10 @@ This is a one-command/one-keybinding feature. Both the app and context menu will
 ## Per-project Formatting
 
 Formatter is able to add and override any setting on per-project basis using `.sublime-project` files.<br/>
-As `.sublime-project` files can be placed everywhere within your system, detecting changes automatically is not possible. Therefore, you might want to restart Sublime Text to apply the changes.
+You might want to restart Sublime Text to apply the changes to the `.sublime-project` file.
 
 _.sublime-project_
+
 ```js
 {
     "folders": [
@@ -716,7 +738,7 @@ _.sublime-project_
                 },
                 "jsbeautifier": {
                     "config_path": {
-                        "default": "${packages}/path/to/new/jsbeautify_rc.json"
+                        "default": "${HOME}/path/to/new/jsbeautify_rc.json"
                     }
                 }
             }

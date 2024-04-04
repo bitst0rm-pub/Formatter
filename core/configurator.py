@@ -566,7 +566,7 @@ def build_formatter_sublime_settings(formatter_map):
     // This option enables auto-detect formatting for file with a single command.
     // You can configure it either here and/or by using the dot files in your working folder.
     // If you use both methods, the config from the dot files will override the one embedded here.
-    // More about this feature and its structure: see README.md > Auto-detect Formatting.'''),
+    // More about this feature and its structure: see README.md > Auto-detect Formatting'''),
             ('auto_format', OrderedDict([
                 ('__COMMENT__auto_format_a', '/*'),
                 ('config', OrderedDict([
@@ -765,6 +765,8 @@ def build_formatter_sublime_settings(formatter_map):
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case, the key must be named: "default"
+            // Tips: You can choose another config file format as the standard one
+            // provided by Formatter if the third-party plugin supports it.
             // Formatter provides a set of default config files under
             // "formatter.assets/config" folder for your personal use.
             // Do not use the reference files with suffix '.master.' directly.
@@ -776,7 +778,7 @@ def build_formatter_sublime_settings(formatter_map):
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
             //    the working root folder. The structure of this file is
-            //    descripted in README.md > Auto-detect Formatting.
+            //    descripted in README.md > Auto-detect Formatting
             // Formatter will start to search up the file tree until a
             // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),
                     ('config_path', OrderedDict([

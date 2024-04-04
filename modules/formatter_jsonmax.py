@@ -23,7 +23,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'jsonmax_rc.json'
     },
-    'comment': 'build-in, no executable'
+    'comment': 'build-in, no executable. json not json5 with comments.'
 }
 
 
