@@ -99,21 +99,6 @@ class SessionManager:
                 region = sublime.Region(region_data['start'], region_data['end'])
                 view.sel().add(region)
 
-    def add_syntax(self, file_path, syntax):
-        data = self.read_session_file()
-        entry = data.get(file_path, {})
-        entry['last_update'] = str(datetime.now())
-        entry['syntax'] = syntax
-        self.write_session_file(data)
-
-    def restore_syntax(self, view, file_path):
-        data = self.read_session_file()
-        entry = data.get(file_path, {})
-        syntax = entry.get('syntax', None)
-
-        if syntax:
-            view.assign_syntax(syntax)
-
     def add_bookmarks(self, file_path, bookmarks):
         data = self.read_session_file()
         entry = data.get(file_path, {})
@@ -149,15 +134,13 @@ class SessionManager:
             cursor_position = view.sel()[0].begin()
             cursor_x, cursor_y = view.rowcol(cursor_position)
 
-            # Get selections, syntax, and bookmarks and store them
+            # Store selections and bookmarks
             selections = [{'start': region.begin(), 'end': region.end()} for region in view.sel()]
-            # syntax = view.settings().get('syntax')
             bookmarks = self.get_bookmarks(view)
 
             with self.lock:
                 self.add_entry(file_path, cursor_x, cursor_y)
                 self.add_selections(file_path, selections)
-                # self.add_syntax(file_path, syntax)
                 self.add_bookmarks(file_path, bookmarks)
 
     def run_on_load(self, view):
@@ -176,9 +159,8 @@ class SessionManager:
                     view.sel().add(sublime.Region(cursor_position))
                     view.show_at_center(cursor_position, animate=False)
 
-                    # Restore selections, syntax, and bookmarks
+                    # Restore selections and bookmarks
                     self.restore_selections(view, file_path)
-                    # self.restore_syntax(view, file_path)
                     self.restore_bookmarks(view, file_path)
 
 
