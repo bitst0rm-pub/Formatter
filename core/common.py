@@ -943,10 +943,12 @@ class Base(Module):
                         master_path = '{0}.{2}{1}'.format(*splitext(path) + ('master',))
                         hash_dst_master = self.md5f(master_path) if isfile(master_path) else None
 
-                        if not hash_dst_master or (hash_dst_master and hash_src != hash_dst_master):
+                        if hash_src != hash_dst and (not hash_dst_master or hash_src != hash_dst_master):
                             with open(master_path, 'wb') as f:
                                 f.write(res)
-                            #log.debug('Setup shared master config: %s', master_path)
+                        elif hash_dst_master:
+                            os.remove(master_path)
+
                     except Exception as e:
                         log.warning('Could not setup shared master config: %s\n%s', master_path, e)
                 else:
@@ -954,7 +956,6 @@ class Base(Module):
                         res = sublime.load_binary_resource(resource)
                         with open(path, 'wb') as f:
                             f.write(res)
-                        #log.debug('Setup shared config: %s', path)
                     except Exception as e:
                         log.warning('Could not setup shared config: %s\n%s', path, e)
 
@@ -1001,14 +1002,11 @@ class Base(Module):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 try:
-                    # Attempt to read the first line
                     next(f)
                 except StopIteration:
-                    # If the file is empty, return False
                     return False
             return True
         except UnicodeDecodeError:
-            # If a UnicodeDecodeError occurs, the file is not a text file
             return False
 
     def get_unique(self, data):
