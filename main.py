@@ -49,6 +49,10 @@ def merge(api):
             for src in v:
                 src = sublime.expand_variables(os.path.normpath(os.path.expanduser(os.path.expandvars(src))), {'packages': packages_path})
                 base = os.path.basename(src)
+
+                if k == 'libs' and base in ['langref', 'prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']:
+                    continue
+
                 dst = os.path.join(packages_path, common.PACKAGE_NAME, k, base)
 
                 if os.path.isfile(src):
