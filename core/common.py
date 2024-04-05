@@ -77,13 +77,7 @@ class Module(object):
             if os.access(file, os.F_OK | os.X_OK):
                 return True
 
-            if not IS_WINDOWS:
-                import stat
-                os.chmod(file, os.stat(file).st_mode | stat.S_IEXEC)
-                log.debug('Set executable permission for: %s', file)
-                return True
-
-            log.warning('File exists but cannot be executed: %s', file)
+            log.warning('File exists but cannot get permission to execute: %s', file)
         return False
 
     def get_pathinfo(self, path=None):
