@@ -747,8 +747,8 @@ class Base(Module):
                 },
                 'remember_session': settings.get('remember_session', True),
                 'layout': {
-                    'enable': self.query(settings, False, 'layout', 'enable'),
-                    'sync_scroll': self.query(settings, False, 'layout', 'sync_scroll')
+                    'enable': self.query(settings, '2cols', 'layout', 'enable'),
+                    'sync_scroll': self.query(settings, True, 'layout', 'sync_scroll')
                 },
                 'environ': settings.get('environ', {}),
                 'format_on_unique': settings.get('format_on_unique', {}),
