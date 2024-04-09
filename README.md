@@ -1,6 +1,6 @@
-# Formatter
+# 🧜‍♀️ Formatter
 
-Formatter is a config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
+Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
 **Key features:**
 
@@ -73,7 +73,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
   - This table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
   - Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
   - `build-in` = do not need to install by end-users.
-  - `None` = mostly standalone binary
+  - `None` = mostly standalone binary.
   - `Req.` = Requirements might not be up-to-date.
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
