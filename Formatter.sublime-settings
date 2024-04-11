@@ -2277,6 +2277,20 @@
             }
             /* uses headless browser to convert images, no dark-theme for png. */
         },
+        "drawio": {
+            "info": "https://github.com/jgraph/drawio-desktop",
+            "disable": true,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "syntaxes": ["drawio"],
+            "type": "graphic",
+            "render_extended": false,
+            "executable_path": ["/path/to/bin/draw.io"],
+            "config_path": {
+                "default": "${packages}/User/formatter.assets/config/drawio_rc.yaml"
+            }
+            /* executable_path for macosx is /Applications/draw.io.app/Contents/MacOS/draw.io, no dark-theme for png. */
+        },
         "graphviz": {
             "info": "https://gitlab.com/graphviz/graphviz",
             "disable": true,

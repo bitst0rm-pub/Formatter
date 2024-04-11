@@ -837,6 +837,14 @@
                 }
             },
             {
+                "caption": "Drawio",
+                "command": "run_format",
+                "args": {
+                    "uid": "drawio",
+                    "type": "graphic"
+                }
+            },
+            {
                 "caption": "Graphviz",
                 "command": "run_format",
                 "args": {

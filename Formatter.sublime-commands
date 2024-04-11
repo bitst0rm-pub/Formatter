@@ -832,6 +832,14 @@
         }
     },
     {
+        "caption": "Formatter: Visualize with Drawio",
+        "command": "run_format",
+        "args": {
+            "uid": "drawio",
+            "type": "graphic"
+        }
+    },
+    {
         "caption": "Formatter: Visualize with Graphviz",
         "command": "run_format",
         "args": {

@@ -1,0 +1,35 @@
+# $ /Applications/draw.io.app/Contents/MacOS/draw.io --help
+# Update: 2024-04-11
+
+# Set transparent background for PNG
+transparent: false
+
+# Includes a copy of the diagram (for PNG, SVG and PDF formats only)
+embed-diagram: true
+
+# Embed Images in SVG file (for SVG format only)
+embed-svg-images: true
+
+# Sets the border width around the diagram (default: 0)
+border: 0
+
+# Scales the diagram size
+scale: 0
+
+# Fits the generated image/pdf into the specified width, preserves aspect ratio.
+width: -1
+
+# Fits the generated image/pdf into the specified height, preserves aspect ratio.
+height: -1
+
+# Scales the application interface
+zoom: 0
+
+# Theme of the exported SVG image (dark, light [default]) (default: "light")
+svg-theme: "light"
+
+# Target of links in the exported SVG image (auto [default], new-win, same-win) (default: "auto")
+svg-links-target: "auto"
+
+# Enable Plugins
+enable-plugins: false

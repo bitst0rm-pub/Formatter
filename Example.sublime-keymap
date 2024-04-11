@@ -119,6 +119,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "svgomin", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "d2", "type": "graphic"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "drawio", "type": "graphic"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "graphviz", "type": "graphic"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "mermaid", "type": "graphic"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "plantuml", "type": "graphic"}}

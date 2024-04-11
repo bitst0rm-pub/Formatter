@@ -96,6 +96,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | -- | Dart | -- |
 | Dhall | [dhall format](https://github.com/dhall-lang/dhall-haskell) | -- | -- | None | -- |
 | Dockerfile | [dockfmt](https://github.com/jessfraz/dockfmt) | -- | -- | None | -- |
+| Drawio | -- | -- | [draw.io](https://github.com/jgraph/drawio-desktop) | None | -- |
 | Elixir | [mix format](https://github.com/elixir-lang/elixir) | -- | -- | Erlang | -- |
 | Elm | [elm-format](https://github.com/avh4/elm-format) | -- | -- | None | -- |
 | Erlang | [erlfmt](https://github.com/WhatsApp/erlfmt)[1], [efmt](https://github.com/sile/efmt) | -- | -- | rebar3[1], None | -- |

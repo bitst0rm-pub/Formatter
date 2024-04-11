@@ -947,6 +947,15 @@
                         }
                     },
                     {
+                        "caption": "Drawio",
+                        "mnemonic": "D",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "drawio",
+                            "type": "graphic"
+                        }
+                    },
+                    {
                         "caption": "Graphviz",
                         "mnemonic": "G",
                         "command": "run_format",
