@@ -412,7 +412,7 @@ def build_formatter_sublime_settings_children(formatter_map):
         if config:
             child = OrderedDict([
                 ('info', config['source']),
-                ('disable', True),
+                ('enable', False),
                 ('format_on_save', False),
                 ('format_on_paste', False),
                 ('new_file_on_format', False),
@@ -613,16 +613,16 @@ def build_formatter_sublime_settings(formatter_map):
             // The exit code of the third-party plugin.
             // This option can be omitted. Type integer, default to 0.'''),
                     ('success_code', 0),
-                    ('__COMMENT__disable', '''
+                    ('__COMMENT__enable', '''
             // Same as examplemodule options.'''),
-                    ('disable', True),
+                    ('enable', False),
                     ('__COMMENT__format_on_save', '''// Same as examplemodule options.'''),
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''// Same as examplemodule options.'''),
                     ('format_on_paste', False),
-                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options. (disabled for type graphic)'''),
+                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options. (disabled/unused for type graphic)'''),
                     ('new_file_on_format', False),
-                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options. (disabled for type graphic)'''),
+                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options. (disabled/unused for type graphic)'''),
                     ('recursive_folder_format', {}),
                     ('__COMMENT__syntaxes', '''// Same as examplemodule options.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
@@ -666,9 +666,9 @@ def build_formatter_sublime_settings(formatter_map):
                     ]))
                 ])),
                 ('examplemodule', OrderedDict([
-                    ('__COMMENT__disable', '''// Plugin activation.
+                    ('__COMMENT__enable', '''// Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.'''),
-                    ('disable', True),
+                    ('enable', False),
                     ('__COMMENT__format_on_save', '''
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.

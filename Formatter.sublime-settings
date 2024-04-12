@@ -138,14 +138,14 @@
             "success_code": 0,
 
             // Same as examplemodule options.
-            "disable": true,
+            "enable": false,
             // Same as examplemodule options.
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options. (disabled for type graphic)
+            // Same as examplemodule options. (disabled/unused for type graphic)
             "new_file_on_format": false,
-            // Same as examplemodule options. (disabled for type graphic)
+            // Same as examplemodule options. (disabled/unused for type graphic)
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -191,7 +191,7 @@
         "examplemodule": {
             // Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.
-            "disable": true,
+            "enable": false,
 
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
@@ -349,7 +349,7 @@
 
         "appleswiftformat": {
             "info": "https://github.com/apple/swift-format",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -368,7 +368,7 @@
         },
         "asmfmt": {
             "info": "https://github.com/klauspost/asmfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -385,7 +385,7 @@
         },
         "astyle": {
             "info": "https://sourceforge.net/projects/astyle",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -405,7 +405,7 @@
         },
         "autopep8": {
             "info": "https://github.com/hhatto/autopep8",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -425,7 +425,7 @@
         },
         "beautysh": {
             "info": "https://github.com/lovesegfault/beautysh",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -445,7 +445,7 @@
         },
         "bibtextidy": {
             "info": "https://github.com/FlamingTempura/bibtex-tidy",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -465,7 +465,7 @@
         },
         "black": {
             "info": "https://github.com/ambv/black",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -485,7 +485,7 @@
         },
         "cabalfmt": {
             "info": "https://github.com/phadej/cabal-fmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -503,7 +503,7 @@
         },
         "caddyfmt": {
             "info": "https://github.com/caddyserver/caddy",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -520,7 +520,7 @@
         },
         "clangformat": {
             "info": "https://clang.llvm.org/docs/ClangFormat.html",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -539,7 +539,7 @@
         },
         "cljfmt": {
             "info": "https://github.com/weavejester/cljfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -560,7 +560,7 @@
         },
         "cmakeformat": {
             "info": "https://github.com/cheshirekow/cmake_format",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -580,7 +580,7 @@
         },
         "crystal": {
             "info": "https://github.com/crystal-lang/crystal",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -597,7 +597,7 @@
         },
         "csscomb": {
             "info": "https://github.com/csscomb/csscomb.js",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -617,7 +617,7 @@
         },
         "d2fmt": {
             "info": "https://github.com/terrastruct/d2",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -634,7 +634,7 @@
         },
         "dartformat": {
             "info": "https://dart.dev/tools/dart-format",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -651,7 +651,7 @@
         },
         "deno": {
             "info": "https://github.com/denoland/deno",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -670,7 +670,7 @@
         },
         "dhallformat": {
             "info": "https://github.com/dhall-lang/dhall-haskell",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -687,7 +687,7 @@
         },
         "docformatter": {
             "info": "https://github.com/PyCQA/docformatter",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -707,7 +707,7 @@
         },
         "dockfmt": {
             "info": "https://github.com/jessfraz/dockfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -724,7 +724,7 @@
         },
         "dprint": {
             "info": "https://github.com/dprint/dprint",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -743,7 +743,7 @@
         },
         "efmt": {
             "info": "https://github.com/sile/efmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -760,7 +760,7 @@
         },
         "elixirmix": {
             "info": "https://github.com/elixir-lang/elixir",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -780,7 +780,7 @@
         },
         "elmformat": {
             "info": "https://github.com/avh4/elm-format",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -797,7 +797,7 @@
         },
         "erlfmt": {
             "info": "https://github.com/WhatsApp/erlfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -814,7 +814,7 @@
         },
         "eslint": {
             "info": "https://github.com/eslint/eslint",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -835,7 +835,7 @@
         },
         "eslintd": {
             "info": "https://github.com/mantoni/eslint_d.js",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -856,7 +856,7 @@
         },
         "floskell": {
             "info": "https://github.com/ennocramer/floskell",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -875,7 +875,7 @@
         },
         "formatr": {
             "info": "https://github.com/yihui/formatR",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -894,7 +894,7 @@
         },
         "fourmolu": {
             "info": "https://github.com/fourmolu/fourmolu",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -913,7 +913,7 @@
         },
         "fprettify": {
             "info": "https://github.com/pseewald/fprettify",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -933,7 +933,7 @@
         },
         "gleam": {
             "info": "https://github.com/gleam-lang/gleam",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -950,7 +950,7 @@
         },
         "gofmt": {
             "info": "https://pkg.go.dev/cmd/gofmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -967,7 +967,7 @@
         },
         "gofumpt": {
             "info": "https://github.com/mvdan/gofumpt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -984,7 +984,7 @@
         },
         "goimports": {
             "info": "https://pkg.go.dev/golang.org/x/tools/cmd/goimports",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1001,7 +1001,7 @@
         },
         "googlejavaformat": {
             "info": "https://github.com/google/google-java-format",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1022,7 +1022,7 @@
         },
         "hclfmt": {
             "info": "https://github.com/hashicorp/hcl",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1039,7 +1039,7 @@
         },
         "hindent": {
             "info": "https://github.com/mihaimaruseac/hindent",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1058,7 +1058,7 @@
         },
         "htmltidy": {
             "info": "https://github.com/htacg/tidy-html5",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1078,7 +1078,7 @@
         },
         "isort": {
             "info": "https://github.com/PyCQA/isort",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1098,7 +1098,7 @@
         },
         "jsbeautifier": {
             "info": "https://github.com/beautify-web/js-beautify",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1121,7 +1121,7 @@
         },
         "jsonmax": {
             "info": "build-in",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1140,7 +1140,7 @@
         },
         "ktlint": {
             "info": "https://github.com/pinterest/ktlint",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1158,7 +1158,7 @@
         },
         "latexindent": {
             "info": "https://github.com/cmhughes/latexindent.pl",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1178,7 +1178,7 @@
         },
         "luaformatter": {
             "info": "https://github.com/Koihik/LuaFormatter",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1197,7 +1197,7 @@
         },
         "nasmfmt": {
             "info": "https://github.com/yamnikov-oleg/nasmfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1216,7 +1216,7 @@
         },
         "nginxfmt": {
             "info": "https://github.com/slomkowski/nginx-config-formatter",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1234,7 +1234,7 @@
         },
         "ocamlformat": {
             "info": "https://github.com/ocaml-ppx/ocamlformat",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1253,7 +1253,7 @@
         },
         "ocpindent": {
             "info": "https://github.com/OCamlPro/ocp-indent",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1272,7 +1272,7 @@
         },
         "ormolu": {
             "info": "https://github.com/tweag/ormolu",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1289,7 +1289,7 @@
         },
         "perltidy": {
             "info": "https://github.com/perltidy/perltidy",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1309,7 +1309,7 @@
         },
         "pgformat": {
             "info": "https://github.com/darold/pgFormatter",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1330,7 +1330,7 @@
         },
         "phpcbf": {
             "info": "https://github.com/squizlabs/PHP_CodeSniffer",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1350,7 +1350,7 @@
         },
         "phpcsfixer": {
             "info": "https://github.com/FriendsOfPHP/PHP-CS-Fixer",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1370,7 +1370,7 @@
         },
         "plantumlascii": {
             "info": "https://github.com/plantuml/plantuml",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1388,7 +1388,7 @@
         },
         "prettier": {
             "info": "https://github.com/prettier/prettier",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1408,7 +1408,7 @@
         },
         "prettierd": {
             "info": "https://github.com/fsouza/prettierd",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1428,7 +1428,7 @@
         },
         "prettydiffmax": {
             "info": "https://github.com/prettydiff/prettydiff",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1448,7 +1448,7 @@
         },
         "prettytable": {
             "info": "https://github.com/jazzband/prettytable",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1467,7 +1467,7 @@
         },
         "pyment": {
             "info": "https://github.com/dadadel/pyment",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1487,7 +1487,7 @@
         },
         "racofmt": {
             "info": "https://github.com/sorawee/fmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1505,7 +1505,7 @@
         },
         "rubocop": {
             "info": "https://github.com/rubocop-hq/rubocop",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1525,7 +1525,7 @@
         },
         "rubyfmt": {
             "info": "https://github.com/fables-tales/rubyfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1542,7 +1542,7 @@
         },
         "ruff": {
             "info": "https://github.com/astral-sh/ruff",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1561,7 +1561,7 @@
         },
         "rufo": {
             "info": "https://github.com/ruby-formatter/rufo",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1578,7 +1578,7 @@
         },
         "rustfmt": {
             "info": "https://github.com/rust-lang/rustfmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1597,7 +1597,7 @@
         },
         "scalafmt": {
             "info": "https://github.com/scalameta/scalafmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1616,7 +1616,7 @@
         },
         "scalariform": {
             "info": "https://github.com/scala-ide/scalariform",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1636,7 +1636,7 @@
         },
         "semistandardjs": {
             "info": "https://github.com/standard/semistandard",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1653,7 +1653,7 @@
         },
         "shellcheck": {
             "info": "https://github.com/koalaman/shellcheck",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1673,7 +1673,7 @@
         },
         "shfmt": {
             "info": "https://github.com/mvdan/sh",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1692,7 +1692,7 @@
         },
         "sqlformatter": {
             "info": "https://github.com/sql-formatter-org/sql-formatter",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1712,7 +1712,7 @@
         },
         "sqlparse": {
             "info": "https://github.com/andialbrecht/sqlparse",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1732,7 +1732,7 @@
         },
         "standardjs": {
             "info": "https://github.com/standard/standard",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1749,7 +1749,7 @@
         },
         "standardrb": {
             "info": "https://github.com/standardrb/standard",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1766,7 +1766,7 @@
         },
         "standardxjs": {
             "info": "https://github.com/standard/standardx",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1783,7 +1783,7 @@
         },
         "stylefmt": {
             "info": "https://github.com/masaakim/stylefmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1804,7 +1804,7 @@
         },
         "stylelint": {
             "info": "https://github.com/stylelint/stylelint",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1825,7 +1825,7 @@
         },
         "styler": {
             "info": "https://github.com/r-lib/styler",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1844,7 +1844,7 @@
         },
         "stylishhaskell": {
             "info": "https://github.com/haskell/stylish-haskell",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1863,7 +1863,7 @@
         },
         "stylua": {
             "info": "https://github.com/JohnnyMorganz/StyLua",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1882,7 +1882,7 @@
         },
         "svgomax": {
             "info": "https://github.com/svg/svgo",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1902,7 +1902,7 @@
         },
         "swiftformat": {
             "info": "https://github.com/nicklockwood/SwiftFormat",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1921,7 +1921,7 @@
         },
         "taplo": {
             "info": "https://github.com/tamasfe/taplo",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1940,7 +1940,7 @@
         },
         "terraformfmt": {
             "info": "https://developer.hashicorp.com/terraform/cli/commands/fmt",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1957,7 +1957,7 @@
         },
         "topiary": {
             "info": "https://github.com/tweag/topiary",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1976,7 +1976,7 @@
         },
         "tsfmt": {
             "info": "https://github.com/vvakame/typescript-formatter",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -1996,7 +1996,7 @@
         },
         "tsstandard": {
             "info": "https://github.com/standard/ts-standard",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2013,7 +2013,7 @@
         },
         "uncrustify": {
             "info": "https://github.com/uncrustify/uncrustify",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2035,7 +2035,7 @@
         },
         "yapf": {
             "info": "https://github.com/google/yapf",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2055,7 +2055,7 @@
         },
         "zigfmt": {
             "info": "https://github.com/ziglang/zig",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2072,7 +2072,7 @@
         },
         "zprint": {
             "info": "https://github.com/kkinnear/zprint",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2093,7 +2093,7 @@
         },
         "cleancss": {
             "info": "https://github.com/jakubpawlowicz/clean-css-cli",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2113,7 +2113,7 @@
         },
         "htmlminifier": {
             "info": "https://github.com/kangax/html-minifier",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2133,7 +2133,7 @@
         },
         "jsonmin": {
             "info": "build-in",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2149,7 +2149,7 @@
         },
         "prettydiffmin": {
             "info": "https://github.com/prettydiff/prettydiff",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2169,7 +2169,7 @@
         },
         "pythonminifier": {
             "info": "https://github.com/dflook/python-minifier",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2189,7 +2189,7 @@
         },
         "shfmtmin": {
             "info": "https://github.com/mvdan/sh",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2206,7 +2206,7 @@
         },
         "sqlmin": {
             "info": "https://github.com/bitst0rm",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2225,7 +2225,7 @@
         },
         "svgomin": {
             "info": "https://github.com/svg/svgo",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2245,7 +2245,7 @@
         },
         "terser": {
             "info": "https://github.com/terser-js/terser",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "new_file_on_format": false,
@@ -2265,7 +2265,7 @@
         },
         "d2": {
             "info": "https://github.com/terrastruct/d2",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "syntaxes": ["d2"],
@@ -2279,7 +2279,7 @@
         },
         "drawio": {
             "info": "https://github.com/jgraph/drawio-desktop",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "syntaxes": ["drawio"],
@@ -2293,7 +2293,7 @@
         },
         "graphviz": {
             "info": "https://gitlab.com/graphviz/graphviz",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "syntaxes": ["graphviz"],
@@ -2306,7 +2306,7 @@
         },
         "mermaid": {
             "info": "https://github.com/mermaid-js/mermaid-cli",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "syntaxes": ["mermaid"],
@@ -2320,7 +2320,7 @@
         },
         "plantuml": {
             "info": "https://github.com/plantuml/plantuml",
-            "disable": true,
+            "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
             "syntaxes": ["plantuml"],

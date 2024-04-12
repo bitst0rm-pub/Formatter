@@ -36,7 +36,7 @@ class Formatter(common.Module):
         return False
 
     def run(self):
-        if self.view.is_read_only() or not self.view.window() or self.view.size() == 0:
+        if not self.is_view_formattable():
             log.error('View is not formattable.')
             return False
 

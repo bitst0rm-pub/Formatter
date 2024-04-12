@@ -352,14 +352,14 @@ Both methods with examples are in this settings guide:
             "success_code": 0,
 
             // Same as examplemodule options.
-            "disable": true,
+            "enable": false,
             // Same as examplemodule options.
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options. (disabled for type graphic)
+            // Same as examplemodule options. (disabled/unused for type graphic)
             "new_file_on_format": false,
-            // Same as examplemodule options. (disabled for type graphic)
+            // Same as examplemodule options. (disabled/unused for type graphic)
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -405,7 +405,7 @@ Both methods with examples are in this settings guide:
         "examplemodule": { // MODULE METHOD
             // Plugin activation.
             // By default, all plugins are disabled and disappear from the menu.
-            "disable": true,
+            "enable": false,
 
             // Auto formatting whenever the current file/view is being saved.
             // This option should be used for plugins with unique syntaxes.
@@ -563,7 +563,7 @@ Both methods with examples are in this settings guide:
 
         "stylelint": {  // EXAMPLE: MODULE METHOD
             "info": "https://github.com/stylelint/stylelint",
-            "disable": false,
+            "enable": true,
             "format_on_paste": false,
             "format_on_save": false,
             "new_file_on_format": false,
@@ -588,7 +588,7 @@ Both methods with examples are in this settings guide:
             "args": ["{{e}}", " --style=file:{{c}} ", "--"],
 
             "info": "https://github.com/uncrustify/uncrustify",
-            "disable": false,
+            "enable": true,
             "format_on_save": false,
             // "new_file_on_format": false, // Add this, if needed
             // "recursive_folder_format": {...} // Add this, if needed
@@ -608,7 +608,7 @@ Both methods with examples are in this settings guide:
           "render_extended": true,
 
           "info": "https://github.com/terrastruct/d2",
-          "disable": false,
+          "enable": true,
           "format_on_save": false,
           "format_on_paste": false,
           "syntaxes": ["d2"],

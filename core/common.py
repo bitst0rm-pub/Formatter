@@ -228,6 +228,9 @@ class Module(object):
     def get_text_from_region(self, region):
         return self.view.substr(region)
 
+    def is_view_formattable(self):
+        return not (self.view.is_read_only() or not self.view.window() or self.view.size() == 0)
+
     def query(self, data_dict, default=None, *keys):
         for key in keys:
             if not isinstance(data_dict, (dict, sublime.Settings)):

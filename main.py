@@ -443,8 +443,19 @@ class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
 
     def is_visible(self, **kwargs):
         self.set_debug_mode()
-        is_disabled = self.query(common.config, True, 'formatters', kwargs.get('uid', None), 'disable')
-        return not is_disabled
+        return self.is_plugin_enabled(kwargs.get('uid', None))
+
+    def is_plugin_enabled(self, uid):
+        if not self.is_view_formattable():
+            return False
+
+        formatter = self.query(common.config, {}, 'formatters', uid)
+        if 'disable' in formatter and not formatter.get('disable', True):
+            return True
+        elif 'enable' in formatter and formatter.get('enable', False):
+            return True
+        else:
+            return False
 
     def is_recursive_formatting_enabled(self, uid):
         if self.is_quick_options_mode():
@@ -1180,7 +1191,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         is_qo_mode = self.is_quick_options_mode()
         is_rff_on = self.query(common.config, False, 'quick_options', 'recursive_folder_format')
 
-        if not isinstance(value, dict) or value.get('disable', True):
+        if not isinstance(value, dict) or ('disable' in value and value.get('disable', True)) or ('enable' in value and not value.get('enable', False)):
             return True
 
         if (is_qo_mode and uid not in self.query(common.config, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
