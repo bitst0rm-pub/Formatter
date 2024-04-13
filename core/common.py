@@ -60,8 +60,7 @@ LAYOUTS = {
 
 class Module(object):
     '''
-    A fundamental class providing the complete APIs for the formatting modules.
-    These APIs are strictly limited for use with files located in the 'modules' folder.
+    API for use with files located in the 'modules' folder.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
@@ -638,8 +637,7 @@ class Module(object):
 
 class Base(Module):
     '''
-    A base class extending the Module class with additional APIs for universal use.
-    This class inherits all methods and attributes from the Module class.
+    Extended API for universal use.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
@@ -1075,7 +1073,7 @@ class Base(Module):
 
 
 '''
-Static helper APIs
+Static helper API
 '''
 
 def read_settings_file(settings_file):

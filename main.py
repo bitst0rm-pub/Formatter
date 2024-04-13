@@ -202,8 +202,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
         ('debug', 'Enable Debug'),
         ('layout', 'Choose Layout'),
         ('ignore_config_path', 'Ignore Config Path'),
-        ('format_on_paste', 'Enable Format on Paste'),
         ('format_on_save', 'Enable Format on Save'),
+        ('format_on_paste', 'Enable Format on Paste'),
         ('new_file_on_format', 'Enable New File on Format'),
         ('recursive_folder_format', 'Enable Recursive Folder Format'),
         ('render_extended', 'Render Extended Graphics'),
@@ -536,10 +536,10 @@ class SingleFormat(common.Base):
     def print_status(self, is_success):
         if is_success:
             self.success += 1
-            log.status('Formatting successful. 🎉😃🍰\n')
+            log.status('🎉 Formatting successful. 🥳✨\n')
         else:
             self.failure += 1
-            log.status('Formatting failed. 💔😢💔\n')
+            log.status('❌ Formatting failed. 😢💔\n')
 
         if common.config.get('show_statusbar'):
             self.set_status_bar_text()
@@ -787,7 +787,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         return dst_view
 
     def copy_content_and_selections(self, edit, src_view, dst_view):
-        # edit is broken again with upgrade to 4166 and beyond:
+        # edit is broken in ST4166+:
         # dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
         dst_view.run_command('append', {'characters': src_view.substr(sublime.Region(0, src_view.size()))})
 
@@ -924,10 +924,10 @@ class RecursiveFormat(common.Base):
     def show_result(self, is_success):
         if is_success:
             self.CONTEXT['success_count'] += 1
-            log.status('Formatting successful. 🎉😃🍰\n')
+            log.status('🎉 Formatting successful. 🥳✨\n')
         else:
             self.CONTEXT['failure_count'] += 1
-            log.status('Formatting failed. 💔😢💔\n')
+            log.status('❌ Formatting failed. 😢💔\n')
 
     def save_formatted_file(self, new_view, new_cwd, is_success):
         file_path = new_view.file_name()
