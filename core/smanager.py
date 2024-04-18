@@ -32,7 +32,7 @@ class SessionManager:
 
     def read_session_file(self):
         try:
-            with open(SESSION_FILE, 'r') as f:
+            with open(SESSION_FILE, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
