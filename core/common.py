@@ -713,7 +713,7 @@ class Base(Module):
 
         try:
             if isfile(qo_file):
-                with open(qo_file, 'r') as f:
+                with open(qo_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 quick_options = data
             else:
@@ -860,7 +860,7 @@ class Base(Module):
 
         try:
             file = self.quick_options_config_file()
-            with open(file, 'r') as f:
+            with open(file, 'r', encoding='utf-8') as f:
                 qo_file = self.sort_dict(json.load(f))
         except FileNotFoundError:
             log.error('The file %s was not found.', file)
