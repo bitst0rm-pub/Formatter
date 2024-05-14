@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#
-# @copyright    Copyright (c) 2019-present, Duc Ng. (bitst0rm)
-# @link         https://github.com/bitst0rm
-# @license      The MIT License (MIT)
 # @install      https://scrossoracle.medium.com/building-graphviz-from-source-on-macos-b6a846d73949
 
 import logging

@@ -823,8 +823,6 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 _formatter_thisismyfirstpluginmodule.py_
 
 ```py
-#!/usr/bin/env python3
-
 INTERPRETERS = []                                           # optional: Fallback list of interpreter names
 EXECUTABLES = []                                            # REQUIRED: Fallback list of executable names
 MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
@@ -841,13 +839,6 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 Details as an example:
 
 ```py
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#
-# @copyright    you
-# @link         you
-# @license      The MIT License (MIT)
-
 import logging                                              # REQUIRED: logging system for debugging this file
 from ..core import common                                   # REQUIRED: a collection of APIs to assist in running this file
 
@@ -1015,4 +1006,4 @@ self.print_oserr(cmd)
 
 ## License
 
-[MIT license](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE).
+[MIT license](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE)
