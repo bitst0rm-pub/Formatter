@@ -175,7 +175,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 ## Installation
 
 - **Using [Package Control](https://packagecontrol.io/packages/Formatter):** run `Package Control: Install Package` and select `Formatter`
-- **or Download:** the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter) to your sublime `Packages` directory and rename it to `Formatter`
+- **_or_** **Download:** the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter) to your sublime `Packages` directory and rename it to `Formatter`
 
 The `Packages` directory is located in:
 
@@ -192,20 +192,18 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
 
         Sublime Text > Packages > User > formatter.assets > config
 
-You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.<br/>
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates: Some exotic plugins do not support input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
+- You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.
+
+- You can use a different config file format than the default one provided by Formatter. For example, while Formatter typically uses JSON or YAML (`prettier_rc.json`) by default, you can write your own config in JavaScript format (`prettier_rc.js`) or any other format supported by third-party plugins.
+
+Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Reason: Some exotic plugins do not support input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
 It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following setting details - along with their default values and examples - are provided to guide you on how to set it up. Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but keep the json structure be intact.
+The following setting details - along with their default values and examples - are provided to guide you on how to set it up.
 
-Starting from version 1.2.0, Formatter provides 2 methods to add third-party plugins:
-
-- Generic: simple, no need coding, using just a simple portion of JSON dict.
-- Modules: advanced, more powerful but needs writing and integrating python modules to hack deeper.
-
-Both methods with examples are in this settings guide:
+- Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but ensure that the JSON structure remains intact.
 
 💡 **Tips**:
 
@@ -1017,4 +1015,4 @@ self.print_oserr(cmd)
 
 ## License
 
-Formatter is licensed under the [MIT license](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE).
+[MIT license](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE).
