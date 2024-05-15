@@ -203,10 +203,9 @@ Formatter settings can be accessed from: `Preferences > Package Settings > Forma
 
 The following setting details - along with their default values and examples - are provided to guide you on how to set it up.
 
-- Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but ensure that the JSON structure remains intact.
-
 💡 **Tips**:
 
+- Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but ensure that the JSON structure remains intact.
 - You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
 - Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
 
@@ -1006,4 +1005,4 @@ self.print_oserr(cmd)
 
 ## License
 
-[MIT license](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE)
+[MIT](https://github.com/bitst0rm-pub/Formatter/blob/master/LICENSE)
