@@ -9,7 +9,7 @@ MODULE_CONFIG = {
     'name': 'Prettierd',
     'uid': 'prettierd',
     'type': 'beautifier',
-    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
+    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'ts', 'tsx', 'vue', 'yaml'],
     'exclude_syntaxes': None,
     'executable_path': '/path/to/node_modules/.bin/prettierd',
     'args': None,

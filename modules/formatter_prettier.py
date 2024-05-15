@@ -9,7 +9,7 @@ MODULE_CONFIG = {
     'name': 'Prettier',
     'uid': 'prettier',
     'type': 'beautifier',
-    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'tsx', 'vue', 'yaml'],
+    'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'ts', 'tsx', 'vue', 'yaml'],
     'exclude_syntaxes': None,
     'executable_path': '/path/to/node_modules/.bin/prettier or /path/to/node_modules/.bin/bin-prettier.js',
     'args': None,
