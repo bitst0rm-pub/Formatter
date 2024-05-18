@@ -7,7 +7,7 @@ from collections import OrderedDict
 import sublime
 
 from . import common
-from ..modules import __all__ as formatter_map
+from ..modules import formatter_map
 
 log = logging.getLogger(__name__)
 

@@ -66,4 +66,4 @@ def load_formatter_modules(module_dir):
 
     return formatter_map
 
-__all__ = load_formatter_modules(os.path.dirname(__file__))
+formatter_map = load_formatter_modules(os.path.dirname(__file__))

@@ -1,7 +1,7 @@
 import logging
 from . import common
 from ..modules import formatter_generic
-from ..modules import __all__ as formatter_map
+from ..modules import formatter_map
 
 log = logging.getLogger(__name__)
 
@@ -45,7 +45,6 @@ class Formatter(common.Module):
             self._log_debug_info('module', syntax)
             result = formatter_plugin['class'](**self.kwargs).format()
         else:
-            #log.error('UID not found: %s', self.uid)
             self._log_debug_info('generic', syntax)
             result = formatter_generic.GenericFormatter(**self.kwargs).format()
 
