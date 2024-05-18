@@ -828,7 +828,6 @@ class RecursiveFormat(common.Base):
         self.kwargs = kwargs
 
     def run(self):
-        self.print_sysinfo()
         try:
             cwd = self.get_current_working_directory()
             filelist = self.get_recursive_files(cwd)
