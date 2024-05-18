@@ -193,7 +193,6 @@ Formatter stores third-party plugin [config files](https://github.com/bitst0rm-p
         Sublime Text > Packages > User > formatter.assets > config
 
 - You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.
-
 - You can use a different config file format than the default one provided by Formatter. For example, while Formatter typically uses JSON or YAML (`prettier_rc.json`) by default, you can write your own config in JavaScript format (`prettier_rc.js`) or any other format supported by third-party plugins.
 
 Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Reason: Some exotic plugins do not support input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br/>
@@ -213,10 +212,10 @@ The following setting details - along with their default values and examples - a
 ```js
 {
     // Enable debug mode to view errors in the console.
-    // Accepted values: true (verbose), false, OR "status" (minimal info)
+    // Accepted values: true (verbose), false, OR "status" (only result)
     "debug": false,
 
-    // Auto open the console panel whenever formatting failed.
+    // Auto open the console panel whenever formatting fails.
     // This is useful when combined with "debug": "status" or true
     "open_console_on_failure": false,
 
@@ -225,10 +224,6 @@ The following setting details - along with their default values and examples - a
     "timeout": 10,
 
     // Integrate your custom modules into the Formatter ecosystem.
-    // This option ensures that your own modules won't be automatically removed
-    // from Packages Control during any release updates. It also spares you the trouble
-    // of having to submit pull requests to get your own modules integrated.
-    // For security reasons, Formatter never communicates over the Internet:
     // All paths to files and folders must be local.
     "custom_modules": {
         "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
@@ -236,8 +231,7 @@ The following setting details - along with their default values and examples - a
         "libs": ["/path/to/foolib", "/path/to/mylib"]
     },
 
-    // Display results in the status bar.
-    // The displayed abbreviation for the current settings mode:
+    // Display results in the status bar with the current settings mode:
     // PUS: Persistent User Settings
     // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options
@@ -257,10 +251,7 @@ The following setting details - along with their default values and examples - a
     "remember_session": true,
 
     // Configure the layout when opening new files.
-    // This setting takes effect when the "new_file_on_format" option is enabled.
-    // Available choices include 2-columns, 2-rows or single layout.
-    // To revert to the Sublime default layout:
-    // View > Layout > Single
+    // This only takes effect when the "new_file_on_format" option is enabled.
     // Accepted values: "2cols", "2rows", "single" OR false
     "layout": {
         "enable": "2cols",
@@ -268,18 +259,13 @@ The following setting details - along with their default values and examples - a
     },
 
     // A set of directories where executable programs are located.
-    // It can be absolute paths to module directories, python zipfiles.
+    // These can be absolute paths to module directories or Python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, GOPATH,
     // GOROOT, GOBIN, TMPDIR, WHATEVER, etc. can be added here.
-    // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
-    // from terminal. But it is only temporary in the memory and will only apply
-    // for the current formatting session. Your system environment remains untouched.
-    // Non-existent environment directories and files will be silently ignored.
-    // This option can be ommitted, but for python, ruby and erlang you probably need
-    // to add it. In debug mode, Formatter will display your current system environments
-    // to assist you in configuration. On Windows, you can use either escaped
-    // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
-    // as path separators for all other options in this file as well.
+    // This is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
+    // from the terminal. It is temporary, your system environment remains untouched.
+    // On Windows, you can use either escaped backslashes (e.g., "C:\\a\\b\\c") or
+    // forward slashes (e.g., "C:/a/b/c") as path separators for all other options.
     "environ": {
         "PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin", "/path/to/.cache/rebar3/bin:$PATH"],
         "GEM_PATH": ["${HOME}/to/my/ruby"],
@@ -300,9 +286,9 @@ The following setting details - along with their default values and examples - a
     },
 
     // This option enables auto-detect formatting for file with a single command.
-    // You can configure it either here and/or by using the dot files in your working folder.
-    // If you use both methods, the config from the dot files will override the one embedded here.
-    // More about this feature and its structure: see README.md > Auto-detect Formatting
+    // Configure it here and/or by using the dot files in your working folder.
+    // If both methods are used, the config from the dot files will override this embedded one.
+    // More about this feature, see README.md > Auto-detect Formatting
     "auto_format": {
         "config": {
             "format_on_save": false,
@@ -327,25 +313,24 @@ The following setting details - along with their default values and examples - a
         "examplegeneric": { // GENERIC METHOD
             // Formatter provides 2 methods to add custom plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
-            // - Modules: hacking deeper where generic cannot, needs writing python modules.
-            // Note: Generic method requires an Sublime Text restart after adding or changing
-            // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.
+            // - Modules: requires writing Python modules for complex tasks.
+            // Note: The Generic method requires a Sublime Text restart after adding or changing
+            // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.
 
-            // Capitalized Plugin name. REQUIRED! REQUIRED! REQUIRED!
-            // This will appear on the sublime menu and on other important commands.
+            // The capitalized Plugin name (REQUIRED!)
+            // This will appear in the Sublime menu and other commands.
             "name": "Example Generic",
 
-            // Plugin type. REQUIRED! REQUIRED! REQUIRED!
-            // This will be assigned to a category. Accepted values:
-            // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.
+            // The plugin type (REQUIRED!)
+            // This will categorize the plugin. Accepted values:
+            // "beautifier", "minifier", "converter", "graphic", or any string of your choice.
             "type": "beautifier",
 
-            // This will activate the option "args_extended" for type graphic
-            // to generate extended files like SVG to download.
+            // This will activate the "args_extended" option for the graphic type
+            // to generate extended files like SVG for download.
             "render_extended": false,
 
-            // The exit code of the third-party plugin.
-            // This option can be omitted. Type integer, default to 0.
+            // The exit code for the third-party plugin (optional, default is 0).
             "success_code": 0,
 
             // Same as examplemodule options.
@@ -354,9 +339,9 @@ The following setting details - along with their default values and examples - a
             "format_on_save": false,
             // Same as examplemodule options.
             "format_on_paste": false,
-            // Same as examplemodule options. (disabled/unused for type graphic)
+            // Same as examplemodule options, but disabled/unused for type graphic.
             "new_file_on_format": false,
-            // Same as examplemodule options. (disabled/unused for type graphic)
+            // Same as examplemodule options, but disabled/unused for type graphic.
             "recursive_folder_format": {},
             // Same as examplemodule options.
             "syntaxes": ["css", "html", "js", "php"],
@@ -373,21 +358,21 @@ The following setting details - along with their default values and examples - a
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
             },
 
-            // These are the main commands to trigger the formatting process.
-            // You can either pass the paths directly or use variable substitution for the following options:
+            // Main commands to trigger the formatting process.
+            // You can either set the paths directly or use variable substitution for:
             // - "interpreter_path"   : "{{i}}"
-            // - "executable_path"    : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
+            // - "executable_path"    : "{{e}}", "{{e=node}}" (for local executable auto-resolving with runtime type node)
             // - "config_path"        : "{{c}}"
             // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
-            // Variable substitution offers more advanced mechanisms such as auto-search path, auto-config, etc.
-            // Requirements to use the SPECIAL CASE GRAPHIC:
-            // 1. Third-party plugins MUST support exporting PNG format.
-            // 2. The hardcoded "{{o}}" MUST ALWAYS be set inside "args".
+            // Variable substitution allows advanced mechanisms such as auto-search path, auto-config, etc.
+            // SPECIAL CASE GRAPHIC requirements:
+            // 1. The plugin must support exporting PNG format.
+            // 2. The hardcoded "{{o}}" MUST ALWAYS be included in "args".
             //    You might regret using your own path instead of "{{o}}" or daring to omit "{{o}}" in this case.
             // In all other cases, output may not be as a file; use "-" or "--" instead.
             "args": ["{{i}}", "{{e=node}}", "--config", "{{c}}", "--basedir", "./example/my/foo", "--"],
 
-            // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
+            // This is for the SPECIAL CASE GRAPHIC to downloading extended graphic files.
             // To use this, the trigger option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
@@ -507,7 +492,7 @@ The following setting details - along with their default values and examples - a
             // These files could be overwritten by any release updates.
             // Note: Options from this config file always have precedence over
             // the options from any local project (per-project config file).
-            // To disable this option in favor of the local project config:
+            // To disable this option:
             // 1. Set the config path of this option to null, OR
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside

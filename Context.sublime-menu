@@ -63,6 +63,14 @@
                 }
             },
             {
+                "caption": "Biome",
+                "command": "run_format",
+                "args": {
+                    "uid": "biome",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Black",
                 "command": "run_format",
                 "args": {

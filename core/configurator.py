@@ -156,8 +156,8 @@ def build_main_sublime_menu(formatter_map):
                                     ('command', 'edit_settings'),
                                     ('args', OrderedDict([
                                         ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
-                                        ('default', '// Do NOT edit anything in the left-hand pane.\n'
-                                                    '// Pick up items you need, just make sure to maintain the structure.\n'
+                                        ('default', '// Do not edit the left-hand pane.\n'
+                                                    '// Take needed items while keeping JSON structure intact.\n'
                                                     '{\n\t$0\n}\n')
                                     ]))
                                 ]),
@@ -470,10 +470,10 @@ def build_formatter_sublime_settings_children(formatter_map):
 def build_formatter_sublime_settings(formatter_map):
     sublime_settings = OrderedDict([
             ('__COMMENT__debug', '''// Enable debug mode to view errors in the console.
-    // Accepted values: true (verbose), false, OR "status" (minimal info)'''),
+    // Accepted values: true (verbose), false, OR "status" (only result)'''),
             ('debug', False),
             ('__COMMENT__open_console_on_failure', '''
-    // Auto open the console panel whenever formatting failed.
+    // Auto open the console panel whenever formatting fails.
     // This is useful when combined with "debug": "status" or true'''),
             ('open_console_on_failure', False),
             ('__COMMENT__timeout', '''
@@ -482,10 +482,6 @@ def build_formatter_sublime_settings(formatter_map):
             ('timeout', 10),
             ('__COMMENT__custom_modules', '''
     // Integrate your custom modules into the Formatter ecosystem.
-    // This option ensures that your own modules won't be automatically removed
-    // from Packages Control during any release updates. It also spares you the trouble
-    // of having to submit pull requests to get your own modules integrated.
-    // For security reasons, Formatter never communicates over the Internet:
     // All paths to files and folders must be local.'''),
             ('custom_modules', OrderedDict([
                 ('config', []),
@@ -493,8 +489,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('libs', [])
             ])),
             ('__COMMENT__show_statusbar', '''
-    // Display results in the status bar.
-    // The displayed abbreviation for the current settings mode:
+    // Display results in the status bar with the current settings mode:
     // PUS: Persistent User Settings
     // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options'''),
@@ -514,10 +509,7 @@ def build_formatter_sublime_settings(formatter_map):
             ('remember_session', True),
             ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
-    // This setting takes effect when the "new_file_on_format" option is enabled.
-    // Available choices include 2-columns, 2-rows or single layout.
-    // To revert to the Sublime default layout:
-    // View > Layout > Single
+    // This only takes effect when the "new_file_on_format" option is enabled.
     // Accepted values: "2cols", "2rows", "single" OR false'''),
             ('layout', OrderedDict([
                 ('enable', '2cols'),
@@ -525,18 +517,13 @@ def build_formatter_sublime_settings(formatter_map):
             ])),
             ('__COMMENT__environ', '''
     // A set of directories where executable programs are located.
-    // It can be absolute paths to module directories, python zipfiles.
+    // These can be absolute paths to module directories or Python zipfiles.
     // Any environment variables like PATH, PYTHONPATH, GEM_PATH, GOPATH,
     // GOROOT, GOBIN, TMPDIR, WHATEVER, etc. can be added here.
-    // This option is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
-    // from terminal. But it is only temporary in the memory and will only apply
-    // for the current formatting session. Your system environment remains untouched.
-    // Non-existent environment directories and files will be silently ignored.
-    // This option can be ommitted, but for python, ruby and erlang you probably need
-    // to add it. In debug mode, Formatter will display your current system environments
-    // to assist you in configuration. On Windows, you can use either escaped
-    // backslashes (e.g., "C:\\a\\b\\c") or forward slashes (e.g., "C:/a/b/c")
-    // as path separators for all other options in this file as well.'''),
+    // This is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
+    // from the terminal. It is temporary, your system environment remains untouched.
+    // On Windows, you can use either escaped backslashes (e.g., "C:\\a\\b\\c") or
+    // forward slashes (e.g., "C:/a/b/c") as path separators for all other options.'''),
             ('environ', OrderedDict([
                 ('PATH', []),
                 ('GEM_PATH', []),
@@ -557,9 +544,9 @@ def build_formatter_sublime_settings(formatter_map):
             ])),
             ('__COMMENT__auto_format', '''
     // This option enables auto-detect formatting for file with a single command.
-    // You can configure it either here and/or by using the dot files in your working folder.
-    // If you use both methods, the config from the dot files will override the one embedded here.
-    // More about this feature and its structure: see README.md > Auto-detect Formatting'''),
+    // Configure it here and/or by using the dot files in your working folder.
+    // If both methods are used, the config from the dot files will override this embedded one.
+    // More about this feature, see README.md > Auto-detect Formatting'''),
             ('auto_format', OrderedDict([
                 ('__COMMENT__auto_format_a', '/*'),
                 ('config', OrderedDict([
@@ -586,25 +573,24 @@ def build_formatter_sublime_settings(formatter_map):
                 ('examplegeneric', OrderedDict([
                     ('__COMMENT__generic', '''// Formatter provides 2 methods to add custom plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
-            // - Modules: hacking deeper where generic cannot, needs writing python modules.
-            // Note: Generic method requires an Sublime Text restart after adding or changing
-            // the keys: "name" and "type". Also avoid using the same existing uid key in JSON.'''),
+            // - Modules: requires writing Python modules for complex tasks.
+            // Note: The Generic method requires a Sublime Text restart after adding or changing
+            // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.'''),
                     ('__COMMENT__name', '''
-            // Capitalized Plugin name. REQUIRED! REQUIRED! REQUIRED!
-            // This will appear on the sublime menu and on other important commands.'''),
+            // The capitalized Plugin name (REQUIRED!)
+            // This will appear in the Sublime menu and other commands.'''),
                     ('name', 'Example Generic'),
                     ('__COMMENT__type', '''
-            // Plugin type. REQUIRED! REQUIRED! REQUIRED!
-            // This will be assigned to a category. Accepted values:
-            // "beautifier" OR "minifier" OR "converter" OR "graphic" OR any string of your choice.'''),
+            // The plugin type (REQUIRED!)
+            // This will categorize the plugin. Accepted values:
+            // "beautifier", "minifier", "converter", "graphic", or any string of your choice.'''),
                     ('type', 'beautifier'),
                     ('__COMMENT__render_extended', '''
-            // This will activate the option "args_extended" for type graphic
-            // to generate extended files like SVG to download.'''),
+            // This will activate the "args_extended" option for the graphic type
+            // to generate extended files like SVG for download.'''),
                     ('render_extended', False),
                     ('__COMMENT__success_code', '''
-            // The exit code of the third-party plugin.
-            // This option can be omitted. Type integer, default to 0.'''),
+            // The exit code for the third-party plugin (optional, default is 0).'''),
                     ('success_code', 0),
                     ('__COMMENT__enable', '''
             // Same as examplemodule options.'''),
@@ -613,9 +599,9 @@ def build_formatter_sublime_settings(formatter_map):
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''// Same as examplemodule options.'''),
                     ('format_on_paste', False),
-                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options. (disabled/unused for type graphic)'''),
+                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options, but disabled/unused for type graphic.'''),
                     ('new_file_on_format', False),
-                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options. (disabled/unused for type graphic)'''),
+                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options, but disabled/unused for type graphic.'''),
                     ('recursive_folder_format', {}),
                     ('__COMMENT__syntaxes', '''// Same as examplemodule options.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
@@ -632,21 +618,21 @@ def build_formatter_sublime_settings(formatter_map):
                         ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
                     ])),
                     ('__COMMENT__args', '''
-            // These are the main commands to trigger the formatting process.
-            // You can either pass the paths directly or use variable substitution for the following options:
+            // Main commands to trigger the formatting process.
+            // You can either set the paths directly or use variable substitution for:
             // - "interpreter_path"   : "{{i}}"
-            // - "executable_path"    : "{{e}}", "{{e=node}}" (to auto resolve the local executable with runtime type node)
+            // - "executable_path"    : "{{e}}", "{{e=node}}" (for local executable auto-resolving with runtime type node)
             // - "config_path"        : "{{c}}"
             // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
-            // Variable substitution offers more advanced mechanisms such as auto-search path, auto-config, etc.
-            // Requirements to use the SPECIAL CASE GRAPHIC:
-            // 1. Third-party plugins MUST support exporting PNG format.
-            // 2. The hardcoded "{{o}}" MUST ALWAYS be set inside "args".
+            // Variable substitution allows advanced mechanisms such as auto-search path, auto-config, etc.
+            // SPECIAL CASE GRAPHIC requirements:
+            // 1. The plugin must support exporting PNG format.
+            // 2. The hardcoded "{{o}}" MUST ALWAYS be included in "args".
             //    You might regret using your own path instead of "{{o}}" or daring to omit "{{o}}" in this case.
             // In all other cases, output may not be as a file; use "-" or "--" instead.'''),
                     ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
                     ('__COMMENT__args_extended', '''
-            // This is for the SPECIAL CASE GRAPHIC to offer downloading extended graphic files.
+            // This is for the SPECIAL CASE GRAPHIC to downloading extended graphic files.
             // To use this, the trigger option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
@@ -766,7 +752,7 @@ def build_formatter_sublime_settings(formatter_map):
             // These files could be overwritten by any release updates.
             // Note: Options from this config file always have precedence over
             // the options from any local project (per-project config file).
-            // To disable this option in favor of the local project config:
+            // To disable this option:
             // 1. Set the config path of this option to null, OR
             // 2. Use the Quick Options: Ignore Config Path, OR
             // 3. Place an '.sublimeformatter.cfgignore.json' file inside
