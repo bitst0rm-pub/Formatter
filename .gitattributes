@@ -1,23 +1,4 @@
-*               text=auto       eol=lf
-*.jpg           binary
-*.png           binary
-*.gif           binary
-*.gz            binary
-*.rar           binary
-*.zip           binary
-*.sh            ident           export-subst
-*.m             ident           export-subst
-*.c             ident           export-subst
-*.cc            ident           export-subst
-*.h             ident           export-subst
-*.js            ident           export-subst
-*.py            ident           export-subst
-*.php           ident           export-subst
-LICENSE         ident           export-subst
-README.md       ident           export-subst
-.git                            export-ignore
 .github                         export-ignore
 .gitignore                      export-ignore
 .gitattributes                  export-ignore
-.editorconfig                   export-ignore
 .package-metadata.json          export-ignore
