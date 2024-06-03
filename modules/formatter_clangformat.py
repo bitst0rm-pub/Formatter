@@ -14,7 +14,8 @@ MODULE_CONFIG = {
     'args': None,
     'config_path': {
         'default': 'clang_format_llvm_rc.yaml'
-    }
+    },
+    'comment': 'requires clang+llvm-14.0.0-rc1 or newer (clang-format >= 14.0.0)'
 }
 
 
