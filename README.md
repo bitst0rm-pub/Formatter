@@ -11,8 +11,8 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
   - Text-to-Image (Image diagramms, QR-code images, etc.)
 - Capable to format entire files, single or multiple selections.
 - Capable to format entire folder recursively.
-- Operates based on syntax scope, not file extension.
-- Works with both saved and unsaved files.
+- Operates more precisely based on syntax scope, **not** file extension.
+- Works with both saved and unsaved files (buffer).
 - Unified settings across different systems.
 - Supports [auto-detect formatting](#auto-detect-formatting).
 - Supports [per-project formatting](#per-project-formatting).
@@ -204,15 +204,16 @@ The following setting details - along with their default values and examples - a
 
 💡 **Tips**:
 
-- Options are flexible, you do not need to take the whole set of options. Just take the ones you need, but ensure that the JSON structure remains intact.
+- Options are _flexible_: you do not need to take the whole set of options. Just take the ones you need, but ensure that the JSON structure remains intact.
 - You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
 - Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
 
+_Formatter.sublime-settings_
 
 ```js
 {
     // Enable debug mode to view errors in the console.
-    // Accepted values: true (verbose), false, OR "status" (only result)
+    // Accepted values: true (verbose), false, OR "status" (recommended)
     "debug": false,
 
     // Auto open the console panel whenever formatting fails.
@@ -231,7 +232,7 @@ The following setting details - along with their default values and examples - a
         "libs": ["/path/to/foolib", "/path/to/mylib"]
     },
 
-    // Display results in the status bar with the current settings mode:
+    // Display results in the status bar with the current settings mode info:
     // PUS: Persistent User Settings
     // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options
@@ -273,8 +274,8 @@ The following setting details - along with their default values and examples - a
         "OLALA": ["$HOME/.cabal/bin:$PATH", "~/.olala/bin:$PATH"]
     },
 
-    // This option addresses the syntaxes conflict described in "format_on_save".
-    // It serves as a takeover and only applies to the following options:
+    // This option resolves the syntax conflicts described in "format_on_save".
+    // It acts as an override and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"
     // Syntaxes in this option always take precedence over the syntaxes specified there.
@@ -285,7 +286,7 @@ The following setting details - along with their default values and examples - a
         "jsbeautifier": ["js"]
     },
 
-    // This option enables auto-detect formatting for file with a single command.
+    // This option enables auto-detect formatting for file using a single command.
     // Configure it here and/or by using the dot files in your working folder.
     // If both methods are used, the config from the dot files will override this embedded one.
     // More about this feature, see README.md > Auto-detect Formatting
@@ -333,25 +334,25 @@ The following setting details - along with their default values and examples - a
             // The exit code for the third-party plugin (optional, default is 0).
             "success_code": 0,
 
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "enable": false,
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "format_on_save": false,
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "format_on_paste": false,
-            // Same as examplemodule options, but disabled/unused for type graphic.
+            // Same as the one in the examplemodule, but disabled/unused for type graphic.
             "new_file_on_format": false,
-            // Same as examplemodule options, but disabled/unused for type graphic.
+            // Same as the one in the examplemodule, but disabled/unused for type graphic.
             "recursive_folder_format": {},
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "syntaxes": ["css", "html", "js", "php"],
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "exclude_syntaxes": {},
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "interpreter_path": ["${HOME}/example/path/to\\$my/php.exe"],
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
@@ -907,6 +908,9 @@ Do not forget to update/adjust your _User_ settings:<br/>
 ### 3. Integrating modules:
 
 You have the choice to either submit a pull request or integrate your modules yourself using:
+
+_Formatter.sublime-settings_
+
 ```js
     "custom_modules": {
         "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],

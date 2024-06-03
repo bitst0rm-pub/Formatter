@@ -470,7 +470,7 @@ def build_formatter_sublime_settings_children(formatter_map):
 def build_formatter_sublime_settings(formatter_map):
     sublime_settings = OrderedDict([
             ('__COMMENT__debug', '''// Enable debug mode to view errors in the console.
-    // Accepted values: true (verbose), false, OR "status" (only result)'''),
+    // Accepted values: true (verbose), false, OR "status" (recommended)'''),
             ('debug', False),
             ('__COMMENT__open_console_on_failure', '''
     // Auto open the console panel whenever formatting fails.
@@ -489,7 +489,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('libs', [])
             ])),
             ('__COMMENT__show_statusbar', '''
-    // Display results in the status bar with the current settings mode:
+    // Display results in the status bar with the current settings mode info:
     // PUS: Persistent User Settings
     // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options'''),
@@ -531,8 +531,8 @@ def build_formatter_sublime_settings(formatter_map):
                 ('OLALA', [])
             ])),
             ('__COMMENT__format_on_unique', '''
-    // This option addresses the syntaxes conflict described in "format_on_save".
-    // It serves as a takeover and only applies to the following options:
+    // This option resolves the syntax conflicts described in "format_on_save".
+    // It acts as an override and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"
     // Syntaxes in this option always take precedence over the syntaxes specified there.
@@ -543,7 +543,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('jsbeautifier', NoIndent(['js']))
             ])),
             ('__COMMENT__auto_format', '''
-    // This option enables auto-detect formatting for file with a single command.
+    // This option enables auto-detect formatting for file using a single command.
     // Configure it here and/or by using the dot files in your working folder.
     // If both methods are used, the config from the dot files will override this embedded one.
     // More about this feature, see README.md > Auto-detect Formatting'''),
@@ -593,25 +593,25 @@ def build_formatter_sublime_settings(formatter_map):
             // The exit code for the third-party plugin (optional, default is 0).'''),
                     ('success_code', 0),
                     ('__COMMENT__enable', '''
-            // Same as examplemodule options.'''),
+            // Same as the one in the examplemodule.'''),
                     ('enable', False),
-                    ('__COMMENT__format_on_save', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__format_on_save', '''// Same as the one in the examplemodule.'''),
                     ('format_on_save', False),
-                    ('__COMMENT__format_on_paste', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__format_on_paste', '''// Same as the one in the examplemodule.'''),
                     ('format_on_paste', False),
-                    ('__COMMENT__new_file_on_format', '''// Same as examplemodule options, but disabled/unused for type graphic.'''),
+                    ('__COMMENT__new_file_on_format', '''// Same as the one in the examplemodule, but disabled/unused for type graphic.'''),
                     ('new_file_on_format', False),
-                    ('__COMMENT__recursive_folder_format', '''// Same as examplemodule options, but disabled/unused for type graphic.'''),
+                    ('__COMMENT__recursive_folder_format', '''// Same as the one in the examplemodule, but disabled/unused for type graphic.'''),
                     ('recursive_folder_format', {}),
-                    ('__COMMENT__syntaxes', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__syntaxes', '''// Same as the one in the examplemodule.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
-                    ('__COMMENT__exclude_syntaxes', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__exclude_syntaxes', '''// Same as the one in the examplemodule.'''),
                     ('exclude_syntaxes', {}),
-                    ('__COMMENT__interpreter_path', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__interpreter_path', '''// Same as the one in the examplemodule.'''),
                     ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
-                    ('__COMMENT__executable_path', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__executable_path', '''// Same as the one in the examplemodule.'''),
                     ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
-                    ('__COMMENT__config_path', '''// Same as examplemodule options.'''),
+                    ('__COMMENT__config_path', '''// Same as the one in the examplemodule.'''),
                     ('config_path', OrderedDict([
                         ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
                         ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),

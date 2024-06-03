@@ -1,6 +1,6 @@
 {
     // Enable debug mode to view errors in the console.
-    // Accepted values: true (verbose), false, OR "status" (only result)
+    // Accepted values: true (verbose), false, OR "status" (recommended)
     "debug": false,
 
     // Auto open the console panel whenever formatting fails.
@@ -19,7 +19,7 @@
         "libs": []
     },
 
-    // Display results in the status bar with the current settings mode:
+    // Display results in the status bar with the current settings mode info:
     // PUS: Persistent User Settings
     // PQO: Persistent Quick Options
     // TQO: Temporary Quick Options
@@ -61,8 +61,8 @@
         "OLALA": []
     },
 
-    // This option addresses the syntaxes conflict described in "format_on_save".
-    // It serves as a takeover and only applies to the following options:
+    // This option resolves the syntax conflicts described in "format_on_save".
+    // It acts as an override and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"
     // Syntaxes in this option always take precedence over the syntaxes specified there.
@@ -73,7 +73,7 @@
         "jsbeautifier": ["js"]
     },
 
-    // This option enables auto-detect formatting for file with a single command.
+    // This option enables auto-detect formatting for file using a single command.
     // Configure it here and/or by using the dot files in your working folder.
     // If both methods are used, the config from the dot files will override this embedded one.
     // More about this feature, see README.md > Auto-detect Formatting
@@ -123,25 +123,25 @@
             // The exit code for the third-party plugin (optional, default is 0).
             "success_code": 0,
 
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "enable": false,
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "format_on_save": false,
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "format_on_paste": false,
-            // Same as examplemodule options, but disabled/unused for type graphic.
+            // Same as the one in the examplemodule, but disabled/unused for type graphic.
             "new_file_on_format": false,
-            // Same as examplemodule options, but disabled/unused for type graphic.
+            // Same as the one in the examplemodule, but disabled/unused for type graphic.
             "recursive_folder_format": {},
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "syntaxes": ["css", "html", "js", "php"],
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "exclude_syntaxes": {},
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "interpreter_path": ["${HOME}/example/path/to\\$my/php.exe"],
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
-            // Same as examplemodule options.
+            // Same as the one in the examplemodule.
             "config_path": {
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
