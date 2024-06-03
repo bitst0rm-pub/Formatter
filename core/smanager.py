@@ -30,7 +30,7 @@ class SessionManager:
         except UnicodeDecodeError as e:
             log.error('Unicode decoding error occurred: %s', e)
             return {}
-        except (FileNotFoundError, json.JSONDecodeError):
+        except Exception as e:
             return {}
 
     def write_session_file(self, data):
