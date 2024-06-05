@@ -1027,20 +1027,9 @@
                                 "caption": "-"
                             },
                             {
-                                "caption": "Example Key Bindings",
-                                "mnemonic": "E",
-                                "command": "open_file",
-                                "args": {
-                                    "file": "${packages}/Formatter/Example.sublime-keymap"
-                                }
-                            },
-                            {
-                                "caption": "Key Bindings – User",
+                                "caption": "Key Bindings",
                                 "mnemonic": "K",
-                                "command": "open_file",
-                                "args": {
-                                    "file": "${packages}/User/Default (${platform}).sublime-keymap"
-                                }
+                                "command": "key_bindings"
                             },
                             {
                                 "caption": "-"
@@ -1048,7 +1037,7 @@
                             {
                                 "caption": "Backup Settings",
                                 "mnemonic": "B",
-                                "command": "config_manager",
+                                "command": "backup_manager",
                                 "args": {
                                     "type": "backup"
                                 }
@@ -1056,7 +1045,7 @@
                             {
                                 "caption": "Restore Settings",
                                 "mnemonic": "R",
-                                "command": "config_manager",
+                                "command": "backup_manager",
                                 "args": {
                                     "type": "restore"
                                 }

@@ -169,32 +169,22 @@ def build_main_sublime_menu(formatter_map):
                                     ('caption', '-')
                                 ]),
                                 OrderedDict([
-                                    ('caption', 'Example Key Bindings'),
-                                    ('command', 'open_file'),
-                                    ('args', OrderedDict([
-                                        ('file', '${packages}/Formatter/Example.sublime-keymap')
-                                    ]))
-                                ]),
-                                OrderedDict([
-                                    ('caption', 'Key Bindings – User'),
-                                    ('command', 'open_file'),
-                                    ('args', OrderedDict([
-                                        ('file', '${packages}/User/Default (${platform}).sublime-keymap')
-                                    ]))
+                                    ('caption', 'Key Bindings'),
+                                    ('command', 'key_bindings')
                                 ]),
                                 OrderedDict([
                                     ('caption', '-')
                                 ]),
                                 OrderedDict([
                                     ('caption', 'Backup Settings'),
-                                    ('command', 'config_manager'),
+                                    ('command', 'backup_manager'),
                                     ('args', OrderedDict([
                                         ('type', 'backup')
                                     ]))
                                 ]),
                                 OrderedDict([
                                     ('caption', 'Restore Settings'),
-                                    ('command', 'config_manager'),
+                                    ('command', 'backup_manager'),
                                     ('args', OrderedDict([
                                         ('type', 'restore')
                                     ]))

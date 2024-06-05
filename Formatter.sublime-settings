@@ -542,6 +542,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"
             }
+            /* requires clang+llvm-14.0.0-rc1 or newer (clang-format >= 14.0.0) */
         },
         "cljfmt": {
             "info": "https://github.com/weavejester/cljfmt",

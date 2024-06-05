@@ -100,6 +100,17 @@ class ShowVersionCommand(sublime_plugin.WindowCommand):
         sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + __version__)
 
 
+class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):
+    def run(self):
+        sublime.run_command('new_window')
+        new_window = sublime.active_window()
+        new_window.set_layout(self.assign_layout('2cols'))
+        new_window.focus_group(0)
+        new_window.run_command('open_file', {'file': '${packages}/' + common.PACKAGE_NAME + '/Example.sublime-keymap'})
+        new_window.focus_group(1)
+        new_window.run_command('open_file', {'file': '${packages}/User/Default (${platform}).sublime-keymap'})
+
+
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
         seen = set()
@@ -118,7 +129,7 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
                         seen.add(dir_path)
 
 
-class ConfigManagerCommand(sublime_plugin.WindowCommand, common.Base):
+class BackupManagerCommand(sublime_plugin.WindowCommand, common.Base):
     backup_temp_dir = None
 
     def get_config_paths_to_zip(self):
