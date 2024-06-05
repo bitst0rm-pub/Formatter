@@ -748,7 +748,7 @@ Formatting actions can be triggered in different ways:
 - Tools > Command Palette (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and type `Formatter`.
 - Tools > Formatter
 - Right-click > Context-Menu > Formatter
-- Settings > Key Bindings
+- Preferences > Package Settings > Formatter > Key Bindings
 
 ### The Quick Options
 
