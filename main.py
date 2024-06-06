@@ -131,14 +131,21 @@ class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
 
 class BackupManagerCommand(sublime_plugin.WindowCommand, common.Base):
     backup_temp_dir = None
+    USER_PATH = os.path.join(sublime.packages_path(), 'User')
 
     def get_config_paths_to_zip(self):
+        default_keymaps = [
+            'Default.sublime-keymap',
+            'Default (OSX).sublime-keymap',
+            'Default (Linux).sublime-keymap',
+            'Default (Windows).sublime-keymap'
+        ]
+
         file_paths_to_zip = [
             self.quick_options_config_file(),
-            os.path.join(sublime.packages_path(), 'User', 'Formatter.sublime-settings'),
-            os.path.join(sublime.packages_path(), 'User', 'Default (' + sublime.platform().upper() + ').sublime-keymap'),
+            os.path.join(self.USER_PATH, 'Formatter.sublime-settings'),
             SESSION_FILE
-        ]
+        ] + [os.path.join(self.USER_PATH, keymap) for keymap in default_keymaps]
 
         config_paths = [
             path for formatter in common.config.get('formatters', {}).values()
