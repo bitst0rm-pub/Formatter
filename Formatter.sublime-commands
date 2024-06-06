@@ -1,11 +1,29 @@
 [
     {
-        "caption": "Formatter: Show Version",
+        "caption": "Formatter: Version Info",
         "command": "show_version"
     },
     {
         "caption": "Formatter: Open Config Folders",
         "command": "open_config_folders"
+    },
+    {
+        "caption": "Formatter: Key Bindings",
+        "command": "key_bindings"
+    },
+    {
+        "caption": "Formatter: Backup Settings",
+        "command": "backup_manager",
+        "args": {
+            "type": "backup"
+        }
+    },
+    {
+        "caption": "Formatter: Restore Settings",
+        "command": "backup_manager",
+        "args": {
+            "type": "restore"
+        }
     },
     {
         "caption": "Formatter: Quick Options",

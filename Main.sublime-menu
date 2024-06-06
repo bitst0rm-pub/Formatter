@@ -1015,7 +1015,7 @@
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/Formatter/Formatter.sublime-settings",
-                                    "default": "// Do not edit the left-hand pane.\n// Take needed items while keeping JSON structure intact.\n{\n\t$0\n}\n"
+                                    "default": "// Do not edit the left-hand pane.\n// Pick up needed items while keeping the JSON structure intact.\n{\n\t$0\n}\n"
                                 }
                             },
                             {

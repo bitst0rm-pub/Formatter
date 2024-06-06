@@ -205,7 +205,7 @@ The following setting details - along with their default values and examples - a
 
 💡 **Tips**:
 
-- Options are _flexible_: you do not need to take the whole set of options. Just take the ones you need, but ensure that the JSON structure remains intact.
+- Options are _optional_: you do not need to take the whole set of options. Take only what you need, but keep the JSON structure intact.
 - You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
 - Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
 

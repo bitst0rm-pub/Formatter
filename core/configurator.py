@@ -157,7 +157,7 @@ def build_main_sublime_menu(formatter_map):
                                     ('args', OrderedDict([
                                         ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
                                         ('default', '// Do not edit the left-hand pane.\n'
-                                                    '// Take needed items while keeping JSON structure intact.\n'
+                                                    '// Pick up needed items while keeping the JSON structure intact.\n'
                                                     '{\n\t$0\n}\n')
                                     ]))
                                 ]),
@@ -285,12 +285,30 @@ def build_formatter_sublime_commands_children(formatter_map):
 def build_formatter_sublime_commands(formatter_map):
     sublime_commands = [
         OrderedDict([
-            ('caption', 'Formatter: Show Version'),
+            ('caption', 'Formatter: Version Info'),
             ('command', 'show_version')
         ]),
         OrderedDict([
             ('caption', 'Formatter: Open Config Folders'),
             ('command', 'open_config_folders')
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Key Bindings'),
+            ('command', 'key_bindings')
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Backup Settings'),
+            ('command', 'backup_manager'),
+            ('args', OrderedDict([
+                ('type', 'backup')
+            ]))
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Restore Settings'),
+            ('command', 'backup_manager'),
+            ('args', OrderedDict([
+                ('type', 'restore')
+            ]))
         ]),
         OrderedDict([
             ('caption', 'Formatter: Quick Options'),
