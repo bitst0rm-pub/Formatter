@@ -42,7 +42,23 @@ class JuliaformatterFormatter(common.Module):
                 for line in config.splitlines():
                     if '=' in line:
                         key, value = line.split('=', 1)
-                        processed_lines.append(key.strip() + '=' + value.strip())
+                        key = key.strip()
+                        value = value.strip()
+
+                        if key == 'style':
+                            style_mapping = {
+                                'default': 'DefaultStyle()',
+                                'blue': 'BlueStyle()',
+                                'yas': 'YASStyle()',
+                                'sciml': 'SciMLStyle()',
+                                'minimal': 'MinimalStyle()'
+                            }
+                            v = value.strip('\'"')
+                            if v in style_mapping:
+                                value = style_mapping[v]
+                            else:
+                                continue
+                        processed_lines.append(key + '=' + value)
                     else:
                         processed_lines.append(line)
 

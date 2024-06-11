@@ -1,5 +1,15 @@
 # https://domluna.github.io/JuliaFormatter.jl/stable/#Formatting-Options
+# File Options like: overwrite, verbose, format_markdown, ignore
+# are not supported to use with JuliaFormatter.format_text() method.
+# Tell the devs to make this happen to use with Formatter.
 # Update: 2024-06-11
+
+# Use formatting style based on:
+# style = "default"  # DefaultStyle
+# style = "blue"     # BlueStyle
+# style = "yas"      # YASStyle
+# style = "sciml"    # SciMLStyle
+# style = "minimal"  # MinimalStyle
 
 indent = 4
 margin = 92
