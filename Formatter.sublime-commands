@@ -378,6 +378,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with JuliaFormatter",
+        "command": "run_format",
+        "args": {
+            "uid": "juliaformatter",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Ktlint",
         "command": "run_format",
         "args": {

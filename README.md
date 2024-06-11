@@ -254,7 +254,7 @@ _Formatter.sublime-settings_
     "remember_session": true,
 
     // Configure the layout when opening new files.
-    // This only takes effect when the "new_file_on_format" option is enabled.
+    // This only takes effect if the "new_file_on_format" option is true.
     // Accepted values: "2cols", "2rows", "single" OR false
     "layout": {
         "enable": "2cols",
@@ -446,7 +446,7 @@ _Formatter.sublime-settings_
             // Syntax support based on the scope name, not file extension.
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
-            // End-users are advised to consult plugin documentation to add more syntaxes.
+            // End-users are advised to consult plugin manpages to add more syntaxes.
             "syntaxes": ["css", "html", "js", "php"],
 
             // Exclude a list of syntaxes for an individual syntax key.
@@ -946,6 +946,9 @@ args = self.get_args()
 
 # Get the input "config_path" from the User settings or None.
 path = self.get_config_path()
+
+# Get the current text content in view or the current selected text.
+text = self.get_text_from_region(self.region)
 
 # Get the detected syntax of the current file or None.
 syntax = self.get_assigned_syntax()

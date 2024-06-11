@@ -60,6 +60,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "isort", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "jsbeautifier", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "jsonmax", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "juliaformatter", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "ktlint", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "latexindent", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "luaformatter", "type": "beautifier"}},

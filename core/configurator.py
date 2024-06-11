@@ -517,7 +517,7 @@ def build_formatter_sublime_settings(formatter_map):
             ('remember_session', True),
             ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
-    // This only takes effect when the "new_file_on_format" option is enabled.
+    // This only takes effect if the "new_file_on_format" option is true.
     // Accepted values: "2cols", "2rows", "single" OR false'''),
             ('layout', OrderedDict([
                 ('enable', '2cols'),
@@ -711,7 +711,7 @@ def build_formatter_sublime_settings(formatter_map):
             // Syntax support based on the scope name, not file extension.
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
-            // End-users are advised to consult plugin documentation to add more syntaxes.'''),
+            // End-users are advised to consult plugin manpages to add more syntaxes.'''),
                     ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
                     ('__COMMENT__exclude_syntaxes', '''
             // Exclude a list of syntaxes for an individual syntax key.

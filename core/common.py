@@ -507,7 +507,7 @@ class Module(object):
         else:
             log.warning('Setting key "config_path" must be a non-empty dict: %s', shared_config)
 
-        log.info('Plugin default or per-project config will be used instead if available.')
+        log.info('Third-party plugin will run without specifying a "config_path"')
         return None
 
     def is_valid_path(self, path):

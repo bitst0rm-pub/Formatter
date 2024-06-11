@@ -359,6 +359,14 @@
                 }
             },
             {
+                "caption": "JuliaFormatter",
+                "command": "run_format",
+                "args": {
+                    "uid": "juliaformatter",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Ktlint",
                 "command": "run_format",
                 "args": {
