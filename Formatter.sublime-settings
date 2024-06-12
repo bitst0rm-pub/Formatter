@@ -473,7 +473,7 @@
             /* interpreter_path can be set to use node, otherwise omid it to use standalone binary. */
         },
         "black": {
-            "info": "https://github.com/ambv/black",
+            "info": "https://github.com/psf/black",
             "enable": false,
             "format_on_save": false,
             "format_on_paste": false,
@@ -1184,7 +1184,7 @@
             "syntaxes": ["kotlin"],
             "interpreter_path": ["/path/to/bin/java.exe"],
             "executable_path": ["/path/to/bin/ktlint or path/to/ktlint.bat"]
-            /* requires java on PATH if omit interpreter_path. opinionated, no config */
+            /* opinionated, no config. requires java on PATH if omit interpreter_path. */
         },
         "latexindent": {
             "info": "https://github.com/cmhughes/latexindent.pl",
