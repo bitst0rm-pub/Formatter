@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['mmdc']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/mermaid-js/mermaid-cli',
     'name': 'Mermaid',

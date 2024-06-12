@@ -6,6 +6,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['dot']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://gitlab.com/graphviz/graphviz',
     'name': 'Graphviz',

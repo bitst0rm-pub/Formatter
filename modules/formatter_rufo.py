@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['ruby']
 EXECUTABLES = ['rufo']
+DOTFILES = ['.rufo']
 MODULE_CONFIG = {
     'source': 'https://github.com/ruby-formatter/rufo',
     'name': 'Rufo',

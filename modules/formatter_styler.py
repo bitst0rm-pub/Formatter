@@ -4,6 +4,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['R']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/r-lib/styler',
     'name': 'Styler',

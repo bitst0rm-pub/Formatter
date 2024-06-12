@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['perl']
 EXECUTABLES = ['perltidy', 'perltidy.pl']
+DOTFILES = ['.perltidyrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/perltidy/perltidy',
     'name': 'Perltidy',

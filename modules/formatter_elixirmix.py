@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['mix']
+DOTFILES = ['.formatter.exs']
 MODULE_CONFIG = {
     'source': 'https://github.com/elixir-lang/elixir',
     'name': 'Elixir mix',

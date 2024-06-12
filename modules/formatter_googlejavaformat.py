@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['java']
 EXECUTABLES = ['google-java-format-all-deps.jar']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/google/google-java-format',
     'name': 'Google Java Format',

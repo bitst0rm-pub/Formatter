@@ -4,8 +4,9 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['black']
+DOTFILES = ['pyproject.toml', '.black']
 MODULE_CONFIG = {
-    'source': 'https://github.com/ambv/black',
+    'source': 'https://github.com/psf/black',
     'name': 'Black',
     'uid': 'black',
     'type': 'beautifier',

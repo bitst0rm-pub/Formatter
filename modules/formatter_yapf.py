@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['yapf']
+DOTFILES = ['.style.yapf', 'setup.cfg', 'pyproject.toml']
 MODULE_CONFIG = {
     'source': 'https://github.com/google/yapf',
     'name': 'YAPF',

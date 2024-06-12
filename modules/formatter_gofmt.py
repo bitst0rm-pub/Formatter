@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['gofmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://pkg.go.dev/cmd/gofmt',
     'name': 'Gofmt',

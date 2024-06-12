@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['ocamlformat']
+DOTFILES = ['.ocamlformat']
 MODULE_CONFIG = {
     'source': 'https://github.com/ocaml-ppx/ocamlformat',
     'name': 'OCamlformat',

@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['terser']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/terser-js/terser',
     'name': 'Terser',

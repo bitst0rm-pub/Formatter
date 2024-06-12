@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['shellcheck']
+DOTFILES = ['.shellcheckrc', 'shellcheckrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/koalaman/shellcheck',
     'name': 'ShellCheck',

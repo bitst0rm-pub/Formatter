@@ -5,6 +5,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['dockfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/jessfraz/dockfmt',
     'name': 'Dockfmt',

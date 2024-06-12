@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['terraform']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://developer.hashicorp.com/terraform/cli/commands/fmt',
     'name': 'Terraform fmt',

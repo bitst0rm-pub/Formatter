@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['ruby']
 EXECUTABLES = ['rubocop']
+DOTFILES = ['.rubocop.yml']
 MODULE_CONFIG = {
     'source': 'https://github.com/rubocop-hq/rubocop',
     'name': 'RuboCop',

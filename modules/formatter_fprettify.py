@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['fprettify']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/pseewald/fprettify',
     'name': 'Fortran fprettify',

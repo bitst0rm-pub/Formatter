@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['AStyle', 'astyle']
+DOTFILES = ['.astylerc', '_astylerc']
 MODULE_CONFIG = {
     'source': 'https://sourceforge.net/projects/astyle',
     'name': 'Artistic Style',

@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['cabal-fmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/phadej/cabal-fmt',
     'name': 'Cabal-fmt',

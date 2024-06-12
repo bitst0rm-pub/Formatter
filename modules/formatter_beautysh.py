@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['beautysh']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/lovesegfault/beautysh',
     'name': 'Beautysh',

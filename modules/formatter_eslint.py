@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint', 'eslint.js']
+DOTFILES = ['.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json']
 MODULE_CONFIG = {
     'source': 'https://github.com/eslint/eslint',
     'name': 'ESLint',

@@ -4,6 +4,7 @@ from ..core import common
 from ..libs.prettytable import prettytable
 
 log = logging.getLogger(__name__)
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/jazzband/prettytable',
     'name': 'PrettyTable',

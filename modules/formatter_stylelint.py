@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['stylelint']
+DOTFILES = ['stylelint.config.js', '.stylelintrc.js', 'stylelint.config.mjs', '.stylelintrc.mjs', 'stylelint.config.cjs', '.stylelintrc.cjs', '.stylelintrc.json', '.stylelintrc.yml', '.stylelintrc.yaml', '.stylelintrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/stylelint/stylelint',
     'name': 'Stylelint',

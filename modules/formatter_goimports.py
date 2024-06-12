@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['goimports']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://pkg.go.dev/golang.org/x/tools/cmd/goimports',
     'name': 'Goimports',

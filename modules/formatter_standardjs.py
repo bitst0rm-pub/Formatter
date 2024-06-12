@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['standard']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standard/standard',
     'name': 'Standard JS',

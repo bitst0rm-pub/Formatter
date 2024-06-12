@@ -4,6 +4,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['drawio', 'draw.io']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/jgraph/drawio-desktop',
     'name': 'Drawio',

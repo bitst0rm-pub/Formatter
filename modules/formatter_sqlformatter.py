@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['sql-formatter']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/sql-formatter-org/sql-formatter',
     'name': 'SQL Formatter',

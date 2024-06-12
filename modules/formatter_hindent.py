@@ -4,6 +4,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['hindent']
+DOTFILES = ['.hindent.yaml']
 MODULE_CONFIG = {
     'source': 'https://github.com/mihaimaruseac/hindent',
     'name': 'Hindent',

@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['crystal']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/crystal-lang/crystal',
     'name': 'Crystal',

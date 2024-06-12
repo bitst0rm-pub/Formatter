@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['dart']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://dart.dev/tools/dart-format',
     'name': 'Dart Format',

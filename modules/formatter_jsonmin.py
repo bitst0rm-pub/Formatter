@@ -4,6 +4,7 @@ import sublime
 from ..core import common
 
 log = logging.getLogger(__name__)
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
     'name': 'JSON',

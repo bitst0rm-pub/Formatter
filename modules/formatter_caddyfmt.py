@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['caddy']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/caddyserver/caddy',
     'name': 'Caddy-fmt',

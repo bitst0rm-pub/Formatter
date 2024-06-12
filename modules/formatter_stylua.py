@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['stylua']
+DOTFILES = ['.stylua.toml', 'stylua.toml']
 MODULE_CONFIG = {
     'source': 'https://github.com/JohnnyMorganz/StyLua',
     'name': 'StyLua',

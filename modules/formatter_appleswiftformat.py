@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['swift-format']
+DOTFILES = ['.swift-format']
 MODULE_CONFIG = {
     'source': 'https://github.com/apple/swift-format',
     'name': 'Apple Swift Format',

@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['java']
 EXECUTABLES = ['cljfmt']
+DOTFILES = ['.cljfmt.edn', '.cljfmt.clj', 'cljfmt.edn', 'cljfmt.clj']
 MODULE_CONFIG = {
     'source': 'https://github.com/weavejester/cljfmt',
     'name': 'CLJfmt',

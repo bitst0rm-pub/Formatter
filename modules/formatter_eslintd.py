@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint_d', 'eslint_d.js']
+DOTFILES = ['.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json']
 MODULE_CONFIG = {
     'source': 'https://github.com/mantoni/eslint_d.js',
     'name': 'ESLintd',

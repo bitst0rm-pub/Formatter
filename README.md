@@ -126,7 +126,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | -- | PHP 7.4+[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
 | Plantuml | [plantumlascii](https://github.com/plantuml/plantuml) | -- | [plantuml](https://github.com/plantuml/plantuml) | Java | -- |
 | Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf), [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | -- | Python 3.7+[1] | [[2]](https://python-minifier.com) |
+| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf)[1], [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | -- | Python 3.7+[1] | [[2]](https://python-minifier.com) |
 | R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR)[1] | -- | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
 | Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | -- | Racket 8.0+ | -- |
 | Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | -- | Ruby[1], None | -- |
@@ -813,8 +813,9 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 _formatter_thisismyfirstpluginmodule.py_
 
 ```py
-INTERPRETERS = []                                           # optional: Fallback list of interpreter names
-EXECUTABLES = []                                            # REQUIRED: Fallback list of executable names
+INTERPRETERS = []                                           # optional: fallback list of interpreter names
+EXECUTABLES = []                                            # REQUIRED: fallback list of executable names
+DOTFILES = []                                               # optional: names list of the per-project config dotfiles
 MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
 
 class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!

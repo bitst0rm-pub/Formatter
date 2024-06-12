@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['sqlformat']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/andialbrecht/sqlparse',
     'name': 'SQLparse',

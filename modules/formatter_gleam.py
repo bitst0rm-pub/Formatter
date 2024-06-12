@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['gleam']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/gleam-lang/gleam',
     'name': 'Gleam',

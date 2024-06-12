@@ -4,6 +4,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['nasmfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/yamnikov-oleg/nasmfmt',
     'name': 'NASMfmt',

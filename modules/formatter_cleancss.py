@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['cleancss']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/jakubpawlowicz/clean-css-cli',
     'name': 'Clean CSS',

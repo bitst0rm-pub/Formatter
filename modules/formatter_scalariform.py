@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['java']
 EXECUTABLES = ['scalariform']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/scala-ide/scalariform',
     'name': 'Scalariform',

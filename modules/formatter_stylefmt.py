@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['stylefmt']
+DOTFILES = ['.stylelintrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/masaakim/stylefmt',
     'name': 'Stylefmt',

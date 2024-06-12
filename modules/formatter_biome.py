@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['biome']
+DOTFILES = ['biome.json', 'biome.jsonc']
 MODULE_CONFIG = {
     'source': 'https://github.com/biomejs/biome',
     'name': 'Biome',

@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['ormolu']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/tweag/ormolu',
     'name': 'Ormolu',

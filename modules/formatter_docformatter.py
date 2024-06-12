@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['docformatter']
+DOTFILES = ['pyproject.toml', 'setup.cfg', 'tox.ini']
 MODULE_CONFIG = {
     'source': 'https://github.com/PyCQA/docformatter',
     'name': 'Docformatter',

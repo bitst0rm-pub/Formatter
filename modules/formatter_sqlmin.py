@@ -4,6 +4,7 @@ from ..core import common
 from ..libs.sqlmin import sqlmin
 
 log = logging.getLogger(__name__)
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/bitst0rm',
     'name': 'SQLMin',

@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['js-beautify']
+DOTFILES = ['.jsbeautifyrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/beautify-web/js-beautify',
     'name': 'JS Beautifier',

@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['rebar3', 'erlfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/WhatsApp/erlfmt',
     'name': 'Erlang erlfmt',

@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['clang-format']
+DOTFILES = ['.clang-format']
 MODULE_CONFIG = {
     'source': 'https://clang.llvm.org/docs/ClangFormat.html',
     'name': 'ClangFormat',

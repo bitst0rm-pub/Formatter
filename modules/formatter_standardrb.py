@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['ruby']
 EXECUTABLES = ['standardrb']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standardrb/standard',
     'name': 'Standard RB',

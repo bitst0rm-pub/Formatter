@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['svgo']
+DOTFILES = ['svgo.config.mjs']
 MODULE_CONFIG = {
     'source': 'https://github.com/svg/svgo',
     'name': 'SVGO',

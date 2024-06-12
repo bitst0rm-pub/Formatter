@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['java']
 EXECUTABLES = ['plantuml.jar']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/plantuml/plantuml',
     'name': 'Plantuml',

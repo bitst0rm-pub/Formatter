@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['semistandard']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standard/semistandard',
     'name': 'Semistandard JS',

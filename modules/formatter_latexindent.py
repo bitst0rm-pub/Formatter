@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['perl', 'perl5']
 EXECUTABLES = ['latexindent.pl', 'latexindent', 'latexindent-macos', 'latexindent-linux']
+DOTFILES = ['indentconfig.yaml', '.indentconfig.yaml']
 MODULE_CONFIG = {
     'source': 'https://github.com/cmhughes/latexindent.pl',
     'name': 'LaTeXindent',

@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['pyminify']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/dflook/python-minifier',
     'name': 'Python Minifier',
@@ -32,6 +33,8 @@ class PythonminifierFormatter(common.Module):
 
         path = self.get_config_path()
         if path:
+            # pythonminifier does not have an option to
+            # read external config file. We build one.
             params = [
                 '--no-combine-imports',
                 '--no-remove-pass',

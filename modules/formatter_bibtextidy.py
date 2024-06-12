@@ -5,6 +5,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['bibtex-tidy']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/FlamingTempura/bibtex-tidy',
     'name': 'BibTeX-tidy',

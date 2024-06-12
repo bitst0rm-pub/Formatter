@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['ruff']
+DOTFILES = ['.ruff.toml', 'ruff.toml', 'pyproject.toml']
 MODULE_CONFIG = {
     'source': 'https://github.com/astral-sh/ruff',
     'name': 'Ruff',

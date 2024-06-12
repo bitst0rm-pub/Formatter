@@ -4,6 +4,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['fourmolu']
+DOTFILES = ['fourmolu.yaml']
 MODULE_CONFIG = {
     'source': 'https://github.com/fourmolu/fourmolu',
     'name': 'Fourmolu',

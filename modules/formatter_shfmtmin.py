@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['shfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/mvdan/sh',
     'name': 'Shfmt',

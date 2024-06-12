@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['tidy']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/htacg/tidy-html5',
     'name': 'HTML Tidy',

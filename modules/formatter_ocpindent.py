@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['ocp-indent']
+DOTFILES = ['.ocp-indent', 'ocp-indent.conf']
 MODULE_CONFIG = {
     'source': 'https://github.com/OCamlPro/ocp-indent',
     'name': 'OCP-indent',

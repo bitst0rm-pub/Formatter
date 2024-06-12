@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['cmake-format']
+DOTFILES = ['.cmake-format.yaml', '.cmake-format.json', '.cmake-format.py']
 MODULE_CONFIG = {
     'source': 'https://github.com/cheshirekow/cmake_format',
     'name': 'CMake-format',

@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['asmfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/klauspost/asmfmt',
     'name': 'ASMfmt',

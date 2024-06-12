@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['hclfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/hashicorp/hcl',
     'name': 'HCLfmt',

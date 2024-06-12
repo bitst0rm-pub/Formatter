@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['dhall']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/dhall-lang/dhall-haskell',
     'name': 'Dhall format',

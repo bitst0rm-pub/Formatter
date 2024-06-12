@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['lua-format']
+DOTFILES = ['.lua-format']
 MODULE_CONFIG = {
     'source': 'https://github.com/Koihik/LuaFormatter',
     'name': 'LuaFormatter',

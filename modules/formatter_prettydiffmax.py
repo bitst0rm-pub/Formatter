@@ -6,6 +6,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettydiff']
+DOTFILES = ['.prettydiffrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/prettydiff/prettydiff',
     'name': 'Pretty Diff',

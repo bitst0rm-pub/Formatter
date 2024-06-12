@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['csscomb']
+DOTFILES = ['.csscomb.json']
 MODULE_CONFIG = {
     'source': 'https://github.com/csscomb/csscomb.js',
     'name': 'CSScomb',

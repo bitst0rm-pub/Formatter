@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['rubyfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/fables-tales/rubyfmt',
     'name': 'Rubyfmt',

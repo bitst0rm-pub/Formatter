@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['nginxfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/slomkowski/nginx-config-formatter',
     'name': 'NGINXfmt',

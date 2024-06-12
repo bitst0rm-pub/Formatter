@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['uncrustify']
+DOTFILES = ['.uncrustify.cfg', 'uncrustify.cfg']
 MODULE_CONFIG = {
     'source': 'https://github.com/uncrustify/uncrustify',
     'name': 'Uncrustify',

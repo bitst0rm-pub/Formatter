@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['tsfmt']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/vvakame/typescript-formatter',
     'name': 'TSfmt',

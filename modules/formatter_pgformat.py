@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['perl']
 EXECUTABLES = ['pg_format']
+DOTFILES = ['.pg_format']
 MODULE_CONFIG = {
     'source': 'https://github.com/darold/pgFormatter',
     'name': 'PgFormatter',

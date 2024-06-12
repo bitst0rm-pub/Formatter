@@ -4,6 +4,7 @@ from ..core import common
 log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['autopep8']
+DOTFILES = ['.pycodestyle', 'setup.cfg', 'tox.ini', '.pep8', '.flake8']
 MODULE_CONFIG = {
     'source': 'https://github.com/hhatto/autopep8',
     'name': 'Autopep8',

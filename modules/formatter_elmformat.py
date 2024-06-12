@@ -3,6 +3,7 @@ from ..core import common
 
 log = logging.getLogger(__name__)
 EXECUTABLES = ['elm-format']
+DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/avh4/elm-format',
     'name': 'Elm-format',
