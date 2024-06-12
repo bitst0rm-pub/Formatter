@@ -5,7 +5,6 @@ log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettierd']
 DOTFILES = ['.prettierrc', '.prettierrc.json', '.prettierrc.yml', '.prettierrc.yaml', '.prettierrc.json5', '.prettierrc.js', 'prettier.config.js', '.prettierrc.mjs', 'prettier.config.mjs', '.prettierrc.cjs', 'prettier.config.cjs', '.prettierrc.toml']
-DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/fsouza/prettierd',
     'name': 'Prettierd',
