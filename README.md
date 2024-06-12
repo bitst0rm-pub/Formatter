@@ -487,14 +487,17 @@ _Formatter.sublime-settings_
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case, the key must be named: "default"
-            // Tips: You can choose another config file format as the standard one
-            // provided by Formatter if the third-party plugin supports it.
-            // Formatter provides a set of default config files under
-            // "formatter.assets/config" folder for your personal use.
-            // Do not use the reference files with suffix '.master.' directly.
-            // These files could be overwritten by any release updates.
-            // Note: Options from this config file always have precedence over
-            // the options from any local project (per-project config file).
+            // Note:
+            // - You can choose another config file format as the default one
+            //   provided by Formatter if the third-party plugin supports it.
+            // - Formatter provides a set of default config files under
+            //   "formatter.assets/config" folder for your personal use.
+            //   Do not use the reference files with suffix '.master.' directly.
+            //   These files could be overwritten by any release updates.
+            // - Options from this config file always have precedence over
+            //   the options from any local project (per-project config dotfile).
+            // - Disabling this option will force Formatter to auto resolve
+            //   the per-project config dotfile in the file tree to use.
             // To disable this option:
             // 1. Set the config path of this option to null, OR
             // 2. Use the Quick Options: Ignore Config Path, OR
@@ -832,6 +835,7 @@ from ..core import common                                   # REQUIRED: a collec
 log = logging.getLogger(__name__)                           # REQUIRED: logger setup
 INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
 EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
+DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the per-project config dotfile if "config_path" is disabled
 MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
     'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
     'name': 'My First Plugin',                              # REQUIRED: a Capitalized plugin name of your choice, preferably short and comprehensive
@@ -944,7 +948,8 @@ executable = self.get_executable(runtime_type=None)
 # Get the input arguments "args" from the User settings or None.
 args = self.get_args()
 
-# Get the input "config_path" from the User settings or None.
+# Get the input "config_path" from the User settings or
+# the path of the per-project config dotfile if found or None.
 path = self.get_config_path()
 
 # Get the current text content in view or the current selected text.

@@ -62,15 +62,29 @@ class Module(object):
         self.region = region
         self.interpreters = interpreters
         self.executables = executables
+        self.dotfiles = kwargs.get('dotfiles', [])
         self.kwargs = kwargs or {}
 
-    def is_executeable(self, file):
-        if file and isinstance(file, str) and isfile(file):
-            if os.access(file, os.F_OK | os.X_OK):
-                return True
+    @staticmethod
+    def _is_valid_file(file):
+        return file and isinstance(file, str) and isfile(file)
 
-            log.warning('File exists but cannot get permission to execute: %s', file)
+    @staticmethod
+    def _has_permission(file, permission, permission_name):
+        if os.access(file, permission):
+            return True
+        log.warning('File exists but cannot get permission to %s: %s', permission_name, file)
         return False
+
+    def is_executeable(self, file):
+        if not self._is_valid_file(file):
+            return False
+        return self._has_permission(file, os.X_OK, 'execute')
+
+    def is_readable(self, file):
+        if not self._is_valid_file(file):
+            return False
+        return self._has_permission(file, os.R_OK, 'read')
 
     def get_pathinfo(self, path=None):
         try:
@@ -479,6 +493,17 @@ class Module(object):
         auto_format.update(self.get_auto_format_config(active_file_path).get('auto_format_config', {}))
         return {'auto_format_config': auto_format} if auto_format else {}
 
+    def _traverse_find_config_dotfile(self):
+        parent_folders = self._get_active_view_parent_folders()
+        if parent_folders:
+            for folder in parent_folders:
+                for dotfile in self.dotfiles:
+                    f = join(folder, dotfile)
+                    if self.is_readable(f):
+                        log.debug('Set "config_path" to the found dot file: %s', f)
+                        return f
+        return None
+
     def get_config_path(self):
         ignore_config_path = self.query(config, [], 'quick_options', 'ignore_config_path')
         if self.uid in ignore_config_path:
@@ -505,9 +530,13 @@ class Module(object):
 
             log.warning('Could not obtain config file for syntax: %s', syntax)
         else:
-            log.warning('Setting key "config_path" must be a non-empty dict: %s', shared_config)
+            log.warning('User specific "config_path" is not set: %s', shared_config)
 
-        log.info('Third-party plugin will run without specifying a "config_path"')
+            dotfile_path = self._traverse_find_config_dotfile()
+            if dotfile_path:
+                return dotfile_path
+
+        log.info('Running third-party plugin without specifying a "config_path"')
         return None
 
     def is_valid_path(self, path):

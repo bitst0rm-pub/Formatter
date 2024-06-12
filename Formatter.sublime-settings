@@ -274,14 +274,17 @@
             // Syntax keys must match those in the "syntaxes" option above.
             // A single config file can be used to assign to all syntaxes.
             // In this case, the key must be named: "default"
-            // Tips: You can choose another config file format as the standard one
-            // provided by Formatter if the third-party plugin supports it.
-            // Formatter provides a set of default config files under
-            // "formatter.assets/config" folder for your personal use.
-            // Do not use the reference files with suffix '.master.' directly.
-            // These files could be overwritten by any release updates.
-            // Note: Options from this config file always have precedence over
-            // the options from any local project (per-project config file).
+            // Note:
+            // - You can choose another config file format as the default one
+            //   provided by Formatter if the third-party plugin supports it.
+            // - Formatter provides a set of default config files under
+            //   "formatter.assets/config" folder for your personal use.
+            //   Do not use the reference files with suffix '.master.' directly.
+            //   These files could be overwritten by any release updates.
+            // - Options from this config file always have precedence over
+            //   the options from any local project (per-project config dotfile).
+            // - Disabling this option will force Formatter to auto resolve
+            //   the per-project config dotfile in the file tree to use.
             // To disable this option:
             // 1. Set the config path of this option to null, OR
             // 2. Use the Quick Options: Ignore Config Path, OR
