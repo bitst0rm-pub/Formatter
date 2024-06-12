@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.10] - 2024-06-12
+
+### 🚀 Features
+
+- Introduce Auto-resolve per-project config dotfile when "config_path" is disabled.
+
+### 🐛 Bug Fixes
+
+- *(juliaformatter)* Add config DOTFILES
+- *(plugins)* Add config DOTFILES constant
+- *(juliaformatter)* Add style option
+- Minor typo
+- *(juliaformatter)* Remove redundant DOTFILES constant
+- Stop searching for the per-project config dotfile as reaching to .git or .hg dir
+- Update black homepage url
+
 ## [1.4.9] - 2024-06-11
 
 ### 🚀 Features
