@@ -498,13 +498,13 @@ class Module(object):
         candidate_paths = []
 
         def should_stop_search(folder):
-            return isdir(join(folder, '.git')) or isdir(join(folder, '.hg'))
+            return any(isdir(join(folder, vcs_dir)) for vcs_dir in ['.git', '.hg'])
 
         if parent_folders:
             for folder in parent_folders:
+                candidate_paths.extend(join(folder, dotfile) for dotfile in self.dotfiles)
                 if should_stop_search(folder):
                     break
-                candidate_paths.extend(join(folder, dotfile) for dotfile in self.dotfiles)
 
         xdg_config_home = os.getenv('XDG_CONFIG_HOME')
         if xdg_config_home and not IS_WINDOWS:
@@ -547,13 +547,13 @@ class Module(object):
 
             log.warning('Could not obtain config file for syntax: %s', syntax)
         else:
-            log.warning('User specific "config_path" is not set: %s', shared_config)
+            log.info('User specific "config_path" is not set: %s', shared_config)
 
             dotfile_path = self._traverse_find_config_dotfile()
             if dotfile_path:
                 return dotfile_path
 
-        log.info('Running third-party plugin without specifying a "config_path"')
+        log.info('Running third-party plugin without specifying any "config_path"')
         return None
 
     def is_valid_path(self, path):
