@@ -495,13 +495,30 @@ class Module(object):
 
     def _traverse_find_config_dotfile(self):
         parent_folders = self._get_active_view_parent_folders()
+        candidate_paths = []
+
+        def should_stop_search(folder):
+            return isdir(join(folder, '.git')) or isdir(join(folder, '.hg'))
+
         if parent_folders:
             for folder in parent_folders:
-                for dotfile in self.dotfiles:
-                    f = join(folder, dotfile)
-                    if self.is_readable(f):
-                        log.debug('Set "config_path" to the found dot file: %s', f)
-                        return f
+                if should_stop_search(folder):
+                    break
+                candidate_paths.extend(join(folder, dotfile) for dotfile in self.dotfiles)
+
+        xdg_config_home = os.getenv('XDG_CONFIG_HOME')
+        if xdg_config_home and not IS_WINDOWS:
+            candidate_paths.extend(join(xdg_config_home, dotfile) for dotfile in self.dotfiles)
+        else:
+            appdata = os.getenv('APPDATA')
+            if appdata:
+                candidate_paths.extend(join(appdata, dotfile) for dotfile in self.dotfiles)
+
+        for path in candidate_paths:
+            if self.is_readable(path):
+                log.debug('Set "config_path" to the found dot file: %s', path)
+                return path
+
         return None
 
     def get_config_path(self):
