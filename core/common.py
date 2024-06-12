@@ -516,7 +516,7 @@ class Module(object):
 
         for path in candidate_paths:
             if self.is_readable(path):
-                log.debug('Set "config_path" to the found dot file: %s', path)
+                log.debug('Auto set "config_path" to the found dot file: %s', path)
                 return path
 
         return None
