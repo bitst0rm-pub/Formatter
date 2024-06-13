@@ -34,7 +34,7 @@ class EslintFormatter(common.Module):
         version = version.strip().split(' ')[0]
         log.debug('Eslint version: %s', version)
 
-        return cmd, LooseVersion(version) < LooseVersion('v9.0.0')
+        return cmd, LooseVersion(version) < LooseVersion('v8.57.0')
 
     def remove_deprecated_flag_and_next(self, cmd):
         for flag in ['--resolve-plugins-relative-to', '--rulesdir', '--ext']:
