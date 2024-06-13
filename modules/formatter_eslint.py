@@ -31,7 +31,7 @@ class EslintFormatter(common.Module):
         cmd = self.get_iprexe_cmd(runtime_type='node')
         _, version, _ = self.exec_cmd(cmd + ['--version'])
 
-        version = version.strip()
+        version = version.strip().split(' ')[0]
         log.debug('Eslint version: %s', version)
 
         return cmd, LooseVersion(version) < LooseVersion('v9.0.0')
