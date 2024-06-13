@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.11] - 2024-06-13
+
+### 🚀 Features
+
+- Add a new cmd API to get interpreter and executable: get_iprexe_cmd(runtimetype=None)
+
+### 🐛 Bug Fixes
+
+- *(eslintd)* Disable support for Eslint v8.57.0+ using flat config files. @see: https://github.com/mantoni/eslint_d.js/issues/281
+- *(eslint)* Improve version detection
+- Stop searching for the per-project config dotfile *after* a .git or .hg directory is found
+- *(eslint)* Update compatibility with both ESLint v8- and v9+ (using flat config file)
+- *(eslint)* Update version detection to v8.57.0 for supporting flat config files: eslint.config.(js|mjs|cjs)
+
 ## [1.4.10] - 2024-06-12
 
 ### 🚀 Features
