@@ -365,13 +365,18 @@ class Module(object):
         user_and_global_interpreter = self._get_path_for('interpreter')
         return user_and_global_interpreter or None
 
-    def get_combo_cmd(self, runtime_type=None):
+    def get_iprexe_cmd(self, runtime_type=None):
         user_files = self.query(config, None, 'formatters', self.uid, 'interpreter_path')
         if user_files:
             cmd = [self.get_interpreter(), self.get_executable(runtime_type)]
         else:
             cmd = [self.get_executable(runtime_type)]
-        cmd.extend(self.get_args())
+        return cmd if all(cmd) else None
+
+    def get_combo_cmd(self, runtime_type=None):
+        cmd = self.get_iprexe_cmd(runtime_type)
+        if cmd:
+            cmd.extend(self.get_args())
         return cmd if all(cmd) else None
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):

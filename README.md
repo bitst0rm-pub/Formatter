@@ -934,9 +934,12 @@ Responsible for handling plugin modules is the class: `class Module(object)`:
 - Essentially for the `def get_cmd(self)` function:
 
 ```py
-# An alias for get_interpreter(), get_executable() and get_args() together.
+# This alias method combines get_interpreter() and get_executable().
 # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
-# Currently only None|node makes sense. 'python'|'perl'|'ruby' are just placeholder for future.
+# Currently, only None and 'node' are functional. All others are placeholders for future use.
+cmd = self.get_iprexe_cmd(runtime_type=None)
+
+# This alias method just extends get_iprexe_cmd() with get_args().
 cmd = self.get_combo_cmd(runtime_type=None)
 
 # Get the interpreter path or None.
