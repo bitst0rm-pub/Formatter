@@ -837,9 +837,9 @@
             },
             "syntaxes": ["js"],
             "executable_path": ["/path/to/node_modules/.bin/eslint or /path/to/node_modules/.bin/eslint.js"],
-            "args": ["--resolve-plugins-relative-to", "/path/to/javascript/node_modules"],
+            "args": ["--resolve-plugins-relative-to", "/path/to/eslintv8/javascript/node_modules"],
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/eslint_rc.json"
+                "default": "${packages}/User/formatter.assets/config/eslint_rc.json_(v8)_or_eslint_config_rc.mjs_(v9)"
             }
             /* requires node on PATH if omit interpreter_path */
         },
@@ -858,11 +858,11 @@
             },
             "syntaxes": ["js"],
             "executable_path": ["/path/to/node_modules/.bin/eslint_d or /path/to/node_modules/.bin/eslint_d.js"],
-            "args": ["--resolve-plugins-relative-to", "/path/to/javascript/node_modules"],
+            "args": ["--resolve-plugins-relative-to", "/path/to/eslintv8/javascript/node_modules"],
             "config_path": {
-                "default": "${packages}/User/formatter.assets/config/eslintd_rc.json"
+                "default": "${packages}/User/formatter.assets/config/eslintd_rc.json_(v8)_or_eslintd_config_rc.mjs_(v9)"
             }
-            /* requires node on PATH if omit interpreter_path */
+            /* no support for eslint v8.57.0+ using flat config files. requires node on PATH if omit interpreter_path */
         },
         "floskell": {
             "info": "https://github.com/ennocramer/floskell",
