@@ -16,14 +16,14 @@ All notable changes to this project will be documented in this file.\n
 # https://keats.github.io/tera/docs/#introduction
 body = """
 {% if version %}\
-    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+    ## [[{{ version | trim_start_matches(pat="v") }}](<REPO>/releases/tag/{{ version }})] - {{ timestamp | date(format="%Y-%m-%d") }}
 {% else %}\
     ## [unreleased]
 {% endif %}\
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | striptags | trim | upper_first }}
     {% for commit in commits | unique(attribute="message") | sort(attribute="message") %}
-        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
+        - [`{{ commit.id | truncate(length=7, end="") }}`](<REPO>/commit/{{ commit.id }}) {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
             {% if commit.breaking %}[**breaking**] {% endif %}\
             {{ commit.message | upper_first }}\
     {% endfor %}
@@ -37,7 +37,7 @@ footer = """
 trim = true
 # postprocessors
 postprocessors = [
-  # { pattern = '<REPO>', replace = "https://github.com/orhun/git-cliff" }, # replace repository URL
+  { pattern = '<REPO>', replace = "https://github.com/bitst0rm-pub/Formatter" }, # replace repository URL
 ]
 
 [git]
