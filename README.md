@@ -37,6 +37,8 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
   - `"new_file_on_format"` will not be implemented or is disabled.
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
+- Plugins:
+  - *`eslint_d`*: Drop support for Eslint v8.57.0+ (using flat config files `eslint.config.*`) untill this upstream bug is fixed: [#281](https://github.com/mantoni/eslint_d.js/issues/281)
 
 _Formatter in action: Text-to-Text..._
 
