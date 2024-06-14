@@ -43,7 +43,7 @@ def merge(api):
                 src = sublime.expand_variables(os.path.normpath(os.path.expanduser(os.path.expandvars(src))), {'packages': packages_path})
                 base = os.path.basename(src)
 
-                if k == 'libs' and base in ['langref', 'prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']:
+                if k == 'libs' and base in ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']:
                     continue
 
                 dst = os.path.join(packages_path, common.PACKAGE_NAME, k, base)
@@ -103,12 +103,12 @@ class ShowVersionCommand(sublime_plugin.WindowCommand):
 class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
         sublime.run_command('new_window')
-        new_window = sublime.active_window()
-        new_window.set_layout(self.assign_layout('2cols'))
-        new_window.focus_group(0)
-        new_window.run_command('open_file', {'file': '${packages}/' + common.PACKAGE_NAME + '/Example.sublime-keymap'})
-        new_window.focus_group(1)
-        new_window.run_command('open_file', {'file': '${packages}/User/Default (${platform}).sublime-keymap'})
+        window = sublime.active_window()
+        window.set_layout(self.assign_layout('2cols'))
+        window.focus_group(0)
+        window.run_command('open_file', {'file': '${packages}/' + common.PACKAGE_NAME + '/Example.sublime-keymap'})
+        window.focus_group(1)
+        window.run_command('open_file', {'file': '${packages}/User/Default (${platform}).sublime-keymap'})
 
 
 class ReadModulesSummaryCommand(sublime_plugin.WindowCommand):
@@ -1174,7 +1174,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
         if not opkey:
             return None
 
-        unique = common.config.get('format_on_unique', None)
+        unique = common.config.get('format_on_priority', None) or common.config.get('format_on_unique', None)
         if unique and isinstance(unique, dict) and unique.get('enable', False):
             self._on_paste_or_save__unique(view, unique, opkey)
         else:
@@ -1201,7 +1201,7 @@ class FormatterListener(sublime_plugin.EventListener, common.Base):
                     SingleFormat(view, uid=uid, type=value.get('type', None)).run()
                     break
         else:
-            self.popup_message('There are duplicate syntaxes in your "format_on_unique" option setting. Please sort them out.', 'ERROR')
+            self.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
 
     def _on_paste_or_save__regular(self, view, opkey):
         seen = set()

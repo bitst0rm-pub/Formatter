@@ -546,14 +546,14 @@ def build_formatter_sublime_settings(formatter_map):
                 ('PYTHONPATH', []),
                 ('OLALA', [])
             ])),
-            ('__COMMENT__format_on_unique', '''
+            ('__COMMENT__format_on_priority', '''
     // This option resolves the syntax conflicts described in "format_on_save".
     // It acts as an override and only applies to the following options:
     // 1. "format_on_save"
     // 2. "format_on_paste"
     // Syntaxes in this option always take precedence over the syntaxes specified there.
     // All syntaxes must be unique without any duplicates.'''),
-            ('format_on_unique', OrderedDict([
+            ('format_on_priority', OrderedDict([
                 ('enable', False),
                 ('csscomb', NoIndent(['css'])),
                 ('jsbeautifier', NoIndent(['js']))
@@ -676,7 +676,7 @@ def build_formatter_sublime_settings(formatter_map):
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
-            // Solution: Use the "format_on_unique" option to workaround this.'''),
+            // Solution: Use the "format_on_priority" option to workaround this.'''),
                     ('format_on_save', False),
                     ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file/view.

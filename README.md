@@ -284,7 +284,7 @@ _Formatter.sublime-settings_
     // 2. "format_on_paste"
     // Syntaxes in this option always take precedence over the syntaxes specified there.
     // All syntaxes must be unique without any duplicates.
-    "format_on_unique": {
+    "format_on_priority": {
         "enable": false,
         "csscomb": ["css"],
         "jsbeautifier": ["js"]
@@ -404,7 +404,7 @@ _Formatter.sublime-settings_
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
-            // Solution: Use the "format_on_unique" option to workaround this.
+            // Solution: Use the "format_on_priority" option to workaround this.
             "format_on_save": false,
 
             // Auto formatting whenever code is pasted into the current file/view.

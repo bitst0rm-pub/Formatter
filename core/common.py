@@ -796,6 +796,7 @@ class Base(Module):
                     'sync_scroll': self.query(settings, True, 'layout', 'sync_scroll')
                 },
                 'environ': settings.get('environ', {}),
+                'format_on_priority': settings.get('format_on_priority', {}),
                 'format_on_unique': settings.get('format_on_unique', {}),
                 'auto_format': settings.get('auto_format', {}),
                 'formatters': settings.get('formatters', {})
