@@ -1028,6 +1028,11 @@
                                 }
                             },
                             {
+                                "caption": "Read Modules Summary",
+                                "mnemonic": "R",
+                                "command": "read_modules_summary"
+                            },
+                            {
                                 "caption": "Open Config Folders",
                                 "mnemonic": "O",
                                 "command": "open_config_folders"

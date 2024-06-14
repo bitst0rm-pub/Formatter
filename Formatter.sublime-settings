@@ -99,6 +99,7 @@
     },
 
     // THIRD-PARTY PLUGINS LEVEL
+    // Help: Preferences > Package Settings > Formatter > Read Modules Summary
     "formatters": {
         "examplegeneric": {
             // Formatter provides 2 methods to add custom plugins:

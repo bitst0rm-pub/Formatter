@@ -162,6 +162,10 @@ def build_main_sublime_menu(formatter_map):
                                     ]))
                                 ]),
                                 OrderedDict([
+                                    ('caption', 'Read Modules Summary'),
+                                    ('command', 'read_modules_summary')
+                                ]),
+                                OrderedDict([
                                     ('caption', 'Open Config Folders'),
                                     ('command', 'open_config_folders')
                                 ]),
@@ -287,6 +291,10 @@ def build_formatter_sublime_commands(formatter_map):
         OrderedDict([
             ('caption', 'Formatter: Version Info'),
             ('command', 'show_version')
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Read Modules Summary'),
+            ('command', 'read_modules_summary')
         ]),
         OrderedDict([
             ('caption', 'Formatter: Open Config Folders'),
@@ -576,7 +584,8 @@ def build_formatter_sublime_settings(formatter_map):
                 ('__COMMENT__auto_format_b', '*/')
             ])),
             ('__COMMENT__formatters', '''
-    // THIRD-PARTY PLUGINS LEVEL'''),
+    // THIRD-PARTY PLUGINS LEVEL
+    // Help: Preferences > Package Settings > Formatter > Read Modules Summary'''),
             ('formatters', OrderedDict([
                 ('examplegeneric', OrderedDict([
                     ('__COMMENT__generic', '''// Formatter provides 2 methods to add custom plugins:

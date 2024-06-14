@@ -4,6 +4,10 @@
         "command": "show_version"
     },
     {
+        "caption": "Formatter: Read Modules Summary",
+        "command": "read_modules_summary"
+    },
+    {
         "caption": "Formatter: Open Config Folders",
         "command": "open_config_folders"
     },

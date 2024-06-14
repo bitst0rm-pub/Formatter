@@ -111,6 +111,26 @@ class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):
         new_window.run_command('open_file', {'file': '${packages}/User/Default (${platform}).sublime-keymap'})
 
 
+class ReadModulesSummaryCommand(sublime_plugin.WindowCommand):
+    def __init__(self, *args, **kwargs):
+        self.FILE_PATH = self.get_summary_file_path()
+
+    def get_summary_file_path(self):
+        return os.path.join(sublime.packages_path(), common.PACKAGE_NAME, 'modules', '_summary.txt')
+
+    def is_enabled(self):
+        return os.path.exists(self.FILE_PATH)
+
+    def is_visible(self):
+        return self.is_enabled()
+
+    def run(self):
+        if os.path.exists(self.FILE_PATH):
+            sublime.active_window().open_file(self.FILE_PATH)
+        else:
+            log.error('Summary file does not exist.')
+
+
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
         seen = set()
