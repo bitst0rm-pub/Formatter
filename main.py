@@ -16,10 +16,10 @@ from collections import OrderedDict
 import sublime
 import sublime_plugin
 
+from .version import __version__
 from .core import common, configurator
 from .core.wcounter import *
 from .core.smanager import *
-from .core.version import __version__
 from .core.formatter import Formatter
 
 log = logging.getLogger(__name__)
@@ -541,7 +541,7 @@ class SingleFormat(common.Base):
 
     def run(self):
         self.create_graphic_temp_dir()
-        self.print_sysinfo()
+        self.print_sysinfo(pretty=False)
         try:
             for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
                 self.kwargs.update(region=region)

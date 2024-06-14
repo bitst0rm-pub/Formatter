@@ -1019,8 +1019,8 @@ class Base(Module):
 
         return hash_md5.hexdigest()
 
-    def print_sysinfo(self):
-        log.info('System environments:\n%s', json.dumps(self.update_environ(), ensure_ascii=False, indent=4))
+    def print_sysinfo(self, pretty=False):
+        log.info('System environments:\n%s', json.dumps(self.update_environ(), ensure_ascii=False, indent=4 if pretty else None))
 
         if self.is_quick_options_mode():
             log.info('Current mode: Quick Options: \n%s', json.dumps(self.query(config, {}, 'quick_options'), ensure_ascii=False, indent=4))

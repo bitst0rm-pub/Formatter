@@ -28,7 +28,7 @@ jobs:
       - name: Set up environment
         run: |
           # Extract current version
-          CURRENT_VERSION=$(python -c "exec(open('./core/version.py').read()); print(__version__)")
+          CURRENT_VERSION=$(python -c "exec(open('./version.py').read()); print(__version__)")
           echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
 
           # Fetch previous version
