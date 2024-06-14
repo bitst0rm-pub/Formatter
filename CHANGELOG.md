@@ -2,48 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.4.11] - 2024-06-13
+## [[1.4.12](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.12)] - 2024-06-14
 
-### 🚀 Features
+### 📚 Documentation
 
-- Add a new cmd API to get interpreter and executable: get_iprexe_cmd(runtimetype=None)
-
-### 🐛 Bug Fixes
-
-- *(eslintd)* Disable support for Eslint v8.57.0+ using flat config files. @see: https://github.com/mantoni/eslint_d.js/issues/281
-- *(eslint)* Improve version detection
-- Stop searching for the per-project config dotfile *after* a .git or .hg directory is found
-- *(eslint)* Update compatibility with both ESLint v8- and v9+ (using flat config file)
-- *(eslint)* Update version detection to v8.57.0 for supporting flat config files: eslint.config.(js|mjs|cjs)
-
-## [1.4.10] - 2024-06-12
-
-### 🚀 Features
-
-- Introduce Auto-resolve per-project config dotfile when "config_path" is disabled.
-
-### 🐛 Bug Fixes
-
-- *(juliaformatter)* Add config DOTFILES
-- *(plugins)* Add config DOTFILES constant
-- *(juliaformatter)* Add style option
-- Minor typo
-- *(juliaformatter)* Remove redundant DOTFILES constant
-- Stop searching for the per-project config dotfile as reaching to .git or .hg dir
-- Update black homepage url
-
-## [1.4.9] - 2024-06-11
-
-### 🚀 Features
-
-- *(plugin)* Add JuliaFormatter
-
-### 🐛 Bug Fixes
-
-- Typo
+- [`82c2e53`](https://github.com/bitst0rm-pub/Formatter/commit/82c2e53d7d244384a20f71ea3047ed098bbfa38c) *(eslintd)* Add note to limitations
 
 ### ⚙️ Miscellaneous Tasks
 
-- Add cliff.toml to generate changelog
+- [`86f1fb5`](https://github.com/bitst0rm-pub/Formatter/commit/86f1fb54bf82fbf1ffaa10ea157ed941c7e91f20) Add `Read Modules Summary` command to help setting Formatter
+- [`6693059`](https://github.com/bitst0rm-pub/Formatter/commit/6693059901d21aa95f430531df7b8a1b0270bd9e) Change option name from `"format_on_unique"` to `"format_on_priority"`
+- [`6870fbb`](https://github.com/bitst0rm-pub/Formatter/commit/6870fbbd00a7d2c860e35c314f5b638131cbb0f9) *(git)* Generate modules summary text file
+- [`6b89e57`](https://github.com/bitst0rm-pub/Formatter/commit/6b89e57ed4d122cfa3cb35f536bb98ff32cb0b2c) Move version.py to the root
+- [`4c6a6d9`](https://github.com/bitst0rm-pub/Formatter/commit/4c6a6d9323c2bc706ccd1b34930dd02a6d34af30) Remove langref
+- [`1829047`](https://github.com/bitst0rm-pub/Formatter/commit/1829047790aff131b59e4dff7eb5a05ef9004aba) Update cliff.toml to include commit links
+
+## [[1.4.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.11)] - 2024-06-13
+
+### 🚀 Features
+
+- [`46f539e`](https://github.com/bitst0rm-pub/Formatter/commit/46f539e1e415fa5ba16a843b7fb8b7d74f4d4548) Add a new cmd API to get interpreter and executable: get_iprexe_cmd(runtimetype=None)
+
+### 🐛 Bug Fixes
+
+- [`6da59e4`](https://github.com/bitst0rm-pub/Formatter/commit/6da59e437efb839007e4c6fba86015e85120b0bb) *(eslintd)* Disable support for Eslint v8.57.0+ using flat config files. @see: https://github.com/mantoni/eslint_d.js/issues/281
+- [`0e9390e`](https://github.com/bitst0rm-pub/Formatter/commit/0e9390eefdc731c3b613460e5adb37bcacf76eba) *(eslint)* Improve version detection
+- [`19a4e21`](https://github.com/bitst0rm-pub/Formatter/commit/19a4e2125d220794a170f24b2d89b091f70443d1) Stop searching for the per-project config dotfile *after* a .git or .hg directory is found
+- [`e4997cb`](https://github.com/bitst0rm-pub/Formatter/commit/e4997cbcd5cc92a8dab7553f9fc183928c3803d0) *(eslint)* Update compatibility with both ESLint v8- and v9+ (using flat config file)
+- [`097f6cd`](https://github.com/bitst0rm-pub/Formatter/commit/097f6cdc882a071fe7323cd652db524bf941d9b3) *(eslint)* Update version detection to v8.57.0 for supporting flat config files: eslint.config.(js|mjs|cjs)
+
+## [[1.4.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.10)] - 2024-06-12
+
+### 🚀 Features
+
+- [`cb06723`](https://github.com/bitst0rm-pub/Formatter/commit/cb0672308ed24fccb5c7ae4d98f2ab3c58e37841) Introduce Auto-resolve per-project config dotfile when "config_path" is disabled.
+
+### 🐛 Bug Fixes
+
+- [`36b379f`](https://github.com/bitst0rm-pub/Formatter/commit/36b379f75e3b62832e151b05f0c1bd9d91141098) *(juliaformatter)* Add config DOTFILES
+- [`ece056b`](https://github.com/bitst0rm-pub/Formatter/commit/ece056bd65df2747a66986bd0847d77951e1a2d1) *(plugins)* Add config DOTFILES constant
+- [`9e2f45d`](https://github.com/bitst0rm-pub/Formatter/commit/9e2f45d48fb82834f679d928aa44ea4c13eb76cc) *(juliaformatter)* Add style option
+- [`990f4c1`](https://github.com/bitst0rm-pub/Formatter/commit/990f4c1c9a1de0ae3df652324dda9965f5ec0c2f) Minor typo
+- [`0debb25`](https://github.com/bitst0rm-pub/Formatter/commit/0debb25d9824c1275b30c6d968af3d73e14f8f21) *(juliaformatter)* Remove redundant DOTFILES constant
+- [`de47793`](https://github.com/bitst0rm-pub/Formatter/commit/de47793ccde5aa0967e16877a85d79ae46217c54) Stop searching for the per-project config dotfile as reaching to .git or .hg dir
+- [`63c85c7`](https://github.com/bitst0rm-pub/Formatter/commit/63c85c707f71c8233cfd59af3d7cea542a1ed357) Update black homepage url
+
+## [[1.4.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.9)] - 2024-06-11
+
+### 🚀 Features
+
+- [`db6986b`](https://github.com/bitst0rm-pub/Formatter/commit/db6986b752d28965b472645b1df1483337917e42) *(plugin)* Add JuliaFormatter
+
+### 🐛 Bug Fixes
+
+- [`d05fe01`](https://github.com/bitst0rm-pub/Formatter/commit/d05fe01dc63a1fb9f167c8c41ea9b16562ada743) Typo
+
+### ⚙️ Miscellaneous Tasks
+
+- [`403176c`](https://github.com/bitst0rm-pub/Formatter/commit/403176c5600e4c94a2e4710461061a3cc60c6cc3) Add cliff.toml to generate changelog
 
 <!-- generated by git-cliff -->
