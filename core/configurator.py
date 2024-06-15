@@ -162,8 +162,8 @@ def build_main_sublime_menu(formatter_map):
                                     ]))
                                 ]),
                                 OrderedDict([
-                                    ('caption', 'Read Modules Summary'),
-                                    ('command', 'read_modules_summary')
+                                    ('caption', 'Modules Info'),
+                                    ('command', 'modules_info')
                                 ]),
                                 OrderedDict([
                                     ('caption', 'Open Config Folders'),
@@ -197,8 +197,12 @@ def build_main_sublime_menu(formatter_map):
                                     ('caption', '-')
                                 ]),
                                 OrderedDict([
+                                    ('caption', 'Changelog'),
+                                    ('command', 'open_changelog')
+                                ]),
+                                OrderedDict([
                                     ('caption', 'Version Info'),
-                                    ('command', 'show_version')
+                                    ('command', 'version_info')
                                 ])
                             ])
                         ])
@@ -290,11 +294,15 @@ def build_formatter_sublime_commands(formatter_map):
     sublime_commands = [
         OrderedDict([
             ('caption', 'Formatter: Version Info'),
-            ('command', 'show_version')
+            ('command', 'version_info')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Read Modules Summary'),
-            ('command', 'read_modules_summary')
+            ('caption', 'Formatter: Changelog'),
+            ('command', 'open_changelog')
+        ]),
+        OrderedDict([
+            ('caption', 'Formatter: Modules Info'),
+            ('command', 'modules_info')
         ]),
         OrderedDict([
             ('caption', 'Formatter: Open Config Folders'),
@@ -585,7 +593,7 @@ def build_formatter_sublime_settings(formatter_map):
             ])),
             ('__COMMENT__formatters', '''
     // THIRD-PARTY PLUGINS LEVEL
-    // Help: Preferences > Package Settings > Formatter > Read Modules Summary'''),
+    // Help: Preferences > Package Settings > Formatter > Modules Info'''),
             ('formatters', OrderedDict([
                 ('examplegeneric', OrderedDict([
                     ('__COMMENT__generic', '''// Formatter provides 2 methods to add custom plugins:

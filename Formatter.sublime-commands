@@ -1,11 +1,15 @@
 [
     {
         "caption": "Formatter: Version Info",
-        "command": "show_version"
+        "command": "version_info"
     },
     {
-        "caption": "Formatter: Read Modules Summary",
-        "command": "read_modules_summary"
+        "caption": "Formatter: Changelog",
+        "command": "open_changelog"
+    },
+    {
+        "caption": "Formatter: Modules Info",
+        "command": "modules_info"
     },
     {
         "caption": "Formatter: Open Config Folders",

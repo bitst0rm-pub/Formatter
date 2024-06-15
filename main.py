@@ -95,7 +95,7 @@ def plugin_loaded():
         sublime.set_timeout_async(lambda: entry(api), 100)
 
 
-class ShowVersionCommand(sublime_plugin.WindowCommand):
+class VersionInfoCommand(sublime_plugin.WindowCommand):
     def run(self):
         sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + __version__)
 
@@ -111,11 +111,11 @@ class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):
         window.run_command('open_file', {'file': '${packages}/User/Default (${platform}).sublime-keymap'})
 
 
-class ReadModulesSummaryCommand(sublime_plugin.WindowCommand):
+class ModulesInfoCommand(sublime_plugin.WindowCommand):
     def __init__(self, *args, **kwargs):
-        self.FILE_PATH = self.get_summary_file_path()
+        self.FILE_PATH = self.get_file_path()
 
-    def get_summary_file_path(self):
+    def get_file_path(self):
         return os.path.join(sublime.packages_path(), common.PACKAGE_NAME, 'modules', '_summary.txt')
 
     def is_enabled(self):
@@ -126,9 +126,48 @@ class ReadModulesSummaryCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         if os.path.exists(self.FILE_PATH):
-            sublime.active_window().open_file(self.FILE_PATH)
+            view = sublime.active_window().open_file(self.FILE_PATH)
+            view.settings().set('word_wrap', False)
         else:
-            log.error('Summary file does not exist.')
+            log.error('File does not exist: %s', self.FILE_PATH)
+
+
+class OpenChangelogCommand(sublime_plugin.WindowCommand, common.Base):
+    def __init__(self, *args, **kwargs):
+        self.FILE_PATH = self.get_file_path()
+
+    def get_file_path(self):
+        return os.path.join(sublime.packages_path(), common.PACKAGE_NAME, 'CHANGELOG.md')
+
+    def convert_markdown_file_to_html(self, filepath):
+        try:
+            with open(filepath, 'r') as f:
+                markdown = f.read()
+
+            return self.markdown_to_html(markdown)
+        except Exception as e:
+            log.error('Error reading file: %s\n%s', filepath, e)
+        return None
+
+    def is_enabled(self):
+        return os.path.exists(self.FILE_PATH)
+
+    def is_visible(self):
+        return self.is_enabled()
+
+    def run(self):
+        if os.path.exists(self.FILE_PATH):
+            html = self.convert_markdown_file_to_html(self.FILE_PATH)
+            if html:
+                view = sublime.active_window().new_file()
+                self.style_view(view)
+                view.erase_phantoms('changelog')
+                view.add_phantom('changelog', sublime.Region(0), html, sublime.LAYOUT_INLINE)
+                view.set_name('Changelog')
+                view.set_read_only(True)
+                view.set_scratch(True)
+        else:
+            log.error('File does not exist: %s', self.FILE_PATH)
 
 
 class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):

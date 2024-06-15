@@ -1028,9 +1028,9 @@
                                 }
                             },
                             {
-                                "caption": "Read Modules Summary",
-                                "mnemonic": "R",
-                                "command": "read_modules_summary"
+                                "caption": "Modules Info",
+                                "mnemonic": "M",
+                                "command": "modules_info"
                             },
                             {
                                 "caption": "Open Config Folders",
@@ -1068,9 +1068,14 @@
                                 "caption": "-"
                             },
                             {
+                                "caption": "Changelog",
+                                "mnemonic": "C",
+                                "command": "open_changelog"
+                            },
+                            {
                                 "caption": "Version Info",
                                 "mnemonic": "V",
-                                "command": "show_version"
+                                "command": "version_info"
                             }
                         ]
                     }
