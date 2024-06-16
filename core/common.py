@@ -922,7 +922,7 @@ class Base(Module):
         <body id="phantom-body">
             <style>
                 html, body {display:block;margin:0;padding:0;text-align:center;border-style:none;width:''' + str(dst_view.viewport_extent()[0]) + '''px;}
-                .container {display:block;margin:0 auto;text-align:center;font-weight:bold;padding-bottom:1rem;}
+                .container {display:block;margin:0 auto;text-align:center;font-weight:bold;padding:2rem 0;}
                 .image {margin:0 auto;}
                 a {text-decoration:none;color:#FF8C00;}
                 span.button {border:1px solid #FF8C00;border-radius:0.313rem;padding:.125rem .375rem;}

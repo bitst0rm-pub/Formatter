@@ -713,7 +713,7 @@ class SingleFormat(common.Base):
             data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
             dst_view.erase_phantoms('graphic')
-            dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_BLOCK, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
+            dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_INLINE, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
         except Exception as e:
             log.error('Error creating phantom: %s', e)
         finally:
@@ -790,7 +790,7 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
                 data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
                 dst_view.erase_phantoms('graphic')
-                dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_BLOCK, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
+                dst_view.add_phantom('graphic', sublime.Region(0), html, sublime.LAYOUT_INLINE, on_navigate=lambda href: self.on_navigate(href, data, dst_view))
             except Exception as e:
                 log.error('Error creating phantom: %s', e)
 
