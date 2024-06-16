@@ -33,7 +33,7 @@ class DartformatFormatter(common.Module):
 
         cmd.extend(['format'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

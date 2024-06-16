@@ -514,10 +514,16 @@ class Module(object):
         xdg_config_home = os.getenv('XDG_CONFIG_HOME')
         if xdg_config_home and not IS_WINDOWS:
             candidate_paths.extend(join(xdg_config_home, dotfile) for dotfile in self.dotfiles)
+            for child in os.listdir(xdg_config_home):
+                candidate_paths.extend(join(xdg_config_home, child, dotfile) for dotfile in self.dotfiles)
+                break  # Only look in the first child folder
         else:
             appdata = os.getenv('APPDATA')
             if appdata:
                 candidate_paths.extend(join(appdata, dotfile) for dotfile in self.dotfiles)
+                for child in os.listdir(appdata):
+                    candidate_paths.extend(join(appdata, child, dotfile) for dotfile in self.dotfiles)
+                    break
 
         for path in candidate_paths:
             if self.is_readable(path):
@@ -1105,9 +1111,9 @@ class Base(Module):
         log.info('System environments:\n%s', json.dumps(self.update_environ(), ensure_ascii=False, indent=4 if pretty else None))
 
         if self.is_quick_options_mode():
-            log.info('Current mode: Quick Options: \n%s', json.dumps(self.query(config, {}, 'quick_options'), ensure_ascii=False, indent=4))
+            log.info('Mode: Quick Options: \n%s', json.dumps(self.query(config, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
         else:
-            log.info('Current mode: User Settings')
+            log.info('Mode: User Settings')
 
     def is_view(self, file_or_view):
         return (type(file_or_view) is sublime.View)

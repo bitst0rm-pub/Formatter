@@ -39,7 +39,7 @@ class ShellcheckFormatter(common.Module):
 
         cmd.extend(['--color=never', '--format', 'diff', '-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

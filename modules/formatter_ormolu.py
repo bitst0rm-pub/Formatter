@@ -33,7 +33,7 @@ class OrmoluFormatter(common.Module):
 
         cmd.extend(['--color', 'never', '--stdin-input-file', '-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

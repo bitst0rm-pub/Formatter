@@ -36,7 +36,7 @@ class SvgomaxFormatter(common.Module):
 
         cmd.extend(['--pretty', '--no-color', '-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

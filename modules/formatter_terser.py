@@ -36,7 +36,7 @@ class TerserFormatter(common.Module):
 
         cmd.extend(['--compress', '--mangle', '--'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

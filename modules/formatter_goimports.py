@@ -33,7 +33,7 @@ class GoimportsFormatter(common.Module):
 
         cmd.extend(['-e'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

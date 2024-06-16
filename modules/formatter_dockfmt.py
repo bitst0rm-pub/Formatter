@@ -41,7 +41,7 @@ class DockfmtFormatter(common.Module):
             tmp_file = self.create_tmp_file()
             cmd.extend([tmp_file])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd, tmp_file

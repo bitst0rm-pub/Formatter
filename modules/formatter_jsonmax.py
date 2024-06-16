@@ -30,7 +30,7 @@ class JsonmaxFormatter(common.Module):
         if path:
             with open(path, 'r', encoding='utf-8') as file:
                 cmd = json.load(file)
-            log.debug('Current arguments: %s', cmd)
+            log.debug('Command: %s', cmd)
 
         try:
             text = self.get_text_from_region(self.region)

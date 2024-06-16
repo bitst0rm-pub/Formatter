@@ -72,7 +72,7 @@ class JuliaformatterFormatter(common.Module):
 
         cmd = [interpreter, '-e', arg]
 
-        log.debug('Current arguments: %s', [interpreter, '-e', 'using JuliaFormatter; println(format_text(raw"""text"""' + config_arg + ')); exit()'])
+        log.debug('Command: %s', [interpreter, '-e', 'using JuliaFormatter; println(format_text(raw"""text"""' + config_arg + ')); exit()'])
 
         return cmd
 

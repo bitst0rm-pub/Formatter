@@ -38,7 +38,7 @@ class StylelintFormatter(common.Module):
         dummy = file if file else 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--fix', '--stdin', '--stdin-filename', dummy])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

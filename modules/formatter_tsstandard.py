@@ -30,7 +30,7 @@ class TsstandardFormatter(common.Module):
 
         cmd.extend(['--fix', '--stdin', '-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

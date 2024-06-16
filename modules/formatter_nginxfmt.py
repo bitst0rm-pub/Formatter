@@ -30,7 +30,7 @@ class NginxfmtFormatter(common.Module):
 
         cmd.extend(['--pipe', '--'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

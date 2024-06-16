@@ -51,7 +51,7 @@ class FormatrFormatter(common.Module):
         ops = ', ' + text if text else ''
         cmd.extend(['--slave', '--no-restore', '--no-save', '-e', 'formatR::tidy_source("stdin"' + ops + ')'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

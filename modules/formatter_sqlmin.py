@@ -32,7 +32,7 @@ class SqlminFormatter(common.Module):
             with open(path, 'r', encoding='utf-8') as file:
                 data = file.read()
             json = sublime.decode_value(data)
-            log.debug('Current arguments: %s', json)
+            log.debug('Command: %s', json)
 
         try:
             text = self.get_text_from_region(self.region)

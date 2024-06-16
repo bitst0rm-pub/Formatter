@@ -51,7 +51,7 @@ class StylerFormatter(common.Module):
         transformers = ', transformers=' + text if text else ''
         cmd.extend(['--slave', '--no-restore', '--no-save', '-e', 'options(styler.colored_print.vertical=FALSE); ctx <- file("stdin"); out <- styler::style_text(readLines(ctx)' + transformers + '); close(ctx); out'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

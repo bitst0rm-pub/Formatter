@@ -36,7 +36,7 @@ class CmakeformatFormatter(common.Module):
 
         cmd.extend(['-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

@@ -37,7 +37,7 @@ class RubocopFormatter(common.Module):
         base = self.get_pathinfo()['base']
         cmd.extend(['--autocorrect', '--stdin', base if base else 'untitled', '--stderr'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

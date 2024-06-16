@@ -67,7 +67,7 @@ class ClangformatFormatter(common.Module):
 
         cmd.extend(['--assume-filename=dummy.' + syntax, '--'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

@@ -54,7 +54,7 @@ class OcamlformatFormatter(common.Module):
         p = self.get_pathinfo()['path']
         cmd.extend(['--name', p if p else 'dummy.ml', '-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

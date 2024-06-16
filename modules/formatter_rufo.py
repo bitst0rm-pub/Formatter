@@ -30,7 +30,7 @@ class RufoFormatter(common.Module):
 
         cmd.extend(['--simple-exit'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

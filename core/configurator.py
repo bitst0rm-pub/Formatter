@@ -12,7 +12,7 @@ from ..modules import formatter_map
 log = logging.getLogger(__name__)
 
 
-class NoIndent(object):
+class NoIndent:
     def __init__(self, value):
         self.value = value
 
@@ -21,22 +21,32 @@ class NoIndentEncoder(json.JSONEncoder):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.kwargs = dict(kwargs)
-        del self.kwargs['indent']
+        self.kwargs.pop('indent', None)
         self._replacement_map = {}
 
     def default(self, o):
         if isinstance(o, NoIndent):
             key = uuid.uuid4().hex
             self._replacement_map[key] = json.dumps(o.value, **self.kwargs)
-            return '@@%s@@' % (key,)
+            return '@@%s@@' % key
         else:
             return super().default(o)
 
     def encode(self, o):
         result = super().encode(o)
-        for k, v in iter(self._replacement_map.items()):
-            result = result.replace('"@@%s@@"' % (k,), v)
+        for k, v in self._replacement_map.items():
+            result = result.replace('"@@%s@@"' % k, v)
         return result
+
+    @classmethod
+    def decode(cls, s):
+        def object_hook(obj):
+            for key, value in obj.items():
+                if isinstance(value, str) and value.startswith('@@') and value.endswith('@@'):
+                    obj[key] = NoIndent(json.loads(value[2:-2]))
+            return obj
+
+        return json.loads(s, object_hook=object_hook)
 
 
 def strip_trailing(text):
@@ -397,11 +407,7 @@ def build_example_sublime_keymap(formatter_map):
     formatted_keymap = '[\n    ' + quick_options + auto_format_file + ',\n    '.join([json.dumps(item, cls=NoIndentEncoder, ensure_ascii=False) for item in sorted_beautifiers + sorted_minifiers + sorted_converters + sorted_graphics + sorted_custom]) + '\n]'
 
     comment = '''// This example is not ready to use.
-// End-users are free to remap any key combination, but keep in mind:
-// 1. Ctrl+Alt+<alphanum> should never be used in any Windows key bindings.
-// 2. Option+<alphanum> should never be used in any macOS key bindings.
-// In both cases, the user's ability to insert non-ASCII characters
-// would be compromised otherwise.
+// End-users are free to remap any key combination.
 //
 // Modifiers:
 // shift

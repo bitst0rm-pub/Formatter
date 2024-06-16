@@ -33,7 +33,7 @@ class ElmformatFormatter(common.Module):
 
         cmd.extend(['--yes','--stdin', '--'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

@@ -55,7 +55,7 @@ class D2Formatter(common.Module):
 
         cmd.extend(['-', self.get_output_image()])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

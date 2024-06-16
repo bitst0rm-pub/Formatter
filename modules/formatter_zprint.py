@@ -61,7 +61,7 @@ class ZprintFormatter(common.Module):
                 text = ''.join(text.splitlines())
                 cmd.extend([self.remove_extra_whitespaces(text)])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

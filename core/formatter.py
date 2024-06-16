@@ -13,10 +13,8 @@ class Formatter(common.Module):
 
     def _log_debug_info(self, method, syntax):
         file = self.view.file_name() or '(view)'
-        log.debug('Target: %s', file)
-        log.debug('Scope: %s', self.view.scope_name(self.region.begin()))
-        log.debug('Syntax: %s', syntax)
-        log.debug('UID: %s (method: %s)', self.uid, method)
+        log.debug('Syntax: %s | Scope: %s', syntax, self.view.scope_name(self.region.begin()).strip())
+        log.debug('UID: %s (method: %s) | Target: %s', self.uid, method, file)
 
     def is_success(self, result):
         if self.kwargs.get('type', None) == 'graphic' and result is not None:

@@ -72,7 +72,7 @@ class EslintdFormatter(common.Module):
         if not isv8:
             cmd = self.remove_deprecated_flag_and_next(cmd)
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

@@ -31,7 +31,7 @@ class StandardrbFormatter(common.Module):
         base = self.get_pathinfo()['base']
         cmd.extend(['--fix', '--stdin', base if base else 'untitled', '--stderr'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

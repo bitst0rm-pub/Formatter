@@ -32,7 +32,7 @@ class PlantumlFormatter(common.Module):
 
         cmd.extend(['-pipe', '-failfast2', '-tpng'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

@@ -48,7 +48,7 @@ class PrettytableFormatter(common.Module):
             with open(path, 'r', encoding='utf-8') as file:
                 data = file.read()
             json = sublime.decode_value(data)
-            log.debug('Current arguments: %s', json)
+            log.debug('Command: %s', json)
 
         style = json.get('style', None)
         separator = json.get('separator', None)

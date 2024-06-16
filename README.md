@@ -878,7 +878,7 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 
         # cmd.extend(['--output', self.get_output_image()]) # REQUIRED: only for special case of "type": "graphic"
 
-        log.debug('Current arguments: %s', cmd)             # REQUIRED: to debug the input command
+        log.debug('Command: %s', cmd)                       # REQUIRED: to debug the input command
         cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return
 
         return cmd

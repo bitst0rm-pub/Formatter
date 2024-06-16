@@ -33,7 +33,7 @@ class TerraformfmtFormatter(common.Module):
 
         cmd.extend(['-no-color', '-'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

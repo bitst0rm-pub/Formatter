@@ -45,7 +45,7 @@ class UncrustifyFormatter(common.Module):
 
         cmd.extend(['-l', language])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd

@@ -33,7 +33,7 @@ class GleamFormatter(common.Module):
 
         cmd.extend(['--stdin', '--'])
 
-        log.debug('Current arguments: %s', cmd)
+        log.debug('Command: %s', cmd)
         cmd = self.fix_cmd(cmd)
 
         return cmd
