@@ -615,7 +615,7 @@ class SingleFormat(common.Base):
             self.set_status_bar_text()
 
     def set_status_bar_text(self):
-        status_text = '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME, self.get_mode_description(short=True), self.success, self.failure)
+        status_text = '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME[0], self.get_mode_description(short=True), self.success, self.failure)
         self.view.set_status(common.STATUS_KEY, status_text)
 
     def open_console_on_failure(self):
@@ -1044,7 +1044,7 @@ class RecursiveFormat(common.Base):
 
     def generate_status_text(self):
         return '{}({}) [total:{}|ok:{}|ko:{}]'.format(
-            common.PACKAGE_NAME, self.CONTEXT['mode_description'],
+            common.PACKAGE_NAME[0], self.CONTEXT['mode_description'],
             self.CONTEXT['filelist_length'],
             self.CONTEXT['success_count'],
             self.CONTEXT['failure_count']
