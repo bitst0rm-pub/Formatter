@@ -12,8 +12,8 @@
         "command": "modules_info"
     },
     {
-        "caption": "Formatter: Open Config Folders",
-        "command": "open_config_folders"
+        "caption": "Formatter: Browser Configs",
+        "command": "browser_configs"
     },
     {
         "caption": "Formatter: Key Bindings",

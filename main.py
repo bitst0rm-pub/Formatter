@@ -170,7 +170,7 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand, common.Base):
             log.error('File does not exist: %s', self.FILE_PATH)
 
 
-class OpenConfigFoldersCommand(sublime_plugin.WindowCommand, common.Base):
+class BrowserConfigsCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
         seen = set()
 

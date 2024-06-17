@@ -1033,9 +1033,9 @@
                                 "command": "modules_info"
                             },
                             {
-                                "caption": "Open Config Folders",
-                                "mnemonic": "O",
-                                "command": "open_config_folders"
+                                "caption": "Browser Configs",
+                                "mnemonic": "B",
+                                "command": "browser_configs"
                             },
                             {
                                 "caption": "-"

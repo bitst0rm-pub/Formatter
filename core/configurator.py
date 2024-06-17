@@ -176,8 +176,8 @@ def build_main_sublime_menu(formatter_map):
                                     ('command', 'modules_info')
                                 ]),
                                 OrderedDict([
-                                    ('caption', 'Open Config Folders'),
-                                    ('command', 'open_config_folders')
+                                    ('caption', 'Browser Configs'),
+                                    ('command', 'browser_configs')
                                 ]),
                                 OrderedDict([
                                     ('caption', '-')
@@ -315,8 +315,8 @@ def build_formatter_sublime_commands(formatter_map):
             ('command', 'modules_info')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Open Config Folders'),
-            ('command', 'open_config_folders')
+            ('caption', 'Formatter: Browser Configs'),
+            ('command', 'browser_configs')
         ]),
         OrderedDict([
             ('caption', 'Formatter: Key Bindings'),
