@@ -12,7 +12,7 @@ class Formatter(common.Module):
         self.kwargs = kwargs
 
     def _log_debug_info(self, method, syntax):
-        file = self.view.file_name() or '(view)'
+        file = self.view.file_name() or 'view'
         log.debug('Syntax: %s | Scope: %s', syntax, self.view.scope_name(self.region.begin()).strip())
         log.debug('UID: %s (method: %s) | Target: %s', self.uid, method, file)
 

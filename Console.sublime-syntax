@@ -36,7 +36,7 @@ contexts:
         - match: '(Syntax|UID|method):\s*([^\s\(\)]+)'
           captures:
             2: string.console
-        - match: '(Mode|Scope):\s*(.+)'
+        - match: '(Mode|Scope|Target):\s*(.+)'
           captures:
             2: string.console
         - match: '(/[^/].+)'
