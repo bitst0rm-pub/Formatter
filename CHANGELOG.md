@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.4.13](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.13)] - 2024-06-17
+
+### 🚀 Features
+
+- [`2d0e202`](https://github.com/bitst0rm-pub/Formatter/commit/2d0e202f06d23172dc1e39a2c7933dd6ab2eec6b) Add `Changelog` command to References and Command Palette
+- [`fe73788`](https://github.com/bitst0rm-pub/Formatter/commit/fe73788fce44b9aca0928d6878e85960ee219de3) Add console color highlighting
+
+### 🐛 Bug Fixes
+
+- [`936ce36`](https://github.com/bitst0rm-pub/Formatter/commit/936ce36015d68dc8c273d455c34d284a762c0f56) *(eslint)* Add missing cmd check
+- [`d4cd316`](https://github.com/bitst0rm-pub/Formatter/commit/d4cd3168e9ba3bc3e9617091a329ce138538a7b1) Console syntax for Target
+
+### 📚 Documentation
+
+- [`0aca59a`](https://github.com/bitst0rm-pub/Formatter/commit/0aca59ace739fee9e27d135ccb8c2283b8623352) Add note to cloning to README.md
+
+### 🎨 Styling
+
+- [`59a0e8d`](https://github.com/bitst0rm-pub/Formatter/commit/59a0e8daedf8c1f16e555f2e8d8e0604ceb116c6) *(graphic)* Change phantom LAYOUT_BLOCK to LAYOUT_INLINE
+- [`a072211`](https://github.com/bitst0rm-pub/Formatter/commit/a072211b2f7ece2bab269c5e0c6895f4609dee4e) Shorten package name from `Formatter` to `F` on status bar
+
+### ⚙️ Miscellaneous Tasks
+
+- [`7c57023`](https://github.com/bitst0rm-pub/Formatter/commit/7c5702367c3fd7320cf6943271e127ce81d25fbf) *(git)* Add SYNTAXES field to modules summary
+- [`f8e431c`](https://github.com/bitst0rm-pub/Formatter/commit/f8e431c2a193687cabdf6e861feba4b2cd2a154e) Change menu item name from `Open Config Folders` to `Browser Configs`
+- [`0e6bbf4`](https://github.com/bitst0rm-pub/Formatter/commit/0e6bbf4a9298412f2fe1786c7d346d5ebec80d6c) Minor enhancements
+
 ## [[1.4.12](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.12)] - 2024-06-14
 
 ### 📚 Documentation

@@ -1,109 +1,109 @@
-#       UID                  NAME                 TYPE                 INFO                
-1       appleswiftformat     Apple Swift Format   beautifier           https://github.com/apple/swift-format
-2       asmfmt               ASMfmt               beautifier           https://github.com/klauspost/asmfmt
-3       astyle               Artistic Style       beautifier           https://sourceforge.net/projects/astyle
-4       autopep8             Autopep8             beautifier           https://github.com/hhatto/autopep8
-5       beautysh             Beautysh             beautifier           https://github.com/lovesegfault/beautysh
-6       bibtextidy           BibTeX-tidy          beautifier           https://github.com/FlamingTempura/bibtex-tidy
-7       biome                Biome                beautifier           https://github.com/biomejs/biome
-8       black                Black                beautifier           https://github.com/psf/black
-9       cabalfmt             Cabal-fmt            beautifier           https://github.com/phadej/cabal-fmt
-10      caddyfmt             Caddy-fmt            beautifier           https://github.com/caddyserver/caddy
-11      clangformat          ClangFormat          beautifier           https://clang.llvm.org/docs/ClangFormat.html
-12      cljfmt               CLJfmt               beautifier           https://github.com/weavejester/cljfmt
-13      cmakeformat          CMake-format         beautifier           https://github.com/cheshirekow/cmake_format
-14      crystal              Crystal              beautifier           https://github.com/crystal-lang/crystal
-15      csscomb              CSScomb              beautifier           https://github.com/csscomb/csscomb.js
-16      d2fmt                D2-fmt               beautifier           https://github.com/terrastruct/d2
-17      dartformat           Dart Format          beautifier           https://dart.dev/tools/dart-format
-18      deno                 Deno                 beautifier           https://github.com/denoland/deno
-19      dhallformat          Dhall format         beautifier           https://github.com/dhall-lang/dhall-haskell
-20      docformatter         Docformatter         beautifier           https://github.com/PyCQA/docformatter
-21      dockfmt              Dockfmt              beautifier           https://github.com/jessfraz/dockfmt
-22      dprint               Dprint               beautifier           https://github.com/dprint/dprint
-23      efmt                 Erlang efmt          beautifier           https://github.com/sile/efmt
-24      elixirmix            Elixir mix           beautifier           https://github.com/elixir-lang/elixir
-25      elmformat            Elm-format           beautifier           https://github.com/avh4/elm-format
-26      erlfmt               Erlang erlfmt        beautifier           https://github.com/WhatsApp/erlfmt
-27      eslint               ESLint               beautifier           https://github.com/eslint/eslint
-28      eslintd              ESLintd              beautifier           https://github.com/mantoni/eslint_d.js
-29      floskell             Floskell             beautifier           https://github.com/ennocramer/floskell
-30      formatr              FormatR              beautifier           https://github.com/yihui/formatR
-31      fourmolu             Fourmolu             beautifier           https://github.com/fourmolu/fourmolu
-32      fprettify            Fortran fprettify    beautifier           https://github.com/pseewald/fprettify
-33      gleam                Gleam                beautifier           https://github.com/gleam-lang/gleam
-34      gofmt                Gofmt                beautifier           https://pkg.go.dev/cmd/gofmt
-35      gofumpt              Gofumpt              beautifier           https://github.com/mvdan/gofumpt
-36      goimports            Goimports            beautifier           https://pkg.go.dev/golang.org/x/tools/cmd/goimports
-37      googlejavaformat     Google Java Format   beautifier           https://github.com/google/google-java-format
-38      hclfmt               HCLfmt               beautifier           https://github.com/hashicorp/hcl
-39      hindent              Hindent              beautifier           https://github.com/mihaimaruseac/hindent
-40      htmltidy             HTML Tidy            beautifier           https://github.com/htacg/tidy-html5
-41      isort                Isort                beautifier           https://github.com/PyCQA/isort
-42      jsbeautifier         JS Beautifier        beautifier           https://github.com/beautify-web/js-beautify
-43      jsonmax              JSON                 beautifier           build-in            
-44      juliaformatter       JuliaFormatter       beautifier           https://github.com/domluna/JuliaFormatter.jl
-45      ktlint               Ktlint               beautifier           https://github.com/pinterest/ktlint
-46      latexindent          LaTeXindent          beautifier           https://github.com/cmhughes/latexindent.pl
-47      luaformatter         LuaFormatter         beautifier           https://github.com/Koihik/LuaFormatter
-48      nasmfmt              NASMfmt              beautifier           https://github.com/yamnikov-oleg/nasmfmt
-49      nginxfmt             NGINXfmt             beautifier           https://github.com/slomkowski/nginx-config-formatter
-50      ocamlformat          OCamlformat          beautifier           https://github.com/ocaml-ppx/ocamlformat
-51      ocpindent            OCP-indent           beautifier           https://github.com/OCamlPro/ocp-indent
-52      ormolu               Ormolu               beautifier           https://github.com/tweag/ormolu
-53      perltidy             Perltidy             beautifier           https://github.com/perltidy/perltidy
-54      pgformat             PgFormatter          beautifier           https://github.com/darold/pgFormatter
-55      phpcbf               PHP CodeSniffer      beautifier           https://github.com/squizlabs/PHP_CodeSniffer
-56      phpcsfixer           PHP CS Fixer         beautifier           https://github.com/FriendsOfPHP/PHP-CS-Fixer
-57      plantumlascii        Plantuml ASCII       beautifier           https://github.com/plantuml/plantuml
-58      prettier             Prettier             beautifier           https://github.com/prettier/prettier
-59      prettierd            Prettierd            beautifier           https://github.com/fsouza/prettierd
-60      prettydiffmax        Pretty Diff          beautifier           https://github.com/prettydiff/prettydiff
-61      prettytable          PrettyTable          beautifier           https://github.com/jazzband/prettytable
-62      pyment               Pyment               beautifier           https://github.com/dadadel/pyment
-63      racofmt              Racofmt              beautifier           https://github.com/sorawee/fmt
-64      rubocop              RuboCop              beautifier           https://github.com/rubocop-hq/rubocop
-65      rubyfmt              Rubyfmt              beautifier           https://github.com/fables-tales/rubyfmt
-66      ruff                 Ruff                 beautifier           https://github.com/astral-sh/ruff
-67      rufo                 Rufo                 beautifier           https://github.com/ruby-formatter/rufo
-68      rustfmt              Rustfmt              beautifier           https://github.com/rust-lang/rustfmt
-69      scalafmt             Scalafmt             beautifier           https://github.com/scalameta/scalafmt
-70      scalariform          Scalariform          beautifier           https://github.com/scala-ide/scalariform
-71      semistandardjs       Semistandard JS      beautifier           https://github.com/standard/semistandard
-72      shellcheck           ShellCheck           beautifier           https://github.com/koalaman/shellcheck
-73      shfmt                Shfmt                beautifier           https://github.com/mvdan/sh
-74      sqlformatter         SQL Formatter        beautifier           https://github.com/sql-formatter-org/sql-formatter
-75      sqlparse             SQLparse             beautifier           https://github.com/andialbrecht/sqlparse
-76      standardjs           Standard JS          beautifier           https://github.com/standard/standard
-77      standardrb           Standard RB          beautifier           https://github.com/standardrb/standard
-78      standardxjs          Standardx JS         beautifier           https://github.com/standard/standardx
-79      stylefmt             Stylefmt             beautifier           https://github.com/masaakim/stylefmt
-80      stylelint            Stylelint            beautifier           https://github.com/stylelint/stylelint
-81      styler               Styler               beautifier           https://github.com/r-lib/styler
-82      stylishhaskell       Stylish Haskell      beautifier           https://github.com/haskell/stylish-haskell
-83      stylua               StyLua               beautifier           https://github.com/JohnnyMorganz/StyLua
-84      svgomax              SVGO                 beautifier           https://github.com/svg/svgo
-85      swiftformat          SwiftFormat          beautifier           https://github.com/nicklockwood/SwiftFormat
-86      taplo                Taplo                beautifier           https://github.com/tamasfe/taplo
-87      terraformfmt         Terraform fmt        beautifier           https://developer.hashicorp.com/terraform/cli/commands/fmt
-88      topiary              Topiary              beautifier           https://github.com/tweag/topiary
-89      tsfmt                TSfmt                beautifier           https://github.com/vvakame/typescript-formatter
-90      tsstandard           TS Standard          beautifier           https://github.com/standard/ts-standard
-91      uncrustify           Uncrustify           beautifier           https://github.com/uncrustify/uncrustify
-92      yapf                 YAPF                 beautifier           https://github.com/google/yapf
-93      zigfmt               Zigfmt               beautifier           https://github.com/ziglang/zig
-94      zprint               Zprint               beautifier           https://github.com/kkinnear/zprint
-95      d2                   D2                   graphic              https://github.com/terrastruct/d2
-96      drawio               Drawio               graphic              https://github.com/jgraph/drawio-desktop
-97      graphviz             Graphviz             graphic              https://gitlab.com/graphviz/graphviz
-98      mermaid              Mermaid              graphic              https://github.com/mermaid-js/mermaid-cli
-99      plantuml             Plantuml             graphic              https://github.com/plantuml/plantuml
-100     cleancss             Clean CSS            minifier             https://github.com/jakubpawlowicz/clean-css-cli
-101     htmlminifier         HTMLMinifier         minifier             https://github.com/kangax/html-minifier
-102     jsonmin              JSON                 minifier             build-in            
-103     prettydiffmin        Pretty Diff          minifier             https://github.com/prettydiff/prettydiff
-104     pythonminifier       Python Minifier      minifier             https://github.com/dflook/python-minifier
-105     shfmtmin             Shfmt                minifier             https://github.com/mvdan/sh
-106     sqlmin               SQLMin               minifier             https://github.com/bitst0rm
-107     svgomin              SVGO                 minifier             https://github.com/svg/svgo
-108     terser               Terser               minifier             https://github.com/terser-js/terser
+#       UID                  NAME                   TYPE           INFO                                                           SYNTAXES                                                                                                                             
+1       appleswiftformat     Apple Swift Format     beautifier     https://github.com/apple/swift-format                          ['swift']                                                                                                                            
+2       asmfmt               ASMfmt                 beautifier     https://github.com/klauspost/asmfmt                            ['asm']                                                                                                                              
+3       astyle               Artistic Style         beautifier     https://sourceforge.net/projects/astyle                        ['c', 'c++', 'cs', 'objc', 'objc++', 'java', 'js']                                                                                   
+4       autopep8             Autopep8               beautifier     https://github.com/hhatto/autopep8                             ['python']                                                                                                                           
+5       beautysh             Beautysh               beautifier     https://github.com/lovesegfault/beautysh                       ['bash']                                                                                                                             
+6       bibtextidy           BibTeX-tidy            beautifier     https://github.com/FlamingTempura/bibtex-tidy                  ['bibtex']                                                                                                                           
+7       biome                Biome                  beautifier     https://github.com/biomejs/biome                               ['js', 'jsx', 'ts', 'tsx', 'json']                                                                                                   
+8       black                Black                  beautifier     https://github.com/psf/black                                   ['python']                                                                                                                           
+9       cabalfmt             Cabal-fmt              beautifier     https://github.com/phadej/cabal-fmt                            ['cabal']                                                                                                                            
+10      caddyfmt             Caddy-fmt              beautifier     https://github.com/caddyserver/caddy                           ['Caddyfile']                                                                                                                        
+11      clangformat          ClangFormat            beautifier     https://clang.llvm.org/docs/ClangFormat.html                   ['c', 'cs', 'c++', 'objc', 'objc++', 'js', 'tsx', 'jsx', 'json', 'java', 'proto', 'protodevel', 'td', 'sv', 'svh', 'v', 'vh', 'glsl']
+12      cljfmt               CLJfmt                 beautifier     https://github.com/weavejester/cljfmt                          ['clojure']                                                                                                                          
+13      cmakeformat          CMake-format           beautifier     https://github.com/cheshirekow/cmake_format                    ['cmake']                                                                                                                            
+14      crystal              Crystal                beautifier     https://github.com/crystal-lang/crystal                        ['crystal']                                                                                                                          
+15      csscomb              CSScomb                beautifier     https://github.com/csscomb/csscomb.js                          ['css', 'scss', 'sass', 'less']                                                                                                      
+16      d2fmt                D2-fmt                 beautifier     https://github.com/terrastruct/d2                              ['d2']                                                                                                                               
+17      dartformat           Dart Format            beautifier     https://dart.dev/tools/dart-format                             ['dart']                                                                                                                             
+18      deno                 Deno                   beautifier     https://github.com/denoland/deno                               ['js', 'jsx', 'ts', 'tsx', 'json', 'markdown', 'ipynb']                                                                              
+19      dhallformat          Dhall format           beautifier     https://github.com/dhall-lang/dhall-haskell                    ['dhall']                                                                                                                            
+20      docformatter         Docformatter           beautifier     https://github.com/PyCQA/docformatter                          ['python']                                                                                                                           
+21      dockfmt              Dockfmt                beautifier     https://github.com/jessfraz/dockfmt                            ['dockerfile']                                                                                                                       
+22      dprint               Dprint                 beautifier     https://github.com/dprint/dprint                               ['js', 'jsx', 'ts', 'tsx', 'json', 'markdown', 'toml']                                                                               
+23      efmt                 Erlang efmt            beautifier     https://github.com/sile/efmt                                   ['erlang']                                                                                                                           
+24      elixirmix            Elixir mix             beautifier     https://github.com/elixir-lang/elixir                          ['elixir']                                                                                                                           
+25      elmformat            Elm-format             beautifier     https://github.com/avh4/elm-format                             ['elm']                                                                                                                              
+26      erlfmt               Erlang erlfmt          beautifier     https://github.com/WhatsApp/erlfmt                             ['erlang']                                                                                                                           
+27      eslint               ESLint                 beautifier     https://github.com/eslint/eslint                               ['js']                                                                                                                               
+28      eslintd              ESLintd                beautifier     https://github.com/mantoni/eslint_d.js                         ['js']                                                                                                                               
+29      floskell             Floskell               beautifier     https://github.com/ennocramer/floskell                         ['haskell']                                                                                                                          
+30      formatr              FormatR                beautifier     https://github.com/yihui/formatR                               ['r']                                                                                                                                
+31      fourmolu             Fourmolu               beautifier     https://github.com/fourmolu/fourmolu                           ['haskell']                                                                                                                          
+32      fprettify            Fortran fprettify      beautifier     https://github.com/pseewald/fprettify                          ['fortran']                                                                                                                          
+33      gleam                Gleam                  beautifier     https://github.com/gleam-lang/gleam                            ['gleam']                                                                                                                            
+34      gofmt                Gofmt                  beautifier     https://pkg.go.dev/cmd/gofmt                                   ['go']                                                                                                                               
+35      gofumpt              Gofumpt                beautifier     https://github.com/mvdan/gofumpt                               ['go']                                                                                                                               
+36      goimports            Goimports              beautifier     https://pkg.go.dev/golang.org/x/tools/cmd/goimports            ['go']                                                                                                                               
+37      googlejavaformat     Google Java Format     beautifier     https://github.com/google/google-java-format                   ['java']                                                                                                                             
+38      hclfmt               HCLfmt                 beautifier     https://github.com/hashicorp/hcl                               ['hcl']                                                                                                                              
+39      hindent              Hindent                beautifier     https://github.com/mihaimaruseac/hindent                       ['haskell']                                                                                                                          
+40      htmltidy             HTML Tidy              beautifier     https://github.com/htacg/tidy-html5                            ['html', 'xml']                                                                                                                      
+41      isort                Isort                  beautifier     https://github.com/PyCQA/isort                                 ['python']                                                                                                                           
+42      jsbeautifier         JS Beautifier          beautifier     https://github.com/beautify-web/js-beautify                    ['js', 'css', 'html', 'json', 'tsx', 'vue']                                                                                          
+43      jsonmax              JSON                   beautifier     build-in                                                       ['json']                                                                                                                             
+44      juliaformatter       JuliaFormatter         beautifier     https://github.com/domluna/JuliaFormatter.jl                   ['julia']                                                                                                                            
+45      ktlint               Ktlint                 beautifier     https://github.com/pinterest/ktlint                            ['kotlin']                                                                                                                           
+46      latexindent          LaTeXindent            beautifier     https://github.com/cmhughes/latexindent.pl                     ['tex', 'latex']                                                                                                                     
+47      luaformatter         LuaFormatter           beautifier     https://github.com/Koihik/LuaFormatter                         ['lua']                                                                                                                              
+48      nasmfmt              NASMfmt                beautifier     https://github.com/yamnikov-oleg/nasmfmt                       ['asm']                                                                                                                              
+49      nginxfmt             NGINXfmt               beautifier     https://github.com/slomkowski/nginx-config-formatter           ['nginx']                                                                                                                            
+50      ocamlformat          OCamlformat            beautifier     https://github.com/ocaml-ppx/ocamlformat                       ['ocaml', 'ocamlyacc', 'ocamllex']                                                                                                   
+51      ocpindent            OCP-indent             beautifier     https://github.com/OCamlPro/ocp-indent                         ['ocaml', 'ocamlyacc', 'ocamllex']                                                                                                   
+52      ormolu               Ormolu                 beautifier     https://github.com/tweag/ormolu                                ['haskell']                                                                                                                          
+53      perltidy             Perltidy               beautifier     https://github.com/perltidy/perltidy                           ['perl']                                                                                                                             
+54      pgformat             PgFormatter            beautifier     https://github.com/darold/pgFormatter                          ['sql']                                                                                                                              
+55      phpcbf               PHP CodeSniffer        beautifier     https://github.com/squizlabs/PHP_CodeSniffer                   ['php']                                                                                                                              
+56      phpcsfixer           PHP CS Fixer           beautifier     https://github.com/FriendsOfPHP/PHP-CS-Fixer                   ['php']                                                                                                                              
+57      plantumlascii        Plantuml ASCII         beautifier     https://github.com/plantuml/plantuml                           ['plantuml']                                                                                                                         
+58      prettier             Prettier               beautifier     https://github.com/prettier/prettier                           ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'ts', 'tsx', 'vue', 'yaml']                              
+59      prettierd            Prettierd              beautifier     https://github.com/fsouza/prettierd                            ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'ts', 'tsx', 'vue', 'yaml']                              
+60      prettydiffmax        Pretty Diff            beautifier     https://github.com/prettydiff/prettydiff                       ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx']                                                            
+61      prettytable          PrettyTable            beautifier     https://github.com/jazzband/prettytable                        ['csv', 'text']                                                                                                                      
+62      pyment               Pyment                 beautifier     https://github.com/dadadel/pyment                              ['python']                                                                                                                           
+63      racofmt              Racofmt                beautifier     https://github.com/sorawee/fmt                                 ['racket']                                                                                                                           
+64      rubocop              RuboCop                beautifier     https://github.com/rubocop-hq/rubocop                          ['ruby']                                                                                                                             
+65      rubyfmt              Rubyfmt                beautifier     https://github.com/fables-tales/rubyfmt                        ['ruby']                                                                                                                             
+66      ruff                 Ruff                   beautifier     https://github.com/astral-sh/ruff                              ['python']                                                                                                                           
+67      rufo                 Rufo                   beautifier     https://github.com/ruby-formatter/rufo                         ['ruby']                                                                                                                             
+68      rustfmt              Rustfmt                beautifier     https://github.com/rust-lang/rustfmt                           ['rust']                                                                                                                             
+69      scalafmt             Scalafmt               beautifier     https://github.com/scalameta/scalafmt                          ['scala']                                                                                                                            
+70      scalariform          Scalariform            beautifier     https://github.com/scala-ide/scalariform                       ['scala']                                                                                                                            
+71      semistandardjs       Semistandard JS        beautifier     https://github.com/standard/semistandard                       ['js']                                                                                                                               
+72      shellcheck           ShellCheck             beautifier     https://github.com/koalaman/shellcheck                         ['bash']                                                                                                                             
+73      shfmt                Shfmt                  beautifier     https://github.com/mvdan/sh                                    ['bash']                                                                                                                             
+74      sqlformatter         SQL Formatter          beautifier     https://github.com/sql-formatter-org/sql-formatter             ['sql']                                                                                                                              
+75      sqlparse             SQLparse               beautifier     https://github.com/andialbrecht/sqlparse                       ['sql']                                                                                                                              
+76      standardjs           Standard JS            beautifier     https://github.com/standard/standard                           ['js']                                                                                                                               
+77      standardrb           Standard RB            beautifier     https://github.com/standardrb/standard                         ['ruby']                                                                                                                             
+78      standardxjs          Standardx JS           beautifier     https://github.com/standard/standardx                          ['js']                                                                                                                               
+79      stylefmt             Stylefmt               beautifier     https://github.com/masaakim/stylefmt                           ['css', 'scss', 'sass', 'less']                                                                                                      
+80      stylelint            Stylelint              beautifier     https://github.com/stylelint/stylelint                         ['css', 'scss', 'sass', 'less', 'sss', 'sugarss']                                                                                    
+81      styler               Styler                 beautifier     https://github.com/r-lib/styler                                ['r']                                                                                                                                
+82      stylishhaskell       Stylish Haskell        beautifier     https://github.com/haskell/stylish-haskell                     ['haskell']                                                                                                                          
+83      stylua               StyLua                 beautifier     https://github.com/JohnnyMorganz/StyLua                        ['lua']                                                                                                                              
+84      svgomax              SVGO                   beautifier     https://github.com/svg/svgo                                    ['svg']                                                                                                                              
+85      swiftformat          SwiftFormat            beautifier     https://github.com/nicklockwood/SwiftFormat                    ['swift']                                                                                                                            
+86      taplo                Taplo                  beautifier     https://github.com/tamasfe/taplo                               ['toml']                                                                                                                             
+87      terraformfmt         Terraform fmt          beautifier     https://developer.hashicorp.com/terraform/cli/commands/fmt     ['terraform']                                                                                                                        
+88      topiary              Topiary                beautifier     https://github.com/tweag/topiary                               ['json', 'nickel', 'ocaml', 'ocamllex', 'toml']                                                                                      
+89      tsfmt                TSfmt                  beautifier     https://github.com/vvakame/typescript-formatter                ['ts', 'tsx']                                                                                                                        
+90      tsstandard           TS Standard            beautifier     https://github.com/standard/ts-standard                        ['ts']                                                                                                                               
+91      uncrustify           Uncrustify             beautifier     https://github.com/uncrustify/uncrustify                       ['c', 'c++', 'cs', 'd', 'es', 'objc', 'objc++', 'java', 'pawn', 'vala']                                                              
+92      yapf                 YAPF                   beautifier     https://github.com/google/yapf                                 ['python']                                                                                                                           
+93      zigfmt               Zigfmt                 beautifier     https://github.com/ziglang/zig                                 ['zig']                                                                                                                              
+94      zprint               Zprint                 beautifier     https://github.com/kkinnear/zprint                             ['clojure']                                                                                                                          
+95      d2                   D2                     graphic        https://github.com/terrastruct/d2                              ['d2']                                                                                                                               
+96      drawio               Drawio                 graphic        https://github.com/jgraph/drawio-desktop                       ['drawio']                                                                                                                           
+97      graphviz             Graphviz               graphic        https://gitlab.com/graphviz/graphviz                           ['graphviz']                                                                                                                         
+98      mermaid              Mermaid                graphic        https://github.com/mermaid-js/mermaid-cli                      ['mermaid']                                                                                                                          
+99      plantuml             Plantuml               graphic        https://github.com/plantuml/plantuml                           ['plantuml']                                                                                                                         
+100     cleancss             Clean CSS              minifier       https://github.com/jakubpawlowicz/clean-css-cli                ['css', 'scss', 'sass', 'less']                                                                                                      
+101     htmlminifier         HTMLMinifier           minifier       https://github.com/kangax/html-minifier                        ['html', 'xml']                                                                                                                      
+102     jsonmin              JSON                   minifier       build-in                                                       ['json']                                                                                                                             
+103     prettydiffmin        Pretty Diff            minifier       https://github.com/prettydiff/prettydiff                       ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx']                                                            
+104     pythonminifier       Python Minifier        minifier       https://github.com/dflook/python-minifier                      ['python']                                                                                                                           
+105     shfmtmin             Shfmt                  minifier       https://github.com/mvdan/sh                                    ['bash']                                                                                                                             
+106     sqlmin               SQLMin                 minifier       https://github.com/bitst0rm                                    ['sql']                                                                                                                              
+107     svgomin              SVGO                   minifier       https://github.com/svg/svgo                                    ['svg']                                                                                                                              
+108     terser               Terser                 minifier       https://github.com/terser-js/terser                            ['js']                                                                                                                               
