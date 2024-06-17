@@ -2,6 +2,11 @@
 
 Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
+Update:
+
+- Cloning this repo for *contribution* should be done outside the ST context, as Formatter will automatically remove its `.git` folder to prevent conflicts with some sort of ST4 built-in feature.
+
+
 **Key features:**
 
 - Supports more than 70 major programming languages.
@@ -179,7 +184,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
 - **Using [Package Control](https://packagecontrol.io/packages/Formatter):** run `Package Control: Install Package` and select `Formatter`
 - **_or_** **Download:** the latest source from [GitHub](https://github.com/bitst0rm-pub/Formatter) to your sublime `Packages` directory and rename it to `Formatter`
-- Cloning for use is okey, but cloning for contributions like pull requests, it's important to clone outside of `/Sublime Text/Packages/` as Formatter will auto delete its `.git` folder to prevent conflict in ST4.
+- Cloning for use is okey, but cloning for contributions like pull requests, it's important to clone outside the ST context as Formatter will auto delete its `.git` folder to prevent conflict in ST4.
 
 The `Packages` directory is located in:
 
