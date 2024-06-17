@@ -29,6 +29,9 @@ class EslintdFormatter(common.Module):
 
     def compat(self):
         cmd = self.get_iprexe_cmd(runtime_type='node')
+        if not cmd:
+            return None, None
+
         _, version, _ = self.exec_cmd(cmd + ['--version'])
 
         version = version.strip().split(' ')[0]
