@@ -499,6 +499,9 @@ class Module(object):
         return {'auto_format_config': auto_format} if auto_format else {}
 
     def _traverse_find_config_dotfile(self):
+        if not self.dotfiles:
+            return None
+
         parent_folders = self._get_active_view_parent_folders()
         candidate_paths = []
 

@@ -30,7 +30,7 @@ Update:
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
   - Modules: Integration of your own modules. _see_ [Development](#development)
 - Zero dependencies for installation.
-- Open source and works offline.
+- Open source and works offline (security reason).
 
 
 **Limitations:**
@@ -65,6 +65,10 @@ _Formatter in action: Text-to-Image..._
   - [Usage](#usage)
     - [The Quick Options](#the-quick-options)
   - [Development: Creating Your Own Modules](#development)
+    1. [Prerequisite](#1-prerequisite)
+    2. [Creating a module](#2-creating-a-module)
+    3. [Integrating modules](#3-integrating-modules)
+    4. [API](#4-api)
   - [License](#license)
 
 
@@ -251,8 +255,8 @@ _Formatter.sublime-settings_
     // By default, whitespace is not included in the character count.
     "show_words_count": {
         "enable": true,
-        "ignore_whitespace_char": true,
-        "use_short_label": false
+        "use_short_label": false,
+        "ignore_whitespace_char": true
     },
 
     // Remember and restore cursor position, selections and bookmarks
@@ -935,9 +939,9 @@ _Formatter.sublime-settings_
     },
 ```
 
-### 4. APIs:
+### 4. API:
 
-The entire set of Formatter APIs can be found in the file: `core > common.py`<br/>
+The entire set of Formatter API can be found in the file: `core > common.py`<br/>
 Responsible for handling plugin modules is the class: `class Module(object)`:
 
 - Essentially for the `def get_cmd(self)` function:
