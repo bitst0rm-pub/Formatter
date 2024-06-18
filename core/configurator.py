@@ -529,7 +529,8 @@ def build_formatter_sublime_settings(formatter_map):
     // By default, whitespace is not included in the character count.'''),
             ('show_words_count', OrderedDict([
                 ('enable', True),
-                ('ignore_whitespace_char', True)
+                ('ignore_whitespace_char', True),
+                ('use_short_label', False)
             ])),
             ('__COMMENT__remember_session', '''
     // Remember and restore cursor position, selections and bookmarks

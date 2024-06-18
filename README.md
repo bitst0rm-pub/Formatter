@@ -251,7 +251,8 @@ _Formatter.sublime-settings_
     // By default, whitespace is not included in the character count.
     "show_words_count": {
         "enable": true,
-        "ignore_whitespace_char": true
+        "ignore_whitespace_char": true,
+        "use_short_label": false
     },
 
     // Remember and restore cursor position, selections and bookmarks

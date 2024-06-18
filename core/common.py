@@ -794,7 +794,8 @@ class Base(Module):
                 'show_statusbar': settings.get('show_statusbar', True),
                 'show_words_count': {
                     'enable': self.query(settings, True, 'show_words_count', 'enable'),
-                    'ignore_whitespace_char': self.query(settings, True, 'show_words_count', 'ignore_whitespace_char')
+                    'ignore_whitespace_char': self.query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
+                    'use_short_label': self.query(settings, False, 'show_words_count', 'use_short_label')
                 },
                 'remember_session': settings.get('remember_session', True),
                 'layout': {
