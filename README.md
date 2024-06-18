@@ -4,7 +4,7 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
 
 Update:
 
-- Cloning this repo for *contribution* should be done outside the ST context, as Formatter will automatically remove its `.git` folder to prevent conflicts with some sort of ST4 built-in feature.
+- Cloning this repo for *contribution* should be done outside the ST context, as Formatter will automatically remove its `.git` folder to prevent conflicts with certain built-in features of ST4.
 
 
 **Key features:**
@@ -475,13 +475,13 @@ _Formatter.sublime-settings_
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.
             // Alternatively, you can set the basename as the interpreter name to search on
-            // PATH, similar to how it is done with the "executable_path" option.
+            // PATH or local, similar to how it is done with the "executable_path" option.
             "interpreter_path": ["${HOME}/example/path/to\\$my/java.exe"],
 
             // Path to the third-party plugin executable to process formatting.
             // This option can be either a string or a list of executable paths.
             // - If this option is omitted or set to null, then the global executable
-            //   on PATH will be used, if automatically found.
+            //   on PATH will be used, OR the local executable if automatically found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
             //   Basename can be with or without dot.extension as both variants are the same.

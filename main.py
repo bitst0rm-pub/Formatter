@@ -97,7 +97,7 @@ def plugin_loaded():
 
 class VersionInfoCommand(sublime_plugin.WindowCommand):
     def run(self):
-        sublime.message_dialog(common.PACKAGE_NAME + '\nVersion: ' + __version__)
+        sublime.message_dialog('🧜‍♀️ ' + common.PACKAGE_NAME + '\nVersion: ' + __version__)
 
 
 class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):

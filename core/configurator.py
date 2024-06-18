@@ -755,13 +755,13 @@ def build_formatter_sublime_settings(formatter_map):
             // Formatter is able to detect and automatically set them for you.
             // However, if you do need to use a specific interpreter, you can provide the path.
             // Alternatively, you can set the basename as the interpreter name to search on
-            // PATH, similar to how it is done with the "executable_path" option.'''),
+            // PATH or local, similar to how it is done with the "executable_path" option.'''),
                     ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
                     ('__COMMENT__executable_path', '''
             // Path to the third-party plugin executable to process formatting.
             // This option can be either a string or a list of executable paths.
             // - If this option is omitted or set to null, then the global executable
-            //   on PATH will be used, if automatically found.
+            //   on PATH will be used, OR the local executable if automatically found.
             // - If this option is exactly the basename, then it will be used as the
             //   executable name and searched for on the PATH.
             //   Basename can be with or without dot.extension as both variants are the same.
