@@ -39,7 +39,8 @@ contexts:
         - match: '(Mode|Scope|Target):\s*(.+)'
           captures:
             2: string.console
-        - match: '(/[^/].+)'
+        # Matches paths on Windows, macOS, and Linux
+        - match: '([a-zA-Z]:\\[^*|"<>?\n\r]*|\/[^*|"<>?\n\r]*)'
           scope: string.path.console
         - match: '\n'
           pop: true
@@ -48,6 +49,10 @@ contexts:
       push:
         # Match numbers, excluding those preceded or followed by '%'
         - match: '(?<!%)\b\d+\b(?!%)'
+          captures:
+            0: constant.character.escape
+        # Matches a sequence of caret error hint symbols
+        - match: '([\^])*'
           captures:
             0: constant.character.escape
         - match: '^(={87})$'
