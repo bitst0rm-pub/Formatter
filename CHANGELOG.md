@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.4.14](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.14)] - 2024-06-18
+
+### 🚀 Features
+
+- [`7400461`](https://github.com/bitst0rm-pub/Formatter/commit/74004616750999633888f54c6acfc9f6593def62) Add a new option `"use_short_label"` to `"show_words_count"`
+
+### 🎨 Styling
+
+- [`b2af96c`](https://github.com/bitst0rm-pub/Formatter/commit/b2af96ccfe9ec05c7eca66492612a59569ecac06) *(console)* Add rules to match path on Windows and the caret error hint symbol
+
+### ⚙️ Miscellaneous Tasks
+
+- [`7ef6149`](https://github.com/bitst0rm-pub/Formatter/commit/7ef6149fb67ae78fd3822218152ef8ba9b2b4f16) *(doc)* Update
+
 ## [[1.4.13](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.13)] - 2024-06-17
 
 ### 🚀 Features
