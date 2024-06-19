@@ -767,8 +767,8 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["erlang"],
-            "executable_path": ["/path/to/bin/efmt (standalone bin) or /path/to/rebar3"]
-            /* opinionated, no config */
+            "executable_path": ["/path/to/bin/efmt (standalone bin)"]
+            /* opinionated, no config. no rebar3 upstream support, use efmt standalone instead. requires efmt on PATH if omit interpreter_path */
         },
         "elixirmix": {
             "info": "https://github.com/elixir-lang/elixir",
