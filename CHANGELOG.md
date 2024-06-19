@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.4.15](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.15)] - 2024-06-19
+
+### 🐛 Bug Fixes
+
+- [`60cdc50`](https://github.com/bitst0rm-pub/Formatter/commit/60cdc5045ba8eeb62cd7f527058c66fb93152139) *(efmt)* Remove rebar3-flavored efmt as upstream is not supported (ref #55) Thanks @verbit
+
+### ⚙️ Miscellaneous Tasks
+
+- [`0abead9`](https://github.com/bitst0rm-pub/Formatter/commit/0abead98556101aa79335f3dc1e2d2faf8df4046) *(console)* Add more rules to match error signs
+
 ## [[1.4.14](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.14)] - 2024-06-18
 
 ### 🚀 Features
