@@ -7,7 +7,7 @@ scope: source.console
 contexts:
   main:
     - match: '^(▋)'
-      scope: constant.character.escape
+      scope: constant.character.escape.console
       push:
         - match: '\[([^\]]+)\]\(([^#]+)#L(\d+)\):'
           captures:
@@ -19,11 +19,11 @@ contexts:
         - match: '\[DEBUG\]'
           scope: support.type.debug.console
         - match: '\[ERROR\]'
-          scope: constant.character.escape
+          scope: constant.character.escape.console
         - match: '\[WARNING\]'
-          scope: constant.character.escape
+          scope: constant.character.escape.console
         - match: '\[STATUS\]'
-          scope: constant.character.escape
+          scope: constant.character.escape.console
         - match: 'Command:\s*\['
           push:
             - match: '\]'
@@ -39,24 +39,25 @@ contexts:
         - match: '(Mode|Scope|Target):\s*(.+)'
           captures:
             2: string.console
-        # Matches paths on Windows, macOS, and Linux
+        # Matches paths on Windows, MacOS, and Linux
         - match: '([a-zA-Z]:\\[^*|"<>?\n\r]*|\/[^*|"<>?\n\r]*)'
           scope: string.path.console
         - match: '\n'
           pop: true
     - match: '^(={87})$'
-      scope: constant.character.escape
+      scope: constant.character.escape.console
       push:
         # Match numbers, excluding those preceded or followed by '%'
         - match: '(?<!%)\b\d+\b(?!%)'
-          captures:
-            0: constant.character.escape
-        # Matches a sequence of caret error hint symbols
-        - match: '([\^])*'
-          captures:
-            0: constant.character.escape
+          scope: constant.character.escape.console
+        # Matches a sequence of ^^^ and ~~~ and ××× signs
+        - match: '[\^~×]+'
+          scope: constant.character.escape.console
+        # Matches a sequence of !!! and >>> signs
+        - match: '[\!>]+'
+          scope: keyword.console
         - match: '^(={87})$'
-          scope: constant.character.escape
+          scope: constant.character.escape.console
           pop: true
     - match: '[^\n]+'
       scope: text.console
