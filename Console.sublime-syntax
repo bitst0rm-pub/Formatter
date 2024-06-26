@@ -51,7 +51,7 @@ contexts:
         - match: '(?<!%)\b\d+\b(?!%)'
           scope: constant.character.escape.console
         # Matches a sequence of ^^^ and ~~~ and ××× signs
-        - match: '[\^~×]+'
+        - match: '[\^~×⚠⚡]+'
           scope: constant.character.escape.console
         # Matches a sequence of !!! and >>> signs
         - match: '[\!>]+'
