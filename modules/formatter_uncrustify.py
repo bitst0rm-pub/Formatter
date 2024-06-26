@@ -16,8 +16,8 @@ MODULE_CONFIG = {
     'config_path': {
         'objc': 'uncrustify_objc_rc.cfg',
         'objc++': 'uncrustify_objc_rc.cfg',
-        'java': 'uncrustify_sun_java_rc.cfg',
-        'default': 'uncrustify_rc.cfg'
+        'java': 'uncrustify_sun_rc.cfg',
+        'default': 'uncrustify_defaults_rc'
     }
 }
 
