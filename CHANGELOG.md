@@ -2,11 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.4.16](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.16)] - 2024-06-27
+
+### 🚀 Features
+
+- [`8422a57`](https://github.com/bitst0rm-pub/Formatter/commit/8422a5710fc5df3a0658bbd239d3038e5835c520) Add `"print_on_console"` sub option to `"environ"` to help setting environment
+
+### ⚙️ Miscellaneous Tasks
+
+- [`e046af5`](https://github.com/bitst0rm-pub/Formatter/commit/e046af55aa1ce36d7ef2d22cabb2cef1c2f4b159) *(console)* Minor update
+- [`18c94d6`](https://github.com/bitst0rm-pub/Formatter/commit/18c94d6041e6e1ad7f3db5b540488b6f5a21a985) Update cliff.toml to autolink to issue numbers and person mentioning
+- [`7414315`](https://github.com/bitst0rm-pub/Formatter/commit/74143158a45f8180992f22301f58a002587bda44) *(uncrustify)* Update config files to use with 0.79.0
+- [`cf7d147`](https://github.com/bitst0rm-pub/Formatter/commit/cf7d1474292cc33c1a3ea7643c2214e0b93e38b9) *(clang-format)* Update config files to use with 18.1.8
+- [`53b5f73`](https://github.com/bitst0rm-pub/Formatter/commit/53b5f73e78934c08a3af7c9b85dd3eff461902c2) Fdsa [#1](https://github.com/bitst0rm-pub/Formatter/issues/1) grfdsa [@bitst0rm](https://github.com/bitst0rm)
+
 ## [[1.4.15](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.15)] - 2024-06-19
 
 ### 🐛 Bug Fixes
 
-- [`60cdc50`](https://github.com/bitst0rm-pub/Formatter/commit/60cdc5045ba8eeb62cd7f527058c66fb93152139) *(efmt)* Remove rebar3-flavored efmt as upstream is not supported (ref #55) Thanks @verbit
+- [`60cdc50`](https://github.com/bitst0rm-pub/Formatter/commit/60cdc5045ba8eeb62cd7f527058c66fb93152139) *(efmt)* Remove rebar3-flavored efmt as upstream is not supported (ref [#55](https://github.com/bitst0rm-pub/Formatter/issues/55)) Thanks [@verbit](https://github.com/verbit)
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -76,7 +90,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
-- [`6da59e4`](https://github.com/bitst0rm-pub/Formatter/commit/6da59e437efb839007e4c6fba86015e85120b0bb) *(eslintd)* Disable support for Eslint v8.57.0+ using flat config files. @see: https://github.com/mantoni/eslint_d.js/issues/281
+- [`6da59e4`](https://github.com/bitst0rm-pub/Formatter/commit/6da59e437efb839007e4c6fba86015e85120b0bb) *(eslintd)* Disable support for Eslint v8.57.0+ using flat config files. [@see](https://github.com/see): https://github.com/mantoni/eslint_d.js/issues/281
 - [`0e9390e`](https://github.com/bitst0rm-pub/Formatter/commit/0e9390eefdc731c3b613460e5adb37bcacf76eba) *(eslint)* Improve version detection
 - [`19a4e21`](https://github.com/bitst0rm-pub/Formatter/commit/19a4e2125d220794a170f24b2d89b091f70443d1) Stop searching for the per-project config dotfile *after* a .git or .hg directory is found
 - [`e4997cb`](https://github.com/bitst0rm-pub/Formatter/commit/e4997cbcd5cc92a8dab7553f9fc183928c3803d0) *(eslint)* Update compatibility with both ESLint v8- and v9+ (using flat config file)
