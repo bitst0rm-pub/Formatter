@@ -4,7 +4,7 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
 
 Update:
 
-- Cloning this repo for *contribution* should be done outside the ST context, as Formatter will automatically remove its `.git` folder to prevent conflicts with certain built-in features of ST4.
+- Cloning this repxo for *contribution* should be done outside the ST context, as Formatter will automatically remove its `.git` folder to prevent conflicts with certain built-in features of ST4.
 
 
 **Key features:**
