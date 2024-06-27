@@ -580,7 +580,9 @@ class SingleFormat(common.Base):
 
     def run(self):
         self.create_graphic_temp_dir()
-        self.print_sysinfo(pretty=False)
+        if self.query(common.config, False, 'environ', 'print_on_console'):
+            self.print_sysinfo(pretty=True)
+
         try:
             for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
                 self.kwargs.update(region=region)

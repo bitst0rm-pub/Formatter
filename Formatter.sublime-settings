@@ -55,7 +55,9 @@
     // from the terminal. It is temporary, your system environment remains untouched.
     // On Windows, you can use either escaped backslashes (e.g., "C:\\a\\b\\c") or
     // forward slashes (e.g., "C:/a/b/c") as path separators for all other options.
+    // Tip: Activating "print_on_console" will help to set the correct environment.
     "environ": {
+        "print_on_console": false,
         "PATH": [],
         "GEM_PATH": [],
         "PYTHONPATH": [],

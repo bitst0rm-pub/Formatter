@@ -281,7 +281,9 @@ _Formatter.sublime-settings_
     // from the terminal. It is temporary, your system environment remains untouched.
     // On Windows, you can use either escaped backslashes (e.g., "C:\\a\\b\\c") or
     // forward slashes (e.g., "C:/a/b/c") as path separators for all other options.
+    // Tip: Activating "print_on_console" will help to set the correct environment.
     "environ": {
+        "print_on_console": false,
         "PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin", "/path/to/.cache/rebar3/bin:$PATH"],
         "GEM_PATH": ["${HOME}/to/my/ruby"],
         "PYTHONPATH": ["${packages}/User/MyFolder/python/lib/python3.7/site-packages"],

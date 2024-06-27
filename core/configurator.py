@@ -554,8 +554,10 @@ def build_formatter_sublime_settings(formatter_map):
     // This is similar to running 'export PYTHONPATH="/path/to/my/site-packages"'
     // from the terminal. It is temporary, your system environment remains untouched.
     // On Windows, you can use either escaped backslashes (e.g., "C:\\a\\b\\c") or
-    // forward slashes (e.g., "C:/a/b/c") as path separators for all other options.'''),
+    // forward slashes (e.g., "C:/a/b/c") as path separators for all other options.
+    // Tip: Activating "print_on_console" will help to set the correct environment.'''),
             ('environ', OrderedDict([
+                ('print_on_console', False),
                 ('PATH', []),
                 ('GEM_PATH', []),
                 ('PYTHONPATH', []),
