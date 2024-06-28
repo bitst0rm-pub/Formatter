@@ -848,6 +848,7 @@ class Base(Module):
         italic_re = re.compile(r'\*(.*?)\*')
         code_re = re.compile(r'`(.*?)`')
         commit_re = re.compile(r'\[`(.*?)`\]\((.*?)\)')
+        github_issue_re = re.compile(r'(?<!\<a href=")https?://github\.com/([^/]+/[^/]+)/(issues|pull)/(\d+)')
 
         in_code_block = False
         in_list = False
@@ -880,6 +881,9 @@ class Base(Module):
 
             # Commit links (inline code with links)
             line = commit_re.sub(r'<a href="\2"><code>\1</code></a>', line)
+
+            # GitHub issue links
+            line = github_issue_re.sub(r'<a href="https://github.com/\1/\2/\3">\1#\3</a>', line)
 
             # Bold and italic
             line = bold_re.sub(r'<strong>\1</strong>', line)
