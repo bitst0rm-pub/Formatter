@@ -74,6 +74,7 @@ def entry(api):
     api.remove_junk()
     ready = configurator.create_package_config_files()
     if ready:
+        api.load_sublime_preferences()
         api.get_config()
         api.setup_shared_config_files()
         api.set_debug_mode()
@@ -499,6 +500,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
 
 class RunFormatCommand(sublime_plugin.TextCommand, common.Base):
     def run(self, edit, **kwargs):
+        self.clear_console()
+
         is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
         if is_recursive:
             if kwargs.get('type', None) == 'graphic':

@@ -519,7 +519,7 @@ class Module(object):
             candidate_paths.extend(join(xdg_config_home, dotfile) for dotfile in self.dotfiles)
             for child in os.listdir(xdg_config_home):
                 candidate_paths.extend(join(xdg_config_home, child, dotfile) for dotfile in self.dotfiles)
-                break  # Only look in the first child folder
+                break  # only look in the first child folder
         else:
             appdata = os.getenv('APPDATA')
             if appdata:
@@ -696,7 +696,8 @@ class Base(Module):
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
         super().__init__(view=view, uid=uid, region=region, interpreters=interpreters, executables=executables, **kwargs)
 
-    def remove_junk(self):
+    @staticmethod
+    def remove_junk():
         try:
             parent_dir = dirname(dirname(__file__))
             items = [join(parent_dir, item) for item in ['.DS_Store', '.editorconfig', '.gitattributes', '.gitignore', '.git']]
@@ -709,7 +710,8 @@ class Base(Module):
         except Exception as e:
             pass
 
-    def generate_ascii_tree(self, reloaded_modules, package_name):
+    @staticmethod
+    def generate_ascii_tree(reloaded_modules, package_name):
         tree = {}
 
         for module in reloaded_modules:
@@ -746,19 +748,25 @@ class Base(Module):
         if print_tree:
             self.generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 
-    def config_file(self):
+    @staticmethod
+    def config_file():
         return PACKAGE_NAME + '.sublime-settings'
 
-    def quick_options_config_file(self):
+    @staticmethod
+    def quick_options_config_file():
         return join(sublime.packages_path(), 'User', QUICK_OPTIONS_SETTING_FILE)
 
+    @staticmethod
+    def load_settings(file):
+        return sublime.load_settings(file)
+
     def get_config(self):
-        settings = sublime.load_settings(self.config_file())
+        settings = self.load_settings(self.config_file())
         settings.add_on_change('@reload@', self.load_config)
         self.build_config(settings)
 
     def load_config(self):
-        settings = sublime.load_settings(self.config_file())
+        settings = self.load_settings(self.config_file())
         self.build_config(settings)
 
     def load_quick_options(self):
@@ -781,6 +789,14 @@ class Base(Module):
         project_settings = self.query(project_data, {}, 'settings', PACKAGE_NAME)
         if project_settings:
             self.update_json_recursive(config, project_settings)
+
+    def load_sublime_preferences(self):
+        global sublime_preferences
+
+        try:
+            sublime_preferences = self.load_settings('Preferences.sublime-settings')
+        except Exception as e:
+            sublime_preferences = {}
 
     def build_config(self, settings):
         try:
@@ -820,6 +836,17 @@ class Base(Module):
         except Exception as e:
             self.reload_modules(print_tree=False)
             sublime.set_timeout_async(self.load_config, 100)
+
+    @staticmethod
+    def clear_console():
+        if sublime_preferences:
+            current = sublime_preferences.get('console_max_history_lines', None)
+            if current is None:
+                return  # <ST4088
+
+            sublime_preferences.set('console_max_history_lines', 1)
+            print('')
+            sublime_preferences.set('console_max_history_lines', current)
 
     @staticmethod
     def style_view(dst_view):
