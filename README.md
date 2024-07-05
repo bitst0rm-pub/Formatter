@@ -49,6 +49,10 @@ _Formatter in action: Text-to-Image..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
 
+_Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bitst0rm-pub/theme-dosa) and [color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two)_
+
+![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot3.png)
+
 
 ## Guides
 
