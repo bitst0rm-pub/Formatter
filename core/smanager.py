@@ -153,7 +153,10 @@ class SessionManager:
                     cursor_position = view.text_point(cursor_x, cursor_y)
                     view.sel().clear()
                     view.sel().add(sublime.Region(cursor_position))
-                    view.show_at_center(cursor_position, animate=False)
+                    try:
+                        view.show_at_center(cursor_position, animate=False)  # ST4
+                    except Exception as e:
+                        view.show_at_center(cursor_position)  # ST3
 
                     # Restore selections and bookmarks
                     self.restore_selections(view, file_path)
