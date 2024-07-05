@@ -1263,7 +1263,7 @@ def status(self, message, *args, **kwargs):
 logging.Logger.status = status
 
 def setup_logger(name):
-    formatter = logging.Formatter(fmt='▋[' + PACKAGE_NAME + '](%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
+    formatter = logging.Formatter(fmt='▍[' + PACKAGE_NAME + '](%(filename)s#L%(lineno)s): [%(levelname)s] %(message)s')
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger = logging.getLogger(name)

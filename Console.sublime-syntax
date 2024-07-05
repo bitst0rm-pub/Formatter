@@ -6,7 +6,7 @@ name: Console
 scope: source.console
 contexts:
   main:
-    - match: '^(▋)'
+    - match: '^(▍)'
       scope: constant.character.escape.console
       push:
         - match: '\[([^\]]+)\]\(([^#]+)#L(\d+)\):'
