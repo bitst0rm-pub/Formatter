@@ -71,7 +71,7 @@ def merge(api):
 
 def entry(api):
     merge(api)
-    api.remove_junk()
+    # api.remove_junk()
     ready = configurator.create_package_config_files()
     if ready:
         api.load_sublime_preferences()
