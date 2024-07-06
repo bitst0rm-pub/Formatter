@@ -8,7 +8,6 @@ import logging
 import zipfile
 import tempfile
 import traceback
-import importlib
 import threading
 from datetime import datetime
 from collections import OrderedDict
@@ -24,13 +23,6 @@ from .core.formatter import Formatter
 
 log = logging.getLogger(__name__)
 
-
-def has_package_control():
-    if sys.version_info < (3, 4):
-        loader = importlib.find_loader('package_control')
-    else:
-        loader = importlib.util.find_spec('package_control')
-    return loader is not None
 
 def merge(api):
     packages_path = sublime.packages_path()
@@ -85,15 +77,18 @@ def entry(api):
 def plugin_loaded():
     api = common.Base()
     api.get_config()
-    done = False
 
-    if has_package_control():
+    def call_entry():
+        sublime.set_timeout_async(lambda: entry(api), 100)
+
+    try:
         from package_control import events
         if events.install(common.PACKAGE_NAME) or events.post_upgrade(common.PACKAGE_NAME):
-            sublime.set_timeout_async(lambda: entry(api), 100)
-            done = True
-    if not done:
-        sublime.set_timeout_async(lambda: entry(api), 100)
+            call_entry()
+        else:
+            call_entry()
+    except:
+        call_entry()
 
 
 class VersionInfoCommand(sublime_plugin.WindowCommand):

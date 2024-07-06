@@ -732,17 +732,15 @@ class Base(Module):
 
     def reload_modules(self, print_tree=False):
         reloaded_modules = []
-        modules_copy = dict(sys.modules)
 
-        for module_name, module in modules_copy.items():
-            if module_name.startswith(PACKAGE_NAME + '.') and module:
+        prefix = PACKAGE_NAME + '.'
+        for module_name, module in tuple(filter(lambda item: item[0].startswith(prefix), sys.modules.items())):
+            try:
+                reload(module)
                 reloaded_modules.append(module_name)
-
-                try:
-                    reload(module)
-                except Exception as e:
-                    log.error('Error reloading module %s: %s', module_name, str(e))
-                    return None
+            except Exception as e:
+                log.error('Error reloading module %s: %s', module_name, str(e))
+                return None
 
         log.debug('Reloaded modules (Python %s)', '.'.join(map(str, sys.version_info[:3])))
         if print_tree:

@@ -7,7 +7,6 @@ from collections import OrderedDict
 import sublime
 
 from . import common
-from ..modules import formatter_map
 
 log = logging.getLogger(__name__)
 
@@ -904,6 +903,7 @@ def create_package_config_files():
         'Formatter.sublime-settings': build_formatter_sublime_settings
     }
 
+    from ..modules import formatter_map
     api = common.Base()
 
     for file_name, build_function in file_functions.items():

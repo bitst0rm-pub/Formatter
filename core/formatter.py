@@ -1,6 +1,5 @@
 import logging
 from . import common
-from ..modules import formatter_generic
 from ..modules import formatter_map
 
 log = logging.getLogger(__name__)
@@ -41,9 +40,9 @@ class Formatter(common.Module):
         if formatter_plugin:
             self.kwargs.update(formatter_plugin['const'])
             self._log_debug_info('module', syntax)
-            result = formatter_plugin['class'](**self.kwargs).format()
         else:
+            formatter_plugin = formatter_map.get('generic')
             self._log_debug_info('generic', syntax)
-            result = formatter_generic.GenericFormatter(**self.kwargs).format()
 
+        result = formatter_plugin['class'](**self.kwargs).format()
         return self.is_success(result)
