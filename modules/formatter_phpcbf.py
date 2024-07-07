@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['php']
 EXECUTABLES = ['phpcbf.phar']
 DOTFILES = ['.phpcs.xml', 'phpcs.xml', '.phpcs.xml.dist', 'phpcs.xml.dist']

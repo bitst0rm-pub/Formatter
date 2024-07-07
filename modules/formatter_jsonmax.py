@@ -1,9 +1,8 @@
-import logging
 import json
 import sublime
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',

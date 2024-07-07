@@ -1,8 +1,7 @@
-import logging
 import re
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['bb', 'java']
 EXECUTABLES = ['zprint-filter', 'zprintma', 'zprintm', 'zprintl', 'zprint']
 DOTFILES = ['.zprintrc', '.zprint.edn']

@@ -1,9 +1,8 @@
 import os
-import logging
 import tempfile
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['dockfmt']
 DOTFILES = []
 MODULE_CONFIG = {

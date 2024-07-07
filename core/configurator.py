@@ -1,14 +1,12 @@
 import re
 import uuid
 import json
-import logging
 from collections import OrderedDict
 
 import sublime
 
+from .. import log
 from . import common
-
-log = logging.getLogger(__name__)
 
 
 class NoIndent:

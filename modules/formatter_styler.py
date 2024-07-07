@@ -1,8 +1,7 @@
-import logging
 import re
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['R']
 DOTFILES = []
 MODULE_CONFIG = {

@@ -1,9 +1,8 @@
-import logging
 import sublime
-from ..core import common
 from ..libs.sqlmin import sqlmin
+from .. import log
+from ..core import common
 
-log = logging.getLogger(__name__)
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/bitst0rm',

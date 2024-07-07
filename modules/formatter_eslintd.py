@@ -1,9 +1,8 @@
-import logging
 import sublime
 from distutils.version import LooseVersion, StrictVersion
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint_d', 'eslint_d.js']
 DOTFILES = ['eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', '.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json', 'package.json']

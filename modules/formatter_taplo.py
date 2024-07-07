@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['taplo']
 DOTFILES = ['.taplo.toml', 'taplo.toml']
 MODULE_CONFIG = {

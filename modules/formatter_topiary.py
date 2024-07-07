@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['topiary']
 DOTFILES = ['languages.toml']
 MODULE_CONFIG = {

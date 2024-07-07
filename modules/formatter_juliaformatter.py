@@ -1,8 +1,7 @@
-import logging
 from ..libs import toml
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['julia']
 EXECUTABLES = []
 DOTFILES = ['.JuliaFormatter.toml']

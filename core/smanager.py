@@ -1,15 +1,13 @@
 import os
 import json
-import logging
 import threading
 from datetime import datetime, timedelta
 
 import sublime
 import sublime_plugin
 
+from .. import log
 from . import common
-
-log = logging.getLogger(__name__)
 
 SESSION_FILE = common.join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
 MAX_AGE_DAYS = 180

@@ -4,7 +4,6 @@ import time
 import json
 import shutil
 import base64
-import logging
 import zipfile
 import tempfile
 import traceback
@@ -15,13 +14,12 @@ from collections import OrderedDict
 import sublime
 import sublime_plugin
 
+from . import log
 from .version import __version__
 from .core import common, configurator
 from .core.wcounter import *
 from .core.smanager import *
 from .core.formatter import Formatter
-
-log = logging.getLogger(__name__)
 
 
 def merge(api):

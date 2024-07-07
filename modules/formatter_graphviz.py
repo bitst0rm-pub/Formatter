@@ -1,10 +1,9 @@
 # @install      https://scrossoracle.medium.com/building-graphviz-from-source-on-macos-b6a846d73949
 
-import logging
 from ..libs import yaml
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['dot']
 DOTFILES = []
 MODULE_CONFIG = {

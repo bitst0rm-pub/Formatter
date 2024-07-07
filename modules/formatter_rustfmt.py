@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['rustfmt']
 DOTFILES = ['.rustfmt.toml', 'rustfmt.toml']
 MODULE_CONFIG = {

@@ -1,11 +1,8 @@
-import logging
-
 import sublime
 import sublime_plugin
 
+from .. import log
 from . import common
-
-log = logging.getLogger(__name__)
 
 
 class WordsCounter:

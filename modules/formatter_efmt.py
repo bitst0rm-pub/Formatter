@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 #EXECUTABLES = ['rebar3', 'efmt']  # No rebar3 support right now, @see #55
 EXECUTABLES = ['efmt']
 DOTFILES = []

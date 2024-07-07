@@ -1,8 +1,7 @@
-import logging
 from ..libs import yaml
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['hindent']
 DOTFILES = ['.hindent.yaml']
 MODULE_CONFIG = {

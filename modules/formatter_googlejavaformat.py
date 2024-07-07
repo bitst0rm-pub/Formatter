@@ -1,8 +1,7 @@
-import logging
 from ..libs import yaml
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['java']
 EXECUTABLES = ['google-java-format-all-deps.jar']
 DOTFILES = []

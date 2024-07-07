@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['dprint']
 DOTFILES = ['.dprint.json', '.dprint.jsonc', 'dprint.json', 'dprint.jsonc']
 MODULE_CONFIG = {

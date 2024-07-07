@@ -844,10 +844,9 @@ class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capi
 Details as an example:
 
 ```py
-import logging                                              # REQUIRED: logging system for debugging this file
+from .. import log                                          # REQUIRED: log to debugging this file
 from ..core import common                                   # REQUIRED: a collection of APIs to assist in running this file
 
-log = logging.getLogger(__name__)                           # REQUIRED: logger setup
 INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
 EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
 DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the per-project config dotfile if "config_path" is disabled

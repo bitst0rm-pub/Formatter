@@ -1,7 +1,6 @@
-import logging
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['swift-format']
 DOTFILES = ['.swift-format']
 MODULE_CONFIG = {

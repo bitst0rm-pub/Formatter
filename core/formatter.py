@@ -1,8 +1,6 @@
-import logging
+from .. import log
 from . import common
 from ..modules import formatter_map
-
-log = logging.getLogger(__name__)
 
 
 class Formatter(common.Module):

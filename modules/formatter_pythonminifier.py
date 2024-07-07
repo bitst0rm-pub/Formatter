@@ -1,8 +1,7 @@
-import logging
 import sublime
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['pyminify']
 DOTFILES = []

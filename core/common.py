@@ -10,8 +10,6 @@ import logging
 import tempfile
 from datetime import datetime
 
-import sublime
-
 if sys.version_info < (3, 4):
     from imp import reload
 else:
@@ -21,7 +19,8 @@ from subprocess import Popen, PIPE, TimeoutExpired
 from os.path import (basename, expanduser, expandvars, isdir, isfile, join,
                     normcase, normpath, pathsep, split, splitext, dirname)
 
-log = logging.getLogger(__name__)
+import sublime
+from . import log
 
 IS_WINDOWS = sublime.platform() == 'windows'
 PACKAGE_NAME = 'Formatter'

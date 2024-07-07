@@ -1,9 +1,8 @@
 import os
-import logging
 import tempfile
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 INTERPRETERS = ['php']
 EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']
 DOTFILES = ['.php-cs-fixer.php', '.php-cs-fixer.dist.php']

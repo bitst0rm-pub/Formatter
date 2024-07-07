@@ -1,15 +1,14 @@
 import os
 import sys
-import logging
-import sublime
 if sys.version_info < (3, 4):
     import imp
 else:
     import importlib
 
-from ..core import common
+import sublime
 
-log = logging.getLogger(__name__)
+from .. import log
+from ..core import common
 
 
 def update_sys_path(environ, packages_path):

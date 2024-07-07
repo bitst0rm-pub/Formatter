@@ -1,8 +1,7 @@
-import logging
 from ..libs import yaml
+from .. import log
 from ..core import common
 
-log = logging.getLogger(__name__)
 EXECUTABLES = ['fourmolu']
 DOTFILES = ['fourmolu.yaml']
 MODULE_CONFIG = {
