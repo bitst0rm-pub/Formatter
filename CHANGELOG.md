@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.4.17](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.17)] - 2024-07-07
+
+### 🐛 Bug Fixes
+
+- [`1c6009e`](https://github.com/bitst0rm-pub/Formatter/commit/1c6009eb47a2f435e19c08d690235b8ac8f59443) *(smanager)* Fix the issue where the `animate` argument was unavailable for `show_at_center()` in ST3
+
+### 🚜 Refactor
+
+- [`c3e31ad`](https://github.com/bitst0rm-pub/Formatter/commit/c3e31ada9d938aa272b8ee11ced4ebc231b049ea) Relative import for logging. It may break your code, simply change it to: `from .. import log` and remove `log = logging.getLogger(__name__)`
+
+### 📚 Documentation
+
+- [`0c42aaf`](https://github.com/bitst0rm-pub/Formatter/commit/0c42aaf67ebca1c2e44e31a51ddabfcdc2a64bda) Add more screenshots
+
+### 🎨 Styling
+
+- [`84b0010`](https://github.com/bitst0rm-pub/Formatter/commit/84b0010a8c441311c1a613562148afffa7c645f0) Change log marker symbol from ▋to ▍
+
+### ⚙️ Miscellaneous Tasks
+
+- [`b9ebfc3`](https://github.com/bitst0rm-pub/Formatter/commit/b9ebfc38f4d68bb20c62604c33a10fb7b7d36416) Clear console for ST4088+
+- [`3b8a6a8`](https://github.com/bitst0rm-pub/Formatter/commit/3b8a6a8ac4b653e7f451a5da5509af1485aff84b) Disable `remove_junk()` as some 💩 no longer affect `.git`
+- [`f4d4c90`](https://github.com/bitst0rm-pub/Formatter/commit/f4d4c90a8f125799bec1823091877241cf4a3775) Move check for `print_sysinfo()` to common
+- [`46f84b3`](https://github.com/bitst0rm-pub/Formatter/commit/46f84b3ecf1ab4be2cde115a1d0166ec27fafe01) Optimize importing modules
+
 ## [[1.4.16](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.16)] - 2024-06-28
 
 ### 🚀 Features
