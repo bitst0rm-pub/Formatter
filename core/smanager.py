@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 import sublime
 import sublime_plugin
 
-from .. import log
-from . import common
+from . import (log, common)
+
 
 SESSION_FILE = common.join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
 MAX_AGE_DAYS = 180

@@ -5,8 +5,7 @@ from collections import OrderedDict
 
 import sublime
 
-from .. import log
-from . import common
+from . import (log, common)
 
 
 class NoIndent:

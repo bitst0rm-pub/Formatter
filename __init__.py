@@ -1,5 +1,24 @@
-import logging
-from .core import common
+from .core import (
+    log,
+    enable_logging,
+    enable_status,
+    disable_logging,
+    create_package_config_files,
+    SessionManagerListener,
+    WordsCounterListener
+)
 
-common.setup_logger(__name__)
-log = logging.getLogger(__name__)
+from .core.formatter import Formatter
+from .version import __version__
+
+__all__ = [
+    'log',
+    'enable_logging',
+    'enable_status',
+    'disable_logging',
+    'create_package_config_files',
+    'SessionManagerListener',
+    'WordsCounterListener',
+    'Formatter',
+    '__version__'
+]

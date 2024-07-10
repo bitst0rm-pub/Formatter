@@ -1,5 +1,4 @@
-from .. import log
-from . import common
+from . import (log, common)
 from ..modules import formatter_map
 
 

@@ -14,12 +14,18 @@ from collections import OrderedDict
 import sublime
 import sublime_plugin
 
-from . import log
-from .version import __version__
-from .core import common, configurator
-from .core.wcounter import *
-from .core.smanager import *
-from .core.formatter import Formatter
+from .core import common
+from . import (
+    log,
+    enable_logging,
+    enable_status,
+    disable_logging,
+    create_package_config_files,
+    SessionManagerListener,
+    WordsCounterListener,
+    Formatter,
+    __version__,
+)
 
 
 def merge(api):
@@ -62,7 +68,7 @@ def merge(api):
 def entry(api):
     merge(api)
     # api.remove_junk()
-    ready = configurator.create_package_config_files()
+    ready = create_package_config_files()
     if ready:
         api.load_sublime_preferences()
         api.get_config()
@@ -365,11 +371,11 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand, common.Base):
                     current_debug_value = False
                 else:
                     if debug_value == 'status':
-                        common.enable_status()
+                        enable_status()
                     elif debug_value == 'true':
-                        common.enable_logging()
+                        enable_logging()
                     else:
-                        common.disable_logging()
+                        disable_logging()
                     current_debug_value = debug_value
                 common.config.setdefault('quick_options', {})['debug'] = current_debug_value
                 self.run()

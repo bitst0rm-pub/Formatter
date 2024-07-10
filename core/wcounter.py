@@ -1,8 +1,7 @@
 import sublime
 import sublime_plugin
 
-from .. import log
-from . import common
+from . import (log, common)
 
 
 class WordsCounter:
