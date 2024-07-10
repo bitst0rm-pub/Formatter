@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 
 from . import (log, common)
+from .constants import STATUS_KEY
 
 
 class WordsCounter:
@@ -83,7 +84,7 @@ class WordsCounter:
                     self.thousands_separator(current_column)
                 )
 
-            self.view.set_status(common.STATUS_KEY + '_words_count', status_text)
+            self.view.set_status(STATUS_KEY + '_wc', status_text)
         except:
             pass
 

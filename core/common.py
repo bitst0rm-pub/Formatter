@@ -39,33 +39,17 @@ from . import (
     disable_logging
 )
 
-
-IS_WINDOWS = sublime.platform() == 'windows'
-PACKAGE_NAME = 'Formatter'
-ASSETS_DIRECTORY = 'formatter.assets'
-QUICK_OPTIONS_SETTING_FILE = 'Formatter.quick-options'
-RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
-RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
-STATUS_KEY = '@!' + PACKAGE_NAME.lower()
-GFX_OUT_NAME = 'out_%s' % datetime.now().strftime('%Y%m%d')
-
-LAYOUTS = {
-    'single': {
-        'cols': [0.0, 1.0],
-        'rows': [0.0, 1.0],
-        'cells': [[0, 0, 1, 1]]
-    },
-    '2cols': {
-        'cols': [0.0, 0.5, 1.0],
-        'rows': [0.0, 1.0],
-        'cells': [[0, 0, 1, 1], [1, 0, 2, 1]]
-    },
-    '2rows': {
-        'cols': [0.0, 1.0],
-        'rows': [0.0, 0.5, 1.0],
-        'cells': [[0, 0, 1, 1], [0, 1, 1, 2]]
-    }
-}
+from .constants import (
+    IS_WINDOWS,
+    PACKAGE_NAME,
+    ASSETS_DIRECTORY,
+    QUICK_OPTIONS_SETTING_FILE,
+    RECURSIVE_SUCCESS_DIRECTORY,
+    RECURSIVE_FAILURE_DIRECTORY,
+    STATUS_KEY,
+    GFX_OUT_NAME,
+    LAYOUTS
+)
 
 
 class Module(object):

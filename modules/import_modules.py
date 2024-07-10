@@ -9,6 +9,7 @@ import sublime
 
 from .. import log
 from ..core import common
+from ..core.constants import PACKAGE_NAME
 
 
 def update_sys_path(environ, packages_path):
@@ -27,7 +28,7 @@ def import_formatter_modules():
         original_sys_path = sys.path.copy()
         packages_path = sublime.packages_path()
 
-        settings_file = os.path.join(packages_path, 'User', common.PACKAGE_NAME + '.sublime-settings')
+        settings_file = os.path.join(packages_path, 'User', PACKAGE_NAME + '.sublime-settings')
         settings = common.read_settings_file(settings_file)
 
         environ = settings.get('environ', {})
@@ -40,14 +41,14 @@ def import_formatter_modules():
 
                 try:
                     if sys.version_info < (3, 4):
-                        module = imp.load_source(common.PACKAGE_NAME + '.modules.' + module_name, module_path)
+                        module = imp.load_source(PACKAGE_NAME + '.modules.' + module_name, module_path)
                     else:
-                        module = importlib.import_module(common.PACKAGE_NAME + '.modules.' + module_name, package=__name__)
+                        module = importlib.import_module(PACKAGE_NAME + '.modules.' + module_name, package=__name__)
                 except Exception as e:
                     log.error('Error importing module %s: %s', module_name, str(e))
                     continue
 
-                formatter_class_name = module_name[formatter_prefix_len:].capitalize() + common.PACKAGE_NAME
+                formatter_class_name = module_name[formatter_prefix_len:].capitalize() + PACKAGE_NAME
                 formatter_class = getattr(module, formatter_class_name, None)
                 formatter_const = {key.lower(): getattr(module, key, None) for key in ['INTERPRETERS', 'EXECUTABLES', 'DOTFILES']}
 

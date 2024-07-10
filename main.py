@@ -27,6 +27,15 @@ from . import (
     __version__,
 )
 
+from .core.constants import (
+    PACKAGE_NAME,
+    ASSETS_DIRECTORY,
+    RECURSIVE_SUCCESS_DIRECTORY,
+    RECURSIVE_FAILURE_DIRECTORY,
+    STATUS_KEY,
+    GFX_OUT_NAME
+)
+
 
 def merge(api):
     packages_path = sublime.packages_path()
@@ -42,7 +51,7 @@ def merge(api):
                 if k == 'libs' and base in ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']:
                     continue
 
-                dst = os.path.join(packages_path, common.PACKAGE_NAME, k, base)
+                dst = os.path.join(packages_path, PACKAGE_NAME, k, base)
 
                 if os.path.isfile(src):
                     src_md5 = api.md5f(src)
@@ -75,7 +84,7 @@ def entry(api):
         api.setup_shared_config_files()
         api.set_debug_mode()
 
-    log.info('%s version: %s (Python %s)', common.PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
+    log.info('%s version: %s (Python %s)', PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 def plugin_loaded():
@@ -87,7 +96,7 @@ def plugin_loaded():
 
     try:
         from package_control import events
-        if events.install(common.PACKAGE_NAME) or events.post_upgrade(common.PACKAGE_NAME):
+        if events.install(PACKAGE_NAME) or events.post_upgrade(PACKAGE_NAME):
             call_entry()
         else:
             call_entry()
@@ -97,7 +106,7 @@ def plugin_loaded():
 
 class VersionInfoCommand(sublime_plugin.WindowCommand):
     def run(self):
-        sublime.message_dialog('🧜‍♀️ ' + common.PACKAGE_NAME + '\nVersion: ' + __version__)
+        sublime.message_dialog('🧜‍♀️ ' + PACKAGE_NAME + '\nVersion: ' + __version__)
 
 
 class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):
@@ -106,7 +115,7 @@ class KeyBindingsCommand(sublime_plugin.WindowCommand, common.Base):
         window = sublime.active_window()
         window.set_layout(self.assign_layout('2cols'))
         window.focus_group(0)
-        window.run_command('open_file', {'file': '${packages}/' + common.PACKAGE_NAME + '/Example.sublime-keymap'})
+        window.run_command('open_file', {'file': '${packages}/' + PACKAGE_NAME + '/Example.sublime-keymap'})
         window.focus_group(1)
         window.run_command('open_file', {'file': '${packages}/User/Default (${platform}).sublime-keymap'})
 
@@ -116,7 +125,7 @@ class ModulesInfoCommand(sublime_plugin.WindowCommand):
         self.FILE_PATH = self.get_file_path()
 
     def get_file_path(self):
-        return os.path.join(sublime.packages_path(), common.PACKAGE_NAME, 'modules', '_summary.txt')
+        return os.path.join(sublime.packages_path(), PACKAGE_NAME, 'modules', '_summary.txt')
 
     def is_enabled(self):
         return os.path.exists(self.FILE_PATH)
@@ -137,7 +146,7 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand, common.Base):
         self.FILE_PATH = self.get_file_path()
 
     def get_file_path(self):
-        return os.path.join(sublime.packages_path(), common.PACKAGE_NAME, 'CHANGELOG.md')
+        return os.path.join(sublime.packages_path(), PACKAGE_NAME, 'CHANGELOG.md')
 
     def convert_markdown_file_to_html(self, filepath):
         try:
@@ -174,7 +183,7 @@ class BrowserConfigsCommand(sublime_plugin.WindowCommand, common.Base):
     def run(self):
         seen = set()
 
-        config_dir = os.path.join(sublime.packages_path(), 'User', common.ASSETS_DIRECTORY, 'config')
+        config_dir = os.path.join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
         if os.path.isdir(config_dir):
             self.window.run_command('open_dir', {'dir': config_dir})
             seen.add(config_dir)
@@ -618,8 +627,8 @@ class SingleFormat(common.Base):
             self.set_status_bar_text()
 
     def set_status_bar_text(self):
-        status_text = '{}({}) [ok:{}|ko:{}]'.format(common.PACKAGE_NAME[0], self.get_mode_description(short=True), self.success, self.failure)
-        self.view.set_status(common.STATUS_KEY, status_text)
+        status_text = '{}({}) [ok:{}|ko:{}]'.format(PACKAGE_NAME[0], self.get_mode_description(short=True), self.success, self.failure)
+        self.view.set_status(STATUS_KEY, status_text)
 
     def open_console_on_failure(self):
         if common.config.get('open_console_on_failure'):
@@ -692,7 +701,7 @@ class SingleFormat(common.Base):
 
             for ext in image_extensions:
                 ext = ext.strip().lower()
-                image_path = os.path.join(self.temp_dir.name, common.GFX_OUT_NAME + '.' + ext)
+                image_path = os.path.join(self.temp_dir.name, GFX_OUT_NAME + '.' + ext)
                 if os.path.exists(image_path):
                     with open(image_path, 'rb') as image_file:
                         extended_data[ext] = base64.b64encode(image_file.read()).decode('utf-8')
@@ -703,7 +712,7 @@ class SingleFormat(common.Base):
 
     def set_graphic_phantom(self, dst_view):
         try:
-            image_path = os.path.join(self.temp_dir.name, common.GFX_OUT_NAME + '.png')
+            image_path = os.path.join(self.temp_dir.name, GFX_OUT_NAME + '.png')
             with open(image_path, 'rb') as image_file:
                 data = image_file.read()
                 image_width, image_height = self.get_image_size(data)
@@ -726,7 +735,7 @@ class SingleFormat(common.Base):
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
-            stem = self.get_pathinfo()['stem'] or common.GFX_OUT_NAME
+            stem = self.get_pathinfo()['stem'] or GFX_OUT_NAME
             save_path = os.path.join(self.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
@@ -801,7 +810,7 @@ class ZoomCommand(sublime_plugin.WindowCommand, common.Base):
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
-            stem = os.path.splitext(os.path.basename(dst_view.file_name() or common.GFX_OUT_NAME))[0]
+            stem = os.path.splitext(os.path.basename(dst_view.file_name() or GFX_OUT_NAME))[0]
             save_path = os.path.join(self.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
@@ -886,7 +895,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand, common.Base):
         else:
             if common.config.get('show_statusbar'):
                 view.window().set_status_bar_visible(True)
-                view.set_status(common.STATUS_KEY, self.view.get_status(common.STATUS_KEY))
+                view.set_status(STATUS_KEY, self.view.get_status(STATUS_KEY))
 
 
 class RecursiveFormat(common.Base):
@@ -990,7 +999,7 @@ class RecursiveFormat(common.Base):
 
     def get_post_format_cwd(self, is_success):
         base_directory = self.CONTEXT['cwd']
-        sub_directory = common.RECURSIVE_SUCCESS_DIRECTORY if is_success else common.RECURSIVE_FAILURE_DIRECTORY
+        sub_directory = RECURSIVE_SUCCESS_DIRECTORY if is_success else RECURSIVE_FAILURE_DIRECTORY
         return os.path.join(base_directory, sub_directory)
 
     def show_result(self, is_success):
@@ -1040,14 +1049,14 @@ class RecursiveFormat(common.Base):
             current_view = self.get_current_view()
             current_view.window().set_status_bar_visible(True)
             status_text = self.generate_status_text()
-            current_view.set_status(common.STATUS_KEY, status_text)
+            current_view.set_status(STATUS_KEY, status_text)
 
     def get_current_view(self):
         return sublime.active_window().active_view()
 
     def generate_status_text(self):
         return '{}({}) [total:{}|ok:{}|ko:{}]'.format(
-            common.PACKAGE_NAME[0], self.CONTEXT['mode_description'],
+            PACKAGE_NAME[0], self.CONTEXT['mode_description'],
             self.CONTEXT['filelist_length'],
             self.CONTEXT['success_count'],
             self.CONTEXT['failure_count']

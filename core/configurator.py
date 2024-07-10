@@ -6,6 +6,11 @@ from collections import OrderedDict
 import sublime
 
 from . import (log, common)
+from .constants import (
+    PACKAGE_NAME,
+    ASSETS_DIRECTORY,
+    QUICK_OPTIONS_SETTING_FILE
+)
 
 
 class NoIndent:
@@ -476,7 +481,7 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             config_path = config.get('config_path', None)
             if config_path is not None and isinstance(config_path, dict) and len(config_path) > 0:
-                child['config_path'] = {key: common.join('${packages}', 'User', common.ASSETS_DIRECTORY, 'config', value) for key, value in config['config_path'].items()}
+                child['config_path'] = {key: common.join('${packages}', 'User', ASSETS_DIRECTORY, 'config', value) for key, value in config['config_path'].items()}
                 default_value = child['config_path'].pop('default', None)
                 sorted_config_path = OrderedDict(sorted(child['config_path'].items()))
                 if default_value:
@@ -883,7 +888,7 @@ def build_formatter_sublime_settings(formatter_map):
     return strip_trailing(json_text)
 
 def create_package_config_files():
-    directory = common.join(sublime.packages_path(), common.PACKAGE_NAME)
+    directory = common.join(sublime.packages_path(), PACKAGE_NAME)
 
     try:
         common.os.makedirs(directory, exist_ok=True)
@@ -920,7 +925,7 @@ def create_package_config_files():
             return False
 
     try:
-        for file in [common.join(directory, common.QUICK_OPTIONS_SETTING_FILE), api.quick_options_config_file()]:
+        for file in [common.join(directory, QUICK_OPTIONS_SETTING_FILE), api.quick_options_config_file()]:
             if not common.isfile(file):
                 with open(file, 'w', encoding='utf-8') as f:
                     json.dump({}, f, ensure_ascii=False, indent=4)
