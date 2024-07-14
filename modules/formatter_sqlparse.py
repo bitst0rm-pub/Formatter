@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['sqlformat']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class SqlparseFormatter(common.Module):
+class SqlparseFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

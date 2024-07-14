@@ -1,6 +1,7 @@
 from ..libs import toml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['julia']
 EXECUTABLES = []
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class JuliaformatterFormatter(common.Module):
+class JuliaformatterFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

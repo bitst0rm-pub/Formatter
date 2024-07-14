@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['yapf']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class YapfFormatter(common.Module):
+class YapfFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

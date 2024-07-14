@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['uncrustify']
 DOTFILES = ['.uncrustify.cfg', 'uncrustify.cfg']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class UncrustifyFormatter(common.Module):
+class UncrustifyFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

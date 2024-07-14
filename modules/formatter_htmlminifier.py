@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['html-minifier']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class HtmlminifierFormatter(common.Module):
+class HtmlminifierFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

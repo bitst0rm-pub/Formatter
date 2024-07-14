@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['AStyle', 'astyle']
 DOTFILES = ['.astylerc', '_astylerc']
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class AstyleFormatter(common.Module):
+class AstyleFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

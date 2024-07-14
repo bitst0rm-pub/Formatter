@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['dprint']
 DOTFILES = ['.dprint.json', '.dprint.jsonc', 'dprint.json', 'dprint.jsonc']
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class DprintFormatter(common.Module):
+class DprintFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

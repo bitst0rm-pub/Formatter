@@ -1,6 +1,7 @@
 import sublime
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['pyminify']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class PythonminifierFormatter(common.Module):
+class PythonminifierFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

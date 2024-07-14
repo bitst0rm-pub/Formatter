@@ -1,6 +1,5 @@
 import os
 import re
-import sys
 import json
 import time
 import shutil
@@ -9,15 +8,10 @@ import hashlib
 import logging
 import tempfile
 from datetime import datetime
-
-if sys.version_info < (3, 4):
-    from imp import reload
-else:
-    from importlib import reload
-
 from subprocess import Popen, PIPE, TimeoutExpired
 from os.path import (
     basename,
+    dirname,
     expanduser,
     expandvars,
     isdir,
@@ -27,11 +21,11 @@ from os.path import (
     normpath,
     pathsep,
     split,
-    splitext,
-    dirname
+    splitext
 )
 
 import sublime
+
 from . import (
     log,
     enable_logging,
@@ -52,20 +46,247 @@ from .constants import (
 )
 
 
-class Module(object):
+CONFIG = {}
+SUBLIME_PREFERENCES = {}
+
+
+class InstanceManager:
+    _instances = {}
+
+    @classmethod
+    def get_instance(cls, class_name_or_instance, *args, **kwargs):
+        if isinstance(class_name_or_instance, str):  # if class_name is provided
+            class_name = class_name_or_instance
+            key = (class_name, *args)
+            if key not in cls._instances:
+                cls._instances[key] = globals()[class_name](*args, **kwargs)
+            return cls._instances[key]
+        else:  # if instance is provided
+            instance = class_name_or_instance
+            key = (instance.__class__.__name__, *args)
+            if key not in cls._instances:
+                cls._instances[key] = instance
+            return cls._instances[key]
+
+    @classmethod
+    def reset_instance(cls, class_name_or_instance, *args):
+        if isinstance(class_name_or_instance, str):  # if class_name is provided
+            class_name = class_name_or_instance
+            key = (class_name, *args)
+            if key in cls._instances:
+                del cls._instances[key]
+        else:  # if instance is provided
+            instance = class_name_or_instance
+            key = (instance.__class__.__name__, *args)
+            if key in cls._instances:
+                del cls._instances[key]
+
+    @classmethod
+    def reset_all(cls):
+        cls._instances.clear()
+
+
+###################################################
+# === Module Class and Its Supporting Classes === #
+###################################################
+
+class Module:
     '''
-    API for use with files located in the 'modules' folder.
+    API solely for interacting with files located in the 'modules' folder.
     '''
 
-    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
-        self.view = view
-        self.uid = uid
-        self.region = region
-        self.interpreters = interpreters
-        self.executables = executables
-        self.dotfiles = kwargs.get('dotfiles', [])
-        self.kwargs = kwargs or {}
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
+        self.view               = view
+        self.uid                = uid
+        self.region             = region
+        self.interpreters       = interpreters
+        self.executables        = executables
+        self.dotfiles           = dotfiles
+        self.temp_dir           = temp_dir
+        self.type               = type
+        self.auto_format_config = auto_format_config
+        self.kwargs             = kwargs  # unused
 
+        InstanceManager.reset_all()
+
+    def is_executable(self, file):
+        instance = InstanceManager.get_instance('FileHandler')
+        return instance.is_executable(file)
+
+    def is_readable(self, file):
+        instance = InstanceManager.get_instance('FileHandler')
+        return instance.is_readable(file)
+
+    def get_pathinfo(self, path=None):
+        instance = InstanceManager.get_instance('PathHandler', view=self.view)
+        return instance.get_pathinfo(path)
+
+    def is_valid_path(self, path):
+        instance = InstanceManager.get_instance('PathHandler', view=self.view)
+        return instance.is_valid_path(path)
+
+    def update_environ(self):
+        instance = InstanceManager.get_instance('EnvironmentHandler')
+        return instance.update_environ()
+
+    def get_environ_path(self, fnames):
+        instance = InstanceManager.get_instance('EnvironmentHandler')
+        return instance.get_environ_path(fnames)
+
+    def popen(self, cmd, stdout=PIPE):
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        return instance.popen(cmd, stdout)
+
+    def kill(self, process):
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        return instance.kill(process)
+
+    def is_alive(self, process):
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        return instance.is_alive(process)
+
+    def timeout(self):
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        return instance.timeout()
+
+    def exec_com(self, cmd):
+        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
+        return instance.exec_com(cmd)
+
+    def exec_cmd(self, cmd, outfile=None):
+        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
+        return instance.exec_cmd(cmd, outfile)
+
+    def get_success_code(self):
+        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
+        return instance.get_success_code()
+
+    def print_exiterr(self, exitcode, stderr):
+        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
+        return instance.print_exiterr(exitcode, stderr)
+
+    def print_oserr(self, cmd):
+        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
+        return instance.print_oserr(cmd)
+
+    def get_text_from_region(self, region):
+        instance = InstanceManager.get_instance('ViewHandler', view=self.view)
+        return instance.get_text_from_region(region)
+
+    def is_view_formattable(self):
+        instance = InstanceManager.get_instance('ViewHandler', view=self.view)
+        return instance.is_view_formattable()
+
+    def query(self, data_dict, default=None, *keys):
+        instance = InstanceManager.get_instance('OptionHandler')
+        return instance.query(data_dict, default, *keys)
+
+    def create_tmp_file(self, suffix=None):
+        instance = InstanceManager.get_instance('TempFileHandler', view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config)
+        return instance.create_tmp_file(suffix)
+
+    def remove_tmp_file(self, tmp_file):
+        instance = InstanceManager.get_instance('TempFileHandler', view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config)
+        return instance.remove_tmp_file(tmp_file)
+
+    def is_generic_mode(self):
+        instance = InstanceManager.get_instance('ModeHandler', uid=self.uid)
+        return instance.is_generic_mode()
+
+    def set_generic_local_executables(self):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.set_generic_local_executables()
+
+    def get_local_executable(self, runtime_type=None):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_local_executable(runtime_type)
+
+    def get_executable(self, runtime_type=None):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_executable(runtime_type)
+
+    def get_interpreter(self):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_interpreter()
+
+    def get_iprexe_cmd(self, runtime_type=None):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_iprexe_cmd(runtime_type)
+
+    def get_combo_cmd(self, runtime_type=None):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_combo_cmd(runtime_type)
+
+    def get_args(self):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_args()
+
+    def get_config_path(self):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.get_config_path()
+
+    def fix_cmd(self, cmd):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.fix_cmd(cmd)
+
+    def is_valid_cmd(self, cmd):
+        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return instance.is_valid_cmd(cmd)
+
+    def get_assigned_syntax(self, view=None, uid=None, region=None):
+        instance = InstanceManager.get_instance('SyntaxHandler', view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config)
+        uid, syntax = instance.get_assigned_syntax(view, uid, region)
+        self.uid = uid  # update for auto format
+        return syntax
+
+    def update_json_recursive(self, json_data, update_data):
+        instance = InstanceManager.get_instance('StringHandler')
+        return instance.update_json_recursive(json_data, update_data)
+
+    def get_cfgignore(self, active_file_path=None):
+        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
+        return instance.get_cfgignore(active_file_path)
+
+    def get_auto_format_config(self, active_file_path=None):
+        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
+        return instance.get_auto_format_config(active_file_path)
+
+    def get_auto_format_user_config(self, active_file_path=None):
+        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
+        return instance.get_auto_format_user_config(active_file_path)
+
+    def get_auto_format_args(self, active_file_path=None):
+        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
+        return instance.get_auto_format_args(active_file_path)
+
+    def is_render_extended(self):
+        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
+        return instance.is_render_extended()
+
+    def get_args_extended(self):
+        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
+        return instance.get_args_extended()
+
+    def ext_png_to_svg_cmd(self, cmd):
+        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
+        return instance.ext_png_to_svg_cmd(cmd)
+
+    def all_png_to_svg_cmd(self, cmd):
+        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
+        return instance.all_png_to_svg_cmd(cmd)
+
+    def get_output_image(self):
+        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
+        return instance.get_output_image()
+
+    def popup_message(self, text, title=None, dialog=False):
+        instance = InstanceManager.get_instance('InterfaceHandler')
+        return instance.popup_message(text, title, dialog)
+
+
+# === Module Supporting Classes === #
+
+class FileHandler:
     @staticmethod
     def _is_valid_file(file):
         return file and isinstance(file, str) and isfile(file)
@@ -77,7 +298,7 @@ class Module(object):
         log.warning('File exists but cannot get permission to %s: %s', permission_name, file)
         return False
 
-    def is_executeable(self, file):
+    def is_executable(self, file):
         if not self._is_valid_file(file):
             return False
         return self._has_permission(file, os.X_OK, 'execute')
@@ -86,6 +307,11 @@ class Module(object):
         if not self._is_valid_file(file):
             return False
         return self._has_permission(file, os.R_OK, 'read')
+
+
+class PathHandler:
+    def __init__(self, view=None):
+        self.view = view
 
     def get_pathinfo(self, path=None):
         try:
@@ -105,11 +331,18 @@ class Module(object):
 
         return {'path': path, 'cwd': cwd, 'base': base, 'stem': stem, 'suffix': suffix, 'ext': ext}
 
-    def update_environ(self):
+    @staticmethod
+    def is_valid_path(path):
+        return path and isinstance(path, str) and isfile(path) and os.access(path, os.R_OK)
+
+
+class EnvironmentHandler:
+    @staticmethod
+    def update_environ():
         try:
             environ = os.environ.copy()
 
-            for key, value in config.get('environ').items():
+            for key, value in CONFIG.get('environ').items():
                 if value and isinstance(value, list):
                     pathstring = environ.get(key, None)
                     items = list(filter(None, value))
@@ -154,7 +387,7 @@ class Module(object):
                             seen.add(normdir)
                             for f in files:
                                 file = join(dir, f)
-                                if self.is_executeable(file):
+                                if FileHandler().is_executable(file):
                                     return file
                 else:
                     log.error('"PATH" or default search path does not exist: %s', path)
@@ -164,6 +397,11 @@ class Module(object):
             log.error('File names variable is empty or not of type list: %s', fnames)
 
         return None
+
+
+class ProcessHandler:
+    def __init__(self, view=None):
+        self.view = view
 
     def popen(self, cmd, stdout=PIPE):
         info = None
@@ -176,8 +414,8 @@ class Module(object):
             info.wShowWindow = SW_HIDE
 
         # Input cmd must be a list of strings
-        process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=self.get_pathinfo()['cwd'],
-                        env=self.update_environ(), shell=False, startupinfo=info)
+        process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
+                        env=EnvironmentHandler().update_environ(), shell=False, startupinfo=info)
         return process
 
     def kill(self, process):
@@ -192,35 +430,49 @@ class Module(object):
         except Exception as e:
             log.error('Error terminating process: %s', e)
 
-    def is_alive(self, process):
+    @staticmethod
+    def is_alive(process):
         return process.poll() is None
 
-    def timeout(self):
-        timeout = config.get('timeout')
+    @staticmethod
+    def timeout():
+        timeout = CONFIG.get('timeout')
         return timeout if not isinstance(timeout, bool) and isinstance(timeout, int) else None
 
+
+class CommandHandler:
+    def __init__(self, view=None, uid=None, region=None):
+        self.view   = view
+        self.uid    = uid
+        self.region = region
+
     def exec_com(self, cmd):
-        timeout = self.timeout()
-        process = self.popen(cmd)
+        pm = ProcessHandler(view=self.view)
+        timeout = pm.timeout()
+        process = pm.popen(cmd)
+
         try:
             stdout, stderr = process.communicate(timeout=timeout)
         except TimeoutExpired:
-            self.kill(process)
-            return 1, None, 'Aborted due to expired timeout=%s (adjust this in Formatter settings)' % str(timeout)
+            pm.kill(process)
+            return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase timeout value in Formatter settings)' % str(timeout)
 
-        self.kill(process)
+        pm.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def _exec_file_or_pipe_cmd(self, cmd, outfile=None):
-        timeout = self.timeout()
-        process = self.popen(cmd, outfile or PIPE)
+        pm = ProcessHandler(view=self.view)
+        timeout = pm.timeout()
+        process = pm.popen(cmd, outfile or PIPE)
+        text = ViewHandler(view=self.view).get_text_from_region(self.region)
+
         try:
-            stdout, stderr = process.communicate(self.get_text_from_region(self.region).encode('utf-8'), timeout=timeout)
+            stdout, stderr = process.communicate(text.encode('utf-8'), timeout=timeout)
         except TimeoutExpired:
-            self.kill(process)
+            pm.kill(process)
             return 1, None, 'Aborted due to expired timeout=%s (adjust this in Formatter settings)' % str(timeout)
 
-        self.kill(process)
+        pm.kill(process)
         return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def exec_cmd(self, cmd, outfile=None):
@@ -232,41 +484,81 @@ class Module(object):
 
         return returncode, stdout, stderr
 
+    def get_success_code(self):
+        return int(OptionHandler().query(CONFIG, 0, 'formatters', self.uid, 'success_code'))
+
+    def print_exiterr(self, exitcode, stderr):
+        sep = '=' * 87
+        s = 'File not formatted due to an error (exitcode=%d)' % exitcode
+        log.status(s + '.' if StringHandler().is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
+
+    def print_oserr(self, cmd):
+        log.status('An error occurred while executing the command: %s', ' '.join(cmd))
+
+
+class ViewHandler:
+    def __init__(self, view=None):
+        self.view = view
+
     def get_text_from_region(self, region):
         return self.view.substr(region)
 
     def is_view_formattable(self):
         return not (self.view.is_read_only() or not self.view.window() or self.view.size() == 0)
 
-    def query(self, data_dict, default=None, *keys):
+
+class OptionHandler:
+    @staticmethod
+    def query(data_dict, default=None, *keys):
         for key in keys:
             if not isinstance(data_dict, (dict, sublime.Settings)):
                 return default
             data_dict = data_dict.get(key, default)
         return data_dict
 
+
+class TempFileHandler:
+    def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
+        self.view               = view
+        self.uid                = uid
+        self.region             = region
+        self.auto_format_config = auto_format_config
+
     def create_tmp_file(self, suffix=None):
         import tempfile
 
         if not suffix:
-            suffix = '.' + self.get_assigned_syntax()
+            uid, syntax = SyntaxHandler(view=self.view, uid=self.uid, region=self.region, auto_format_config=auto_format_config).get_assigned_syntax()
+            self.uid = uid
+            suffix = '.' + syntax
 
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=self.get_pathinfo()['cwd'], encoding='utf-8') as file:
-            file.write(self.get_text_from_region(self.region))
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=PathHandler(view=self.view).get_pathinfo()['cwd'], encoding='utf-8') as file:
+            file.write(ViewHandler(view=self.view).get_text_from_region(self.region))
             file.close()
             return file.name
 
         return None
 
-    def remove_tmp_file(self, tmp_file):
+    @staticmethod
+    def remove_tmp_file(tmp_file):
         if tmp_file and os.path.isfile(tmp_file):
             os.unlink(tmp_file)
 
+
+class ModeHandler:
+    def __init__(self, uid=None):
+        self.uid = uid
+
     def is_generic_mode(self):
-        formatter = self.query(config, {}, 'formatters', self.uid)
+        formatter = OptionHandler().query(CONFIG, {}, 'formatters', self.uid)
         name = formatter.get('name', None)
         typ = formatter.get('type', None)
         return bool(name and typ)
+
+
+class FolderHandler:
+    def __init__(self, view=None):
+        self.view = view
 
     def _get_active_view_parent_folders(self, active_file_path=None, max_depth=50):
         if not active_file_path:
@@ -284,13 +576,24 @@ class Module(object):
 
         return parent_folders
 
+
+class ArgumentHandler:
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, auto_format_config=None):
+        self.view               = view
+        self.uid                = uid
+        self.region             = region
+        self.interpreters       = interpreters
+        self.executables        = executables
+        self.dotfiles           = dotfiles
+        self.auto_format_config = auto_format_config
+
     def set_generic_local_executables(self):
-        if self.is_generic_mode():
-            path = self.query(config, None, 'formatters', self.uid, 'executable_path')
+        if ModeHandler(uid=self.uid).is_generic_mode():
+            path = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'executable_path')
             if isinstance(path, list):
-                self.executables = [self.get_pathinfo(p)['base'] for p in path]
+                self.executables = [PathHandler(view=self.view).get_pathinfo(p)['base'] for p in path]
             elif isinstance(path, str):
-                self.executables = [self.get_pathinfo(path)['base']]
+                self.executables = [PathHandler(view=self.view).get_pathinfo(path)['base']]
 
     def get_local_executable(self, runtime_type=None):
         self.set_generic_local_executables()
@@ -298,7 +601,7 @@ class Module(object):
         if not runtime_type or not self.executables:
             return None
 
-        parent_folders = self._get_active_view_parent_folders()
+        parent_folders = FolderHandler(view=self.view)._get_active_view_parent_folders()
         if parent_folders:
             paths = []
             if runtime_type == 'node':
@@ -314,7 +617,7 @@ class Module(object):
             if runtime_type == 'ruby':
                 pass
             for f in paths:
-                if self.is_executeable(f):
+                if FileHandler().is_executable(f):
                     log.debug('Local executable found: %s', f)
                     return f
         return None
@@ -327,7 +630,7 @@ class Module(object):
         else:
             return None
 
-        user_files = self.query(config, None, 'formatters', self.uid, what + '_path')
+        user_files = OptionHandler().query(CONFIG, None, 'formatters', self.uid, what + '_path')
 
         if isinstance(user_files, str):
             user_files = [user_files]
@@ -335,18 +638,18 @@ class Module(object):
             user_files = []
 
         for user_file in user_files:
-            a = self.get_pathinfo(user_file)
+            a = PathHandler(view=self.view).get_pathinfo(user_file)
             if a['path'] == a['base'] and not a['cwd']:
-                global_file = self.get_environ_path([user_file])
+                global_file = EnvironmentHandler().get_environ_path([user_file])
                 if global_file:
                     log.debug('Global %s found: %s', what, global_file)
                     return global_file
 
-            if self.is_executeable(user_file):
+            if FileHandler().is_executable(user_file):
                 log.debug('User %s found: %s', what, user_file)
                 return user_file
 
-        global_file = self.get_environ_path(fnames_list)
+        global_file = EnvironmentHandler().get_environ_path(fnames_list)
         if global_file:
             log.debug('Global %s found: %s', what, global_file)
             return global_file
@@ -367,7 +670,7 @@ class Module(object):
         return user_and_global_interpreter or None
 
     def get_iprexe_cmd(self, runtime_type=None):
-        user_files = self.query(config, None, 'formatters', self.uid, 'interpreter_path')
+        user_files = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'interpreter_path')
         if user_files:
             cmd = [self.get_interpreter(), self.get_executable(runtime_type)]
         else:
@@ -380,11 +683,143 @@ class Module(object):
             cmd.extend(self.get_args())
         return cmd if all(cmd) else None
 
-    def get_assigned_syntax(self, view=None, uid=None, region=None):
-        kwargs = self.kwargs if hasattr(self, 'kwargs') else {}
-        auto_format_config = kwargs.get('auto_format_config', {})
-        if auto_format_config:
-            for syntax, v in auto_format_config.items():
+    def get_args(self):
+        args = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'args')
+        return StringHandler().convert_list_items_to_string(args)
+
+    def get_config_path(self):
+        ignore_config_path = OptionHandler().query(CONFIG, [], 'quick_options', 'ignore_config_path')
+        if self.uid in ignore_config_path:
+            return None
+
+        shared_config = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'config_path')
+
+        if shared_config and isinstance(shared_config, dict):
+            uid, syntax = SyntaxHandler(view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config).get_assigned_syntax()
+            self.uid = uid
+
+            for k, v in DotFileHandler(view=self.view).get_cfgignore().items():
+                if (k.strip().lower() == syntax or k == 'default') and self.uid in v:
+                    return None
+
+            for key, path in shared_config.items():
+                if key.strip().lower() == syntax and PathHandler(view=self.view).is_valid_path(path):
+                    log.debug('Config [%s]: %s', syntax, path)
+                    return path
+
+            default_path = shared_config.get('default', None)
+            if PathHandler(view=self.view).is_valid_path(default_path):
+                log.debug('Config [default]: %s', default_path)
+                return default_path
+
+            log.warning('Could not obtain config file for syntax: %s', syntax)
+        else:
+            log.info('User specific "config_path" is not set: %s', shared_config)
+
+            dotfile_path = self._traverse_find_config_dotfile()
+            if dotfile_path:
+                return dotfile_path
+
+        log.info('Running third-party plugin without specifying any "config_path"')
+        return None
+
+    def _traverse_find_config_dotfile(self):
+        if not self.dotfiles:
+            return None
+
+        parent_folders = FolderHandler(view=self.view)._get_active_view_parent_folders()
+        candidate_paths = []
+
+        def should_stop_search(folder):
+            return any(isdir(join(folder, vcs_dir)) for vcs_dir in ['.git', '.hg'])
+
+        if parent_folders:
+            for folder in parent_folders:
+                candidate_paths.extend(join(folder, dotfile) for dotfile in self.dotfiles)
+                if should_stop_search(folder):
+                    break
+
+        xdg_config_home = os.getenv('XDG_CONFIG_HOME')
+        if xdg_config_home and not IS_WINDOWS:
+            candidate_paths.extend(join(xdg_config_home, dotfile) for dotfile in self.dotfiles)
+            for child in os.listdir(xdg_config_home):
+                candidate_paths.extend(join(xdg_config_home, child, dotfile) for dotfile in self.dotfiles)
+                break  # only look in the first child folder
+        else:
+            appdata = os.getenv('APPDATA')
+            if appdata:
+                candidate_paths.extend(join(appdata, dotfile) for dotfile in self.dotfiles)
+                for child in os.listdir(appdata):
+                    candidate_paths.extend(join(appdata, child, dotfile) for dotfile in self.dotfiles)
+                    break
+
+        for path in candidate_paths:
+            if FileHandler().is_readable(path):
+                log.debug('Auto-set "config_path" to the detected dot file: %s', path)
+                return path
+
+        return None
+
+    def fix_cmd(self, cmd):
+        fix_cmds = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'fix_commands')
+
+        if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
+            for x in fix_cmds:
+                if isinstance(x, list):
+                    l = len(x)
+
+                    if 3 <= l <= 5:
+                        search = str(x[l-5])
+                        replace = str(x[l-4])
+                        index = int(x[l-3])
+                        count = int(x[l-2])
+                        position = int(x[l-1])
+
+                        if isinstance(index, int) and isinstance(count, int) and isinstance(position, int):
+                            for i, item in enumerate(cmd):
+                                item = str(item)
+
+                                if index == i:
+                                    if l == 5:
+                                        if search == item and position < 0:
+                                            cmd.pop(i)
+                                        else:
+                                            cmd[i] = re.sub(r'%s' % search, replace, item, count)
+                                    if l == 4:
+                                        cmd[i] = replace
+                                    if l == 3 and position < 0:
+                                        cmd.pop(i)
+                                    if position > -1:
+                                        cmd.insert(position, cmd.pop(i))
+
+                            log.debug('Fixed arguments: %s', cmd)
+                        else:
+                            log.error('index, count and position of "fix_commands" must be of type int.')
+                            return None
+                    else:
+                        log.error('Length of each item in "fix_commands" must be between 3 and 5.')
+                        return None
+                else:
+                    log.error('Items of "fix_commands" must be of type list.')
+                    return None
+
+        return cmd
+
+    @staticmethod
+    def is_valid_cmd(cmd):
+        return all(isinstance(x, str) for x in cmd) if cmd and isinstance(cmd, list) else False
+
+
+class SyntaxHandler:
+    def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
+        self.view               = view
+        self.uid                = uid
+        self.region             = region
+        self.auto_format_config = auto_format_config
+
+    def get_assigned_syntax(self, view=None, uid=None, region=None):  # return tuple
+        if self.auto_format_config:
+            for syntax, v in self.auto_format_config.items():
                 self.uid = v.get('uid', None)
                 kwargs = {
                     'is_auto_format': True,
@@ -393,9 +828,10 @@ class Module(object):
                 }
                 syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
                 if syntax:
-                    return syntax
+                    return self.uid, syntax
         else:
-            return self._detect_assigned_syntax(view, uid, region)
+            syntax = self._detect_assigned_syntax(view, uid, region)
+            return self.uid, syntax
 
     def _detect_assigned_syntax(self, view=None, uid=None, region=None, **kwargs):
         if not all((view, uid, region)):
@@ -405,8 +841,8 @@ class Module(object):
             syntaxes = kwargs.get('syntaxes')
             exclude_syntaxes = kwargs.get('exclude_syntaxes')
         else:
-            syntaxes = self.query(config, None, 'formatters', uid, 'syntaxes')
-            exclude_syntaxes = self.query(config, None, 'formatters', uid, 'exclude_syntaxes')
+            syntaxes = OptionHandler().query(CONFIG, None, 'formatters', uid, 'syntaxes')
+            exclude_syntaxes = OptionHandler().query(CONFIG, None, 'formatters', uid, 'exclude_syntaxes')
 
         def should_exclude(syntax, scope):
             return (
@@ -460,19 +896,8 @@ class Module(object):
         #log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
         return None
 
-    def _read_config_file(self, paths, filenames):
-        config = {}
-        for path in reversed(paths):
-            for filename in filenames:
-                p = join(path, filename)
-                if isfile(p):
-                    try:
-                        with open(p, 'r', encoding='utf-8') as f:
-                            self.update_json_recursive(config, sublime.decode_value(f.read()))
-                    except Exception as e:
-                        log.error('Error reading %s at: %s', filename, p)
-        return config
 
+class StringHandler:
     def update_json_recursive(self, json_data, update_data):
         for key, value in update_data.items():
             if key in json_data and isinstance(value, dict) and isinstance(json_data[key], dict):
@@ -480,122 +905,74 @@ class Module(object):
             else:
                 json_data[key] = value
 
+    @staticmethod
+    def convert_list_items_to_string(lst):
+        return list(map(str, lst)) if lst and isinstance(lst, list) else []
+
+    @staticmethod
+    def is_empty_or_whitespace(s):
+        return s is not None and not s.strip()
+
+
+class DotFileHandler:
+    def __init__(self, view=None):
+        self.view = view
+
+    @staticmethod
+    def _read_config_file(paths, filenames):
+        config = {}
+        for path in reversed(paths):
+            for filename in filenames:
+                p = join(path, filename)
+                if isfile(p):
+                    try:
+                        with open(p, 'r', encoding='utf-8') as f:
+                            StringHandler().update_json_recursive(config, sublime.decode_value(f.read()))
+                    except Exception as e:
+                        log.error('Error reading %s at: %s', filename, p)
+        return config
+
     def get_cfgignore(self, active_file_path=None):
-        paths = self._get_active_view_parent_folders(active_file_path)
+        paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
         return self._read_config_file(paths, ['.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore'])
 
     def get_auto_format_config(self, active_file_path=None):
-        paths = self._get_active_view_parent_folders(active_file_path)
+        paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
         config = self._read_config_file(paths, ['.sublimeformatter.json', '.sublimeformatter'])
         if 'config' in config: config.pop('config')
         return {'auto_format_config': config} if config else {}
 
     def get_auto_format_user_config(self, active_file_path=None):
-        paths = self._get_active_view_parent_folders(active_file_path)
+        paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
         return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter-user'])
 
     def get_auto_format_args(self, active_file_path=None):
-        auto_format = self.query(config, {}, 'auto_format').copy()
+        auto_format = OptionHandler().query(CONFIG, {}, 'auto_format').copy()
         auto_format.update(self.get_auto_format_config(active_file_path).get('auto_format_config', {}))
         return {'auto_format_config': auto_format} if auto_format else {}
 
-    def _traverse_find_config_dotfile(self):
-        if not self.dotfiles:
-            return None
 
-        parent_folders = self._get_active_view_parent_folders()
-        candidate_paths = []
-
-        def should_stop_search(folder):
-            return any(isdir(join(folder, vcs_dir)) for vcs_dir in ['.git', '.hg'])
-
-        if parent_folders:
-            for folder in parent_folders:
-                candidate_paths.extend(join(folder, dotfile) for dotfile in self.dotfiles)
-                if should_stop_search(folder):
-                    break
-
-        xdg_config_home = os.getenv('XDG_CONFIG_HOME')
-        if xdg_config_home and not IS_WINDOWS:
-            candidate_paths.extend(join(xdg_config_home, dotfile) for dotfile in self.dotfiles)
-            for child in os.listdir(xdg_config_home):
-                candidate_paths.extend(join(xdg_config_home, child, dotfile) for dotfile in self.dotfiles)
-                break  # only look in the first child folder
-        else:
-            appdata = os.getenv('APPDATA')
-            if appdata:
-                candidate_paths.extend(join(appdata, dotfile) for dotfile in self.dotfiles)
-                for child in os.listdir(appdata):
-                    candidate_paths.extend(join(appdata, child, dotfile) for dotfile in self.dotfiles)
-                    break
-
-        for path in candidate_paths:
-            if self.is_readable(path):
-                log.debug('Auto-set "config_path" to the detected dot file: %s', path)
-                return path
-
-        return None
-
-    def get_config_path(self):
-        ignore_config_path = self.query(config, [], 'quick_options', 'ignore_config_path')
-        if self.uid in ignore_config_path:
-            return None
-
-        shared_config = self.query(config, None, 'formatters', self.uid, 'config_path')
-
-        if shared_config and isinstance(shared_config, dict):
-            syntax = self.get_assigned_syntax()
-
-            for k, v in self.get_cfgignore().items():
-                if (k.strip().lower() == syntax or k == 'default') and self.uid in v:
-                    return None
-
-            for key, path in shared_config.items():
-                if key.strip().lower() == syntax and self.is_valid_path(path):
-                    log.debug('Config [%s]: %s', syntax, path)
-                    return path
-
-            default_path = shared_config.get('default', None)
-            if self.is_valid_path(default_path):
-                log.debug('Config [default]: %s', default_path)
-                return default_path
-
-            log.warning('Could not obtain config file for syntax: %s', syntax)
-        else:
-            log.info('User specific "config_path" is not set: %s', shared_config)
-
-            dotfile_path = self._traverse_find_config_dotfile()
-            if dotfile_path:
-                return dotfile_path
-
-        log.info('Running third-party plugin without specifying any "config_path"')
-        return None
-
-    def is_valid_path(self, path):
-        return path and isinstance(path, str) and isfile(path) and os.access(path, os.R_OK)
-
-    @staticmethod
-    def convert_list_items_to_string(lst):
-        return list(map(str, lst)) if lst and isinstance(lst, list) else []
-
-    def get_args(self):
-        args = self.query(config, None, 'formatters', self.uid, 'args')
-        return self.convert_list_items_to_string(args)
+class GraphicHandler:
+    def __init__(self, view=None, uid=None, temp_dir=None, type=None):
+        self.view     = view
+        self.uid      = uid
+        self.temp_dir = temp_dir
+        self.type     = type
 
     def is_render_extended(self):
-        if self.query(config, {}, 'quick_options'):
-            render_extended = self.uid in self.query(config, [], 'quick_options', 'render_extended')
+        if OptionHandler().query(CONFIG, {}, 'quick_options'):
+            render_extended = self.uid in OptionHandler().query(CONFIG, [], 'quick_options', 'render_extended')
         else:
-            render_extended = self.query(config, False, 'formatters', self.uid, 'render_extended')
+            render_extended = OptionHandler().query(CONFIG, False, 'formatters', self.uid, 'render_extended')
 
         return isinstance(render_extended, bool) and render_extended
 
     def get_args_extended(self):
         if self.is_render_extended():
-            args_extended = self.query(config, {}, 'formatters', self.uid, 'args_extended')
+            args_extended = OptionHandler().query(CONFIG, {}, 'formatters', self.uid, 'args_extended')
             valid = {}
             for k, v in args_extended.items():
-                valid[k.strip().lower()] = self.convert_list_items_to_string(v)
+                valid[k.strip().lower()] = StringHandler().convert_list_items_to_string(v)
             return valid
         else:
             return {}
@@ -609,66 +986,17 @@ class Module(object):
         return [x.replace('png', 'svg') for x in cmd]
 
     def get_output_image(self):
-        temp_dir = self.kwargs.get('temp_dir', None)
-        if temp_dir and self.kwargs.get('type', None) == 'graphic':
-            temp_dir = join(temp_dir, GFX_OUT_NAME + '.png')
+        if self.temp_dir and self.type == 'graphic':
+            temp_dir = join(self.temp_dir, GFX_OUT_NAME + '.png')
             return temp_dir
         else:
             log.error('Wrong args param: get_output_image() is only applicable to type: graphic')
             return '!wrong_param!'
 
-    def get_success_code(self):
-        return int(self.query(config, 0, 'formatters', self.uid, 'success_code'))
 
-    def fix_cmd(self, cmd):
-        fix_cmds = self.query(config, None, 'formatters', self.uid, 'fix_commands')
-
-        if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
-            for x in fix_cmds:
-                if isinstance(x, list):
-                    l = len(x)
-
-                    if 3 <= l <= 5:
-                        search = str(x[l-5])
-                        replace = str(x[l-4])
-                        index = int(x[l-3])
-                        count = int(x[l-2])
-                        position = int(x[l-1])
-
-                        if isinstance(index, int) and isinstance(count, int) and isinstance(position, int):
-                            for i, item in enumerate(cmd):
-                                item = str(item)
-
-                                if index == i:
-                                    if l == 5:
-                                        if search == item and position < 0:
-                                            cmd.pop(i)
-                                        else:
-                                            cmd[i] = re.sub(r'%s' % search, replace, item, count)
-                                    if l == 4:
-                                        cmd[i] = replace
-                                    if l == 3 and position < 0:
-                                        cmd.pop(i)
-                                    if position > -1:
-                                        cmd.insert(position, cmd.pop(i))
-
-                            log.debug('Fixed arguments: %s', cmd)
-                        else:
-                            log.error('index, count and position of "fix_commands" must be of type int.')
-                            return None
-                    else:
-                        log.error('Length of each item in "fix_commands" must be between 3 and 5.')
-                        return None
-                else:
-                    log.error('Items of "fix_commands" must be of type list.')
-                    return None
-
-        return cmd
-
-    def is_valid_cmd(self, cmd):
-        return all(isinstance(x, str) for x in cmd) if cmd and isinstance(cmd, list) else False
-
-    def popup_message(self, text, title=None, dialog=False):
+class InterfaceHandler:
+    @staticmethod
+    def popup_message(text, title=None, dialog=False):
         template = u'%s' + (u' (%s)' if title else '') + u':\n\n%s'
         message = template % (PACKAGE_NAME, title, text) if title else template % (PACKAGE_NAME, text)
 
@@ -677,26 +1005,140 @@ class Module(object):
         else:
             sublime.error_message(message)
 
-    def is_empty_or_whitespace(self, s):
-        return s is not None and not s.strip()
 
-    def print_exiterr(self, exitcode, stderr):
-        sep = '=' * 87
-        s = 'File not formatted due to an error (exitcode=%d)' % exitcode
-        log.status(s + '.' if self.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
-
-    def print_oserr(self, cmd):
-        log.status('An error occurred while executing the command: %s', ' '.join(cmd))
-
+#################################################
+# === Base Class and Its Supporting Classes === #
+#################################################
 
 class Base(Module):
     '''
-    Extended API for universal use.
+    Extended API for universal use, inheriting all methods from the Module class.
+    This class is not used and is included here for documentation purposes only.
     '''
 
-    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, **kwargs):
-        super().__init__(view=view, uid=uid, region=region, interpreters=interpreters, executables=executables, **kwargs)
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
+        super().__init__(view=view, uid=uid, region=region, interpreters=interpreters, executables=executables, dotfiles=dotfiles, temp_dir=temp_dir, type=type, auto_format_config=auto_format_config, **kwargs)
 
+    def remove_junk(self):
+        instance = InstanceManager.get_instance('CleanupHandler')
+        return instance.remove_junk()
+
+    def clear_console(self):
+        instance = InstanceManager.get_instance('CleanupHandler')
+        return instance.clear_console()
+
+    def reload_modules(self, print_tree=False):
+        instance = InstanceManager.get_instance('ReloadHandler')
+        return instance.reload_modules(print_tree)
+
+    def setup_config(self):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.setup_config()
+
+    def load_sublime_preferences(self):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.load_sublime_preferences()
+
+    def setup_shared_config_files(self):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.setup_shared_config_files()
+
+    def is_quick_options_mode(self):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.is_quick_options_mode()
+
+    def get_mode_description(self, short=False):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.get_mode_description(short)
+
+    def set_debug_mode(self):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.set_debug_mode()
+
+    def is_generic_method(self, uid):
+        instance = InstanceManager.get_instance('ConfigHandler')
+        return instance.is_generic_method(uid)
+
+    def recursive_map(self, func, data):
+        instance = InstanceManager.get_instance('TransformHandler')
+        return instance.recursive_map(func, data)
+
+    def expand_path(self, path):
+        instance = InstanceManager.get_instance('TransformHandler')
+        return instance.expand_path(path)
+
+    def get_recursive_filelist(self, dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
+        instance = InstanceManager.get_instance('TransformHandler')
+        return instance.get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
+
+    def md5f(self, file_path):
+        instance = InstanceManager.get_instance('HashHandler')
+        return instance.md5f(file_path)
+
+    def md5d(self, dir_path):
+        instance = InstanceManager.get_instance('HashHandler')
+        return instance.md5d(dir_path)
+
+    def markdown_to_html(self, markdown):
+        instance = InstanceManager.get_instance('MarkdownHandler')
+        return instance.markdown_to_html(markdown)
+
+    def style_view(self, dst_view):
+        instance = InstanceManager.get_instance('PhantomHandler')
+        return instance.style_view(dst_view)
+
+    def set_html_phantom(self, dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data):
+        instance = InstanceManager.get_instance('PhantomHandler')
+        return instance.set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
+
+    def get_image_size(self, data):
+        instance = InstanceManager.get_instance('PhantomHandler')
+        return instance.get_image_size(data)
+
+    def image_scale_fit(self, view, image_width, image_height):
+        instance = InstanceManager.get_instance('PhantomHandler')
+        return instance.image_scale_fit(view, image_width, image_height)
+
+    def get_downloads_folder(self):
+        instance = InstanceManager.get_instance('PhantomHandler')
+        return instance.get_downloads_folder()
+
+    def assign_layout(self, layout):
+        instance = InstanceManager.get_instance('LayoutHandler')
+        return instance.assign_layout(layout)
+
+    def want_layout(self):
+        instance = InstanceManager.get_instance('LayoutHandler')
+        return instance.want_layout()
+
+    def setup_layout(self, view):
+        instance = InstanceManager.get_instance('LayoutHandler')
+        return instance.setup_layout(view)
+
+    def is_text_data(self, data):
+        instance = InstanceManager.get_instance('TextHandler')
+        return instance.is_text_data(data)
+
+    def is_text_file(self, file_path):
+        instance = InstanceManager.get_instance('TextHandler')
+        return instance.is_text_file(file_path)
+
+    def print_sysinfo(self, pretty=False):
+        instance = InstanceManager.get_instance('PrintHandler')
+        return instance.print_sysinfo(pretty)
+
+    def is_view(self, file_or_view):
+        instance = InstanceManager.get_instance('MiscHandler')
+        return instance.is_view(file_or_view)
+
+    def get_unique(self, data):
+        instance = InstanceManager.get_instance('MiscHandler')
+        return instance.get_unique(data)
+
+
+# === Base Supporting Classes === #
+
+class CleanupHandler:
     @staticmethod
     def remove_junk():
         try:
@@ -712,7 +1154,20 @@ class Base(Module):
             pass
 
     @staticmethod
-    def generate_ascii_tree(reloaded_modules, package_name):
+    def clear_console():
+        if SUBLIME_PREFERENCES:
+            current = SUBLIME_PREFERENCES.get('console_max_history_lines', None)
+            if current is None:
+                return  # not implemented in <ST4088
+
+            SUBLIME_PREFERENCES.set('console_max_history_lines', 1)
+            print('')
+            SUBLIME_PREFERENCES.set('console_max_history_lines', current)
+
+
+class ReloadHandler:
+    @staticmethod
+    def _generate_ascii_tree(reloaded_modules, package_name):
         tree = {}
 
         for module in reloaded_modules:
@@ -732,12 +1187,13 @@ class Base(Module):
         print_tree(tree[package_name], '')
 
     def reload_modules(self, print_tree=False):
-        reloaded_modules = []
+        import sys
 
+        reloaded_modules = []
         prefix = PACKAGE_NAME + '.'
         for module_name, module in tuple(filter(lambda item: item[0].startswith(prefix), sys.modules.items())):
             try:
-                reload(module)
+                del sys.modules[module_name]
                 reloaded_modules.append(module_name)
             except Exception as e:
                 log.error('Error reloading module %s: %s', module_name, str(e))
@@ -745,8 +1201,10 @@ class Base(Module):
 
         log.debug('Reloaded modules (Python %s)', '.'.join(map(str, sys.version_info[:3])))
         if print_tree:
-            self.generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
+            self._generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
 
+
+class ConfigHandler:
     @staticmethod
     def config_file():
         return PACKAGE_NAME + '.sublime-settings'
@@ -759,9 +1217,9 @@ class Base(Module):
     def load_settings(file):
         return sublime.load_settings(file)
 
-    def get_config(self):
+    def setup_config(self):
         settings = self.load_settings(self.config_file())
-        settings.add_on_change('@reload@', self.load_config)
+        settings.add_on_change('290c6488-3973-493b-9151-137042f0fa36', self.load_config)
         self.build_config(settings)
 
     def load_config(self):
@@ -777,32 +1235,33 @@ class Base(Module):
                     data = json.load(f)
                 quick_options = data
             else:
-                quick_options = config.get('quick_options', {})
+                quick_options = CONFIG.get('quick_options', {})
         except Exception as e:
             quick_options = {}
 
         return quick_options
 
-    def project_config_overwrites_config(self, config):
+    @staticmethod
+    def project_config_overwrites_config(config):
         project_data = sublime.active_window().project_data()
-        project_settings = self.query(project_data, {}, 'settings', PACKAGE_NAME)
+        project_settings = OptionHandler().query(project_data, {}, 'settings', PACKAGE_NAME)
         if project_settings:
-            self.update_json_recursive(config, project_settings)
+            StringHandler().update_json_recursive(config, project_settings)
 
     def load_sublime_preferences(self):
-        global sublime_preferences
+        global SUBLIME_PREFERENCES
 
         try:
-            sublime_preferences = self.load_settings('Preferences.sublime-settings')
+            SUBLIME_PREFERENCES = self.load_settings('Preferences.sublime-settings')
         except Exception as e:
-            sublime_preferences = {}
+            SUBLIME_PREFERENCES = {}
 
     def build_config(self, settings):
         try:
-            global config
+            global CONFIG
 
             # Sublime settings dict is immutable and unordered
-            config = {
+            c = {
                 'quick_options': self.load_quick_options(),
                 'debug': settings.get('debug', False),
                 'dev': settings.get('dev', False),
@@ -811,14 +1270,14 @@ class Base(Module):
                 'custom_modules': settings.get('custom_modules', {}),
                 'show_statusbar': settings.get('show_statusbar', True),
                 'show_words_count': {
-                    'enable': self.query(settings, True, 'show_words_count', 'enable'),
-                    'ignore_whitespace_char': self.query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
-                    'use_short_label': self.query(settings, False, 'show_words_count', 'use_short_label')
+                    'enable': OptionHandler().query(settings, True, 'show_words_count', 'enable'),
+                    'ignore_whitespace_char': OptionHandler().query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
+                    'use_short_label': OptionHandler().query(settings, False, 'show_words_count', 'use_short_label')
                 },
                 'remember_session': settings.get('remember_session', True),
                 'layout': {
-                    'enable': self.query(settings, '2cols', 'layout', 'enable'),
-                    'sync_scroll': self.query(settings, True, 'layout', 'sync_scroll')
+                    'enable': OptionHandler().query(settings, '2cols', 'layout', 'enable'),
+                    'sync_scroll': OptionHandler().query(settings, True, 'layout', 'sync_scroll')
                 },
                 'environ': settings.get('environ', {}),
                 'format_on_priority': settings.get('format_on_priority', {}),
@@ -827,41 +1286,188 @@ class Base(Module):
                 'formatters': settings.get('formatters', {})
             }
 
-            config['formatters'].pop('examplegeneric', None)
-            config['formatters'].pop('examplemodule', None)
-            self.project_config_overwrites_config(config)
-            config = self.recursive_map(self.expand_path, config)
-            return config
+            c['formatters'].pop('examplegeneric', None)
+            c['formatters'].pop('examplemodule', None)
+            self.project_config_overwrites_config(c)
+            c = TransformHandler().recursive_map(TransformHandler().expand_path, c)
+            CONFIG.update(c)
+            return c
         except Exception as e:
-            self.reload_modules(print_tree=False)
+            ReloadHandler().reload_modules(print_tree=False)
             sublime.set_timeout_async(self.load_config, 100)
 
     @staticmethod
-    def clear_console():
-        if sublime_preferences:
-            current = sublime_preferences.get('console_max_history_lines', None)
-            if current is None:
-                return  # <ST4088
+    def setup_shared_config_files():
+        src = 'Packages/' + PACKAGE_NAME + '/config'
+        dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
 
-            sublime_preferences.set('console_max_history_lines', 1)
-            print('')
-            sublime_preferences.set('console_max_history_lines', current)
+        try:
+            os.makedirs(dst, exist_ok=True)
+        except OSError as e:
+            if e.errno != os.errno.EEXIST:
+                log.warning('Could not create directory: %s', dst)
+            return None
+
+        if not isdir(dst):
+            log.warning('Could not create directory: %s', dst)
+            return None
+
+        for resource in sublime.find_resources('*'):
+            if resource.startswith(src):
+                file = basename(resource)
+                path = join(dst, file)
+
+                if isfile(path):
+                    try:
+                        res = sublime.load_binary_resource(resource)
+                        hash_src = hashlib.md5(res).hexdigest()
+                        hash_dst = HashHandler().md5f(path)
+                        master_path = '{0}.{2}{1}'.format(*splitext(path) + ('master',))
+                        hash_dst_master = HashHandler().md5f(master_path) if isfile(master_path) else None
+
+                        if hash_src != hash_dst and (not hash_dst_master or hash_src != hash_dst_master):
+                            with open(master_path, 'wb') as f:
+                                f.write(res)
+                        elif hash_dst_master:
+                            os.remove(master_path)
+
+                    except Exception as e:
+                        log.warning('Could not setup shared master config: %s\n%s', master_path, e)
+                else:
+                    try:
+                        res = sublime.load_binary_resource(resource)
+                        with open(path, 'wb') as f:
+                            f.write(res)
+                    except Exception as e:
+                        log.warning('Could not setup shared config: %s\n%s', path, e)
+
+        return True
 
     @staticmethod
-    def style_view(dst_view):
-        style = {
-            'highlight_line': False,
-            'highlight_gutter': False,
-            'highlight_line_number': False,
-            'block_caret': False,
-            'gutter': False,
-            'word_wrap': False
+    def is_quick_options_mode():
+        return OptionHandler().query(CONFIG, {}, 'quick_options')
+
+    def get_mode_description(self, short=False):
+        qo_memory = self.sort_dict(self.is_quick_options_mode())
+
+        try:
+            file = self.quick_options_config_file()
+            with open(file, 'r', encoding='utf-8') as f:
+                qo_file = self.sort_dict(json.load(f))
+        except FileNotFoundError:
+            log.error('The file %s was not found.', file)
+            qo_file = None
+        except json.JSONDecodeError as e:
+            log.error('Error decoding JSON: %s', e)
+            qo_file = None
+        except Exception as e:
+            log.error('An error occurred: %s', e)
+            qo_file = None
+
+        mode_descriptions = {
+            'Permanent User Settings': 'PUS',
+            'Permanent Quick Options': 'PQO',
+            'Temporary Quick Options': 'TQO'
         }
 
-        for k, v in style.items():
-            if dst_view.settings().get(k):
-                dst_view.settings().set(k, v)
+        if not qo_file and not qo_memory:
+            mode = 'Permanent User Settings'
+        elif qo_file != qo_memory:
+            mode = 'Temporary Quick Options'
+        elif qo_file:
+            mode = 'Permanent Quick Options'
 
+        return mode_descriptions[mode] if short else mode
+
+    def sort_dict(self, dictionary):
+        sorted_dict = {}
+        for key, value in sorted(dictionary.items()):
+            if isinstance(value, dict):
+                sorted_dict[key] = self.sort_dict(value)
+            elif isinstance(value, list):
+                sorted_dict[key] = sorted(value)
+            else:
+                sorted_dict[key] = value
+        return sorted_dict
+
+    def set_debug_mode(self):
+        if self.is_quick_options_mode():
+            debug = OptionHandler().query(CONFIG, False, 'quick_options', 'debug')
+        else:
+            debug = CONFIG.get('debug')
+
+        if debug == 'status':
+            enable_status()
+        elif (isinstance(debug, str) and debug.strip().lower() == 'true') or (debug == True):
+            enable_logging()
+        else:
+            disable_logging()
+
+    @staticmethod
+    def is_generic_method(uid):
+        name = OptionHandler().query(CONFIG, None, 'formatters', uid, 'name')
+        return name is not None
+
+
+class TransformHandler:
+    def recursive_map(self, func, data):
+        if isinstance(data, dict):
+            return dict(map(lambda item: (item[0], self.recursive_map(func, item[1])), data.items()))
+        elif isinstance(data, list):
+            return list(map(lambda x: self.recursive_map(func, x), data))
+        else:
+            return func(data)
+
+    @staticmethod
+    def expand_path(path):
+        if path and isinstance(path, str):
+            path = normpath(expanduser(expandvars(path)))
+            path = sublime.expand_variables(path, sublime.active_window().extract_variables())
+        return path
+
+    @staticmethod
+    def get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
+        text_files = []
+
+        for root, dirs, files in os.walk(dir):
+            dirs[:] = [d for d in dirs if not any(re.match(pattern, d) for pattern in exclude_dirs_regex) and d not in [RECURSIVE_SUCCESS_DIRECTORY, RECURSIVE_FAILURE_DIRECTORY]]
+
+            for file in files:
+                p = PathHandler(view=None).get_pathinfo(file)
+                if p['ext'] in exclude_extensions or not p['ext'] and p['base'] == p['stem'] and p['stem'] in exclude_extensions:
+                    continue
+                if any(re.match(pattern, file) for pattern in exclude_files_regex):
+                    continue
+                file_path = join(root, file)
+                if TextHandler().is_text_file(file_path):
+                    text_files.append(file_path)
+
+        return text_files
+
+
+class HashHandler:
+    @staticmethod
+    def md5f(file_path):
+        hash_md5 = hashlib.md5()
+
+        with open(file_path, 'rb') as f:
+            for chunk in iter(lambda: f.read(8192), b''):
+                hash_md5.update(chunk)
+
+        return hash_md5.hexdigest()
+
+    def md5d(self, dir_path):
+        hash_md5 = hashlib.md5()
+
+        for root, _, files in os.walk(dir_path):
+            for file in files:
+                file_path = join(root, file)
+                hash_md5.update(self.md5f(file_path).encode('utf-8'))
+
+        return hash_md5.hexdigest()
+
+
+class MarkdownHandler:
     @staticmethod
     def markdown_to_html(markdown):
         html = []
@@ -946,6 +1552,23 @@ class Base(Module):
         </body>
         '''
 
+
+class PhantomHandler:
+    @staticmethod
+    def style_view(dst_view):
+        style = {
+            'highlight_line': False,
+            'highlight_gutter': False,
+            'highlight_line_number': False,
+            'block_caret': False,
+            'gutter': False,
+            'word_wrap': False
+        }
+
+        for k, v in style.items():
+            if dst_view.settings().get(k):
+                dst_view.settings().set(k, v)
+
     def set_html_phantom(self, dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data):
         self.style_view(dst_view)
 
@@ -1003,64 +1626,29 @@ class Base(Module):
 
         return image_width, image_height
 
-    def is_generic_method(self):
-        name = self.query(config, None, 'formatters', self.kwargs.get('uid'), 'name')
-        return name is not None
-
-    def is_quick_options_mode(self):
-        return self.query(config, {}, 'quick_options')
-
-    def sort_dict(self, dictionary):
-        sorted_dict = {}
-        for key, value in sorted(dictionary.items()):
-            if isinstance(value, dict):
-                sorted_dict[key] = self.sort_dict(value)
-            elif isinstance(value, list):
-                sorted_dict[key] = sorted(value)
-            else:
-                sorted_dict[key] = value
-        return sorted_dict
-
-    def get_mode_description(self, short=False):
-        qo_memory = self.sort_dict(self.is_quick_options_mode())
+    @staticmethod
+    def get_downloads_folder():
+        downloads_folder = join(expanduser('~'), 'Downloads')
 
         try:
-            file = self.quick_options_config_file()
-            with open(file, 'r', encoding='utf-8') as f:
-                qo_file = self.sort_dict(json.load(f))
-        except FileNotFoundError:
-            log.error('The file %s was not found.', file)
-            qo_file = None
-        except json.JSONDecodeError as e:
-            log.error('Error decoding JSON: %s', e)
-            qo_file = None
+            os.makedirs(downloads_folder, exist_ok=True)
         except Exception as e:
-            log.error('An error occurred: %s', e)
-            qo_file = None
+            return tempfile.TemporaryDirectory()
 
-        mode_descriptions = {
-            'Permanent User Settings': 'PUS',
-            'Permanent Quick Options': 'PQO',
-            'Temporary Quick Options': 'TQO'
-        }
+        return downloads_folder
 
-        if not qo_file and not qo_memory:
-            mode = 'Permanent User Settings'
-        elif qo_file != qo_memory:
-            mode = 'Temporary Quick Options'
-        elif qo_file:
-            mode = 'Permanent Quick Options'
 
-        return mode_descriptions[mode] if short else mode
-
-    def assign_layout(self, layout):
+class LayoutHandler:
+    @staticmethod
+    def assign_layout(layout):
         return LAYOUTS.get(layout, None)
 
-    def want_layout(self):
-        return self.query(config, False, 'layout', 'enable') in LAYOUTS
+    @staticmethod
+    def want_layout():
+        return OptionHandler().query(CONFIG, False, 'layout', 'enable') in LAYOUTS
 
     def setup_layout(self, view):
-        layout = self.query(config, False, 'layout', 'enable')
+        layout = OptionHandler().query(CONFIG, False, 'layout', 'enable')
 
         if layout in LAYOUTS:
             view.window().set_layout(self.assign_layout(layout))
@@ -1068,99 +1656,18 @@ class Base(Module):
 
         return False
 
-    def recursive_map(self, func, data):
-        if isinstance(data, dict):
-            return dict(map(lambda item: (item[0], self.recursive_map(func, item[1])), data.items()))
-        elif isinstance(data, list):
-            return list(map(lambda x: self.recursive_map(func, x), data))
-        else:
-            return func(data)
 
-    def setup_shared_config_files(self):
-        src = 'Packages/' + PACKAGE_NAME + '/config'
-        dst = join(sublime.packages_path(), 'User', ASSETS_DIRECTORY, 'config')
-
-        try:
-            os.makedirs(dst, exist_ok=True)
-        except OSError as e:
-            if e.errno != os.errno.EEXIST:
-                log.warning('Could not create directory: %s', dst)
-            return None
-
-        if not isdir(dst):
-            log.warning('Could not create directory: %s', dst)
-            return None
-
-        for resource in sublime.find_resources('*'):
-            if resource.startswith(src):
-                file = basename(resource)
-                path = join(dst, file)
-
-                if isfile(path):
-                    try:
-                        res = sublime.load_binary_resource(resource)
-                        hash_src = hashlib.md5(res).hexdigest()
-                        hash_dst = self.md5f(path)
-                        master_path = '{0}.{2}{1}'.format(*splitext(path) + ('master',))
-                        hash_dst_master = self.md5f(master_path) if isfile(master_path) else None
-
-                        if hash_src != hash_dst and (not hash_dst_master or hash_src != hash_dst_master):
-                            with open(master_path, 'wb') as f:
-                                f.write(res)
-                        elif hash_dst_master:
-                            os.remove(master_path)
-
-                    except Exception as e:
-                        log.warning('Could not setup shared master config: %s\n%s', master_path, e)
-                else:
-                    try:
-                        res = sublime.load_binary_resource(resource)
-                        with open(path, 'wb') as f:
-                            f.write(res)
-                    except Exception as e:
-                        log.warning('Could not setup shared config: %s\n%s', path, e)
-
-        return True
-
-    def md5f(self, file_path):
-        hash_md5 = hashlib.md5()
-
-        with open(file_path, 'rb') as f:
-            for chunk in iter(lambda: f.read(8192), b''):
-                hash_md5.update(chunk)
-
-        return hash_md5.hexdigest()
-
-    def md5d(self, dir_path):
-        hash_md5 = hashlib.md5()
-
-        for root, _, files in os.walk(dir_path):
-            for file in files:
-                file_path = join(root, file)
-                hash_md5.update(self.md5f(file_path).encode('utf-8'))
-
-        return hash_md5.hexdigest()
-
-    def print_sysinfo(self, pretty=False):
-        if self.query(config, False, 'environ', 'print_on_console'):
-            log.info('Environments:\n%s', json.dumps(self.update_environ(), ensure_ascii=False, indent=4 if pretty else None))
-
-            if self.is_quick_options_mode():
-                log.info('Mode: Quick Options: \n%s', json.dumps(self.query(config, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
-            else:
-                log.info('Mode: User Settings')
-
-    def is_view(self, file_or_view):
-        return (type(file_or_view) is sublime.View)
-
-    def is_text_data(self, data):
+class TextHandler:
+    @staticmethod
+    def is_text_data(data):
         try:
             data = data.decode('utf-8')
             return data
         except (UnicodeDecodeError, AttributeError):
             return False
 
-    def is_text_file(self, file_path):
+    @staticmethod
+    def is_text_file(file_path):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 try:
@@ -1171,7 +1678,26 @@ class Base(Module):
         except UnicodeDecodeError:
             return False
 
-    def get_unique(self, data):
+
+class PrintHandler:
+    @staticmethod
+    def print_sysinfo(pretty=False):
+        if OptionHandler().query(CONFIG, False, 'environ', 'print_on_console'):
+            log.info('Environments:\n%s', json.dumps(EnvironmentHandler().update_environ(), ensure_ascii=False, indent=4 if pretty else None))
+
+            if ConfigHandler().is_quick_options_mode():
+                log.info('Mode: Quick Options: \n%s', json.dumps(OptionHandler().query(CONFIG, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
+            else:
+                log.info('Mode: User Settings')
+
+
+class MiscHandler:  # unused
+    @staticmethod
+    def is_view(file_or_view):
+        return (type(file_or_view) is sublime.View)
+
+    @staticmethod
+    def get_unique(data):
         if isinstance(data, list):
             unique_list = []
             for item in data:
@@ -1190,63 +1716,3 @@ class Base(Module):
             return unique_dict
         else:
             raise ValueError('Input data type not supported')
-
-    def get_recursive_filelist(self, dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
-        text_files = []
-
-        for root, dirs, files in os.walk(dir):
-            dirs[:] = [d for d in dirs if not any(re.match(pattern, d) for pattern in exclude_dirs_regex) and d not in [RECURSIVE_SUCCESS_DIRECTORY, RECURSIVE_FAILURE_DIRECTORY]]
-
-            for file in files:
-                p = self.get_pathinfo(file)
-                if p['ext'] in exclude_extensions or not p['ext'] and p['base'] == p['stem'] and p['stem'] in exclude_extensions:
-                    continue
-                if any(re.match(pattern, file) for pattern in exclude_files_regex):
-                    continue
-                file_path = join(root, file)
-                if self.is_text_file(file_path):
-                    text_files.append(file_path)
-
-        return text_files
-
-    def expand_path(self, path):
-        if path and isinstance(path, str):
-            path = normpath(expanduser(expandvars(path)))
-            path = sublime.expand_variables(path, sublime.active_window().extract_variables())
-        return path
-
-    def get_downloads_folder(self):
-        downloads_folder = join(expanduser('~'), 'Downloads')
-
-        try:
-            os.makedirs(downloads_folder, exist_ok=True)
-        except Exception as e:
-            return tempfile.TemporaryDirectory()
-
-        return downloads_folder
-
-    def set_debug_mode(self):
-        if self.is_quick_options_mode():
-            debug = self.query(config, False, 'quick_options', 'debug')
-        else:
-            debug = config.get('debug')
-
-        if debug == 'status':
-            enable_status()
-        elif (isinstance(debug, str) and debug.strip().lower() == 'true') or (debug == True):
-            enable_logging()
-        else:
-            disable_logging()
-
-
-'''
-Static helper API
-'''
-
-def read_settings_file(settings_file):
-    try:
-        with open(settings_file, 'r', encoding='utf-8') as f:
-            file_content = f.read()
-            return sublime.decode_value(file_content)
-    except Exception as e:
-        return {}

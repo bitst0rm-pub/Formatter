@@ -1,8 +1,8 @@
-from . import (log, common)
+from . import (log, Module)
 from ..modules import formatter_map
 
 
-class Formatter(common.Module):
+class Formatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.kwargs = kwargs

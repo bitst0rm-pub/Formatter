@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['bibtex-tidy']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class BibtextidyFormatter(common.Module):
+class BibtextidyFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

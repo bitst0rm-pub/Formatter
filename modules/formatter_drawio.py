@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['drawio', 'draw.io']
 DOTFILES = []
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class DrawioFormatter(common.Module):
+class DrawioFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

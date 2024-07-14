@@ -1,7 +1,9 @@
+import re
+
 import sublime
 import sublime_plugin
 
-from . import (log, common)
+from . import (log, CONFIG, OptionHandler)
 from .constants import STATUS_KEY
 
 
@@ -21,7 +23,7 @@ class WordsCounter:
 
     def count_characters(self, text):
         if self.ignore_whitespace_char:
-            return len(common.re.sub(r'\s', '', text))
+            return len(re.sub(r'\s', '', text))
         else:
             return len(text)
 
@@ -89,10 +91,10 @@ class WordsCounter:
             pass
 
 
-class WordsCounterListener(sublime_plugin.EventListener, common.Base):
+class WordsCounterListener(sublime_plugin.EventListener):
     def on_selection_modified_async(self, view):
-        if self.query(common.config, False, 'show_words_count', 'enable'):
-            ignore_whitespace_char = self.query(common.config, True, 'show_words_count', 'ignore_whitespace_char')
-            use_short_label = self.query(common.config, False, 'show_words_count', 'use_short_label')
+        if OptionHandler().query(CONFIG, False, 'show_words_count', 'enable'):
+            ignore_whitespace_char = OptionHandler().query(CONFIG, True, 'show_words_count', 'ignore_whitespace_char')
+            use_short_label = OptionHandler().query(CONFIG, False, 'show_words_count', 'use_short_label')
             view.settings().set('show_line_column', 'disabled')
             WordsCounter(view, ignore_whitespace_char, use_short_label).run_on_selection_modified()

@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['fourmolu']
 DOTFILES = ['fourmolu.yaml']
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class FourmoluFormatter(common.Module):
+class FourmoluFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

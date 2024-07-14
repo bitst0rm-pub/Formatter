@@ -1,22 +1,23 @@
-import os
 import json
 import threading
-from datetime import datetime, timedelta
+from os import makedirs
+from os.path import (join, dirname)
+from datetime import (datetime, timedelta)
 
 import sublime
 import sublime_plugin
 
-from . import (log, common)
+from . import (log, CONFIG, OptionHandler)
 
 
-SESSION_FILE = common.join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
+SESSION_FILE = join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
 MAX_AGE_DAYS = 180
 MAX_DATABASE_RECORDS = 600
 
 
 class SessionManager:
     def __init__(self, max_database_records=MAX_DATABASE_RECORDS):
-        os.makedirs(common.dirname(SESSION_FILE), exist_ok=True)
+        makedirs(dirname(SESSION_FILE), exist_ok=True)
         self.lock = threading.Lock()
         self.max_database_records = max_database_records
         self.cleanup_session_file()
@@ -161,14 +162,14 @@ class SessionManager:
                     self.restore_bookmarks(view, file_path)
 
 
-class SessionManagerListener(sublime_plugin.EventListener, common.Base):
+class SessionManagerListener(sublime_plugin.EventListener):
     def __init__(self, *args, **kwargs):
         self.session_manager = SessionManager(max_database_records=600)
 
     def on_load(self, view):
-        if self.query(common.config, True, 'remember_session'):
+        if OptionHandler().query(CONFIG, True, 'remember_session'):
             self.session_manager.run_on_load(view)
 
     def on_pre_close(self, view):
-        if self.query(common.config, True, 'remember_session'):
+        if OptionHandler().query(CONFIG, True, 'remember_session'):
             self.session_manager.run_on_pre_close(view)

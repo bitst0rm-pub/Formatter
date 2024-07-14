@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['swift-format']
 DOTFILES = ['.swift-format']
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class AppleswiftformatFormatter(common.Module):
+class AppleswiftformatFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

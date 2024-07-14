@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['php']
 EXECUTABLES = ['phpcbf.phar']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class PhpcbfFormatter(common.Module):
+class PhpcbfFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

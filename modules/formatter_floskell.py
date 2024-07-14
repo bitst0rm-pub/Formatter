@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['floskell']
 DOTFILES = ['floskell.json', '.floskell.json']
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class FloskellFormatter(common.Module):
+class FloskellFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

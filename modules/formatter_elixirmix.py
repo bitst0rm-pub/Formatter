@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['mix']
 DOTFILES = ['.formatter.exs']
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class ElixirmixFormatter(common.Module):
+class ElixirmixFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

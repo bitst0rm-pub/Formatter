@@ -1,5 +1,5 @@
 %YAML 1.2
-# Color is controlled by the Default color scheme and cannot be customized.
+# The color is determined by the Default color scheme and cannot be customized.
 # @see: https://forum.sublimetext.com/t/change-the-bg-color-of-the-build-panel-new-st2-build-2165/3799/6
 ---
 name: Console
@@ -25,14 +25,9 @@ contexts:
         - match: '\[STATUS\]'
           scope: constant.character.escape.console
         - match: 'Command:\s*\['
-          push:
-            - match: '\]'
-              pop: true
-            - match: "'([^']+)'"
-              captures:
-                1: keyword.console
-            - match: ','
-              scope: punctuation.separator.console
+          push: command_arguments
+        - match: 'Extended commands:\s*\['
+          push: extended_arguments
         - match: '(Syntax|UID|method):\s*([^\s\(\)]+)'
           captures:
             2: string.console
@@ -61,3 +56,18 @@ contexts:
           pop: true
     - match: '[^\n]+'
       scope: text.console
+
+  command_arguments:
+    - match: '\]'
+      pop: true
+    - match: "'([^']+)'"
+      captures:
+        1: keyword.console
+    - match: ','
+      scope: punctuation.separator.console
+
+  extended_arguments:
+    - match: '\]'
+      pop: true
+    - match: '\['
+      push: command_arguments

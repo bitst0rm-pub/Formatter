@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['autopep8']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class Autopep8Formatter(common.Module):
+class Autopep8Formatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

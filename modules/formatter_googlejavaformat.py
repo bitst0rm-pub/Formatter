@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['java']
 EXECUTABLES = ['google-java-format-all-deps.jar']
@@ -22,7 +23,7 @@ MODULE_CONFIG = {
 }
 
 
-class GooglejavaformatFormatter(common.Module):
+class GooglejavaformatFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

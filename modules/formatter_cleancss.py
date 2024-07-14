@@ -1,6 +1,7 @@
 import sublime
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['cleancss']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class CleancssFormatter(common.Module):
+class CleancssFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

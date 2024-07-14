@@ -1,6 +1,7 @@
 import sublime
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['beautysh']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class BeautyshFormatter(common.Module):
+class BeautyshFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

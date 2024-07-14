@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['d2']
 DOTFILES = []
@@ -17,7 +18,7 @@ MODULE_CONFIG = {
 }
 
 
-class D2fmtFormatter(common.Module):
+class D2fmtFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

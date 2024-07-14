@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['perl', 'perl5']
 EXECUTABLES = ['latexindent.pl', 'latexindent', 'latexindent-macos', 'latexindent-linux']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class LatexindentFormatter(common.Module):
+class LatexindentFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

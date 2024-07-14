@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['perl']
 EXECUTABLES = ['pg_format']
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class PgformatFormatter(common.Module):
+class PgformatFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -39,7 +39,7 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 - Plugins:
-  - *`eslint_d`*: Drop support for Eslint v8.57.0+ (using flat config files `eslint.config.*`) untill this upstream bug is fixed: [#281](https://github.com/mantoni/eslint_d.js/issues/281)
+  - *`eslint_d`*: Drop support for Eslint v8.57.0+ (using flat config files `eslint.config.*`) until this upstream bug is fixed: [#281](https://github.com/mantoni/eslint_d.js/issues/281)
 
 _Formatter in action: Text-to-Text..._
 
@@ -832,7 +832,8 @@ EXECUTABLES = []                                            # REQUIRED: fallback
 DOTFILES = []                                               # optional: names list of the per-project config dotfiles
 MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
 
-class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+
+class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
@@ -845,7 +846,8 @@ Details as an example:
 
 ```py
 from .. import log                                          # REQUIRED: log to debugging this file
-from ..core import common                                   # REQUIRED: a collection of APIs to assist in running this file
+from ..core.common import Module                            # REQUIRED: a collection of APIs to assist in running this file
+
 
 INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
 EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
@@ -871,7 +873,7 @@ MODULE_CONFIG = {                                           # REQUIRED: template
 }
 
 
-class ThisismyfirstpluginmoduleFormatter(common.Module):    # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
     def __init__(self, *args, **kwargs):                    # REQUIRED: initialization
         super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
@@ -942,7 +944,7 @@ _Formatter.sublime-settings_
 ### 4. API:
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br/>
-Responsible for handling plugin modules is the class: `class Module(object)`:
+Responsible for handling plugin modules is the class: `class Module:`:
 
 - Essentially for the `def get_cmd(self)` function:
 

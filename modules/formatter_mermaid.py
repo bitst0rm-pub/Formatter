@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['mmdc']
 DOTFILES = []
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class MermaidFormatter(common.Module):
+class MermaidFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

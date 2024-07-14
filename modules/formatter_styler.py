@@ -1,6 +1,7 @@
 import re
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['R']
 DOTFILES = []
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class StylerFormatter(common.Module):
+class StylerFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

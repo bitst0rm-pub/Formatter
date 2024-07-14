@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['goimports']
 DOTFILES = []
@@ -17,7 +18,7 @@ MODULE_CONFIG = {
 }
 
 
-class GoimportsFormatter(common.Module):
+class GoimportsFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

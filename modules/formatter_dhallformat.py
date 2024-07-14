@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['dhall']
 DOTFILES = []
@@ -17,7 +18,7 @@ MODULE_CONFIG = {
 }
 
 
-class DhallformatFormatter(common.Module):
+class DhallformatFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

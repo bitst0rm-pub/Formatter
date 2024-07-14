@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['hindent']
 DOTFILES = ['.hindent.yaml']
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class HindentFormatter(common.Module):
+class HindentFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

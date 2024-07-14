@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['ruby']
 EXECUTABLES = ['rubocop']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class RubocopFormatter(common.Module):
+class RubocopFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -2,7 +2,8 @@
 
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['dot']
 DOTFILES = []
@@ -21,7 +22,7 @@ MODULE_CONFIG = {
 }
 
 
-class GraphvizFormatter(common.Module):
+class GraphvizFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

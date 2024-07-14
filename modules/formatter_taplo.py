@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['taplo']
 DOTFILES = ['.taplo.toml', 'taplo.toml']
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class TaploFormatter(common.Module):
+class TaploFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['ocamlformat']
 DOTFILES = ['.ocamlformat']
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class OcamlformatFormatter(common.Module):
+class OcamlformatFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -1,11 +1,20 @@
 import re
 import uuid
 import json
+import hashlib
+from os import makedirs
+from os.path import (join, isfile)
 from collections import OrderedDict
 
 import sublime
 
-from . import (log, common)
+from . import (
+    log,
+    ConfigHandler,
+    CONFIG,
+    HashHandler
+)
+
 from .constants import (
     PACKAGE_NAME,
     ASSETS_DIRECTORY,
@@ -76,7 +85,7 @@ def build_sublime_menu_children(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    formatters = common.config.get('formatters', {})
+    formatters = CONFIG.get('formatters', {})
     for uid, v in formatters.items():
         name = v.get('name', None)
         typ = v.get('type', None)
@@ -282,7 +291,7 @@ def build_formatter_sublime_commands_children(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    formatters = common.config.get('formatters', {})
+    formatters = CONFIG.get('formatters', {})
     for uid, v in formatters.items():
         name = v.get('name', None)
         typ = v.get('type', None)
@@ -383,7 +392,7 @@ def build_example_sublime_keymap(formatter_map):
             target_list = type_to_list.get(config['type'], custom)
             target_list.append(child)
 
-    formatters = common.config.get('formatters', {})
+    formatters = CONFIG.get('formatters', {})
     for uid, v in formatters.items():
         name = v.get('name', None)
         typ = v.get('type', None)
@@ -481,7 +490,7 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             config_path = config.get('config_path', None)
             if config_path is not None and isinstance(config_path, dict) and len(config_path) > 0:
-                child['config_path'] = {key: common.join('${packages}', 'User', ASSETS_DIRECTORY, 'config', value) for key, value in config['config_path'].items()}
+                child['config_path'] = {key: join('${packages}', 'User', ASSETS_DIRECTORY, 'config', value) for key, value in config['config_path'].items()}
                 default_value = child['config_path'].pop('default', None)
                 sorted_config_path = OrderedDict(sorted(child['config_path'].items()))
                 if default_value:
@@ -888,10 +897,10 @@ def build_formatter_sublime_settings(formatter_map):
     return strip_trailing(json_text)
 
 def create_package_config_files():
-    directory = common.join(sublime.packages_path(), PACKAGE_NAME)
+    directory = join(sublime.packages_path(), PACKAGE_NAME)
 
     try:
-        common.os.makedirs(directory, exist_ok=True)
+        makedirs(directory, exist_ok=True)
     except OSError as e:
         if e.errno != os.errno.EEXIST:
             log.error('Could not create directory: %s', directory)
@@ -905,16 +914,16 @@ def create_package_config_files():
         'Formatter.sublime-settings': build_formatter_sublime_settings
     }
 
+    # Import must be included here, not in the header
     from ..modules import formatter_map
-    api = common.Base()
 
     for file_name, build_function in file_functions.items():
         try:
             text = build_function(formatter_map)
-            file = common.join(directory, file_name)
-            if common.isfile(file):
-                hash_src = common.hashlib.md5(text.encode('utf-8')).hexdigest()
-                hash_dst = api.md5f(file)
+            file = join(directory, file_name)
+            if isfile(file):
+                hash_src = hashlib.md5(text.encode('utf-8')).hexdigest()
+                hash_dst = HashHandler().md5f(file)
                 if hash_src == hash_dst:
                     continue
 
@@ -925,8 +934,8 @@ def create_package_config_files():
             return False
 
     try:
-        for file in [common.join(directory, QUICK_OPTIONS_SETTING_FILE), api.quick_options_config_file()]:
-            if not common.isfile(file):
+        for file in [join(directory, QUICK_OPTIONS_SETTING_FILE), ConfigHandler().quick_options_config_file()]:
+            if not isfile(file):
                 with open(file, 'w', encoding='utf-8') as f:
                     json.dump({}, f, ensure_ascii=False, indent=4)
     except Exception as e:

@@ -1,7 +1,8 @@
 import os
 import tempfile
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettydiff']
@@ -22,7 +23,7 @@ MODULE_CONFIG = {
 }
 
 
-class PrettydiffminFormatter(common.Module):
+class PrettydiffminFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

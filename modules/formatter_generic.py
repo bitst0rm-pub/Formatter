@@ -1,9 +1,9 @@
 import re
 from .. import log
-from ..core import common
+from ..core.common import Module
 
 
-class GenericFormatter(common.Module):
+class GenericFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.kwargs = kwargs
@@ -73,7 +73,7 @@ class GenericFormatter(common.Module):
             if isinstance(v, list):
                 cmd_list.append([item.replace(common.GFX_OUT_NAME + '.png', common.GFX_OUT_NAME + '.' + k) for item in self.rebuild_cmd(v)])
 
-        log.debug('Current extended arguments: %s', cmd_list)
+        log.debug('Extended commands: %s', cmd_list)
 
         return cmd_list
 

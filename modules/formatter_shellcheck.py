@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['shellcheck']
 DOTFILES = ['.shellcheckrc', 'shellcheckrc']
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class ShellcheckFormatter(common.Module):
+class ShellcheckFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['sql-formatter']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class SqlformatterFormatter(common.Module):
+class SqlformatterFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

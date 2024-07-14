@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['stylish-haskell']
 DOTFILES = ['.stylish-haskell.yaml']
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class StylishhaskellFormatter(common.Module):
+class StylishhaskellFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

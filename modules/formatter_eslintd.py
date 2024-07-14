@@ -1,7 +1,8 @@
 import sublime
 from distutils.version import LooseVersion, StrictVersion
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint_d', 'eslint_d.js']
@@ -22,7 +23,7 @@ MODULE_CONFIG = {
 }
 
 
-class EslintdFormatter(common.Module):
+class EslintdFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

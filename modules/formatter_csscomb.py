@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['csscomb']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class CsscombFormatter(common.Module):
+class CsscombFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

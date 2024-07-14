@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['js-beautify']
@@ -22,7 +23,7 @@ MODULE_CONFIG = {
 }
 
 
-class JsbeautifierFormatter(common.Module):
+class JsbeautifierFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

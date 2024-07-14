@@ -1,5 +1,6 @@
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 #EXECUTABLES = ['rebar3', 'efmt']  # No rebar3 support right now, @see #55
 EXECUTABLES = ['efmt']
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class EfmtFormatter(common.Module):
+class EfmtFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

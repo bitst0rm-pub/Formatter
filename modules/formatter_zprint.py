@@ -1,6 +1,7 @@
 import re
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 INTERPRETERS = ['bb', 'java']
 EXECUTABLES = ['zprint-filter', 'zprintma', 'zprintm', 'zprintl', 'zprint']
@@ -22,7 +23,7 @@ MODULE_CONFIG = {
 }
 
 
-class ZprintFormatter(common.Module):
+class ZprintFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

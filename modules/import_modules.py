@@ -8,9 +8,16 @@ else:
 import sublime
 
 from .. import log
-from ..core import common
 from ..core.constants import PACKAGE_NAME
 
+
+def read_settings_file(settings_file):
+    try:
+        with open(settings_file, 'r', encoding='utf-8') as f:
+            file_content = f.read()
+            return sublime.decode_value(file_content)
+    except Exception as e:
+        return {}
 
 def update_sys_path(environ, packages_path):
     pypath = environ.get('PYTHONPATH', [])
@@ -29,7 +36,7 @@ def import_formatter_modules():
         packages_path = sublime.packages_path()
 
         settings_file = os.path.join(packages_path, 'User', PACKAGE_NAME + '.sublime-settings')
-        settings = common.read_settings_file(settings_file)
+        settings = read_settings_file(settings_file)
 
         environ = settings.get('environ', {})
         update_sys_path(environ, packages_path)

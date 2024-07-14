@@ -1,6 +1,7 @@
 from ..libs import yaml
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 EXECUTABLES = ['nasmfmt']
 DOTFILES = []
@@ -19,7 +20,7 @@ MODULE_CONFIG = {
 }
 
 
-class NasmfmtFormatter(common.Module):
+class NasmfmtFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

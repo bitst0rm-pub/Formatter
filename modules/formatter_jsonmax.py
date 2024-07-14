@@ -1,7 +1,8 @@
 import json
 import sublime
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 DOTFILES = []
 MODULE_CONFIG = {
@@ -20,7 +21,7 @@ MODULE_CONFIG = {
 }
 
 
-class JsonmaxFormatter(common.Module):
+class JsonmaxFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

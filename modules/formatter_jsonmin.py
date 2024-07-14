@@ -1,7 +1,8 @@
 import json
 import sublime
 from .. import log
-from ..core import common
+from ..core.common import Module
+
 
 DOTFILES = []
 MODULE_CONFIG = {
@@ -18,7 +19,7 @@ MODULE_CONFIG = {
 }
 
 
-class JsonminFormatter(common.Module):
+class JsonminFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
