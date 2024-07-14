@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.0)] - 2024-07-14
+
+### 🚜 Refactor
+
+- [`974da9b`](https://github.com/bitst0rm-pub/Formatter/commit/974da9b1936b473324c6d56b8b302883b9441bf2) Complete restructuring and improvement of Formatter codebase
+- [`ef2a9bb`](https://github.com/bitst0rm-pub/Formatter/commit/ef2a9bb1910322e7e02dae1f1e246075b420bbed) Restructuring constants
+- [`0121c8a`](https://github.com/bitst0rm-pub/Formatter/commit/0121c8a153f3e46f6cc8934977da0f22595d9ce1) Restructuring logger
+
 ## [[1.4.17](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.4.17)] - 2024-07-07
 
 ### 🐛 Bug Fixes
