@@ -312,13 +312,8 @@ class PathHandler:
         self.view = view
 
     def get_pathinfo(self, path=None):
-        try:
-            cwd = tempfile.gettempdir()
-        except Exception:
-            # Fallback to ${HOME} for unsaved buffer
-            cwd = expanduser('~')
-
         base = stem = suffix = ext = None
+
         if not path:
             path = self.view.file_name()
 
@@ -326,6 +321,11 @@ class PathHandler:
             cwd, base = split(path)
             stem, suffix = splitext(base)
             ext = suffix[1:]
+        else:
+            try:
+                cwd = tempfile.gettempdir()
+            except Exception:
+                cwd = expanduser('~')  # fallback for buffer
 
         return {'path': path, 'cwd': cwd, 'base': base, 'stem': stem, 'suffix': suffix, 'ext': ext}
 
