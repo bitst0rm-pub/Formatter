@@ -1131,7 +1131,7 @@ class SequenceFormatThread(threading.Thread):
                 if not syntax or syntax in exclude_syntaxes:
                     if not syntax:
                         scope = OptionHandler().query(CONFIG, [], 'formatters', uid, 'syntaxes')
-                        log.warning('Syntax out of the scope. Plugin scope: %s, ID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
+                        log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
                     self.callback(False)
                 else:
                     self.kwargs.update({
@@ -1289,7 +1289,7 @@ class FormatterListener(sublime_plugin.EventListener):
             if syntax in value.get('syntaxes', []) and syntax not in seen:
                 CleanupHandler().clear_console()
 
-                log.debug('"%s" (ID: %s | syntax: %s)', opkey, uid, syntax)
+                log.debug('"%s" (UID: %s | Syntax: %s)', opkey, uid, syntax)
                 SingleFormat(view=view, uid=uid, type=value.get('type', None)).run()
                 seen.add(syntax)
 

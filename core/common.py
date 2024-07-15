@@ -5,9 +5,7 @@ import time
 import shutil
 import struct
 import hashlib
-import logging
 import tempfile
-from datetime import datetime
 from subprocess import Popen, PIPE, TimeoutExpired
 from os.path import (
     basename,
@@ -316,7 +314,7 @@ class PathHandler:
     def get_pathinfo(self, path=None):
         try:
             cwd = tempfile.gettempdir()
-        except AttributeError:
+        except Exception:
             # Fallback to ${HOME} for unsaved buffer
             cwd = expanduser('~')
 
@@ -455,7 +453,7 @@ class CommandHandler:
             stdout, stderr = process.communicate(timeout=timeout)
         except TimeoutExpired:
             pm.kill(process)
-            return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase timeout value in Formatter settings)' % str(timeout)
+            return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
 
         pm.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
@@ -470,7 +468,7 @@ class CommandHandler:
             stdout, stderr = process.communicate(text.encode('utf-8'), timeout=timeout)
         except TimeoutExpired:
             pm.kill(process)
-            return 1, None, 'Aborted due to expired timeout=%s (adjust this in Formatter settings)' % str(timeout)
+            return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
 
         pm.kill(process)
         return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')

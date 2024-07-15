@@ -944,7 +944,7 @@ _Formatter.sublime-settings_
 ### 4. API:
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br/>
-Responsible for handling plugin modules is the class: `class Module:`:
+Responsible for interacting with plugin modules is the class: `class Module:`:
 
 - Essentially for the `def get_cmd(self)` function:
 
