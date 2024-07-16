@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.1)] - 2024-07-16
+
+### 🐛 Bug Fixes
+
+- [`cb3b5b5`](https://github.com/bitst0rm-pub/Formatter/commit/cb3b5b5f56de5237538c6134fb2ea23540241c99) Fix reloading and importing custom modules
+
+### ⚙️ Miscellaneous Tasks
+
+- [`5d9d69e`](https://github.com/bitst0rm-pub/Formatter/commit/5d9d69e743460bc5f61cfedc1225080b4b0feff0) Optimize `get_pathinfo()`
+- [`7cb0a43`](https://github.com/bitst0rm-pub/Formatter/commit/7cb0a43cd02a0d68061d2d65fdd56f1dcc1aa1ef) Remove redundant import
+- [`220503e`](https://github.com/bitst0rm-pub/Formatter/commit/220503e0b14c08c9edc70c5e8979d035e1fd28c8) Typo
+
 ## [[1.5.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.0)] - 2024-07-14
 
 ### 🚜 Refactor
