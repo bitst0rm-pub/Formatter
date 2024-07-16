@@ -75,3 +75,7 @@ def import_formatter_modules():
     return formatter_map
 
 formatter_map = import_formatter_modules()
+
+def update_formatter_modules():
+    global formatter_map
+    formatter_map.update(import_formatter_modules())

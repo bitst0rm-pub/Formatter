@@ -15,14 +15,15 @@ from .core import (
     PathHandler,
     PhantomHandler,
     PrintHandler,
-    ReloadHandler,
     SyntaxHandler,
     TransformHandler,
     ViewHandler,
     create_package_config_files,
     SESSION_FILE,
     SessionManagerListener,
-    WordsCounterListener
+    WordsCounterListener,
+    import_custom_modules,
+    reload_modules
 )
 
 from .core.formatter import Formatter
@@ -45,7 +46,6 @@ __all__ = [
     'PathHandler',
     'PhantomHandler',
     'PrintHandler',
-    'ReloadHandler',
     'SyntaxHandler',
     'TransformHandler',
     'ViewHandler',
@@ -54,5 +54,7 @@ __all__ = [
     'SessionManagerListener',
     'WordsCounterListener',
     'Formatter',
-    '__version__'
+    '__version__',
+    'import_custom_modules',
+    'reload_modules'
 ]

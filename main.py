@@ -31,7 +31,6 @@ from . import (
     PathHandler,
     PhantomHandler,
     PrintHandler,
-    ReloadHandler,
     SyntaxHandler,
     TransformHandler,
     ViewHandler,
@@ -41,6 +40,8 @@ from . import (
     WordsCounterListener,
     Formatter,
     __version__,
+    import_custom_modules,
+    reload_modules
 )
 
 from .core.constants import (
@@ -53,45 +54,8 @@ from .core.constants import (
 )
 
 
-def merge():
-    packages_path = sublime.packages_path()
-    custom_modules = CONFIG.get('custom_modules', {})
-    seen = set()
-
-    for k, v in custom_modules.items():
-        if k in ['config', 'modules', 'libs'] and isinstance(v, list):
-            for src in v:
-                src = sublime.expand_variables(os.path.normpath(os.path.expanduser(os.path.expandvars(src))), {'packages': packages_path})
-                base = os.path.basename(src)
-
-                if k == 'libs' and base in ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']:
-                    continue
-
-                dst = os.path.join(packages_path, PACKAGE_NAME, k, base)
-
-                if os.path.isfile(src):
-                    src_md5 = HashHandler().md5f(src)
-                    dst_md5 = HashHandler().md5f(dst) if os.path.exists(dst) else None
-                    if src_md5 != dst_md5:
-                        shutil.copy2(src, dst, follow_symlinks=True)
-                        seen.add(True)
-                elif os.path.isdir(src):
-                    src_sum = HashHandler().md5d(src)
-                    dst_sum = HashHandler().md5d(dst) if os.path.exists(dst) else None
-                    if src_sum != dst_sum:
-                        try:
-                            shutil.copytree(src, dst)
-                            seen.add(True)
-                        except FileExistsError:
-                            shutil.rmtree(dst)
-                            shutil.copytree(src, dst)
-                            seen.add(True)
-
-    if any(seen):
-        ReloadHandler().reload_modules(print_tree=False)
-
 def entry():
-    merge()
+    import_custom_modules()
     # CleanupHandler().remove_junk()
     ready = create_package_config_files()
     if ready:
@@ -1327,4 +1291,4 @@ class FormatterListener(sublime_plugin.EventListener):
         if CONFIG.get('debug') and CONFIG.get('dev'):
             # For development only
             self.stop_sync_scroll()
-            ReloadHandler().reload_modules(print_tree=False)
+            reload_modules(print_tree=False)

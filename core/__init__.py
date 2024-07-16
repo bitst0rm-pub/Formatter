@@ -19,7 +19,6 @@ from .common import (
     PathHandler,
     PhantomHandler,
     PrintHandler,
-    ReloadHandler,
     SyntaxHandler,
     TransformHandler,
     ViewHandler
@@ -28,6 +27,8 @@ from .common import (
 from .configurator import create_package_config_files
 from .smanager import (SESSION_FILE, SessionManagerListener)
 from .wcounter import WordsCounterListener
+from .importer import import_custom_modules
+from .reloader import reload_modules
 
 __all__ = [
     'log',
@@ -47,12 +48,13 @@ __all__ = [
     'PathHandler',
     'PhantomHandler',
     'PrintHandler',
-    'ReloadHandler',
     'SyntaxHandler',
     'TransformHandler',
     'ViewHandler',
     'create_package_config_files',
     'SESSION_FILE',
     'SessionManagerListener',
-    'WordsCounterListener'
+    'WordsCounterListener',
+    'import_custom_modules',
+    'reload_modules'
 ]

@@ -1,5 +1,9 @@
-from .import_modules import formatter_map
+from .import_modules import (
+    formatter_map,
+    update_formatter_modules
+)
 
 __all__ = [
-    'formatter_map'
+    'formatter_map',
+    'update_formatter_modules'
 ]
