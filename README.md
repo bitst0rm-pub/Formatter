@@ -26,7 +26,6 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
   - Modules: Integration of your own modules. _see_ [Development](#development)
 - Zero dependencies for installation.
-- Open source and works offline (security reason).
 
 
 **Limitations:**
@@ -237,12 +236,10 @@ _Formatter.sublime-settings_
     "timeout": 10,
 
     // Integrate your custom modules into the Formatter ecosystem.
-    // All paths to files and folders must be local.
-    "custom_modules": {
-        "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
-        "modules": ["/path/to/formatter_foo.py", "/path/to/formatter_bar.py"],
-        "libs": ["/path/to/foolib", "/path/to/mylib"]
-    },
+    // Modules can be located either locally or remotely.
+    // This option must be of type string pointing to the JSON metata file path.
+    // More about the format of this file, see README.md > Integrating modules
+    "custom_modules_manifest": "",
 
     // Display results in the status bar with the current settings mode info:
     // PUS: Persistent User Settings
@@ -929,17 +926,38 @@ Do not forget to update/adjust your _User_ settings:<br/>
 
 ### 3. Integrating modules:
 
-You have the choice to either submit a pull request or integrate your modules yourself using:
+You have the choice to either submit a pull request or integrate your modules yourself by configuring:
 
 _Formatter.sublime-settings_
 
 ```js
-    "custom_modules": {
-        "config": ["/path/to/foo_rc.json", "/path/to/bar_rc.cfg"],
-        "modules": ["/path/to/formatter_foo.py", "/path/to/formatter_bar.py"],
-        "libs": ["/path/to/foolib", "/path/to/mylib"]
-    },
+    "custom_modules_manifest": "/path/to/local/metadata.json",  // or
+    "custom_modules_manifest": "https://raw.githubusercontent.com/you/repo/main/metadata.json",
 ```
+
+The structure of the metadata JSON file should follow this format:
+
+```js
+{
+    // Comments are allowed
+    "version": "0.0.1",  // tells to update
+    "local": {
+        "config": ["/path/to/dir", "/path/to/file"],
+        "libs": ["/path/to/dir", "/path/to/file"],
+        "modules": ["/path/to/dir", "/path/to/file"],
+    },
+    "remote": [
+        "http|s|ftp://server.com/archive/refs/heads/myproject.zip"  // only zip or tar.gz
+    ]
+}
+```
+
+The remote *myproject.zip* file must include at least one of the fixed folders: `config`, `libs`, `modules`
+All files must be placed within these **predefined** folders.
+To reset the version, just edit the file `.custom` in the Formatter root folder.
+
+*Python is not JS. You are responsible for handling any operations over the internet.
+Formatter does not have any mechanism to verify the integrity of remote files.*
 
 ### 4. API:
 

@@ -12,12 +12,10 @@
     "timeout": 10,
 
     // Integrate your custom modules into the Formatter ecosystem.
-    // All paths to files and folders must be local.
-    "custom_modules": {
-        "config": [],
-        "modules": [],
-        "libs": []
-    },
+    // Modules can be located either locally or remotely.
+    // This option must be of type string pointing to the JSON metata file path.
+    // More about the format of this file, see README.md > Integrating modules
+    "custom_modules_manifest": "",
 
     // Display results in the status bar with the current settings mode info:
     // PUS: Persistent User Settings

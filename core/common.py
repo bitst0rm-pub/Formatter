@@ -1224,7 +1224,8 @@ class ConfigHandler:
                 'dev': settings.get('dev', False),
                 'open_console_on_failure': settings.get('open_console_on_failure', False),
                 'timeout': settings.get('timeout', 10),
-                'custom_modules': settings.get('custom_modules', {}),
+                'custom_modules': settings.get('custom_modules', {}),  # deprecated
+                'custom_modules_manifest': settings.get('custom_modules_manifest', ''),
                 'show_statusbar': settings.get('show_statusbar', True),
                 'show_words_count': {
                     'enable': OptionHandler().query(settings, True, 'show_words_count', 'enable'),
@@ -1247,6 +1248,7 @@ class ConfigHandler:
             c['formatters'].pop('examplemodule', None)
             self.project_config_overwrites_config(c)
             c = TransformHandler().recursive_map(TransformHandler().expand_path, c)
+            c['custom_modules_manifest'] = re.sub(r'(\bhttps?|ftp):/(?=[^/])', r'\1://', c['custom_modules_manifest'])
             CONFIG.update(c)
             return c
         except Exception as e:

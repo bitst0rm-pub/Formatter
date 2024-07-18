@@ -520,14 +520,12 @@ def build_formatter_sublime_settings(formatter_map):
     // Timeout to abort subprocess in seconds.
     // Default to 10 seconds. Set to false to disable the timeout.'''),
             ('timeout', 10),
-            ('__COMMENT__custom_modules', '''
+            ('__COMMENT__custom_modules_manifest', '''
     // Integrate your custom modules into the Formatter ecosystem.
-    // All paths to files and folders must be local.'''),
-            ('custom_modules', OrderedDict([
-                ('config', []),
-                ('modules', []),
-                ('libs', [])
-            ])),
+    // Modules can be located either locally or remotely.
+    // This option must be of type string pointing to the JSON metata file path.
+    // More about the format of this file, see README.md > Integrating modules'''),
+            ('custom_modules_manifest', ''),
             ('__COMMENT__show_statusbar', '''
     // Display results in the status bar with the current settings mode info:
     // PUS: Persistent User Settings
