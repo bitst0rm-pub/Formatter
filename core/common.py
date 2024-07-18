@@ -829,7 +829,9 @@ class SyntaxHandler:
                     'exclude_syntaxes': v.get('exclude_syntaxes', {})
                 }
                 syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
-                return self.uid, syntax
+                if syntax:
+                    return self.uid, syntax
+            return '@noop@', None
         else:
             syntax = self._detect_assigned_syntax(view, uid, region)
             return self.uid, syntax

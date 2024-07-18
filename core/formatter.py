@@ -28,6 +28,10 @@ class Formatter(Module):
             return False
 
         syntax = self.get_assigned_syntax()
+
+        if self.uid == '@noop@':
+            return False
+
         if not syntax:
             self.popup_message('Syntax out of the scope.', 'UID:' + self.uid)
             return False
