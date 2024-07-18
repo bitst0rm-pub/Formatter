@@ -528,7 +528,7 @@ class TempFileHandler:
         import tempfile
 
         if not suffix:
-            uid, syntax = SyntaxHandler(view=self.view, uid=self.uid, region=self.region, auto_format_config=auto_format_config).get_assigned_syntax()
+            uid, syntax = SyntaxHandler(view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config).get_assigned_syntax()
             self.uid = uid
             suffix = '.' + syntax
 
@@ -820,6 +820,8 @@ class SyntaxHandler:
     def get_assigned_syntax(self, view=None, uid=None, region=None):  # return tuple
         if self.auto_format_config:
             for syntax, v in self.auto_format_config.items():
+                if syntax == 'config':
+                    continue
                 self.uid = v.get('uid', None)
                 kwargs = {
                     'is_auto_format': True,
@@ -827,8 +829,7 @@ class SyntaxHandler:
                     'exclude_syntaxes': v.get('exclude_syntaxes', {})
                 }
                 syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
-                if syntax:
-                    return self.uid, syntax
+                return self.uid, syntax
         else:
             syntax = self._detect_assigned_syntax(view, uid, region)
             return self.uid, syntax
