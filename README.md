@@ -952,11 +952,11 @@ The structure of the metadata JSON file should follow this format:
 }
 ```
 
-The remote *myproject.zip* file must include at least one of the fixed folders: `config`, `libs`, `modules`
-All files must be placed within these **predefined** folders.
-To reset the version, just edit the file `.custom` in the Formatter root folder.
+- The remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
+- All files must be placed within these **predefined** folders.
+- To reset the version, just edit the `.custom` file in the Formatter root folder.
 
-*Python is not JS. You are responsible for handling any operations over the internet.
+*Python is not JS. You are responsible for handling any operations over the internet.<br/>
 Formatter does not have any mechanism to verify the integrity of remote files.*
 
 ### 4. API:
