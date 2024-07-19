@@ -530,7 +530,7 @@ class TempFileHandler:
         if not suffix:
             uid, syntax = SyntaxHandler(view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config).get_assigned_syntax()
             self.uid = uid
-            suffix = '.' + syntax
+            suffix = '.' + syntax if syntax else None
 
         with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=PathHandler(view=self.view).get_pathinfo()['cwd'], encoding='utf-8') as file:
             file.write(ViewHandler(view=self.view).get_text_from_region(self.region))
