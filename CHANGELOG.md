@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.2)] - 2024-07-19
+
+### 🚀 Features
+
+- [`745221e`](https://github.com/bitst0rm-pub/Formatter/commit/745221e7af22a7bdad5379b5f3648155314719cc) Deprecating the `"custom_modules":` option in favor of `"custom_modules_manifest":` Custom modules can now be used both locally and remotely
+
+### 🐛 Bug Fixes
+
+- [`daec479`](https://github.com/bitst0rm-pub/Formatter/commit/daec479fd36a84bd1e2cd7c06d518e8935b66568) Add `'[@noop](https://github.com/noop)@'` uid for auto-format when no syntax is detected
+- [`b63d852`](https://github.com/bitst0rm-pub/Formatter/commit/b63d852749d2db19aceb95c06b2c4a1a63d64429) Add missing `self`, which caused auto_format_config to be undefined (ref: https://github.com/bitst0rm-pub/Formatter/issues/57) Thanks [@the-ge](https://github.com/the-ge)
+- [`1ec2de5`](https://github.com/bitst0rm-pub/Formatter/commit/1ec2de5afa84acfbc2596b64d066d4ee9f2af6b3) Fix `create_tmp_file()` suffix for syntax of None`
+
 ## [[1.5.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.1)] - 2024-07-16
 
 ### 🐛 Bug Fixes
