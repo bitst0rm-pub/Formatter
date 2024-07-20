@@ -1,9 +1,9 @@
 import sys
 
-if sys.version_info < (3, 4):
-    from imp import reload
-else:
+try:  # python 3.8+
     from importlib import reload
+except:  # python 3.3
+    from imp import reload
 
 from . import log
 from .constants import PACKAGE_NAME

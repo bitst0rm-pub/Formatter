@@ -1226,6 +1226,7 @@ class ConfigHandler:
                 'debug': settings.get('debug', False),
                 'dev': settings.get('dev', False),
                 'open_console_on_failure': settings.get('open_console_on_failure', False),
+                'close_console_on_success': settings.get('close_console_on_success', False),
                 'timeout': settings.get('timeout', 10),
                 'custom_modules': settings.get('custom_modules', {}),  # deprecated
                 'custom_modules_manifest': settings.get('custom_modules_manifest', ''),

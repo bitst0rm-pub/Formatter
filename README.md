@@ -228,8 +228,11 @@ _Formatter.sublime-settings_
     "debug": false,
 
     // Auto open the console panel whenever formatting fails.
-    // This is useful when combined with "debug": "status" or true
+    // This is useful if "debug" is "status" or true
     "open_console_on_failure": false,
+
+    // The counterpart for success.
+    "close_console_on_success": false,
 
     // Timeout to abort subprocess in seconds.
     // Default to 10 seconds. Set to false to disable the timeout.

@@ -514,8 +514,11 @@ def build_formatter_sublime_settings(formatter_map):
             ('debug', False),
             ('__COMMENT__open_console_on_failure', '''
     // Auto open the console panel whenever formatting fails.
-    // This is useful when combined with "debug": "status" or true'''),
+    // This is useful if "debug" is "status" or true'''),
             ('open_console_on_failure', False),
+            ('__COMMENT__close_console_on_success', '''
+    // The counterpart for success.'''),
+            ('close_console_on_success', False),
             ('__COMMENT__timeout', '''
     // Timeout to abort subprocess in seconds.
     // Default to 10 seconds. Set to false to disable the timeout.'''),

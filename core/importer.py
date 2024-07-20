@@ -1,15 +1,15 @@
 import os
-import sys
 import shutil
 import zipfile
 import tarfile
 import tempfile
 import urllib.request
 from urllib.parse import urlparse
-if sys.version_info < (3, 4):
-    import imp
-else:
+
+try:  # python 3.8+
     import importlib
+except:  # python 3.3
+    import imp
 
 import sublime
 
@@ -268,9 +268,9 @@ def import_module(libs_dir, root, filename):
     module_name = relative_path.replace(os.sep, '.').rsplit('.', 1)[0]
 
     try:
-        if sys.version_info < (3, 4):
-            module = imp.load_source(PACKAGE_NAME + '.libs.' + module_name, module_path)
-        else:
+        try:  # python 3.8+
             module = importlib.import_module(PACKAGE_NAME + '.libs.' + module_name, package=PACKAGE_NAME)
+        except:  # python 3.3
+            module = imp.load_source(PACKAGE_NAME + '.libs.' + module_name, module_path)
     except Exception as e:
         log.error('Error importing module %s: %s', module_name, e)

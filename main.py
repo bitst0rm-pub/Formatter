@@ -581,6 +581,7 @@ class SingleFormat:
                 self.print_status(is_success)
 
             if any(self.cycles):
+                self.close_console_on_success()
                 self.handle_successful_formatting()
             else:
                 self.open_console_on_failure()
@@ -612,7 +613,11 @@ class SingleFormat:
 
     def open_console_on_failure(self):
         if CONFIG.get('open_console_on_failure'):
-            self.view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
+            self.view.window().run_command('show_panel', {'panel': 'console'})
+
+    def close_console_on_success(self):
+        if CONFIG.get('close_console_on_success'):
+            self.view.window().run_command('hide_panel', {'panel': 'console'})
 
     def handle_successful_formatting(self):
         if self.kwargs.get('type', None) == 'graphic':
