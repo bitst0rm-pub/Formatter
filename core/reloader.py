@@ -1,4 +1,10 @@
 import sys
+
+if sys.version_info < (3, 4):
+    from imp import reload
+else:
+    from importlib import reload
+
 from . import log
 from .constants import PACKAGE_NAME
 
@@ -8,12 +14,15 @@ def reload_modules(print_tree=False):
     prefix = PACKAGE_NAME + '.'
     for module_name, module in tuple(filter(lambda item: item[0].startswith(prefix) and item[0] != __name__, sys.modules.items())):
         try:
-            del sys.modules[module_name]
+            reload(module)
             if print_tree:
                 reloaded_modules.append(module_name)
         except Exception as e:
             log.error('Error reloading module %s: %s', module_name, str(e))
             return None
+
+    from ..main import entry
+    entry()
 
     log.debug('Reloaded modules (Python %s)', '.'.join(map(str, sys.version_info[:3])))
     if print_tree:
