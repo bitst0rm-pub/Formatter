@@ -48,7 +48,7 @@ _Formatter in action: Text-to-Image..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
 
-_Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bitst0rm-pub/theme-dosa) and [color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two)_
+_Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bitst0rm-pub/theme-dosa) and [color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two), ST4 not patched or keygened_
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot3.png)
 
@@ -800,8 +800,8 @@ _Formatter.sublime-settings_
 
 ```js
 {
-    "debug": true,  // controls printing error messages
-    "dev": true     // controls modules reloading to update modified files
+    "debug": true,  // printing error messages
+    "dev": true     // updating modified files
     ...
 }
 ```
@@ -957,7 +957,8 @@ The structure of the metadata JSON file should follow this format:
 
 - The remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
 - All files must be placed within these **predefined** folders.
-- To reset the version, just edit the `.custom` file in the Formatter root folder.
+- To update your code, just reset the `.custom` file in the Formatter root folder.
+- The following Formatter modules are not exchangeable: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 
 *Python is not JS. You are responsible for handling any operations over the internet.<br/>
 Formatter does not have any mechanism to verify the integrity of remote files.*
