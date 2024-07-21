@@ -6,6 +6,7 @@ from .logger import (
 )
 
 from .common import (
+    InstanceManager,
     Module,
     ConfigHandler,
     CONFIG,
@@ -35,6 +36,7 @@ __all__ = [
     'enable_logging',
     'enable_status',
     'disable_logging',
+    'InstanceManager',
     'Module',
     'ConfigHandler',
     'CONFIG',

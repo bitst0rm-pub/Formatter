@@ -107,8 +107,6 @@ class Module:
         self.auto_format_config = auto_format_config
         self.kwargs             = kwargs  # unused
 
-        InstanceManager.reset_all()
-
     def is_executable(self, file):
         instance = InstanceManager.get_instance('FileHandler')
         return instance.is_executable(file)

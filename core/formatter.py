@@ -1,4 +1,4 @@
-from . import (log, Module)
+from . import (log, InstanceManager, Module)
 from ..modules import formatter_map
 
 
@@ -6,6 +6,7 @@ class Formatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.kwargs = kwargs
+        InstanceManager.reset_all()
 
     def _log_debug_info(self, method, syntax):
         file = self.view.file_name() or 'view'
