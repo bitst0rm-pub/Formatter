@@ -1,3 +1,4 @@
+from os.path import basename
 from .. import log
 from ..core.common import Module
 
@@ -33,7 +34,7 @@ class CljfmtFormatter(Module):
 
         interpreter = self.get_interpreter()
         if interpreter:
-            interpreter_base = common.basename(interpreter).lower()
+            interpreter_base = basename(interpreter).lower()
             if 'java' in interpreter_base and executable.endswith('jar'):
                 cmd = [interpreter, '-jar', executable]
             elif 'lein' in interpreter_base:

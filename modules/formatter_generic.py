@@ -1,5 +1,7 @@
 import re
+from os.path import join
 from .. import log
+from ..core.constants import GFX_OUT_NAME
 from ..core.common import Module
 
 
@@ -11,7 +13,7 @@ class GenericFormatter(Module):
     def rebuild_cmd(self, cmd):
         temp_dir = self.kwargs.get('temp_dir', None)
         if temp_dir and self.kwargs.get('type', None) == 'graphic':
-            temp_dir = common.join(temp_dir, common.GFX_OUT_NAME + '.png')
+            temp_dir = join(temp_dir, GFX_OUT_NAME + '.png')
         else:
             temp_dir = None
 
@@ -71,7 +73,7 @@ class GenericFormatter(Module):
         cmd_list = []
         for k, v in self.get_args_extended().items():
             if isinstance(v, list):
-                cmd_list.append([item.replace(common.GFX_OUT_NAME + '.png', common.GFX_OUT_NAME + '.' + k) for item in self.rebuild_cmd(v)])
+                cmd_list.append([item.replace(GFX_OUT_NAME + '.png', GFX_OUT_NAME + '.' + k) for item in self.rebuild_cmd(v)])
 
         log.debug('Extended commands: %s', cmd_list)
 

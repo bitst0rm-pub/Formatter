@@ -1,5 +1,5 @@
 from .. import log
-from ..core.common import Module
+from ..core.common import (CONFIG, Module)
 
 
 INTERPRETERS = ['node']
@@ -35,7 +35,7 @@ class PrettierdFormatter(Module):
         path = self.get_config_path()
         if path:
             cmd.extend(['--no-config'])
-            common.config.get('environ').update({'PRETTIERD_DEFAULT_CONFIG': [path]})
+            CONFIG.get('environ').update({'PRETTIERD_DEFAULT_CONFIG': [path]})
 
         file = self.get_pathinfo()['path']
         dummy = file if file else 'dummy.' + self.get_assigned_syntax()

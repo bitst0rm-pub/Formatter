@@ -1,3 +1,4 @@
+from os.path import basename
 from .. import log
 from ..core.common import Module
 
@@ -27,7 +28,7 @@ class ErlfmtFormatter(Module):
         if not executable:
             return None
 
-        if common.basename(executable) == 'rebar3':
+        if basename(executable) == 'rebar3':
             cmd = [executable, 'fmt']
         else:
             cmd = [executable]

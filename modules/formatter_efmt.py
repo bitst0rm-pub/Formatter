@@ -1,3 +1,4 @@
+from os.path import basename
 from .. import log
 from ..core.common import Module
 
@@ -35,7 +36,7 @@ class EfmtFormatter(Module):
         https://github.com/bitst0rm-pub/Formatter/issues/55
         https://github.com/sile/efmt/issues/94
 
-        if common.basename(executable) == 'rebar3':
+        if basename(executable) == 'rebar3':
             cmd = [executable, 'efmt']
         else:
             cmd = [executable]

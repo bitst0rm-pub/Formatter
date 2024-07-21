@@ -1,4 +1,5 @@
 from .. import log
+from ..core.constants import IS_WINDOWS
 from ..core.common import Module
 
 
@@ -26,7 +27,7 @@ class PrettierFormatter(Module):
         super().__init__(*args, **kwargs)
 
     def get_cmd(self):
-        if common.IS_WINDOWS:
+        if IS_WINDOWS:
             executable = self.get_executable(runtime_type='node')
             if not executable.endswith('js'):
                 cmd = [executable]

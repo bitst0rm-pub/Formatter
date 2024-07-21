@@ -1,4 +1,5 @@
 import re
+from os.path import basename
 from .. import log
 from ..core.common import Module
 
@@ -41,9 +42,9 @@ class ZprintFormatter(Module):
         interpreter = self.get_interpreter()
         executable = self.get_executable(runtime_type=None)
         if executable and interpreter:
-            if 'zprint-filter' in common.basename(executable).lower():
+            if 'zprint-filter' in basename(executable).lower():
                 cmd = [interpreter, '-jar', executable]
-            elif 'bb' in common.basename(interpreter).lower():
+            elif 'bb' in basename(interpreter).lower():
                 cmd = [interpreter, executable]
             else:
                 cmd = [executable]
