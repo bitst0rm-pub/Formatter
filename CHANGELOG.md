@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.3)] - 2024-07-21
+
+### 🚀 Features
+
+- [`1f2ae01`](https://github.com/bitst0rm-pub/Formatter/commit/1f2ae01126748a8e5b774d8ec99f83500243b400) Add a new setting option: `"close_console_on_success":`
+
+### 🐛 Bug Fixes
+
+- [`4a4e347`](https://github.com/bitst0rm-pub/Formatter/commit/4a4e347f093638ee06a9a1f8a51a75fda20d2ec1) Fix modules reload for developer mode
+- [`21bdf5f`](https://github.com/bitst0rm-pub/Formatter/commit/21bdf5f88cf8013cc59669d237036eec05f61c8e) Move `InstanceManager.reset_all()` to formatter.py
+
 ## [[1.5.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.2)] - 2024-07-19
 
 ### 🚀 Features
