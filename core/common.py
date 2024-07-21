@@ -1,7 +1,6 @@
 import os
 import re
 import json
-import time
 import shutil
 import struct
 import hashlib
@@ -399,7 +398,8 @@ class EnvironmentHandler:
 
 class ProcessHandler:
     def __init__(self, view=None):
-        self.view = view
+        self.view    = view
+        self.process = None
 
     def popen(self, cmd, stdout=PIPE):
         info = None
@@ -412,19 +412,18 @@ class ProcessHandler:
             info.wShowWindow = SW_HIDE
 
         # Input cmd must be a list of strings
-        process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
+        self.process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
                         env=EnvironmentHandler().update_environ(), shell=False, startupinfo=info)
-        return process
+        return self.process
 
     def kill(self, process):
         try:
             if self.is_alive(process):
                 process.terminate()
-                process.wait()
-                time.sleep(1)
+                process.wait(timeout=1)  # 1 sec
             if self.is_alive(process):
                 process.kill()
-                process.wait()
+                process.wait(timeout=1)
         except Exception as e:
             log.error('Error terminating process: %s', e)
 
@@ -443,34 +442,43 @@ class CommandHandler:
         self.view   = view
         self.uid    = uid
         self.region = region
+        self.ph     = None
+
+    def __del__(self):
+        if self.ph and hasattr(self.ph, 'process') and self.ph.process:
+            self.ph.kill(self.ph.process)
 
     def exec_com(self, cmd):
-        pm = ProcessHandler(view=self.view)
-        timeout = pm.timeout()
-        process = pm.popen(cmd)
+        self.ph = ProcessHandler(view=self.view)
+        timeout = self.ph.timeout()
+        process = self.ph.popen(cmd)
 
         try:
             stdout, stderr = process.communicate(timeout=timeout)
         except TimeoutExpired:
-            pm.kill(process)
+            self.ph.kill(process)
             return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
+        except Exception as e:
+            self.ph.kill(process)
+            return 1, None, 'Error during process execution: %s' % e
 
-        pm.kill(process)
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def _exec_file_or_pipe_cmd(self, cmd, outfile=None):
-        pm = ProcessHandler(view=self.view)
-        timeout = pm.timeout()
-        process = pm.popen(cmd, outfile or PIPE)
+        self.ph = ProcessHandler(view=self.view)
+        timeout = self.ph.timeout()
+        process = self.ph.popen(cmd, outfile or PIPE)
         text = ViewHandler(view=self.view).get_text_from_region(self.region)
 
         try:
             stdout, stderr = process.communicate(text.encode('utf-8'), timeout=timeout)
         except TimeoutExpired:
-            pm.kill(process)
+            self.ph.kill(process)
             return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
+        except Exception as e:
+            self.ph.kill(process)
+            return 1, None, 'Error during process execution: %s' % e
 
-        pm.kill(process)
         return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def exec_cmd(self, cmd, outfile=None):
