@@ -924,7 +924,7 @@ def create_package_config_files():
             file = join(directory, file_name)
             if isfile(file):
                 hash_src = hashlib.md5(text.encode('utf-8')).hexdigest()
-                hash_dst = HashHandler().md5f(file)
+                hash_dst = HashHandler.md5f(file)
                 if hash_src == hash_dst:
                     continue
 
@@ -935,7 +935,7 @@ def create_package_config_files():
             return False
 
     try:
-        for file in [join(directory, QUICK_OPTIONS_SETTING_FILE), ConfigHandler().quick_options_config_file()]:
+        for file in [join(directory, QUICK_OPTIONS_SETTING_FILE), ConfigHandler.quick_options_config_file()]:
             if not isfile(file):
                 with open(file, 'w', encoding='utf-8') as f:
                     json.dump({}, f, ensure_ascii=False, indent=4)

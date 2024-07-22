@@ -491,7 +491,7 @@ class CommandHandler:
         return returncode, stdout, stderr
 
     def get_success_code(self):
-        return int(OptionHandler().query(CONFIG, 0, 'formatters', self.uid, 'success_code'))
+        return int(OptionHandler.query(CONFIG, 0, 'formatters', self.uid, 'success_code'))
 
     def print_exiterr(self, exitcode, stderr):
         sep = '=' * 87
@@ -556,7 +556,7 @@ class ModeHandler:
         self.uid = uid
 
     def is_generic_mode(self):
-        formatter = OptionHandler().query(CONFIG, {}, 'formatters', self.uid)
+        formatter = OptionHandler.query(CONFIG, {}, 'formatters', self.uid)
         name = formatter.get('name', None)
         typ = formatter.get('type', None)
         return bool(name and typ)
@@ -595,7 +595,7 @@ class ArgumentHandler:
 
     def set_generic_local_executables(self):
         if ModeHandler(uid=self.uid).is_generic_mode():
-            path = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'executable_path')
+            path = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'executable_path')
             if isinstance(path, list):
                 self.executables = [PathHandler(view=self.view).get_pathinfo(p)['base'] for p in path]
             elif isinstance(path, str):
@@ -636,7 +636,7 @@ class ArgumentHandler:
         else:
             return None
 
-        user_files = OptionHandler().query(CONFIG, None, 'formatters', self.uid, what + '_path')
+        user_files = OptionHandler.query(CONFIG, None, 'formatters', self.uid, what + '_path')
 
         if isinstance(user_files, str):
             user_files = [user_files]
@@ -676,7 +676,7 @@ class ArgumentHandler:
         return user_and_global_interpreter or None
 
     def get_iprexe_cmd(self, runtime_type=None):
-        user_files = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'interpreter_path')
+        user_files = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'interpreter_path')
         if user_files:
             cmd = [self.get_interpreter(), self.get_executable(runtime_type)]
         else:
@@ -690,15 +690,15 @@ class ArgumentHandler:
         return cmd if all(cmd) else None
 
     def get_args(self):
-        args = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'args')
+        args = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'args')
         return StringHandler().convert_list_items_to_string(args)
 
     def get_config_path(self):
-        ignore_config_path = OptionHandler().query(CONFIG, [], 'quick_options', 'ignore_config_path')
+        ignore_config_path = OptionHandler.query(CONFIG, [], 'quick_options', 'ignore_config_path')
         if self.uid in ignore_config_path:
             return None
 
-        shared_config = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'config_path')
+        shared_config = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'config_path')
 
         if shared_config and isinstance(shared_config, dict):
             uid, syntax = SyntaxHandler(view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config).get_assigned_syntax()
@@ -767,7 +767,7 @@ class ArgumentHandler:
         return None
 
     def fix_cmd(self, cmd):
-        fix_cmds = OptionHandler().query(CONFIG, None, 'formatters', self.uid, 'fix_commands')
+        fix_cmds = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'fix_commands')
 
         if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
             for x in fix_cmds:
@@ -850,8 +850,8 @@ class SyntaxHandler:
             syntaxes = kwargs.get('syntaxes')
             exclude_syntaxes = kwargs.get('exclude_syntaxes')
         else:
-            syntaxes = OptionHandler().query(CONFIG, None, 'formatters', uid, 'syntaxes')
-            exclude_syntaxes = OptionHandler().query(CONFIG, None, 'formatters', uid, 'exclude_syntaxes')
+            syntaxes = OptionHandler.query(CONFIG, None, 'formatters', uid, 'syntaxes')
+            exclude_syntaxes = OptionHandler.query(CONFIG, None, 'formatters', uid, 'exclude_syntaxes')
 
         def should_exclude(syntax, scope):
             return (
@@ -956,7 +956,7 @@ class DotFileHandler:
         return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter-user'])
 
     def get_auto_format_args(self, active_file_path=None):
-        auto_format = OptionHandler().query(CONFIG, {}, 'auto_format').copy()
+        auto_format = OptionHandler.query(CONFIG, {}, 'auto_format').copy()
         auto_format.update(self.get_auto_format_config(active_file_path).get('auto_format_config', {}))
         return {'auto_format_config': auto_format} if auto_format else {}
 
@@ -969,16 +969,16 @@ class GraphicHandler:
         self.type     = type
 
     def is_render_extended(self):
-        if OptionHandler().query(CONFIG, {}, 'quick_options'):
-            render_extended = self.uid in OptionHandler().query(CONFIG, [], 'quick_options', 'render_extended')
+        if OptionHandler.query(CONFIG, {}, 'quick_options'):
+            render_extended = self.uid in OptionHandler.query(CONFIG, [], 'quick_options', 'render_extended')
         else:
-            render_extended = OptionHandler().query(CONFIG, False, 'formatters', self.uid, 'render_extended')
+            render_extended = OptionHandler.query(CONFIG, False, 'formatters', self.uid, 'render_extended')
 
         return isinstance(render_extended, bool) and render_extended
 
     def get_args_extended(self):
         if self.is_render_extended():
-            args_extended = OptionHandler().query(CONFIG, {}, 'formatters', self.uid, 'args_extended')
+            args_extended = OptionHandler.query(CONFIG, {}, 'formatters', self.uid, 'args_extended')
             valid = {}
             for k, v in args_extended.items():
                 valid[k.strip().lower()] = StringHandler().convert_list_items_to_string(v)
@@ -1022,7 +1022,7 @@ class InterfaceHandler:
 class Base(Module):
     '''
     Extended API for universal use, inheriting all methods from the Module class.
-    This class is not used and is included here for documentation purposes only.
+    This class is not used and is included here for historical purposes only.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
@@ -1183,17 +1183,20 @@ class ConfigHandler:
     def load_settings(file):
         return sublime.load_settings(file)
 
-    def setup_config(self):
-        settings = self.load_settings(self.config_file())
-        settings.add_on_change('290c6488-3973-493b-9151-137042f0fa36', self.load_config)
-        self.build_config(settings)
+    @classmethod
+    def setup_config(cls):
+        settings = cls.load_settings(cls.config_file())
+        settings.add_on_change('290c6488-3973-493b-9151-137042f0fa36', cls.load_config)
+        cls.build_config(settings)
 
-    def load_config(self):
-        settings = self.load_settings(self.config_file())
-        self.build_config(settings)
+    @classmethod
+    def load_config(cls):
+        settings = cls.load_settings(cls.config_file())
+        cls.build_config(settings)
 
-    def load_quick_options(self):
-        qo_file = self.quick_options_config_file()
+    @classmethod
+    def load_quick_options(cls):
+        qo_file = cls.quick_options_config_file()
 
         try:
             if isfile(qo_file):
@@ -1210,25 +1213,27 @@ class ConfigHandler:
     @staticmethod
     def project_config_overwrites_config(config):
         project_data = sublime.active_window().project_data()
-        project_settings = OptionHandler().query(project_data, {}, 'settings', PACKAGE_NAME)
+        project_settings = OptionHandler.query(project_data, {}, 'settings', PACKAGE_NAME)
         if project_settings:
             StringHandler().update_json_recursive(config, project_settings)
 
-    def load_sublime_preferences(self):
+    @classmethod
+    def load_sublime_preferences(cls):
         global SUBLIME_PREFERENCES
 
         try:
-            SUBLIME_PREFERENCES = self.load_settings('Preferences.sublime-settings')
+            SUBLIME_PREFERENCES = cls.load_settings('Preferences.sublime-settings')
         except Exception as e:
             SUBLIME_PREFERENCES = {}
 
-    def build_config(self, settings):
+    @classmethod
+    def build_config(cls, settings):
         try:
             global CONFIG
 
             # Sublime settings dict is immutable and unordered
             c = {
-                'quick_options': self.load_quick_options(),
+                'quick_options': cls.load_quick_options(),
                 'debug': settings.get('debug', False),
                 'dev': settings.get('dev', False),
                 'open_console_on_failure': settings.get('open_console_on_failure', False),
@@ -1238,14 +1243,14 @@ class ConfigHandler:
                 'custom_modules_manifest': settings.get('custom_modules_manifest', ''),
                 'show_statusbar': settings.get('show_statusbar', True),
                 'show_words_count': {
-                    'enable': OptionHandler().query(settings, True, 'show_words_count', 'enable'),
-                    'ignore_whitespace_char': OptionHandler().query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
-                    'use_short_label': OptionHandler().query(settings, False, 'show_words_count', 'use_short_label')
+                    'enable': OptionHandler.query(settings, True, 'show_words_count', 'enable'),
+                    'ignore_whitespace_char': OptionHandler.query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
+                    'use_short_label': OptionHandler.query(settings, False, 'show_words_count', 'use_short_label')
                 },
                 'remember_session': settings.get('remember_session', True),
                 'layout': {
-                    'enable': OptionHandler().query(settings, '2cols', 'layout', 'enable'),
-                    'sync_scroll': OptionHandler().query(settings, True, 'layout', 'sync_scroll')
+                    'enable': OptionHandler.query(settings, '2cols', 'layout', 'enable'),
+                    'sync_scroll': OptionHandler.query(settings, True, 'layout', 'sync_scroll')
                 },
                 'environ': settings.get('environ', {}),
                 'format_on_priority': settings.get('format_on_priority', {}),
@@ -1256,14 +1261,14 @@ class ConfigHandler:
 
             c['formatters'].pop('examplegeneric', None)
             c['formatters'].pop('examplemodule', None)
-            self.project_config_overwrites_config(c)
-            c = TransformHandler().recursive_map(TransformHandler().expand_path, c)
+            cls.project_config_overwrites_config(c)
+            c = TransformHandler.recursive_map(TransformHandler.expand_path, c)
             c['custom_modules_manifest'] = re.sub(r'(\bhttps?|ftp):/(?=[^/])', r'\1://', c['custom_modules_manifest'])
             CONFIG.update(c)
             return c
         except Exception as e:
             reload_modules(print_tree=False)
-            sublime.set_timeout_async(self.load_config, 100)
+            sublime.set_timeout_async(cls.load_config, 100)
 
     @staticmethod
     def setup_shared_config_files():
@@ -1290,9 +1295,9 @@ class ConfigHandler:
                     try:
                         res = sublime.load_binary_resource(resource)
                         hash_src = hashlib.md5(res).hexdigest()
-                        hash_dst = HashHandler().md5f(path)
+                        hash_dst = HashHandler.md5f(path)
                         master_path = '{0}.{2}{1}'.format(*splitext(path) + ('master',))
-                        hash_dst_master = HashHandler().md5f(master_path) if isfile(master_path) else None
+                        hash_dst_master = HashHandler.md5f(master_path) if isfile(master_path) else None
 
                         if hash_src != hash_dst and (not hash_dst_master or hash_src != hash_dst_master):
                             with open(master_path, 'wb') as f:
@@ -1314,15 +1319,16 @@ class ConfigHandler:
 
     @staticmethod
     def is_quick_options_mode():
-        return OptionHandler().query(CONFIG, {}, 'quick_options')
+        return OptionHandler.query(CONFIG, {}, 'quick_options')
 
-    def get_mode_description(self, short=False):
-        qo_memory = self.sort_dict(self.is_quick_options_mode())
+    @classmethod
+    def get_mode_description(cls, short=False):
+        qo_memory = cls.sort_dict(cls.is_quick_options_mode())
 
         try:
-            file = self.quick_options_config_file()
+            file = cls.quick_options_config_file()
             with open(file, 'r', encoding='utf-8') as f:
-                qo_file = self.sort_dict(json.load(f))
+                qo_file = cls.sort_dict(json.load(f))
         except FileNotFoundError:
             log.error('The file %s was not found.', file)
             qo_file = None
@@ -1348,20 +1354,22 @@ class ConfigHandler:
 
         return mode_descriptions[mode] if short else mode
 
-    def sort_dict(self, dictionary):
+    @classmethod
+    def sort_dict(cls, dictionary):
         sorted_dict = {}
         for key, value in sorted(dictionary.items()):
             if isinstance(value, dict):
-                sorted_dict[key] = self.sort_dict(value)
+                sorted_dict[key] = cls.sort_dict(value)
             elif isinstance(value, list):
                 sorted_dict[key] = sorted(value)
             else:
                 sorted_dict[key] = value
         return sorted_dict
 
-    def set_debug_mode(self):
-        if self.is_quick_options_mode():
-            debug = OptionHandler().query(CONFIG, False, 'quick_options', 'debug')
+    @classmethod
+    def set_debug_mode(cls):
+        if cls.is_quick_options_mode():
+            debug = OptionHandler.query(CONFIG, False, 'quick_options', 'debug')
         else:
             debug = CONFIG.get('debug')
 
@@ -1374,16 +1382,17 @@ class ConfigHandler:
 
     @staticmethod
     def is_generic_method(uid):
-        name = OptionHandler().query(CONFIG, None, 'formatters', uid, 'name')
+        name = OptionHandler.query(CONFIG, None, 'formatters', uid, 'name')
         return name is not None
 
 
 class TransformHandler:
-    def recursive_map(self, func, data):
+    @classmethod
+    def recursive_map(cls, func, data):
         if isinstance(data, dict):
-            return dict(map(lambda item: (item[0], self.recursive_map(func, item[1])), data.items()))
+            return dict(map(lambda item: (item[0], cls.recursive_map(func, item[1])), data.items()))
         elif isinstance(data, list):
-            return list(map(lambda x: self.recursive_map(func, x), data))
+            return list(map(lambda x: cls.recursive_map(func, x), data))
         else:
             return func(data)
 
@@ -1425,13 +1434,14 @@ class HashHandler:
 
         return hash_md5.hexdigest()
 
-    def md5d(self, dir_path):
+    @classmethod
+    def md5d(cls, dir_path):
         hash_md5 = hashlib.md5()
 
         for root, _, files in os.walk(dir_path):
             for file in files:
                 file_path = join(root, file)
-                hash_md5.update(self.md5f(file_path).encode('utf-8'))
+                hash_md5.update(cls.md5f(file_path).encode('utf-8'))
 
         return hash_md5.hexdigest()
 
@@ -1538,8 +1548,9 @@ class PhantomHandler:
             if dst_view.settings().get(k):
                 dst_view.settings().set(k, v)
 
-    def set_html_phantom(self, dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data):
-        self.style_view(dst_view)
+    @classmethod
+    def set_html_phantom(cls, dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data):
+        cls.style_view(dst_view)
 
         image_tag = '<img class="image" src="data:image/png;base64,' + image_data + '" width="' + str(fit_image_width) + '" height="' + str(fit_image_height) + '">'
         dimension = '<div class="image-dimension"><span class="dimension-text">' + str(image_width) + ' x ' + str(image_height) + '</span></div>'
@@ -1614,13 +1625,14 @@ class LayoutHandler:
 
     @staticmethod
     def want_layout():
-        return OptionHandler().query(CONFIG, False, 'layout', 'enable') in LAYOUTS
+        return OptionHandler.query(CONFIG, False, 'layout', 'enable') in LAYOUTS
 
-    def setup_layout(self, view):
-        layout = OptionHandler().query(CONFIG, False, 'layout', 'enable')
+    @classmethod
+    def setup_layout(cls, view):
+        layout = OptionHandler.query(CONFIG, False, 'layout', 'enable')
 
         if layout in LAYOUTS:
-            view.window().set_layout(self.assign_layout(layout))
+            view.window().set_layout(cls.assign_layout(layout))
             return True
 
         return False
@@ -1651,11 +1663,11 @@ class TextHandler:
 class PrintHandler:
     @staticmethod
     def print_sysinfo(pretty=False):
-        if OptionHandler().query(CONFIG, False, 'environ', 'print_on_console'):
+        if OptionHandler.query(CONFIG, False, 'environ', 'print_on_console'):
             log.info('Environments:\n%s', json.dumps(EnvironmentHandler().update_environ(), ensure_ascii=False, indent=4 if pretty else None))
 
-            if ConfigHandler().is_quick_options_mode():
-                log.info('Mode: Quick Options: \n%s', json.dumps(OptionHandler().query(CONFIG, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
+            if ConfigHandler.is_quick_options_mode():
+                log.info('Mode: Quick Options: \n%s', json.dumps(OptionHandler.query(CONFIG, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
             else:
                 log.info('Mode: User Settings')
 

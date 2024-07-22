@@ -55,19 +55,19 @@ from .core.constants import (
 
 def entry():
     import_custom_modules()
-    # CleanupHandler().remove_junk()
+    # CleanupHandler.remove_junk()
     ready = create_package_config_files()
     if ready:
-        ConfigHandler().load_sublime_preferences()
-        ConfigHandler().setup_config()
-        ConfigHandler().setup_shared_config_files()
-        ConfigHandler().set_debug_mode()
+        ConfigHandler.load_sublime_preferences()
+        ConfigHandler.setup_config()
+        ConfigHandler.setup_shared_config_files()
+        ConfigHandler.set_debug_mode()
 
     log.info('%s version: %s (Python %s)', PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 def plugin_loaded():
-    ConfigHandler().setup_config()
+    ConfigHandler.setup_config()
 
     def call_entry():
         sublime.set_timeout_async(lambda: entry(), 100)
@@ -91,7 +91,7 @@ class KeyBindingsCommand(sublime_plugin.WindowCommand):
     def run(self):
         sublime.run_command('new_window')
         window = sublime.active_window()
-        window.set_layout(LayoutHandler().assign_layout('2cols'))
+        window.set_layout(LayoutHandler.assign_layout('2cols'))
         window.focus_group(0)
         window.run_command('open_file', {'file': '${packages}/' + PACKAGE_NAME + '/Example.sublime-keymap'})
         window.focus_group(1)
@@ -131,7 +131,7 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand):
             with open(filepath, 'r') as f:
                 markdown = f.read()
 
-            return MarkdownHandler().markdown_to_html(markdown)
+            return MarkdownHandler.markdown_to_html(markdown)
         except Exception as e:
             log.error('Error reading file: %s\n%s', filepath, e)
         return None
@@ -147,7 +147,7 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand):
             html = self.convert_markdown_file_to_html(self.FILE_PATH)
             if html:
                 view = sublime.active_window().new_file()
-                PhantomHandler().style_view(view)
+                PhantomHandler.style_view(view)
                 view.erase_phantoms('changelog')
                 view.add_phantom('changelog', sublime.Region(0), html, sublime.LAYOUT_INLINE)
                 view.set_name('Changelog')
@@ -188,7 +188,7 @@ class BackupManagerCommand(sublime_plugin.WindowCommand):
         ]
 
         file_paths_to_zip = [
-            ConfigHandler().quick_options_config_file(),
+            ConfigHandler.quick_options_config_file(),
             os.path.join(self.USER_PATH, 'Formatter.sublime-settings'),
             SESSION_FILE
         ] + [os.path.join(self.USER_PATH, keymap) for keymap in default_keymaps]
@@ -221,12 +221,12 @@ class BackupManagerCommand(sublime_plugin.WindowCommand):
                 for file_path in file_paths_to_zip:
                     zipf.write(file_path, file_path)
         except Exception as e:
-            InterfaceHandler().popup_message('Error during backup: %s' % e)
+            InterfaceHandler.popup_message('Error during backup: %s' % e)
             self.cleanup_temp_dir()
             return
 
         self.window.run_command('open_dir', {'dir': self.backup_temp_dir.name})
-        InterfaceHandler().popup_message('Your backup file successfully created.', 'INFO', dialog=True)
+        InterfaceHandler.popup_message('Your backup file successfully created.', 'INFO', dialog=True)
 
     def restore_config(self):
         def on_done(file_path):
@@ -237,11 +237,11 @@ class BackupManagerCommand(sublime_plugin.WindowCommand):
                     with zipfile.ZipFile(file_path, 'r') as zip_ref:
                         zip_ref.extractall('/')
                 except Exception as e:
-                    InterfaceHandler().popup_message('Error during restore: %s' % e)
+                    InterfaceHandler.popup_message('Error during restore: %s' % e)
                     return
-                InterfaceHandler().popup_message('Restore completed successfully.', 'INFO', dialog=True)
+                InterfaceHandler.popup_message('Restore completed successfully.', 'INFO', dialog=True)
             else:
-                InterfaceHandler().popup_message('File not found: %s' % file_path, 'ERROR')
+                InterfaceHandler.popup_message('File not found: %s' % file_path, 'ERROR')
 
         self.window.show_input_panel('Enter the path to the backup zip file:', '', on_done, None, None)
 
@@ -282,7 +282,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         if key == 'use_user_settings':
             option_status = '[-]' if config_values else '[x]'
         if key == 'save_quick_options':
-            option_status = '[x]' if config_values and ConfigHandler().load_quick_options() else '[-]'
+            option_status = '[x]' if config_values and ConfigHandler.load_quick_options() else '[-]'
         if key in ['debug', 'layout', 'ignore_config_path', 'format_on_paste', 'format_on_save', 'new_file_on_format', 'render_extended'] and option_value:
             option_label = '{} {}: {}'.format(option_status, title, option_value if isinstance(option_value, str) else ', '.join(option_value))
         else:
@@ -315,9 +315,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
 
     def show_format_on_menu(self, option_key, error_message):
         def handler():
-            is_on = OptionHandler().query(CONFIG, False, 'quick_options', 'recursive_folder_format')
+            is_on = OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
             if is_on:
-                InterfaceHandler().popup_message(error_message, 'ERROR')
+                InterfaceHandler.popup_message(error_message, 'ERROR')
                 self.run()
             else:
                 self.show_format_menu(option_key)
@@ -406,7 +406,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                 self.run()
 
     def show_new_file_format_input(self):
-        value = OptionHandler().query(CONFIG, '', 'quick_options', 'new_file_on_format')
+        value = OptionHandler.query(CONFIG, '', 'quick_options', 'new_file_on_format')
         self.window.show_input_panel(
             'Enter a suffix for "New File on Format" (to disable: false or spaces):',
             value if (value and isinstance(value, str)) else '',
@@ -467,9 +467,9 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
     def check_recursive_folder_format(self, option_value):
         a = {'format_on_save': 'Format on Save', 'format_on_paste': 'Format on Paste'}
         for k, v in a.items():
-            is_on = OptionHandler().query(CONFIG, [], 'quick_options', k)
+            is_on = OptionHandler.query(CONFIG, [], 'quick_options', k)
             if option_value and is_on:
-                InterfaceHandler().popup_message('Recursive Folder Format is not compatible with an enabled %s.' % v, 'ERROR')
+                InterfaceHandler.popup_message('Recursive Folder Format is not compatible with an enabled %s.' % v, 'ERROR')
                 self.run()
                 return True
         return False
@@ -479,14 +479,14 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         self.save_qo_config_file(config_json)
 
     def save_qo_config_file(self, json_data):
-        file = ConfigHandler().quick_options_config_file()
+        file = ConfigHandler.quick_options_config_file()
         with open(file, 'w', encoding='utf-8') as f:
             json.dump(json_data, f, ensure_ascii=False, indent=4)
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
-        CleanupHandler().clear_console()
+        CleanupHandler.clear_console()
 
         is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
         if is_recursive:
@@ -501,14 +501,14 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         return not bool(self.view.settings().get('is_widget', False))
 
     def is_visible(self, **kwargs):
-        ConfigHandler().set_debug_mode()
+        ConfigHandler.set_debug_mode()
         return self.is_plugin_enabled(kwargs.get('uid', None))
 
     def is_plugin_enabled(self, uid):
         if not ViewHandler(view=self.view).is_view_formattable():
             return False
 
-        formatter = OptionHandler().query(CONFIG, {}, 'formatters', uid)
+        formatter = OptionHandler.query(CONFIG, {}, 'formatters', uid)
         if 'disable' in formatter and not formatter.get('disable', True):
             return True
         elif 'enable' in formatter and formatter.get('enable', False):
@@ -517,10 +517,10 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             return False
 
     def is_recursive_formatting_enabled(self, uid):
-        if ConfigHandler().is_quick_options_mode():
-            return OptionHandler().query(CONFIG, False, 'quick_options', 'recursive_folder_format')
+        if ConfigHandler.is_quick_options_mode():
+            return OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
         else:
-            return OptionHandler().query(CONFIG, False, 'formatters', uid, 'recursive_folder_format', 'enable')
+            return OptionHandler.query(CONFIG, False, 'formatters', uid, 'recursive_folder_format', 'enable')
 
     def run_recursive_formatting(self, **kwargs):
         if self.view.file_name():
@@ -530,7 +530,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
                 recursive_format_thread = threading.Thread(target=recursive_format.run)
                 recursive_format_thread.start()
         else:
-            InterfaceHandler().popup_message('Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.', 'ERROR')
+            InterfaceHandler.popup_message('Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.', 'ERROR')
 
     def run_single_formatting(self, **kwargs):
         with threading.Lock():
@@ -542,7 +542,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
 class AutoFormatFileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
-        CleanupHandler().clear_console()
+        CleanupHandler.clear_console()
 
         auto_format_args = DotFileHandler(view=self.view).get_auto_format_args()
         if auto_format_args:
@@ -556,8 +556,8 @@ class AutoFormatFileCommand(sublime_plugin.TextCommand):
         return not bool(self.view.settings().get('is_widget', False))
 
     def is_visible(self):
-        ConfigHandler().set_debug_mode()
-        return bool(DotFileHandler(view=self.view).get_auto_format_config()) or bool(OptionHandler().query(CONFIG, {}, 'auto_format'))
+        ConfigHandler.set_debug_mode()
+        return bool(DotFileHandler(view=self.view).get_auto_format_config()) or bool(OptionHandler.query(CONFIG, {}, 'auto_format'))
 
 
 class SingleFormat:
@@ -571,7 +571,7 @@ class SingleFormat:
 
     def run(self):
         self.create_graphic_temp_dir()
-        PrintHandler().print_sysinfo(pretty=True)
+        PrintHandler.print_sysinfo(pretty=True)
 
         try:
             for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
@@ -608,7 +608,7 @@ class SingleFormat:
             self.set_status_bar_text()
 
     def set_status_bar_text(self):
-        status_text = '{}({}) [ok:{}|ko:{}]'.format(PACKAGE_NAME[0], ConfigHandler().get_mode_description(short=True), self.success, self.failure)
+        status_text = '{}({}) [ok:{}|ko:{}]'.format(PACKAGE_NAME[0], ConfigHandler.get_mode_description(short=True), self.success, self.failure)
         self.view.set_status(STATUS_KEY, status_text)
 
     def open_console_on_failure(self):
@@ -628,14 +628,14 @@ class SingleFormat:
     def handle_graphic_formatting(self):
         window = self.view.window()
         window.focus_group(0)
-        layout = OptionHandler().query(CONFIG, '2cols', 'layout', 'enable')
+        layout = OptionHandler.query(CONFIG, '2cols', 'layout', 'enable')
         layout = layout if layout in ['2cols', '2rows'] else '2cols'
-        window.set_layout(LayoutHandler().assign_layout(layout))
+        window.set_layout(LayoutHandler.assign_layout(layout))
         self.create_or_reuse_view()
 
     def handle_text_formatting(self):
         uid = self.kwargs.get('uid', None)
-        mode = 'qo' if ConfigHandler().is_quick_options_mode() else 'user'
+        mode = 'qo' if ConfigHandler.is_quick_options_mode() else 'user'
         layout, suffix = self.get_layout_and_suffix(uid, mode)
 
         if suffix and isinstance(suffix, str):
@@ -643,9 +643,9 @@ class SingleFormat:
             window.focus_group(0)
 
             if mode == 'qo':
-                window.set_layout(LayoutHandler().assign_layout(layout))
-            elif LayoutHandler().want_layout():
-                LayoutHandler().setup_layout(self.view)
+                window.set_layout(LayoutHandler.assign_layout(layout))
+            elif LayoutHandler.want_layout():
+                LayoutHandler.setup_layout(self.view)
 
             file_path = self.view.file_name()
             new_path = '{0}.{2}{1}'.format(*os.path.splitext(file_path) + (suffix,)) if file_path and os.path.isfile(file_path) else None
@@ -678,13 +678,13 @@ class SingleFormat:
     def get_extended_data(self):
         uid = self.kwargs.get('uid', None)
 
-        if ConfigHandler().is_quick_options_mode():
-            if uid not in OptionHandler().query(CONFIG, [], 'quick_options', 'render_extended'):
+        if ConfigHandler.is_quick_options_mode():
+            if uid not in OptionHandler.query(CONFIG, [], 'quick_options', 'render_extended'):
                 return {}
 
         try:
             extended_data = {}
-            image_extensions = ['svg'] if not ConfigHandler().is_generic_method(uid) else list(OptionHandler().query(CONFIG, {}, 'formatters', uid, 'args_extended').keys())
+            image_extensions = ['svg'] if not ConfigHandler.is_generic_method(uid) else list(OptionHandler.query(CONFIG, {}, 'formatters', uid, 'args_extended').keys())
 
             for ext in image_extensions:
                 ext = ext.strip().lower()
@@ -702,13 +702,13 @@ class SingleFormat:
             image_path = os.path.join(self.temp_dir.name, GFX_OUT_NAME + '.png')
             with open(image_path, 'rb') as image_file:
                 data = image_file.read()
-                image_width, image_height = PhantomHandler().get_image_size(data)
+                image_width, image_height = PhantomHandler.get_image_size(data)
                 image_data = base64.b64encode(data).decode('utf-8')
 
-            fit_image_width, fit_image_height = PhantomHandler().image_scale_fit(dst_view, image_width, image_height)
+            fit_image_width, fit_image_height = PhantomHandler.image_scale_fit(dst_view, image_width, image_height)
             extended_data = self.get_extended_data()
 
-            html = PhantomHandler().set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
+            html = PhantomHandler.set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
             data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
             dst_view.erase_phantoms('graphic')
@@ -723,7 +723,7 @@ class SingleFormat:
             dst_view.window().run_command('zoom', data)
         else:
             stem = PathHandler(view=dst_view).get_pathinfo()['stem'] or GFX_OUT_NAME
-            save_path = os.path.join(PhantomHandler().get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
+            save_path = os.path.join(PhantomHandler.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
                 mime_type, base64_data = href.split(',', 1)
@@ -731,20 +731,20 @@ class SingleFormat:
                 with open(save_path, 'wb') as f:
                     f.write(decoded_data)
 
-                InterfaceHandler().popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
+                InterfaceHandler.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
             except Exception as e:
-                InterfaceHandler().popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
+                InterfaceHandler.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
     def get_layout_and_suffix(self, uid, mode):
         if mode == 'qo':
             return (
-                OptionHandler().query(CONFIG, False, 'quick_options', 'layout'),
-                OptionHandler().query(CONFIG, False, 'quick_options', 'new_file_on_format')
+                OptionHandler.query(CONFIG, False, 'quick_options', 'layout'),
+                OptionHandler.query(CONFIG, False, 'quick_options', 'new_file_on_format')
             )
         else:
             return (
-                OptionHandler().query(CONFIG, False, 'layout', 'enable'),
-                OptionHandler().query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
+                OptionHandler.query(CONFIG, False, 'layout', 'enable'),
+                OptionHandler.query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
             )
 
     def undo_history(self):
@@ -779,13 +779,13 @@ class ZoomCommand(sublime_plugin.WindowCommand):
 
             dst_view = self.find_view_by_id(dst_view_id) or self.window.active_view()
             if zoom_level == 'Fit':
-                fit_image_width, fit_image_height = PhantomHandler().image_scale_fit(dst_view, image_width, image_height)
+                fit_image_width, fit_image_height = PhantomHandler.image_scale_fit(dst_view, image_width, image_height)
             else:
                 fit_image_width = image_width * zoom_factor
                 fit_image_height = image_height * zoom_factor
 
             try:
-                html = PhantomHandler().set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
+                html = PhantomHandler.set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
                 data = {'dst_view_id': dst_view.id(), 'image_data': image_data, 'image_width': image_width, 'image_height': image_height, 'extended_data': extended_data}
 
                 dst_view.erase_phantoms('graphic')
@@ -798,7 +798,7 @@ class ZoomCommand(sublime_plugin.WindowCommand):
             dst_view.window().run_command('zoom', data)
         else:
             stem = os.path.splitext(os.path.basename(dst_view.file_name() or GFX_OUT_NAME))[0]
-            save_path = os.path.join(PhantomHandler().get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
+            save_path = os.path.join(PhantomHandler.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:
                 mime_type, base64_data = href.split(',', 1)
@@ -806,9 +806,9 @@ class ZoomCommand(sublime_plugin.WindowCommand):
                 with open(save_path, 'wb') as f:
                     f.write(decoded_data)
 
-                InterfaceHandler().popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
+                InterfaceHandler.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
             except Exception as e:
-                InterfaceHandler().popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
+                InterfaceHandler.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
     def find_view_by_id(self, dst_view_id):
         for window in sublime.windows():
@@ -874,7 +874,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
                 file.write(allcontent)
         except OSError as e:
             log.error('Could not save file: %s\n%s', path, e)
-            InterfaceHandler().popup_message('Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.', 'ERROR')
+            InterfaceHandler.popup_message('Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.', 'ERROR')
 
     def show_status_on_new_file(self, view):
         if view.is_loading():
@@ -919,7 +919,7 @@ class RecursiveFormat():
 
     def get_recursive_files(self, cwd):
         items = self.get_recursive_format_items()
-        return TransformHandler().get_recursive_filelist(
+        return TransformHandler.get_recursive_filelist(
             cwd,
             items.get('exclude_folders_regex', []),
             items.get('exclude_files_regex', []),
@@ -928,7 +928,7 @@ class RecursiveFormat():
 
     def get_recursive_format_items(self):
         uid = self.kwargs.get('uid', None)
-        return OptionHandler().query(CONFIG, {}, 'formatters', uid, 'recursive_folder_format')
+        return OptionHandler.query(CONFIG, {}, 'formatters', uid, 'recursive_folder_format')
 
     def prepare_context(self, cwd, filelist):
         self.CONTEXT.update({
@@ -941,7 +941,7 @@ class RecursiveFormat():
             'current_index': 0,
             'success_count': 0,
             'failure_count': 0,
-            'mode_description': ConfigHandler().get_mode_description(short=True)
+            'mode_description': ConfigHandler.get_mode_description(short=True)
         })
 
     def process_files(self):
@@ -1019,11 +1019,11 @@ class RecursiveFormat():
         return new_file_path
 
     def get_new_file_suffix(self):
-        if ConfigHandler().is_quick_options_mode():
-            return OptionHandler().query(CONFIG, False, 'quick_options', 'new_file_on_format')
+        if ConfigHandler.is_quick_options_mode():
+            return OptionHandler.query(CONFIG, False, 'quick_options', 'new_file_on_format')
         else:
             uid = self.CONTEXT['kwargs'].get('uid', None)
-            return OptionHandler().query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
+            return OptionHandler.query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
 
     def handle_formatting_completion(self):
         self.update_status_bar()
@@ -1058,7 +1058,7 @@ class RecursiveFormat():
         ok = self.CONTEXT['success_count']
         ko = self.CONTEXT['failure_count']
         total = self.CONTEXT['filelist_length']
-        InterfaceHandler().popup_message('Formatting COMPLETED!\n\nOK: %s\nKO: %s\nTotal: %s\n\nPlease check the results in:\n%s' % (ok, ko, total, self.CONTEXT['cwd']), 'INFO', dialog=True)
+        InterfaceHandler.popup_message('Formatting COMPLETED!\n\nOK: %s\nKO: %s\nTotal: %s\n\nPlease check the results in:\n%s' % (ok, ko, total, self.CONTEXT['cwd']), 'INFO', dialog=True)
 
     def reset_context(self):
         for key, value in self.CONTEXT.items():
@@ -1074,10 +1074,10 @@ class RecursiveFormat():
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
         if cwd and (error.errno != os.errno.EEXIST):
             log.error('Could not create directory: %s', cwd)
-            InterfaceHandler().popup_message('Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.' % cwd, 'ERROR')
+            InterfaceHandler.popup_message('Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.' % cwd, 'ERROR')
         if file_path:
             log.error('Could not save file: %s', file_path)
-            InterfaceHandler().popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
+            InterfaceHandler.popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
 
 
 class SequenceFormatThread(threading.Thread):
@@ -1095,10 +1095,10 @@ class SequenceFormatThread(threading.Thread):
                 region = sublime.Region(0, self.view.size())
                 uid = self.kwargs.get('uid', None)
                 uid, syntax = SyntaxHandler(view=self.view, uid=uid, region=region, auto_format_config=None).get_assigned_syntax(self.view, uid, region)
-                exclude_syntaxes = OptionHandler().query(CONFIG, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
+                exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
                 if not syntax or syntax in exclude_syntaxes:
                     if not syntax:
-                        scope = OptionHandler().query(CONFIG, [], 'formatters', uid, 'syntaxes')
+                        scope = OptionHandler.query(CONFIG, [], 'formatters', uid, 'syntaxes')
                         log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
                     self.callback(False)
                 else:
@@ -1123,7 +1123,7 @@ class FormatterListener(sublime_plugin.EventListener):
             RecursiveFormat(view).next_thread(view, is_ready=False)
 
     def on_activated(self, view):
-        if OptionHandler().query(CONFIG, False, 'layout', 'sync_scroll') and LayoutHandler().want_layout():
+        if OptionHandler.query(CONFIG, False, 'layout', 'sync_scroll') and LayoutHandler.want_layout():
             self.stop_sync_scroll()
 
             src_view = self._find_src_view_by_dst_view(view)
@@ -1177,10 +1177,10 @@ class FormatterListener(sublime_plugin.EventListener):
             # Auto-switch to single layout upon closing the latest view
             group, _ = window.get_view_index(view)
             if len(window.views_in_group(group)) == 1:
-                sublime.set_timeout(lambda: window.set_layout(LayoutHandler().assign_layout('single')), 0)
+                sublime.set_timeout(lambda: window.set_layout(LayoutHandler.assign_layout('single')), 0)
 
         window = view.window()
-        if window and LayoutHandler().want_layout() and window.num_groups() == 2:
+        if window and LayoutHandler.want_layout() and window.num_groups() == 2:
             _set_single_layout(window, view)
 
     def on_post_text_command(self, view, command_name, args):
@@ -1198,12 +1198,12 @@ class FormatterListener(sublime_plugin.EventListener):
                 return  # exclude
 
             auto_format_user_config = DotFileHandler(view=view).get_auto_format_user_config(active_file_path=path)
-            auto_format_user_operation = OptionHandler().query(auto_format_user_config, False, operation)
-            auto_format_config_operation = OptionHandler().query(CONFIG, False, 'auto_format', 'config', operation)
+            auto_format_user_operation = OptionHandler.query(auto_format_user_config, False, operation)
+            auto_format_config_operation = OptionHandler.query(CONFIG, False, 'auto_format', 'config', operation)
             if (auto_format_user_config and auto_format_user_operation) or auto_format_config_operation:
                 get_auto_format_args = DotFileHandler(view=view).get_auto_format_args(active_file_path=path)
                 if get_auto_format_args:
-                    CleanupHandler().clear_console()
+                    CleanupHandler.clear_console()
 
                     SingleFormat(view, **get_auto_format_args).run()
                     return
@@ -1232,18 +1232,18 @@ class FormatterListener(sublime_plugin.EventListener):
                 if uid == 'enable':
                     continue
 
-                v = OptionHandler().query(formatters, None, uid)
+                v = OptionHandler.query(formatters, None, uid)
                 if self._on_paste_or_save__should_skip_formatter(uid, v, opkey):
                     continue
 
                 syntax = self._on_paste_or_save__get_syntax(view, uid)
                 if syntax in value:
-                    CleanupHandler().clear_console()
+                    CleanupHandler.clear_console()
 
                     SingleFormat(view=view, uid=uid, type=value.get('type', None)).run()
                     break
         else:
-            InterfaceHandler().popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
+            InterfaceHandler.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
 
     def _on_paste_or_save__regular(self, view, opkey):
         seen = set()
@@ -1255,23 +1255,23 @@ class FormatterListener(sublime_plugin.EventListener):
 
             syntax = self._on_paste_or_save__get_syntax(view, uid)
             if syntax in value.get('syntaxes', []) and syntax not in seen:
-                CleanupHandler().clear_console()
+                CleanupHandler.clear_console()
 
                 log.debug('"%s" (UID: %s | Syntax: %s)', opkey, uid, syntax)
                 SingleFormat(view=view, uid=uid, type=value.get('type', None)).run()
                 seen.add(syntax)
 
     def _on_paste_or_save__should_skip_formatter(self, uid, value, opkey):
-        is_qo_mode = ConfigHandler().is_quick_options_mode()
-        is_rff_on = OptionHandler().query(CONFIG, False, 'quick_options', 'recursive_folder_format')
+        is_qo_mode = ConfigHandler.is_quick_options_mode()
+        is_rff_on = OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
 
         if not isinstance(value, dict) or ('disable' in value and value.get('disable', True)) or ('enable' in value and not value.get('enable', False)):
             return True
 
-        if (is_qo_mode and uid not in OptionHandler().query(CONFIG, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
+        if (is_qo_mode and uid not in OptionHandler.query(CONFIG, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
             return True
 
-        if (is_qo_mode and is_rff_on) or (not is_qo_mode and OptionHandler().query(value, False, 'recursive_folder_format', 'enable')):
+        if (is_qo_mode and is_rff_on) or (not is_qo_mode and OptionHandler.query(value, False, 'recursive_folder_format', 'enable')):
             mode = 'Quick Options' if is_qo_mode else 'User Settings'
             log.info('%s mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid, opkey)
             return True

@@ -194,15 +194,17 @@ def download_and_extract_archive(arch_url, dst_dir=None):
     extract_dir = tempfile.mkdtemp()
     dst_dir = dst_dir or tempfile.mkdtemp()
 
-    if download_file(arch_url, download_path) and extract_archive(download_path, extract_dir):
-        if move_extracted_contents(extract_dir, dst_dir):
-            shutil.rmtree(extract_dir)
+    try:
+        if download_file(arch_url, download_path) and extract_archive(download_path, extract_dir):
+            if move_extracted_contents(extract_dir, dst_dir):
+                shutil.rmtree(extract_dir)
+                os.remove(download_path)
+                return dst_dir
+    except:
+        shutil.rmtree(extract_dir)
+        if os.path.isfile(download_path)
             os.remove(download_path)
-            return dst_dir
-
-    shutil.rmtree(extract_dir)
-    os.remove(download_path)
-    return False
+        return False
 
 def import_model_v1(custom_modules):  # deprecated
     packages_path = sublime.packages_path()
@@ -237,13 +239,13 @@ def import_model_v1(custom_modules):  # deprecated
         update_import()
 
 def files_are_equal(src, dst):
-    src_md5 = HashHandler().md5f(src)
-    dst_md5 = HashHandler().md5f(dst) if os.path.exists(dst) else None
+    src_md5 = HashHandler.md5f(src)
+    dst_md5 = HashHandler.md5f(dst) if os.path.exists(dst) else None
     return src_md5 == dst_md5
 
 def dirs_are_equal(src, dst):
-    src_sum = HashHandler().md5d(src)
-    dst_sum = HashHandler().md5d(dst) if os.path.exists(dst) else None
+    src_sum = HashHandler.md5d(src)
+    dst_sum = HashHandler.md5d(dst) if os.path.exists(dst) else None
     return src_sum == dst_sum
 
 def update_import():
