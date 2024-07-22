@@ -538,7 +538,7 @@ class TempFileHandler:
             self.uid = uid
             suffix = '.' + syntax if syntax else None
 
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=PathHandler(view=self.view).get_pathinfo()['cwd'], encoding='utf-8') as file:
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=None, encoding='utf-8') as file:
             file.write(ViewHandler(view=self.view).get_text_from_region(self.region))
             file.close()
             return file.name
