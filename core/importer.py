@@ -202,7 +202,7 @@ def download_and_extract_archive(arch_url, dst_dir=None):
                 return dst_dir
     except:
         shutil.rmtree(extract_dir)
-        if os.path.isfile(download_path)
+        if os.path.isfile(download_path):
             os.remove(download_path)
         return False
 
