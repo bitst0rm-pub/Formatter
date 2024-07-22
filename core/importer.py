@@ -41,6 +41,7 @@ def import_model_v2(custom_modules_manifest):
 
     if not process_local_sources(data.get('local', {})) or not process_remote_sources(data.get('remote', [])):
         log.error('Failed to import custom modules.')
+        remove_dotfile(dot_path)
         return
 
     update_import()
@@ -58,6 +59,14 @@ def version_up_to_date(dot_path, version):
 def update_version(dot_path, version):
     with open(dot_path, 'w') as f:
         f.write(version)
+
+def remove_dotfile(dot_path):
+    try:
+        os.remove(dot_path)
+    except FileNotFoundError:
+        log.error('File not found: %s' % dot_path)
+    except Exception as e:
+        log.error('An error occurred while trying to remove %s: %s' % (dot_path, e))
 
 def process_local_sources(local_sources):
     for k, sources in local_sources.items():
