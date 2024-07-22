@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.4)] - 2024-07-22
+
+### 🐛 Bug Fixes
+
+- [`15abbcd`](https://github.com/bitst0rm-pub/Formatter/commit/15abbcd53857ca8c8c2728174c0dbdfcb74b5add) Add the missing colon
+- [`cab37fc`](https://github.com/bitst0rm-pub/Formatter/commit/cab37fc8d5083424e49eab954974d559955ad4e5) Create temp file in the temp file system instead of cwd (closes [#58](https://github.com/bitst0rm-pub/Formatter/issues/58)) Thanks [@husanjun](https://github.com/husanjun)
+- [`042df96`](https://github.com/bitst0rm-pub/Formatter/commit/042df96675f7c6f0cc444d9497f56b85b40215dc) Fix obsolete import from common
+
+### ⚙️ Miscellaneous Tasks
+
+- [`694094a`](https://github.com/bitst0rm-pub/Formatter/commit/694094a4782367b80d45e44371d26b867cca0ad6) Auto remove `.custom` if fetching custom modules data fails
+- [`af16b8a`](https://github.com/bitst0rm-pub/Formatter/commit/af16b8a3dc8c7a4bbc62f26e4e8d6dd4281bd7a5) Improve subprocess termination
+
 ## [[1.5.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.3)] - 2024-07-21
 
 ### 🚀 Features
