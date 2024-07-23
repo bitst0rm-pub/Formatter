@@ -1123,6 +1123,8 @@ class FormatterListener(sublime_plugin.EventListener):
             RecursiveFormat(view).next_thread(view, is_ready=False)
 
     def on_activated(self, view):
+        ConfigHandler.update_project_config_overwrites_config()
+
         if OptionHandler.query(CONFIG, False, 'layout', 'sync_scroll') and LayoutHandler.want_layout():
             self.stop_sync_scroll()
 

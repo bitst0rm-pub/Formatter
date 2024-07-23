@@ -1215,6 +1215,7 @@ class ConfigHandler:
         project_data = sublime.active_window().project_data()
         project_settings = OptionHandler.query(project_data, {}, 'settings', PACKAGE_NAME)
         if project_settings:
+            project_settings = TransformHandler.recursive_map(TransformHandler.expand_path, project_settings)
             StringHandler().update_json_recursive(config, project_settings)
 
     @classmethod
@@ -1269,6 +1270,13 @@ class ConfigHandler:
         except Exception as e:
             reload_modules(print_tree=False)
             sublime.set_timeout_async(cls.load_config, 100)
+
+    @classmethod
+    def update_project_config_overwrites_config(cls):
+        c = CONFIG
+        cls.project_config_overwrites_config(c)
+        CONFIG.update(c)
+        return c
 
     @staticmethod
     def setup_shared_config_files():
