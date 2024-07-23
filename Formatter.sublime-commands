@@ -1,5 +1,13 @@
 [
     {
+        "caption": "Formatter: Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/Formatter/Formatter.sublime-settings",
+            "default": "// Settings in here override those in \"Formatter/Formatter.sublime-settings\"\n\n{\n\t$0\n}\n",
+        },
+    },
+    {
         "caption": "Formatter: Version Info",
         "command": "version_info"
     },
