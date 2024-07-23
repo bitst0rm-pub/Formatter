@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.5)] - 2024-07-23
+
+### 🐛 Bug Fixes
+
+- [`121550c`](https://github.com/bitst0rm-pub/Formatter/commit/121550c3a1f80457c305bade84671b8d0feeb6e1) Update config to use multi per-projects opening at once (closes [#60](https://github.com/bitst0rm-pub/Formatter/issues/60)) Thanks [@husanjun](https://github.com/husanjun)
+
+### ⚙️ Miscellaneous Tasks
+
+- [`83e155a`](https://github.com/bitst0rm-pub/Formatter/commit/83e155a07fcd66a6cdcdc3319a297f39d2084a83) Add shortcut command for setting options (closes [#59](https://github.com/bitst0rm-pub/Formatter/issues/59)) Credit & Thanks [@husanjun](https://github.com/husanjun)
+
 ## [[1.5.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.4)] - 2024-07-22
 
 ### 🐛 Bug Fixes
