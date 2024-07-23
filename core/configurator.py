@@ -313,6 +313,14 @@ def build_formatter_sublime_commands_children(formatter_map):
 def build_formatter_sublime_commands(formatter_map):
     sublime_commands = [
         OrderedDict([
+            ('caption', 'Formatter: Settings'),
+            ('command', 'edit_settings'),
+            ('args', OrderedDict([
+                ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
+                ('default', '// Settings in here override those in \'Formatter/Formatter.sublime-settings\'\n\n{\n\t$0\n}\n'),
+            ])),
+        ]),
+        OrderedDict([
             ('caption', 'Formatter: Version Info'),
             ('command', 'version_info')
         ]),
