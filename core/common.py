@@ -46,6 +46,7 @@ from .constants import (
 
 
 CONFIG = {}
+settings = {}
 SUBLIME_PREFERENCES = {}
 
 
@@ -1185,14 +1186,15 @@ class ConfigHandler:
 
     @classmethod
     def setup_config(cls):
+        global settings
         settings = cls.load_settings(cls.config_file())
         settings.add_on_change('290c6488-3973-493b-9151-137042f0fa36', cls.load_config)
-        cls.build_config(settings)
+        cls.load_config()
 
     @classmethod
     def load_config(cls):
-        settings = cls.load_settings(cls.config_file())
-        cls.build_config(settings)
+        global settings
+        return cls.build_config(settings)
 
     @classmethod
     def load_quick_options(cls):
@@ -1273,9 +1275,7 @@ class ConfigHandler:
 
     @classmethod
     def update_project_config_overwrites_config(cls):
-        c = CONFIG
-        cls.project_config_overwrites_config(c)
-        CONFIG.update(c)
+        c = cls.load_config()
         return c
 
     @staticmethod
