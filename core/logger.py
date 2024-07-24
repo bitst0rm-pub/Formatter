@@ -24,15 +24,15 @@ def setup_logger(name):
     return logger
 
 def enable_logging():
-    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger = logging.getLogger(__name__)
     root_logger.setLevel(logging.DEBUG)
 
 def enable_status():
-    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger = logging.getLogger(__name__)
     root_logger.setLevel(STATUS)
 
 def disable_logging():
-    root_logger = logging.getLogger(PACKAGE_NAME)
+    root_logger = logging.getLogger(__name__)
     root_logger.setLevel(logging.CRITICAL)
 
 setup_logger(__name__)
