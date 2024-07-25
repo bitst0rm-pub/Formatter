@@ -297,15 +297,17 @@ class FileHandler:
         log.warning('File exists but cannot get permission to %s: %s', permission_name, file)
         return False
 
-    def is_executable(self, file):
-        if not self._is_valid_file(file):
+    @classmethod
+    def is_executable(cls, file):
+        if not cls._is_valid_file(file):
             return False
-        return self._has_permission(file, os.X_OK, 'execute')
+        return cls._has_permission(file, os.X_OK, 'execute')
 
-    def is_readable(self, file):
-        if not self._is_valid_file(file):
+    @classmethod
+    def is_readable(cls, file):
+        if not cls._is_valid_file(file):
             return False
-        return self._has_permission(file, os.R_OK, 'read')
+        return cls._has_permission(file, os.R_OK, 'read')
 
 
 class PathHandler:
@@ -361,9 +363,10 @@ class EnvironmentHandler:
 
         return None
 
-    def get_environ_path(self, fnames):
+    @classmethod
+    def get_environ_path(cls, fnames):
         if fnames and isinstance(fnames, list):
-            environ = self.update_environ()
+            environ = cls.update_environ()
             if environ and isinstance(environ, dict):
                 path = environ.get('PATH', os.defpath)
                 if path:
@@ -386,7 +389,7 @@ class EnvironmentHandler:
                             seen.add(normdir)
                             for f in files:
                                 file = join(dir, f)
-                                if FileHandler().is_executable(file):
+                                if FileHandler.is_executable(file):
                                     return file
                 else:
                     log.error('"PATH" or default search path does not exist: %s', path)
@@ -415,7 +418,7 @@ class ProcessHandler:
 
         # Input cmd must be a list of strings
         self.process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
-                        env=EnvironmentHandler().update_environ(), shell=False, startupinfo=info)
+                        env=EnvironmentHandler.update_environ(), shell=False, startupinfo=info)
         return self.process
 
     def kill(self, process):
@@ -498,7 +501,7 @@ class CommandHandler:
     def print_exiterr(self, exitcode, stderr):
         sep = '=' * 87
         s = 'File not formatted due to an error (exitcode=%d)' % exitcode
-        log.status(s + '.' if StringHandler().is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
+        log.status(s + '.' if StringHandler.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
 
     def print_oserr(self, cmd):
         log.status('An error occurred while executing the command: %s', ' '.join(cmd))
@@ -628,7 +631,7 @@ class ArgumentHandler:
             if runtime_type == 'ruby':
                 pass
             for f in paths:
-                if FileHandler().is_executable(f):
+                if FileHandler.is_executable(f):
                     log.debug('Local executable found: %s', f)
                     return f
         return None
@@ -651,16 +654,16 @@ class ArgumentHandler:
         for user_file in user_files:
             a = PathHandler(view=self.view).get_pathinfo(user_file)
             if a['path'] == a['base'] and not a['cwd']:
-                global_file = EnvironmentHandler().get_environ_path([user_file])
+                global_file = EnvironmentHandler.get_environ_path([user_file])
                 if global_file:
                     log.debug('Global %s found: %s', what, global_file)
                     return global_file
 
-            if FileHandler().is_executable(user_file):
+            if FileHandler.is_executable(user_file):
                 log.debug('User %s found: %s', what, user_file)
                 return user_file
 
-        global_file = EnvironmentHandler().get_environ_path(fnames_list)
+        global_file = EnvironmentHandler.get_environ_path(fnames_list)
         if global_file:
             log.debug('Global %s found: %s', what, global_file)
             return global_file
@@ -696,7 +699,7 @@ class ArgumentHandler:
 
     def get_args(self):
         args = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'args')
-        return StringHandler().convert_list_items_to_string(args)
+        return StringHandler.convert_list_items_to_string(args)
 
     def get_config_path(self):
         ignore_config_path = OptionHandler.query(CONFIG, [], 'quick_options', 'ignore_config_path')
@@ -765,7 +768,7 @@ class ArgumentHandler:
                     break
 
         for path in candidate_paths:
-            if FileHandler().is_readable(path):
+            if FileHandler.is_readable(path):
                 log.debug('Auto-set "config_path" to the detected dot file: %s', path)
                 return path
 
@@ -912,10 +915,11 @@ class SyntaxHandler:
 
 
 class StringHandler:
-    def update_json_recursive(self, json_data, update_data):
+    @classmethod
+    def update_json_recursive(cls, json_data, update_data):
         for key, value in update_data.items():
             if key in json_data and isinstance(value, dict) and isinstance(json_data[key], dict):
-                self.update_json_recursive(json_data[key], value)
+                cls.update_json_recursive(json_data[key], value)
             else:
                 json_data[key] = value
 
@@ -941,7 +945,7 @@ class DotFileHandler:
                 if isfile(p):
                     try:
                         with open(p, 'r', encoding='utf-8') as f:
-                            StringHandler().update_json_recursive(config, sublime.decode_value(f.read()))
+                            StringHandler.update_json_recursive(config, sublime.decode_value(f.read()))
                     except Exception as e:
                         log.error('Error reading %s at: %s', filename, p)
         return config
@@ -986,7 +990,7 @@ class GraphicHandler:
             args_extended = OptionHandler.query(CONFIG, {}, 'formatters', self.uid, 'args_extended')
             valid = {}
             for k, v in args_extended.items():
-                valid[k.strip().lower()] = StringHandler().convert_list_items_to_string(v)
+                valid[k.strip().lower()] = StringHandler.convert_list_items_to_string(v)
             return valid
         else:
             return {}
@@ -1225,7 +1229,7 @@ class ConfigHandler:
             if project_settings:
                 PROJECT_CONFIG = deepcopy(CONFIG)
                 project_settings = TransformHandler.recursive_map(TransformHandler.expand_path, project_settings)
-                StringHandler().update_json_recursive(PROJECT_CONFIG, project_settings)
+                StringHandler.update_json_recursive(PROJECT_CONFIG, project_settings)
             else:
                 PROJECT_CONFIG = {}
         else:
@@ -1679,7 +1683,7 @@ class PrintHandler:
     @staticmethod
     def print_sysinfo(pretty=False):
         if OptionHandler.query(CONFIG, False, 'environ', 'print_on_console'):
-            log.info('Environments:\n%s', json.dumps(EnvironmentHandler().update_environ(), ensure_ascii=False, indent=4 if pretty else None))
+            log.info('Environments:\n%s', json.dumps(EnvironmentHandler.update_environ(), ensure_ascii=False, indent=4 if pretty else None))
 
             if ConfigHandler.is_quick_options_mode():
                 log.info('Mode: Quick Options: \n%s', json.dumps(OptionHandler.query(CONFIG, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
