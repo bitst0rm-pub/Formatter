@@ -5,6 +5,7 @@ import shutil
 import struct
 import hashlib
 import tempfile
+from copy import deepcopy
 from subprocess import Popen, PIPE, TimeoutExpired
 from os.path import (
     basename,
@@ -46,6 +47,7 @@ from .constants import (
 
 
 CONFIG = {}
+PROJECT_CONFIG = {}
 SUBLIME_PREFERENCES = {}
 
 
@@ -339,7 +341,7 @@ class EnvironmentHandler:
         try:
             environ = os.environ.copy()
 
-            for key, value in CONFIG.get('environ').items():
+            for key, value in OptionHandler.query(CONFIG, {}, 'environ').items():
                 if value and isinstance(value, list):
                     pathstring = environ.get(key, None)
                     items = list(filter(None, value))
@@ -433,7 +435,7 @@ class ProcessHandler:
 
     @staticmethod
     def timeout():
-        timeout = CONFIG.get('timeout')
+        timeout = OptionHandler.query(CONFIG, 10, 'timeout')
         return timeout if not isinstance(timeout, bool) and isinstance(timeout, int) else None
 
 
@@ -516,6 +518,9 @@ class ViewHandler:
 class OptionHandler:
     @staticmethod
     def query(data_dict, default=None, *keys):
+        if PROJECT_CONFIG and any(key in data_dict for key in PROJECT_CONFIG):
+            data_dict = PROJECT_CONFIG
+
         for key in keys:
             if not isinstance(data_dict, (dict, sublime.Settings)):
                 return default
@@ -1204,19 +1209,29 @@ class ConfigHandler:
                     data = json.load(f)
                 quick_options = data
             else:
-                quick_options = CONFIG.get('quick_options', {})
+                quick_options = OptionHandler.query(CONFIG, {}, 'quick_options')
         except Exception as e:
             quick_options = {}
 
         return quick_options
 
     @staticmethod
-    def project_config_overwrites_config(config):
+    def project_config_overwrites_config():
+        global PROJECT_CONFIG
+
         project_data = sublime.active_window().project_data()
-        project_settings = OptionHandler.query(project_data, {}, 'settings', PACKAGE_NAME)
-        if project_settings:
-            project_settings = TransformHandler.recursive_map(TransformHandler.expand_path, project_settings)
-            StringHandler().update_json_recursive(config, project_settings)
+        if project_data and isinstance(project_data, dict):
+            project_settings = project_data.get('settings', {}).get(PACKAGE_NAME, None)
+            if project_settings:
+                PROJECT_CONFIG = deepcopy(CONFIG)
+                project_settings = TransformHandler.recursive_map(TransformHandler.expand_path, project_settings)
+                StringHandler().update_json_recursive(PROJECT_CONFIG, project_settings)
+            else:
+                PROJECT_CONFIG = {}
+        else:
+            PROJECT_CONFIG = {}
+
+        ConfigHandler.set_debug_mode()  # update
 
     @classmethod
     def load_sublime_preferences(cls):
@@ -1262,7 +1277,6 @@ class ConfigHandler:
 
             c['formatters'].pop('examplegeneric', None)
             c['formatters'].pop('examplemodule', None)
-            cls.project_config_overwrites_config(c)
             c = TransformHandler.recursive_map(TransformHandler.expand_path, c)
             c['custom_modules_manifest'] = re.sub(r'(\bhttps?|ftp):/(?=[^/])', r'\1://', c['custom_modules_manifest'])
             CONFIG.update(c)
@@ -1270,13 +1284,6 @@ class ConfigHandler:
         except Exception as e:
             reload_modules(print_tree=False)
             sublime.set_timeout_async(cls.load_config, 100)
-
-    @classmethod
-    def update_project_config_overwrites_config(cls):
-        c = CONFIG
-        cls.project_config_overwrites_config(c)
-        CONFIG.update(c)
-        return c
 
     @staticmethod
     def setup_shared_config_files():
@@ -1379,7 +1386,7 @@ class ConfigHandler:
         if cls.is_quick_options_mode():
             debug = OptionHandler.query(CONFIG, False, 'quick_options', 'debug')
         else:
-            debug = CONFIG.get('debug')
+            debug = OptionHandler.query(CONFIG, False, 'debug')
 
         if debug == 'status':
             enable_status()

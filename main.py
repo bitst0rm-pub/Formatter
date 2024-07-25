@@ -604,7 +604,7 @@ class SingleFormat:
             self.failure += 1
             log.status('❌ Formatting failed. 😢💔\n')
 
-        if CONFIG.get('show_statusbar'):
+        if OptionHandler.query(CONFIG, True, 'show_statusbar'):
             self.set_status_bar_text()
 
     def set_status_bar_text(self):
@@ -612,11 +612,11 @@ class SingleFormat:
         self.view.set_status(STATUS_KEY, status_text)
 
     def open_console_on_failure(self):
-        if CONFIG.get('open_console_on_failure'):
+        if OptionHandler.query(CONFIG, False, 'open_console_on_failure'):
             self.view.window().run_command('show_panel', {'panel': 'console'})
 
     def close_console_on_success(self):
-        if CONFIG.get('close_console_on_success'):
+        if OptionHandler.query(CONFIG, False, 'close_console_on_success'):
             self.view.window().run_command('hide_panel', {'panel': 'console'})
 
     def handle_successful_formatting(self):
@@ -880,7 +880,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
         if view.is_loading():
             sublime.set_timeout(lambda: self.show_status_on_new_file(view), 250)
         else:
-            if CONFIG.get('show_statusbar'):
+            if OptionHandler.query(CONFIG, True, 'show_statusbar'):
                 view.window().set_status_bar_visible(True)
                 view.set_status(STATUS_KEY, self.view.get_status(STATUS_KEY))
 
@@ -1032,7 +1032,7 @@ class RecursiveFormat():
         self.reset_context()
 
     def update_status_bar(self):
-        if CONFIG.get('show_statusbar'):
+        if OptionHandler.query(CONFIG, True, 'show_statusbar'):
             current_view = self.get_current_view()
             current_view.window().set_status_bar_visible(True)
             status_text = self.generate_status_text()
@@ -1050,7 +1050,7 @@ class RecursiveFormat():
         )
 
     def open_console_on_failure(self):
-        if CONFIG.get('open_console_on_failure') and self.CONTEXT['failure_count'] > 0:
+        if OptionHandler.query(CONFIG, False, 'open_console_on_failure') and self.CONTEXT['failure_count'] > 0:
             current_view = self.get_current_view()
             current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
@@ -1123,7 +1123,7 @@ class FormatterListener(sublime_plugin.EventListener):
             RecursiveFormat(view).next_thread(view, is_ready=False)
 
     def on_activated(self, view):
-        ConfigHandler.update_project_config_overwrites_config()
+        ConfigHandler.project_config_overwrites_config()
 
         if OptionHandler.query(CONFIG, False, 'layout', 'sync_scroll') and LayoutHandler.want_layout():
             self.stop_sync_scroll()
@@ -1216,7 +1216,7 @@ class FormatterListener(sublime_plugin.EventListener):
         if not opkey:
             return None
 
-        unique = CONFIG.get('format_on_priority', None) or CONFIG.get('format_on_unique', None)
+        unique = OptionHandler.query(CONFIG, {}, 'format_on_priority') or OptionHandler.query(CONFIG, {}, 'format_on_unique')
         if unique and isinstance(unique, dict) and unique.get('enable', False):
             self._on_paste_or_save__unique(view, unique, opkey)
         else:
@@ -1227,7 +1227,7 @@ class FormatterListener(sublime_plugin.EventListener):
             flat_values = [value for key, values_list in unique.items() if key != 'enable' for value in values_list]
             return (len(flat_values) == len(set(flat_values)))
 
-        formatters = CONFIG.get('formatters')
+        formatters = OptionHandler.query(CONFIG, {}, 'formatters')
 
         if are_unique_values(unique):
             for uid, value in unique.items():
@@ -1249,7 +1249,7 @@ class FormatterListener(sublime_plugin.EventListener):
 
     def _on_paste_or_save__regular(self, view, opkey):
         seen = set()
-        formatters = CONFIG.get('formatters')
+        formatters = OptionHandler.query(CONFIG, {}, 'formatters')
 
         for uid, value in formatters.items():
             if self._on_paste_or_save__should_skip_formatter(uid, value, opkey):
@@ -1294,7 +1294,7 @@ class FormatterListener(sublime_plugin.EventListener):
         return syntax
 
     def on_post_save(self, view):
-        if CONFIG.get('debug') and CONFIG.get('dev'):
+        if OptionHandler.query(CONFIG, False, 'debug') and OptionHandler.query(CONFIG, False, 'dev'):
             # For development only
             self.stop_sync_scroll()
             reload_modules(print_tree=False)
