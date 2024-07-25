@@ -38,9 +38,6 @@ class PrettierFormatter(Module):
         else:
             cmd = self.get_combo_cmd(runtime_type='node')
 
-        if not self.is_valid_cmd(cmd):
-            return None
-
         cmd.extend(['--no-color'])
 
         path = self.get_config_path()
@@ -58,8 +55,6 @@ class PrettierFormatter(Module):
 
     def format(self):
         cmd = self.get_cmd()
-        if not self.is_valid_cmd(cmd):
-            return None
 
         try:
             exitcode, stdout, stderr = self.exec_cmd(cmd)

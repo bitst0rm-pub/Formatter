@@ -38,9 +38,6 @@ class KtlintFormatter(Module):
             cmd = self.get_combo_cmd(runtime_type=None)
             cmd[1:1] = ['-jar']
 
-        if not self.is_valid_cmd(cmd):
-            return None
-
         cmd.extend(['--format', '--stdin', '-'])
 
         log.debug('Command: %s', cmd)
@@ -50,8 +47,6 @@ class KtlintFormatter(Module):
 
     def format(self):
         cmd = self.get_cmd()
-        if not self.is_valid_cmd(cmd):
-            return None
 
         try:
             exitcode, stdout, stderr = self.exec_cmd(cmd)

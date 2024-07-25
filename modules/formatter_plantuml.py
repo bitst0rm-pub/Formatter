@@ -39,8 +39,6 @@ class PlantumlFormatter(Module):
 
     def format(self):
         cmd = self.get_cmd()
-        if not self.is_valid_cmd(cmd):
-            return None
 
         try:
             outfile = self.get_output_image()

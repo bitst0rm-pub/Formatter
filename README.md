@@ -898,8 +898,6 @@ class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capi
 
     def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
         cmd = self.get_cmd()
-        if not self.is_valid_cmd(cmd):                      # REQUIRED: is command ok?
-            return None
 
         try:
             exitcode, stdout, stderr = self.exec_cmd(cmd)   # REQUIRED: process command
@@ -1021,9 +1019,6 @@ cmd = self.fix_cmd(cmd)
 - Essentially for the `def format(self)` function:
 
 ```py
-# To quickly test the command.
-is_valid = self.is_valid_cmd(cmd)
-
 # To replace cmd list items to generate SVG file for download.
 # It is applicable only to the special case of type: graphic.
 # Note: extended_cmd MUST be executed right before return stdout (=success)!

@@ -28,7 +28,9 @@ from . import (
     log,
     enable_logging,
     enable_status,
-    disable_logging
+    disable_logging,
+    validate_args,
+    is_non_empty_string_list
 )
 
 from .reloader import reload_modules
@@ -228,7 +230,7 @@ class Module:
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.fix_cmd(cmd)
 
-    def is_valid_cmd(self, cmd):
+    def is_valid_cmd(self, cmd):  # deprecated
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.is_valid_cmd(cmd)
 
@@ -406,6 +408,7 @@ class ProcessHandler:
         self.view    = view
         self.process = None
 
+    @validate_args(is_non_empty_string_list)
     def popen(self, cmd, stdout=PIPE):
         info = None
         if IS_WINDOWS:
@@ -820,7 +823,7 @@ class ArgumentHandler:
         return cmd
 
     @staticmethod
-    def is_valid_cmd(cmd):
+    def is_valid_cmd(cmd):  # deprecated
         return all(isinstance(x, str) for x in cmd) if cmd and isinstance(cmd, list) else False
 
 
@@ -1028,10 +1031,10 @@ class InterfaceHandler:
 # === Base Class and Its Supporting Classes === #
 #################################################
 
-class Base(Module):
+class Base(Module):  # unused
     '''
     Extended API for universal use, inheriting all methods from the Module class.
-    This class is not used and is included here for historical purposes only.
+    This class is never used and is included here for clarity and better overview only.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):

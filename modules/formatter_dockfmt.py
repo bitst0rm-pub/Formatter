@@ -48,9 +48,6 @@ class DockfmtFormatter(Module):
 
     def format(self):
         cmd, tmp_file = self.get_cmd()
-        if not self.is_valid_cmd(cmd):
-            self.remove_tmp_file(tmp_file)
-            return None
 
         try:
             exitcode, stdout, stderr = self.exec_com(cmd)

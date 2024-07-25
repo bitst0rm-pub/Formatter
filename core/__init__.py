@@ -5,6 +5,11 @@ from .logger import (
     disable_logging
 )
 
+from .decorator import (
+    validate_args,
+    is_non_empty_string_list
+)
+
 from .common import (
     InstanceManager,
     Module,
@@ -36,6 +41,8 @@ __all__ = [
     'enable_logging',
     'enable_status',
     'disable_logging',
+    'validate_args',
+    'is_non_empty_string_list',
     'InstanceManager',
     'Module',
     'ConfigHandler',
