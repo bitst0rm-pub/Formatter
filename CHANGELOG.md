@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.6)] - 2024-07-25
+
+### 🐛 Bug Fixes
+
+- [`247a606`](https://github.com/bitst0rm-pub/Formatter/commit/247a606aec9728e22a8fcdfabb88ee30cc01320c) Fix getLogger arg
+- [`3d2a29d`](https://github.com/bitst0rm-pub/Formatter/commit/3d2a29d51177bc4f2d052a45df7a9c4e23cd3813) Fix multi project configurations not reloading (closes [#60](https://github.com/bitst0rm-pub/Formatter/issues/60), closes [#61](https://github.com/bitst0rm-pub/Formatter/issues/61)) Thanks [@husanjun](https://github.com/husanjun)
+
 ## [[1.5.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.5)] - 2024-07-23
 
 ### 🐛 Bug Fixes
