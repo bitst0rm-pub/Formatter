@@ -63,9 +63,6 @@ class DrawioFormatter(Module):
 
         cmd.extend(['--export', '--format', 'png', '--output', self.get_output_image(), input_file])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd, tmp_file
 
     def format(self):

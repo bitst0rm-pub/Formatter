@@ -65,8 +65,6 @@ class GenericFormatter(Module):
         cmd = self.get_args()
         cmd = self.rebuild_cmd(cmd)
 
-        log.debug('Command: %s', cmd)
-
         return cmd
 
     def get_extended_cmd(self):

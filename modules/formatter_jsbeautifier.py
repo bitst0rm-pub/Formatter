@@ -39,9 +39,6 @@ class JsbeautifierFormatter(Module):
         syntax = self.get_assigned_syntax()
         cmd.extend(['--type', syntax if syntax in ('js', 'css', 'html') else 'js'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

@@ -45,9 +45,6 @@ class FourmoluFormatter(Module):
 
         cmd.extend(['--color', 'never', '--stdin-input-file', '-'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

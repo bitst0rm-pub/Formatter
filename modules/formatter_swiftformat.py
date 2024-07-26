@@ -36,9 +36,6 @@ class SwiftformatFormatter(Module):
         if path:
             cmd.extend(['--config', path])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

@@ -68,6 +68,7 @@ _Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bi
     2. [Creating a module](#2-creating-a-module)
     3. [Integrating modules](#3-integrating-modules)
     4. [API](#4-api)
+  - [Deprecated API and Settings](#deprecated-api-and-settings)
   - [License](#license)
 
 
@@ -785,11 +786,11 @@ This feature is designed to help users quickly access and switch between options
 - The current mode is indicated on the status bar for your reference.
 
 
-## Development:
+## Development
 
 Starting from version 1.0.6, you now are able to create your own module for a third-party plugin that hasn't yet been integrated into Formatter. This allows you to extend your individual needs. In theory, you can use Formatter as a platform to convert **_any_** form of text, as long as third-party plugins operate in a text-to-text manner, such as Text-to-QR code, text-to-ASCII image conversion.
 
-### 1. Prerequisite:
+### 1. Prerequisite
 
 1. Create a config file specific to your third-party plugin _if needed_. Config files for third-party plugins must be placed in the following folder:
 
@@ -807,7 +808,7 @@ _Formatter.sublime-settings_
 }
 ```
 
-### 2. Creating a module:
+### 2. Creating a module
 
 Developing a module for Formatter is straightforward. All you need to do is creating a python file with just a few lines of code as below:
 
@@ -891,9 +892,6 @@ class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capi
 
         # cmd.extend(['--output', self.get_output_image()]) # REQUIRED: only for special case of "type": "graphic"
 
-        log.debug('Command: %s', cmd)                       # REQUIRED: to debug the input command
-        cmd = self.fix_cmd(cmd)                             # REQUIRED: to finally process the "fix_commands" option, just right before the return
-
         return cmd
 
     def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
@@ -919,14 +917,14 @@ class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capi
         return None                                         # REQUIRED: return None to indicate failure
 
 ```
-**That's all**. Happy coding o_O
+**That's all**. Lean and easy. Happy coding 🤪
 
 Restart Sublime Text.<br/>
 New keys will be automatically created in the _Default_ settings.<br/>
 Do not forget to update/adjust your _User_ settings:<br/>
 `Preferences > Package Settings > Formatter > Settings`
 
-### 3. Integrating modules:
+### 3. Integrating modules
 
 You have the choice to either submit a pull request or integrate your modules yourself by configuring:
 
@@ -962,7 +960,7 @@ The structure of the metadata JSON file should follow this format:
 *Python is not JS. You are responsible for handling any operations over the internet.<br/>
 Formatter does not have any mechanism to verify the integrity of remote files.*
 
-### 4. API:
+### 4. API
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br/>
 Responsible for interacting with plugin modules is the class: `class Module:`:
@@ -1011,9 +1009,6 @@ tmp_file = self.create_tmp_file(suffix=None)
 
 # Remove temp file.
 self.remove_tmp_file(tmp_file)
-
-# To finally process the "fix_commands" option, just right before exec_cmd().
-cmd = self.fix_cmd(cmd)
 ```
 
 - Essentially for the `def format(self)` function:
@@ -1038,6 +1033,19 @@ self.print_exiterr(exitcode, stderr)
 # To print executing commands error.
 self.print_oserr(cmd)
 ```
+
+## Deprecated API and Settings
+
+The following API and settings are deprecated and will be **removed** in the next version:
+
+*Custom modules API:*
+
+- `self.is_valid_cmd(cmd)`
+- `self.fix_cmd(cmd)`
+
+*Formatter.sublime-settings* options:
+
+- `"custom_modules"`
 
 ## License
 

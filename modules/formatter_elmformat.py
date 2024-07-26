@@ -33,9 +33,6 @@ class ElmformatFormatter(Module):
 
         cmd.extend(['--yes','--stdin', '--'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

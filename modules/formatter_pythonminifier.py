@@ -75,9 +75,6 @@ class PythonminifierFormatter(Module):
 
         cmd.extend(['-'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

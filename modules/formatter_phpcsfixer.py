@@ -39,9 +39,6 @@ class PhpcsfixerFormatter(Module):
         tmp_file = self.create_tmp_file()
         cmd.extend(['fix', tmp_file])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd, tmp_file
 
     def format(self):

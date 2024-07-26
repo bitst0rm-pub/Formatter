@@ -43,9 +43,6 @@ class AstyleFormatter(Module):
 
         cmd.extend(['--mode=' + language])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

@@ -37,9 +37,6 @@ class BeautyshFormatter(Module):
 
         cmd.extend(['-'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def get_config(self, path):

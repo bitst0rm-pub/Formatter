@@ -41,9 +41,6 @@ class DprintFormatter(Module):
         ext = syntax_mapping.get(syntax, syntax)
         cmd.extend(['--stdin', 'dummy.' + ext, '--'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

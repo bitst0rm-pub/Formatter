@@ -39,9 +39,6 @@ class ShellcheckFormatter(Module):
 
         cmd.extend(['--color=never', '--format', 'diff', '-'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def build_config(self, path):

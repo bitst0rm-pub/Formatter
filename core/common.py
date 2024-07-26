@@ -31,6 +31,7 @@ from . import (
     disable_logging,
     validate_args,
     is_non_empty_string_list,
+    transform_args,
     retry_on_exception,
     recovery_steps
 )
@@ -135,20 +136,24 @@ class Module:
         return instance.get_environ_path(fnames)
 
     def popen(self, cmd, stdout=PIPE):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.popen(cmd, stdout)
 
     def kill(self, process):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.kill(process)
 
     def is_alive(self, process):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.is_alive(process)
 
     def timeout(self):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view)
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.timeout()
+
+    def fix_cmd(self, cmd):  # @deprecated
+        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
+        return instance.fix_cmd(cmd)
 
     def exec_com(self, cmd):
         instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
@@ -226,11 +231,7 @@ class Module:
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.get_config_path()
 
-    def fix_cmd(self, cmd):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.fix_cmd(cmd)
-
-    def is_valid_cmd(self, cmd):  # deprecated
+    def is_valid_cmd(self, cmd):  # @deprecated
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.is_valid_cmd(cmd)
 
@@ -404,11 +405,54 @@ class EnvironmentHandler:
 
 
 class ProcessHandler:
-    def __init__(self, view=None):
+    def __init__(self, view=None, uid=None):
         self.view    = view
+        self.uid     = uid
         self.process = None
 
-    @validate_args(is_non_empty_string_list)
+    def fix_cmd(self, cmd):
+        fix_cmds = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'fix_commands')
+
+        if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
+            for x in fix_cmds:
+                if isinstance(x, list):
+                    l = len(x)
+
+                    if 3 <= l <= 5:
+                        search = str(x[l-5])
+                        replace = str(x[l-4])
+                        index = int(x[l-3])
+                        count = int(x[l-2])
+                        position = int(x[l-1])
+
+                        for i, item in enumerate(cmd):
+                            item = str(item)
+
+                            if index == i:
+                                if l == 5:
+                                    if search == item and position < 0:
+                                        cmd.pop(i)
+                                    else:
+                                        cmd[i] = re.sub(r'%s' % search, replace, item, count)
+                                if l == 4:
+                                    cmd[i] = replace
+                                if l == 3 and position < 0:
+                                    cmd.pop(i)
+                                if position > -1:
+                                    cmd.insert(position, cmd.pop(i))
+
+                        log.debug('Fixed command: %s', cmd)
+                    else:
+                        log.error('Each list item in "fix_commands" must contain between 3 and 5 elements.')
+                        return None
+                else:
+                    log.error('Items of "fix_commands" must be of type list.')
+                    return None
+
+        return cmd
+
+    @validate_args(is_non_empty_string_list, check_cmd=True)
+    @transform_args(fix_cmd)
     def popen(self, cmd, stdout=PIPE):
         info = None
         if IS_WINDOWS:
@@ -457,7 +501,7 @@ class CommandHandler:
             self.ph.kill(self.ph.process)
 
     def exec_com(self, cmd):
-        self.ph = ProcessHandler(view=self.view)
+        self.ph = ProcessHandler(view=self.view, uid=self.uid)
         timeout = self.ph.timeout()
         process = self.ph.popen(cmd)
 
@@ -473,7 +517,7 @@ class CommandHandler:
         return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def _exec_file_or_pipe_cmd(self, cmd, outfile=None):
-        self.ph = ProcessHandler(view=self.view)
+        self.ph = ProcessHandler(view=self.view, uid=self.uid)
         timeout = self.ph.timeout()
         process = self.ph.popen(cmd, outfile or PIPE)
         text = ViewHandler(view=self.view).get_text_from_region(self.region)
@@ -777,53 +821,8 @@ class ArgumentHandler:
 
         return None
 
-    def fix_cmd(self, cmd):
-        fix_cmds = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'fix_commands')
-
-        if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
-            for x in fix_cmds:
-                if isinstance(x, list):
-                    l = len(x)
-
-                    if 3 <= l <= 5:
-                        search = str(x[l-5])
-                        replace = str(x[l-4])
-                        index = int(x[l-3])
-                        count = int(x[l-2])
-                        position = int(x[l-1])
-
-                        if isinstance(index, int) and isinstance(count, int) and isinstance(position, int):
-                            for i, item in enumerate(cmd):
-                                item = str(item)
-
-                                if index == i:
-                                    if l == 5:
-                                        if search == item and position < 0:
-                                            cmd.pop(i)
-                                        else:
-                                            cmd[i] = re.sub(r'%s' % search, replace, item, count)
-                                    if l == 4:
-                                        cmd[i] = replace
-                                    if l == 3 and position < 0:
-                                        cmd.pop(i)
-                                    if position > -1:
-                                        cmd.insert(position, cmd.pop(i))
-
-                            log.debug('Fixed arguments: %s', cmd)
-                        else:
-                            log.error('index, count and position of "fix_commands" must be of type int.')
-                            return None
-                    else:
-                        log.error('Length of each item in "fix_commands" must be between 3 and 5.')
-                        return None
-                else:
-                    log.error('Items of "fix_commands" must be of type list.')
-                    return None
-
-        return cmd
-
     @staticmethod
-    def is_valid_cmd(cmd):  # deprecated
+    def is_valid_cmd(cmd):  # @deprecated
         return all(isinstance(x, str) for x in cmd) if cmd and isinstance(cmd, list) else False
 
 
@@ -1262,7 +1261,7 @@ class ConfigHandler:
             'open_console_on_failure': settings.get('open_console_on_failure', False),
             'close_console_on_success': settings.get('close_console_on_success', False),
             'timeout': settings.get('timeout', 10),
-            'custom_modules': settings.get('custom_modules', {}),  # deprecated
+            'custom_modules': settings.get('custom_modules', {}),  # @deprecated
             'custom_modules_manifest': settings.get('custom_modules_manifest', ''),
             'show_statusbar': settings.get('show_statusbar', True),
             'show_words_count': {

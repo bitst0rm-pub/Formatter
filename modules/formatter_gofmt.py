@@ -33,9 +33,6 @@ class GofmtFormatter(Module):
 
         cmd.extend(['-e', '-s'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

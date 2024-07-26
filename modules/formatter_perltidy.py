@@ -36,9 +36,6 @@ class PerltidyFormatter(Module):
 
         cmd.extend(['--standard-output', '--standard-error-output', '--warning-output'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

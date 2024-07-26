@@ -42,9 +42,6 @@ class AppleswiftformatFormatter(Module):
         dummy = file if file else 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--assume-filename', dummy])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

@@ -31,9 +31,6 @@ class RubyfmtFormatter(Module):
 
         cmd.extend(self.get_args())
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

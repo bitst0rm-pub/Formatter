@@ -36,9 +36,6 @@ class HtmlminifierFormatter(Module):
 
         cmd.extend(['--file-ext', self.get_assigned_syntax()])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):

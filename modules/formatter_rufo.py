@@ -30,9 +30,6 @@ class RufoFormatter(Module):
 
         cmd.extend(['--simple-exit'])
 
-        log.debug('Command: %s', cmd)
-        cmd = self.fix_cmd(cmd)
-
         return cmd
 
     def format(self):
