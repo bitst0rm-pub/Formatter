@@ -30,10 +30,10 @@ from . import (
     enable_status,
     disable_logging,
     validate_args,
-    is_non_empty_string_list
+    is_non_empty_string_list,
+    retry_on_exception,
+    recovery_steps
 )
-
-from .reloader import reload_modules
 
 from .constants import (
     IS_WINDOWS,
@@ -1250,47 +1250,43 @@ class ConfigHandler:
             SUBLIME_PREFERENCES = {}
 
     @classmethod
+    @retry_on_exception(retries=5, recovery_steps=recovery_steps)
     def build_config(cls, settings):
-        try:
-            global CONFIG
+        global CONFIG
 
-            # Sublime settings dict is immutable and unordered
-            c = {
-                'quick_options': cls.load_quick_options(),
-                'debug': settings.get('debug', False),
-                'dev': settings.get('dev', False),
-                'open_console_on_failure': settings.get('open_console_on_failure', False),
-                'close_console_on_success': settings.get('close_console_on_success', False),
-                'timeout': settings.get('timeout', 10),
-                'custom_modules': settings.get('custom_modules', {}),  # deprecated
-                'custom_modules_manifest': settings.get('custom_modules_manifest', ''),
-                'show_statusbar': settings.get('show_statusbar', True),
-                'show_words_count': {
-                    'enable': OptionHandler.query(settings, True, 'show_words_count', 'enable'),
-                    'ignore_whitespace_char': OptionHandler.query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
-                    'use_short_label': OptionHandler.query(settings, False, 'show_words_count', 'use_short_label')
-                },
-                'remember_session': settings.get('remember_session', True),
-                'layout': {
-                    'enable': OptionHandler.query(settings, '2cols', 'layout', 'enable'),
-                    'sync_scroll': OptionHandler.query(settings, True, 'layout', 'sync_scroll')
-                },
-                'environ': settings.get('environ', {}),
-                'format_on_priority': settings.get('format_on_priority', {}),
-                'format_on_unique': settings.get('format_on_unique', {}),
-                'auto_format': settings.get('auto_format', {}),
-                'formatters': settings.get('formatters', {})
-            }
-
-            c['formatters'].pop('examplegeneric', None)
-            c['formatters'].pop('examplemodule', None)
-            c = TransformHandler.recursive_map(TransformHandler.expand_path, c)
-            c['custom_modules_manifest'] = re.sub(r'(\bhttps?|ftp):/(?=[^/])', r'\1://', c['custom_modules_manifest'])
-            CONFIG.update(c)
-            return c
-        except Exception as e:
-            reload_modules(print_tree=False)
-            sublime.set_timeout_async(cls.load_config, 100)
+        # Sublime settings dict is immutable and unordered
+        c = {
+            'quick_options': cls.load_quick_options(),
+            'debug': settings.get('debug', False),
+            'dev': settings.get('dev', False),
+            'open_console_on_failure': settings.get('open_console_on_failure', False),
+            'close_console_on_success': settings.get('close_console_on_success', False),
+            'timeout': settings.get('timeout', 10),
+            'custom_modules': settings.get('custom_modules', {}),  # deprecated
+            'custom_modules_manifest': settings.get('custom_modules_manifest', ''),
+            'show_statusbar': settings.get('show_statusbar', True),
+            'show_words_count': {
+                'enable': OptionHandler.query(settings, True, 'show_words_count', 'enable'),
+                'ignore_whitespace_char': OptionHandler.query(settings, True, 'show_words_count', 'ignore_whitespace_char'),
+                'use_short_label': OptionHandler.query(settings, False, 'show_words_count', 'use_short_label')
+            },
+            'remember_session': settings.get('remember_session', True),
+            'layout': {
+                'enable': OptionHandler.query(settings, '2cols', 'layout', 'enable'),
+                'sync_scroll': OptionHandler.query(settings, True, 'layout', 'sync_scroll')
+            },
+            'environ': settings.get('environ', {}),
+            'format_on_priority': settings.get('format_on_priority', {}),
+            'format_on_unique': settings.get('format_on_unique', {}),
+            'auto_format': settings.get('auto_format', {}),
+            'formatters': settings.get('formatters', {})
+        }
+        c['formatters'].pop('examplegeneric', None)
+        c['formatters'].pop('examplemodule', None)
+        c = TransformHandler.recursive_map(TransformHandler.expand_path, c)
+        c['custom_modules_manifest'] = re.sub(r'(\bhttps?|ftp):/(?=[^/])', r'\1://', c['custom_modules_manifest'])
+        CONFIG.update(c)
+        return c
 
     @staticmethod
     def setup_shared_config_files():

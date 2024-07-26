@@ -7,7 +7,9 @@ from .logger import (
 
 from .decorator import (
     validate_args,
-    is_non_empty_string_list
+    is_non_empty_string_list,
+    retry_on_exception,
+    recovery_steps
 )
 
 from .common import (
@@ -43,6 +45,8 @@ __all__ = [
     'disable_logging',
     'validate_args',
     'is_non_empty_string_list',
+    'retry_on_exception',
+    'recovery_steps',
     'InstanceManager',
     'Module',
     'ConfigHandler',
