@@ -2,6 +2,9 @@
 
 Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to beautify and minify source code.
 
+*Update:*
+
+- Starting with version 1.5.7, there have been some changes regarding [Deprecated API and Settings](#deprecated-api-and-settings)
 
 **Key features:**
 
@@ -1045,7 +1048,7 @@ The following API and settings are deprecated and will be **removed** in the nex
 
 *Formatter.sublime-settings* options:
 
-- `"custom_modules"`
+- `"custom_modules":` (in favor of `"custom_modules_manifest":`)
 
 ## License
 
