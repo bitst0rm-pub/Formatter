@@ -1250,7 +1250,7 @@ class ConfigHandler:
             SUBLIME_PREFERENCES = {}
 
     @classmethod
-    @retry_on_exception(retries=5, recovery_steps=recovery_steps)
+    @retry_on_exception(retries=5, delay=100, recovery_steps=recovery_steps)
     def build_config(cls, settings):
         global CONFIG
 

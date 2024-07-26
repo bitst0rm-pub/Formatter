@@ -28,7 +28,7 @@ def is_non_empty_string_list(lst):
         and all(is_non_empty_string(item) for item in lst)
     )
 
-def retry_on_exception(retries=5, recovery_steps=None):
+def retry_on_exception(retries=5, delay=100, recovery_steps=None):
     def decorator_retry(func):
         @wraps(func)
         def wrapper_retry(*args, **kwargs):
@@ -39,11 +39,11 @@ def retry_on_exception(retries=5, recovery_steps=None):
                 except Exception as e:
                     attempt += 1
                     if attempt == retries:
-                        recovery_steps(args[0])
+                        recovery_steps(args[0], delay)
                         raise RuntimeError('Function %s failed after %d retries. Execution has been stopped.' % (func.__name__, retries)) from e
         return wrapper_retry
     return decorator_retry
 
-def recovery_steps(cls):
+def recovery_steps(cls, delay=100):
     reload_modules(print_tree=False)
-    sublime.set_timeout_async(cls.load_config, 100)
+    sublime.set_timeout_async(cls.load_config, delay)
