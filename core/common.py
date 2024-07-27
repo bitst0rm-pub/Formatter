@@ -1635,12 +1635,16 @@ class PhantomHandler:
 
     @staticmethod
     def get_downloads_folder():
-        downloads_folder = join(expanduser('~'), 'Downloads')
+        if IS_WINDOWS:
+            downloads_folder = join(os.getenv('USERPROFILE', ''), 'Downloads')
+        else:
+            downloads_folder = join(os.getenv('HOME', ''), 'Downloads')
 
-        try:
-            os.makedirs(downloads_folder, exist_ok=True)
-        except Exception as e:
-            return tempfile.TemporaryDirectory()
+        if not isdir(downloads_folder):
+            try:
+                os.makedirs(downloads_folder, exist_ok=True)
+            except:
+                return tempfile.mkdtemp()
 
         return downloads_folder
 
