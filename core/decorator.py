@@ -1,9 +1,9 @@
+import time
 from functools import wraps
 
 import sublime
 
 from . import log
-from .reloader import reload_modules
 
 
 def validate_args(*validators, check_cmd=False):
@@ -11,7 +11,7 @@ def validate_args(*validators, check_cmd=False):
         @wraps(func)
         def wrapper(*args, **kwargs):
             # Skip the 'self' argument for methods
-            args_to_validate = args[1:]
+            args_to_validate = args[1:] if hasattr(args[0], func.__name__) else args
             for validator, arg in zip(validators, args_to_validate):
                 if not validator(arg):
                     raise ValueError('Validation failed for argument %s' % arg)
@@ -40,7 +40,7 @@ def transform_args(*transformers):
         return wrapper
     return decorator
 
-def retry_on_exception(retries=5, delay=100, recovery_steps=None):
+def retry_on_exception(retries=5, delay=500):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -51,11 +51,8 @@ def retry_on_exception(retries=5, delay=100, recovery_steps=None):
                 except Exception as e:
                     attempt += 1
                     if attempt == retries:
-                        recovery_steps(args[0], delay)
-                        raise RuntimeError('Function %s failed after %d retries. Execution has been stopped.' % (func.__name__, retries)) from e
+                        log.error('Function %s failed after %d retries. Execution has been stopped.', func.__name__, retries)
+                        raise RuntimeError
+                    time.sleep(delay / 1000)
         return wrapper
     return decorator
-
-def recovery_steps(cls, delay=100):
-    reload_modules(print_tree=False)
-    sublime.set_timeout_async(cls.load_config, delay)

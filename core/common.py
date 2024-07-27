@@ -32,8 +32,7 @@ from . import (
     validate_args,
     is_non_empty_string_list,
     transform_args,
-    retry_on_exception,
-    recovery_steps
+    retry_on_exception
 )
 
 from .constants import (
@@ -1203,7 +1202,7 @@ class ConfigHandler:
     @classmethod
     def load_config(cls):
         settings = cls.load_settings(cls.config_file())
-        cls.build_config(settings)
+        cls.build_config_with_retry(settings)
 
     @classmethod
     def load_quick_options(cls):
@@ -1249,7 +1248,7 @@ class ConfigHandler:
             SUBLIME_PREFERENCES = {}
 
     @classmethod
-    @retry_on_exception(retries=5, delay=100, recovery_steps=recovery_steps)
+    @retry_on_exception(retries=5, delay=500)
     def build_config(cls, settings):
         global CONFIG
 
@@ -1285,7 +1284,15 @@ class ConfigHandler:
         c = TransformHandler.recursive_map(TransformHandler.expand_path, c)
         c['custom_modules_manifest'] = re.sub(r'(\bhttps?|ftp):/(?=[^/])', r'\1://', c['custom_modules_manifest'])
         CONFIG.update(c)
+
+        if not CONFIG:
+            raise  # invoke @retry_on_exception
         return c
+
+    @classmethod
+    def build_config_with_retry(cls, settings):
+        # Directly retry the build_config method without invoking retry_on_exception again
+        retry_on_exception(retries=5, delay=500)(cls.build_config)(settings)
 
     @staticmethod
     def setup_shared_config_files():
