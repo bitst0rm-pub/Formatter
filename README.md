@@ -965,7 +965,7 @@ Responsible for interacting with plugin modules is the class: `class Module:`:
 
 - Essentially for the `def get_cmd(self)` function:
 
-```py
+```python
 # This alias method combines get_interpreter() and get_executable().
 # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
 # Currently, only None and 'node' are functional. All others are placeholders for future use.
@@ -1011,7 +1011,7 @@ self.remove_tmp_file(tmp_file)
 
 - Essentially for the `def format(self)` function:
 
-```py
+```python
 # To replace cmd list items to generate SVG file for download.
 # It is applicable only to the special case of type: graphic.
 # Note: extended_cmd MUST be executed right before return stdout (=success)!
