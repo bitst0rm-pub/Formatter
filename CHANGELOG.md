@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.7)] - 2024-07-27
+
+### ⚙️ Miscellaneous Tasks
+
+- [`7a160a5`](https://github.com/bitst0rm-pub/Formatter/commit/7a160a5563ec5e56b4d4e7040efc57c6bebe6aff) Add `deprecated()` decorator to auto deactivate methods on time
+- [`0bef7c4`](https://github.com/bitst0rm-pub/Formatter/commit/0bef7c4605fc6ec29339d5c90724c287358477bf) Add delay flag to `retry_on_exception()` decorator
+- [`fdf772d`](https://github.com/bitst0rm-pub/Formatter/commit/fdf772d2844de36a0b15b3baa04474feb834dce0) Convert some instance methods to class methods
+- [`36b1543`](https://github.com/bitst0rm-pub/Formatter/commit/36b15432b0a442d91bd1bd010a16d61d72e32672) Deprecated `fix_cmd()` in favor of `transform_args()` decorator
+- [`c9a372a`](https://github.com/bitst0rm-pub/Formatter/commit/c9a372a26e1372e89f91e48b826b3b2fcfa02294) Deprecated `is_valid_cmd()` in favor of `validate_args()` decorator
+- [`a572a67`](https://github.com/bitst0rm-pub/Formatter/commit/a572a67504849908b4ae0ac4e03a2e142ee11496) Improve `retry_on_exception()` logic to avoid circular calls on `cls.build_config(settings)`
+- [`eeb40d7`](https://github.com/bitst0rm-pub/Formatter/commit/eeb40d7557c61db24cd4b1478676553ff5db0870) Replace `build_config()` exception with `retry_on_exception()` decorator
+- [`700c49d`](https://github.com/bitst0rm-pub/Formatter/commit/700c49df65818b512da688a590d2f14f20a3edea) Typo
+- [`b6b34ad`](https://github.com/bitst0rm-pub/Formatter/commit/b6b34ad1bad8e6998388543537426f98947b3745) Update README.md
+
 ## [[1.5.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.6)] - 2024-07-25
 
 ### 🐛 Bug Fixes
