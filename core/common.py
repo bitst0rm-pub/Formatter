@@ -29,11 +29,13 @@ from . import (
     enable_logging,
     enable_status,
     disable_logging,
+    # === decorators === #
+    check_deprecated_options,
+    check_deprecated_api,
     validate_args,
     is_non_empty_string_list,
     transform_args,
-    retry_on_exception,
-    deprecated
+    retry_on_exception
 )
 
 from .constants import (
@@ -151,7 +153,7 @@ class Module:
         instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.timeout()
 
-    @deprecated(start_date='2024-07-28', deactivate_after_days=60)
+    @check_deprecated_api(start_date='2024-07-28', deactivate_after_days=60)
     def fix_cmd(self, cmd):  # @deprecated
         instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.fix_cmd(cmd)
@@ -232,7 +234,7 @@ class Module:
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.get_config_path()
 
-    @deprecated(start_date='2024-07-28', deactivate_after_days=60)
+    @check_deprecated_api(start_date='2024-07-28', deactivate_after_days=60)
     def is_valid_cmd(self, cmd):  # @deprecated
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.is_valid_cmd(cmd)
@@ -1251,7 +1253,8 @@ class ConfigHandler:
             SUBLIME_PREFERENCES = {}
 
     @classmethod
-    @retry_on_exception(retries=5, delay=500)
+    @check_deprecated_options
+    @retry_on_exception(retries=5, delay=500)  # 2sec
     def build_config(cls, settings):
         global CONFIG
 

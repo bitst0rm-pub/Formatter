@@ -1034,16 +1034,18 @@ self.print_oserr(cmd)
 
 ## Deprecated API and Settings
 
-The following API and settings are deprecated and will be **removed** in the next version:
+The following API and settings are deprecated and will be **removed** in the next versions:
 
 *Custom modules API:*
 
+- `log = logging.getLogger(__name__)` (in favor of `from .. import log`)
 - `self.is_valid_cmd(cmd)`
 - `self.fix_cmd(cmd)`
 
 *Formatter.sublime-settings* options:
 
 - `"custom_modules":` (in favor of `"custom_modules_manifest":`)
+- `"disable":` (in favor of `"enable":`)
 
 ## License
 

@@ -6,11 +6,12 @@ from .logger import (
 )
 
 from .decorator import (
+    check_deprecated_options,
+    check_deprecated_api,
     validate_args,
     is_non_empty_string_list,
     transform_args,
-    retry_on_exception,
-    deprecated
+    retry_on_exception
 )
 
 from .common import (
@@ -44,11 +45,12 @@ __all__ = [
     'enable_logging',
     'enable_status',
     'disable_logging',
+    'check_deprecated_options',
+    'check_deprecated_api',
     'validate_args',
     'is_non_empty_string_list',
     'transform_args,',
     'retry_on_exception',
-    'deprecated',
     'InstanceManager',
     'Module',
     'ConfigHandler',
