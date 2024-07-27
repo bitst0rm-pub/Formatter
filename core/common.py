@@ -29,7 +29,6 @@ from . import (
     enable_logging,
     enable_status,
     disable_logging,
-    # Decorators
     validate_args,
     is_non_empty_string_list,
     transform_args,
@@ -333,7 +332,7 @@ class PathHandler:
         else:
             try:
                 cwd = tempfile.gettempdir()
-            except Exception:
+            except:
                 cwd = expanduser('~')  # fallback for buffer
 
         return {'path': path, 'cwd': cwd, 'base': base, 'stem': stem, 'suffix': suffix, 'ext': ext}
@@ -784,7 +783,7 @@ class ArgumentHandler:
             if dotfile_path:
                 return dotfile_path
 
-        log.info('Running third-party plugin without specifying any "config_path"')
+        log.info('↳Running third-party plugin without specifying any "config_path"')
         return None
 
     def _traverse_find_config_dotfile(self):
@@ -850,7 +849,7 @@ class SyntaxHandler:
                 syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
                 if syntax:
                     return self.uid, syntax
-            return '@noop@', None
+            return '@@noop@@', None
         else:
             syntax = self._detect_assigned_syntax(view, uid, region)
             return self.uid, syntax

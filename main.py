@@ -55,7 +55,7 @@ from .core.constants import (
 
 def entry():
     import_custom_modules()
-    # CleanupHandler.remove_junk()
+    #CleanupHandler.remove_junk()
     ready = create_package_config_files()
     if ready:
         ConfigHandler.load_sublime_preferences()

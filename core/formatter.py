@@ -30,7 +30,7 @@ class Formatter(Module):
 
         syntax = self.get_assigned_syntax()
 
-        if self.uid == '@noop@':
+        if self.uid == '@@noop@@':
             return False
 
         if not syntax:
