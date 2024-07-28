@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'biome_rc.json'
     },
-    'comment': 'interpreter_path can be set to use node, otherwise omid it to use standalone binary.'
+    'comment': 'interpreter_path can be set to use node, otherwise omit it to use standalone binary.'
 }
 
 

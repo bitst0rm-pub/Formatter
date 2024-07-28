@@ -475,7 +475,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/biome_rc.json"
             }
-            /* interpreter_path can be set to use node, otherwise omid it to use standalone binary. */
+            /* interpreter_path can be set to use node, otherwise omit it to use standalone binary. */
         },
         "black": {
             "info": "https://github.com/psf/black",
@@ -2119,7 +2119,7 @@
                 "exclude_syntaxes": []
             },
             "syntaxes": ["clojure"],
-            "interpreter_path": ["/path/to/bin/java.exe if use zprint-filter OR /path/to/bin/bb if use babashka OR just omid"],
+            "interpreter_path": ["/path/to/bin/java.exe if use zprint-filter OR /path/to/bin/bb if use babashka OR just omit"],
             "executable_path": ["/path/to/bin/zprint[l|m|ma|] or /path/to/bin/zprint-filter if use java"],
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/zprint_rc.edn"

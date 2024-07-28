@@ -37,7 +37,7 @@ class JsonmaxFormatter(Module):
             obj = json.loads(text)
             result = json.dumps(obj, **cmd if path else {'ensure_ascii': False, 'indent': 4})
             return result
-        except ValueError as err:
-            log.status('File not formatted due to ValueError: "%s"', err)
+        except ValueError as e:
+            log.status('File not formatted due to ValueError: "%s"', e)
 
         return None

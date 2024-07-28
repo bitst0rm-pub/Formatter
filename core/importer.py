@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 
 try:  # python 3.8+
     import importlib
-except:  # python 3.3
+except ImportError:  # python 3.3
     import imp
 
 import sublime
@@ -22,6 +22,7 @@ from .constants import PACKAGE_NAME
 
 EXPECTED_DIRS = ['config', 'libs', 'modules']
 EXCLUDE_DIRS = ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']
+FETCH_TIMEOUT = 3
 DOWNLOAD_TIMEOUT = 10  # sec
 
 
@@ -100,17 +101,17 @@ def process_remote_sources(remote_sources, ca_cert=None, public_key=None, gpg=No
                 return False
     return True
 
-def read_json(path, timeout=3):
+def read_json(path):
     try:
-        data = fetch_data(path, timeout)
+        data = fetch_data(path)
         return sublime.decode_value(data)
     except Exception as e:
         log.error('Failed to read custom modules JSON metadata from %s: %s', path, e)
         return {}
 
-def fetch_data(path, timeout):
+def fetch_data(path):
     if is_url(path):
-        with urllib.request.urlopen(path, timeout=timeout) as response:
+        with urllib.request.urlopen(path, timeout=FETCH_TIMEOUT) as response:
             return response.read().decode('utf-8')
     else:
         with open(path, 'r') as file:
@@ -327,7 +328,7 @@ def import_module(libs_dir, root, filename):
     try:
         try:  # python 3.8+
             module = importlib.import_module(PACKAGE_NAME + '.libs.' + module_name, package=PACKAGE_NAME)
-        except:  # python 3.3
+        except ImportError:  # python 3.3
             module = imp.load_source(PACKAGE_NAME + '.libs.' + module_name, module_path)
     except Exception as e:
         log.error('Error importing module %s: %s', module_name, e)

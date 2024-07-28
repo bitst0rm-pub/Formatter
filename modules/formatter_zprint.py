@@ -14,7 +14,7 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['clojure'],
     'exclude_syntaxes': None,
-    'interpreter_path': '/path/to/bin/java.exe if use zprint-filter OR /path/to/bin/bb if use babashka OR just omid',
+    'interpreter_path': '/path/to/bin/java.exe if use zprint-filter OR /path/to/bin/bb if use babashka OR just omit',
     'executable_path': '/path/to/bin/zprint[l|m|ma|] or /path/to/bin/zprint-filter if use java',
     'args': None,
     'config_path': {

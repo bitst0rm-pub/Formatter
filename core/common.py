@@ -153,7 +153,7 @@ class Module:
         instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.timeout()
 
-    @check_deprecated_api(start_date='2024-07-28', deactivate_after_days=60)
+    @check_deprecated_api(start_date='2024-07-30', deactivate_after_days=90)
     def fix_cmd(self, cmd):  # @deprecated
         instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
         return instance.fix_cmd(cmd)
@@ -234,7 +234,7 @@ class Module:
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.get_config_path()
 
-    @check_deprecated_api(start_date='2024-07-28', deactivate_after_days=60)
+    @check_deprecated_api(start_date='2024-07-30', deactivate_after_days=90)
     def is_valid_cmd(self, cmd):  # @deprecated
         instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
         return instance.is_valid_cmd(cmd)
@@ -365,8 +365,8 @@ class EnvironmentHandler:
 
             environ.update({'NO_COLOR': '1'})
             return environ
-        except Exception as error:
-            log.warning('Could not clone system environment: %s', error)
+        except Exception as e:
+            log.warning('Could not clone system environment: %s', e)
 
         return None
 
@@ -1037,7 +1037,7 @@ class InterfaceHandler:
 class Base(Module):  # unused
     '''
     Extended API for universal use, inheriting all methods from the Module class.
-    This class is never used and is included here for clarity and better overview only.
+    This subclass is never used and is included here for clarity and better overview only.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
@@ -1254,7 +1254,7 @@ class ConfigHandler:
 
     @classmethod
     @check_deprecated_options
-    @retry_on_exception(retries=5, delay=500)  # 2sec
+    @retry_on_exception(retries=5, delay=500)  # 2 sec
     def build_config(cls, settings):
         global CONFIG
 

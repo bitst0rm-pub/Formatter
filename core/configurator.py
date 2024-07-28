@@ -176,7 +176,7 @@ def build_main_sublime_menu(formatter_map):
                                     ('command', 'edit_settings'),
                                     ('args', OrderedDict([
                                         ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
-                                        ('default', '// Do not edit the left-hand pane.\n'
+                                        ('default', '// Settings in here override those in the left-hand pane.\n'
                                                     '// Pick up needed items while keeping the JSON structure intact.\n'
                                                     '{\n\t$0\n}\n')
                                     ]))

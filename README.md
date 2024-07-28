@@ -940,17 +940,17 @@ The structure of the metadata JSON file should follow this format:
     "version": "0.0.1",                              // tells to update
     "ca_cert": "/path/to/ca_cert.pem",               // optional, CA Certificate path for ssl
     "public_key": "/path/to/public_key.asc",         // optional, but required for .sig file
-    "gpg": "gpg.exe (on PATH) or /path/to/gpg.exe",  // optional, but required for .sig file
+    "gpg": "gpg.exe (on PATH) or /path/to/gpg.exe",  // optional, omit this to auto-detect gpg on PATH
     "local": {
         "config": ["/path/to/dir", "/path/to/file"],
         "libs": ["/path/to/dir", "/path/to/file"],
         "modules": ["/path/to/dir", "/path/to/file"]
     },
     "remote": [
-        "http|s|ftp://server.com/archive/refs/heads/myproject1.zip",      // only zip or tar.gz
-        "http|s|ftp://server.com/archive/refs/heads/myproject1.zip.sig",  // optional, but pattern: filename + '.sig'
-        "http|s|ftp://server.com/archive/refs/heads/myproject2.tar.gz",
-        "http|s|ftp://server.com/archive/refs/heads/myproject2.tar.gz.sig"
+        "http|s|ftp://example.com/archive/refs/heads/myproject1.zip",      // only zip or tar.gz
+        "http|s|ftp://example.com/archive/refs/heads/myproject1.zip.sig",  // optional, but pattern: filename + '.sig'
+        "http|s|ftp://example.com/archive/refs/heads/myproject2.tar.gz",
+        "http|s|ftp://example.com/archive/refs/heads/myproject2.tar.gz.sig"
     ]
 }
 ```
@@ -969,7 +969,7 @@ Responsible for interacting with plugin modules is the class: `class Module:`:
 
 - Essentially for the `def get_cmd(self)` function:
 
-```python
+```py
 # This alias method combines get_interpreter() and get_executable().
 # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
 # Currently, only None and 'node' are functional. All others are placeholders for future use.
@@ -1015,7 +1015,7 @@ self.remove_tmp_file(tmp_file)
 
 - Essentially for the `def format(self)` function:
 
-```python
+```py
 # To replace cmd list items to generate SVG file for download.
 # It is applicable only to the special case of type: graphic.
 # Note: extended_cmd MUST be executed right before return stdout (=success)!

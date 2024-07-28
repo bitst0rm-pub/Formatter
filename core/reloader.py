@@ -2,7 +2,7 @@ import sys
 
 try:  # python 3.8+
     from importlib import reload
-except:  # python 3.3
+except ImportError:  # python 3.3
     from imp import reload
 
 from . import log
