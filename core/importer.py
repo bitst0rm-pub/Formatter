@@ -186,7 +186,7 @@ def verify_signature(file_path, sig_path, public_key, gpg):
     if not gpg:
         gpg = shutil.which('gpg') or shutil.which('gpg.exe')
         if not gpg:
-            log.error('PGP executable not found on PATH.')
+            log.error('GPG executable not found on PATH.')
             return False
 
     try:
