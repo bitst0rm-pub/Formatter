@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.8)] - 2024-07-28
+
+### 🚀 Features
+
+- [`63dbd99`](https://github.com/bitst0rm-pub/Formatter/commit/63dbd99fa7fdef78d626f6615186100c575afb8c) Add signature verification for remote custom modules archive files
+
+### ⚙️ Miscellaneous Tasks
+
+- [`385a924`](https://github.com/bitst0rm-pub/Formatter/commit/385a924a9a4ece1dcaa1ff957f84dce63c2182ba) Add `"ca_cert":` option to the custom modules manifest to use the optional CA Certificate
+- [`7685080`](https://github.com/bitst0rm-pub/Formatter/commit/76850809e25197a274228e1fe887b434a23430f4) Add `check_deprecated_options()` decorator to warn user about using obsolete settings options
+- [`e14eb80`](https://github.com/bitst0rm-pub/Formatter/commit/e14eb80402f692806baf7112681513eff3a56fe4) Improve downloads folder detection
+
 ## [[1.5.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.7)] - 2024-07-27
 
 ### ⚙️ Miscellaneous Tasks
