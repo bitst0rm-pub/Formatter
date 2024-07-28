@@ -937,26 +937,30 @@ The structure of the metadata JSON file should follow this format:
 
 ```js
 {
-    "version": "0.0.1",  // tells to update
-    "ca_cert": "/path/to/ca_cert.pem",  // optional CA Certificate path
+    "version": "0.0.1",                              // tells to update
+    "ca_cert": "/path/to/ca_cert.pem",               // optional, CA Certificate path for ssl
+    "public_key": "/path/to/public_key.asc",         // optional, but required for .sig file
+    "gpg": "gpg.exe (on PATH) or /path/to/gpg.exe",  // optional, but required for .sig file
     "local": {
         "config": ["/path/to/dir", "/path/to/file"],
         "libs": ["/path/to/dir", "/path/to/file"],
-        "modules": ["/path/to/dir", "/path/to/file"],
+        "modules": ["/path/to/dir", "/path/to/file"]
     },
     "remote": [
-        "http|s|ftp://server.com/archive/refs/heads/myproject.zip"  // only zip or tar.gz
+        "http|s|ftp://server.com/archive/refs/heads/myproject1.zip",      // only zip or tar.gz
+        "http|s|ftp://server.com/archive/refs/heads/myproject1.zip.sig",  // optional, but pattern: filename + '.sig'
+        "http|s|ftp://server.com/archive/refs/heads/myproject2.tar.gz",
+        "http|s|ftp://server.com/archive/refs/heads/myproject2.tar.gz.sig"
     ]
 }
 ```
 
-- The remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
+- Each remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
 - All files must be placed within these **predefined** folders.
 - To update your code, just reset the `.custom` file in the Formatter root folder.
 - The following Formatter modules cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 
-*Python is not JS. You are responsible for handling any operations over the internet.<br/>
-Formatter does not have any mechanism to verify the integrity of remote files.*
+*Python is not JS. You are responsible for handling any operations over the internet.*
 
 ### 4. API
 
