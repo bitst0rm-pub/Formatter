@@ -937,8 +937,8 @@ The structure of the metadata JSON file should follow this format:
 
 ```js
 {
-    // Comments are allowed
     "version": "0.0.1",  // tells to update
+    "ca_cert": "/path/to/ca_cert.pem",  // optional CA Certificate path
     "local": {
         "config": ["/path/to/dir", "/path/to/file"],
         "libs": ["/path/to/dir", "/path/to/file"],
@@ -953,7 +953,7 @@ The structure of the metadata JSON file should follow this format:
 - The remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
 - All files must be placed within these **predefined** folders.
 - To update your code, just reset the `.custom` file in the Formatter root folder.
-- The following Formatter modules are not exchangeable: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
+- The following Formatter modules cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 
 *Python is not JS. You are responsible for handling any operations over the internet.<br/>
 Formatter does not have any mechanism to verify the integrity of remote files.*

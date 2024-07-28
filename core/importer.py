@@ -1,4 +1,6 @@
 import os
+import sys
+import ssl
 import shutil
 import zipfile
 import tarfile
@@ -19,13 +21,14 @@ from .constants import PACKAGE_NAME
 
 EXPECTED_DIRS = ['config', 'libs', 'modules']
 EXCLUDE_DIRS = ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']
+DOWNLOAD_TIMEOUT = 10  # sec
 
 
 def import_custom_modules():
     custom_modules = CONFIG.get('custom_modules', None)
     custom_modules_manifest = CONFIG.get('custom_modules_manifest', None)
     if custom_modules and isinstance(custom_modules, dict):
-        import_model_v1(custom_modules)  # deprecated
+        import_model_v1(custom_modules)  # @deprecated
     elif custom_modules_manifest and isinstance(custom_modules_manifest, str):
         import_model_v2(custom_modules_manifest)
 
@@ -35,11 +38,12 @@ def import_model_v2(custom_modules_manifest):
         return
 
     version = data.get('version', None)
+    ca_cert = data.get('ca_cert', None)
     dot_path = os.path.join(sublime.packages_path(), PACKAGE_NAME, '.custom')
     if version_up_to_date(dot_path, version):
         return
 
-    if not process_local_sources(data.get('local', {})) or not process_remote_sources(data.get('remote', [])):
+    if not process_local_sources(data.get('local', {})) or not process_remote_sources(data.get('remote', []), ca_cert):
         log.error('Failed to import custom modules.')
         remove_dotfile(dot_path)
         return
@@ -77,9 +81,9 @@ def process_local_sources(local_sources):
                     return False
     return True
 
-def process_remote_sources(remote_sources):
+def process_remote_sources(remote_sources, ca_cert=None):
     for arch_url in remote_sources:
-        src = download_and_extract_archive(arch_url)
+        src = download_and_extract_archive(arch_url, ca_cert)
         if src:
             for d in EXPECTED_DIRS:
                 dst = os.path.join(sublime.packages_path(), PACKAGE_NAME, d)
@@ -147,10 +151,28 @@ def copy(src, dst):
         log.error('Failed to copy from %s to %s: %s', src, dst, e)
         return False
 
-def download_file(url, file_path):
+def download_file(url, file_path, ca_cert=None):
     try:
-        with urllib.request.urlopen(url) as response, open(file_path, 'wb') as file:
-            shutil.copyfileobj(response, file)
+        if url.startswith('https'):
+            if sys.version_info >= (3, 4):  # python 3.8+
+                context = ssl.create_default_context()
+                if ca_cert:
+                    context.load_verify_locations(cafile=ca_cert)
+                with urllib.request.urlopen(url, context=context, timeout=DOWNLOAD_TIMEOUT) as response, open(file_path, 'wb') as file:
+                    shutil.copyfileobj(response, file)
+            else:  # python 3.3
+                if ca_cert:
+                    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+                    context.verify_mode = ssl.CERT_REQUIRED
+                    context.load_verify_locations(cafile=ca_cert)
+                    with urllib.request.urlopen(url, context=context, timeout=DOWNLOAD_TIMEOUT) as response, open(file_path, 'wb') as file:
+                        shutil.copyfileobj(response, file)
+                else:
+                    with urllib.request.urlopen(url, timeout=DOWNLOAD_TIMEOUT) as response, open(file_path, 'wb') as file:
+                        shutil.copyfileobj(response, file)
+        else:
+            with urllib.request.urlopen(url, timeout=DOWNLOAD_TIMEOUT) as response, open(file_path, 'wb') as file:
+                shutil.copyfileobj(response, file)
         return True
     except Exception as e:
         log.error('Failed to download %s: %s', url, e)
@@ -193,7 +215,7 @@ def move_extracted_contents(extract_dir, dst_dir):
         log.error('Failed to move contents from %s to %s: %s', extract_dir, dst_dir, e)
         return False
 
-def download_and_extract_archive(arch_url, dst_dir=None):
+def download_and_extract_archive(arch_url, ca_cert=None, dst_dir=None):
     if not arch_url.endswith(('.zip', '.tar.gz', '.tgz')):
         log.error('Unsupported archive format. Only .zip and .tar.gz are supported.')
         return False
@@ -204,7 +226,7 @@ def download_and_extract_archive(arch_url, dst_dir=None):
     dst_dir = dst_dir or tempfile.mkdtemp()
 
     try:
-        if download_file(arch_url, download_path) and extract_archive(download_path, extract_dir):
+        if download_file(arch_url, download_path, ca_cert) and extract_archive(download_path, extract_dir):
             if move_extracted_contents(extract_dir, dst_dir):
                 shutil.rmtree(extract_dir)
                 os.remove(download_path)
