@@ -228,22 +228,43 @@ def extract_archive(arch_path, dst_dir):
         return False
 
 def move_extracted_contents(extract_dir, dst_dir):
+    moved_dirs = set()
+
     try:
         entries = os.listdir(extract_dir)
         if not entries:
             log.error('Extracted directory is empty: %s', extract_dir)
             return False
 
-        base_folder = os.path.join(extract_dir, entries[0])
-        source_dirs = [os.path.join(base_folder if len(entries) == 1 and os.path.isdir(base_folder) else extract_dir, d) for d in EXPECTED_DIRS]
+        for root, dirs, files in os.walk(extract_dir):
+            # Exclude directories that start with '.' or '_' like '__MACOSX'
+            dirs[:] = [d for d in dirs if not (d.startswith(('.', '_')))]
 
-        for src in source_dirs:
-            if os.path.exists(src):
-                shutil.move(src, dst_dir)
+            for expected_dir in EXPECTED_DIRS:
+                if expected_dir in dirs:
+                    if expected_dir in moved_dirs:
+                        continue
+
+                    src_dir = os.path.join(root, expected_dir)
+                    cleanup_directory(src_dir)
+                    shutil.move(src_dir, dst_dir)
+                    moved_dirs.add(expected_dir)
         return True
     except Exception as e:
         log.error('Failed to move contents from %s to %s: %s', extract_dir, dst_dir, e)
         return False
+
+def cleanup_directory(directory):
+    for root, dirs, files in os.walk(directory, topdown=False):
+        for name in files:
+            if name.startswith(('.DS_Store', '.localized', '._', 'Thumbs.db')):
+                file_path = os.path.join(root, name)
+                os.remove(file_path)
+
+        for name in dirs:
+            if name.startswith(('__MACOSX', '.Trashes', '.TemporaryItems')):
+                dir_path = os.path.join(root, name)
+                shutil.rmtree(dir_path)
 
 def download_and_extract_archive(arch_url, sig_url=None, ca_cert=None, public_key=None, gpg=None):
     if not arch_url.endswith(('.zip', '.tar.gz', '.tgz')):
