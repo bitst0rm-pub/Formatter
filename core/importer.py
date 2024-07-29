@@ -191,13 +191,22 @@ def verify_signature(file_path, sig_path, public_key, gpg):
             return False
 
     try:
-        subprocess.run([gpg, '--import', public_key], check=True)
-        result = subprocess.run([gpg, '--verify', sig_path, file_path], capture_output=True, text=True)
+        import_process = subprocess.Popen([gpg, '--import', public_key], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        import_output, import_error = import_process.communicate()
 
-        if result.returncode == 0:
-            log.info('Signature verification succeeded for %s', file_path)
-            return True
-        log.error('Signature verification failed for %s: %s', file_path, result.stderr)
+        if import_process.returncode != 0:
+            log.error('Failed to import public key: %s', import_error)
+            return False
+
+        verify_process = subprocess.Popen([gpg, '--verify', sig_path, file_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        verify_output, verify_error = verify_process.communicate()
+
+        if verify_process.returncode != 0:
+            log.error('Signature verification failed for %s: %s', file_path, verify_error)
+            return False
+
+        log.info('Signature verification succeeded for %s', file_path)
+        return True
     except Exception as e:
         log.error('An error occurred while verifying the signature: %s', e)
     return False
