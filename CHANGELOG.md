@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.9)] - 2024-07-29
+
+### 🐛 Bug Fixes
+
+- [`fb2004f`](https://github.com/bitst0rm-pub/Formatter/commit/fb2004f0e97adde7d93cf04dc5b29341f459819d) Replace `subprocess.run()` with `subprocess.Popen()`to work with py33
+
+### ⚙️ Miscellaneous Tasks
+
+- [`90bf5ba`](https://github.com/bitst0rm-pub/Formatter/commit/90bf5ba963001ab516b62d039289b2528b594967) Typo
+
 ## [[1.5.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.8)] - 2024-07-28
 
 ### 🚀 Features
