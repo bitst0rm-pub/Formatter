@@ -956,7 +956,7 @@ The structure of the metadata JSON file should follow this format:
 ```
 
 - Each remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
-- All files must be placed within these **predefined** folders.
+- All files must be placed within these 3 **predefined** folders.
 - To update your code, just reset the `.custom` file in the Formatter root folder.
 - The following Formatter modules cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 
