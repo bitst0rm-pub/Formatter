@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.10)] - 2024-07-29
+
+### 🐛 Bug Fixes
+
+- [`3b8da99`](https://github.com/bitst0rm-pub/Formatter/commit/3b8da9950fc69f493e36ca8cd2f5f161466feafa) Exclude dirs starting with '.' or '_', such as '__MACOSX', which might contain incorrect custom module files when creating ZIP archives
+
 ## [[1.5.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.9)] - 2024-07-29
 
 ### 🐛 Bug Fixes
