@@ -72,10 +72,13 @@ def validate_args(*validators, check_cmd=False):
         return wrapper
     return decorator
 
-def is_non_empty_string(s):
+def are_all_strings_in_list(lst):
+    return all(isinstance(item, str) for item in lst) if lst and isinstance(lst, list) else False
+
+def is_non_empty_string(s):  # unused
     return isinstance(s, str) and bool(s)
 
-def is_non_empty_string_list(lst):
+def is_non_empty_string_list(lst):  # unused
     return (
         isinstance(lst, list)
         and bool(lst)

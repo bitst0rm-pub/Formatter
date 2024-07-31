@@ -9,7 +9,7 @@ from .decorator import (
     check_deprecated_options,
     check_deprecated_api,
     validate_args,
-    is_non_empty_string_list,
+    are_all_strings_in_list,
     transform_args,
     retry_on_exception
 )
@@ -48,7 +48,7 @@ __all__ = [
     'check_deprecated_options',
     'check_deprecated_api',
     'validate_args',
-    'is_non_empty_string_list',
+    'are_all_strings_in_list',
     'transform_args,',
     'retry_on_exception',
     'InstanceManager',
