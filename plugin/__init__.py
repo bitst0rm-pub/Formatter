@@ -10,6 +10,7 @@ from .auto_format_file_command import AutoFormatFileCommand
 from .replace_view_content_command import ReplaceViewContentCommand
 from .zoom_command import ZoomCommand
 from .transfer_view_content_command import TransferViewContentCommand
+from .collapse_setting_sections_command import CollapseSettingSectionsCommand
 from .formatter_listener import FormatterListener
 
 __all__ = [
@@ -25,5 +26,6 @@ __all__ = [
     'ReplaceViewContentCommand',
     'ZoomCommand',
     'TransferViewContentCommand',
+    'CollapseSettingSectionsCommand',
     'FormatterListener'
 ]

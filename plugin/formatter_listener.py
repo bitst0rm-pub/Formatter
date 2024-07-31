@@ -6,6 +6,7 @@ import sublime
 import sublime_plugin
 
 from ..core import (log, CONFIG, ConfigHandler, OptionHandler, CleanupHandler, DotFileHandler, SyntaxHandler, LayoutHandler, InterfaceHandler, reload_modules)
+from ..core.constants import PACKAGE_NAME
 from .single_format import SingleFormat
 from .recursive_format import RecursiveFormat
 
@@ -19,6 +20,9 @@ class FormatterListener(sublime_plugin.EventListener):
     def on_load(self, view):
         if view == RecursiveFormat.CONTEXT['new_view']:
             RecursiveFormat(view).next_thread(view, is_ready=False)
+
+        if view.file_name() and view.file_name().endswith(PACKAGE_NAME + '.sublime-settings'):
+            view.run_command('collapse_setting_sections')
 
     def on_activated(self, view):
         ConfigHandler.project_config_overwrites_config()
