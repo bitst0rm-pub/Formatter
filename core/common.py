@@ -1,55 +1,25 @@
+import hashlib
+import json
 import os
 import re
-import json
 import shutil
 import struct
-import hashlib
 import tempfile
 from copy import deepcopy
-from subprocess import Popen, PIPE, TimeoutExpired
-from os.path import (
-    basename,
-    dirname,
-    expanduser,
-    expandvars,
-    isdir,
-    isfile,
-    join,
-    normcase,
-    normpath,
-    pathsep,
-    split,
-    splitext
-)
+from os.path import (basename, dirname, expanduser, expandvars, isdir, isfile,
+                     join, normcase, normpath, pathsep, split, splitext)
+from subprocess import PIPE, Popen, TimeoutExpired
 
 import sublime
 
-from . import (
-    log,
-    enable_logging,
-    enable_status,
-    disable_logging,
-    # === decorators === #
-    check_deprecated_options,
-    check_deprecated_api,
-    validate_args,
-    are_all_strings_in_list,
-    transform_args,
-    retry_on_exception
-)
-
-from .constants import (
-    IS_WINDOWS,
-    PACKAGE_NAME,
-    ASSETS_DIRECTORY,
-    QUICK_OPTIONS_SETTING_FILE,
-    RECURSIVE_SUCCESS_DIRECTORY,
-    RECURSIVE_FAILURE_DIRECTORY,
-    STATUS_KEY,
-    GFX_OUT_NAME,
-    LAYOUTS
-)
-
+from . import (are_all_strings_in_list, check_deprecated_api,
+               check_deprecated_options, disable_logging, enable_logging,
+               enable_status, log, retry_on_exception, transform_args,
+               validate_args)
+from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
+                        PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
+                        RECURSIVE_FAILURE_DIRECTORY,
+                        RECURSIVE_SUCCESS_DIRECTORY)
 
 CONFIG = {}
 PROJECT_CONFIG = {}
@@ -102,16 +72,16 @@ class Module:
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
-        self.view               = view
-        self.uid                = uid
-        self.region             = region
-        self.interpreters       = interpreters
-        self.executables        = executables
-        self.dotfiles           = dotfiles
-        self.temp_dir           = temp_dir
-        self.type               = type
+        self.view = view
+        self.uid = uid
+        self.region = region
+        self.interpreters = interpreters
+        self.executables = executables
+        self.dotfiles = dotfiles
+        self.temp_dir = temp_dir
+        self.type = type
         self.auto_format_config = auto_format_config
-        self.kwargs             = kwargs  # unused
+        self.kwargs = kwargs  # unused
 
     def is_executable(self, file):
         instance = InstanceManager.get_instance('FileHandler')
@@ -334,7 +304,7 @@ class PathHandler:
         else:
             try:
                 cwd = tempfile.gettempdir()
-            except:
+            except Exception:
                 cwd = expanduser('~')  # fallback for buffer
 
         return {'path': path, 'cwd': cwd, 'base': base, 'stem': stem, 'suffix': suffix, 'ext': ext}
@@ -392,7 +362,7 @@ class EnvironmentHandler:
                     seen = set()
                     for dir in dirs:
                         normdir = normcase(dir)
-                        if not normdir in seen:
+                        if normdir not in seen:
                             seen.add(normdir)
                             for f in files:
                                 file = join(dir, f)
@@ -410,8 +380,8 @@ class EnvironmentHandler:
 
 class ProcessHandler:
     def __init__(self, view=None, uid=None):
-        self.view    = view
-        self.uid     = uid
+        self.view = view
+        self.uid = uid
         self.process = None
 
     def fix_cmd(self, cmd):
@@ -420,27 +390,27 @@ class ProcessHandler:
         if fix_cmds and isinstance(fix_cmds, list) and cmd and isinstance(cmd, list):
             for x in fix_cmds:
                 if isinstance(x, list):
-                    l = len(x)
+                    length = len(x)
 
-                    if 3 <= l <= 5:
-                        search = str(x[l-5])
-                        replace = str(x[l-4])
-                        index = int(x[l-3])
-                        count = int(x[l-2])
-                        position = int(x[l-1])
+                    if 3 <= length <= 5:
+                        search = str(x[length - 5])
+                        replace = str(x[length - 4])
+                        index = int(x[length - 3])
+                        count = int(x[length - 2])
+                        position = int(x[length - 1])
 
                         for i, item in enumerate(cmd):
                             item = str(item)
 
                             if index == i:
-                                if l == 5:
+                                if length == 5:
                                     if search == item and position < 0:
                                         cmd.pop(i)
                                     else:
                                         cmd[i] = re.sub(r'%s' % search, replace, item, count)
-                                if l == 4:
+                                if length == 4:
                                     cmd[i] = replace
-                                if l == 3 and position < 0:
+                                if length == 3 and position < 0:
                                     cmd.pop(i)
                                 if position > -1:
                                     cmd.insert(position, cmd.pop(i))
@@ -460,7 +430,8 @@ class ProcessHandler:
     def popen(self, cmd, stdout=PIPE):
         info = None
         if IS_WINDOWS:
-            from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, SW_HIDE
+            from subprocess import STARTF_USESHOWWINDOW, STARTUPINFO, SW_HIDE
+
             # Hide the console window to avoid flashing an
             # ugly cmd prompt on Windows when invoking plugin.
             info = STARTUPINFO()
@@ -468,8 +439,11 @@ class ProcessHandler:
             info.wShowWindow = SW_HIDE
 
         # Input cmd must be a list of strings
-        self.process = Popen(cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
-                        env=EnvironmentHandler.update_environ(), shell=False, startupinfo=info)
+        self.process = Popen(
+            cmd, stdout=stdout, stdin=PIPE, stderr=PIPE,
+            cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
+            env=EnvironmentHandler.update_environ(), shell=False, startupinfo=info
+        )
         return self.process
 
     def kill(self, process):
@@ -495,10 +469,10 @@ class ProcessHandler:
 
 class CommandHandler:
     def __init__(self, view=None, uid=None, region=None):
-        self.view   = view
-        self.uid    = uid
+        self.view = view
+        self.uid = uid
         self.region = region
-        self.ph     = None
+        self.ph = None
 
     def __del__(self):
         if self.ph and hasattr(self.ph, 'process') and self.ph.process:
@@ -584,9 +558,9 @@ class OptionHandler:
 
 class TempFileHandler:
     def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
-        self.view               = view
-        self.uid                = uid
-        self.region             = region
+        self.view = view
+        self.uid = uid
+        self.region = region
         self.auto_format_config = auto_format_config
 
     def create_tmp_file(self, suffix=None):
@@ -644,12 +618,12 @@ class FolderHandler:
 
 class ArgumentHandler:
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, auto_format_config=None):
-        self.view               = view
-        self.uid                = uid
-        self.region             = region
-        self.interpreters       = interpreters
-        self.executables        = executables
-        self.dotfiles           = dotfiles
+        self.view = view
+        self.uid = uid
+        self.region = region
+        self.interpreters = interpreters
+        self.executables = executables
+        self.dotfiles = dotfiles
         self.auto_format_config = auto_format_config
 
     def set_generic_local_executables(self):
@@ -832,9 +806,9 @@ class ArgumentHandler:
 
 class SyntaxHandler:
     def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
-        self.view               = view
-        self.uid                = uid
-        self.region             = region
+        self.view = view
+        self.uid = uid
+        self.region = region
         self.auto_format_config = auto_format_config
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):  # return tuple
@@ -870,10 +844,10 @@ class SyntaxHandler:
         def should_exclude(syntax, scope):
             return (
                 exclude_syntaxes
-                and isinstance(exclude_syntaxes, dict)
-                and any(
-                    (key.strip().lower() in ['all', syntax]) and
-                    (isinstance(value, list) and any(x in scope for x in value))
+                and isinstance(exclude_syntaxes, dict)  # noqa: W503
+                and any(  # noqa: W503
+                    (key.strip().lower() in ['all', syntax])
+                    and (isinstance(value, list) and any(x in scope for x in value))  # noqa: W503
                     for key, value in exclude_syntaxes.items()
                 )
             )
@@ -916,7 +890,7 @@ class SyntaxHandler:
 
             return None
 
-        #log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
+        # log.error('Setting key "syntaxes" must be a non-empty list: %s', syntaxes)
         return None
 
 
@@ -952,7 +926,7 @@ class DotFileHandler:
                     try:
                         with open(p, 'r', encoding='utf-8') as f:
                             StringHandler.update_json_recursive(config, sublime.decode_value(f.read()))
-                    except Exception as e:
+                    except Exception:
                         log.error('Error reading %s at: %s', filename, p)
         return config
 
@@ -963,7 +937,8 @@ class DotFileHandler:
     def get_auto_format_config(self, active_file_path=None):
         paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
         config = self._read_config_file(paths, ['.sublimeformatter.json', '.sublimeformatter'])
-        if 'config' in config: config.pop('config')
+        if 'config' in config:
+            config.pop('config')
         return {'auto_format_config': config} if config else {}
 
     def get_auto_format_user_config(self, active_file_path=None):
@@ -978,10 +953,10 @@ class DotFileHandler:
 
 class GraphicHandler:
     def __init__(self, view=None, uid=None, temp_dir=None, type=None):
-        self.view     = view
-        self.uid      = uid
+        self.view = view
+        self.uid = uid
         self.temp_dir = temp_dir
-        self.type     = type
+        self.type = type
 
     def is_render_extended(self):
         if OptionHandler.query(CONFIG, {}, 'quick_options'):
@@ -1003,7 +978,7 @@ class GraphicHandler:
 
     @staticmethod
     def ext_png_to_svg_cmd(cmd):
-        return [x.replace(GFX_OUT_NAME + '.png', GFX_OUT_NAME+ '.svg') for x in cmd]
+        return [x.replace(GFX_OUT_NAME + '.png', GFX_OUT_NAME + '.svg') for x in cmd]
 
     @staticmethod
     def all_png_to_svg_cmd(cmd):
@@ -1170,7 +1145,7 @@ class CleanupHandler:
                     os.remove(item)
                 elif isdir(item):
                     shutil.rmtree(item)
-        except Exception as e:
+        except Exception:
             pass
 
     @staticmethod
@@ -1220,7 +1195,7 @@ class ConfigHandler:
                 quick_options = data
             else:
                 quick_options = OptionHandler.query(CONFIG, {}, 'quick_options')
-        except Exception as e:
+        except Exception:
             quick_options = {}
 
         return quick_options
@@ -1249,7 +1224,7 @@ class ConfigHandler:
 
         try:
             SUBLIME_PREFERENCES = cls.load_settings('Preferences.sublime-settings')
-        except Exception as e:
+        except Exception:
             SUBLIME_PREFERENCES = {}
 
     @classmethod
@@ -1405,7 +1380,7 @@ class ConfigHandler:
 
         if debug == 'status':
             enable_status()
-        elif (isinstance(debug, str) and debug.strip().lower() == 'true') or (debug == True):
+        elif (isinstance(debug, str) and debug.strip().lower() == 'true') or debug is True:
             enable_logging()
         else:
             disable_logging()
@@ -1646,7 +1621,7 @@ class PhantomHandler:
         if not isdir(downloads_folder):
             try:
                 os.makedirs(downloads_folder, exist_ok=True)
-            except:
+            except Exception:
                 return tempfile.mkdtemp()
 
         return downloads_folder

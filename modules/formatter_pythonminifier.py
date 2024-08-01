@@ -1,7 +1,6 @@
 import sublime
-from .. import log
-from ..core.common import Module
 
+from ..core.common import Module
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['pyminify']
@@ -66,7 +65,7 @@ class PythonminifierFormatter(Module):
                 no_param = '--no-' + k
                 param = '--' + k
                 if no_param in params and isinstance(v, bool) and not v:
-                        cmd.extend([no_param])
+                    cmd.extend([no_param])
                 if param in params:
                     if isinstance(v, bool) and v:
                         cmd.extend([param])

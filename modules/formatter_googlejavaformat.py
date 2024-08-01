@@ -1,7 +1,5 @@
-from ..libs import yaml
-from .. import log
 from ..core.common import Module
-
+from ..libs import yaml
 
 INTERPRETERS = ['java']
 EXECUTABLES = ['google-java-format-all-deps.jar']

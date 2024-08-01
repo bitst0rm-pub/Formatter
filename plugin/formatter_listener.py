@@ -1,14 +1,16 @@
 import os
-import time
 import threading
+import time
 
 import sublime
 import sublime_plugin
 
-from ..core import (log, CONFIG, ConfigHandler, OptionHandler, CleanupHandler, DotFileHandler, SyntaxHandler, LayoutHandler, InterfaceHandler, reload_modules)
+from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
+                    InterfaceHandler, LayoutHandler, OptionHandler,
+                    SyntaxHandler, log, reload_modules)
 from ..core.constants import PACKAGE_NAME
-from .single_format import SingleFormat
 from .recursive_format import RecursiveFormat
+from .single_format import SingleFormat
 
 
 class FormatterListener(sublime_plugin.EventListener):

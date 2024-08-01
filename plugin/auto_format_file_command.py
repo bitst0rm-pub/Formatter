@@ -2,7 +2,8 @@ import threading
 
 import sublime_plugin
 
-from ..core import (log, CONFIG, CleanupHandler, ConfigHandler, OptionHandler, DotFileHandler)
+from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
+                    OptionHandler, log)
 from .single_format import SingleFormat
 
 

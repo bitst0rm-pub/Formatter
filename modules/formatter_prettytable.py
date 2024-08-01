@@ -1,8 +1,8 @@
 import sublime
-from ..libs.prettytable import prettytable
+
 from .. import log
 from ..core.common import Module
-
+from ..libs.prettytable import prettytable
 
 DOTFILES = []
 MODULE_CONFIG = {

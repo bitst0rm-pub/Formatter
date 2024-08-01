@@ -1,8 +1,7 @@
 import json
-import sublime
+
 from .. import log
 from ..core.common import Module
-
 
 DOTFILES = []
 MODULE_CONFIG = {

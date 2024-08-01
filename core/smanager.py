@@ -1,14 +1,13 @@
 import json
 import threading
+from datetime import datetime, timedelta
 from os import makedirs
-from os.path import (join, dirname)
-from datetime import (datetime, timedelta)
+from os.path import dirname, join
 
 import sublime
 import sublime_plugin
 
-from . import (log, CONFIG, OptionHandler)
-
+from . import CONFIG, OptionHandler, log
 
 SESSION_FILE = join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
 MAX_AGE_DAYS = 180
@@ -29,7 +28,7 @@ class SessionManager:
         except UnicodeDecodeError as e:
             log.error('Unicode decoding error occurred: %s', e)
             return {}
-        except Exception as e:
+        except Exception:
             return {}
 
     def write_session_file(self, data):
@@ -154,7 +153,7 @@ class SessionManager:
                     view.sel().add(sublime.Region(cursor_position))
                     try:
                         view.show_at_center(cursor_position, animate=False)  # ST4
-                    except Exception as e:
+                    except Exception:
                         view.show_at_center(cursor_position)  # ST3
 
                     # Restore selections and bookmarks

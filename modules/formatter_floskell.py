@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['floskell']
 DOTFILES = ['floskell.json', '.floskell.json']

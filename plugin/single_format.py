@@ -1,12 +1,14 @@
-import os
 import base64
+import os
 import tempfile
 import traceback
 
 import sublime
 
-from ..core import (log, CONFIG, PrintHandler, ConfigHandler, OptionHandler, PathHandler, LayoutHandler, PhantomHandler, InterfaceHandler)
-from ..core.constants import (PACKAGE_NAME, STATUS_KEY, GFX_OUT_NAME)
+from ..core import (CONFIG, ConfigHandler, InterfaceHandler, LayoutHandler,
+                    OptionHandler, PathHandler, PhantomHandler, PrintHandler,
+                    log)
+from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
 
 

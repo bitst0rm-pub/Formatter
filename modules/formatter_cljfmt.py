@@ -1,7 +1,6 @@
 from os.path import basename
-from .. import log
-from ..core.common import Module
 
+from ..core.common import Module
 
 INTERPRETERS = ['java']
 EXECUTABLES = ['cljfmt']

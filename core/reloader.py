@@ -26,7 +26,8 @@ def reload_modules(print_tree=False):
 
     log.debug('Reloaded modules (Python %s)', '.'.join(map(str, sys.version_info[:3])))
     if print_tree:
-        self._generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
+        _generate_ascii_tree(reloaded_modules, PACKAGE_NAME)
+
 
 def _generate_ascii_tree(reloaded_modules, package_name):
     tree = {}

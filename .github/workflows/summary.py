@@ -6,6 +6,7 @@ directory = './modules'
 # Output file
 output_file = './modules/_summary.txt'
 
+
 # Function to extract relevant fields from the MODULE_CONFIG dictionary
 def extract_info(file_content):
     uid, name, source, type_, syntaxes = None, None, None, None, None
@@ -38,6 +39,7 @@ def extract_info(file_content):
     if uid and name and source and type_ and syntaxes:
         return uid, name, source, type_, syntaxes
     return None
+
 
 # Ensure the directory exists
 if not os.path.isdir(directory):

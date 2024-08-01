@@ -1,9 +1,6 @@
-from os.path import basename
-from .. import log
 from ..core.common import Module
 
-
-#EXECUTABLES = ['rebar3', 'efmt']  # No rebar3 support right now, @see #55
+# EXECUTABLES = ['rebar3', 'efmt']  # No rebar3 support right now, @see #55
 EXECUTABLES = ['efmt']
 DOTFILES = []
 MODULE_CONFIG = {
@@ -13,11 +10,11 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['erlang'],
     'exclude_syntaxes': None,
-    #'executable_path': '/path/to/bin/efmt (standalone bin) or /path/to/rebar3',
+    # 'executable_path': '/path/to/bin/efmt (standalone bin) or /path/to/rebar3',
     'executable_path': '/path/to/bin/efmt (standalone bin)',
     'args': None,
     'config_path': None,
-    #'comment': 'opinionated, no config'
+    # 'comment': 'opinionated, no config'
     'comment': 'opinionated, no config. no rebar3 upstream support, use efmt standalone instead. requires efmt on PATH if omit interpreter_path'
 }
 

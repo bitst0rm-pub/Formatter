@@ -1,8 +1,4 @@
-import os
-import tempfile
-from .. import log
 from ..core.common import Module
-
 
 INTERPRETERS = ['php']
 EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'phpcsfixer', 'php-cs-fixer.phar', 'php-cs-fixer', 'php-cs-fixer-v2.phar', 'php-cs-fixer-v2']

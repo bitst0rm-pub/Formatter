@@ -1,6 +1,4 @@
-from .. import log
-from ..core.common import (CONFIG, Module)
-
+from ..core.common import CONFIG, Module
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettierd']

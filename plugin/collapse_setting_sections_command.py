@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 
 from ..core import log
+
 EXCLUDE_COLLAPSE_KEYS = []  # example: ['stylelint', 'examplegeneric']
 
 

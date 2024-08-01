@@ -1,12 +1,12 @@
 import os
-import sys
-import ssl
 import shutil
-import zipfile
+import ssl
+import subprocess
+import sys
 import tarfile
 import tempfile
-import subprocess
 import urllib.request
+import zipfile
 from urllib.parse import urlparse
 
 try:  # python 3.8+
@@ -16,9 +16,8 @@ except ImportError:  # python 3.3
 
 import sublime
 
-from . import (log, CONFIG, HashHandler)
+from . import CONFIG, HashHandler, log
 from .constants import PACKAGE_NAME
-
 
 EXPECTED_DIRS = ['config', 'libs', 'modules']
 EXCLUDE_DIRS = ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']
@@ -34,6 +33,7 @@ def import_custom_modules():
         import_model_v1(custom_modules)  # @deprecated
     elif custom_modules_manifest and isinstance(custom_modules_manifest, str):
         import_model_v2(custom_modules_manifest)
+
 
 def import_model_v2(custom_modules_manifest):
     data = read_json(custom_modules_manifest)
@@ -57,6 +57,7 @@ def import_model_v2(custom_modules_manifest):
     update_import()
     update_version(dot_path, version)
 
+
 def version_up_to_date(dot_path, version):
     if os.path.isfile(dot_path):
         with open(dot_path, 'r') as f:
@@ -66,9 +67,11 @@ def version_up_to_date(dot_path, version):
     update_version(dot_path, version)
     return False
 
+
 def update_version(dot_path, version):
     with open(dot_path, 'w') as f:
         f.write(version)
+
 
 def remove_dotfile(dot_path):
     try:
@@ -78,6 +81,7 @@ def remove_dotfile(dot_path):
     except Exception as e:
         log.error('An error occurred while trying to remove %s: %s', dot_path, e)
 
+
 def process_local_sources(local_sources):
     for k, sources in local_sources.items():
         if k in EXPECTED_DIRS:
@@ -86,6 +90,7 @@ def process_local_sources(local_sources):
                 if not copy(src, dst):
                     return False
     return True
+
 
 def process_remote_sources(remote_sources, ca_cert=None, public_key=None, gpg=None):
     for arch_url in remote_sources:
@@ -101,6 +106,7 @@ def process_remote_sources(remote_sources, ca_cert=None, public_key=None, gpg=No
                 return False
     return True
 
+
 def read_json(path):
     try:
         data = fetch_data(path)
@@ -108,6 +114,7 @@ def read_json(path):
     except Exception as e:
         log.error('Failed to read custom modules JSON metadata from %s: %s', path, e)
         return {}
+
 
 def fetch_data(path):
     if is_url(path):
@@ -117,12 +124,14 @@ def fetch_data(path):
         with open(path, 'r') as file:
             return file.read()
 
+
 def is_url(path):
     try:
         parsed = urlparse(path)
         return all([parsed.scheme, parsed.netloc])
     except Exception:
         return False
+
 
 def copy_dir(src, dst):
     try:
@@ -140,9 +149,11 @@ def copy_dir(src, dst):
         log.error('Failed to copy directory from %s to %s: %s', src, dst, e)
         return False
 
+
 def should_exclude(dst_path):
     p = os.path.normpath(dst_path).split(os.sep)
     return len(p) > 3 and p[-3] == PACKAGE_NAME and p[-2] == 'libs' and p[-1] in EXCLUDE_DIRS
+
 
 def copy(src, dst):
     try:
@@ -155,6 +166,7 @@ def copy(src, dst):
     except Exception as e:
         log.error('Failed to copy from %s to %s: %s', src, dst, e)
         return False
+
 
 def download_file(url, file_path, ca_cert=None):
     try:
@@ -182,6 +194,7 @@ def download_file(url, file_path, ca_cert=None):
     except Exception as e:
         log.error('Failed to download %s: %s', url, e)
         return False
+
 
 def verify_signature(file_path, sig_path, public_key, gpg):
     if not gpg:
@@ -211,6 +224,7 @@ def verify_signature(file_path, sig_path, public_key, gpg):
         log.error('An error occurred while verifying the signature: %s', e)
     return False
 
+
 def extract_archive(arch_path, dst_dir):
     try:
         if arch_path.endswith('.zip'):
@@ -226,6 +240,7 @@ def extract_archive(arch_path, dst_dir):
     except Exception as e:
         log.error('Failed to extract %s: %s', arch_path, e)
         return False
+
 
 def move_extracted_contents(extract_dir, dst_dir):
     moved_dirs = set()
@@ -254,6 +269,7 @@ def move_extracted_contents(extract_dir, dst_dir):
         log.error('Failed to move contents from %s to %s: %s', extract_dir, dst_dir, e)
         return False
 
+
 def cleanup_directory(directory):
     for root, dirs, files in os.walk(directory, topdown=False):
         for name in files:
@@ -265,6 +281,7 @@ def cleanup_directory(directory):
             if name.startswith(('__MACOSX', '.Trashes', '.TemporaryItems')):
                 dir_path = os.path.join(root, name)
                 shutil.rmtree(dir_path)
+
 
 def download_and_extract_archive(arch_url, sig_url=None, ca_cert=None, public_key=None, gpg=None):
     if not arch_url.endswith(('.zip', '.tar.gz', '.tgz')):
@@ -291,6 +308,7 @@ def download_and_extract_archive(arch_url, sig_url=None, ca_cert=None, public_ke
             if os.path.isfile(path):
                 os.remove(path)
     return False
+
 
 def import_model_v1(custom_modules):  # deprecated
     packages_path = sublime.packages_path()
@@ -324,21 +342,25 @@ def import_model_v1(custom_modules):  # deprecated
     if any(seen):
         update_import()
 
+
 def files_are_equal(src, dst):
     src_md5 = HashHandler.md5f(src)
     dst_md5 = HashHandler.md5f(dst) if os.path.exists(dst) else None
     return src_md5 == dst_md5
+
 
 def dirs_are_equal(src, dst):
     src_sum = HashHandler.md5d(src)
     dst_sum = HashHandler.md5d(dst) if os.path.exists(dst) else None
     return src_sum == dst_sum
 
+
 def update_import():
     import_libs()  # import libs
 
     from ..modules import update_formatter_modules
     update_formatter_modules()  # import modules
+
 
 def import_libs():
     libs_dir = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'libs')
@@ -347,6 +369,7 @@ def import_libs():
         for filename in files:
             if filename.endswith('.py'):
                 import_module(libs_dir, root, filename)
+
 
 def import_module(libs_dir, root, filename):
     module_name = filename[:-3]
@@ -357,8 +380,8 @@ def import_module(libs_dir, root, filename):
 
     try:
         try:  # python 3.8+
-            module = importlib.import_module(PACKAGE_NAME + '.libs.' + module_name, package=PACKAGE_NAME)
+            importlib.import_module(PACKAGE_NAME + '.libs.' + module_name, package=PACKAGE_NAME)
         except ImportError:  # python 3.3
-            module = imp.load_source(PACKAGE_NAME + '.libs.' + module_name, module_path)
+            imp.load_source(PACKAGE_NAME + '.libs.' + module_name, module_path)
     except Exception as e:
         log.error('Error importing module %s: %s', module_name, e)

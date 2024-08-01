@@ -3,7 +3,7 @@ import os
 import sublime
 import sublime_plugin
 
-from ..core import (log, MarkdownHandler, PhantomHandler)
+from ..core import MarkdownHandler, PhantomHandler, log
 from ..core.constants import PACKAGE_NAME
 
 

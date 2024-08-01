@@ -1,7 +1,6 @@
-from ..libs import yaml
 from .. import log
 from ..core.common import Module
-
+from ..libs import yaml
 
 EXECUTABLES = ['d2']
 DOTFILES = []

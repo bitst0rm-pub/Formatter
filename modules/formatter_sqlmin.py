@@ -1,8 +1,8 @@
 import sublime
-from ..libs.sqlmin import sqlmin
+
 from .. import log
 from ..core.common import Module
-
+from ..libs.sqlmin import sqlmin
 
 DOTFILES = []
 MODULE_CONFIG = {

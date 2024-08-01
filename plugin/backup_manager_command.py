@@ -1,12 +1,12 @@
 import os
-import zipfile
 import tempfile
+import zipfile
 from datetime import datetime
 
 import sublime
 import sublime_plugin
 
-from ..core import (CONFIG, SESSION_FILE, ConfigHandler, InterfaceHandler)
+from ..core import CONFIG, SESSION_FILE, ConfigHandler, InterfaceHandler
 
 
 class BackupManagerCommand(sublime_plugin.WindowCommand):

@@ -1,5 +1,6 @@
 import os
 import sys
+
 if sys.version_info < (3, 4):
     import imp
 else:
@@ -16,14 +17,18 @@ def read_settings_file(settings_file):
         with open(settings_file, 'r', encoding='utf-8') as f:
             file_content = f.read()
             return sublime.decode_value(file_content)
-    except Exception as e:
+    except Exception:
         return {}
+
 
 def update_sys_path(environ, packages_path):
     pypath = environ.get('PYTHONPATH', [])
-    updated_paths = [os.path.normpath(os.path.expanduser(os.path.expandvars(path.replace('${packages}', packages_path))))
-                  for path in pypath if path]
+    updated_paths = [
+        os.path.normpath(os.path.expanduser(os.path.expandvars(path.replace('${packages}', packages_path))))
+        for path in pypath if path
+    ]
     sys.path = updated_paths + sys.path
+
 
 def import_formatter_modules():
     formatter_map = {}
@@ -70,11 +75,13 @@ def import_formatter_modules():
                     log.error('Either missing or misspelled formatter class in %s.py', module_name)
                     continue
     finally:
-            sys.path = original_sys_path
+        sys.path = original_sys_path
 
     return formatter_map
 
+
 formatter_map = import_formatter_modules()
+
 
 def update_formatter_modules():
     global formatter_map

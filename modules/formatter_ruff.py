@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['ruff']
 DOTFILES = ['.ruff.toml', 'ruff.toml', 'pyproject.toml']

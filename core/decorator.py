@@ -1,14 +1,12 @@
-import time
 import datetime
+import time
 from functools import wraps
-
-import sublime
 
 from . import log
 
-
 # List of deprecated options
 DEPRECATED_OPTIONS = ['custom_modules', 'disable']
+
 
 def check_nested_settings(settings, deprecated_options, current_key=''):
     for option in deprecated_options:
@@ -25,6 +23,7 @@ def check_nested_settings(settings, deprecated_options, current_key=''):
                     elif nested_key in deprecated_options:
                         log.warning('The settings option "%s%s" is deprecated and will be removed in future versions.' % (current_key, nested_key))
 
+
 # Decorator to check for deprecated options in settings
 def check_deprecated_options(func):
     @wraps(func)
@@ -34,6 +33,7 @@ def check_deprecated_options(func):
             check_nested_settings(settings, DEPRECATED_OPTIONS)
         return func(cls, settings, *args, **kwargs)
     return wrapper
+
 
 # Decorator to check if a method is deprecated based on a start date and deactivation period
 def check_deprecated_api(start_date, deactivate_after_days=14):
@@ -56,6 +56,7 @@ def check_deprecated_api(start_date, deactivate_after_days=14):
         return wrapper
     return decorator
 
+
 # Decorator to validate function arguments using provided validator functions
 def validate_args(*validators, check_cmd=False):
     def decorator(func):
@@ -72,18 +73,18 @@ def validate_args(*validators, check_cmd=False):
         return wrapper
     return decorator
 
+
 def are_all_strings_in_list(lst):
     return all(isinstance(item, str) for item in lst) if lst and isinstance(lst, list) else False
+
 
 def is_non_empty_string(s):  # unused
     return isinstance(s, str) and bool(s)
 
+
 def is_non_empty_string_list(lst):  # unused
-    return (
-        isinstance(lst, list)
-        and bool(lst)
-        and all(is_non_empty_string(item) for item in lst)
-    )
+    return (isinstance(lst, list) and bool(lst) and all(is_non_empty_string(item) for item in lst))
+
 
 # Decorator to transform function arguments using provided transformer functions
 def transform_args(*transformers):
@@ -95,6 +96,7 @@ def transform_args(*transformers):
         return wrapper
     return decorator
 
+
 # Decorator to retry a function on exception
 def retry_on_exception(retries=5, delay=500):
     def decorator(func):
@@ -104,7 +106,7 @@ def retry_on_exception(retries=5, delay=500):
             while attempt < retries:
                 try:
                     return func(*args, **kwargs)
-                except Exception as e:
+                except Exception:
                     attempt += 1
                     if attempt == retries:
                         log.error('Function %s failed after %d retries. Execution has been stopped.', func.__name__, retries)

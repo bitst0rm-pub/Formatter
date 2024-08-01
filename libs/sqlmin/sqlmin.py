@@ -18,6 +18,7 @@ def add_space(result, space):
         space = False
     return result, space
 
+
 def minify(sql, options=None):
     if options is not None and not isinstance(options, dict):
         return {'code': 1, 'result': 'Options must be of type dict.'}
@@ -176,10 +177,10 @@ if __name__ == '__main__':
         sys.exit()
 
     options = {
-                  'preserve_special_comments': args.preserve_special_comments,
-                  'newlines_before_special_comments': args.newlines_before_special_comments,
-                  'newlines_after_special_comments': args.newlines_after_special_comments
-              }
+        'preserve_special_comments': args.preserve_special_comments,
+        'newlines_before_special_comments': args.newlines_before_special_comments,
+        'newlines_after_special_comments': args.newlines_after_special_comments
+    }
     minified_sql = minify(args.sql, options)
 
     if minified_sql['code'] == 0:

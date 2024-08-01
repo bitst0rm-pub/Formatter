@@ -4,8 +4,10 @@ import traceback
 
 import sublime
 
-from ..core import (log, CONFIG, ConfigHandler, OptionHandler, PathHandler, SyntaxHandler, TransformHandler, InterfaceHandler)
-from ..core.constants import (PACKAGE_NAME, STATUS_KEY, RECURSIVE_FAILURE_DIRECTORY, RECURSIVE_SUCCESS_DIRECTORY)
+from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
+                    PathHandler, SyntaxHandler, TransformHandler, log)
+from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
+                              RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
 from ..core.formatter import Formatter
 
 

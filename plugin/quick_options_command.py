@@ -3,7 +3,8 @@ from collections import OrderedDict
 
 import sublime_plugin
 
-from ..core import (CONFIG, enable_logging, enable_status, disable_logging, ConfigHandler, OptionHandler, InterfaceHandler)
+from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
+                    disable_logging, enable_logging, enable_status)
 
 
 class QuickOptionsCommand(sublime_plugin.WindowCommand):

@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 
-from ..core import (log, CONFIG, OptionHandler, InterfaceHandler)
+from ..core import CONFIG, InterfaceHandler, OptionHandler, log
 from ..core.constants import STATUS_KEY
 
 

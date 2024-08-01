@@ -1,7 +1,6 @@
 import re
-from .. import log
-from ..core.common import Module
 
+from ..core.common import Module
 
 EXECUTABLES = ['R']
 DOTFILES = []

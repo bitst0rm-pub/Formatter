@@ -1,7 +1,6 @@
 from .. import log
 from ..core.common import Module
 
-
 EXECUTABLES = ['mmdc']
 DOTFILES = []
 MODULE_CONFIG = {

@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['AStyle', 'astyle']
 DOTFILES = ['.astylerc', '_astylerc']

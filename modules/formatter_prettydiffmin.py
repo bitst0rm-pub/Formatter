@@ -1,8 +1,4 @@
-import os
-import tempfile
-from .. import log
 from ..core.common import Module
-
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettydiff']

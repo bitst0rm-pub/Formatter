@@ -1,5 +1,5 @@
-from . import (log, InstanceManager, Module)
 from ..modules import formatter_map
+from . import InstanceManager, Module, log
 
 
 class Formatter(Module):

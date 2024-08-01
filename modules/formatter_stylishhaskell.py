@@ -1,7 +1,4 @@
-from ..libs import yaml
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['stylish-haskell']
 DOTFILES = ['.stylish-haskell.yaml']

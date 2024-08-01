@@ -1,6 +1,6 @@
 from datetime import datetime
-import sublime
 
+import sublime
 
 IS_WINDOWS = sublime.platform() == 'windows'
 PACKAGE_NAME = __package__.partition('.')[0]

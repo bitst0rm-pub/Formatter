@@ -1,10 +1,10 @@
-import os
 import base64
+import os
 
 import sublime
 import sublime_plugin
 
-from ..core import (log, PhantomHandler, InterfaceHandler)
+from ..core import InterfaceHandler, PhantomHandler, log
 from ..core.constants import GFX_OUT_NAME
 
 

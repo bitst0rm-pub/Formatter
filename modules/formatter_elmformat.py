@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['elm-format']
 DOTFILES = []
@@ -31,7 +29,7 @@ class ElmformatFormatter(Module):
 
         cmd.extend(self.get_args())
 
-        cmd.extend(['--yes','--stdin', '--'])
+        cmd.extend(['--yes', '--stdin', '--'])
 
         return cmd
 

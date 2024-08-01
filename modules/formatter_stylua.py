@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['stylua']
 DOTFILES = ['.stylua.toml', 'stylua.toml']

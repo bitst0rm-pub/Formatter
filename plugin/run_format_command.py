@@ -2,9 +2,10 @@ import threading
 
 import sublime_plugin
 
-from ..core import (log, CONFIG, ConfigHandler, OptionHandler, CleanupHandler, ViewHandler, InterfaceHandler)
-from .single_format import SingleFormat
+from ..core import (CONFIG, CleanupHandler, ConfigHandler, InterfaceHandler,
+                    OptionHandler, ViewHandler, log)
 from .recursive_format import RecursiveFormat
+from .single_format import SingleFormat
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):

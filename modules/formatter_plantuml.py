@@ -1,7 +1,6 @@
 from .. import log
 from ..core.common import Module
 
-
 INTERPRETERS = ['java']
 EXECUTABLES = ['plantuml.jar']
 DOTFILES = []

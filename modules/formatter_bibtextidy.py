@@ -1,7 +1,5 @@
-from ..libs import yaml
-from .. import log
 from ..core.common import Module
-
+from ..libs import yaml
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['bibtex-tidy']
@@ -52,7 +50,7 @@ class BibtextidyFormatter(Module):
                         elif isinstance(value, str):
                             flattened_list.append('--' + key + '=' + value)
                     else:
-                        if key in ['curly','numeric', 'tab', 'align', 'blank-lines', 'sort', 'merge', 'escape', 'strip-comments', 'trailing-commas', 'encode-urls', 'tidy-comments', 'remove-empty-fields', 'remove-dupe-fields', 'wrap']:
+                        if key in ['curly', 'numeric', 'tab', 'align', 'blank-lines', 'sort', 'merge', 'escape', 'strip-comments', 'trailing-commas', 'encode-urls', 'tidy-comments', 'remove-empty-fields', 'remove-dupe-fields', 'wrap']:
                             flattened_list.append('--no-' + key)
 
                 cmd.extend(flattened_list)

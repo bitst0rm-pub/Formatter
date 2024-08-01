@@ -1,7 +1,6 @@
 from .. import log
 from ..core.common import Module
 
-
 EXECUTABLES = ['shellcheck']
 DOTFILES = ['.shellcheckrc', 'shellcheckrc']
 MODULE_CONFIG = {
@@ -93,7 +92,7 @@ class ShellcheckFormatter(Module):
         '''
         import difflib
 
-        _no_eol = '\ No newline at end of file'
+        _no_eol = r'\ No newline at end of file'
 
         diffs = difflib.unified_diff(a.splitlines(True), b.splitlines(True), n=0)
         try:
@@ -115,7 +114,7 @@ class ShellcheckFormatter(Module):
         '''
         import re
 
-        _hdr_pat = re.compile('^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@$')
+        _hdr_pat = re.compile(r'^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@$')
 
         s = s.splitlines(True)
         p = patch.splitlines(True)
@@ -128,11 +127,11 @@ class ShellcheckFormatter(Module):
             m = _hdr_pat.match(p[i])
             if not m:
                 raise Exception('Bad patch -- regex mismatch [line ' + str(i) + ']')
-            l = int(m.group(midx)) - 1 + (m.group(midx + 1) == '0')
-            if sl > l or l > len(s):
+            length = int(m.group(midx)) - 1 + (m.group(midx + 1) == '0')
+            if sl > length or length > len(s):
                 raise Exception('Bad patch -- bad line num [line ' + str(i) + ']')
-            t += ''.join(s[sl:l])
-            sl = l
+            t += ''.join(s[sl:length])
+            sl = length
             i += 1
             while i < len(p) and p[i][0] != '@':
                 if i + 1 < len(p) and p[i + 1][0] == '\\':

@@ -1,7 +1,6 @@
 from .. import log
 from ..core.common import Module
 
-
 EXECUTABLES = ['tidy']
 DOTFILES = []
 MODULE_CONFIG = {

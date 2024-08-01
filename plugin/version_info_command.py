@@ -1,8 +1,8 @@
 import sublime
 import sublime_plugin
 
-from ..version import __version__
 from ..core.constants import PACKAGE_NAME
+from ..version import __version__
 
 
 class VersionInfoCommand(sublime_plugin.WindowCommand):

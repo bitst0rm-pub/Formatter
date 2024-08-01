@@ -1,7 +1,6 @@
 import sublime
-from .. import log
-from ..core.common import Module
 
+from ..core.common import Module
 
 EXECUTABLES = ['shfmt']
 DOTFILES = []
@@ -50,11 +49,11 @@ class ShfmtFormatter(Module):
 
         result = []
         for key, value in json.items():
-            if type(value) == int:
+            if type(value) is int:
                 result.extend(['--' + key, '%d' % value])
-            elif type(value) == bool and value:
+            elif type(value) is bool and value:
                 result.extend(['--' + key])
-            elif type(value) == str:
+            elif type(value) is str:
                 result.extend(['--' + key, '%s' % value])
 
         return result

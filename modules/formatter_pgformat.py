@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 INTERPRETERS = ['perl']
 EXECUTABLES = ['pg_format']

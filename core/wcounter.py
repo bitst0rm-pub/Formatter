@@ -3,7 +3,7 @@ import re
 import sublime
 import sublime_plugin
 
-from . import (log, CONFIG, OptionHandler)
+from . import CONFIG, OptionHandler
 from .constants import STATUS_KEY
 
 
@@ -87,7 +87,7 @@ class WordsCounter:
                 )
 
             self.view.set_status(STATUS_KEY + '_wc', status_text)
-        except:
+        except Exception:
             pass
 
 

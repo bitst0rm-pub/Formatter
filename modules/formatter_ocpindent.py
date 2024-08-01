@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 EXECUTABLES = ['ocp-indent']
 DOTFILES = ['.ocp-indent', 'ocp-indent.conf']

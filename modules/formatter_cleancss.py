@@ -1,7 +1,6 @@
 import sublime
-from .. import log
-from ..core.common import Module
 
+from ..core.common import Module
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['cleancss']
@@ -49,22 +48,22 @@ class CleancssFormatter(Module):
         result = []
 
         for key, value in json.items():
-            if type(value) == list:
+            if type(value) is list:
                 result.extend(['--' + key, ','.join(value)])
-            elif type(value) == int:
+            elif type(value) is int:
                 result.extend(['--' + key, '%d' % value])
-            elif type(value) == bool and value:
+            elif type(value) is bool and value:
                 result.append('--' + key)
-            elif type(value) == str:
+            elif type(value) is str:
                 result.extend(['--' + key, '%s' % value])
-            elif type(value) == dict:
+            elif type(value) is dict:
                 if key == 'compatibility':
                     for keylv1, valuelv1 in value.items():
                         string = ''
                         for keylv2, valuelv2 in valuelv1.items():
-                            if type(valuelv2) == bool:
+                            if type(valuelv2) is bool:
                                 string += (('+' if valuelv2 else '-') + keylv2 + ',')
-                            elif type(valuelv2) == list and valuelv2:
+                            elif type(valuelv2) is list and valuelv2:
                                 string += (('+' if valuelv2 else '-') + keylv2 + ':' + ','.join(valuelv2) + ';')
                         if string:
                             result.extend(['--compatibility', keylv1 + ',' + string[:-1]])
@@ -75,11 +74,11 @@ class CleancssFormatter(Module):
                         else:
                             string = ''
                             for keylv2, valuelv2 in valuelv1.items():
-                                if type(valuelv2) == bool:
+                                if type(valuelv2) is bool:
                                     string += (keylv2 + '=' + ('on' if valuelv2 else 'off') + ';')
-                                elif type(valuelv2) == str:
+                                elif type(valuelv2) is str:
                                     string += (keylv2 + ':' + valuelv2 + ';')
-                                elif type(valuelv2) == int:
+                                elif type(valuelv2) is int:
                                     string += (keylv2 + ':' + '%d' % valuelv2 + ';')
                             if string:
                                 result.extend(['--format', string[:-1]])
@@ -91,13 +90,13 @@ class CleancssFormatter(Module):
                             if keylv1 in str(value['level']):
                                 string = ''
                                 for keylv2, valuelv2 in valuelv1.items():
-                                    if type(valuelv2) == bool:
+                                    if type(valuelv2) is bool:
                                         string += (keylv2 + ':' + ('on' if valuelv2 else 'off') + ';')
-                                    elif type(valuelv2) == list and valuelv2:
+                                    elif type(valuelv2) is list and valuelv2:
                                         string += (keylv2 + ':' + ','.join(valuelv2) + ';')
-                                    elif type(valuelv2) == str:
+                                    elif type(valuelv2) is str:
                                         string += (keylv2 + ':' + valuelv2 + ';')
-                                    elif type(valuelv2) == int:
+                                    elif type(valuelv2) is int:
                                         string += (keylv2 + ':' + '%d' % valuelv2 + ';')
                                 if string:
                                     result.extend(['-O' + keylv1, string[:-1]])

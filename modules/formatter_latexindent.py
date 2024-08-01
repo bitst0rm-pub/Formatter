@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 INTERPRETERS = ['perl', 'perl5']
 EXECUTABLES = ['latexindent.pl', 'latexindent', 'latexindent-macos', 'latexindent-linux']

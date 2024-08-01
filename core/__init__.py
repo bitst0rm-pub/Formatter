@@ -1,66 +1,39 @@
-from .logger import (
-    log,
-    enable_logging,
-    enable_status,
-    disable_logging
-)
-
-from .decorator import (
-    check_deprecated_options,
-    check_deprecated_api,
-    validate_args,
-    are_all_strings_in_list,
-    transform_args,
-    retry_on_exception
-)
-
-from .common import (
-    InstanceManager,
-    Module,
-    ConfigHandler,
-    CONFIG,
-    CleanupHandler,
-    DotFileHandler,
-    HashHandler,
-    InterfaceHandler,
-    LayoutHandler,
-    MarkdownHandler,
-    OptionHandler,
-    PathHandler,
-    PhantomHandler,
-    PrintHandler,
-    SyntaxHandler,
-    TransformHandler,
-    ViewHandler
-)
-
+from .logger import disable_logging, enable_logging, enable_status, log
+from .decorator import (are_all_strings_in_list, check_deprecated_api,
+                        check_deprecated_options, retry_on_exception,
+                        transform_args, validate_args)
+from .common import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
+                     HashHandler, InstanceManager, InterfaceHandler,
+                     LayoutHandler, MarkdownHandler, Module, OptionHandler,
+                     PathHandler, PhantomHandler, PrintHandler, SyntaxHandler,
+                     TransformHandler, ViewHandler)
 from .configurator import create_package_config_files
-from .smanager import (SESSION_FILE, SessionManagerListener)
-from .wcounter import WordsCounterListener
 from .importer import import_custom_modules
 from .reloader import reload_modules
+from .smanager import SESSION_FILE, SessionManagerListener
+from .wcounter import WordsCounterListener
 
 __all__ = [
-    'log',
+    'disable_logging',
     'enable_logging',
     'enable_status',
-    'disable_logging',
-    'check_deprecated_options',
-    'check_deprecated_api',
-    'validate_args',
+    'log',
     'are_all_strings_in_list',
-    'transform_args,',
+    'check_deprecated_api',
+    'check_deprecated_options',
     'retry_on_exception',
-    'InstanceManager',
-    'Module',
-    'ConfigHandler',
+    'transform_args',
+    'validate_args',
     'CONFIG',
     'CleanupHandler',
+    'ConfigHandler',
     'DotFileHandler',
     'HashHandler',
+    'InstanceManager',
     'InterfaceHandler',
     'LayoutHandler',
     'MarkdownHandler',
+    'Module',
     'OptionHandler',
     'PathHandler',
     'PhantomHandler',
@@ -69,9 +42,9 @@ __all__ = [
     'TransformHandler',
     'ViewHandler',
     'create_package_config_files',
+    'import_custom_modules',
+    'reload_modules',
     'SESSION_FILE',
     'SessionManagerListener',
-    'WordsCounterListener',
-    'import_custom_modules',
-    'reload_modules'
+    'WordsCounterListener'
 ]

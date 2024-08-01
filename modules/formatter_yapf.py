@@ -1,6 +1,4 @@
-from .. import log
 from ..core.common import Module
-
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['yapf']

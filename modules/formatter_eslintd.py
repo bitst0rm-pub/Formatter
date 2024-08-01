@@ -1,8 +1,9 @@
+from distutils.version import LooseVersion
+
 import sublime
-from distutils.version import LooseVersion, StrictVersion
+
 from .. import log
 from ..core.common import Module
-
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint_d', 'eslint_d.js']
