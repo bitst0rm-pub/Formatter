@@ -7,7 +7,6 @@ on:
 
 jobs:
   lint:
-    name: Run flake8 linting
     runs-on: ubuntu-latest
 
     steps:
