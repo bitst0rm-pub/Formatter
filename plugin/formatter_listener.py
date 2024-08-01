@@ -42,6 +42,9 @@ class SyncScrollManager:
             target_view.set_viewport_position(active_view.viewport_position(), False)
             time.sleep(0.25)
 
+    def __del__(self):
+        self.stop_sync_scroll()
+
 
 class SavePasteManager:
     def __init__(self, view):
