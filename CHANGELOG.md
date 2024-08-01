@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.11)] - 2024-08-01
+
+### 🐛 Bug Fixes
+
+- [`5cb019a`](https://github.com/bitst0rm-pub/Formatter/commit/5cb019aa6495807c9e637fdc5450e9aa5d9fae77) Cmd item can be empty string
+
+### 🚜 Refactor
+
+- [`5f7b75a`](https://github.com/bitst0rm-pub/Formatter/commit/5f7b75a3a1ecad181ced8c9e414ef11f834f3c03) Restructuring `FormatterListener()`
+- [`f626aaa`](https://github.com/bitst0rm-pub/Formatter/commit/f626aaa5f5abccd3d525d8dd72a2516abf63f1a4) Restructuring main.py
+
+### ⚙️ Miscellaneous Tasks
+
+- [`50f29b5`](https://github.com/bitst0rm-pub/Formatter/commit/50f29b52d9c36447485dca8b847620484adb3229) Add `collapse_setting_sections_command` for `Formatter.sublime-settings`
+- [`3b811b2`](https://github.com/bitst0rm-pub/Formatter/commit/3b811b2ced4bae34dae794ebeca765b42b8d4156) Ensure sync scroll listener is terminated
+- [`1506b1d`](https://github.com/bitst0rm-pub/Formatter/commit/1506b1df9ce4a91ce60731af2fc671ec9c4ca130) Improve deprecated option warning messages
+- [`991cac0`](https://github.com/bitst0rm-pub/Formatter/commit/991cac0def8d58fcd9dcaf32a8832d6fc07a6b20) Refactor code to conform to flake8 standards
+- [`923a7a7`](https://github.com/bitst0rm-pub/Formatter/commit/923a7a7aa35fabafbd8682f701eb9adb36d86146) Update
+- [`db4efd0`](https://github.com/bitst0rm-pub/Formatter/commit/db4efd030ce916b6631ae7e9e1417acf67d22e88) Update GitHub workflows
+
 ## [[1.5.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.10)] - 2024-07-29
 
 ### 🐛 Bug Fixes
