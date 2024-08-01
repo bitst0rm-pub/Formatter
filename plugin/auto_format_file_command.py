@@ -4,7 +4,7 @@ import sublime_plugin
 
 from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                     OptionHandler, log)
-from .single_format import SingleFormat
+from .file_format import FileFormat
 
 
 class AutoFormatFileCommand(sublime_plugin.TextCommand):
@@ -15,9 +15,9 @@ class AutoFormatFileCommand(sublime_plugin.TextCommand):
         if auto_format_args:
             with threading.Lock():
                 log.debug('Starting auto formatting ...')
-                single_format = SingleFormat(self.view, **auto_format_args)
-                single_format_thread = threading.Thread(target=single_format.run)
-                single_format_thread.start()
+                file_format = FileFormat(self.view, **auto_format_args)
+                file_format_thread = threading.Thread(target=file_format.run)
+                file_format_thread.start()
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))

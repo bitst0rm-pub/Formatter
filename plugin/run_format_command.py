@@ -4,22 +4,22 @@ import sublime_plugin
 
 from ..core import (CONFIG, CleanupHandler, ConfigHandler, InterfaceHandler,
                     OptionHandler, ViewHandler, log)
-from .recursive_format import RecursiveFormat
-from .single_format import SingleFormat
+from .dir_format import DirFormat
+from .file_format import FileFormat
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         CleanupHandler.clear_console()
 
-        is_recursive = self.is_recursive_formatting_enabled(kwargs.get('uid', None))
+        is_recursive = self.is_dir_format_enabled(kwargs.get('uid', None))
         if is_recursive:
             if kwargs.get('type', None) == 'graphic':
                 log.info('Recursive formatting is not supported for plugins of type: graphic')
             else:
-                self.run_recursive_formatting(**kwargs)
+                self.run_dir_format(**kwargs)
         else:
-            self.run_single_formatting(**kwargs)
+            self.run_file_format(**kwargs)
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
@@ -40,25 +40,25 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         else:
             return False
 
-    def is_recursive_formatting_enabled(self, uid):
+    def is_dir_format_enabled(self, uid):
         if ConfigHandler.is_quick_options_mode():
             return OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
         else:
             return OptionHandler.query(CONFIG, False, 'formatters', uid, 'recursive_folder_format', 'enable')
 
-    def run_recursive_formatting(self, **kwargs):
+    def run_dir_format(self, **kwargs):
         if self.view.file_name():
             with threading.Lock():
-                log.debug('Starting recursive formatting ...')
-                recursive_format = RecursiveFormat(self.view, **kwargs)
-                recursive_format_thread = threading.Thread(target=recursive_format.run)
-                recursive_format_thread.start()
+                log.debug('Starting dir formatting ...')
+                dir_format = DirFormat(self.view, **kwargs)
+                dir_format_thread = threading.Thread(target=dir_format.run)
+                dir_format_thread.start()
         else:
             InterfaceHandler.popup_message('Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.', 'ERROR')
 
-    def run_single_formatting(self, **kwargs):
+    def run_file_format(self, **kwargs):
         with threading.Lock():
             log.debug('Starting file formatting ...')
-            single_format = SingleFormat(self.view, **kwargs)
-            single_format_thread = threading.Thread(target=single_format.run)
-            single_format_thread.start()
+            file_format = FileFormat(self.view, **kwargs)
+            file_format_thread = threading.Thread(target=file_format.run)
+            file_format_thread.start()

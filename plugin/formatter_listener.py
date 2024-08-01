@@ -9,8 +9,8 @@ from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                     InterfaceHandler, LayoutHandler, OptionHandler,
                     SyntaxHandler, log, reload_modules)
 from ..core.constants import PACKAGE_NAME
-from .recursive_format import RecursiveFormat
-from .single_format import SingleFormat
+from .dir_format import DirFormat
+from .file_format import FileFormat
 
 
 class SyncScrollManager:
@@ -60,8 +60,7 @@ class SavePasteManager:
                 get_auto_format_args = DotFileHandler(view=self.view).get_auto_format_args(active_file_path=path)
                 if get_auto_format_args:
                     CleanupHandler.clear_console()
-
-                    SingleFormat(self.view, **get_auto_format_args).run()
+                    FileFormat(self.view, **get_auto_format_args).run()
                     return
 
         self._on_paste_or_save(opkey=operation)
@@ -95,8 +94,7 @@ class SavePasteManager:
                 syntax = self._get_syntax(uid)
                 if syntax in value:
                     CleanupHandler.clear_console()
-
-                    SingleFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
+                    FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
                     break
         else:
             InterfaceHandler.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
@@ -112,9 +110,8 @@ class SavePasteManager:
             syntax = self._get_syntax(uid)
             if syntax in value.get('syntaxes', []) and syntax not in seen:
                 CleanupHandler.clear_console()
-
                 log.debug('"%s" (UID: %s | Syntax: %s)', opkey, uid, syntax)
-                SingleFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
+                FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
                 seen.add(syntax)
 
     def _should_skip_formatter(self, uid, value, opkey):
@@ -154,8 +151,8 @@ class FormatterListener(sublime_plugin.EventListener):
         self.sync_scroll_manager = SyncScrollManager()
 
     def on_load(self, view):
-        if view == RecursiveFormat.CONTEXT['new_view']:
-            RecursiveFormat(view).next_thread(view, is_ready=False)
+        if view == DirFormat.CONTEXT['new_view']:
+            DirFormat(view).next_thread(view, is_ready=False)
 
         if view.file_name() and view.file_name().endswith(PACKAGE_NAME + '.sublime-settings'):
             view.run_command('collapse_setting_sections')

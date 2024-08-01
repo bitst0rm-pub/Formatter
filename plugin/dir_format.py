@@ -11,7 +11,7 @@ from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
 from ..core.formatter import Formatter
 
 
-class RecursiveFormat():
+class DirFormat:
     CONTEXT = {
         'entry_view': None,
         'new_view': None,
@@ -44,7 +44,7 @@ class RecursiveFormat():
         return PathHandler(view=self.view).get_pathinfo(self.view.file_name())['cwd']
 
     def get_recursive_files(self, cwd):
-        items = self.get_recursive_format_items()
+        items = self.get_dir_format_items()
         return TransformHandler.get_recursive_filelist(
             cwd,
             items.get('exclude_folders_regex', []),
@@ -52,7 +52,7 @@ class RecursiveFormat():
             items.get('exclude_extensions', [])
         )
 
-    def get_recursive_format_items(self):
+    def get_dir_format_items(self):
         uid = self.kwargs.get('uid', None)
         return OptionHandler.query(CONFIG, {}, 'formatters', uid, 'recursive_folder_format')
 
@@ -89,7 +89,7 @@ class RecursiveFormat():
 
     def next_thread(self, new_view, is_ready=False):
         def format_completed(is_success):
-            self.post_recursive_format(new_view, is_success)
+            self.post_dir_format(new_view, is_success)
             if is_ready and is_success:
                 new_view.run_command('undo')
             elif self.CONTEXT['entry_view'] != new_view:
@@ -105,7 +105,7 @@ class RecursiveFormat():
         thread = SequenceFormatThread(new_view, callback=format_completed, **self.CONTEXT['kwargs'])
         thread.start()
 
-    def post_recursive_format(self, new_view, is_success):
+    def post_dir_format(self, new_view, is_success):
         new_cwd = self.get_post_format_cwd(is_success)
         self.show_result(is_success)
         self.save_formatted_file(new_view, new_cwd, is_success)

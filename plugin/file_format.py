@@ -12,7 +12,7 @@ from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
 
 
-class SingleFormat:
+class FileFormat:
     def __init__(self, view, **kwargs):
         self.view = view
         self.kwargs = kwargs
