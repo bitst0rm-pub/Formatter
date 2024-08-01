@@ -34,5 +34,5 @@ def plugin_loaded():
             call_entry()
         else:
             call_entry()
-    except Exception:
+    except ImportError:
         call_entry()

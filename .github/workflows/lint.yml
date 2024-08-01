@@ -1,4 +1,4 @@
-name: Lint Code
+name: Lint
 
 on:
   pull_request:
@@ -9,8 +9,7 @@ on:
       - master
 
 jobs:
-  lint-code:
-    name: Lint Code
+  lint:
     runs-on: ubuntu-latest
 
     steps:

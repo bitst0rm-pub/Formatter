@@ -5,7 +5,7 @@ from functools import wraps
 from . import log
 
 # List of deprecated options
-DEPRECATED_OPTIONS = ['custom_modules', 'disable']
+DEPRECATED_OPTIONS = ['custom_modules', 'format_on_unique', 'disable']
 
 
 def check_nested_settings(settings, deprecated_options, current_key=''):

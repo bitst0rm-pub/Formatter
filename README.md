@@ -325,7 +325,7 @@ _Formatter.sublime-settings_
     },
 
     // THIRD-PARTY PLUGINS LEVEL
-    // Help: Preferences > Package Settings > Formatter > Modules Info
+    // Info: Preferences > Package Settings > Formatter > Modules Info
     "formatters": {
         "examplegeneric": { // GENERIC METHOD
             // Formatter provides 2 methods to add custom plugins:

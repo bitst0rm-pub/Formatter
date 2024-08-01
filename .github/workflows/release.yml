@@ -2,13 +2,13 @@ name: Release
 
 on:
   workflow_run:
-    workflows: ["Lint Code"]
+    workflows: [Lint]
     types:
       - completed
 
 jobs:
   release:
-    name: Generate modules summary and update changelog
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
 
     steps:

@@ -1256,7 +1256,7 @@ class ConfigHandler:
             },
             'environ': settings.get('environ', {}),
             'format_on_priority': settings.get('format_on_priority', {}),
-            'format_on_unique': settings.get('format_on_unique', {}),
+            'format_on_unique': settings.get('format_on_unique', {}),  # @deprecated
             'auto_format': settings.get('auto_format', {}),
             'formatters': settings.get('formatters', {})
         }
