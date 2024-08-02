@@ -36,7 +36,7 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
 - Plugins:
-  - *`eslint_d`*: Drop support for Eslint v8.57.0+ (using flat config files `eslint.config.*`) until this upstream bug is fixed: [#281](https://github.com/mantoni/eslint_d.js/issues/281)
+  - _`eslint_d`_: Drop support for Eslint v8.57.0+ (using flat config files `eslint.config.*`) until this upstream bug is fixed: [#281](https://github.com/mantoni/eslint_d.js/issues/281)
 
 _Formatter in action: Text-to-Text..._
 
@@ -49,7 +49,6 @@ _Formatter in action: Text-to-Image..._
 _Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bitst0rm-pub/theme-dosa) and [color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two)_
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot3.png)
-
 
 ## Guides
 
@@ -68,7 +67,6 @@ _Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bi
     4. [API](#4-api)
   - [Deprecated API and Settings](#deprecated-api-and-settings)
   - [License](#license)
-
 
 ## Plugins
 
@@ -89,19 +87,19 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: | :------: |
 | Angular | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
-| Arduino | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
+| Arduino | [uncrustify](https://github.com/uncrustify/uncrustify) [1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [2], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | -- | None | -- |
 | Astro | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
-| BibTeX | [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy)[1] | -- | -- | Node.js 12.0+ | [[1]](https://flamingtempura.github.io/bibtex-tidy/) |
-| C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify)[1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[2], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
+| BibTeX | [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy) [1] | -- | -- | Node.js 12.0+ | [[1]](https://flamingtempura.github.io/bibtex-tidy/) |
+| C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify) [1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [2], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Cabal | [cabal-fmt](https://github.com/phadej/cabal-fmt) | -- | -- | Haskell | -- |
 | Caddyfile | [caddy-fmt](https://github.com/caddyserver/caddy) | -- | -- | None | -- |
 | Clojure | [cljfmt](https://github.com/weavejester/cljfmt), [zprint](https://github.com/kkinnear/zprint) | -- | -- | None, (Java) | -- |
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | -- | None | -- |
-| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint)[1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[2], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff)[2] | -- | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
-| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) `(build-in)`, [prettydiff](https://github.com/prettydiff/prettydiff)[1][2] | -- | -- | Python, Node.js[2] | [[1]](https://prettydiff.com/tool.xhtml) |
-| D | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint) [1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [2], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff) [2] | -- | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
+| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) `(build-in)`, [prettydiff](https://github.com/prettydiff/prettydiff) [1] [2] | -- | -- | Python, Node.js [2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| D | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | D2 | [d2 fmt](https://github.com/terrastruct/d2) | -- | [d2](https://github.com/terrastruct/d2) | None | -- |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | -- | Dart | -- |
 | Dhall | [dhall format](https://github.com/dhall-lang/dhall-haskell) | -- | -- | None | -- |
@@ -109,54 +107,53 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | Drawio | -- | -- | [draw.io](https://github.com/jgraph/drawio-desktop) | None | -- |
 | Elixir | [mix format](https://github.com/elixir-lang/elixir) | -- | -- | Erlang | -- |
 | Elm | [elm-format](https://github.com/avh4/elm-format) | -- | -- | None | -- |
-| Erlang | [erlfmt](https://github.com/WhatsApp/erlfmt)[1], [efmt](https://github.com/sile/efmt) | -- | -- | rebar3[1], None | -- |
+| Erlang | [erlfmt](https://github.com/WhatsApp/erlfmt) [1], [efmt](https://github.com/sile/efmt) | -- | -- | rebar3 [1], None | -- |
 | Fortran | [fprettify](https://github.com/pseewald/fprettify) | -- | -- | Python | -- |
 | Gleam | [gleam format](https://github.com/gleam-lang/gleam) | -- | -- | None | -- |
-| GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| GLSL | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | -- | None | -- |
 | GraphQL | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
 | Graphviz | -- | -- | [graphviz](https://gitlab.com/graphviz/graphviz) | None | -- |
-| Haskell | [ormolu](https://github.com/tweag/ormolu), [fourmolu](https://github.com/fourmolu/fourmolu)[1], [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell), [floskell](https://github.com/ennocramer/floskell) | -- | -- | Haskell | [[1]](https://fourmolu.github.io) |
+| Haskell | [ormolu](https://github.com/tweag/ormolu), [fourmolu](https://github.com/fourmolu/fourmolu) [1], [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell), [floskell](https://github.com/ennocramer/floskell) | -- | -- | Haskell | [[1]](https://fourmolu.github.io) |
 | HCL | [hclfmt](https://github.com/hashicorp/hcl) | -- | -- | None | -- |
-| HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff)[1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
-| Java | [google java format](https://github.com/google/google-java-format)[1], [uncrustify](https://github.com/uncrustify/uncrustify)[2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[3], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | Java[1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
-| JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1][2], [deno](https://github.com/denoland/deno)[2], [dprint](https://github.com/dprint/dprint)[2], [biome](https://github.com/biomejs/biome)[2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | -- | Node.js, None[2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [deno](https://github.com/denoland/deno)[2], [topiary](https://github.com/tweag/topiary)[2], [dprint](https://github.com/dprint/dprint)[2], [biome](https://github.com/biomejs/biome)[2], jsonmax `(build-in)` | [prettydiff](https://github.com/prettydiff/prettydiff)[1], jsonmin `(build-in)` | -- | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
+| Java | [google java format](https://github.com/google/google-java-format) [1], [uncrustify](https://github.com/uncrustify/uncrustify) [2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [3], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | Java [1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
+| JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] [2], [deno](https://github.com/denoland/deno) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | -- | Node.js, None [2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [deno](https://github.com/denoland/deno) [2], [topiary](https://github.com/tweag/topiary) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2], jsonmax `(build-in)` | [prettydiff](https://github.com/prettydiff/prettydiff) [1], jsonmin `(build-in)` | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Julia | [juliaformatter](https://github.com/domluna/JuliaFormatter.jl) | -- | -- | Julia 0.6+ | -- |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | -- | Java | -- |
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | -- | Perl, None | -- |
 | Lua | [stylua](https://github.com/JohnnyMorganz/StyLua), [luaformatter](https://github.com/Koihik/LuaFormatter) | -- | -- | None | -- |
-| Markdown | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [deno](https://github.com/denoland/deno)[1], [dprint](https://github.com/dprint/dprint)[1] | -- | -- | Node.js, None[1] | -- |
-| Mermaid | -- | -- | [mermaid](https://github.com/mermaid-js/mermaid-cli)[1] | Node.js | [[1]](https://mermaid.live) |
+| Markdown | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [deno](https://github.com/denoland/deno) [1], [dprint](https://github.com/dprint/dprint) [1] | -- | -- | Node.js, None [1] | -- |
+| Mermaid | -- | -- | [mermaid](https://github.com/mermaid-js/mermaid-cli) [1] | Node.js | [[1]](https://mermaid.live) |
 | Nginx | [nginxfmt](https://github.com/slomkowski/nginx-config-formatter) | -- | -- | Python 3.4+ | -- |
 | Nickel | [topiary](https://github.com/tweag/topiary) | -- | -- | None | -- |
 | OCaml | [ocamlformat](https://github.com/ocaml-ppx/ocamlformat), [ocp-indent](https://github.com/OCamlPro/ocp-indent), [topiary](https://github.com/tweag/topiary) | -- | -- | None | -- |
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | -- | Perl | -- |
-| Pawn | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)[1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | -- | PHP 7.4+[1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
+| Pawn | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| PHP | [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) [1], [php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) | -- | -- | PHP 7.4+ [1] | [[1]](https://mlocati.github.io/php-cs-fixer-configurator) |
 | Plantuml | [plantumlascii](https://github.com/plantuml/plantuml) | -- | [plantuml](https://github.com/plantuml/plantuml) | Java | -- |
-| Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None[1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf)[1], [black](https://github.com/ambv/black)[1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier)[2] | -- | Python 3.7+[1] | [[2]](https://python-minifier.com) |
-| R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR)[1] | -- | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
+| Proto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None [1] | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| Python | [ruff](https://github.com/astral-sh/ruff), [yapf](https://github.com/google/yapf) [1], [black](https://github.com/ambv/black) [1], [autopep8](https://github.com/hhatto/autopep8), [isort](https://github.com/PyCQA/isort), [docformatter](https://github.com/PyCQA/docformatter), [pyment](https://github.com/dadadel/pyment) | [python-minifier](https://github.com/dflook/python-minifier) [2] | -- | Python 3.7+ [1] | [[2]](https://python-minifier.com) |
+| R | [styler](https://github.com/r-lib/styler), [formatR](https://github.com/yihui/formatR) [1] | -- | -- | R | [[1]](https://yihui.shinyapps.io/formatR/) |
 | Racket | [raco fmt](https://github.com/sorawee/fmt) | -- | -- | Racket 8.0+ | -- |
-| Ruby | [rubocop](https://github.com/rubocop-hq/rubocop)[1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo)[1] | -- | -- | Ruby[1], None | -- |
+| Ruby | [rubocop](https://github.com/rubocop-hq/rubocop) [1], [rubyfmt](https://github.com/fables-tales/rubyfmt), [standardrb](https://github.com/standardrb/standard), [rufo](https://github.com/ruby-formatter/rufo) [1] | -- | -- | Ruby [1], None | -- |
 | Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | -- | Rust 1.24+ | -- |
-| Scala | [scalafmt](https://github.com/scalameta/scalafmt), [scalariform](https://github.com/scala-ide/scalariform)[1] | -- | -- | None, Java[1] | -- |
-| Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh)[1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | -- | Python[1], None | -- |
-| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter)[1], [pg_format](https://github.com/darold/pgFormatter)[2], [sqlparse](https://github.com/andialbrecht/sqlparse)[3] | sqlmin `(build-in)` | -- | Node.js[1], Perl[2], Python 3.6+[3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
+| Scala | [scalafmt](https://github.com/scalameta/scalafmt), [scalariform](https://github.com/scala-ide/scalariform) [1] | -- | -- | None, Java [1] | -- |
+| Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh) [1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | -- | Python [1], None | -- |
+| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) [1], [pg_format](https://github.com/darold/pgFormatter) [2], [sqlparse](https://github.com/andialbrecht/sqlparse) [3] | sqlmin `(build-in)` | -- | Node.js [1], Perl [2], Python 3.6+ [3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
 | Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | -- | None | -- |
 | SVG | [svgo max](https://github.com/svg/svgo) | [svgo min](https://github.com/svg/svgo) | -- | Node.js | -- |
-| TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Terraform | [terraform fmt](https://developer.hashicorp.com/terraform/cli/commands/fmt) | -- | -- | None | -- |
-| TextProto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| TextProto | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | TOML | [taplo](https://github.com/tamasfe/taplo), [topiary](https://github.com/tweag/topiary), [dprint](https://github.com/dprint/dprint) | -- | -- | None | -- |
-| TypeScript | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify), [ts-standard](https://github.com/standard/ts-standard), [prettydiff](https://github.com/prettydiff/prettydiff)[1], [tsfmt](https://github.com/vvakame/typescript-formatter), [deno](https://github.com/denoland/deno)[2], [dprint](https://github.com/dprint/dprint)[2], [biome](https://github.com/biomejs/biome)[2] | [prettydiff](https://github.com/prettydiff/prettydiff)[1] | -- | Node.js, None[2] | [[1]](https://prettydiff.com/tool.xhtml) |
-| VALA | [uncrustify](https://github.com/uncrustify/uncrustify)[1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
-| Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html)[1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| TypeScript | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify), [ts-standard](https://github.com/standard/ts-standard), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [tsfmt](https://github.com/vvakame/typescript-formatter), [deno](https://github.com/denoland/deno) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| VALA | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
+| Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | -- | Node.js | -- |
 | YAML | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
-
 
 💡 **Tips**:
 
@@ -182,7 +179,6 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
     </details>
 
-
 ## Installation
 
 - **Using [Package Control](https://packagecontrol.io/packages/Formatter):** run `Package Control: Install Package` and select `Formatter`
@@ -193,7 +189,6 @@ The `Packages` directory is located in:
 - MacOSX: `~/Library/Application Support/Sublime Text 3/Packages/`
 - Linux: `~/.config/sublime-text-3/Packages/`
 - Windows: `%APPDATA%/Sublime Text 3/Packages/`
-
 
 ## Configuration
 
@@ -629,13 +624,13 @@ _Formatter.sublime-settings_
 }
 ```
 
-
 ## Auto-detect Formatting
 
 Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). There are 2 methods to achieve this:
 
- - Using embedded settings in your User `Formatter.sublime-settings`
- - Placing dot files inside the working folder, similar to per-project basis.
+- Using embedded settings in your User `Formatter.sublime-settings`
+- Using embedded settings in your User `Formatter.sublime-settings`
+- Placing dot files inside the working folder, similar to per-project basis.
 
 Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
@@ -716,7 +711,6 @@ _Formatter.sublime-settings_
 
 This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
 
-
 ## Per-project Formatting
 
 Formatter is able to add and override any setting on per-project basis using `.sublime-project` files.<br/>
@@ -750,7 +744,6 @@ _.sublime-project_
 }
 ```
 
-
 ## Usage
 
 Formatter has been designed to detect the syntax of files according to file scopes, not file extension. In the most cases, Sublime Text already does this job for you when you open a file. For the rest, you must explicit assign the syntax via the syntax menu in the righ-hand bottom corner or via:
@@ -782,7 +775,6 @@ This feature is designed to help users quickly access and switch between options
 - Clicking on the **_same_** selected item will remove it from the list.
 - None of the modes will ever modify your Settings file.
 - The current mode is indicated on the status bar for your reference.
-
 
 ## Development
 
@@ -915,6 +907,7 @@ class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capi
         return None                                         # REQUIRED: return None to indicate failure
 
 ```
+
 **That's all**. Lean and easy. Happy coding 🤪
 
 Restart Sublime Text.<br/>
@@ -955,12 +948,12 @@ The structure of the metadata JSON file should follow this format:
 }
 ```
 
-- Each remote archive file (*myproject.zip*) must include at least one of the fixed folders: `config`, `libs`, `modules`
+- Each remote archive file (_myproject.zip_) must include at least one of the fixed folders: `config`, `libs`, `modules`
 - All files must be placed within these 3 **predefined** folders.
 - To update your code, just reset the `.custom` file in the Formatter root folder.
 - The following Formatter modules cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 
-*Python is not JS. You are responsible for handling any operations over the internet.*
+_Python is not JS. You are responsible for handling any operations over the internet._
 
 ### 4. API
 
@@ -1040,15 +1033,16 @@ self.print_oserr(cmd)
 
 The following API and settings are deprecated and will be **removed** in the next versions:
 
-*Custom modules API:*
+_Custom modules API:_
 
 - `log = logging.getLogger(__name__)` (in favor of `from .. import log`)
 - `self.is_valid_cmd(cmd)`
 - `self.fix_cmd(cmd)`
 
-*Formatter.sublime-settings* options:
+_Formatter.sublime-settings_ options:
 
 - `"custom_modules":` (in favor of `"custom_modules_manifest":`)
+- `"format_on_unique":` (in favor of `"format_on_priority":`)
 - `"disable":` (in favor of `"enable":`)
 
 ## License
