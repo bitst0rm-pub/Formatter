@@ -44,7 +44,6 @@ class DirFormat:
 
             self.prepare_context(cwd, filelist)
             self.process_files()
-
         except Exception as e:
             self.handle_error(e)
 

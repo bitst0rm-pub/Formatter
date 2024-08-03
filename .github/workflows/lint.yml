@@ -13,10 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v16.0.0
+        with:
+          globs: |
+            README.md
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.8'
 
       - name: Install dependencies
         run: |
