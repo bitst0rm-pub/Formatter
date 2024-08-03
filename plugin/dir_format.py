@@ -4,10 +4,16 @@ import traceback
 import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
-                    PathHandler, SyntaxHandler, TransformHandler, log)
+                    PathHandler, SyntaxHandler, TransformHandler, check_stop, log)
 from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
                               RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
 from ..core.formatter import Formatter
+
+STOP = False
+
+
+def get_stop_status():
+    return STOP
 
 
 class DirFormat:
@@ -29,6 +35,9 @@ class DirFormat:
         self.kwargs = kwargs
 
     def run(self):
+        global STOP
+        STOP = False
+
         try:
             cwd = self.get_current_working_directory()
             filelist = self.get_recursive_files(cwd)
@@ -38,6 +47,10 @@ class DirFormat:
 
         except Exception as e:
             self.handle_error(e)
+
+    def stop(self):
+        global STOP
+        STOP = True
 
     def get_current_working_directory(self):
         return PathHandler(view=self.view).get_pathinfo(self.view.file_name())['cwd']
@@ -72,6 +85,7 @@ class DirFormat:
     def process_files(self):
         self.open_next_file()
 
+    @check_stop(get_stop_status)
     def open_next_file(self):
         # Loop files serially
         if self.CONTEXT['current_index'] < self.CONTEXT['filelist_length']:
@@ -86,6 +100,7 @@ class DirFormat:
             else:
                 self.format_next_file(new_view, is_ready=True)
 
+    @check_stop(get_stop_status)
     def format_next_file(self, new_view, is_ready=False):
         def format_completed(is_success):
             self.post_dir_format(new_view, is_success)
@@ -131,7 +146,7 @@ class DirFormat:
             text = new_view.substr(sublime.Region(0, new_view.size()))
             with open(new_file_path, 'w', encoding='utf-8') as f:
                 f.write(text)
-        except OSError as e:
+        except Exception as e:
             self.handle_error(e, cwd, new_file_path)
 
     def generate_new_file_path(self, file_path, new_cwd, is_success):

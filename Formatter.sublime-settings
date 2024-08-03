@@ -212,18 +212,18 @@
             // myfile.raw.js -> myfile.raw.min.js
             "new_file_on_format": false,
 
-            // Recursively format the entire folder with unlimited depth.
+            // Recursively format the entire folder regardless of depth.
             // This option requires an existing and currently opened file
             // to serve as the starting point. Files will be opened and closed.
             // For the sake of convenience, two new folders will be created at
             // the same level as the file, which will contain all failed and
             // successfully formatted files. The "new_file_on_format" option
-            // can be used to rename files if needed.
+            // can be used to rename files simultaneously if needed.
             // The "format_on_save" option above, which applies only to
             // single files, does not take effect here.
             // All none-text files (binary) will be automatically ignored.
-            // Note: Placing files directly on the Desktop or elsewhere without
-            // enclosing them within a folder can lead to accidental formatting.
+            // Note: To stop the formatting process, press any of the
+            // arrow keys (up, down, left, right) on your keyboard.
             // Any literal "$" must be escaped to "\\$" to distinguish it from
             // the variable expansion "${...}". This important rule applies
             // to the entire content of this settings file!

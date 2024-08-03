@@ -132,3 +132,21 @@ def retry_on_exception(retries=5, delay=500):
                     time.sleep(delay / 1000)
         return wrapper
     return decorator
+
+
+# Decorator to stop dir formatting process
+def check_stop(get_stop_status_func):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            if get_stop_status_func():
+                log.status('Formatting operation stopped.')
+                # Close any opened views
+                if self.CONTEXT['new_view']:
+                    self.CONTEXT['new_view'].set_scratch(True)
+                    self.CONTEXT['new_view'].close()
+                self.handle_formatting_completion()
+                return
+            return func(self, *args, **kwargs)
+        return wrapper
+    return decorator
