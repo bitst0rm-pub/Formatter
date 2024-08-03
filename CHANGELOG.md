@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.12](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.12)] - 2024-08-03
+
+### 🚀 Features
+
+- [`7b4e813`](https://github.com/bitst0rm-pub/Formatter/commit/7b4e8135a27a84c721c35def6eea4dd7234c2650) Add the ability to stop the `"recursive_folder_format"` process by pressing any arrow key (up, down, left, or right) on your keyboard
+
+### 📚 Documentation
+
+- [`357d1cc`](https://github.com/bitst0rm-pub/Formatter/commit/357d1cc30a933135d44c4f2a34730f474f76a56d) Update README.md
+
+### ⚙️ Miscellaneous Tasks
+
+- [`53d2841`](https://github.com/bitst0rm-pub/Formatter/commit/53d2841c029630ea18b6047dc3915f92540866fb) Remove all threading-related logic to dir formatting
+- [`59b3e39`](https://github.com/bitst0rm-pub/Formatter/commit/59b3e399a7b243e070ff9fd3c41c5908f52676af) Rename file and dir formatting classes
+- [`91d4796`](https://github.com/bitst0rm-pub/Formatter/commit/91d47969722d44d0a53acabbf755b98ca73c0f37) Shorten some debug messages
+
 ## [[1.5.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.11)] - 2024-08-01
 
 ### 🐛 Bug Fixes
