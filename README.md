@@ -28,8 +28,7 @@ Formatter is a simple config-file-driven plugin for Sublime Text `3` & `4` to be
 
 **Limitations:**
 
-- Text-to-Image:
-  Third-party plugins often rely on a headless browser to render images, making the process time-consuming. Consequently:
+- Text-to-Image: Third-party plugins often rely on a headless browser to render images, making the process time-consuming. Consequently:
 
   - `"recursive_folder_format"` will not be implemented or is disabled.
   - `"new_file_on_format"` will not be implemented or is disabled.
@@ -72,17 +71,17 @@ _Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bi
 
 Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user. This means, Formatter is not responsible for:
 
-  - The quality of formatted code.
-  - The speed of the formatting process.
+- The quality of formatted code.
+- The speed of the formatting process.
 
 **The complete list of supported plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
-  - If you want to keep track of the latest added plugins with release and history info: [_summary.txt](https://github.com/bitst0rm-pub/Formatter/blob/master/modules/_summary.txt)
-  - The following table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
-  - Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
-  - `build-in` = do not need to install by end-users.
-  - `None` = mostly standalone binary.
-  - `Req.` = Requirements might not be up-to-date.
+- If you want to keep track of the latest added plugins with release and history info: [_summary.txt](https://github.com/bitst0rm-pub/Formatter/blob/master/modules/_summary.txt)
+- The following table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
+- Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
+- `build-in` = do not need to install by end-users.
+- `None` = mostly standalone binary.
+- `Req.` = Requirements might not be up-to-date.
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: | :------: |
@@ -196,7 +195,9 @@ This section is the head of Formatter. While the configuration is easy and self-
 
 Formatter stores third-party plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) in:
 
-        Sublime Text > Packages > User > formatter.assets > config
+```text
+Sublime Text > Packages > User > formatter.assets > config
+```
 
 - You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.
 - You can use a different config file format than the default one provided by Formatter. For example, while Formatter typically uses JSON or YAML (`prettier_rc.json`) by default, you can write your own config in JavaScript format (`prettier_rc.js`) or any other format supported by third-party plugins.
@@ -666,7 +667,7 @@ _.sublimeformatter.user.json_
 ```
 
 To ignore a specific syntax assigned to your User's `"config_path":` settings, you can use `.sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br/>
-For example, if you prefer to use the standard .prettierrc in your working folder instead of the custom Formatter `"config_path":`
+For example, if you prefer to use the default .prettierrc in your working folder instead of the custom Formatter `"config_path":`
 
 _.sublimeformatter.cfgignore.json_
 
@@ -748,11 +749,15 @@ _.sublime-project_
 
 Formatter has been designed to detect the syntax of files according to file scopes, not file extension. In the most cases, Sublime Text already does this job for you when you open a file. For the rest, you must explicit assign the syntax via the syntax menu in the righ-hand bottom corner or via:
 
-        Sublime Text > View > Syntax
+```text
+Sublime Text > View > Syntax
+```
 
 Setting wrong syntax when formatting code will cause error:
 
-        Syntax out of the scope.
+```text
+Syntax out of the scope.
+```
 
 Formatting actions can be triggered in different ways:
 
@@ -784,19 +789,21 @@ Starting from version 1.0.6, you now are able to create your own module for a th
 
 1. Create a config file specific to your third-party plugin _if needed_. Config files for third-party plugins must be placed in the following folder:
 
-        Formatter > config
+   ```text
+   Formatter > config
+   ```
 
 2. Activate the debug mode with the secret key `dev` in your Formatter settings. The `dev` key should never be used in a production environment.
 
-_Formatter.sublime-settings_
+   _Formatter.sublime-settings_
 
-```js
-{
-    "debug": true,  // printing error messages
-    "dev": true     // updating modified files
-    ...
-}
-```
+   ```js
+   {
+       "debug": true,  // printing error messages
+       "dev": true     // updating modified files
+       ...
+   }
+   ```
 
 ### 2. Creating a module
 
@@ -804,116 +811,116 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
 1. Create a file with the file name pattern `formatter_thisismyfirstpluginmodule.py` inside the `Formatter > modules` folder. Ensure to follow these conventions:
 
-  - Create only **one** file per plugin in the `Formatter > modules` folder:
-    - All functions and other necessary components should reside inside this file.
-  - The file name is all **lowercase** and contains only **alphanumeric** characters (no spaces or underscores):
-    - Prefix: `formatter_` (indicating that it's a module for a third-party plugin)
-    - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as uid)
-    - Extension: `.py`
-  - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
-    - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
-    - No communication over the Internet.
+   - Create only **one** file per plugin in the `Formatter > modules` folder:
+     - All functions and other necessary components should reside inside this file.
+   - The file name is all **lowercase** and contains only **alphanumeric** characters (no spaces or underscores):
+     - Prefix: `formatter_` (indicating that it's a module for a third-party plugin)
+     - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as uid)
+     - Extension: `.py`
+   - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
+     - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
+     - No communication over the Internet.
 
 2. The content of this module file should follow the structure outlined below:
 
-_formatter_thisismyfirstpluginmodule.py_
+   _formatter_thisismyfirstpluginmodule.py_
 
-```py
-INTERPRETERS = []                                           # optional: fallback list of interpreter names
-EXECUTABLES = []                                            # REQUIRED: fallback list of executable names
-DOTFILES = []                                               # optional: names list of the per-project config dotfiles
-MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
-
-
-class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
-
-    def get_cmd(self):                                      # optional: get commands, e.g get the "config_path", "executable_path" etc...
-
-    def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
-```
-
-Details as an example:
-
-```py
-from .. import log                                          # REQUIRED: log to debugging this file
-from ..core.common import Module                            # REQUIRED: a collection of APIs to assist in running this file
+   ```py
+   INTERPRETERS = []                                           # optional: fallback list of interpreter names
+   EXECUTABLES = []                                            # REQUIRED: fallback list of executable names
+   DOTFILES = []                                               # optional: names list of the per-project config dotfiles
+   MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
 
 
-INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
-EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
-DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the per-project config dotfile if "config_path" is disabled
-MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
-    'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
-    'name': 'My First Plugin',                              # REQUIRED: a Capitalized plugin name of your choice, preferably short and comprehensive
-    'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
-    'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
-                                                            #           OR any string of your choice (for private purposes).
-    'syntaxes': ['js', 'html'],                             # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
-    'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
-        'html': ['markdown']
-    },
-    "interpreter_path": ["/path/to/bin/node"],              # optional: use an empty string "" to include this key in config files or None to omit it
-    "executable_path": ["/path/to/bin/terser"],             # optional: use an empty string "" to include this key in config files or None to omit it
-    'args': None,                                           # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
-    'config_path': {                                        # optional: a dictionary to include this key in config files or None to omit it
-        'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
-        'default': 'my_first_plugin_rc.json'                # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
-    },
-    'comment': 'build-in, no executable'                    # optional: a single short comment, limited to 200 chars or just omit it
-}
+   class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+       def __init__(self, *args, **kwargs):
+           super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
+
+       def get_cmd(self):                                      # optional: get commands, e.g get the "config_path", "executable_path" etc...
+
+       def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
+   ```
+
+   Details as an example:
+
+   ```py
+   from .. import log                                          # REQUIRED: log to debugging this file
+   from ..core.common import Module                            # REQUIRED: a collection of APIs to assist in running this file
 
 
-class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
-    def __init__(self, *args, **kwargs):                    # REQUIRED: initialization
-        super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
+   INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
+   EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
+   DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the per-project config dotfile if "config_path" is disabled
+   MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
+       'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
+       'name': 'My First Plugin',                              # REQUIRED: a Capitalized plugin name of your choice, preferably short and comprehensive
+       'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
+       'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
+                                                               #           OR any string of your choice (for private purposes).
+       'syntaxes': ['js', 'html'],                             # REQUIRED: array of syntaxes, obtained from: Tools > Developer > Show Scope Name
+       'exclude_syntaxes': {                                   # optional: blacklist syntaxes per syntax or None to omit it.
+           'html': ['markdown']
+       },
+       "interpreter_path": ["/path/to/bin/node"],              # optional: use an empty string "" to include this key in config files or None to omit it
+       "executable_path": ["/path/to/bin/terser"],             # optional: use an empty string "" to include this key in config files or None to omit it
+       'args': None,                                           # optional: an array ['arg1', 'args2', ...] to include this key in config files or None to omit it
+       'config_path': {                                        # optional: a dictionary to include this key in config files or None to omit it
+           'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
+           'default': 'my_first_plugin_rc.json'                # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
+       },
+       'comment': 'build-in, no executable'                    # optional: a single short comment, limited to 200 chars or just omit it
+   }
 
-    def get_cmd(self):                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
-        cmd = self.get_combo_cmd(runtime_type='node')       # See API below
-        if not cmd:
-            return None
 
-        path = self.get_config_path()                       # See API below
-        if path:
-            cmd.extend(['--config-file', path])             # an array of args to run the third-party plugin
+   class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+       def __init__(self, *args, **kwargs):                    # REQUIRED: initialization
+           super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
-        cmd.extend(['--compress', '--mangle', '--'])
+       def get_cmd(self):                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
+           cmd = self.get_combo_cmd(runtime_type='node')       # See API below
+           if not cmd:
+               return None
 
-        # cmd.extend(['--output', self.get_output_image()]) # REQUIRED: only for special case of "type": "graphic"
+           path = self.get_config_path()                       # See API below
+           if path:
+               cmd.extend(['--config-file', path])             # an array of args to run the third-party plugin
 
-        return cmd
+           cmd.extend(['--compress', '--mangle', '--'])
 
-    def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
-        cmd = self.get_cmd()
+           # cmd.extend(['--output', self.get_output_image()]) # REQUIRED: only for special case of "type": "graphic"
 
-        try:
-            exitcode, stdout, stderr = self.exec_cmd(cmd)   # REQUIRED: process command
+           return cmd
 
-            if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
-                self.print_exiterr(exitcode, stderr)
-            else:
-                # if self.is_render_extended():             # is render extended mode activated?
-                #     cmd = self.all_png_to_svg_cmd(cmd)
-                #     try:
-                #         self.exec_cmd(cmd)                # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
-                #     except Exception as e:
-                #         log.error('Error: %s', e)
+       def format(self):                                       # REQUIRED: the entry point, predefined function name exact as written
+           cmd = self.get_cmd()
 
-                return stdout                               # REQUIRED: return the formatted code on success
-        except OSError:
-            self.print_oserr(cmd)
+           try:
+               exitcode, stdout, stderr = self.exec_cmd(cmd)   # REQUIRED: process command
 
-        return None                                         # REQUIRED: return None to indicate failure
+               if exitcode > 0:                                # REQUIRED: please consult the plugin documentation for the exit codes
+                   self.print_exiterr(exitcode, stderr)
+               else:
+                   # if self.is_render_extended():             # is render extended mode activated?
+                   #     cmd = self.all_png_to_svg_cmd(cmd)
+                   #     try:
+                   #         self.exec_cmd(cmd)                # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
+                   #     except Exception as e:
+                   #         log.error('Error: %s', e)
 
-```
+                   return stdout                               # REQUIRED: return the formatted code on success
+           except OSError:
+               self.print_oserr(cmd)
 
-**That's all**. Lean and easy. Happy coding 🤪
+           return None                                         # REQUIRED: return None to indicate failure
 
-Restart Sublime Text.<br/>
-New keys will be automatically created in the _Default_ settings.<br/>
-Do not forget to update/adjust your _User_ settings:<br/>
-`Preferences > Package Settings > Formatter > Settings`
+   ```
+
+   **That's all**. Lean and easy. Happy coding 🤪
+
+   Restart Sublime Text.<br/>
+   New keys will be automatically created in the _Default_ settings.<br/>
+   Do not forget to update/adjust your _User_ settings:<br/>
+   `Preferences > Package Settings > Formatter > Settings`
 
 ### 3. Integrating modules
 
@@ -958,76 +965,76 @@ _Python is not JS. You are responsible for handling any operations over the inte
 ### 4. API
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br/>
-Responsible for interacting with plugin modules is the class: `class Module:`:
+Responsible for interacting with plugin modules is the class: `class Module:`
 
-- Essentially for the `def get_cmd(self)` function:
+1. Essentially for the `def get_cmd(self)` function:
 
-```py
-# This alias method combines get_interpreter() and get_executable().
-# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
-# Currently, only None and 'node' are functional. All others are placeholders for future use.
-cmd = self.get_iprexe_cmd(runtime_type=None)
+   ```py
+   # This alias method combines get_interpreter() and get_executable().
+   # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
+   # Currently, only None and 'node' are functional. All others are placeholders for future use.
+   cmd = self.get_iprexe_cmd(runtime_type=None)
 
-# This alias method just extends get_iprexe_cmd() with get_args().
-cmd = self.get_combo_cmd(runtime_type=None)
+   # This alias method just extends get_iprexe_cmd() with get_args().
+   cmd = self.get_combo_cmd(runtime_type=None)
 
-# Get the interpreter path or None.
-interpreter = self.get_interpreter()
+   # Get the interpreter path or None.
+   interpreter = self.get_interpreter()
 
-# Get the executable path or None.
-# Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
-executable = self.get_executable(runtime_type=None)
+   # Get the executable path or None.
+   # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
+   executable = self.get_executable(runtime_type=None)
 
-# Get the input arguments "args" from the User settings or None.
-args = self.get_args()
+   # Get the input arguments "args" from the User settings or None.
+   args = self.get_args()
 
-# Get the input "config_path" from the User settings or
-# the path of the per-project config dotfile if found or None.
-path = self.get_config_path()
+   # Get the input "config_path" from the User settings or
+   # the path of the per-project config dotfile if found or None.
+   path = self.get_config_path()
 
-# Get the current text content in view or the current selected text.
-text = self.get_text_from_region(self.region)
+   # Get the current text content in view or the current selected text.
+   text = self.get_text_from_region(self.region)
 
-# Get the detected syntax of the current file or None.
-syntax = self.get_assigned_syntax()
+   # Get the detected syntax of the current file or None.
+   syntax = self.get_assigned_syntax()
 
-# Get the path to the output PNG image. Applicable only to the special case of type: graphic
-output_image = self.get_output_image()
+   # Get the path to the output PNG image. Applicable only to the special case of type: graphic
+   output_image = self.get_output_image()
 
-# Get a dictionary of file path components:
-# {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None.
-components = self.get_pathinfo()
+   # Get a dictionary of file path components:
+   # {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None.
+   components = self.get_pathinfo()
 
-# Create and get the temp file path.
-# Useful for plugins lacking a built-in mechanism to fix files inplace.
-tmp_file = self.create_tmp_file(suffix=None)
+   # Create and get the temp file path.
+   # Useful for plugins lacking a built-in mechanism to fix files inplace.
+   tmp_file = self.create_tmp_file(suffix=None)
 
-# Remove temp file.
-self.remove_tmp_file(tmp_file)
-```
+   # Remove temp file.
+   self.remove_tmp_file(tmp_file)
+   ```
 
-- Essentially for the `def format(self)` function:
+2. Essentially for the `def format(self)` function:
 
-```py
-# To replace cmd list items to generate SVG file for download.
-# It is applicable only to the special case of type: graphic.
-# Note: extended_cmd MUST be executed right before return stdout (=success)!
-extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension .png -> .svg
-extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
+   ```py
+   # To replace cmd list items to generate SVG file for download.
+   # It is applicable only to the special case of type: graphic.
+   # Note: extended_cmd MUST be executed right before return stdout (=success)!
+   extended_cmd = self.ext_png_to_svg_cmd(cmd)  # replace extension .png -> .svg
+   extended_cmd = self.all_png_to_svg_cmd(cmd)  # replace all occurred png -> svg
 
-# To process the formatting with all input (fixed) arguments.
-# stdout as PIPE. 99% of plugins use this way.
-exitcode, stdout, stderr = self.exec_cmd(cmd)
+   # To process the formatting with all input (fixed) arguments.
+   # stdout as PIPE. 99% of plugins use this way.
+   exitcode, stdout, stderr = self.exec_cmd(cmd)
 
-# stdout as file. 1% are just retarded.
-exitcode, stdout, stderr = self.exec_cmd(cmd, outfile='/path/to/save/outfile')
+   # stdout as file. 1% are just retarded.
+   exitcode, stdout, stderr = self.exec_cmd(cmd, outfile='/path/to/save/outfile')
 
-# To print formatting exit error.
-self.print_exiterr(exitcode, stderr)
+   # To print formatting exit error.
+   self.print_exiterr(exitcode, stderr)
 
-# To print executing commands error.
-self.print_oserr(cmd)
-```
+   # To print executing commands error.
+   self.print_oserr(cmd)
+   ```
 
 ## Deprecated API and Settings
 
