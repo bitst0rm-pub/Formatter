@@ -657,7 +657,7 @@ class ArgumentHandler:
                 pass
             for f in paths:
                 if FileHandler.is_executable(f):
-                    log.debug('Local executable found: %s', f)
+                    log.debug('Local executable: %s', f)
                     return f
         return None
 
@@ -681,16 +681,16 @@ class ArgumentHandler:
             if a['path'] == a['base'] and not a['cwd']:
                 global_file = EnvironmentHandler.get_environ_path([user_file])
                 if global_file:
-                    log.debug('Global %s found: %s', what, global_file)
+                    log.debug('Global %s: %s', what, global_file)
                     return global_file
 
             if FileHandler.is_executable(user_file):
-                log.debug('User %s found: %s', what, user_file)
+                log.debug('User %s: %s', what, user_file)
                 return user_file
 
         global_file = EnvironmentHandler.get_environ_path(fnames_list)
         if global_file:
-            log.debug('Global %s found: %s', what, global_file)
+            log.debug('Global %s: %s', what, global_file)
             return global_file
         else:
             log.error('Files %s do not exist: %s', what, user_files)
