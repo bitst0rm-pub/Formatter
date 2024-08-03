@@ -152,7 +152,7 @@ class FormatterListener(sublime_plugin.EventListener):
 
     def on_load(self, view):
         if view == DirFormat.CONTEXT['new_view']:
-            DirFormat(view).next_thread(view, is_ready=False)
+            DirFormat(view).format_next_file(view, is_ready=False)
 
         if view.file_name() and view.file_name().endswith(PACKAGE_NAME + '.sublime-settings'):
             view.run_command('collapse_setting_sections')

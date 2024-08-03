@@ -1,5 +1,4 @@
 import os
-import threading
 import traceback
 
 import sublime
@@ -74,7 +73,7 @@ class DirFormat:
         self.open_next_file()
 
     def open_next_file(self):
-        # Loop files sequentially
+        # Loop files serially
         if self.CONTEXT['current_index'] < self.CONTEXT['filelist_length']:
             file_path = self.CONTEXT['filelist'][self.CONTEXT['current_index']]
             new_view = self.CONTEXT['entry_view'].window().open_file(file_path)
@@ -85,9 +84,9 @@ class DirFormat:
             if new_view.is_loading():
                 self.CONTEXT['new_view'] = new_view
             else:
-                self.next_thread(new_view, is_ready=True)
+                self.format_next_file(new_view, is_ready=True)
 
-    def next_thread(self, new_view, is_ready=False):
+    def format_next_file(self, new_view, is_ready=False):
         def format_completed(is_success):
             self.post_dir_format(new_view, is_success)
             if is_ready and is_success:
@@ -102,8 +101,7 @@ class DirFormat:
 
             self.open_next_file()
 
-        thread = SequenceFormatThread(new_view, callback=format_completed, **self.CONTEXT['kwargs'])
-        thread.start()
+        SerialFormat(new_view, callback=format_completed, **self.CONTEXT['kwargs']).run()
 
     def post_dir_format(self, new_view, is_success):
         new_cwd = self.get_post_format_cwd(is_success)
@@ -206,33 +204,30 @@ class DirFormat:
             InterfaceHandler.popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
 
 
-class SequenceFormatThread(threading.Thread):
+class SerialFormat:
     def __init__(self, view, callback, **kwargs):
         self.view = view
         self.kwargs = kwargs
         self.callback = callback
         self.is_success = False
-        threading.Thread.__init__(self)
-        self.lock = threading.Lock()
 
     def run(self):
         try:
-            with self.lock:
-                region = sublime.Region(0, self.view.size())
-                uid = self.kwargs.get('uid', None)
-                uid, syntax = SyntaxHandler(view=self.view, uid=uid, region=region, auto_format_config=None).get_assigned_syntax(self.view, uid, region)
-                exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
-                if not syntax or syntax in exclude_syntaxes:
-                    if not syntax:
-                        scope = OptionHandler.query(CONFIG, [], 'formatters', uid, 'syntaxes')
-                        log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
-                    self.callback(False)
-                else:
-                    self.kwargs.update({
-                        'view': self.view,
-                        'region': region
-                    })
-                    self.is_success = Formatter(**self.kwargs).run()
-                    self.callback(self.is_success)
+            region = sublime.Region(0, self.view.size())
+            uid = self.kwargs.get('uid', None)
+            uid, syntax = SyntaxHandler(view=self.view, uid=uid, region=region, auto_format_config=None).get_assigned_syntax(self.view, uid, region)
+            exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
+            if not syntax or syntax in exclude_syntaxes:
+                if not syntax:
+                    scope = OptionHandler.query(CONFIG, [], 'formatters', uid, 'syntaxes')
+                    log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
+                self.callback(False)
+            else:
+                self.kwargs.update({
+                    'view': self.view,
+                    'region': region
+                })
+                self.is_success = Formatter(**self.kwargs).run()
+                self.callback(self.is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
