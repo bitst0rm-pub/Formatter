@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.13](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.13)] - 2024-08-04
+
+### ⚙️ Miscellaneous Tasks
+
+- [`876b5c5`](https://github.com/bitst0rm-pub/Formatter/commit/876b5c5e79667ec9125192c2f251a63b630fb8fe) Add markdownlint
+- [`99deeec`](https://github.com/bitst0rm-pub/Formatter/commit/99deeec506265012e3642e2a5426cc4386b031d2) Polish sublime-settings file
+- [`91a78d2`](https://github.com/bitst0rm-pub/Formatter/commit/91a78d25bc8dfd5396c62d6b59a4a99612093664) Update README.md
+- [`6c8bce6`](https://github.com/bitst0rm-pub/Formatter/commit/6c8bce6b897189520ac316b668ce6300c711e386) Update ci
+
 ## [[1.5.12](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.12)] - 2024-08-03
 
 ### 🚀 Features
