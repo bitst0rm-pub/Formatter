@@ -192,7 +192,7 @@ The `Packages` directory is located in:
 
 ## Configuration
 
-This section is the head of Formatter. While the configuration is easy and self-explained, it still needs a detailed explanation of the underlying principles and context. Hold on for a long text.<br />
+This section is the head of Formatter. While the configuration is easy and self-explained, it still needs a detailed explanation of the underlying principles and context.<br />
 
 Formatter stores third-party plugin [config files](https://github.com/bitst0rm-pub/Formatter/tree/master/config) in:
 
