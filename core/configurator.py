@@ -533,7 +533,7 @@ def build_formatter_sublime_settings(formatter_map):
         ('timeout', 10),
         ('__COMMENT__custom_modules_manifest', '''
     // Integrate your custom modules into the Formatter ecosystem.
-    // Modules can be located either locally or remotely.
+    // Modules can be located either locally or remotely (with or without signing).
     // This option must be of type string pointing to the JSON metata file path.
     // More about the format of this file, see README.md > Integrating modules'''),
         ('custom_modules_manifest', ''),
@@ -555,7 +555,7 @@ def build_formatter_sublime_settings(formatter_map):
     // Remember and restore cursor position, selections and bookmarks
     // each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
-    // It does not remember the whole session as name might suggest.'''),
+    // It does not remember any sublime sessions as name might suggest.'''),
         ('remember_session', True),
         ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
@@ -595,7 +595,7 @@ def build_formatter_sublime_settings(formatter_map):
             ('jsbeautifier', NoIndent(['js']))
         ])),
         ('__COMMENT__auto_format', '''
-    // This option enables auto-detect formatting for file using a single command.
+    // This option enables auto-detect formatting for file.
     // Configure it here and/or by using the dot files in your working folder.
     // If both methods are used, the config from the dot files will override this embedded one.
     // More about this feature, see README.md > Auto-detect Formatting'''),
@@ -623,6 +623,163 @@ def build_formatter_sublime_settings(formatter_map):
     // THIRD-PARTY PLUGINS LEVEL
     // Info: Preferences > Package Settings > Formatter > Modules Info'''),
         ('formatters', OrderedDict([
+            ('examplemodule', OrderedDict([
+                ('__COMMENT__enable', '''// Plugin activation.
+            // By default, all plugins are disabled.'''),
+                ('enable', False),
+                ('__COMMENT__format_on_save', '''
+            // Auto formatting whenever the current file is being saved.
+            // This option should be used for plugins with unique syntaxes.
+            // For multi plugins with the same syntaxes, the first plugin takes precedence.
+            // Remove the identical syntaxes from one of the plugins to avoid conflicts.
+            // For example:
+            // Plugin A (enabled): syntaxes ["css", "js"]
+            // Plugin B (enabled): syntaxes ["html", "css"]
+            // In the case you want to use Plugin B with "css", then you should remove
+            // the "css" from plugin A or just disable it, as there is no guarantee of the
+            // execution order between the two, and determining your favorist is not possible.
+            // Solution: Use the "format_on_priority" option to workaround this.'''),
+                ('format_on_save', False),
+                ('__COMMENT__format_on_paste', '''
+            // Auto formatting whenever code is pasted into the current file.
+            // This option affects the same way as "format_on_save."
+            // So the mentioned syntax conflicts and solutions are the same.'''),
+                ('format_on_paste', False),
+                ('__COMMENT__new_file_on_format', '''
+            // Create a new file containing formatted code.
+            // The value of this option is the suffix of the new file being renamed.
+            // Suffix must be of type string. =true, =false means =false
+            // Note: It will overwrite any existing file that has the same new name in
+            // the same location.
+            // For example:
+            // "new_file_on_format": "min", will create a new file:
+            // myfile.raw.js -> myfile.raw.min.js'''),
+                ('new_file_on_format', False),
+                ('__COMMENT__recursive_folder_format', '''
+            // Recursive directory formatting, regardless of depth.
+            // This option requires an existing and currently opened file
+            // to serve as the starting point.
+            // - For the sake of convenience, two new folders will be created at
+            //   the same level as the file, which will contain all failed and
+            //   successfully formatted files.
+            // - The "new_file_on_format" option can be used to rename files
+            //   at the same time if needed.
+            // - The "format_on_save" option above, which only works in the
+            //   single file mode, does not take effect here.
+            // - All none-text files (binary) will be automatically ignored.
+            // - To STOP the current formatting process, press any of the
+            //   arrow keys (up, down, left, right) on your keyboard.
+            // Any literal "$" must be escaped to "\\$" to distinguish it from
+            // the variable expansion "${...}". This important rule applies
+            // to the entire content of this settings file!'''),
+                ('recursive_folder_format', OrderedDict([
+                    ('enable', False),
+                    ('exclude_folders_regex', NoIndent(['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*foo\\$'])),
+                    ('exclude_files_regex', NoIndent(['^._.*$', '.*bar.exe'])),
+                    ('exclude_extensions', NoIndent(['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak'])),
+                    ('exclude_syntaxes', [])
+                ])),
+                ('__COMMENT__syntaxes', '''
+            // Syntax support based on the scope name, not file extension.
+            // Syntax name is part of the scope name and can be retrieved from:
+            // Tools > Developer > Show Scope Name
+            // End-users are advised to consult plugin manpages to add more syntaxes.'''),
+                ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
+                ('__COMMENT__exclude_syntaxes', '''
+            // Exclude a list of syntaxes for an individual syntax key.
+            // A list of excluded syntaxes can be applied to all syntax definitions.
+            // In this case, the key must be named: "all".
+            // This option is useful to exclude part of the scope selector.
+            // For example: text.html.markdown, want html but wish to filter out html.markdown.'''),
+                ('exclude_syntaxes', OrderedDict([
+                    ('html', NoIndent(['markdown'])),
+                    ('all', NoIndent(['markdown']))
+                ])),
+                ('__COMMENT__interpreter_path', '''
+            // Path to the interpreter.
+            // Omit this option will force Formatter to detect interpreter on PATH and
+            // automatically set them for you.
+            // Or you can set the basename as the interpreter name to search on PATH or
+            // locally, similar to how it is done with the "executable_path" option.'''),
+                ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
+                ('__COMMENT__executable_path', '''
+            // Path to the plugin executable.
+            // This option can be either a string or a list of executable paths.
+            // - If this option is omitted or set to null, then the global executable
+            //   on PATH will be used, OR the local executable if automatically found.
+            // - If this option is exactly the basename, then it will be used as the
+            //   executable name and searched for on the PATH.
+            //   Basename can be with or without dot.extension as both variants are the same.
+            //   For example: "fiLe.exe" (Windows only), "fiLe" (Windows + Unix + Linux)
+            // System variable expansions like ${HOME}, ${USER} etc. and the Sublime Text
+            // specific ${packages} can be used to assign paths.
+            // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
+            // it from the variable expansion "${...}".'''),
+                ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
+                ('__COMMENT__config_path', '''
+            // Path to the config file for each individual syntaxes.
+            // Syntax keys must match those in the "syntaxes" option above.
+            // A single config file can be used to assign to all syntaxes.
+            // In this case, the key must be named: "default"
+            // - You can choose another config file format as the default one
+            //   provided by Formatter if the third-party plugin supports it.
+            // - Formatter provides a set of default config files under
+            //   "formatter.assets/config" folder for your personal use.
+            //   Do not use the reference files with suffix '.master.' directly.
+            //   These files could be overwritten by any release updates.
+            // - Options from this config file always have precedence over
+            //   the options from any local project (per-project config dotfile).
+            // - Disabling this option will force Formatter to auto resolve
+            //   the per-project config dotfile in the file tree to use.
+            // To disable this option:
+            // 1. Set the config path of this option to null, OR
+            // 2. Use the Quick Options: Ignore Config Path, OR
+            // 3. Place an '.sublimeformatter.cfgignore.json' file inside
+            //    the working root folder. The structure of this file is
+            //    descripted in README.md > Auto-detect Formatting
+            // Formatter will start to search up the file tree until a
+            // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),
+                ('config_path', OrderedDict([
+                    ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
+                    ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
+                    ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
+                ])),
+                ('__COMMENT__args', '''
+            // Array of additional arguments for the command line.'''),
+                ('args', NoIndent(['--basedir', './example/my/foo', '--show-bar', 'yes'])),
+                ('__COMMENT__render_extended', '''
+            // This option is specifically designed for type graphic.
+            // It enables SVG image generation for saving.
+            // Enable it if you need SVG image at the cost of processing time.
+            // Unlike the generic method, this method only supports SVG generation.'''),
+                ('render_extended', False),
+                ('__COMMENT__fix_commands', '''
+            // Manipulate hardcoded command-line arguments.
+            // This option allow you to modify hardcoded parameters, values and
+            // their positions without digging into the source code.
+            // This feature is primarily intended to temporarily fix bugs until
+            // an official solution is implemented.
+            // Note: Hardcoded args can be changed (rarely) by any release updates.
+            // Enable debug mode will help to find all current hardcoded args.
+            // Use "args" option above to add, this option to remove or manipulate.
+            // Using regex: Again, any literal "$" must be escaped to "\\$" to
+            // distinguish it from the variable expansion "${...}". Accepted args:
+            // [search, [replace, [index, count, new position]]], where:
+            // - search:   @type:str (regex)
+            // - replace:  @type:str
+            // - index:    @type:int (the number is known as a list index); required!
+            // - count:    @type:int (the matching occurrences per index, 0 = all); required!
+            // - position: @type:int (move old index pos. to new/old one, -1 = delete index); required!'''),
+                ('fix_commands', [
+                    NoIndent(['--autocorrect', '--autocorrect-all', 4, 0, 4]),
+                    NoIndent(['^.*?auto.*\\$', '--with', 4, 1, 5]),
+                    NoIndent(['${packages}/to/old', '${packages}/to/new', 3, 0, 3]),
+                    NoIndent(['css', 5, 0, 7]),
+                    NoIndent([3, 0, 4]),
+                    NoIndent([2, 0, -1]),
+                    NoIndent(['--show-bar', 'xxx', 2, 0, -1])
+                ])
+            ])),
             ('examplegeneric', OrderedDict([
                 ('__COMMENT__generic', '''// Formatter provides 2 methods to add custom plugins:
             // - Generic: this one, you design the bridge yourself. Suitable for simple tasks.
@@ -640,7 +797,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('type', 'beautifier'),
                 ('__COMMENT__render_extended', '''
             // This will activate the "args_extended" option for the graphic type
-            // to generate extended files like SVG for download.'''),
+            // to generate extended files like SVG for saving.'''),
                 ('render_extended', False),
                 ('__COMMENT__success_code', '''
             // The exit code for the third-party plugin (optional, default is 0).'''),
@@ -672,12 +829,12 @@ def build_formatter_sublime_settings(formatter_map):
                 ])),
                 ('__COMMENT__args', '''
             // Main commands to trigger the formatting process.
-            // You can either set the paths directly or use variable substitution for:
+            // You can either set the qualified paths directly or use variable substitution for:
             // - "interpreter_path"   : "{{i}}"
             // - "executable_path"    : "{{e}}", "{{e=node}}" (for local executable auto-resolving with runtime type node)
             // - "config_path"        : "{{c}}"
             // - SPECIAL CASE GRAPHIC : "{{o}}" (output PNG image, e.g: "args": [... "--output", "{{o}}"])
-            // Variable substitution allows advanced mechanisms such as auto-search path, auto-config, etc.
+            // Variable substitution provides advanced mechanisms such as auto-search path, auto-config, etc.
             // SPECIAL CASE GRAPHIC requirements:
             // 1. The plugin must support exporting PNG format.
             // 2. The hardcoded "{{o}}" MUST ALWAYS be included in "args".
@@ -685,7 +842,7 @@ def build_formatter_sublime_settings(formatter_map):
             // In all other cases, output may not be as a file; use "-" or "--" instead.'''),
                 ('args', NoIndent(['{{i}}', '{{e=node}}', '--config', '{{c}}', '--basedir', './example/my/foo', '--'])),
                 ('__COMMENT__args_extended', '''
-            // This is for the SPECIAL CASE GRAPHIC to downloading extended graphic files.
+            // This is for the SPECIAL CASE GRAPHIC to saving extended graphic files.
             // To use this, the trigger option "render_extended" above must be activated.
             // Sublime Text only supports PNG, JPG, and GIF images. Formatter uses PNG to display
             // image in view and generates the same image in various formats for you.
@@ -696,166 +853,6 @@ def build_formatter_sublime_settings(formatter_map):
                     ('svg', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'svgv5', '--output', '{{o}}'])),
                     ('pdf', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'pdf2001', '--output', '{{o}}']))
                 ]))
-            ])),
-            ('examplemodule', OrderedDict([
-                ('__COMMENT__enable', '''// Plugin activation.
-            // By default, all plugins are disabled and disappear from the menu.'''),
-                ('enable', False),
-                ('__COMMENT__format_on_save', '''
-            // Auto formatting whenever the current file/view is being saved.
-            // This option should be used for plugins with unique syntaxes.
-            // For multi plugins with the same syntaxes, the first plugin takes precedence.
-            // Remove the identical syntaxes from one of the plugins to avoid conflicts.
-            // For example:
-            // Plugin A (enabled): syntaxes ["css", "js"]
-            // Plugin B (enabled): syntaxes ["html", "css"]
-            // In the case you want to use Plugin B with "css", then you should remove
-            // the "css" from plugin A or just disable it, as there is no guarantee of the
-            // execution order between the two, and determining your favorist is not possible.
-            // Solution: Use the "format_on_priority" option to workaround this.'''),
-                ('format_on_save', False),
-                ('__COMMENT__format_on_paste', '''
-            // Auto formatting whenever code is pasted into the current file/view.
-            // This option is affected by the same syntax conflict, so its solutions
-            // are identical to those mentioned above for the "format_on_save" option.'''),
-                ('format_on_paste', False),
-                ('__COMMENT__new_file_on_format', '''
-            // Create a new file containing formatted codes.
-            // The value of this option is the suffix of the new file being renamed.
-            // Suffix must be of type string. =true, =false and all other types imply =false
-            // Note: It will overwrite any existing file that has the same new name in
-            // the same location.
-            // For example:
-            // "new_file_on_format": "min", will create a new file:
-            // myfile.raw.js -> myfile.raw.min.js'''),
-                ('new_file_on_format', False),
-                ('__COMMENT__recursive_folder_format', '''
-            // Recursively format the entire folder regardless of depth.
-            // This option requires an existing and currently opened file
-            // to serve as the starting point. Files will be opened and closed.
-            // For the sake of convenience, two new folders will be created at
-            // the same level as the file, which will contain all failed and
-            // successfully formatted files. The "new_file_on_format" option
-            // can be used to rename files simultaneously if needed.
-            // The "format_on_save" option above, which applies only to
-            // single files, does not take effect here.
-            // All none-text files (binary) will be automatically ignored.
-            // Note: To stop the formatting process, press any of the
-            // arrow keys (up, down, left, right) on your keyboard.
-            // Any literal "$" must be escaped to "\\$" to distinguish it from
-            // the variable expansion "${...}". This important rule applies
-            // to the entire content of this settings file!'''),
-                ('recursive_folder_format', OrderedDict([
-                    ('enable', False),
-                    ('exclude_folders_regex', NoIndent(['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*foo\\$'])),
-                    ('exclude_files_regex', NoIndent(['^._.*$', '.*bar.exe'])),
-                    ('exclude_extensions', NoIndent(['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak'])),
-                    ('exclude_syntaxes', [])
-                ])),
-                ('__COMMENT__syntaxes', '''
-            // Syntax support based on the scope name, not file extension.
-            // Syntax name is part of the scope name and can be retrieved from:
-            // Tools > Developer > Show Scope Name
-            // End-users are advised to consult plugin manpages to add more syntaxes.'''),
-                ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
-                ('__COMMENT__exclude_syntaxes', '''
-            // Exclude a list of syntaxes for an individual syntax key.
-            // A list of excluded syntaxes can be applied to all syntax definitions.
-            // In this case, the key must be named: "all".
-            // This option is useful to exclude part of the scope selector.
-            // For example: text.html.markdown, want html but wish to filter out html.markdown.'''),
-                ('exclude_syntaxes', OrderedDict([
-                    ('html', NoIndent(['markdown'])),
-                    ('all', NoIndent(['markdown']))
-                ])),
-                ('__COMMENT__interpreter_path', '''
-            // Path to the interpreter to run the third-party plugin.
-            // Just for the sake of completeness, but it is unlikely that you will ever need
-            // to use this option. Most of the programs you have installed are usually set
-            // to run in the global environment, such as Python, Node.js, Ruby, PHP, etc.
-            // Formatter is able to detect and automatically set them for you.
-            // However, if you do need to use a specific interpreter, you can provide the path.
-            // Alternatively, you can set the basename as the interpreter name to search on
-            // PATH or local, similar to how it is done with the "executable_path" option.'''),
-                ('interpreter_path', NoIndent(['${HOME}/example/path/to\\$my/php.exe'])),
-                ('__COMMENT__executable_path', '''
-            // Path to the third-party plugin executable to process formatting.
-            // This option can be either a string or a list of executable paths.
-            // - If this option is omitted or set to null, then the global executable
-            //   on PATH will be used, OR the local executable if automatically found.
-            // - If this option is exactly the basename, then it will be used as the
-            //   executable name and searched for on the PATH.
-            //   Basename can be with or without dot.extension as both variants are the same.
-            //   For example: "fiLe.exe" (Windows only), "fiLe" (Windows + Unix + Linux)
-            // System variable expansions like ${HOME}, ${USER} etc. and the Sublime Text
-            // specific ${packages} can be used to assign paths.
-            // Note: Again, any literal "$" must be escaped to "\\$" to distinguish
-            // it from the variable expansion "${...}".'''),
-                ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
-                ('__COMMENT__config_path', '''
-            // Path to the config file for each individual syntaxes.
-            // Syntax keys must match those in the "syntaxes" option above.
-            // A single config file can be used to assign to all syntaxes.
-            // In this case, the key must be named: "default"
-            // Note:
-            // - You can choose another config file format as the default one
-            //   provided by Formatter if the third-party plugin supports it.
-            // - Formatter provides a set of default config files under
-            //   "formatter.assets/config" folder for your personal use.
-            //   Do not use the reference files with suffix '.master.' directly.
-            //   These files could be overwritten by any release updates.
-            // - Options from this config file always have precedence over
-            //   the options from any local project (per-project config dotfile).
-            // - Disabling this option will force Formatter to auto resolve
-            //   the per-project config dotfile in the file tree to use.
-            // To disable this option:
-            // 1. Set the config path of this option to null, OR
-            // 2. Use the Quick Options: Ignore Config Path, OR
-            // 3. Place an '.sublimeformatter.cfgignore.json' file inside
-            //    the working root folder. The structure of this file is
-            //    descripted in README.md > Auto-detect Formatting
-            // Formatter will start to search up the file tree until a
-            // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),
-                ('config_path', OrderedDict([
-                    ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
-                    ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
-                    ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
-                ])),
-                ('__COMMENT__args', '''
-            // Array of additional arguments for the command line.'''),
-                ('args', NoIndent(['--basedir', './example/my/foo', '--show-bar', 'yes'])),
-                ('__COMMENT__render_extended', '''
-            // This option is specifically designed for type graphic.
-            // It enables SVG image generation for download.
-            // Enable it if you need SVG image at the cost of processing time.
-            // Unlike the generic method, this method only supports SVG generation.'''),
-                ('render_extended', False),
-                ('__COMMENT__fix_commands', '''
-            // Manipulate hardcoded command-line arguments.
-            // This option allow you to modify hardcoded parameters, values and
-            // their positions without digging into the source code.
-            // This feature is primarily intended to temporarily fix bugs until
-            // an official solution is implemented.
-            // Note: Hardcoded args can be changed (rarely) by any release updates.
-            // Enable debug mode will help to find all current hardcoded args.
-            // Use "args" option above to add, this option to remove or manipulate.
-            // Using regex: Again, any literal "$" must be escaped to "\\$" to
-            // distinguish it from the variable expansion "${...}". Accepted args:
-            // [search, [replace, [index, count, new position]]], where:
-            // - search:   @type:str (regex)
-            // - replace:  @type:str
-            // - index:    @type:int (the number is known as a list index); required!
-            // - count:    @type:int (the matching occurrences per index, 0 = all); required!
-            // - position: @type:int (move old index pos. to new/old one, -1 = delete index); required!'''),
-                ('fix_commands', [
-                    NoIndent(['--autocorrect', '--autocorrect-all', 4, 0, 4]),
-                    NoIndent(['^.*?auto.*\\$', '--with', 4, 1, 5]),
-                    NoIndent(['${packages}/to/old', '${packages}/to/new', 3, 0, 3]),
-                    NoIndent(['css', 5, 0, 7]),
-                    NoIndent([3, 0, 4]),
-                    NoIndent([2, 0, -1]),
-                    NoIndent(['--show-bar', 'xxx', 2, 0, -1])
-                ])
             ])),
             ('__COMMENT__end_explanation', '''// -- END of explanation --
             ''')
