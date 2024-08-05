@@ -1,4 +1,5 @@
 import os
+import re
 import threading
 import time
 
@@ -51,19 +52,29 @@ class SavePasteManager:
         self.view = view
 
     def apply_formatting(self, operation):
-        path = self.view.file_name()
-        if path and os.path.splitext(path)[1] not in ['.sublime-settings']:
-            auto_format_user_config = DotFileHandler(view=self.view).get_auto_format_user_config(active_file_path=path)
-            auto_format_user_operation = OptionHandler.query(auto_format_user_config, False, operation)
-            auto_format_config_operation = OptionHandler.query(CONFIG, False, 'auto_format', 'config', operation)
-            if (auto_format_user_config and auto_format_user_operation) or auto_format_config_operation:
-                get_auto_format_args = DotFileHandler(view=self.view).get_auto_format_args(active_file_path=path)
-                if get_auto_format_args:
-                    CleanupHandler.clear_console()
-                    FileFormat(self.view, **get_auto_format_args).run()
-                    return
+        file_path = self.view.file_name()
+        if file_path and os.path.splitext(file_path)[1] in ['.sublime-settings']:
+            return
+
+        if self._on_auto_format(file_path, opkey=operation):
+            return
 
         self._on_paste_or_save(opkey=operation)
+
+    def _on_auto_format(self, file_path, opkey=None):
+        auto_format_user_config = DotFileHandler(view=self.view).get_auto_format_user_config(active_file_path=file_path)
+        auto_format_user_operation = OptionHandler.query(auto_format_user_config, False, opkey)
+        auto_format_config_operation = OptionHandler.query(CONFIG, False, 'auto_format', 'config', opkey)
+
+        if (auto_format_user_config and not self._should_skip(auto_format_user_operation)) or not self._should_skip(auto_format_config_operation):
+            get_auto_format_args = DotFileHandler(view=self.view).get_auto_format_args(active_file_path=file_path)
+            if get_auto_format_args:
+                CleanupHandler.clear_console()
+                log.debug('"%s" (autoformat)', opkey)
+                FileFormat(self.view, **get_auto_format_args).run()
+                return True
+
+        return False
 
     def _on_paste_or_save(self, opkey=None):
         if not opkey:
@@ -88,14 +99,13 @@ class SavePasteManager:
                     continue
 
                 v = OptionHandler.query(formatters, None, uid)
-                if self._should_skip_formatter(uid, v, opkey):
-                    continue
-
-                syntax = self._get_syntax(uid)
-                if syntax in value:
-                    CleanupHandler.clear_console()
-                    FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
-                    break
+                if not self._should_skip_formatter(uid, v, opkey):
+                    syntax = self._get_syntax(uid)
+                    if syntax in value:
+                        CleanupHandler.clear_console()
+                        log.debug('"%s" (priority)', opkey)
+                        FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
+                        break
         else:
             InterfaceHandler.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
 
@@ -104,30 +114,68 @@ class SavePasteManager:
         formatters = OptionHandler.query(CONFIG, {}, 'formatters')
 
         for uid, value in formatters.items():
-            if self._should_skip_formatter(uid, value, opkey):
-                continue
-
-            syntax = self._get_syntax(uid)
-            if syntax in value.get('syntaxes', []) and syntax not in seen:
-                CleanupHandler.clear_console()
-                log.debug('"%s" (UID: %s | Syntax: %s)', opkey, uid, syntax)
-                FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
-                seen.add(syntax)
+            if not self._should_skip_formatter(uid, value, opkey):
+                syntax = self._get_syntax(uid)
+                if syntax in value.get('syntaxes', []) and syntax not in seen:
+                    CleanupHandler.clear_console()
+                    log.debug('"%s" (regular)', opkey)
+                    FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
+                    seen.add(syntax)
 
     def _should_skip_formatter(self, uid, value, opkey):
+        if not isinstance(value, dict):
+            return True
+
+        if ('disable' in value and value.get('disable', True)) or ('enable' in value and not value.get('enable', False)):
+            return True
+
         is_qo_mode = ConfigHandler.is_quick_options_mode()
         is_rff_on = OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
 
-        if not isinstance(value, dict) or ('disable' in value and value.get('disable', True)) or ('enable' in value and not value.get('enable', False)):
-            return True
+        if is_qo_mode:
+            if uid not in OptionHandler.query(CONFIG, [], 'quick_options', opkey):
+                return True
 
-        if (is_qo_mode and uid not in OptionHandler.query(CONFIG, [], 'quick_options', opkey)) or (not is_qo_mode and not value.get(opkey, False)):
-            return True
+            if is_rff_on:
+                log.info('Quick Options mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', uid, opkey)
+                return True
+        else:
+            if self._should_skip(value.get(opkey, False)):
+                return True
 
-        if (is_qo_mode and is_rff_on) or (not is_qo_mode and OptionHandler.query(value, False, 'recursive_folder_format', 'enable')):
-            mode = 'Quick Options' if is_qo_mode else 'User Settings'
-            log.info('%s mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', mode, uid, opkey)
-            return True
+            if OptionHandler.query(value, False, 'recursive_folder_format', 'enable'):
+                log.info('User Settings mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', uid, opkey)
+                return True
+
+        return False
+
+    def _should_skip(self, value):
+        if isinstance(value, bool):
+            return not value
+
+        if isinstance(value, dict):
+            return self._should_exclude(value)
+
+        return False
+
+    def _should_exclude(self, value):
+        file_path = self.view.file_name()
+
+        if file_path:
+            dir_path = os.path.dirname(file_path)
+            extension = os.path.splitext(os.path.basename(file_path))[1].lstrip('.').lower()
+
+            for pattern in value.get('exclude_dirs_regex', []):
+                if re.match(pattern, dir_path):
+                    return True
+
+            for pattern in value.get('exclude_files_regex', []):
+                if re.match(pattern, file_path):
+                    return True
+
+            for pattern in value.get('exclude_extensions_regex', []):
+                if re.match(pattern, extension):
+                    return True
 
         return False
 

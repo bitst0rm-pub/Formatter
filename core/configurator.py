@@ -598,6 +598,16 @@ def build_formatter_sublime_settings(formatter_map):
     // This option enables auto-detect formatting for file.
     // Configure it here and/or by using the dot files in your working folder.
     // If both methods are used, the config from the dot files will override this embedded one.
+    // Advantage: The embedded one can handle both saved and unsaved files,
+    // while the dot files variant only applies to saved file, as unsaved files
+    // (puffer on view) never has an working dir to contain dot files.
+    //
+    // For "format_on_save" and "format_on_paste" you can use a dictionary format to exclude.
+    // "format_on_save": {
+    //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+    //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+    //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+    // }
     // More about this feature, see README.md > Auto-detect Formatting'''),
         ('auto_format', OrderedDict([
             ('__COMMENT__auto_format_a', '/*'),
@@ -638,12 +648,23 @@ def build_formatter_sublime_settings(formatter_map):
             // In the case you want to use Plugin B with "css", then you should remove
             // the "css" from plugin A or just disable it, as there is no guarantee of the
             // execution order between the two, and determining your favorist is not possible.
-            // Solution: Use the "format_on_priority" option to workaround this.'''),
+            // Solution: Use the "format_on_priority" option to workaround this.
+            //
+            // By default, this option uses a boolean value: false OR true
+            // To exclude files or dirs, use a dictionary format:
+            // "format_on_save": {
+            //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+            //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+            //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+            // }'''),
                 ('format_on_save', False),
                 ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file.
-            // This option affects the same way as "format_on_save."
-            // So the mentioned syntax conflicts and solutions are the same.'''),
+            // This option affects the same way as "format_on_save".
+            // So the mentioned syntax conflicts and solutions are the same.
+            //
+            // Also you can use the same dictionary format for exclusions:
+            // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex"'''),
                 ('format_on_paste', False),
                 ('__COMMENT__new_file_on_format', '''
             // Create a new file containing formatted code.
@@ -665,7 +686,7 @@ def build_formatter_sublime_settings(formatter_map):
             // - The "new_file_on_format" option can be used to rename files
             //   at the same time if needed.
             // - The "format_on_save" option above, which only works in the
-            //   single file mode, does not take effect here.
+            //   single-file mode, does not take effect here.
             // - All none-text files (binary) will be automatically ignored.
             // - To STOP the current formatting process, press any of the
             //   arrow keys (up, down, left, right) on your keyboard.

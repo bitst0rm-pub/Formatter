@@ -301,6 +301,16 @@ The following setting details - along with their default values and examples - a
         // This option enables auto-detect formatting for file.
         // Configure it here and/or by using the dot files in your working folder.
         // If both methods are used, the config from the dot files will override this embedded one.
+        // Advantage: The embedded one can handle both saved and unsaved files,
+        // while the dot files variant only applies to saved file, as unsaved files
+        // (puffer on view) never has an working dir to contain dot files.
+        //
+        // For "format_on_save" and "format_on_paste" you can use a dictionary format to exclude.
+        // "format_on_save": {
+        //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+        //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+        //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+        // }
         // More about this feature, see README.md > Auto-detect Formatting
         "auto_format": {
             "config": {
@@ -340,11 +350,22 @@ The following setting details - along with their default values and examples - a
                 // the "css" from plugin A or just disable it, as there is no guarantee of the
                 // execution order between the two, and determining your favorist is not possible.
                 // Solution: Use the "format_on_priority" option to workaround this.
+                //
+                // By default, this option uses a boolean value: false OR true
+                // To exclude files or dirs, use a dictionary format:
+                // "format_on_save": {
+                //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+                //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+                //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+                // }
                 "format_on_save": false,
 
                 // Auto formatting whenever code is pasted into the current file.
-                // This option affects the same way as "format_on_save."
+                // This option affects the same way as "format_on_save".
                 // So the mentioned syntax conflicts and solutions are the same.
+                //
+                // Also you can use the same dictionary format for exclusions:
+                // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex"
                 "format_on_paste": false,
 
                 // Create a new file containing formatted code.
@@ -366,7 +387,7 @@ The following setting details - along with their default values and examples - a
                 // - The "new_file_on_format" option can be used to rename files
                 //   at the same time if needed.
                 // - The "format_on_save" option above, which only works in the
-                //   single file mode, does not take effect here.
+                //   single-file mode, does not take effect here.
                 // - All none-text files (binary) will be automatically ignored.
                 // - To STOP the current formatting process, press any of the
                 //   arrow keys (up, down, left, right) on your keyboard.
@@ -645,85 +666,99 @@ The following setting details - along with their default values and examples - a
 Starting from version 1.4.0, Formatter introduces a configuration mechanism to auto-detect formatter for itself (Special thanks to @[midrare](https://github.com/midrare) for ideas, tests and suggestions). There are 2 methods to achieve this:
 
 - Using embedded settings in your User `Formatter.sublime-settings`
-- Using embedded settings in your User `Formatter.sublime-settings`
 - Placing dot files inside the working folder, similar to per-project basis.
 
-Formatter will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
+_Advantage:_ The embedded one can handle both saved and unsaved files, while the dot files variant only applies to saved file, as unsaved files (puffer on view) never has an working dir to be able to contain a dot file.
 
-_.sublimeformatter.json_
+1. **The dot files variant**: will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
-```js
-{
-    // Comments are allowed.
-    "json": {
-        "uid": "jsbeautifier"
-    },
-    "html": {
-        "uid": "jsbeautifier",
-        "exclude_syntaxes": {
-            "html": ["markdown"]
-        }
-    },
-    "python": {
-        "uid": "autopep8"
-    }
-}
-```
+   _.sublimeformatter.json_, _.sublimeformatter_
 
-User-specific config options can be set using `.sublimeformatter.user.json` OR `.sublimeformatter-user`
+   ```js
+   {
+       // Comments are allowed.
+       "json": {
+           "uid": "jsbeautifier"
+       },
+       "html": {
+           "uid": "jsbeautifier",
+           "exclude_syntaxes": {
+               "html": ["markdown"]
+           }
+       },
+       "python": {
+           "uid": "autopep8"
+       }
+   }
+   ```
 
-_.sublimeformatter.user.json_
+   - User-specific actions can be set using: `.sublimeformatter.user.json` OR `.sublimeformatter-user`
 
-```js
-{
-    "format_on_save": true,
-    "format_on_paste": false
-}
-```
+   _.sublimeformatter.user.json_, _.sublimeformatter-user_
 
-To ignore a specific syntax assigned to your User's `"config_path":` settings, you can use `.sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br />
-For example, if you prefer to use the default .prettierrc in your working folder instead of the custom Formatter `"config_path":`
+   ```js
+   {
+       "format_on_save": true,
+       "format_on_paste": false
+   }
+   ```
 
-_.sublimeformatter.cfgignore.json_
+   Or if you prefer the dictionary format:
 
-```js
-{
-    "json": ["jsbeautifier", "deno"],
-    "python": ["autopep8"],
-    "default": ["scalafmt", "stylelint"]
-}
-```
+   ```js
+   {
+       "format_on_save": {
+           "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+           "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+           "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+       },
+       "format_on_paste": false
+   }
+   ```
 
-Alternatively, you can embed your auto-detect config within your User `Formatter.sublime-settings`. In cases where both the dot files and embedded methods coexist, then the config from dot files will take precedence over the embedded one.
+   - To ignore a specific syntax applied to your User `"config_path":` settings, you can use: `.sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br />
+   For example, if you prefer to use the default .prettierrc in your working folder instead of using the custom Formatter `"config_path":`
 
-_Formatter.sublime-settings_
+   _.sublimeformatter.cfgignore.json_, _.sublimeformatter.cfgignore_
 
-```js
-{
-    "debug": "status",
+   ```js
+   {
+       "json": ["jsbeautifier", "deno"],
+       "python": ["autopep8"],
+       "default": ["scalafmt", "stylelint"]
+   }
+   ```
 
-    "auto_format": {
-        "config": {
-            "format_on_save": false,
-            "format_on_paste": false
-        },
-        "json": {
-            "uid": "jsbeautifier"
-        },
-        "html": {
-            "uid": "jsbeautifier",
-            "exclude_syntaxes": {
-                "html": ["markdown"]
-            }
-        },
-        "python": {
-            "uid": "autopep8"
-        }
-    },
+2. **The embedded variant**: embeds your auto-detect config within your User `Formatter.sublime-settings`. In cases where both the dot files and embedded methods coexist, then the config from dot files will take precedence over the embedded one.
 
-    "formatters": {}
-}
-```
+   _Formatter.sublime-settings_
+
+   ```js
+   {
+       "debug": "status",
+
+       "auto_format": {
+           "config": {
+               "format_on_save": false,  // or use the dictionary format to exclude
+               "format_on_paste": false  // or use the dictionary format to exclude
+           },
+           "json": {
+               "uid": "jsbeautifier"
+           },
+           "html": {
+               "uid": "jsbeautifier",
+               "exclude_syntaxes": {
+                   "html": ["markdown"]
+               }
+           },
+           "python": {
+               "uid": "autopep8"
+           }
+       },
+
+       "formatters": {}
+   }
+   ```
 
 This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
 
