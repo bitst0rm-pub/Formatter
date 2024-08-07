@@ -51,8 +51,8 @@ class DockfmtFormatter(Module):
                 self.print_exiterr(exitcode, stderr)
             else:
                 return stdout
-        except OSError:
+        except Exception as e:
             self.remove_tmp_file(tmp_file)
-            self.print_oserr(cmd)
+            self.print_oserr(cmd, e)
 
         return None

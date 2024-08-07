@@ -144,9 +144,9 @@ class Module:
         instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
         return instance.print_exiterr(exitcode, stderr)
 
-    def print_oserr(self, cmd):
+    def print_oserr(self, cmd, error):
         instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
-        return instance.print_oserr(cmd)
+        return instance.print_oserr(cmd, error)
 
     def get_text_from_region(self, region):
         instance = InstanceManager.get_instance('ViewHandler', view=self.view)
@@ -528,8 +528,8 @@ class CommandHandler:
         s = 'File not formatted due to an error (exitcode=%d)' % exitcode
         log.status(s + '.' if StringHandler.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
 
-    def print_oserr(self, cmd):
-        log.status('An error occurred while executing the command: %s', ' '.join(cmd))
+    def print_oserr(self, cmd, error=''):
+        log.status('An error occurred while executing the command: %s Error: %s', ' '.join(cmd), error)
 
 
 class ViewHandler:

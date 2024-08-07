@@ -93,7 +93,7 @@ class EslintdFormatter(Module):
                 self.print_exiterr(exitcode, stderr)
                 for i in obj.get('messages', []):
                     print(i)
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         return None

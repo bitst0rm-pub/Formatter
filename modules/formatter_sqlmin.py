@@ -44,7 +44,7 @@ class SqlminFormatter(Module):
                 self.print_exiterr(exitcode, result)
             else:
                 return result
-        except OSError:
-            self.print_oserr(json)
+        except Exception as e:
+            self.print_oserr(json, e)
 
         return None

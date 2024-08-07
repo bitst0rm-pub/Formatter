@@ -51,8 +51,8 @@ class PhpcsfixerFormatter(Module):
                 with open(tmp_file, 'r', encoding='utf-8') as file:
                     result = file.read()
                     file.close()
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         self.remove_tmp_file(tmp_file)
 

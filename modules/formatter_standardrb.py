@@ -43,7 +43,7 @@ class StandardrbFormatter(Module):
             else:
                 log.debug('Success (exitcode=%d): "%s"', exitcode, stderr)
                 return stdout
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         return None

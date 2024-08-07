@@ -40,7 +40,7 @@ class StandardjsFormatter(Module):
                 self.print_exiterr(exitcode, stderr)
             else:
                 return stdout
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         return None

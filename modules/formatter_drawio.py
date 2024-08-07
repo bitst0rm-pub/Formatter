@@ -83,8 +83,8 @@ class DrawioFormatter(Module):
 
                 self.remove_tmp_file(tmp_file)
                 return stdout
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         self.remove_tmp_file(tmp_file)
         return None

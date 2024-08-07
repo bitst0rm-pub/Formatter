@@ -46,7 +46,7 @@ class TsfmtFormatter(Module):
                 self.print_exiterr(exitcode, stderr)
             else:
                 return stdout.replace('\r', '')  # hack <0x0d>
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         return None

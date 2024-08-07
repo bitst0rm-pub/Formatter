@@ -53,7 +53,7 @@ class PlantumlFormatter(Module):
                         log.error('An error occurred while executing extended cmd: %s Details: %s', cmd, e)
 
                 return stdout
-        except OSError:
-            self.print_oserr(cmd)
+        except Exception as e:
+            self.print_oserr(cmd, e)
 
         return None
