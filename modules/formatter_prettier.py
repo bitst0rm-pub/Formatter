@@ -2,7 +2,7 @@ from ..core.common import Module
 from ..core.constants import IS_WINDOWS
 
 INTERPRETERS = ['node']
-EXECUTABLES = ['prettier', 'bin-prettier.js']
+EXECUTABLES = ['prettier.cmd', 'bin-prettier.js', 'prettier']
 DOTFILES = ['.prettierrc', '.prettierrc.json', '.prettierrc.yml', '.prettierrc.yaml', '.prettierrc.json5', '.prettierrc.js', 'prettier.config.js', '.prettierrc.mjs', 'prettier.config.mjs', '.prettierrc.cjs', 'prettier.config.cjs', '.prettierrc.toml']
 MODULE_CONFIG = {
     'source': 'https://github.com/prettier/prettier',
