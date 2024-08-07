@@ -456,20 +456,14 @@ def build_formatter_sublime_settings_children(formatter_map):
                 ('format_on_save', False),
                 ('format_on_paste', False),
                 ('new_file_on_format', False),
-                ('recursive_folder_format', OrderedDict([
-                    ('enable', False),
-                    ('exclude_folders_regex', []),
-                    ('exclude_files_regex', []),
-                    ('exclude_extensions', []),
-                    ('exclude_syntaxes', [])
-                ])),
+                ('dir_format', False),
                 ('syntaxes', NoIndent(config['syntaxes']))
             ])
 
             typ = config.get('type', None)
             if typ == 'graphic':
                 child.pop('new_file_on_format')
-                child.pop('recursive_folder_format')
+                child.pop('dir_format')
                 child['type'] = 'graphic'
                 child['render_extended'] = False
 
@@ -602,12 +596,13 @@ def build_formatter_sublime_settings(formatter_map):
     // while the dot files variant only applies to saved file, as unsaved files
     // (puffer on view) never has an working dir to contain dot files.
     //
-    // For "format_on_save" and "format_on_paste" you can use a dictionary format to exclude.
+    // For "format_on_save" and "format_on_paste" you can use the dictionary format to exclude.
     // "format_on_save": {
     //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
     //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
     //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
     // }
+    // Terminology: Hidden dot files, like .bashrc, do not have an extension to exclude.
     // More about this feature, see README.md > Auto-detect Formatting'''),
         ('auto_format', OrderedDict([
             ('__COMMENT__auto_format_a', '/*'),
@@ -651,12 +646,13 @@ def build_formatter_sublime_settings(formatter_map):
             // Solution: Use the "format_on_priority" option to workaround this.
             //
             // By default, this option uses a boolean value: false OR true
-            // To exclude files or dirs, use a dictionary format:
+            // To exclude dirs, files and extensions, use a dictionary format:
             // "format_on_save": {
             //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
             //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
             //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
-            // }'''),
+            // }
+            // Terminology: Hidden dot files, like .bashrc, do not have an extension to exclude.'''),
                 ('format_on_save', False),
                 ('__COMMENT__format_on_paste', '''
             // Auto formatting whenever code is pasted into the current file.
@@ -676,7 +672,7 @@ def build_formatter_sublime_settings(formatter_map):
             // "new_file_on_format": "min", will create a new file:
             // myfile.raw.js -> myfile.raw.min.js'''),
                 ('new_file_on_format', False),
-                ('__COMMENT__recursive_folder_format', '''
+                ('__COMMENT__dir_format', '''
             // Recursive directory formatting, regardless of depth.
             // This option requires an existing and currently opened file
             // to serve as the starting point.
@@ -692,14 +688,17 @@ def build_formatter_sublime_settings(formatter_map):
             //   arrow keys (up, down, left, right) on your keyboard.
             // Any literal "$" must be escaped to "\\$" to distinguish it from
             // the variable expansion "${...}". This important rule applies
-            // to the entire content of this settings file!'''),
-                ('recursive_folder_format', OrderedDict([
-                    ('enable', False),
-                    ('exclude_folders_regex', NoIndent(['Spotlight-V100', 'temp', 'cache', 'logs', '^_.*foo\\$'])),
-                    ('exclude_files_regex', NoIndent(['^._.*$', '.*bar.exe'])),
-                    ('exclude_extensions', NoIndent(['DS_Store', 'localized', 'TemporaryItems', 'Trashes', 'db', 'ini', 'git', 'svn', 'tmp', 'bak'])),
-                    ('exclude_syntaxes', [])
-                ])),
+            // to the entire content of this settings file!
+            //
+            // By default, this option uses a boolean value: false OR true
+            // To exclude dirs, files, extensions and syntaxes, use a dictionary format:
+            // "dir_format": {
+            //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+            //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+            //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"],
+            //     "exclude_syntaxes': []
+            // }'''),
+                ('dir_format', False),
                 ('__COMMENT__syntaxes', '''
             // Syntax support based on the scope name, not file extension.
             // Syntax name is part of the scope name and can be retrieved from:
@@ -832,8 +831,8 @@ def build_formatter_sublime_settings(formatter_map):
                 ('format_on_paste', False),
                 ('__COMMENT__new_file_on_format', '''// Same as the one in the examplemodule, but disabled/unused for type graphic.'''),
                 ('new_file_on_format', False),
-                ('__COMMENT__recursive_folder_format', '''// Same as the one in the examplemodule, but disabled/unused for type graphic.'''),
-                ('recursive_folder_format', {}),
+                ('__COMMENT__dir_format', '''// Same as the one in the examplemodule, but disabled/unused for type graphic.'''),
+                ('dir_format', False),
                 ('__COMMENT__syntaxes', '''// Same as the one in the examplemodule.'''),
                 ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
                 ('__COMMENT__exclude_syntaxes', '''// Same as the one in the examplemodule.'''),

@@ -15,7 +15,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         ('format_on_save', 'Enable Format on Save'),
         ('format_on_paste', 'Enable Format on Paste'),
         ('new_file_on_format', 'Enable New File on Format'),
-        ('recursive_folder_format', 'Enable Recursive Folder Format'),
+        ('dir_format', 'Enable Dir Format'),
         ('render_extended', 'Render Extended Graphics'),
         ('use_user_settings', 'Reset'),
         ('save_quick_options', 'Save')
@@ -59,8 +59,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             'debug': self.show_debug_menu,
             'layout': self.show_layout_menu,
             'ignore_config_path': self.show_ignore_config_path_menu,
-            'format_on_paste': self.show_format_on_menu('format_on_paste', 'Format on Paste is not compatible with an enabled Recursive Folder Format.'),
-            'format_on_save': self.show_format_on_menu('format_on_save', 'Format on Save is not compatible with an enabled Recursive Folder Format.'),
+            'format_on_paste': self.show_format_on_menu('format_on_paste', 'Format on Paste is not compatible with an enabled Dir Format.'),
+            'format_on_save': self.show_format_on_menu('format_on_save', 'Format on Save is not compatible with an enabled Dir Format.'),
             'new_file_on_format': self.show_new_file_format_input,
             'render_extended': self.show_render_extended_menu,
         }
@@ -68,7 +68,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
 
     def show_format_on_menu(self, option_key, error_message):
         def handler():
-            is_on = OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
+            is_on = OptionHandler.query(CONFIG, False, 'quick_options', 'dir_format')
             if is_on:
                 InterfaceHandler.popup_message(error_message, 'ERROR')
                 self.run()
@@ -201,8 +201,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         elif config_key == 'save_quick_options':
             self.save_quick_options_config()
         else:
-            if config_key == 'recursive_folder_format':
-                if self.check_recursive_folder_format(option_value):
+            if config_key == 'dir_format':
+                if self.check_dir_format(option_value):
                     return
             CONFIG.setdefault('quick_options', {})[config_key] = option_value
         self.run()
@@ -217,12 +217,12 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         config_key = list(self.option_mapping.keys())[index]
         return option_value, config_key
 
-    def check_recursive_folder_format(self, option_value):
+    def check_dir_format(self, option_value):
         a = {'format_on_save': 'Format on Save', 'format_on_paste': 'Format on Paste'}
         for k, v in a.items():
             is_on = OptionHandler.query(CONFIG, [], 'quick_options', k)
             if option_value and is_on:
-                InterfaceHandler.popup_message('Recursive Folder Format is not compatible with an enabled %s.' % v, 'ERROR')
+                InterfaceHandler.popup_message('Dir Format is not compatible with an enabled %s.' % v, 'ERROR')
                 self.run()
                 return True
         return False

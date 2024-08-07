@@ -58,14 +58,14 @@ class DirFormat:
         items = self.get_dir_format_items()
         return TransformHandler.get_recursive_filelist(
             cwd,
-            items.get('exclude_folders_regex', []),
+            items.get('exclude_dirs_regex', []),
             items.get('exclude_files_regex', []),
-            items.get('exclude_extensions', [])
+            items.get('exclude_extensions_regex', [])
         )
 
     def get_dir_format_items(self):
         uid = self.kwargs.get('uid', None)
-        return OptionHandler.query(CONFIG, {}, 'formatters', uid, 'recursive_folder_format')
+        return OptionHandler.query(CONFIG, {}, 'formatters', uid, 'dir_format')
 
     def prepare_context(self, cwd, filelist):
         self.CONTEXT.update({
@@ -230,7 +230,7 @@ class SerialFormat:
             region = sublime.Region(0, self.view.size())
             uid = self.kwargs.get('uid', None)
             uid, syntax = SyntaxHandler(view=self.view, uid=uid, region=region, auto_format_config=None).get_assigned_syntax(self.view, uid, region)
-            exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'recursive_folder_format', 'exclude_syntaxes')
+            exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'dir_format', 'exclude_syntaxes')
             if not syntax or syntax in exclude_syntaxes:
                 if not syntax:
                     scope = OptionHandler.query(CONFIG, [], 'formatters', uid, 'syntaxes')

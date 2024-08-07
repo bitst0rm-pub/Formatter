@@ -1,5 +1,4 @@
 import os
-import re
 import threading
 import time
 
@@ -8,7 +7,7 @@ import sublime_plugin
 
 from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                     InterfaceHandler, LayoutHandler, OptionHandler,
-                    SyntaxHandler, log, reload_modules)
+                    SyntaxHandler, TransformHandler, log, reload_modules)
 from ..core.constants import PACKAGE_NAME
 from .dir_format import DirFormat
 from .file_format import FileFormat
@@ -130,21 +129,21 @@ class SavePasteManager:
             return True
 
         is_qo_mode = ConfigHandler.is_quick_options_mode()
-        is_rff_on = OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
+        is_rff_on = OptionHandler.query(CONFIG, False, 'quick_options', 'dir_format')
 
         if is_qo_mode:
             if uid not in OptionHandler.query(CONFIG, [], 'quick_options', opkey):
                 return True
 
             if is_rff_on:
-                log.info('Quick Options mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', uid, opkey)
+                log.info('Quick Options mode: %s has the "%s" option enabled, which is incompatible with "dir_format" mode.', uid, opkey)
                 return True
         else:
             if self._should_skip(value.get(opkey, False)):
                 return True
 
-            if OptionHandler.query(value, False, 'recursive_folder_format', 'enable'):
-                log.info('User Settings mode: %s has the "%s" option enabled, which is incompatible with "recursive_folder_format" mode.', uid, opkey)
+            if OptionHandler.query(value, False, 'dir_format', 'enable'):
+                log.info('User Settings mode: %s has the "%s" option enabled, which is incompatible with "dir_format" mode.', uid, opkey)
                 return True
 
         return False
@@ -165,17 +164,18 @@ class SavePasteManager:
             dir_path = os.path.dirname(file_path)
             extension = os.path.splitext(os.path.basename(file_path))[1].lstrip('.').lower()
 
-            for pattern in value.get('exclude_dirs_regex', []):
-                if re.match(pattern, dir_path):
-                    return True
+            exclude_dirs_regex_compiled = TransformHandler.compile_regex_patterns(value.get('exclude_dirs_regex', []))
+            exclude_files_regex_compiled = TransformHandler.compile_regex_patterns(value.get('exclude_files_regex', []))
+            exclude_extensions_regex_compiled = TransformHandler.compile_regex_patterns(value.get('exclude_extensions_regex', []))
 
-            for pattern in value.get('exclude_files_regex', []):
-                if re.match(pattern, file_path):
-                    return True
+            if any(pattern.match(dir_path) for pattern in exclude_dirs_regex_compiled):
+                return True
 
-            for pattern in value.get('exclude_extensions_regex', []):
-                if re.match(pattern, extension):
-                    return True
+            if any(pattern.match(file_path) for pattern in exclude_files_regex_compiled):
+                return True
+
+            if any(pattern.match(extension) for pattern in exclude_extensions_regex_compiled):
+                return True
 
         return False
 

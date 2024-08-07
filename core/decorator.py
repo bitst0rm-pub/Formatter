@@ -7,8 +7,11 @@ from . import log
 # List of deprecated options, categorized by their status
 DEPRECATED_OPTIONS = {
     'renamed': {
+        'disable': 'enable',
         'format_on_unique': 'format_on_priority',
-        'disable': 'enable'
+        'recursive_folder_format': 'dir_format',
+        'exclude_folders_regex': 'exclude_dirs_regex',
+        'exclude_extensions': 'exclude_extensions_regex'
     },
     'deprecated': ['custom_modules']
 }
@@ -27,7 +30,7 @@ def check_nested_settings(settings, deprecated_options, current_key=''):
         if option in settings:
             log.warning('The settings option "%s%s" is deprecated and will be removed in future versions. Please update your settings.', current_key, option)
 
-    for key in ['formatters']:  # adjust known structure key
+    for key in ['formatters', 'recursive_folder_format']:  # adjust known structure key
         if key in settings:
             nested_settings = settings[key]
             if isinstance(nested_settings, dict):

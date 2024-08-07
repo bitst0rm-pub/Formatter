@@ -1062,9 +1062,9 @@ class Base(Module):  # unused
         instance = InstanceManager.get_instance('TransformHandler')
         return instance.expand_path(path)
 
-    def get_recursive_filelist(self, dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
+    def get_recursive_filelist(self, dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions_regex):
         instance = InstanceManager.get_instance('TransformHandler')
-        return instance.get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions)
+        return instance.get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions_regex)
 
     def md5f(self, file_path):
         instance = InstanceManager.get_instance('HashHandler')
@@ -1409,19 +1409,36 @@ class TransformHandler:
         return path
 
     @staticmethod
-    def get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions):
+    def compile_regex_patterns(patterns_lst):
+        compiled_patterns = []
+        for pattern in patterns_lst:
+            try:
+                compiled_patterns.append(re.compile(pattern))
+            except re.error as e:
+                log.error('Invalid regex pattern: %s. Error: %s', pattern, e)
+                raise
+        return compiled_patterns
+
+    @staticmethod
+    def get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions_regex):
         text_files = []
+        exclude_dirs_regex_compiled = TransformHandler.compile_regex_patterns(exclude_dirs_regex)
+        exclude_files_regex_compiled = TransformHandler.compile_regex_patterns(exclude_files_regex)
+        exclude_extensions_regex_compiled = TransformHandler.compile_regex_patterns(exclude_extensions_regex)
 
         for root, dirs, files in os.walk(dir):
-            dirs[:] = [d for d in dirs if not any(re.match(pattern, d) for pattern in exclude_dirs_regex) and d not in [RECURSIVE_SUCCESS_DIRECTORY, RECURSIVE_FAILURE_DIRECTORY]]
+            dirs[:] = [d for d in dirs if not any(pattern.match(join(root, d)) for pattern in exclude_dirs_regex_compiled) and d not in [RECURSIVE_SUCCESS_DIRECTORY, RECURSIVE_FAILURE_DIRECTORY]]
 
             for file in files:
-                p = PathHandler(view=None).get_pathinfo(file)
-                if p['ext'] in exclude_extensions or not p['ext'] and p['base'] == p['stem'] and p['stem'] in exclude_extensions:
-                    continue
-                if any(re.match(pattern, file) for pattern in exclude_files_regex):
-                    continue
                 file_path = join(root, file)
+
+                if any(pattern.match(file_path) for pattern in exclude_files_regex_compiled):
+                    continue
+
+                extension = splitext(basename(file_path))[1].lstrip('.').lower()
+                if any(pattern.match(extension) for pattern in exclude_extensions_regex_compiled):
+                    continue
+
                 if TextHandler().is_text_file(file_path):
                     text_files.append(file_path)
 

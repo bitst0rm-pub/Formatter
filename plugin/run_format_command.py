@@ -12,10 +12,10 @@ class RunFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         CleanupHandler.clear_console()
 
-        is_recursive = self.is_dir_format_enabled(kwargs.get('uid', None))
-        if is_recursive:
+        is_df_enabled = self.is_dir_format_enabled(kwargs.get('uid', None))
+        if is_df_enabled:
             if kwargs.get('type', None) == 'graphic':
-                log.info('Recursive formatting is not supported for plugins of type: graphic')
+                log.info('Dir formatting is not supported for plugins of type: graphic')
             else:
                 self.run_dir_format(**kwargs)
         else:
@@ -41,10 +41,19 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             return False
 
     def is_dir_format_enabled(self, uid):
+        value = OptionHandler.query(CONFIG, False, 'formatters', uid, 'dir_format')
         if ConfigHandler.is_quick_options_mode():
-            return OptionHandler.query(CONFIG, False, 'quick_options', 'recursive_folder_format')
+            qo_value = OptionHandler.query(CONFIG, False, 'quick_options', 'dir_format')
+            if qo_value and isinstance(value, dict):
+                return any(value.values())
+            else:
+                return qo_value
         else:
-            return OptionHandler.query(CONFIG, False, 'formatters', uid, 'recursive_folder_format', 'enable')
+            if isinstance(value, bool):
+                return value
+
+            if isinstance(value, dict):
+                return any(value.values())
 
     def run_dir_format(self, **kwargs):
         if self.view.file_name():
@@ -54,7 +63,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
                 dir_format_thread = threading.Thread(target=dir_format.run)
                 dir_format_thread.start()
         else:
-            InterfaceHandler.popup_message('Please save the file first. Recursive folder formatting requires an existing file on disk, which must be opened as the starting point.', 'ERROR')
+            InterfaceHandler.popup_message('Please save the file first. Dir formatting requires an existing file, which must be opened as the starting point.', 'ERROR')
 
     def run_file_format(self, **kwargs):
         with threading.Lock():

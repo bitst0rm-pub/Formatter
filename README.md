@@ -11,7 +11,7 @@ In _theory_, it can also be used as a platform to convert any form of text, beyo
   - Text-to-Text (Text diagramms, ASCII art, etc.)
   - Text-to-Image (Image diagramms, QR-code images, etc.)
 - Capable to format entire files, single or multiple selections.
-- Capable to format entire folder recursively.
+- Capable to format entire directory recursively.
 - Operates more accurately based on syntax scope, **not** file extension.
 - Works with both saved and unsaved files (buffer).
 - Unified settings across different systems.
@@ -31,7 +31,7 @@ In _theory_, it can also be used as a platform to convert any form of text, beyo
 
 - Text-to-Image: Third-party plugins often rely on a headless browser to render images, making the process time-consuming. Consequently:
 
-  - `"recursive_folder_format"` will not be implemented or is disabled.
+  - `"dir_format"` will not be implemented or is disabled.
   - `"new_file_on_format"` will not be implemented or is disabled.
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
@@ -305,12 +305,13 @@ The following setting details - along with their default values and examples - a
         // while the dot files variant only applies to saved file, as unsaved files
         // (puffer on view) never has an working dir to contain dot files.
         //
-        // For "format_on_save" and "format_on_paste" you can use a dictionary format to exclude.
+        // For "format_on_save" and "format_on_paste" you can use the dictionary format to exclude.
         // "format_on_save": {
         //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
         //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
         //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
         // }
+        // Terminology: Hidden dot files, like .bashrc, do not have an extension to exclude.
         // More about this feature, see README.md > Auto-detect Formatting
         "auto_format": {
             "config": {
@@ -352,12 +353,13 @@ The following setting details - along with their default values and examples - a
                 // Solution: Use the "format_on_priority" option to workaround this.
                 //
                 // By default, this option uses a boolean value: false OR true
-                // To exclude files or dirs, use a dictionary format:
+                // To exclude dirs, files and extensions, use a dictionary format:
                 // "format_on_save": {
                 //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
                 //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
                 //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
                 // }
+                // Terminology: Hidden dot files, like .bashrc, do not have an extension to exclude.
                 "format_on_save": false,
 
                 // Auto formatting whenever code is pasted into the current file.
@@ -394,13 +396,16 @@ The following setting details - along with their default values and examples - a
                 // Any literal "$" must be escaped to "\\$" to distinguish it from
                 // the variable expansion "${...}". This important rule applies
                 // to the entire content of this settings file!
-                "recursive_folder_format": {
-                    "enable": false,
-                    "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
-                    "exclude_files_regex": ["^._.*$", ".*bar.exe"],
-                    "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
-                    "exclude_syntaxes": []
-                },
+                //
+                // By default, this option uses a boolean value: false OR true
+                // To exclude dirs, files, extensions and syntaxes, use a dictionary format:
+                // "dir_format": {
+                //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+                //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+                //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"],
+                //     "exclude_syntaxes': []
+                // }
+                "dir_format": false,
 
                 // Syntax support based on the scope name, not file extension.
                 // Syntax name is part of the scope name and can be retrieved from:
@@ -534,7 +539,7 @@ The following setting details - along with their default values and examples - a
                 // Same as the one in the examplemodule, but disabled/unused for type graphic.
                 "new_file_on_format": false,
                 // Same as the one in the examplemodule, but disabled/unused for type graphic.
-                "recursive_folder_format": {},
+                "dir_format": false,
                 // Same as the one in the examplemodule.
                 "syntaxes": ["css", "html", "js", "php"],
                 // Same as the one in the examplemodule.
@@ -602,11 +607,10 @@ The following setting details - along with their default values and examples - a
                 "format_on_paste": false,
                 "format_on_save": false,
                 "new_file_on_format": false,
-                "recursive_folder_format": {
-                    "enable": false,
-                    "exclude_folders_regex": ["Spotlight-V100", "temp", "cache", "logs", "^_.*foo\\$"],
-                    "exclude_files_regex": ["^._.*$", ".*bar.exe"],
-                    "exclude_extensions": ["DS_Store", "localized", "TemporaryItems", "Trashes", "db", "ini", "git", "svn", "tmp", "bak"],
+                "dir_format": {
+                    "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
+                    "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
+                    "exclude_extensions_regex": ["DS_Store", "localized", "tmp", "bak", "ya?ml", "mjs", "json"],
                     "exclude_syntaxes": []
                 },
                 "syntaxes": ["css", "scss", "sass", "less", "sss", "sugarss"],
@@ -626,7 +630,7 @@ The following setting details - along with their default values and examples - a
                 "enable": true,
                 "format_on_save": false,
                 // "new_file_on_format": false, // Add this, if needed
-                // "recursive_folder_format": {...} // Add this, if needed
+                "dir_format": false
                 "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
                 "executable_path": ["${HOME}/path/to/bin/uncrustify"],
                 "config_path": {
@@ -1092,17 +1096,21 @@ Responsible for interacting with plugin modules is the class: `class Module:`
 
 The following API and settings are deprecated and will be **removed** in the next versions:
 
-_Custom modules API:_
+_Custom modules API (only if you wrote your own modules):_
 
-- `log = logging.getLogger(__name__)` (in favor of `from .. import log`)
-- `self.is_valid_cmd(cmd)`
-- `self.fix_cmd(cmd)`
+- `log = logging.getLogger(__name__)` (deprecated, in favor of `from .. import log`)
+- `self.is_valid_cmd(cmd)` (deprecated)
+- `self.fix_cmd(cmd)` (deprecated)
 
 _Formatter.sublime-settings_ options:
 
-- `"custom_modules":` (in favor of `"custom_modules_manifest":`)
-- `"format_on_unique":` (in favor of `"format_on_priority":`)
-- `"disable":` (in favor of `"enable":`)
+- `"custom_modules":` (deprecated, in favor of `"custom_modules_manifest":`)
+- `"format_on_unique":` (renamed, in favor of `"format_on_priority":`)
+- `"recursive_folder_format"` (renamed, in favor of `"dir_format"`)
+  - `"enable"` (deprecated, removed)
+  - `"exclude_folders_regex"` (renamed, in favor of `"exclude_dirs_regex"`)
+  - `"exclude_extensions"` (renamed, in favor of `"exclude_extensions_regex"`)
+- `"disable":` (renamed, in favor of `"enable":`)
 
 ## License
 
