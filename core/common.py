@@ -535,7 +535,7 @@ class CommandHandler:
         log.status(s + '.' if StringHandler.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
 
     def print_oserr(self, cmd, error=''):
-        log.status('An error occurred while executing the command: %s Error: %s', ' '.join(cmd), error)
+        log.status('An error occurred while executing the command: %s\nError: %s', cmd, error)
 
 
 class ViewHandler:
