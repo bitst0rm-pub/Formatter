@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.14](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.14)] - 2024-08-07
+
+### 🚀 Features
+
+- [`9f9cbc1`](https://github.com/bitst0rm-pub/Formatter/commit/9f9cbc18386a98c63882fc7efa8db5081dadc0d1) Change settings option name from `"recursive_folder_format"` to `"dir_format"`; `"dir_format"` can now exclude specific dirs, files, extensions and syntaxes using: `"exclude_dirs_regex"`, `"exclude_files_regex"`, `"exclude_extensions_regex"`, `"exclude_syntaxes"` in config
+- [`d0a0117`](https://github.com/bitst0rm-pub/Formatter/commit/d0a0117509563ffb8171f587804dbc1e888613c3) `"format_on_save"`, `"format_on_paste"` and `auto format file` can now exclude specific dirs, files and extensions using: `"exclude_dirs_regex"`, `"exclude_files_regex"`, `"exclude_extensions_regex"` in config
+
+### 🐛 Bug Fixes
+
+- [`e3c2daf`](https://github.com/bitst0rm-pub/Formatter/commit/e3c2daf961e0c56d636738d675ce5b3d7af3cffc) *(prettier)* Fix OSError: [WinError 193] %1 is not a valid Win32 application. On Windows, shortcuts (symbolic links) are not considered application by subprocess (closes [#62](https://github.com/bitst0rm-pub/Formatter/issues/62))
+
+### ⚙️ Miscellaneous Tasks
+
+- [`4e3d27f`](https://github.com/bitst0rm-pub/Formatter/commit/4e3d27f90f7fabf698ec90338f9ea1896cc1351b) *(prettier)* Add `'prettier.cmd'` to `EXECUTABLES` list
+- [`7d2f09f`](https://github.com/bitst0rm-pub/Formatter/commit/7d2f09fc4f54a00fd329466392e76dcf71b4b559) Add line break to `print_oserr()`
+- [`67afd6f`](https://github.com/bitst0rm-pub/Formatter/commit/67afd6f55462a0fb92e497074f62e2163176aac0) Improve `print_oserr()` with more details (ref [#62](https://github.com/bitst0rm-pub/Formatter/issues/62))
+
 ## [[1.5.13](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.13)] - 2024-08-04
 
 ### ⚙️ Miscellaneous Tasks
