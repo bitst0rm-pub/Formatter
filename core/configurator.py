@@ -596,7 +596,8 @@ def build_formatter_sublime_settings(formatter_map):
     // while the dot files variant only applies to saved file, as unsaved files
     // (puffer on view) never has an working dir to contain dot files.
     //
-    // For "format_on_save" and "format_on_paste" you can use the dictionary format to exclude.
+    // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
+    // But you can use the dictionary format to exclude dirs, files and extensions:
     // "format_on_save": {
     //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
     //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],

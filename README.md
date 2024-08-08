@@ -305,7 +305,8 @@ The following setting details - along with their default values and examples - a
         // while the dot files variant only applies to saved file, as unsaved files
         // (puffer on view) never has an working dir to contain dot files.
         //
-        // For "format_on_save" and "format_on_paste" you can use the dictionary format to exclude.
+        // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
+        // But you can use the dictionary format to exclude dirs, files and extensions:
         // "format_on_save": {
         //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
         //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
@@ -959,11 +960,11 @@ Developing a module for Formatter is straightforward. All you need to do is crea
                    #     try:
                    #         self.exec_cmd(cmd)                # REQUIRED: only for special case of "type": "graphic" to generate SVG image.
                    #     except Exception as e:
-                   #         log.error('Error: %s', e)
+                   #         self.print_oserr(cmd, e)
 
                    return stdout                               # REQUIRED: return the formatted code on success
-           except OSError:
-               self.print_oserr(cmd)
+           except Exception as e:
+               self.print_oserr(cmd, e)
 
            return None                                         # REQUIRED: return None to indicate failure
 
@@ -1101,6 +1102,7 @@ _Custom modules API (only if you wrote your own modules):_
 - `log = logging.getLogger(__name__)` (deprecated, in favor of `from .. import log`)
 - `self.is_valid_cmd(cmd)` (deprecated)
 - `self.fix_cmd(cmd)` (deprecated)
+- `self.print_oserr(cmd)` (deprecated, in favor of `self.print_oserr(cmd, e)`)
 
 _Formatter.sublime-settings_ options:
 

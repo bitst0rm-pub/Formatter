@@ -428,14 +428,8 @@ class ProcessHandler:
     @validate_args(are_all_strings_in_list, check_cmd=True)
     @transform_args(fix_cmd)
     def popen(self, cmd, stdout=PIPE):
-        shell = False
         info = None
-
         if IS_WINDOWS:
-            # Fix OSError: [WinError 193] %1 is not a valid Win32 application
-            # On Windows, shortcuts (symbolic links) are not considered application by subprocess
-            shell = True
-
             from subprocess import STARTF_USESHOWWINDOW, STARTUPINFO, SW_HIDE
 
             # Hide the console window to avoid flashing an
@@ -448,7 +442,7 @@ class ProcessHandler:
         self.process = Popen(
             cmd, stdout=stdout, stdin=PIPE, stderr=PIPE,
             cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
-            env=EnvironmentHandler.update_environ(), shell=shell, startupinfo=info
+            env=EnvironmentHandler.update_environ(), shell=IS_WINDOWS, startupinfo=info
         )
         return self.process
 
@@ -535,7 +529,7 @@ class CommandHandler:
         log.status(s + '.' if StringHandler.is_empty_or_whitespace(stderr) else s + ':\n%s\n%s\n%s' % (sep, stderr, sep))
 
     def print_oserr(self, cmd, error=''):
-        log.status('An error occurred while executing the command: %s\nError: %s', cmd, error)
+        log.status('Error while executing the command: %s\nError: %s', cmd, error)
 
 
 class ViewHandler:
