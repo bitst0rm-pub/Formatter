@@ -32,7 +32,7 @@ class Formatter(Module):
 
         if self.uid == '@@noop@@':
             log.info('No operation')
-            return False
+            return None
 
         if not syntax:
             self.popup_message('Syntax out of the scope.', 'UID:' + self.uid)

@@ -29,6 +29,8 @@ class FileFormat:
             for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
                 self.kwargs.update(region=region)
                 is_success = Formatter(**self.kwargs).run()
+                if self.is_no_operation(is_success):
+                    continue
                 self.cycles.append(is_success)
                 self.print_status(is_success)
 
@@ -39,6 +41,14 @@ class FileFormat:
                 self.open_console_on_failure()
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+
+    def is_no_operation(self, is_success):
+        if is_success is None:
+            self.cleanup_temp_dir()
+            if OptionHandler.query(CONFIG, True, 'show_statusbar'):
+                self.set_status_bar_text()
+            return True
+        return False
 
     def create_graphic_temp_dir(self):
         if self.kwargs.get('type', None) == 'graphic':
@@ -168,7 +178,12 @@ class FileFormat:
         except Exception as e:
             log.error('Error creating phantom: %s', e)
         finally:
+            self.cleanup_temp_dir()
+
+    def cleanup_temp_dir(self):
+        if self.temp_dir:
             self.temp_dir.cleanup()
+            self.temp_dir = None
 
     def on_navigate(self, href, data, dst_view):
         if href == 'zoom_image':
