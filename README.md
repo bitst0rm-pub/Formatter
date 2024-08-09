@@ -368,7 +368,7 @@ The following setting details - along with their default values and examples - a
                 // So the mentioned syntax conflicts and solutions are the same.
                 //
                 // Also you can use the same dictionary format for exclusions:
-                // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex"
+                // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex", "exclude_syntaxes"
                 "format_on_paste": false,
 
                 // Create a new file containing formatted code.

@@ -661,7 +661,7 @@ def build_formatter_sublime_settings(formatter_map):
             // So the mentioned syntax conflicts and solutions are the same.
             //
             // Also you can use the same dictionary format for exclusions:
-            // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex"'''),
+            // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex", "exclude_syntaxes"'''),
                 ('format_on_paste', False),
                 ('__COMMENT__new_file_on_format', '''
             // Create a new file containing formatted code.
