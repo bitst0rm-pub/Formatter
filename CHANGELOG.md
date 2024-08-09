@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.16](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.16)] - 2024-08-09
+
+### ⚙️ Miscellaneous Tasks
+
+- [`4e3708a`](https://github.com/bitst0rm-pub/Formatter/commit/4e3708a8bd648468e2331a30e2b03934febf25f1) Suspend formatting status when there is no operation
+
 ## [[1.5.15](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.15)] - 2024-08-09
 
 ### 🚀 Features
