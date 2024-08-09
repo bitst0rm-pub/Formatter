@@ -102,6 +102,8 @@ class SavePasteManager:
                 v = OptionHandler.query(formatters, None, uid)
                 if not self._should_skip_formatter(uid, v, opkey):
                     syntax = self._get_syntax(uid)
+                    if self._should_skip_syntaxes(v, opkey, syntax):
+                        continue
                     if syntax in value:
                         CleanupHandler.clear_console()
                         log.debug('"%s" (priority)', opkey)
@@ -117,11 +119,19 @@ class SavePasteManager:
         for uid, value in formatters.items():
             if not self._should_skip_formatter(uid, value, opkey):
                 syntax = self._get_syntax(uid)
+                if self._should_skip_syntaxes(value, opkey, syntax):
+                    continue
                 if syntax in value.get('syntaxes', []) and syntax not in seen:
                     CleanupHandler.clear_console()
                     log.debug('"%s" (regular)', opkey)
                     FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
                     seen.add(syntax)
+
+    def _should_skip_syntaxes(self, value, opkey, syntax):
+        opkey_value = value.get(opkey, None)
+        if isinstance(opkey_value, dict):
+            return syntax in opkey_value.get('exclude_syntaxes', [])
+        return False
 
     def _should_skip_formatter(self, uid, value, opkey):
         if not isinstance(value, dict):

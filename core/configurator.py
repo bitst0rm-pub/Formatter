@@ -646,11 +646,12 @@ def build_formatter_sublime_settings(formatter_map):
             // Solution: Use the "format_on_priority" option to workaround this.
             //
             // By default, this option uses a boolean value: false OR true
-            // To exclude dirs, files and extensions, use a dictionary format:
+            // To exclude dirs, files, extensions and syntaxes, use a dictionary format:
             // "format_on_save": {
             //     "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
             //     "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
-            //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+            //     "exclude_extensions_regex": ["ya?ml", "mjs", "json"],
+            //     "exclude_syntaxes": []
             // }
             // Terminology: Hidden dot files, like .bashrc, do not have an extension to exclude.'''),
                 ('format_on_save', False),
