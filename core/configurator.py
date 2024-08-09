@@ -611,17 +611,15 @@ def build_formatter_sublime_settings(formatter_map):
                 ('format_on_save', False),
                 ('format_on_paste', False)
             ])),
-            ('json', OrderedDict([
-                ('uid', 'jsbeautifier')
+            ('json', 'jsbeautifier'),
+            ('python', OrderedDict([
+                ('uid', 'autopep8')
             ])),
             ('html', OrderedDict([
                 ('uid', 'jsbeautifier'),
                 ('exclude_syntaxes', OrderedDict([
                     ('html', NoIndent(['markdown']))
                 ]))
-            ])),
-            ('python', OrderedDict([
-                ('uid', 'autopep8')
             ])),
             ('__COMMENT__auto_format_b', '*/')
         ])),

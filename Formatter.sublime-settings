@@ -99,17 +99,15 @@
             "format_on_save": false,
             "format_on_paste": false
         },
-        "json": {
-            "uid": "jsbeautifier"
+        "json": "jsbeautifier",
+        "python": {
+            "uid": "autopep8"
         },
         "html": {
             "uid": "jsbeautifier",
             "exclude_syntaxes": {
                 "html": ["markdown"]
             }
-        },
-        "python": {
-            "uid": "autopep8"
         },
         */
     },

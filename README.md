@@ -319,17 +319,15 @@ The following setting details - along with their default values and examples - a
                 "format_on_save": false,
                 "format_on_paste": false
             },
-            "json": {
-                "uid": "jsbeautifier"
+            "json": "jsbeautifier",  // as type string
+            "python": {              // OR as type dictionary
+                "uid": "autopep8"
             },
             "html": {
                 "uid": "jsbeautifier",
                 "exclude_syntaxes": {
                     "html": ["markdown"]
                 }
-            },
-            "python": {
-                "uid": "autopep8"
             }
         },
 
@@ -682,17 +680,15 @@ _Advantage:_ The embedded one can handle both saved and unsaved files, while the
    ```js
    {
        // Comments are allowed.
-       "json": {
-           "uid": "jsbeautifier"
+       "json": "jsbeautifier",  // as type string
+       "python": {              // OR as type dictionary
+           "uid": "autopep8"
        },
        "html": {
            "uid": "jsbeautifier",
            "exclude_syntaxes": {
                "html": ["markdown"]
            }
-       },
-       "python": {
-           "uid": "autopep8"
        }
    }
    ```
@@ -747,17 +743,15 @@ _Advantage:_ The embedded one can handle both saved and unsaved files, while the
                "format_on_save": false,  // or use the dictionary format to exclude
                "format_on_paste": false  // or use the dictionary format to exclude
            },
-           "json": {
-               "uid": "jsbeautifier"
+           "json": "jsbeautifier",  // as type string
+           "python": {              // OR as type dictionary
+               "uid": "autopep8"
            },
            "html": {
                "uid": "jsbeautifier",
                "exclude_syntaxes": {
                    "html": ["markdown"]
                }
-           },
-           "python": {
-               "uid": "autopep8"
            }
        },
 

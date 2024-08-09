@@ -816,11 +816,12 @@ class SyntaxHandler:
             for syntax, v in self.auto_format_config.items():
                 if syntax == 'config':
                     continue
-                self.uid = v.get('uid', None)
+                v_is_dict = isinstance(v, dict)
+                self.uid = v.get('uid', None) if v_is_dict else v
                 kwargs = {
                     'is_auto_format': True,
                     'syntaxes': [syntax],
-                    'exclude_syntaxes': v.get('exclude_syntaxes', {})
+                    'exclude_syntaxes': v.get('exclude_syntaxes', {}) if v_is_dict else None
                 }
                 syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
                 if syntax:
