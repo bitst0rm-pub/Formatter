@@ -711,7 +711,8 @@ _Advantage:_ The embedded one can handle both saved and unsaved files, while the
        "format_on_save": {
            "exclude_dirs_regex": [".*(\\.git|node_modules|__pycache__|env).*", ".*/project/test"],
            "exclude_files_regex": [".*test_file\\.py\\$", ".*/project/test/config\\.json"],
-           "exclude_extensions_regex": ["ya?ml", "mjs", "json"]
+           "exclude_extensions_regex": ["ya?ml", "mjs", "json"],
+           "exclude_syntaxes": []
        },
        "format_on_paste": false
    }

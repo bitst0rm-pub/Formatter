@@ -68,6 +68,8 @@ class SavePasteManager:
         if (auto_format_user_config and not self._should_skip(auto_format_user_operation)) or not self._should_skip(auto_format_config_operation):
             get_auto_format_args = DotFileHandler(view=self.view).get_auto_format_args(active_file_path=file_path)
             if get_auto_format_args:
+                if get_auto_format_args['auto_format_config'].get('config', None):
+                    get_auto_format_args['auto_format_config']['config'].update(__operation__=opkey)
                 CleanupHandler.clear_console()
                 log.debug('"%s" (autoformat)', opkey)
                 FileFormat(self.view, **get_auto_format_args).run()

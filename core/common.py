@@ -825,7 +825,11 @@ class SyntaxHandler:
                 }
                 syntax = self._detect_assigned_syntax(view, uid, region, **kwargs)
                 if syntax:
-                    return self.uid, syntax
+                    operation = OptionHandler.query(self.auto_format_config, None, 'config', '__operation__')
+                    if syntax in OptionHandler.query(self.auto_format_config, [], 'config', operation, 'exclude_syntaxes'):
+                        return '@@noop@@', None
+                    else:
+                        return self.uid, syntax
             return '@@noop@@', None
         else:
             syntax = self._detect_assigned_syntax(view, uid, region)
