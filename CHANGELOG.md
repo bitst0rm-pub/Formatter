@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.15](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.15)] - 2024-08-09
+
+### 🚀 Features
+
+- [`d2f26c0`](https://github.com/bitst0rm-pub/Formatter/commit/d2f26c04dd952f10f21d7bb42b6b16cea4941acc) Add `"exclude_syntaxes": []` to `"format_on_save"` and `"format_on_paste"` to use regular
+- [`3992334`](https://github.com/bitst0rm-pub/Formatter/commit/3992334f1eef068fbf0e57f7272a2637c734e5ae) Add `"exclude_syntaxes": []` to `"format_on_save"` and `"format_on_paste"` to use with `Auto Format File`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`297e913`](https://github.com/bitst0rm-pub/Formatter/commit/297e913765734aa7b2344c5c35c37e21242eb15f) Update README.md
+- [`e17b170`](https://github.com/bitst0rm-pub/Formatter/commit/e17b170594539cbc3b9af68c411c34bf1ac005bd) Auto_format setting items can now be a type string `"auto_format": {{"json": "jsbeautifier"}}` or a dictionary `"auto_format": {{"json": {"uid": "jsbeautifier"}}}`
+
 ## [[1.5.14](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.14)] - 2024-08-07
 
 ### 🚀 Features
