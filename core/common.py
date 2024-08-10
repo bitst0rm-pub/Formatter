@@ -931,13 +931,14 @@ class DotFileHandler:
                     try:
                         with open(p, 'r', encoding='utf-8') as f:
                             StringHandler.update_json_recursive(config, sublime.decode_value(f.read()))
-                    except Exception:
-                        log.error('Error reading %s at: %s', filename, p)
+                    except Exception as e:
+                        log.error('Error reading %s at %s: %s', filename, p, e)
+                    return config
         return config
 
     def get_cfgignore(self, active_file_path=None):
         paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
-        return self._read_config_file(paths, ['.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore'])
+        return self._read_config_file(paths, ['.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore']) or {}
 
     def get_auto_format_config(self, active_file_path=None):
         paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
