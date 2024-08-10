@@ -224,6 +224,10 @@ The following setting details - along with their default values and examples - a
         // Accepted values: true (verbose), false, OR "status" (recommended)
         "debug": false,
 
+        // By default, all previous console messages will be cleared. (ST4088+ only)
+        // If you want to retain the console message history, set this to false.
+        "clear_console": true
+
         // Auto open the console panel whenever formatting fails.
         // This is useful if "debug" is "status" or true
         "open_console_on_failure": false,

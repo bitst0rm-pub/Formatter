@@ -462,8 +462,8 @@ def build_formatter_sublime_settings_children(formatter_map):
 
             typ = config.get('type', None)
             if typ == 'graphic':
-                child.pop('new_file_on_format')
-                child.pop('dir_format')
+                child.pop('new_file_on_format', None)
+                child.pop('dir_format', None)
                 child['type'] = 'graphic'
                 child['render_extended'] = False
 
@@ -514,6 +514,10 @@ def build_formatter_sublime_settings(formatter_map):
         ('__COMMENT__debug', '''// Enable debug mode to view errors in the console.
     // Accepted values: true (verbose), false, OR "status" (recommended)'''),
         ('debug', False),
+        ('__COMMENT__clear_console', '''
+    // By default, all previous console messages will be cleared. (ST4088+ only)
+    // If you want to retain the console message history, set this to false.'''),
+        ('clear_console', True),
         ('__COMMENT__open_console_on_failure', '''
     // Auto open the console panel whenever formatting fails.
     // This is useful if "debug" is "status" or true'''),

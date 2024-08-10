@@ -1159,14 +1159,15 @@ class CleanupHandler:
 
     @staticmethod
     def clear_console():
-        if SUBLIME_PREFERENCES:
-            current = SUBLIME_PREFERENCES.get('console_max_history_lines', None)
-            if current is None:
-                return  # not implemented in <ST4088
+        if OptionHandler.query(CONFIG, True, 'clear_console'):
+            if SUBLIME_PREFERENCES:
+                current = SUBLIME_PREFERENCES.get('console_max_history_lines', None)
+                if current is None:
+                    return  # not implemented in <ST4088
 
-            SUBLIME_PREFERENCES.set('console_max_history_lines', 1)
-            print('')
-            SUBLIME_PREFERENCES.set('console_max_history_lines', current)
+                SUBLIME_PREFERENCES.set('console_max_history_lines', 1)
+                print('')
+                SUBLIME_PREFERENCES.set('console_max_history_lines', current)
 
 
 class ConfigHandler:
@@ -1247,6 +1248,7 @@ class ConfigHandler:
             'quick_options': cls.load_quick_options(),
             'debug': settings.get('debug', False),
             'dev': settings.get('dev', False),
+            'clear_console': settings.get('clear_console', True),
             'open_console_on_failure': settings.get('open_console_on_failure', False),
             'close_console_on_success': settings.get('close_console_on_success', False),
             'timeout': settings.get('timeout', 10),
