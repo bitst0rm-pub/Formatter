@@ -941,19 +941,23 @@ class DotFileHandler:
 
     def get_auto_format_config(self, active_file_path=None):
         paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
-        config = self._read_config_file(paths, ['.sublimeformatter.json', '.sublimeformatter'])
-        if 'config' in config:
-            config.pop('config')
-        return {'auto_format_config': config} if config else {}
+        return self._read_config_file(paths, ['.sublimeformatter.json', '.sublimeformatter']) or {}
 
     def get_auto_format_user_config(self, active_file_path=None):
         paths = FolderHandler(view=self.view)._get_active_view_parent_folders(active_file_path)
-        return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter-user'])
+        return self._read_config_file(paths, ['.sublimeformatter.user.json', '.sublimeformatter-user']) or {}
+
+    def _auto_format_config_merge(self, active_file_path=None):
+        config = self.get_auto_format_config(active_file_path)
+        user_config = self.get_auto_format_user_config(active_file_path)
+        if user_config:
+            config['config'] = user_config
+        return config
 
     def get_auto_format_args(self, active_file_path=None):
         auto_format = OptionHandler.query(CONFIG, {}, 'auto_format').copy()
-        auto_format.update(self.get_auto_format_config(active_file_path).get('auto_format_config', {}))
-        return {'auto_format_config': auto_format} if auto_format else {}
+        auto_format.update(self._auto_format_config_merge(active_file_path))
+        return {'auto_format_config': auto_format}
 
 
 class GraphicHandler:

@@ -61,19 +61,16 @@ class SavePasteManager:
         self._on_paste_or_save(opkey=operation)
 
     def _on_auto_format(self, file_path, opkey=None):
-        auto_format_user_config = DotFileHandler(view=self.view).get_auto_format_user_config(active_file_path=file_path)
-        auto_format_user_operation = OptionHandler.query(auto_format_user_config, False, opkey)
-        auto_format_config_operation = OptionHandler.query(CONFIG, False, 'auto_format', 'config', opkey)
+        get_auto_format_args = DotFileHandler(view=self.view).get_auto_format_args(active_file_path=file_path)
+        x = get_auto_format_args['auto_format_config']
+        config = x.get('config', {})
+        if config and not self._should_skip(config.get(opkey, False)):
+            config.update(__operation__=opkey)
+            CleanupHandler.clear_console()
 
-        if (auto_format_user_config and not self._should_skip(auto_format_user_operation)) or not self._should_skip(auto_format_config_operation):
-            get_auto_format_args = DotFileHandler(view=self.view).get_auto_format_args(active_file_path=file_path)
-            if get_auto_format_args:
-                if get_auto_format_args['auto_format_config'].get('config', None):
-                    get_auto_format_args['auto_format_config']['config'].update(__operation__=opkey)
-                CleanupHandler.clear_console()
-                log.debug('"%s" (autoformat)', opkey)
-                FileFormat(self.view, **get_auto_format_args).run()
-                return True
+            log.debug('"%s" (autoformat)', opkey)
+            FileFormat(self.view, **get_auto_format_args).run()
+            return True
 
         return False
 
@@ -106,6 +103,7 @@ class SavePasteManager:
                         continue
                     if syntax in value:
                         CleanupHandler.clear_console()
+
                         log.debug('"%s" (priority)', opkey)
                         FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
                         break
@@ -123,6 +121,7 @@ class SavePasteManager:
                     continue
                 if syntax in value.get('syntaxes', []) and syntax not in seen:
                     CleanupHandler.clear_console()
+
                     log.debug('"%s" (regular)', opkey)
                     FileFormat(view=self.view, uid=uid, type=value.get('type', None)).run()
                     seen.add(syntax)

@@ -24,4 +24,6 @@ class AutoFormatFileCommand(sublime_plugin.TextCommand):
 
     def is_visible(self):
         ConfigHandler.set_debug_mode()
-        return bool(DotFileHandler(view=self.view).get_auto_format_config()) or bool(OptionHandler.query(CONFIG, {}, 'auto_format'))
+        auto_format = OptionHandler.query(CONFIG, {}, 'auto_format').copy()
+        auto_format.pop('config', None)
+        return bool(auto_format) or bool(DotFileHandler(view=self.view).get_auto_format_config())
