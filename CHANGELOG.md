@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.17](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.17)] - 2024-08-11
+
+### 🚀 Features
+
+- [`913f15a`](https://github.com/bitst0rm-pub/Formatter/commit/913f15a204243d81724c94d68f6fd386a5132527) Add settings option `"clear_console"` to clear all previous console messages, for ST4088+ only
+
+### 🐛 Bug Fixes
+
+- [`f307122`](https://github.com/bitst0rm-pub/Formatter/commit/f307122c99eaeaba56418d0e6d76cd77fedbdec2) Fix issue where dot files config for auto-formatting is not being respected
+
+### ⚙️ Miscellaneous Tasks
+
+- [`f0f7233`](https://github.com/bitst0rm-pub/Formatter/commit/f0f7233c0b8b6658a24b38730de27f499c2ab3ca) Return the auto format config as soon as the first dot file is found
+
 ## [[1.5.16](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.16)] - 2024-08-09
 
 ### ⚙️ Miscellaneous Tasks
