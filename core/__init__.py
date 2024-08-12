@@ -1,7 +1,7 @@
 from .logger import disable_logging, enable_logging, enable_status, log
 from .decorator import (are_all_strings_in_list, check_deprecated_api,
-                        check_deprecated_options, retry_on_exception,
-                        transform_args, validate_args, check_stop)
+                        check_deprecated_options, check_stop,
+                        retry_on_exception, transform_args, validate_args)
 from .common import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                      HashHandler, InstanceManager, InterfaceHandler,
                      LayoutHandler, MarkdownHandler, Module, OptionHandler,

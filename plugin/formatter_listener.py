@@ -9,8 +9,7 @@ from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                     InterfaceHandler, LayoutHandler, OptionHandler,
                     SyntaxHandler, TransformHandler, log, reload_modules)
 from ..core.constants import PACKAGE_NAME
-from .dir_format import DirFormat
-from .file_format import FileFormat
+from . import DirFormat, FileFormat
 
 
 class SyncScrollManager:
