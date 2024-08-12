@@ -38,6 +38,7 @@ class DirFormat:
     def run(self):
         global STOP
         STOP = False
+        CONFIG['STOP'] = False  # pause smanager and wcounter
 
         try:
             cwd = self.get_current_working_directory()
@@ -51,6 +52,7 @@ class DirFormat:
     def stop(self):
         global STOP
         STOP = True
+        CONFIG['STOP'] = True
 
     def get_current_working_directory(self):
         return PathHandler(view=self.view).get_pathinfo(self.view.file_name())['cwd']
@@ -208,6 +210,7 @@ class DirFormat:
             else:
                 self.CONTEXT[key] = None
         # Reset and end
+        CONFIG['STOP'] = True
 
     def handle_error(self, error, cwd=None, file_path=None):
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))

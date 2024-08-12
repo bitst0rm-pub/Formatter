@@ -1451,7 +1451,7 @@ class TransformHandler:
                 if any(pattern.match(extension) for pattern in exclude_extensions_regex_compiled):
                     continue
 
-                if TextHandler().is_text_file(file_path):
+                if TextHandler.is_text_file(file_path):
                     text_files.append(file_path)
 
         return text_files

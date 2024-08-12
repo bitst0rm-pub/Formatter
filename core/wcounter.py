@@ -93,8 +93,9 @@ class WordsCounter:
 
 class WordsCounterListener(sublime_plugin.EventListener):
     def on_selection_modified_async(self, view):
-        if OptionHandler.query(CONFIG, False, 'show_words_count', 'enable'):
-            ignore_whitespace_char = OptionHandler.query(CONFIG, True, 'show_words_count', 'ignore_whitespace_char')
-            use_short_label = OptionHandler.query(CONFIG, False, 'show_words_count', 'use_short_label')
+        x = OptionHandler.query(CONFIG, {}, 'show_words_count')
+        if x.get('enable', True) and CONFIG.get('STOP', True):
+            ignore_whitespace_char = x.get('ignore_whitespace_char', True)
+            use_short_label = x.get('use_short_label', False)
             view.settings().set('show_line_column', 'disabled')
             WordsCounter(view, ignore_whitespace_char, use_short_label).run_on_selection_modified()

@@ -166,9 +166,9 @@ class SessionManagerListener(sublime_plugin.EventListener):
         self.session_manager = SessionManager(max_database_records=600)
 
     def on_load(self, view):
-        if OptionHandler.query(CONFIG, True, 'remember_session'):
+        if OptionHandler.query(CONFIG, True, 'remember_session') and CONFIG.get('STOP', True):
             self.session_manager.run_on_load(view)
 
     def on_pre_close(self, view):
-        if OptionHandler.query(CONFIG, True, 'remember_session'):
+        if OptionHandler.query(CONFIG, True, 'remember_session') and CONFIG.get('STOP', True):
             self.session_manager.run_on_pre_close(view)
