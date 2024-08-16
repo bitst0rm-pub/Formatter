@@ -1686,15 +1686,18 @@ class TextHandler:
             return False
 
     @staticmethod
-    def is_text_file(file_path):
+    def is_text_file(file_path, block_size=1024):
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, 'rb') as file:
+                chunk = file.read(block_size)
+                if not chunk:
+                    return False  # empty file
                 try:
-                    next(f)
-                except StopIteration:
+                    chunk.decode('utf-8')
+                except UnicodeDecodeError:
                     return False
-            return True
-        except UnicodeDecodeError:
+                return True
+        except Exception:
             return False
 
 
