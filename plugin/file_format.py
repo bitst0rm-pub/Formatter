@@ -10,6 +10,7 @@ from ..core import (CONFIG, ConfigHandler, InterfaceHandler, LayoutHandler,
                     log)
 from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
+from . import ActivityIndicator
 
 
 class FileFormat:
@@ -20,8 +21,13 @@ class FileFormat:
         self.temp_dir = None
         self.success, self.failure = 0, 0
         self.cycles = []
+        self.indicator = None
 
     def run(self):
+        # Show progress indicator if formatting takes longer than 1s
+        self.indicator = ActivityIndicator(self.view, 'In Progress...')
+        sublime.set_timeout(self.start_indicator, 1000)
+
         self.create_graphic_temp_dir()
         PrintHandler.print_sysinfo(pretty=True)
 
@@ -41,6 +47,17 @@ class FileFormat:
                 self.open_console_on_failure()
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+        finally:
+            self.stop_indicator()
+
+    def start_indicator(self):
+        if self.indicator:
+            self.indicator.start()
+
+    def stop_indicator(self):
+        if self.indicator:
+            self.indicator.stop()
+            self.indicator = None
 
     def is_no_operation(self, is_success):
         if is_success is None:

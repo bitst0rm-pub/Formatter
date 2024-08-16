@@ -450,7 +450,7 @@ class ProcessHandler:
         try:
             if self.is_alive(process):
                 process.terminate()
-                process.wait(timeout=1)  # 1 sec
+                process.wait(timeout=1)  # 1s
             if self.is_alive(process):
                 process.kill()
                 process.wait(timeout=1)
@@ -1240,7 +1240,7 @@ class ConfigHandler:
 
     @classmethod
     @check_deprecated_options
-    @retry_on_exception(retries=5, delay=500)  # 2 sec
+    @retry_on_exception(retries=5, delay=500)  # 2s
     def build_config(cls, settings):
         global CONFIG
 

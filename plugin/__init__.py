@@ -1,3 +1,4 @@
+from .activity_indicator import ActivityIndicator
 from .dir_format import DirFormat
 from .file_format import FileFormat
 from .auto_format_file_command import AutoFormatFileCommand
@@ -16,6 +17,7 @@ from .zoom_command import ZoomCommand
 from .formatter_listener import FormatterListener
 
 __all__ = [
+    'ActivityIndicator',
     'DirFormat',
     'FileFormat',
     'AutoFormatFileCommand',
