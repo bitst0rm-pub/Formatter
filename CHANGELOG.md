@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.18](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.18)] - 2024-08-16
+
+### ⚙️ Miscellaneous Tasks
+
+- [`93a18de`](https://github.com/bitst0rm-pub/Formatter/commit/93a18de9e8afad1ed6d8c88510f210c3d759bce0) Improve text file detection
+- [`c7ba061`](https://github.com/bitst0rm-pub/Formatter/commit/c7ba0618ab8c7af6c4a02972b3ccf448d2b1f307) Show progress indicator if formatting takes longer than 1s
+- [`1bb48e3`](https://github.com/bitst0rm-pub/Formatter/commit/1bb48e35de6b662449daf447026ed47e1f5397b3) Temporarily disable smanager and wcounter while performing dir formatting
+- [`132c874`](https://github.com/bitst0rm-pub/Formatter/commit/132c87443a2eb01c8e7a947ea4ccb0bfbcb639db) Isort imports
+
 ## [[1.5.17](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.17)] - 2024-08-11
 
 ### 🚀 Features
