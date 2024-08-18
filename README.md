@@ -5,8 +5,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 
 **Key features:**
 
-- Supports more than 70 major programming languages.
-- Includes over 80 preset adapters for various [plugins](#plugins).
+- Supports more than 70 major programming languages via [plugins](#plugins).
 - Transforms text in various ways:
   - Text-to-Text (Text diagramms, ASCII art, etc.)
   - Text-to-Image (Image diagramms, QR-code images, etc.)
@@ -159,7 +158,7 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 
 💡 **Tips**:
 
-- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) and can collaborate to format `CSS`
+- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) can collaborate to format `CSS`
 
     <details>
     <summary><sub>Config example</sub></summary>
