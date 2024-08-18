@@ -101,13 +101,13 @@ class ActivityIndicator:
             'width': 10,
             'interval': 200
         },
-        'wave_animation': {
+        'fancy_wave': {
             'func': lambda width, tick: '{}[{}]'.format(
                 '{label}',
                 ''.join(['°º¤ø,¸¸,ø¤º°'[(i + tick) % len('°º¤ø,¸¸,ø¤º°')] for i in range(width)])
             ),
             'width': 10,
-            'interval': 250
+            'interval': 200
         },
         'dots': {
             'func': lambda width, tick: '{}[{}]'.format(
@@ -141,6 +141,14 @@ class ActivityIndicator:
             'width': 10,
             'interval': 150
         },
+        'dancing_lines': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                ''.join(['/' if (i + tick) % 2 == 0 else '\\' for i in range(width)])
+            ),
+            'width': 10,
+            'interval': 150
+        },
         'chase': {
             'func': lambda width, tick: '{}[{}]'.format(
                 '{label}',
@@ -156,6 +164,206 @@ class ActivityIndicator:
             ),
             'width': 10,
             'interval': 150
+        },
+        'braille_spinner': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '⣷⣯⣟⡿⢿⣻⣽⣾'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'syncopated_rhythm': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                ''.join([['⣷', '⣯', '⣟', '⡿', '⢿', '⣻', '⣽', '⣾'][(tick + i) % 8] if (i % 4) == 0 else '' for i in range(width)])
+            ),
+            'width': 8,
+            'interval': 200
+        },
+        'dancing_bars': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                ''.join([['⣷', '⣯', '⣟', '⡿', '⢿', '⣻', '⣽', '⣾'][(i + tick) % 8] if i % 2 == 0 else ' ' for i in range(width)])
+            ),
+            'width': 8,
+            'interval': 150
+        },
+        'pulsing_wave': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                ' '.join([['⣷', '⣯', '⣟', '⡿', '⢿', '⣻', '⣽', '⣾'][(tick + i) % 8] for i in range(width)])
+            ),
+            'width': 8,
+            'interval': 150
+        },
+        'square_spinner': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '▖▘▝▗'[(tick % 4)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'line_bounce': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                ('-' * (tick % width) + '|' + '-' * (width - (tick % width) - 1))
+            ),
+            'width': 10,
+            'interval': 100
+        },
+        'circle_spinner': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '◐◓◑◒'[(tick % 4)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'pulse': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '●◐◒◓◉◓◒◐'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 200
+        },
+        'heartbeat': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '❤   ❤' if (tick % 4) < 2 else '   ❤   '
+            ),
+            'width': 1,
+            'interval': 300
+        },
+        'twirl': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '▹▸▻►▹▸▻►'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'starry_night': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '✶✸✹✺✹✷✶'[(tick % 7)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'flip': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '┤┘┴└├┌┬┐'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 100
+        },
+        'rolling_dice': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '⚀⚁⚂⚃⚄⚅'[(tick % 6)]
+            ),
+            'width': 1,
+            'interval': 200
+        },
+        'box_spinner': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '▛▜▟▙'[(tick % 4)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'dots_carousel': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'[(tick % 10)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'signal_strength': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '▁▃▅▇'[(tick % 4)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'rolling_circle': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '◴◷◶◵'[(tick % 4)]
+            ),
+            'width': 1,
+            'interval': 100
+        },
+        'clock': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🕛🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚'[(tick % 12)]
+            ),
+            'width': 1,
+            'interval': 150
+        },
+        'moon_phases': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🌑🌒🌓🌔🌕🌖🌗🌘'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 200
+        },
+        'traffic_lights': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🔴🟠🟢'[(tick % 3)]
+            ),
+            'width': 1,
+            'interval': 300
+        },
+        'emoji_bounce': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '😀😃😄😁😆😅😂🤣'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 200
+        },
+        'ping_pong': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🏓 ' if tick % 2 == 0 else ' 🏓'
+            ),
+            'width': 1,
+            'interval': 200
+        },
+        'colorful_blocks': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🟦🟧🟨🟩🟦🟧🟨🟩'[(tick % 8)]
+            ),
+            'width': 1,
+            'interval': 200
+        },
+        'rotating_earth': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🌍🌎🌏'[(tick % 3)]
+            ),
+            'width': 1,
+            'interval': 250
+        },
+        'balloon_pop': {
+            'func': lambda width, tick: '{}[{}]'.format(
+                '{label}',
+                '🎈' if tick % 2 == 0 else '💥'
+            ),
+            'width': 1,
+            'interval': 300
         }
     }
 
@@ -169,7 +377,7 @@ class ActivityIndicator:
         self.width = width if width is not None else style_defaults['width']
         self.interval = interval if interval is not None else style_defaults['interval']
         self.style = style
-        self.key = 'ai-{}'.format(uuid.uuid4())
+        self.key = '{}_ai'.format(uuid.uuid4())
         self._running = False
         self._tick = 0
         self._lock = Lock()
@@ -217,3 +425,29 @@ class ActivityIndicator:
 
     def __del__(self):
         self.erase()
+
+    def test_all_styles(self, duration=5):  # 5s
+        # Test case to display all available styles
+        def _test_styles(styles, index):
+            if index >= len(styles):
+                self.erase()
+                return
+
+            style = styles[index]
+            self.style = style
+            self.width = self.STYLES[style]['width']
+            self.interval = self.STYLES[style]['interval']
+
+            # Update the label to include the style name
+            self.label = '{}: '.format(style)
+
+            self.start()
+
+            # Stop displaying the current style after duration in seconds
+            sublime.set_timeout(lambda: self.stop(), duration * 1000)
+
+            # Schedule the next style to start after duration in seconds plus a small delay
+            sublime.set_timeout(lambda: _test_styles(styles, index + 1), (duration + 0.1) * 1000)
+
+        all_styles = list(self.STYLES.keys())
+        _test_styles(all_styles, 0)
