@@ -153,3 +153,14 @@ def check_stop(get_stop_status_func):
             return func(self, *args, **kwargs)
         return wrapper
     return decorator
+
+
+# Decorator to clean subprocess output
+def clean_output(func):
+    def wrapper(*args, **kwargs):
+        returncode, stdout, stderr = func(*args, **kwargs)
+        if stderr:
+            # Fix '<0x0d>' (\r) due to Popen(shell=True) on Windows
+            stderr = stderr.replace('\r\n', '\n').replace('\r', '\n')
+        return returncode, stdout, stderr
+    return wrapper

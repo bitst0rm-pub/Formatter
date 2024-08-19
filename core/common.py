@@ -13,9 +13,9 @@ from subprocess import PIPE, Popen, TimeoutExpired
 import sublime
 
 from . import (are_all_strings_in_list, check_deprecated_api,
-               check_deprecated_options, disable_logging, enable_logging,
-               enable_status, log, retry_on_exception, transform_args,
-               validate_args)
+               check_deprecated_options, clean_output, disable_logging,
+               enable_logging, enable_status, log, retry_on_exception,
+               transform_args, validate_args)
 from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
                         PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
@@ -511,6 +511,7 @@ class CommandHandler:
 
         return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')
 
+    @clean_output
     def exec_cmd(self, cmd, outfile=None):
         if outfile:
             with open(outfile, 'wb') as file:
