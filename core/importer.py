@@ -310,7 +310,7 @@ def download_and_extract_archive(arch_url, sig_url=None, ca_cert=None, public_ke
     return False
 
 
-def import_model_v1(custom_modules):  # deprecated
+def import_model_v1(custom_modules):  # @deprecated
     packages_path = sublime.packages_path()
     seen = set()
 

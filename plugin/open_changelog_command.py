@@ -9,7 +9,7 @@ from ..core.constants import PACKAGE_NAME
 
 class OpenChangelogCommand(sublime_plugin.WindowCommand):
     def __init__(self, *args, **kwargs):
-        self.FILE_PATH = self.get_file_path()
+        self.file_path = self.get_file_path()
 
     def get_file_path(self):
         return os.path.join(sublime.packages_path(), PACKAGE_NAME, 'CHANGELOG.md')
@@ -25,14 +25,14 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand):
         return None
 
     def is_enabled(self):
-        return os.path.exists(self.FILE_PATH)
+        return os.path.exists(self.file_path)
 
     def is_visible(self):
         return self.is_enabled()
 
     def run(self):
-        if os.path.exists(self.FILE_PATH):
-            html = self.convert_markdown_file_to_html(self.FILE_PATH)
+        if os.path.exists(self.file_path):
+            html = self.convert_markdown_file_to_html(self.file_path)
             if html:
                 view = sublime.active_window().new_file()
                 PhantomHandler.style_view(view)
@@ -42,4 +42,4 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand):
                 view.set_read_only(True)
                 view.set_scratch(True)
         else:
-            log.error('File does not exist: %s', self.FILE_PATH)
+            log.error('File does not exist: %s', self.file_path)
