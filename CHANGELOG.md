@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[1.5.19](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.19)] - 2024-08-21
+
+### ⚙️ Miscellaneous Tasks
+
+- [`b86663f`](https://github.com/bitst0rm-pub/Formatter/commit/b86663f13895f07c723282f178a634d95babbdd4) Add more styles to the activity indicator
+- [`35a087d`](https://github.com/bitst0rm-pub/Formatter/commit/35a087d5b15810e0dce72f0248dd874fc4f7172c) Remove potential carriage return character `<0x0d>` in subprocess stderr on Windows (ref [#54](https://github.com/bitst0rm-pub/Formatter/issues/54))
+- [`fb566af`](https://github.com/bitst0rm-pub/Formatter/commit/fb566af282dcd28981c99e0f1f60c2e01643310b) Use signal to kill subprocess
+
 ## [[1.5.18](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.18)] - 2024-08-16
 
 ### ⚙️ Miscellaneous Tasks
