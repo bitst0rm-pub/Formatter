@@ -43,8 +43,6 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
         return dst_view
 
     def copy_content_and_selections(self, edit, src_view, dst_view):
-        # edit is broken in ST4166+:
-        # dst_view.insert(edit, 0, src_view.substr(sublime.Region(0, src_view.size())))
         dst_view.run_command('append', {'characters': src_view.substr(sublime.Region(0, src_view.size()))})
 
         selections = list(src_view.sel())

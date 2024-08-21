@@ -1,3 +1,4 @@
+import abc
 import hashlib
 import json
 import os
@@ -21,6 +22,7 @@ from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
                         PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
                         RECURSIVE_SUCCESS_DIRECTORY)
+
 if IS_WINDOWS:
     from subprocess import (CREATE_NEW_PROCESS_GROUP, STARTF_USESHOWWINDOW,
                             STARTUPINFO, SW_HIDE)
@@ -35,13 +37,13 @@ class InstanceManager:
 
     @classmethod
     def get_instance(cls, class_name_or_instance, *args, **kwargs):
-        if isinstance(class_name_or_instance, str):  # if class_name is provided
+        if isinstance(class_name_or_instance, str):
             class_name = class_name_or_instance
             key = (class_name, *args)
             if key not in cls._instances:
                 cls._instances[key] = globals()[class_name](*args, **kwargs)
             return cls._instances[key]
-        else:  # if instance is provided
+        else:
             instance = class_name_or_instance
             key = (instance.__class__.__name__, *args)
             if key not in cls._instances:
@@ -50,12 +52,12 @@ class InstanceManager:
 
     @classmethod
     def reset_instance(cls, class_name_or_instance, *args):
-        if isinstance(class_name_or_instance, str):  # if class_name is provided
+        if isinstance(class_name_or_instance, str):
             class_name = class_name_or_instance
             key = (class_name, *args)
             if key in cls._instances:
                 del cls._instances[key]
-        else:  # if instance is provided
+        else:
             instance = class_name_or_instance
             key = (instance.__class__.__name__, *args)
             if key in cls._instances:
@@ -70,7 +72,7 @@ class InstanceManager:
 # === Module Class and Its Supporting Classes === #
 ###################################################
 
-class Module:
+class Module(abc.ABC):
     '''
     API solely for interacting with files located in the 'modules' folder.
     '''
@@ -86,6 +88,10 @@ class Module:
         self.type = type
         self.auto_format_config = auto_format_config
         self.kwargs = kwargs  # unused
+
+    @abc.abstractmethod
+    def format(self):
+        pass
 
     def is_executable(self, file):
         instance = InstanceManager.get_instance('FileHandler')
@@ -460,10 +466,8 @@ class ProcessHandler:
         try:
             if self.is_alive(process):
                 if IS_WINDOWS:
-                    # Send CTRL_BREAK_EVENT to all processes in the group
                     os.kill(process.pid, signal.CTRL_BREAK_EVENT)
                 else:
-                    # On Unix, send SIGTERM to the process group
                     os.killpg(os.getpgid(process.pid), signal.SIGTERM)
                 process.wait(timeout=1)  # 1s
 
@@ -1032,11 +1036,11 @@ class InterfaceHandler:
             sublime.error_message(message)
 
 
-#################################################
-# === Base Class and Its Supporting Classes === #
-#################################################
+#####################################################
+# === Extended Class and Its Supporting Classes === #
+#####################################################
 
-class Base(Module):  # unused
+class _Extended(Module):  # unused
     '''
     Extended API for universal use, inheriting all methods from the Module class.
     This subclass is never used and is included here for clarity and better overview only.
@@ -1179,13 +1183,13 @@ class CleanupHandler:
     def clear_console():
         if OptionHandler.query(CONFIG, True, 'clear_console'):
             if SUBLIME_PREFERENCES:
-                current = SUBLIME_PREFERENCES.get('console_max_history_lines', None)
-                if current is None:
+                orig = SUBLIME_PREFERENCES.get('console_max_history_lines', None)
+                if orig is None:
                     return  # not implemented in <ST4088
 
                 SUBLIME_PREFERENCES.set('console_max_history_lines', 1)
                 print('')
-                SUBLIME_PREFERENCES.set('console_max_history_lines', current)
+                SUBLIME_PREFERENCES.set('console_max_history_lines', orig)
 
 
 class ConfigHandler:

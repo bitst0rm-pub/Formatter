@@ -49,3 +49,6 @@ class Formatter(Module):
 
         result = formatter_plugin['class'](**self.kwargs).format()
         return self.is_success(result)
+
+    def format(self):
+        raise Exception('Oh! You\'re sticking it in the wrong hole!')

@@ -901,7 +901,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
    Details as an example:
 
    ```py
-   from .. import log                                          # REQUIRED: log to debugging this file
+   from .. import log                                          # optional: log to debugging this file
    from ..core.common import Module                            # REQUIRED: a collection of APIs to assist in running this file
 
 

@@ -258,7 +258,7 @@ class FormatterListener(sublime_plugin.EventListener):
             _set_single_layout(window, view)
 
     def on_post_text_command(self, view, command_name, args):
-        # Stop action triggered by the arrow keys on the keyboard (up, down, left, right)
+        # Stop action by pressing the arrow keys on the keyboard (up, down, left, right)
         if command_name == 'move' and args.get('by', None) in ['characters', 'lines']:
             DirFormat(view).stop()
 

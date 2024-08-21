@@ -1,6 +1,4 @@
 %YAML 1.2
-# The color is determined by the Default color scheme and cannot be customized.
-# @see: https://forum.sublimetext.com/t/change-the-bg-color-of-the-build-panel-new-st2-build-2165/3799/6
 ---
 name: Console
 scope: source.console

@@ -112,8 +112,6 @@ class DirFormat:
             new_view = self.CONTEXT['entry_view'].window().open_file(file_path)
             self.CONTEXT['current_index'] += 1
 
-            # open_file() is asynchronous. Use EventListener on_load() to catch
-            # the returned view when the file is finished loading.
             if new_view.is_loading():
                 self.CONTEXT['new_view'] = new_view
             else:

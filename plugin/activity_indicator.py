@@ -426,7 +426,7 @@ class ActivityIndicator:
     def __del__(self):
         self.erase()
 
-    def test_all_styles(self, duration=5):  # 5s
+    def _test_all_styles(self, duration=5):  # 5s
         # Test case to display all available styles
         def _test_styles(styles, index):
             if index >= len(styles):
