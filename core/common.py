@@ -6,6 +6,7 @@ import re
 import shutil
 import signal
 import struct
+import sys
 import tempfile
 from copy import deepcopy
 from os.path import (basename, dirname, expanduser, expandvars, isdir, isfile,
@@ -72,7 +73,17 @@ class InstanceManager:
 # === Module Class and Its Supporting Classes === #
 ###################################################
 
-class Module(abc.ABC):
+class ModuleMeta(abc.ABCMeta):
+    def __init__(cls, name, bases, namespace, **kwargs):
+        super().__init__(name, bases, namespace, **kwargs)
+
+        if cls.__module__.startswith(PACKAGE_NAME + '.modules.formatter_') and 'formatter_generic' not in cls.__module__:
+            module = sys.modules[cls.__module__]
+            if 'MODULE_CONFIG' not in module.__dict__:
+                raise NotImplementedError(name + ' must define a MODULE_CONFIG dictionary at the module level.')
+
+
+class Module(metaclass=ModuleMeta):
     '''
     API solely for interacting with files located in the 'modules' folder.
     '''
@@ -91,7 +102,7 @@ class Module(abc.ABC):
 
     @abc.abstractmethod
     def format(self):
-        pass
+        raise NotImplementedError('Subclasses must implement the "format()" method.')
 
     def is_executable(self, file):
         instance = InstanceManager.get_instance('FileHandler')
@@ -565,6 +576,7 @@ class ViewHandler:
 
 
 class OptionHandler:
+    # Do NOT use 'get()' for retrieving values from CONFIG; instead, use 'query()'
     @staticmethod
     def query(data_dict, default=None, *keys):
         if PROJECT_CONFIG and any(key in data_dict for key in PROJECT_CONFIG):
@@ -1162,14 +1174,14 @@ class _Extended(Module):  # unused
         return instance.get_unique(data)
 
 
-# === Base Supporting Classes === #
+# === Extended Supporting Classes === #
 
 class CleanupHandler:
     @staticmethod
     def remove_junk():
         try:
             parent_dir = dirname(dirname(__file__))
-            items = [join(parent_dir, item) for item in ['.DS_Store', '.editorconfig', '.gitattributes', '.gitignore', '.git']]
+            items = [join(parent_dir, item) for item in ['.DS_Store', '.gitattributes', '.gitignore', '.git']]
 
             for item in items:
                 if isfile(item):
