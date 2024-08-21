@@ -3,6 +3,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import struct
 import tempfile
 from copy import deepcopy
@@ -20,6 +21,9 @@ from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
                         PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
                         RECURSIVE_SUCCESS_DIRECTORY)
+if IS_WINDOWS:
+    from subprocess import (CREATE_NEW_PROCESS_GROUP, STARTF_USESHOWWINDOW,
+                            STARTUPINFO, SW_HIDE)
 
 CONFIG = {}
 PROJECT_CONFIG = {}
@@ -428,29 +432,41 @@ class ProcessHandler:
     @validate_args(are_all_strings_in_list, check_cmd=True)
     @transform_args(fix_cmd)
     def popen(self, cmd, stdout=PIPE):
+        cwd = PathHandler(view=self.view).get_pathinfo()['cwd']
+        env = EnvironmentHandler.update_environ()
         info = None
-        if IS_WINDOWS:
-            from subprocess import STARTF_USESHOWWINDOW, STARTUPINFO, SW_HIDE
 
-            # Hide the console window to avoid flashing an
-            # ugly cmd prompt on Windows when invoking plugin.
+        if IS_WINDOWS:
+            # Hide the console window
             info = STARTUPINFO()
             info.dwFlags |= STARTF_USESHOWWINDOW
             info.wShowWindow = SW_HIDE
 
-        # Input cmd must be a list of strings
-        self.process = Popen(
-            cmd, stdout=stdout, stdin=PIPE, stderr=PIPE,
-            cwd=PathHandler(view=self.view).get_pathinfo()['cwd'],
-            env=EnvironmentHandler.update_environ(), shell=IS_WINDOWS, startupinfo=info
-        )
+            # Input cmd must be a list of strings
+            self.process = Popen(
+                cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, shell=True,
+                cwd=cwd, env=env, startupinfo=info,
+                creationflags=CREATE_NEW_PROCESS_GROUP
+            )
+        else:
+            self.process = Popen(
+                cmd, stdout=stdout, stdin=PIPE, stderr=PIPE, shell=False,
+                cwd=cwd, env=env, startupinfo=info
+            )
+
         return self.process
 
     def kill(self, process):
         try:
             if self.is_alive(process):
-                process.terminate()
+                if IS_WINDOWS:
+                    # Send CTRL_BREAK_EVENT to all processes in the group
+                    os.kill(process.pid, signal.CTRL_BREAK_EVENT)
+                else:
+                    # On Unix, send SIGTERM to the process group
+                    os.killpg(os.getpgid(process.pid), signal.SIGTERM)
                 process.wait(timeout=1)  # 1s
+
             if self.is_alive(process):
                 process.kill()
                 process.wait(timeout=1)
