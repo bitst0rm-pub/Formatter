@@ -1516,6 +1516,10 @@ class HashHandler:
 class MarkdownHandler:
     @staticmethod
     def markdown_to_html(markdown):
+        # Preprocess the markdown to handle special cases
+        markdown = re.sub(r'\[@see\]\([^\)]+\)', '__SEE_PLACEHOLDER__', markdown)
+        markdown = re.sub(r'\[@noop\]\([^\)]+\)', '@noop', markdown)
+
         html = []
         lines = markdown.split('\n')
 
@@ -1544,6 +1548,16 @@ class MarkdownHandler:
             if in_code_block:
                 html.append(line)
                 continue
+
+            # Escape HTML characters to prevent mistakenly interpreted as an HTML tag
+            line = (
+                line
+                .replace('&', '&amp;')  # Escape &
+                .replace('<', '&lt;')   # Escape <
+                .replace('>', '&gt;')   # Escape >
+                .replace('"', '&quot;') # Escape "
+                .replace("'", '&#39;')  # Escape '
+            )
 
             # Headings
             heading_match = heading_re.match(line)
@@ -1586,6 +1600,9 @@ class MarkdownHandler:
         if in_list:
             html.append('</ul>')
 
+        # Replace the custom placeholder with the actual <em> tag for @see
+        html_output = '\n'.join(html).replace('__SEE_PLACEHOLDER__', '<em>@see</em>')
+
         return '''
         <body id="phantom-body">
             <style>
@@ -1593,7 +1610,7 @@ class MarkdownHandler:
                 code {font-family:ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;background-color:#afb8c133;padding:.1em .2em;border-radius:4px;}
             </style>
             <div class="container">
-                ''' + '\n'.join(html) + '''
+                ''' + html_output + '''
             </div>
         </body>
         '''
