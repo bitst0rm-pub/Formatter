@@ -1552,11 +1552,11 @@ class MarkdownHandler:
             # Escape HTML characters to prevent mistakenly interpreted as an HTML tag
             line = (
                 line
-                .replace('&', '&amp;')  # Escape &
-                .replace('<', '&lt;')   # Escape <
-                .replace('>', '&gt;')   # Escape >
-                .replace('"', '&quot;') # Escape "
-                .replace("'", '&#39;')  # Escape '
+                .replace('&', '&amp;')   # Escape &
+                .replace('<', '&lt;')    # Escape <
+                .replace('>', '&gt;')    # Escape >
+                .replace('"', '&quot;')  # Escape "
+                .replace("'", '&#39;')   # Escape '
             )
 
             # Headings
