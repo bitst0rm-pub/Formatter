@@ -1,6 +1,17 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be automatically documented in this file.
+
+## [[1.5.20](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.20)] - 2024-08-22
+
+### 🐛 Bug Fixes
+
+- [`2340ede`](https://github.com/bitst0rm-pub/Formatter/commit/2340edef9c7d1fda13b68d56e3541b7c2597be89) Fix the broken changelog as unescaped HTML characters were mistakenly interpreted as HTML tags
+
+### ⚙️ Miscellaneous Tasks
+
+- [`6d547a6`](https://github.com/bitst0rm-pub/Formatter/commit/6d547a68d57591e7749cd427a03db54604db3f0d) Add `ModuleMeta` metaclass for module-specific configuration enforcement
+- [`123a61d`](https://github.com/bitst0rm-pub/Formatter/commit/123a61d866d073c82b5ef002abd04523f9dedad1) Change vars to lower case
 
 ## [[1.5.19](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.19)] - 2024-08-21
 
