@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.5.21](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.21)] - 2024-08-24
+
+### 🚀 Features
+
+- [`4235a72`](https://github.com/bitst0rm-pub/Formatter/commit/4235a7288be4e086575767dd49b5bbaa72f50baf) Add settings option `"file_chars_limit"`
+
+### ⚡ Performance
+
+- [`3ca630a`](https://github.com/bitst0rm-pub/Formatter/commit/3ca630aaf7ba9d60bf6b0b0841056218cd2d7033) Optimize words counter
+
 ## [[1.5.20](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.20)] - 2024-08-22
 
 ### 🐛 Bug Fixes
