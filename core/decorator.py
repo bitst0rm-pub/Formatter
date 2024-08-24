@@ -1,6 +1,8 @@
 import datetime
 import time
-from functools import wraps
+from functools import wraps, partial
+
+import sublime
 
 from . import log
 
@@ -17,7 +19,18 @@ DEPRECATED_OPTIONS = {
 }
 
 
-def check_nested_settings(settings, deprecated_options, current_key=''):
+# Decorator to check for deprecated options in settings
+def check_deprecated_options(func):
+    @wraps(func)
+    def wrapper(cls, settings, *args, **kwargs):
+        if not hasattr(cls, '_run_once'):
+            cls._run_once = True
+            _check_nested_settings(settings, DEPRECATED_OPTIONS)
+        return func(cls, settings, *args, **kwargs)
+    return wrapper
+
+
+def _check_nested_settings(settings, deprecated_options, current_key=''):
     # Check for renamed options
     renamed_options = deprecated_options.get('renamed', {})
     for old_option, new_option in renamed_options.items():
@@ -36,24 +49,13 @@ def check_nested_settings(settings, deprecated_options, current_key=''):
             if isinstance(nested_settings, dict):
                 for nested_key, nested_value in nested_settings.items():
                     if isinstance(nested_value, dict):
-                        check_nested_settings(nested_value, deprecated_options, current_key + key + '.')
+                        _check_nested_settings(nested_value, deprecated_options, current_key + key + '.')
                     else:
                         # Handle non-dict values
                         if nested_key in renamed_options:
                             log.warning('The settings option "%s%s%s" has been renamed to "%s". Please update your settings.', current_key, key + '.', nested_key, renamed_options[nested_key])
                         elif nested_key in deprecated_options_list:
                             log.warning('The settings option "%s%s%s" is deprecated and will be removed in future versions. Please update your settings.', current_key, key + '.', nested_key)
-
-
-# Decorator to check for deprecated options in settings
-def check_deprecated_options(func):
-    @wraps(func)
-    def wrapper(cls, settings, *args, **kwargs):
-        if not hasattr(cls, '_run_once'):
-            cls._run_once = True
-            check_nested_settings(settings, DEPRECATED_OPTIONS)
-        return func(cls, settings, *args, **kwargs)
-    return wrapper
 
 
 # Decorator to check if a method is deprecated based on a start date and deactivation period
@@ -163,4 +165,51 @@ def clean_output(func):
             # Fix '<0x0d>' (\r) due to Popen(shell=True) on Windows
             stderr = stderr.replace('\r\n', '\n').replace('\r', '\n')
         return returncode, stdout, stderr
+    return wrapper
+
+
+# Decorator to delay function execution until a specified time has passed since the last call
+def debounce(delay_in_ms=500):
+    def decorator(func):
+        last_event_time = {}
+
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            view = self.view if hasattr(self, 'view') else args[0]
+            if not view.is_valid():
+                return
+
+            current_time = time.time() * 1000  # milliseconds
+            view_id = view.id()
+            last_event_time[view_id] = current_time
+
+            # Clean up old entries
+            to_remove = [view_id for view_id, timestamp in last_event_time.items() if not view.is_valid()]
+            for id in to_remove:
+                del last_event_time[id]
+
+            callback = partial(_debounce_callback, func, self, args, kwargs, view, last_event_time, delay_in_ms)
+            sublime.set_timeout_async(callback, delay_in_ms)
+
+        return wrapper
+    return decorator
+
+
+def _debounce_callback(func, instance, args, kwargs, view, last_event_time, delay_in_ms):
+    view_id = view.id()
+    if view.is_valid() and (time.time() * 1000 - last_event_time.get(view_id, 0)) >= delay_in_ms:
+        func(instance, *args, **kwargs)
+        # Optionally remove the entry after execution
+        last_event_time.pop(view_id, None)
+
+
+# Decorator to measure the execution time of a function
+def measure_time(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        log.info('Function "{}" took {:.4f} seconds to execute.'.format(func.__name__, elapsed_time))
+        return result
     return wrapper

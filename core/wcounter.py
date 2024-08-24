@@ -1,16 +1,17 @@
-import re
-
 import sublime
 import sublime_plugin
 
-from . import CONFIG, OptionHandler
+from . import CONFIG, OptionHandler, debounce
 from .constants import STATUS_KEY
+
+CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
 
 
 class WordsCounter:
     def __init__(self, view, ignore_whitespace_char=True, use_short_label=False):
         self.view = view
-        self.selections = view.sel()
+        self.size = self.view.size()
+        self.selections = self.view.sel()
         self.total_lines = 0
         self.total_words = 0
         self.total_chars = 0
@@ -23,9 +24,15 @@ class WordsCounter:
 
     def count_characters(self, text):
         if self.ignore_whitespace_char:
-            return len(re.sub(r'\s', '', text))
+            return sum(1 for char in text if not char.isspace())
         else:
             return len(text)
+
+    def count_text(self, text):
+        self.total_chars += self.count_characters(text)
+        self.total_chars_with_spaces += len(text)
+        self.total_words += len(text.split())
+        self.total_lines += text.count('\n') + 1
 
     def run_on_selection_modified(self):
         try:
@@ -33,17 +40,7 @@ class WordsCounter:
                 # Selections: words count
                 for selection in self.selections:
                     selected_text = self.view.substr(selection)
-                    char_count_with_spaces = len(selected_text)
-                    char_count = self.count_characters(selected_text)
-
-                    self.total_chars += char_count
-                    self.total_chars_with_spaces += char_count_with_spaces
-
-                    word_count = len(selected_text.split())
-                    self.total_words += word_count
-
-                    selected_lines = selected_text.split('\n')
-                    self.total_lines += len(selected_lines)
+                    self.count_text(selected_text)
 
                 if self.use_short_label:
                     label = 'Sel: {} | L: {} | W: {} | C: {}'
@@ -65,13 +62,12 @@ class WordsCounter:
                     status_text += label.format(self.thousands_separator(self.total_chars_with_spaces))
             else:
                 # Entire view: words count
-                self.total_lines = self.view.rowcol(self.view.size())[0] + 1
-                total_text = self.view.substr(sublime.Region(0, self.view.size()))
+                for start in range(0, self.size, CHUNK_SIZE):
+                    end = min(start + CHUNK_SIZE, self.size)
+                    chunk_text = self.view.substr(sublime.Region(start, end))
+                    self.count_text(chunk_text)
 
-                self.total_chars = self.count_characters(total_text)
-                current_line = self.view.rowcol(self.selections[0].begin())[0] + 1
-                current_column = self.view.rowcol(self.selections[0].begin())[1] + 1
-                self.total_words = len(total_text.split())
+                current_line, current_column = self.view.rowcol(self.selections[0].begin())
 
                 if self.use_short_label:
                     label = 'Lines: {} | W: {} | C: {} | L: {}, Col: {}'
@@ -82,8 +78,8 @@ class WordsCounter:
                     self.thousands_separator(self.total_lines),
                     self.thousands_separator(self.total_words),
                     self.thousands_separator(self.total_chars),
-                    self.thousands_separator(current_line),
-                    self.thousands_separator(current_column)
+                    self.thousands_separator(current_line + 1),
+                    self.thousands_separator(current_column + 1)
                 )
 
             self.view.set_status(STATUS_KEY + '_wc', status_text)
@@ -92,6 +88,7 @@ class WordsCounter:
 
 
 class WordsCounterListener(sublime_plugin.EventListener):
+    @debounce(delay_in_ms=400)
     def on_selection_modified_async(self, view):
         x = OptionHandler.query(CONFIG, {}, 'show_words_count')
         if x.get('enable', True) and CONFIG.get('STOP', True):
