@@ -4,8 +4,8 @@ import traceback
 import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
-                    PathHandler, SyntaxHandler, TransformHandler, check_stop,
-                    log)
+                    PathHandler, SyntaxHandler, TextHandler, TransformHandler,
+                    check_stop, log)
 from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
                               RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
 from ..core.formatter import Formatter
@@ -253,7 +253,9 @@ class SerialFormat:
             uid = self.kwargs.get('uid', None)
             uid, syntax = SyntaxHandler(view=self.view, uid=uid, region=region, auto_format_config=None).get_assigned_syntax(self.view, uid, region)
             exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'dir_format', 'exclude_syntaxes')
-            if not syntax or syntax in exclude_syntaxes:
+            if TextHandler.is_chars_limit_exceeded(self.view):
+                self.callback(False)
+            elif not syntax or syntax in exclude_syntaxes:
                 if not syntax:
                     scope = OptionHandler.query(CONFIG, [], 'formatters', uid, 'syntaxes')
                     log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())

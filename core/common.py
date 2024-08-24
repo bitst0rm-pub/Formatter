@@ -1286,6 +1286,7 @@ class ConfigHandler:
             'open_console_on_failure': settings.get('open_console_on_failure', False),
             'close_console_on_success': settings.get('close_console_on_success', False),
             'timeout': settings.get('timeout', 10),
+            'file_chars_limit': settings.get('file_chars_limit', False),
             'custom_modules': settings.get('custom_modules', {}),  # @deprecated
             'custom_modules_manifest': settings.get('custom_modules_manifest', ''),
             'show_statusbar': settings.get('show_statusbar', True),
@@ -1749,6 +1750,16 @@ class TextHandler:
                 return True
         except Exception:
             return False
+
+    @staticmethod
+    def is_chars_limit_exceeded(view):
+        file_chars_limit = OptionHandler.query(CONFIG, False, 'file_chars_limit')
+        if isinstance(file_chars_limit, int) and file_chars_limit > 0:
+            current_size = view.size()
+            if file_chars_limit < current_size:
+                log.info('File chars limit exceeded: Limit = %s, Current = %s', file_chars_limit, current_size)
+                return True
+        return False
 
 
 class PrintHandler:

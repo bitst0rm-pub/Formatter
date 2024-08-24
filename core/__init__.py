@@ -7,7 +7,7 @@ from .common import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                      HashHandler, InstanceManager, InterfaceHandler,
                      LayoutHandler, MarkdownHandler, Module, OptionHandler,
                      PathHandler, PhantomHandler, PrintHandler, SyntaxHandler,
-                     TransformHandler, ViewHandler)
+                     TextHandler, TransformHandler, ViewHandler)
 from .configurator import create_package_config_files
 from .importer import import_custom_modules
 from .reloader import reload_modules
@@ -43,6 +43,7 @@ __all__ = [
     'PhantomHandler',
     'PrintHandler',
     'SyntaxHandler',
+    'TextHandler',
     'TransformHandler',
     'ViewHandler',
     'create_package_config_files',

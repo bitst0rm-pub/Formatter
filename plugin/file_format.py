@@ -7,7 +7,7 @@ import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, LayoutHandler,
                     OptionHandler, PathHandler, PhantomHandler, PrintHandler,
-                    log)
+                    TextHandler, log)
 from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
 from . import ActivityIndicator
@@ -24,6 +24,9 @@ class FileFormat:
         self.indicator = None
 
     def run(self):
+        if TextHandler.is_chars_limit_exceeded(self.view):
+            return
+
         # Show progress indicator if formatting takes longer than 1s
         self.indicator = ActivityIndicator(self.view, 'In Progress...')
         sublime.set_timeout(self.start_indicator, 1000)

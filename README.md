@@ -240,6 +240,11 @@ The following setting details - along with their default values and examples - a
         // Default to 10 seconds. Set to false to disable the timeout.
         "timeout": 10,
 
+        // Limit the total number of characters in the file.
+        // Max. 1 MB = 1024 * 1024 ≈ 1048576 chars is a reasonable value.
+        // Accepted value: int OR false
+        "file_chars_limit": false,
+
         // Integrate your custom modules into the Formatter ecosystem.
         // Modules can be located either locally or remotely (with or without signing).
         // This option must be of type string pointing to the JSON metata file path.
@@ -268,7 +273,7 @@ The following setting details - along with their default values and examples - a
 
         // Configure the layout when opening new files.
         // This only takes effect if the "new_file_on_format" option is true.
-        // Accepted values: "2cols", "2rows", "single" OR false
+        // Accepted value: "2cols", "2rows", "single" OR false
         "layout": {
             "enable": "2cols",
             "sync_scroll": true
@@ -369,11 +374,11 @@ The following setting details - along with their default values and examples - a
                 "format_on_save": false,
 
                 // Auto formatting whenever code is pasted into the current file.
-                // This option affects the same way as "format_on_save".
-                // So the mentioned syntax conflicts and solutions are the same.
+                // This option works the same way as "format_on_save".
+                // So the mentioned syntax conflicts and solution are the same.
                 //
-                // Also you can use the same dictionary format for exclusions:
-                // "exclude_dirs_regex", "exclude_files_regex", "exclude_extensions_regex", "exclude_syntaxes"
+                // Also you can use the same dictionary format to exclude:
+                // dirs, files, extensions, and syntaxes
                 "format_on_paste": false,
 
                 // Create a new file containing formatted code.
