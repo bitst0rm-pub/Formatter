@@ -1,5 +1,6 @@
 import os
 import traceback
+from functools import partial
 
 import sublime
 
@@ -119,21 +120,22 @@ class DirFormat:
 
     @check_stop(get_stop_status)
     def format_next_file(self, new_view, is_ready=False):
-        def format_completed(is_success):
-            self.post_dir_format(new_view, is_success)
-            if is_ready and is_success:
-                new_view.run_command('undo')
-            elif self.CONTEXT['entry_view'] != new_view:
-                new_view.set_scratch(True)
-                new_view.close()
+        callback = partial(self._on_format_completed, new_view, is_ready)
+        SerialFormat(new_view, callback=callback, **self.CONTEXT['kwargs']).run()
 
-            if self.CONTEXT['current_index'] == self.CONTEXT['filelist_length']:
-                # Handle the last file
-                self.handle_formatting_completion()
+    def _on_format_completed(self, new_view, is_ready, is_success):
+        self.post_dir_format(new_view, is_success)
+        if is_ready and is_success:
+            new_view.run_command('undo')  # entry_view
+        elif self.CONTEXT['entry_view'] != new_view:
+            new_view.set_scratch(True)
+            new_view.close()
 
-            self.open_next_file()
+        if self.CONTEXT['current_index'] == self.CONTEXT['filelist_length']:
+            # Handle the last file
+            self.handle_formatting_completion()
 
-        SerialFormat(new_view, callback=format_completed, **self.CONTEXT['kwargs']).run()
+        self.open_next_file()
 
     def post_dir_format(self, new_view, is_success):
         new_cwd = self.get_post_format_cwd(is_success)

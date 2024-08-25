@@ -233,5 +233,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
 
     def save_qo_config_file(self, json_data):
         file = ConfigHandler.quick_options_config_file()
-        with open(file, 'w', encoding='utf-8') as f:
-            json.dump(json_data, f, ensure_ascii=False, indent=4)
+        try:
+            with open(file, 'w', encoding='utf-8') as f:
+                json.dump(json_data, f, ensure_ascii=False, indent=4)
+        except Exception as e:
+            InterfaceHandler.popup_message('Error writing Quick Options file: %s' % e, 'ERROR')

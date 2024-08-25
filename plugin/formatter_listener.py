@@ -18,6 +18,12 @@ class SyncScrollManager:
         self.running = False
         self.thread = None
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.stop_sync_scroll()
+
     def start_sync_scroll(self, target_type, active_view, target_view):
         with self.lock:
             if not self.running:
@@ -36,13 +42,15 @@ class SyncScrollManager:
                     self.thread = None
 
     def sync_scroll(self, target_type, active_view, target_view):
-        while self.running:
-            # log.debug('Sync scroll target: %s', target_type)
-            target_view.set_viewport_position(active_view.viewport_position(), False)
-            time.sleep(0.25)
-
-    def __del__(self):
-        self.stop_sync_scroll()
+        try:
+            while self.running:
+                # log.debug('Sync scroll target: %s', target_type)
+                target_view.set_viewport_position(active_view.viewport_position(), False)
+                time.sleep(0.25)
+        except Exception as e:
+            log.error('Error during sync_scroll: %s', e)
+        finally:
+            self.stop_sync_scroll()
 
 
 class SavePasteManager:

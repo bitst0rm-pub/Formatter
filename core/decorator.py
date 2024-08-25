@@ -1,6 +1,6 @@
 import datetime
 import time
-from functools import wraps, partial
+from functools import partial, wraps
 
 import sublime
 

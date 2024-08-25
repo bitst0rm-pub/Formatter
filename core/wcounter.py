@@ -88,7 +88,7 @@ class WordsCounter:
 
 
 class WordsCounterListener(sublime_plugin.EventListener):
-    @debounce(delay_in_ms=400)
+    @debounce(delay_in_ms=500)
     def on_selection_modified_async(self, view):
         x = OptionHandler.query(CONFIG, {}, 'show_words_count')
         if x.get('enable', True) and CONFIG.get('STOP', True):

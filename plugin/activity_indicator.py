@@ -382,6 +382,16 @@ class ActivityIndicator:
         self._tick = 0
         self._lock = Lock()
 
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.stop()
+
+    def __del__(self):
+        self.erase()
+
     def set(self, message):
         self.view.set_status(self.key, message)
 
@@ -415,16 +425,6 @@ class ActivityIndicator:
         with self._lock:
             self._running = False
             self.erase()
-
-    def __enter__(self):
-        self.start()
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.stop()
-
-    def __del__(self):
-        self.erase()
 
     def _test_all_styles(self, duration=5):  # 5s
         # Test case to display all available styles

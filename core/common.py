@@ -405,6 +405,13 @@ class ProcessHandler:
         self.uid = uid
         self.process = None
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.process and self.is_alive(self.process):
+            self.kill(self.process)
+
     def fix_cmd(self, cmd):
         fix_cmds = OptionHandler.query(CONFIG, None, 'formatters', self.uid, 'fix_commands')
 
@@ -503,44 +510,35 @@ class CommandHandler:
         self.view = view
         self.uid = uid
         self.region = region
-        self.ph = None
-
-    def __del__(self):
-        if self.ph and hasattr(self.ph, 'process') and self.ph.process:
-            self.ph.kill(self.ph.process)
 
     def exec_com(self, cmd):
-        self.ph = ProcessHandler(view=self.view, uid=self.uid)
-        timeout = self.ph.timeout()
-        process = self.ph.popen(cmd)
+        with ProcessHandler(view=self.view, uid=self.uid) as ph:
+            timeout = ph.timeout()
+            process = ph.popen(cmd)
 
-        try:
-            stdout, stderr = process.communicate(timeout=timeout)
-        except TimeoutExpired:
-            self.ph.kill(process)
-            return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
-        except Exception as e:
-            self.ph.kill(process)
-            return 1, None, 'Error during process execution: %s' % e
+            try:
+                stdout, stderr = process.communicate(timeout=timeout)
+            except TimeoutExpired:
+                return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
+            except Exception as e:
+                return 1, None, 'Error during process execution: %s' % e
 
-        return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
+            return process.returncode, stdout.decode('utf-8'), stderr.decode('utf-8')
 
     def _exec_file_or_pipe_cmd(self, cmd, outfile=None):
-        self.ph = ProcessHandler(view=self.view, uid=self.uid)
-        timeout = self.ph.timeout()
-        process = self.ph.popen(cmd, outfile or PIPE)
-        text = ViewHandler(view=self.view).get_text_from_region(self.region)
+        with ProcessHandler(view=self.view, uid=self.uid) as ph:
+            timeout = ph.timeout()
+            process = ph.popen(cmd, outfile or PIPE)
+            text = ViewHandler(view=self.view).get_text_from_region(self.region)
 
-        try:
-            stdout, stderr = process.communicate(text.encode('utf-8'), timeout=timeout)
-        except TimeoutExpired:
-            self.ph.kill(process)
-            return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
-        except Exception as e:
-            self.ph.kill(process)
-            return 1, None, 'Error during process execution: %s' % e
+            try:
+                stdout, stderr = process.communicate(text.encode('utf-8'), timeout=timeout)
+            except TimeoutExpired:
+                return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
+            except Exception as e:
+                return 1, None, 'Error during process execution: %s' % e
 
-        return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')
+            return process.returncode, '' if outfile else stdout.decode('utf-8'), stderr.decode('utf-8')
 
     @clean_output
     def exec_cmd(self, cmd, outfile=None):
