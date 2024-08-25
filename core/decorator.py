@@ -170,7 +170,7 @@ def clean_output(func):
 
 
 # Decorator to disable the word counter based on max chars
-def skip_word_counter(max_size=1000000):
+def skip_word_counter(max_size=6000000):  # ≈ 1.000.000 words (6MB)
     def decorator(func):
         @wraps(func)
         def wrapper(self, view, *args, **kwargs):

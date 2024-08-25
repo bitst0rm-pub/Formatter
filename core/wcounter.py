@@ -79,7 +79,7 @@ class WordCounter:
 
 
 class WordCounterListener(sublime_plugin.EventListener):
-    @skip_word_counter(max_size=1000000)
+    @skip_word_counter(max_size=6000000)
     @debounce(delay_in_ms=300)
     def on_selection_modified_async(self, view):
         x = OptionHandler.query(CONFIG, {}, 'show_words_count')
