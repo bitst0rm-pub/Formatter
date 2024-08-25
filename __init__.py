@@ -1,5 +1,5 @@
 from .core import (SESSION_FILE, CleanupHandler, ConfigHandler,
-                   SessionManagerListener, WordsCounterListener,
+                   SessionManagerListener, WordCounterListener,
                    create_package_config_files, import_custom_modules, log)
 from .version import __version__
 
@@ -8,7 +8,7 @@ __all__ = [
     'CleanupHandler',
     'ConfigHandler',
     'SessionManagerListener',
-    'WordsCounterListener',
+    'WordCounterListener',
     'create_package_config_files',
     'import_custom_modules',
     'log',

@@ -5,6 +5,7 @@ from functools import partial, wraps
 import sublime
 
 from . import log
+from .constants import STATUS_KEY
 
 # List of deprecated options, categorized by their status
 DEPRECATED_OPTIONS = {
@@ -166,6 +167,21 @@ def clean_output(func):
             stderr = stderr.replace('\r\n', '\n').replace('\r', '\n')
         return returncode, stdout, stderr
     return wrapper
+
+
+# Decorator to disable the word counter based on max chars
+def skip_word_counter(max_size=1000000):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, view, *args, **kwargs):
+            size = view.size()
+            if size > max_size:
+                message = 'File too large (> {} chars), word counter disabled.'.format(max_size)
+                view.set_status(STATUS_KEY + '_wc', message)
+                return
+            return func(self, view, *args, **kwargs)
+        return wrapper
+    return decorator
 
 
 # Decorator to delay function execution until a specified time has passed since the last call
