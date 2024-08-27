@@ -2,6 +2,17 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.5.22](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.22)] - 2024-08-27
+
+### 🚜 Refactor
+
+- [`a28237e`](https://github.com/bitst0rm-pub/Formatter/commit/a28237e50fd8957a8e2972ebb9048cc9082f5974) Refactor word counter to limit to max. 1.000.000 chars
+
+### ⚙️ Miscellaneous Tasks
+
+- [`8565f9f`](https://github.com/bitst0rm-pub/Formatter/commit/8565f9f0d89e8e7459298b323735aac011355de2) Increase word counter max. chars to `6.000.000` chars ≈ 1.000.000 words (6MB)
+- [`e7f5e2c`](https://github.com/bitst0rm-pub/Formatter/commit/e7f5e2c2c222589e3506b74d2489bc065f761043) Optimize code
+
 ## [[1.5.21](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.21)] - 2024-08-24
 
 ### 🚀 Features
