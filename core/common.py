@@ -9,6 +9,7 @@ import struct
 import sys
 import tempfile
 from copy import deepcopy
+from functools import lru_cache
 from os.path import (basename, dirname, expanduser, expandvars, isdir, isfile,
                      join, normcase, normpath, pathsep, split, splitext)
 from subprocess import PIPE, Popen, TimeoutExpired
@@ -37,32 +38,34 @@ class InstanceManager:
     _instances = {}
 
     @classmethod
-    def get_instance(cls, class_name_or_instance, *args, **kwargs):
-        if isinstance(class_name_or_instance, str):
-            class_name = class_name_or_instance
-            key = (class_name, *args)
-            if key not in cls._instances:
-                cls._instances[key] = globals()[class_name](*args, **kwargs)
-            return cls._instances[key]
-        else:
-            instance = class_name_or_instance
-            key = (instance.__class__.__name__, *args)
-            if key not in cls._instances:
-                cls._instances[key] = instance
-            return cls._instances[key]
+    def _generate_key(cls, class_name):
+        return class_name if isinstance(class_name, str) else class_name.__name__
 
     @classmethod
-    def reset_instance(cls, class_name_or_instance, *args):
-        if isinstance(class_name_or_instance, str):
-            class_name = class_name_or_instance
-            key = (class_name, *args)
+    def get_instance(cls, class_name, *args, **kwargs):
+        key = cls._generate_key(class_name)
+        instance = cls._instances.get(key)
+        if instance is None:
+            if isinstance(class_name, str):
+                class_name_obj = globals().get(class_name)
+                if class_name_obj is None:
+                    raise ValueError('Class "' + class_name + '" not found.')
+            else:
+                class_name_obj = class_name
+
             if key in cls._instances:
-                del cls._instances[key]
-        else:
-            instance = class_name_or_instance
-            key = (instance.__class__.__name__, *args)
-            if key in cls._instances:
-                del cls._instances[key]
+                raise ValueError('Key "' + key + '" already exists.')
+
+            instance = class_name_obj(*args, **kwargs)
+            cls._instances[key] = instance
+
+        return instance
+
+    @classmethod
+    def reset_instance(cls, class_name, *args):
+        key = cls._generate_key(class_name)
+        if key in cls._instances:
+            del cls._instances[key]
 
     @classmethod
     def reset_all(cls):
@@ -296,12 +299,14 @@ class FileHandler:
         return False
 
     @classmethod
+    @lru_cache(maxsize=128)
     def is_executable(cls, file):
         if not cls._is_valid_file(file):
             return False
         return cls._has_permission(file, os.X_OK, 'execute')
 
     @classmethod
+    @lru_cache(maxsize=128)
     def is_readable(cls, file):
         if not cls._is_valid_file(file):
             return False
