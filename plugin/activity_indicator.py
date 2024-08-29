@@ -3,7 +3,10 @@ from threading import Lock
 
 import sublime
 
+from ..core import singleton
 
+
+@singleton
 class ActivityIndicator:
     STYLES = {
         'bar': {

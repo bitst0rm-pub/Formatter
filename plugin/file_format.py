@@ -7,12 +7,13 @@ import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, LayoutHandler,
                     OptionHandler, PathHandler, PhantomHandler, PrintHandler,
-                    TextHandler, log)
+                    TextHandler, log, singleton)
 from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 
 
+@singleton
 class FileFormat:
     def __init__(self, view, **kwargs):
         self.view = view

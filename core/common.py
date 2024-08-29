@@ -18,7 +18,7 @@ import sublime
 from . import (are_all_strings_in_list, check_deprecated_api,
                check_deprecated_options, clean_output, disable_logging,
                enable_logging, enable_status, log, retry_on_exception,
-               transform_args, validate_args)
+               singleton, transform_args, validate_args)
 from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
                         PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
@@ -308,6 +308,7 @@ class FileHandler:
         return cls._has_permission(file, os.R_OK, 'read')
 
 
+@singleton
 class PathHandler:
     def __init__(self, view=None):
         self.view = view
@@ -399,6 +400,7 @@ class EnvironmentHandler:
         return None
 
 
+@singleton
 class ProcessHandler:
     def __init__(self, view=None, uid=None):
         self.view = view
@@ -505,6 +507,7 @@ class ProcessHandler:
         return timeout if not isinstance(timeout, bool) and isinstance(timeout, int) else None
 
 
+@singleton
 class CommandHandler:
     def __init__(self, view=None, uid=None, region=None):
         self.view = view
@@ -562,6 +565,7 @@ class CommandHandler:
         log.status('Error while executing the command: %s\nError: %s', cmd, error)
 
 
+@singleton
 class ViewHandler:
     def __init__(self, view=None):
         self.view = view
@@ -587,6 +591,7 @@ class OptionHandler:
         return data_dict
 
 
+@singleton
 class TempFileHandler:
     def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
         self.view = view
@@ -615,6 +620,7 @@ class TempFileHandler:
             os.unlink(tmp_file)
 
 
+@singleton
 class ModeHandler:
     def __init__(self, uid=None):
         self.uid = uid
@@ -626,6 +632,7 @@ class ModeHandler:
         return bool(name and typ)
 
 
+@singleton
 class FolderHandler:
     def __init__(self, view=None):
         self.view = view
@@ -647,6 +654,7 @@ class FolderHandler:
         return parent_folders
 
 
+@singleton
 class ArgumentHandler:
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, auto_format_config=None):
         self.view = view
@@ -835,6 +843,7 @@ class ArgumentHandler:
         return all(isinstance(x, str) for x in cmd) if cmd and isinstance(cmd, list) else False
 
 
+@singleton
 class SyntaxHandler:
     def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
         self.view = view
@@ -948,6 +957,7 @@ class StringHandler:
         return s is not None and not s.strip()
 
 
+@singleton
 class DotFileHandler:
     def __init__(self, view=None):
         self.view = view
@@ -992,6 +1002,7 @@ class DotFileHandler:
         return {'auto_format_config': auto_format}
 
 
+@singleton
 class GraphicHandler:
     def __init__(self, view=None, uid=None, temp_dir=None, type=None):
         self.view = view

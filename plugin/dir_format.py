@@ -6,7 +6,7 @@ import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
                     PathHandler, SyntaxHandler, TextHandler, TransformHandler,
-                    check_stop, log)
+                    check_stop, log, singleton)
 from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
                               RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
 from ..core.formatter import Formatter
@@ -19,6 +19,7 @@ def get_stop_status():
     return STOP
 
 
+@singleton
 class DirFormat:
     CONTEXT = {
         'entry_view': None,
@@ -242,6 +243,7 @@ class DirFormat:
             InterfaceHandler.popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
 
 
+@singleton
 class SerialFormat:
     def __init__(self, view, callback, **kwargs):
         self.view = view

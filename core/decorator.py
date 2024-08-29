@@ -229,3 +229,25 @@ def measure_time(func):
         log.info('Function "{}" took {:.4f} seconds to execute.'.format(func.__name__, elapsed_time))
         return result
     return wrapper
+
+
+# Decorator to enforce the Singleton design pattern on a class, allowing only one instance
+def singleton(cls):
+    _instances = {}
+
+    @wraps(cls)
+    def get_instance(*args, **kwargs):
+        key = cls
+        instance = _instances.get(key)
+
+        if instance is None:
+            # Create a new instance by calling __new__ and __init__
+            instance = cls.__new__(cls)
+            instance.__init__(*args, **kwargs)
+            _instances[key] = instance
+        else:
+            # Reinitialize the instance with updated arguments if provided
+            instance.__init__(*args, **kwargs)
+        return instance
+
+    return get_instance

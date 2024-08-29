@@ -7,7 +7,8 @@ import sublime_plugin
 
 from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                     InterfaceHandler, LayoutHandler, OptionHandler,
-                    SyntaxHandler, TransformHandler, log, reload_modules)
+                    SyntaxHandler, TransformHandler, log, reload_modules,
+                    singleton)
 from ..core.constants import PACKAGE_NAME
 from . import DirFormat, FileFormat
 
@@ -53,6 +54,7 @@ class SyncScrollManager:
             self.stop_sync_scroll()
 
 
+@singleton
 class SavePasteManager:
     def __init__(self, view):
         self.view = view

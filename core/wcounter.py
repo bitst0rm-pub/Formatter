@@ -1,12 +1,13 @@
 import sublime
 import sublime_plugin
 
-from . import CONFIG, OptionHandler, debounce, skip_word_counter
+from . import CONFIG, OptionHandler, debounce, singleton, skip_word_counter
 from .constants import STATUS_KEY
 
 CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
 
 
+@singleton
 class WordCounter:
     def __init__(self, view, ignore_whitespace_char=True, use_short_label=False):
         self.view = view
