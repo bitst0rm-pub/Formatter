@@ -4,10 +4,10 @@ from .decorator import (are_all_strings_in_list, check_deprecated_api,
                         debounce, retry_on_exception, singleton,
                         skip_word_counter, transform_args, validate_args)
 from .common import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
-                     HashHandler, InstanceManager, InterfaceHandler,
-                     LayoutHandler, MarkdownHandler, Module, OptionHandler,
-                     PathHandler, PhantomHandler, PrintHandler, SyntaxHandler,
-                     TextHandler, TransformHandler, ViewHandler)
+                     HashHandler, InterfaceHandler, LayoutHandler,
+                     MarkdownHandler, Module, OptionHandler, PathHandler,
+                     PhantomHandler, PrintHandler, SyntaxHandler, TextHandler,
+                     TransformHandler, ViewHandler)
 from .configurator import create_package_config_files
 from .importer import import_custom_modules
 from .reloader import reload_modules
@@ -35,7 +35,6 @@ __all__ = [
     'ConfigHandler',
     'DotFileHandler',
     'HashHandler',
-    'InstanceManager',
     'InterfaceHandler',
     'LayoutHandler',
     'MarkdownHandler',

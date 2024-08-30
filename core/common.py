@@ -34,42 +34,27 @@ PROJECT_CONFIG = {}
 SUBLIME_PREFERENCES = {}
 
 
-class InstanceManager:
-    _instances = {}
+class ClassManager:
+    _context = {}
 
     @classmethod
-    def _generate_key(cls, class_name):
-        return class_name if isinstance(class_name, str) else class_name.__name__
+    def set_context(cls, **kwargs):
+        cls._context.update(kwargs)
 
     @classmethod
-    def get_instance(cls, class_name, *args, **kwargs):
-        key = cls._generate_key(class_name)
-        instance = cls._instances.get(key)
-        if instance is None:
-            if isinstance(class_name, str):
-                class_name_obj = globals().get(class_name)
-                if class_name_obj is None:
-                    raise ValueError('Class "' + class_name + '" not found.')
-            else:
-                class_name_obj = class_name
+    def get_class(cls, class_name, *args, **kwargs):
+        if isinstance(class_name, str):
+            class_object = globals().get(class_name)
+            if class_object is None:
+                raise ValueError('Class "' + class_name + '" not found.')
+        else:
+            class_object = class_name
 
-            if key in cls._instances:
-                raise ValueError('Key "' + key + '" already exists.')
+        if not callable(class_object):
+            raise TypeError('"' + str(class_name) + '" is not a class or is not callable.')
 
-            instance = class_name_obj(*args, **kwargs)
-            cls._instances[key] = instance
-
-        return instance
-
-    @classmethod
-    def reset_instance(cls, class_name, *args):
-        key = cls._generate_key(class_name)
-        if key in cls._instances:
-            del cls._instances[key]
-
-    @classmethod
-    def reset_all(cls):
-        cls._instances.clear()
+        combined_kwargs = {**cls._context, **kwargs}
+        return class_object(*args, **combined_kwargs)
 
 
 ###################################################
@@ -89,6 +74,8 @@ class ModuleMeta(abc.ABCMeta):
 class Module(metaclass=ModuleMeta):
     '''
     API solely for interacting with files located in the 'modules' folder.
+    All supporting classes include a constructor __init__ in the class definition.
+    Thus, their instances are managed by the @singleton decorator.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
@@ -102,186 +89,188 @@ class Module(metaclass=ModuleMeta):
         self.type = type
         self.auto_format_config = auto_format_config
         self.kwargs = kwargs  # unused
+        ClassManager.set_context(view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, temp_dir=self.temp_dir, type=self.type, auto_format_config=self.auto_format_config)
 
     @abc.abstractmethod
     def format(self):
         raise NotImplementedError('Subclasses must implement the "format()" method.')
 
     def is_executable(self, file):
-        instance = InstanceManager.get_instance('FileHandler')
-        return instance.is_executable(file)
+        klass = ClassManager.get_class('FileHandler')
+        return klass.is_executable(file)
 
     def is_readable(self, file):
-        instance = InstanceManager.get_instance('FileHandler')
-        return instance.is_readable(file)
+        klass = ClassManager.get_class('FileHandler')
+        return klass.is_readable(file)
 
     def get_pathinfo(self, path=None):
-        instance = InstanceManager.get_instance('PathHandler', view=self.view)
-        return instance.get_pathinfo(path)
+        klass = ClassManager.get_class('PathHandler')
+        return klass.get_pathinfo(path)
 
     def is_valid_path(self, path):
-        instance = InstanceManager.get_instance('PathHandler', view=self.view)
-        return instance.is_valid_path(path)
+        klass = ClassManager.get_class('PathHandler')
+        return klass.is_valid_path(path)
 
     def update_environ(self):
-        instance = InstanceManager.get_instance('EnvironmentHandler')
-        return instance.update_environ()
+        klass = ClassManager.get_class('EnvironmentHandler')
+        return klass.update_environ()
 
     def get_environ_path(self, fnames):
-        instance = InstanceManager.get_instance('EnvironmentHandler')
-        return instance.get_environ_path(fnames)
+        klass = ClassManager.get_class('EnvironmentHandler')
+        return klass.get_environ_path(fnames)
 
     def popen(self, cmd, stdout=PIPE):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
-        return instance.popen(cmd, stdout)
+        klass = ClassManager.get_class('ProcessHandler')
+        return klass.popen(cmd, stdout)
 
     def kill(self, process):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
-        return instance.kill(process)
+        klass = ClassManager.get_class('ProcessHandler')
+        return klass.kill(process)
 
     def is_alive(self, process):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
-        return instance.is_alive(process)
+        klass = ClassManager.get_class('ProcessHandler')
+        return klass.is_alive(process)
 
     def timeout(self):
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
-        return instance.timeout()
+        klass = ClassManager.get_class('ProcessHandler')
+        return klass.timeout()
 
     @check_deprecated_api(start_date='2024-07-30', deactivate_after_days=90)
     def fix_cmd(self, cmd):  # @deprecated
-        instance = InstanceManager.get_instance('ProcessHandler', view=self.view, uid=self.uid)
-        return instance.fix_cmd(cmd)
+        klass = ClassManager.get_class('ProcessHandler')
+        return klass.fix_cmd(cmd)
 
     def exec_com(self, cmd):
-        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
-        return instance.exec_com(cmd)
+        klass = ClassManager.get_class('CommandHandler')
+        return klass.exec_com(cmd)
 
     def exec_cmd(self, cmd, outfile=None):
-        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
-        return instance.exec_cmd(cmd, outfile)
+        klass = ClassManager.get_class('CommandHandler')
+        return klass.exec_cmd(cmd, outfile)
 
     def get_success_code(self):
-        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
-        return instance.get_success_code()
+        klass = ClassManager.get_class('CommandHandler')
+        return klass.get_success_code()
 
     def print_exiterr(self, exitcode, stderr):
-        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
-        return instance.print_exiterr(exitcode, stderr)
+        klass = ClassManager.get_class('CommandHandler')
+        return klass.print_exiterr(exitcode, stderr)
 
     def print_oserr(self, cmd, error):
-        instance = InstanceManager.get_instance('CommandHandler', view=self.view, uid=self.uid, region=self.region)
-        return instance.print_oserr(cmd, error)
+        klass = ClassManager.get_class('CommandHandler')
+        return klass.print_oserr(cmd, error)
 
     def get_text_from_region(self, region):
-        instance = InstanceManager.get_instance('ViewHandler', view=self.view)
-        return instance.get_text_from_region(region)
+        klass = ClassManager.get_class('ViewHandler')
+        return klass.get_text_from_region(region)
 
     def is_view_formattable(self):
-        instance = InstanceManager.get_instance('ViewHandler', view=self.view)
-        return instance.is_view_formattable()
+        klass = ClassManager.get_class('ViewHandler')
+        return klass.is_view_formattable()
 
     def query(self, data_dict, default=None, *keys):
-        instance = InstanceManager.get_instance('OptionHandler')
-        return instance.query(data_dict, default, *keys)
+        klass = ClassManager.get_class('OptionHandler')
+        return klass.query(data_dict, default, *keys)
 
     def create_tmp_file(self, suffix=None):
-        instance = InstanceManager.get_instance('TempFileHandler', view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config)
-        return instance.create_tmp_file(suffix)
+        klass = ClassManager.get_class('TempFileHandler')
+        return klass.create_tmp_file(suffix)
 
     def remove_tmp_file(self, tmp_file):
-        instance = InstanceManager.get_instance('TempFileHandler', view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config)
-        return instance.remove_tmp_file(tmp_file)
+        klass = ClassManager.get_class('TempFileHandler')
+        return klass.remove_tmp_file(tmp_file)
 
     def is_generic_mode(self):
-        instance = InstanceManager.get_instance('ModeHandler', uid=self.uid)
-        return instance.is_generic_mode()
+        klass = ClassManager.get_class('ModeHandler')
+        return klass.is_generic_mode()
 
     def set_generic_local_executables(self):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.set_generic_local_executables()
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.set_generic_local_executables()
 
     def get_local_executable(self, runtime_type=None):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_local_executable(runtime_type)
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_local_executable(runtime_type)
 
     def get_executable(self, runtime_type=None):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_executable(runtime_type)
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_executable(runtime_type)
 
     def get_interpreter(self):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_interpreter()
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_interpreter()
 
     def get_iprexe_cmd(self, runtime_type=None):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_iprexe_cmd(runtime_type)
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_iprexe_cmd(runtime_type)
 
     def get_combo_cmd(self, runtime_type=None):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_combo_cmd(runtime_type)
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_combo_cmd(runtime_type)
 
     def get_args(self):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_args()
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_args()
 
     def get_config_path(self):
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.get_config_path()
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.get_config_path()
 
     @check_deprecated_api(start_date='2024-07-30', deactivate_after_days=90)
     def is_valid_cmd(self, cmd):  # @deprecated
-        instance = InstanceManager.get_instance('ArgumentHandler', view=self.view, uid=self.uid, region=self.region, interpreters=self.interpreters, executables=self.executables, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
-        return instance.is_valid_cmd(cmd)
+        klass = ClassManager.get_class('ArgumentHandler')
+        return klass.is_valid_cmd(cmd)
 
     def get_assigned_syntax(self, view=None, uid=None, region=None):
-        instance = InstanceManager.get_instance('SyntaxHandler', view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config)
-        uid, syntax = instance.get_assigned_syntax(view, uid, region)
+        klass = ClassManager.get_class('SyntaxHandler')
+        uid, syntax = klass.get_assigned_syntax(view, uid, region)
         self.uid = uid  # update for auto format
+        ClassManager.set_context(uid=self.uid)
         return syntax
 
     def update_json_recursive(self, json_data, update_data):
-        instance = InstanceManager.get_instance('StringHandler')
-        return instance.update_json_recursive(json_data, update_data)
+        klass = ClassManager.get_class('StringHandler')
+        return klass.update_json_recursive(json_data, update_data)
 
     def get_cfgignore(self, active_file_path=None):
-        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
-        return instance.get_cfgignore(active_file_path)
+        klass = ClassManager.get_class('DotFileHandler')
+        return klass.get_cfgignore(active_file_path)
 
     def get_auto_format_config(self, active_file_path=None):
-        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
-        return instance.get_auto_format_config(active_file_path)
+        klass = ClassManager.get_class('DotFileHandler')
+        return klass.get_auto_format_config(active_file_path)
 
     def get_auto_format_user_config(self, active_file_path=None):
-        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
-        return instance.get_auto_format_user_config(active_file_path)
+        klass = ClassManager.get_class('DotFileHandler')
+        return klass.get_auto_format_user_config(active_file_path)
 
     def get_auto_format_args(self, active_file_path=None):
-        instance = InstanceManager.get_instance('DotFileHandler', view=self.view)
-        return instance.get_auto_format_args(active_file_path)
+        klass = ClassManager.get_class('DotFileHandler')
+        return klass.get_auto_format_args(active_file_path)
 
     def is_render_extended(self):
-        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
-        return instance.is_render_extended()
+        klass = ClassManager.get_class('GraphicHandler')
+        return klass.is_render_extended()
 
     def get_args_extended(self):
-        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
-        return instance.get_args_extended()
+        klass = ClassManager.get_class('GraphicHandler')
+        return klass.get_args_extended()
 
     def ext_png_to_svg_cmd(self, cmd):
-        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
-        return instance.ext_png_to_svg_cmd(cmd)
+        klass = ClassManager.get_class('GraphicHandler')
+        return klass.ext_png_to_svg_cmd(cmd)
 
     def all_png_to_svg_cmd(self, cmd):
-        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
-        return instance.all_png_to_svg_cmd(cmd)
+        klass = ClassManager.get_class('GraphicHandler')
+        return klass.all_png_to_svg_cmd(cmd)
 
     def get_output_image(self):
-        instance = InstanceManager.get_instance('GraphicHandler', view=self.view, uid=self.uid, temp_dir=self.temp_dir, type=self.type)
-        return instance.get_output_image()
+        klass = ClassManager.get_class('GraphicHandler')
+        return klass.get_output_image()
 
     def popup_message(self, text, title=None, dialog=False):
-        instance = InstanceManager.get_instance('InterfaceHandler')
-        return instance.popup_message(text, title, dialog)
+        klass = ClassManager.get_class('InterfaceHandler')
+        return klass.popup_message(text, title, dialog)
 
 
 # === Module Supporting Classes === #
@@ -315,7 +304,7 @@ class FileHandler:
 
 @singleton
 class PathHandler:
-    def __init__(self, view=None):
+    def __init__(self, view=None, **kwargs):
         self.view = view
 
     def get_pathinfo(self, path=None):
@@ -407,7 +396,7 @@ class EnvironmentHandler:
 
 @singleton
 class ProcessHandler:
-    def __init__(self, view=None, uid=None):
+    def __init__(self, view=None, uid=None, **kwargs):
         self.view = view
         self.uid = uid
         self.process = None
@@ -514,7 +503,7 @@ class ProcessHandler:
 
 @singleton
 class CommandHandler:
-    def __init__(self, view=None, uid=None, region=None):
+    def __init__(self, view=None, uid=None, region=None, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
@@ -572,7 +561,7 @@ class CommandHandler:
 
 @singleton
 class ViewHandler:
-    def __init__(self, view=None):
+    def __init__(self, view=None, **kwargs):
         self.view = view
 
     def get_text_from_region(self, region):
@@ -598,7 +587,7 @@ class OptionHandler:
 
 @singleton
 class TempFileHandler:
-    def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
+    def __init__(self, view=None, uid=None, region=None, auto_format_config=None, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
@@ -627,7 +616,7 @@ class TempFileHandler:
 
 @singleton
 class ModeHandler:
-    def __init__(self, uid=None):
+    def __init__(self, uid=None, **kwargs):
         self.uid = uid
 
     def is_generic_mode(self):
@@ -639,7 +628,7 @@ class ModeHandler:
 
 @singleton
 class FolderHandler:
-    def __init__(self, view=None):
+    def __init__(self, view=None, **kwargs):
         self.view = view
 
     def _get_active_view_parent_folders(self, active_file_path=None, max_depth=50):
@@ -661,7 +650,7 @@ class FolderHandler:
 
 @singleton
 class ArgumentHandler:
-    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, auto_format_config=None):
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, auto_format_config=None, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
@@ -850,7 +839,7 @@ class ArgumentHandler:
 
 @singleton
 class SyntaxHandler:
-    def __init__(self, view=None, uid=None, region=None, auto_format_config=None):
+    def __init__(self, view=None, uid=None, region=None, auto_format_config=None, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
@@ -964,7 +953,7 @@ class StringHandler:
 
 @singleton
 class DotFileHandler:
-    def __init__(self, view=None):
+    def __init__(self, view=None, **kwargs):
         self.view = view
 
     @staticmethod
@@ -1009,7 +998,7 @@ class DotFileHandler:
 
 @singleton
 class GraphicHandler:
-    def __init__(self, view=None, uid=None, temp_dir=None, type=None):
+    def __init__(self, view=None, uid=None, temp_dir=None, type=None, **kwargs):
         self.view = view
         self.uid = uid
         self.temp_dir = temp_dir
@@ -1070,122 +1059,124 @@ class _Extended(Module):  # unused
     '''
     Extended API for universal use, inheriting all methods from the Module class.
     This subclass is never used and is included here for clarity and better overview only.
+    All supporting classes do not include a constructor __init__ in the class definition.
+    Thus, they can be used directly without creating any instances.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
         super().__init__(view=view, uid=uid, region=region, interpreters=interpreters, executables=executables, dotfiles=dotfiles, temp_dir=temp_dir, type=type, auto_format_config=auto_format_config, **kwargs)
 
     def remove_junk(self):
-        instance = InstanceManager.get_instance('CleanupHandler')
-        return instance.remove_junk()
+        klass = ClassManager.get_class('CleanupHandler')
+        return klass.remove_junk()
 
     def clear_console(self):
-        instance = InstanceManager.get_instance('CleanupHandler')
-        return instance.clear_console()
+        klass = ClassManager.get_class('CleanupHandler')
+        return klass.clear_console()
 
     def setup_config(self):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.setup_config()
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.setup_config()
 
     def load_sublime_preferences(self):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.load_sublime_preferences()
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.load_sublime_preferences()
 
     def setup_shared_config_files(self):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.setup_shared_config_files()
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.setup_shared_config_files()
 
     def is_quick_options_mode(self):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.is_quick_options_mode()
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.is_quick_options_mode()
 
     def get_mode_description(self, short=False):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.get_mode_description(short)
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.get_mode_description(short)
 
     def set_debug_mode(self):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.set_debug_mode()
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.set_debug_mode()
 
     def is_generic_method(self, uid):
-        instance = InstanceManager.get_instance('ConfigHandler')
-        return instance.is_generic_method(uid)
+        klass = ClassManager.get_class('ConfigHandler')
+        return klass.is_generic_method(uid)
 
     def recursive_map(self, func, data):
-        instance = InstanceManager.get_instance('TransformHandler')
-        return instance.recursive_map(func, data)
+        klass = ClassManager.get_class('TransformHandler')
+        return klass.recursive_map(func, data)
 
     def expand_path(self, path):
-        instance = InstanceManager.get_instance('TransformHandler')
-        return instance.expand_path(path)
+        klass = ClassManager.get_class('TransformHandler')
+        return klass.expand_path(path)
 
     def get_recursive_filelist(self, dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions_regex):
-        instance = InstanceManager.get_instance('TransformHandler')
-        return instance.get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions_regex)
+        klass = ClassManager.get_class('TransformHandler')
+        return klass.get_recursive_filelist(dir, exclude_dirs_regex, exclude_files_regex, exclude_extensions_regex)
 
     def md5f(self, file_path):
-        instance = InstanceManager.get_instance('HashHandler')
-        return instance.md5f(file_path)
+        klass = ClassManager.get_class('HashHandler')
+        return klass.md5f(file_path)
 
     def md5d(self, dir_path):
-        instance = InstanceManager.get_instance('HashHandler')
-        return instance.md5d(dir_path)
+        klass = ClassManager.get_class('HashHandler')
+        return klass.md5d(dir_path)
 
     def markdown_to_html(self, markdown):
-        instance = InstanceManager.get_instance('MarkdownHandler')
-        return instance.markdown_to_html(markdown)
+        klass = ClassManager.get_class('MarkdownHandler')
+        return klass.markdown_to_html(markdown)
 
     def style_view(self, dst_view):
-        instance = InstanceManager.get_instance('PhantomHandler')
-        return instance.style_view(dst_view)
+        klass = ClassManager.get_class('PhantomHandler')
+        return klass.style_view(dst_view)
 
     def set_html_phantom(self, dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data):
-        instance = InstanceManager.get_instance('PhantomHandler')
-        return instance.set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
+        klass = ClassManager.get_class('PhantomHandler')
+        return klass.set_html_phantom(dst_view, image_data, image_width, image_height, fit_image_width, fit_image_height, extended_data)
 
     def get_image_size(self, data):
-        instance = InstanceManager.get_instance('PhantomHandler')
-        return instance.get_image_size(data)
+        klass = ClassManager.get_class('PhantomHandler')
+        return klass.get_image_size(data)
 
     def image_scale_fit(self, view, image_width, image_height):
-        instance = InstanceManager.get_instance('PhantomHandler')
-        return instance.image_scale_fit(view, image_width, image_height)
+        klass = ClassManager.get_class('PhantomHandler')
+        return klass.image_scale_fit(view, image_width, image_height)
 
     def get_downloads_folder(self):
-        instance = InstanceManager.get_instance('PhantomHandler')
-        return instance.get_downloads_folder()
+        klass = ClassManager.get_class('PhantomHandler')
+        return klass.get_downloads_folder()
 
     def assign_layout(self, layout):
-        instance = InstanceManager.get_instance('LayoutHandler')
-        return instance.assign_layout(layout)
+        klass = ClassManager.get_class('LayoutHandler')
+        return klass.assign_layout(layout)
 
     def want_layout(self):
-        instance = InstanceManager.get_instance('LayoutHandler')
-        return instance.want_layout()
+        klass = ClassManager.get_class('LayoutHandler')
+        return klass.want_layout()
 
     def setup_layout(self, view):
-        instance = InstanceManager.get_instance('LayoutHandler')
-        return instance.setup_layout(view)
+        klass = ClassManager.get_class('LayoutHandler')
+        return klass.setup_layout(view)
 
     def is_text_data(self, data):
-        instance = InstanceManager.get_instance('TextHandler')
-        return instance.is_text_data(data)
+        klass = ClassManager.get_class('TextHandler')
+        return klass.is_text_data(data)
 
     def is_text_file(self, file_path):
-        instance = InstanceManager.get_instance('TextHandler')
-        return instance.is_text_file(file_path)
+        klass = ClassManager.get_class('TextHandler')
+        return klass.is_text_file(file_path)
 
     def print_sysinfo(self, pretty=False):
-        instance = InstanceManager.get_instance('PrintHandler')
-        return instance.print_sysinfo(pretty)
+        klass = ClassManager.get_class('PrintHandler')
+        return klass.print_sysinfo(pretty)
 
     def is_view(self, file_or_view):
-        instance = InstanceManager.get_instance('MiscHandler')
-        return instance.is_view(file_or_view)
+        klass = ClassManager.get_class('MiscHandler')
+        return klass.is_view(file_or_view)
 
     def get_unique(self, data):
-        instance = InstanceManager.get_instance('MiscHandler')
-        return instance.get_unique(data)
+        klass = ClassManager.get_class('MiscHandler')
+        return klass.get_unique(data)
 
 
 # === Extended Supporting Classes === #

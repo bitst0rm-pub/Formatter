@@ -245,7 +245,7 @@ def singleton(cls):
             instance = cls.__new__(cls)
             instance.__init__(*args, **kwargs)
             _instances[key] = instance
-        else:
+        elif args or kwargs:
             # Reinitialize the instance with updated arguments if provided
             instance.__init__(*args, **kwargs)
         return instance
