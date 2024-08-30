@@ -2,6 +2,18 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.0)] - 2024-08-30
+
+### 🐛 Bug Fixes
+
+- [`8db25e6`](https://github.com/bitst0rm-pub/Formatter/commit/8db25e6bbb90f4399b2f73c1ba43e8b19dc38881) Various fixes for ST3
+
+### ⚙️ Miscellaneous Tasks
+
+- [`0cf7a18`](https://github.com/bitst0rm-pub/Formatter/commit/0cf7a18e1dadf9c5648273a9e47dd3c738bf5a96) Optimize InstanceManager
+- [`eb30cb5`](https://github.com/bitst0rm-pub/Formatter/commit/eb30cb5a5fd6b41e9d472a45e1873ec795bb5442) Optimize with singleton decorator to reuse instances
+- [`037b40c`](https://github.com/bitst0rm-pub/Formatter/commit/037b40c62ac4f54dac51e0ba2472c65adf37af5e) Remove `InstanceManager` in favor of `ClassManager` and Singleton design pattern
+
 ## [[1.5.22](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.5.22)] - 2024-08-27
 
 ### 🚜 Refactor
