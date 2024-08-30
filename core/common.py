@@ -53,7 +53,7 @@ class ClassManager:
         if not callable(class_object):
             raise TypeError('"' + str(class_name) + '" is not a class or is not callable.')
 
-        combined_kwargs = {**cls._context, **kwargs}
+        combined_kwargs = dict(cls._context, **kwargs)
         return class_object(*args, **combined_kwargs)
 
 
@@ -751,6 +751,9 @@ class ArgumentHandler:
 
     def get_combo_cmd(self, runtime_type=None):
         cmd = self.get_iprexe_cmd(runtime_type)
+        if cmd is None:
+            return None
+
         if cmd:
             cmd.extend(self.get_args())
         return cmd if all(cmd) else None

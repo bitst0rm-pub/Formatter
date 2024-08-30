@@ -35,28 +35,30 @@ def _check_nested_settings(settings, deprecated_options, current_key=''):
     # Check for renamed options
     renamed_options = deprecated_options.get('renamed', {})
     for old_option, new_option in renamed_options.items():
-        if old_option in settings:
+        if settings.get(old_option) is not None:
             log.warning('The settings option "%s%s" has been renamed to "%s". Please update your settings.', current_key, old_option, new_option)
 
     # Check for deprecated options
     deprecated_options_list = deprecated_options.get('deprecated', [])
     for option in deprecated_options_list:
-        if option in settings:
+        if settings.get(option) is not None:
             log.warning('The settings option "%s%s" is deprecated and will be removed in future versions. Please update your settings.', current_key, option)
 
+    # Check known nested structures
     for key in ['formatters', 'recursive_folder_format']:  # adjust known structure key
-        if key in settings:
-            nested_settings = settings[key]
-            if isinstance(nested_settings, dict):
-                for nested_key, nested_value in nested_settings.items():
-                    if isinstance(nested_value, dict):
-                        _check_nested_settings(nested_value, deprecated_options, current_key + key + '.')
-                    else:
-                        # Handle non-dict values
-                        if nested_key in renamed_options:
-                            log.warning('The settings option "%s%s%s" has been renamed to "%s". Please update your settings.', current_key, key + '.', nested_key, renamed_options[nested_key])
-                        elif nested_key in deprecated_options_list:
-                            log.warning('The settings option "%s%s%s" is deprecated and will be removed in future versions. Please update your settings.', current_key, key + '.', nested_key)
+        nested_settings = settings.get(key)
+        if isinstance(nested_settings, type(settings)):
+            _check_nested_settings(nested_settings, deprecated_options, current_key + key + '.')
+        elif isinstance(nested_settings, dict):  # fallback if nested setting is a dictionary
+            for nested_key, nested_value in nested_settings.items():
+                if isinstance(nested_value, dict):
+                    _check_nested_settings(nested_value, deprecated_options, current_key + key + '.' + nested_key + '.')
+                else:
+                    # Handle non-dict values
+                    if nested_key in renamed_options:
+                        log.warning('The settings option "%s%s.%s" has been renamed to "%s". Please update your settings.', current_key, key, nested_key, renamed_options[nested_key])
+                    elif nested_key in deprecated_options_list:
+                        log.warning('The settings option "%s%s.%s" is deprecated and will be removed in future versions. Please update your settings.', current_key, key, nested_key)
 
 
 # Decorator to check if a method is deprecated based on a start date and deactivation period
