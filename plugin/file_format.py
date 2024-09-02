@@ -198,7 +198,7 @@ class FileFormat:
             self.cleanup_temp_dir()
 
     def cleanup_temp_dir(self):
-        if self.temp_dir and os.path.exists(self.temp_dir):
+        if self.temp_dir and os.path.exists(self.temp_dir.name):
             self.temp_dir.cleanup()
             self.temp_dir = None
 
