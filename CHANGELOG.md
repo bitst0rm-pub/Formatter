@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.1)] - 2024-09-02
+
+### 🐛 Bug Fixes
+
+- [`08b372a`](https://github.com/bitst0rm-pub/Formatter/commit/08b372abbaa884c0d7625cbbe5b74070d1b11446) Minor fix temp_dir path
+
+### 🚜 Refactor
+
+- [`72cae5f`](https://github.com/bitst0rm-pub/Formatter/commit/72cae5fd0ab05cb15f28fc166c8bd20441883aab) Revise and enhance code for better performance and efficiency
+
 ## [[1.6.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.0)] - 2024-08-30
 
 ### 🐛 Bug Fixes
