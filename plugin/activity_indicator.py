@@ -373,7 +373,6 @@ class ActivityIndicator:
         self.label = label + ' ' if label else ''
         if style not in self.STYLES:
             raise ValueError('Invalid style. Choose from: {}'.format(', '.join(self.STYLES.keys())))
-
         style_defaults = self.STYLES[style]
         self.width = width if width is not None else style_defaults['width']
         self.interval = interval if interval is not None else style_defaults['interval']
