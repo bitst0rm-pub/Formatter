@@ -1,12 +1,10 @@
+import time
 import uuid
 from threading import Lock
 
 import sublime
 
-from ..core import singleton
 
-
-@singleton
 class ActivityIndicator:
     STYLES = {
         'bar': {
@@ -370,7 +368,7 @@ class ActivityIndicator:
         }
     }
 
-    def __init__(self, view, label=None, width=None, interval=None, style='bar'):
+    def __init__(self, view=None, label=None, width=None, interval=None, style='bar', delay=0):
         self.view = view
         self.label = label + ' ' if label else ''
         if style not in self.STYLES:
@@ -384,6 +382,8 @@ class ActivityIndicator:
         self._running = False
         self._tick = 0
         self._lock = Lock()
+        self._start_time = 0
+        self._delay = delay / 1000  # seconds
 
     def __enter__(self):
         self.start()
@@ -416,13 +416,23 @@ class ActivityIndicator:
 
         self._schedule_update()
 
+    def delayed_start(self):
+        if time.time() - self._start_time >= self._delay:
+            with self._lock:
+                if self._running:
+                    self._schedule_update()
+
     def start(self):
         with self._lock:
             if self._running:
                 raise RuntimeError('Activity indicator is already running')
             self._running = True
             self._tick = 0
-            self._schedule_update()
+            self._start_time = time.time()
+            if self._delay > 0:
+                sublime.set_timeout(self.delayed_start, int(self._delay * 1000))
+            else:
+                self._schedule_update()
 
     def stop(self):
         with self._lock:

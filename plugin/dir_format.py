@@ -6,7 +6,7 @@ import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
                     PathHandler, SyntaxHandler, TextHandler, TransformHandler,
-                    check_stop, log, singleton)
+                    check_stop, log)
 from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
                               RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
 from ..core.formatter import Formatter
@@ -19,7 +19,6 @@ def get_stop_status():
     return STOP
 
 
-@singleton
 class DirFormat:
     CONTEXT = {
         'entry_view': None,
@@ -34,47 +33,45 @@ class DirFormat:
         'mode_description': None
     }
 
-    def __init__(self, view, **kwargs):
+    def __init__(self, view=None, **kwargs):
         self.view = view
         self.kwargs = kwargs
-        self.indicator = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        if exc_type:
+            class_name = self.__class__.__name__
+            log.error('Error occurred in %s while exiting: %s\n%s', class_name, exc_value, ''.join(traceback.format_tb(exc_traceback)))
+        return False  # return True to suppress exceptions
 
     def run(self):
-        global STOP
-        STOP = False
-        CONFIG['STOP'] = False  # pause smanager and wcounter
-        # Show progress indicator if formatting takes longer than 1s
-        self.indicator = ActivityIndicator(self.view, 'In Progress...')
-        sublime.set_timeout(self.start_indicator, 1000)
-
         try:
-            cwd = self.get_current_working_directory()
-            filelist = self.get_recursive_files(cwd)
+            global STOP
+            STOP = False
+            CONFIG['STOP'] = False  # pause smanager and wcounter
 
-            self.prepare_context(cwd, filelist)
-            self.process_files()
+            # Show progress indicator if formatting takes longer than 1s
+            with ActivityIndicator(view=self.view, label='In Progress...', delay=1000):
+                try:
+                    cwd = self.get_current_working_directory()
+                    filelist = self.get_recursive_files(cwd)
+
+                    self.prepare_context(cwd, filelist)
+                    self.process_files()
+                except Exception as e:
+                    self.handle_error(e)
         except Exception as e:
-            self.handle_error(e)
-        finally:
-            self.stop_indicator()
+            log.error('Error occurred during dir formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
     def stop(self):
         global STOP
         STOP = True
         CONFIG['STOP'] = True
-        self.stop_indicator()
-
-    def start_indicator(self):
-        if self.indicator:
-            self.indicator.start()
-
-    def stop_indicator(self):
-        if self.indicator:
-            self.indicator.stop()
-            self.indicator = None
 
     def get_current_working_directory(self):
-        return PathHandler(view=self.view).get_pathinfo(self.view.file_name())['cwd']
+        return PathHandler.get_pathinfo(view=self.view, path=self.view.file_name())['cwd']
 
     def get_recursive_files(self, cwd):
         items = self.get_dir_format_items()
@@ -122,7 +119,7 @@ class DirFormat:
     @check_stop(get_stop_status)
     def format_next_file(self, new_view, is_ready=False):
         callback = partial(self._on_format_completed, new_view, is_ready)
-        SerialFormat(new_view, callback=callback, **self.CONTEXT['kwargs']).run()
+        SerialFormat.run(view=new_view, callback=callback, **self.CONTEXT['kwargs'])
 
     def _on_format_completed(self, new_view, is_ready, is_success):
         self.post_dir_format(new_view, is_success)
@@ -159,7 +156,7 @@ class DirFormat:
     def save_formatted_file(self, new_view, new_cwd, is_success):
         file_path = new_view.file_name()
         new_file_path = self.generate_new_file_path(file_path, new_cwd, is_success)
-        cwd = PathHandler(view=new_view).get_pathinfo(new_file_path)['cwd']
+        cwd = PathHandler.get_pathinfo(view=new_view, path=new_file_path)['cwd']
 
         try:
             os.makedirs(cwd, exist_ok=True)
@@ -229,11 +226,8 @@ class DirFormat:
                 self.CONTEXT[key] = None
         # Reset and end
         CONFIG['STOP'] = True
-        self.stop_indicator()
 
     def handle_error(self, error, cwd=None, file_path=None):
-        self.stop_indicator()
-
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
         if cwd and (error.errno != os.errno.EEXIST):
             log.error('Could not create directory: %s', cwd)
@@ -243,33 +237,28 @@ class DirFormat:
             InterfaceHandler.popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
 
 
-@singleton
 class SerialFormat:
-    def __init__(self, view, callback, **kwargs):
-        self.view = view
-        self.kwargs = kwargs
-        self.callback = callback
-        self.is_success = False
-
-    def run(self):
+    @staticmethod
+    def run(view=None, callback=None, **kwargs):
+        is_success = False
         try:
-            region = sublime.Region(0, self.view.size())
-            uid = self.kwargs.get('uid', None)
-            uid, syntax = SyntaxHandler(view=self.view, uid=uid, region=region, auto_format_config=None).get_assigned_syntax(self.view, uid, region)
+            region = sublime.Region(0, view.size())
+            uid = kwargs.get('uid', None)
+            uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=None)
             exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'dir_format', 'exclude_syntaxes')
-            if TextHandler.is_chars_limit_exceeded(self.view):
-                self.callback(False)
+            if TextHandler.is_chars_limit_exceeded(view):
+                callback(False)
             elif not syntax or syntax in exclude_syntaxes:
                 if not syntax:
                     scope = OptionHandler.query(CONFIG, [], 'formatters', uid, 'syntaxes')
-                    log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, self.view.file_name())
-                self.callback(False)
+                    log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, view.file_name())
+                callback(False)
             else:
-                self.kwargs.update({
-                    'view': self.view,
+                kwargs.update({
+                    'view': view,
                     'region': region
                 })
-                self.is_success = Formatter(**self.kwargs).run()
-                self.callback(self.is_success)
+                is_success = Formatter(**kwargs).run()
+                callback(is_success)
         except Exception as e:
             log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))

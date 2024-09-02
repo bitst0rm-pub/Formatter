@@ -7,61 +7,57 @@ import sublime
 
 from ..core import (CONFIG, ConfigHandler, InterfaceHandler, LayoutHandler,
                     OptionHandler, PathHandler, PhantomHandler, PrintHandler,
-                    TextHandler, log, singleton)
+                    TextHandler, log)
 from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 
 
-@singleton
 class FileFormat:
-    def __init__(self, view, **kwargs):
+    def __init__(self, view=None, **kwargs):
         self.view = view
         self.kwargs = kwargs
         self.kwargs.update(view=self.view)
         self.temp_dir = None
         self.success, self.failure = 0, 0
         self.cycles = []
-        self.indicator = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.cleanup_temp_dir()
+
+        if exc_type:
+            class_name = self.__class__.__name__
+            log.error('Error occurred in %s while exiting: %s\n%s', class_name, exc_value, ''.join(traceback.format_tb(exc_traceback)))
+        return False  # return True to suppress exceptions
 
     def run(self):
         if TextHandler.is_chars_limit_exceeded(self.view):
             return
 
-        # Show progress indicator if formatting takes longer than 1s
-        self.indicator = ActivityIndicator(self.view, 'In Progress...')
-        sublime.set_timeout(self.start_indicator, 1000)
-
-        self.create_graphic_temp_dir()
-        PrintHandler.print_sysinfo(pretty=True)
-
         try:
-            for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
-                self.kwargs.update(region=region)
-                is_success = Formatter(**self.kwargs).run()
-                if self.is_no_operation(is_success):
-                    continue
-                self.cycles.append(is_success)
-                self.print_status(is_success)
+            # Show progress indicator if formatting takes longer than 1s
+            with ActivityIndicator(view=self.view, label='In Progress...', delay=1000):
+                self.create_graphic_temp_dir()
+                PrintHandler.print_sysinfo(pretty=True)
 
-            if any(self.cycles):
-                self.close_console_on_success()
-                self.handle_successful_formatting()
-            else:
-                self.open_console_on_failure()
+                for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
+                    self.kwargs.update(region=region)
+                    is_success = Formatter(**self.kwargs).run()
+                    if self.is_no_operation(is_success):
+                        continue
+                    self.cycles.append(is_success)
+                    self.print_status(is_success)
+
+                if any(self.cycles):
+                    self.close_console_on_success()
+                    self.handle_successful_formatting()
+                else:
+                    self.open_console_on_failure()
         except Exception as e:
-            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
-        finally:
-            self.stop_indicator()
-
-    def start_indicator(self):
-        if self.indicator:
-            self.indicator.start()
-
-    def stop_indicator(self):
-        if self.indicator:
-            self.indicator.stop()
-            self.indicator = None
+            log.error('Error occurred during file formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
     def is_no_operation(self, is_success):
         if is_success is None:
@@ -202,7 +198,7 @@ class FileFormat:
             self.cleanup_temp_dir()
 
     def cleanup_temp_dir(self):
-        if self.temp_dir:
+        if self.temp_dir and os.path.exists(self.temp_dir):
             self.temp_dir.cleanup()
             self.temp_dir = None
 
@@ -210,7 +206,7 @@ class FileFormat:
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
-            stem = PathHandler(view=dst_view).get_pathinfo()['stem'] or GFX_OUT_NAME
+            stem = PathHandler.get_pathinfo(view=dst_view)['stem'] or GFX_OUT_NAME
             save_path = os.path.join(PhantomHandler.get_downloads_folder(), stem + '.' + href.split('/')[1].split(';')[0])
 
             try:

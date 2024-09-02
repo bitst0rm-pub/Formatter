@@ -1,24 +1,25 @@
 import sublime
 import sublime_plugin
 
-from . import CONFIG, OptionHandler, debounce, singleton, skip_word_counter
+from . import CONFIG, OptionHandler, debounce, skip_word_counter
 from .constants import STATUS_KEY
 
 CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
 
 
-@singleton
 class WordCounter:
-    def __init__(self, view, ignore_whitespace_char=True, use_short_label=False):
-        self.view = view
+    def __init__(self):
+        self.view = None
+        self.ignore_whitespace_char = True
+        self.use_short_label = False
+
+    def reset(self):
         self.size = self.view.size()
         self.selections = self.view.sel()
         self.total_lines = 0
         self.total_words = 0
         self.total_chars = 0
         self.total_chars_with_spaces = 0
-        self.ignore_whitespace_char = ignore_whitespace_char
-        self.use_short_label = use_short_label
 
     def thousands_separator(self, number):
         return '{:,}'.format(number).replace(',', '.')
@@ -72,14 +73,21 @@ class WordCounter:
 
         self.view.set_status(STATUS_KEY + '_wc', status_text)
 
-    def run_on_selection_modified(self):
+    def run_on_selection_modified(self, view, ignore_whitespace_char, use_short_label):
         try:
+            self.view = view
+            self.ignore_whitespace_char = ignore_whitespace_char
+            self.use_short_label = use_short_label
+            self.reset()
             self.update_status()
         except Exception:
             pass
 
 
 class WordCounterListener(sublime_plugin.EventListener):
+    def __init__(self):
+        self.word_counter = WordCounter()
+
     @skip_word_counter(max_size=6000000)
     @debounce(delay_in_ms=300)
     def on_selection_modified_async(self, view):
@@ -88,4 +96,4 @@ class WordCounterListener(sublime_plugin.EventListener):
             ignore_whitespace_char = x.get('ignore_whitespace_char', True)
             use_short_label = x.get('use_short_label', False)
             view.settings().set('show_line_column', 'disabled')
-            WordCounter(view, ignore_whitespace_char, use_short_label).run_on_selection_modified()
+            self.word_counter.run_on_selection_modified(view, ignore_whitespace_char, use_short_label)

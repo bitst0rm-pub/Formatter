@@ -9,6 +9,8 @@ from .file_format import FileFormat
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
+    _lock = threading.Lock()
+
     def run(self, edit, **kwargs):
         CleanupHandler.clear_console()
 
@@ -17,9 +19,9 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             if kwargs.get('type', None) == 'graphic':
                 log.info('Dir formatting is not supported for plugins of type: graphic')
             else:
-                self.run_dir_format(**kwargs)
+                self.run_dir_format_thread(**kwargs)
         else:
-            self.run_file_format(**kwargs)
+            self.run_file_format_thread(**kwargs)
 
     def is_enabled(self):
         return not bool(self.view.settings().get('is_widget', False))
@@ -29,7 +31,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         return self.is_plugin_enabled(kwargs.get('uid', None))
 
     def is_plugin_enabled(self, uid):
-        if not ViewHandler(view=self.view).is_view_formattable():
+        if not ViewHandler.is_view_formattable(view=self.view):
             return False
 
         formatter = OptionHandler.query(CONFIG, {}, 'formatters', uid)
@@ -55,19 +57,31 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             if isinstance(value, dict):
                 return any(value.values())
 
-    def run_dir_format(self, **kwargs):
+    def run_dir_format_thread(self, **kwargs):
         if self.view.file_name():
-            with threading.Lock():
+            with RunFormatCommand._lock:
                 log.debug('Starting dir formatting ...')
-                dir_format = DirFormat(self.view, **kwargs)
-                dir_format_thread = threading.Thread(target=dir_format.run)
+                dir_format_thread = threading.Thread(target=self._run_dir_format, args=(kwargs,))
                 dir_format_thread.start()
         else:
             InterfaceHandler.popup_message('Please save the file first. Dir formatting requires an existing file, which must be opened as the starting point.', 'ERROR')
 
-    def run_file_format(self, **kwargs):
-        with threading.Lock():
+    def _run_dir_format(self, kwargs):
+        try:
+            with DirFormat(view=self.view, **kwargs) as dir_format:
+                dir_format.run()
+        except Exception as e:
+            log.error('Error occurred in formatting thread: %s', e)
+
+    def run_file_format_thread(self, **kwargs):
+        with RunFormatCommand._lock:
             log.debug('Starting file formatting ...')
-            file_format = FileFormat(self.view, **kwargs)
-            file_format_thread = threading.Thread(target=file_format.run)
+            file_format_thread = threading.Thread(target=self._run_file_format, args=(kwargs,))
             file_format_thread.start()
+
+    def _run_file_format(self, kwargs):
+        try:
+            with FileFormat(view=self.view, **kwargs) as file_format:
+                file_format.run()
+        except Exception as e:
+            log.error('Error occurred in formatting thread: %s', e)

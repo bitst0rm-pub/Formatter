@@ -58,7 +58,7 @@ contexts:
   command_arguments:
     - match: '\]'
       pop: true
-    - match: "'([^']+)'"
+    - match: "'([^']*)'"
       captures:
         1: keyword.console
     - match: ','

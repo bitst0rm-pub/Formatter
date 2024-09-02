@@ -83,42 +83,50 @@ def check_deprecated_api(start_date, deactivate_after_days=14):
     return decorator
 
 
-# Decorator to validate function arguments using provided validator functions
-def validate_args(*validators, check_cmd=False):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            # Skip the 'self' argument for methods
-            args_to_validate = args[1:] if hasattr(args[0], func.__name__) else args
-            for validator, arg in zip(validators, args_to_validate):
-                if not validator(arg):
-                    raise ValueError('Validation failed for argument %s' % arg)
-                if check_cmd:
-                    log.debug('Command: %s', arg)
-            return func(*args, **kwargs)
-        return wrapper
-    return decorator
+# Decorator to validate the subprocess cmd argument as a list of strings
+def validate_cmd_arg(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if 'cmd' in kwargs:
+            cmd = kwargs['cmd']
+            if isinstance(cmd, list):
+                if _are_all_strings_in_list(cmd):
+                    log.debug('Command: %s', cmd)
+                else:
+                    raise ValueError('Validation failed: all elements of the cmd argument must be strings: %s' % cmd)
+            else:
+                raise TypeError('Validation failed: cmd argument is not of type list: %s' % cmd)
+        else:
+            raise ValueError('Validation failed: cmd keyword argument is required.')
+
+        return func(*args, **kwargs)
+    return wrapper
 
 
-def are_all_strings_in_list(lst):
+def _are_all_strings_in_list(lst):
     return all(isinstance(item, str) for item in lst) if lst and isinstance(lst, list) else False
 
 
-def is_non_empty_string(s):  # unused
-    return isinstance(s, str) and bool(s)
-
-
-def is_non_empty_string_list(lst):  # unused
-    return (isinstance(lst, list) and bool(lst) and all(is_non_empty_string(item) for item in lst))
-
-
-# Decorator to transform function arguments using provided transformer functions
-def transform_args(*transformers):
+# Decorator to transform cmd argument using provided transformer functions
+def transform_cmd_arg(*transformers):
     def decorator(func):
         @wraps(func)
         def wrapper(self, *args, **kwargs):
-            new_args = [transformer(self, arg) for transformer, arg in zip(transformers, args)]
-            return func(self, *new_args, **kwargs)
+            if 'cmd' in kwargs:
+                cmd = kwargs['cmd']
+                if isinstance(cmd, list):
+                    if len(transformers) > 0:
+                        kwargs['cmd'] = transformers[0](self, cmd=kwargs['cmd'])
+
+                    new_args = [
+                        transformer(self, arg) if transformer is not None else arg
+                        for transformer, arg in zip(transformers, args)
+                    ]
+                    return func(self, *new_args, **kwargs)
+                else:
+                    raise TypeError('Validation failed: cmd argument is not of type list: %s' % cmd)
+            else:
+                raise ValueError('Validation failed: cmd keyword argument is required.')
         return wrapper
     return decorator
 
@@ -161,7 +169,8 @@ def check_stop(get_stop_status_func):
 
 
 # Decorator to clean subprocess output
-def clean_output(func):
+def sanitize_cmd_output(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         returncode, stdout, stderr = func(*args, **kwargs)
         if stderr:
@@ -208,7 +217,6 @@ def debounce(delay_in_ms=500):
 
             callback = partial(_debounce_callback, func, self, args, kwargs, view, last_event_time, delay_in_ms)
             sublime.set_timeout_async(callback, delay_in_ms)
-
         return wrapper
     return decorator
 
@@ -222,7 +230,7 @@ def _debounce_callback(func, instance, args, kwargs, view, last_event_time, dela
 
 
 # Decorator to measure the execution time of a function
-def measure_time(func):
+def measure_time(func):  # unused
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
@@ -233,8 +241,8 @@ def measure_time(func):
     return wrapper
 
 
-# Decorator to enforce the Singleton design pattern on a class, allowing only one instance
-def singleton(cls):
+# Decorator to enforce the singleton on a class, allowing only one instance
+def singleton(cls):  # unused
     _instances = {}
 
     @wraps(cls)
@@ -243,7 +251,7 @@ def singleton(cls):
         instance = _instances.get(key)
 
         if instance is None:
-            # Create a new instance by calling __new__ and __init__
+            # Create a new instance
             instance = cls.__new__(cls)
             instance.__init__(*args, **kwargs)
             _instances[key] = instance
@@ -251,5 +259,4 @@ def singleton(cls):
             # Reinitialize the instance with updated arguments if provided
             instance.__init__(*args, **kwargs)
         return instance
-
     return get_instance

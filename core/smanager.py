@@ -162,7 +162,7 @@ class SessionManager:
 
 
 class SessionManagerListener(sublime_plugin.EventListener):
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         self.session_manager = SessionManager(max_database_records=600)
 
     def on_load(self, view):

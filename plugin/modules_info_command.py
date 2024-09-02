@@ -8,7 +8,7 @@ from ..core.constants import PACKAGE_NAME
 
 
 class ModulesInfoCommand(sublime_plugin.WindowCommand):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, window):
         self.file_path = self.get_file_path()
 
     def get_file_path(self):
