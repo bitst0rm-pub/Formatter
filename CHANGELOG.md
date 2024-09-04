@@ -2,6 +2,12 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.2)] - 2024-09-04
+
+### ⚙️ Miscellaneous Tasks
+
+- [`1a50cc2`](https://github.com/bitst0rm-pub/Formatter/commit/1a50cc2304224d16577421df0e359c0b8ac3e16b) Cosmetic enhancements 🍒
+
 ## [[1.6.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.1)] - 2024-09-02
 
 ### 🐛 Bug Fixes
