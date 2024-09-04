@@ -29,7 +29,8 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
             self.options.append(option_label)
         self.show_main_menu()
 
-    def get_option_label(self, key, title, config_values):
+    @staticmethod
+    def get_option_label(key, title, config_values):
         option_value = config_values.get(key, False)
         option_status = '[x]' if option_value else '[-]'
         if key == 'use_user_settings':
@@ -231,10 +232,11 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         config_json = CONFIG.get('quick_options', {})
         self.save_qo_config_file(config_json)
 
-    def save_qo_config_file(self, json_data):
+    @staticmethod
+    def save_qo_config_file(json_data):
         file = ConfigHandler.quick_options_config_file()
         try:
             with open(file, 'w', encoding='utf-8') as f:
                 json.dump(json_data, f, ensure_ascii=False, indent=4)
         except Exception as e:
-            InterfaceHandler.popup_message('Error writing Quick Options file: %s' % e, 'ERROR')
+            InterfaceHandler.popup_message('Error saving Quick Options file: %s' % e, 'ERROR')

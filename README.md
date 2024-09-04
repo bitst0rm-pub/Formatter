@@ -818,7 +818,7 @@ Sublime Text > View > Syntax
 Setting wrong syntax when formatting code will cause error:
 
 ```text
-Syntax out of the scope.
+Syntax out of the scope
 ```
 
 Formatting actions can be triggered in different ways:

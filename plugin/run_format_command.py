@@ -42,7 +42,8 @@ class RunFormatCommand(sublime_plugin.TextCommand):
         else:
             return False
 
-    def is_dir_format_enabled(self, uid):
+    @staticmethod
+    def is_dir_format_enabled(uid):
         value = OptionHandler.query(CONFIG, False, 'formatters', uid, 'dir_format')
         if ConfigHandler.is_quick_options_mode():
             qo_value = OptionHandler.query(CONFIG, False, 'quick_options', 'dir_format')

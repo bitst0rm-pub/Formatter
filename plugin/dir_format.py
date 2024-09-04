@@ -1,4 +1,5 @@
 import os
+import time
 import traceback
 from functools import partial
 
@@ -13,6 +14,7 @@ from ..core.formatter import Formatter
 from . import ActivityIndicator
 
 STOP = False
+START_TIME = None
 
 
 def get_stop_status():
@@ -47,6 +49,8 @@ class DirFormat:
         return False  # return True to suppress exceptions
 
     def run(self):
+        self.start_timer()
+
         try:
             global STOP
             STOP = False
@@ -65,10 +69,39 @@ class DirFormat:
         except Exception as e:
             log.error('Error occurred during dir formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
-    def stop(self):
+    @staticmethod
+    def stop():
         global STOP
         STOP = True
         CONFIG['STOP'] = True
+
+    @staticmethod
+    def format_elapsed_time(seconds):
+        if seconds < 60:
+            return '{:.2f} sec'.format(seconds)
+        elif seconds < 3600:
+            return '{:.2f} min'.format(seconds / 60)
+        elif seconds < 86400:
+            return '{:.2f} hrs'.format(seconds / 3600)
+        else:
+            return '{:.2f} day'.format(seconds / 86400)
+
+    @staticmethod
+    def start_timer():
+        global START_TIME
+        START_TIME = time.time()
+
+    def end_timer(self):
+        global START_TIME
+        if START_TIME is None:
+            log.warning('Timer was not started.')
+            return 'N/A'
+
+        end_time = time.time()
+        elapsed_time = end_time - START_TIME
+        formatted_time = self.format_elapsed_time(elapsed_time)
+        START_TIME = None
+        return '{}'.format(formatted_time)
 
     def get_current_working_directory(self):
         return PathHandler.get_pathinfo(view=self.view, path=self.view.file_name())['cwd']
@@ -194,7 +227,8 @@ class DirFormat:
             status_text = self.generate_status_text()
             current_view.set_status(STATUS_KEY, status_text)
 
-    def get_current_view(self):
+    @staticmethod
+    def get_current_view():
         return sublime.active_window().active_view()
 
     def generate_status_text(self):
@@ -214,7 +248,22 @@ class DirFormat:
         ok = self.CONTEXT['success_count']
         ko = self.CONTEXT['failure_count']
         total = self.CONTEXT['filelist_length']
-        InterfaceHandler.popup_message('Formatting COMPLETED!\n\nOK: %s\nKO: %s\nTotal: %s\n\nPlease check the results in:\n%s' % (ok, ko, total, self.CONTEXT['cwd']), 'INFO', dialog=True)
+        etime = self.end_timer() or 'N/A'
+        cwd = self.CONTEXT['cwd']
+
+        message = (
+            'Formatting {}!\n\n'
+            'OK:  {}\n'
+            'KO:  {}\n'
+            'Total:  {}\n'
+            'Time:  {}\n\n'
+            'Please check the result in:\n{}'
+        ).format(
+            'COMPLETED' if STOP is False else 'ABORTED',
+            ok, ko, total, etime, cwd
+        )
+
+        InterfaceHandler.popup_message(message, 'INFO', dialog=True)
 
     def reset_context(self):
         for key, value in self.CONTEXT.items():
@@ -227,7 +276,8 @@ class DirFormat:
         # Reset and end
         CONFIG['STOP'] = True
 
-    def handle_error(self, error, cwd=None, file_path=None):
+    @staticmethod
+    def handle_error(error, cwd=None, file_path=None):
         log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
         if cwd and (error.errno != os.errno.EEXIST):
             log.error('Could not create directory: %s', cwd)

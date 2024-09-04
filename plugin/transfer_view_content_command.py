@@ -11,7 +11,7 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
         src_view = self.view
 
         dst_view = self.create_or_reuse_view(path, src_view)
-        self.copy_content_and_selections(edit, src_view, dst_view)
+        self.copy_content_and_selections(src_view, dst_view)
 
         if path:
             self.save_dst_content(dst_view, path)
@@ -19,7 +19,8 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
             log.debug('The view is an unsaved buffer and must be manually saved as a file.')
         self.show_status_on_new_file(dst_view)
 
-    def create_or_reuse_view(self, path, src_view):
+    @staticmethod
+    def create_or_reuse_view(path, src_view):
         src_window = src_view.window()
         txt_vref = src_view.id()
 
@@ -42,7 +43,8 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
 
         return dst_view
 
-    def copy_content_and_selections(self, edit, src_view, dst_view):
+    @staticmethod
+    def copy_content_and_selections(src_view, dst_view):
         dst_view.run_command('append', {'characters': src_view.substr(sublime.Region(0, src_view.size()))})
 
         selections = list(src_view.sel())
@@ -52,7 +54,8 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
         dst_view.set_viewport_position(src_view.viewport_position(), False)
         dst_view.window().focus_view(dst_view)
 
-    def save_dst_content(self, view, path):
+    @staticmethod
+    def save_dst_content(view, path):
         allcontent = view.substr(sublime.Region(0, view.size()))
         try:
             with open(path, 'w', encoding='utf-8') as file:

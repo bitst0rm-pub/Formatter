@@ -44,7 +44,8 @@ class ZoomCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 log.error('Error creating phantom: %s', e)
 
-    def on_navigate(self, href, data, dst_view):
+    @staticmethod
+    def on_navigate(href, data, dst_view):
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
@@ -61,7 +62,8 @@ class ZoomCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 InterfaceHandler.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
-    def find_view_by_id(self, dst_view_id):
+    @staticmethod
+    def find_view_by_id(dst_view_id):
         for window in sublime.windows():
             for view in window.views():
                 if view.id() == dst_view_id:

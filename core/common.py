@@ -19,8 +19,9 @@ import sublime
 from . import (check_deprecated_api, check_deprecated_options, disable_logging,
                enable_logging, enable_status, log, retry_on_exception,
                sanitize_cmd_output, transform_cmd_arg, validate_cmd_arg)
-from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
-                        PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
+from .constants import (ASSETS_DIRECTORY, AUTO_FORMAT_ACTION_KEY, GFX_OUT_NAME,
+                        IS_WINDOWS, LAYOUTS, PACKAGE_NAME,
+                        QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
                         RECURSIVE_SUCCESS_DIRECTORY)
 
@@ -62,7 +63,7 @@ class Module(metaclass=ModuleMeta):
         self.temp_dir = temp_dir
         self.type = type
         self.auto_format_config = auto_format_config
-        self.kwargs = kwargs  # unused
+        self.kwargs = kwargs  # @unused
 
     @abc.abstractmethod
     def format(self):
@@ -739,8 +740,8 @@ class SyntaxHandler:
                 }
                 syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
                 if syntax:
-                    operation = OptionHandler.query(auto_format_config, None, 'config', '__operation__')
-                    if syntax in OptionHandler.query(auto_format_config, [], 'config', operation, 'exclude_syntaxes'):
+                    action = OptionHandler.query(auto_format_config, None, 'config', AUTO_FORMAT_ACTION_KEY)
+                    if syntax in OptionHandler.query(auto_format_config, [], 'config', action, 'exclude_syntaxes'):
                         return '@@noop@@', None
                     else:
                         return uid, syntax
@@ -914,7 +915,7 @@ class InterfaceHandler:
     @staticmethod
     def popup_message(text, title=None, dialog=False):
         template = u'%s' + (u' (%s)' if title else '') + u':\n\n%s'
-        message = template % (PACKAGE_NAME, title, text) if title else template % (PACKAGE_NAME, text)
+        message = template % ('🧜‍♀️ ' + PACKAGE_NAME, title, text) if title else template % ('🧜‍♀️ ' + PACKAGE_NAME, text)
 
         if dialog:
             sublime.message_dialog(message)
@@ -926,7 +927,7 @@ class InterfaceHandler:
 # === Extended Class and Its Supporting Classes === #
 #####################################################
 
-class _Extended(Module):  # unused
+class _Extended(Module):  # @unused
     '''
     Extended API for universal use, inheriting all methods from the Module class.
     This subclass is never used and is included here for overview only.
@@ -1620,7 +1621,7 @@ class PrintHandler:
                 log.info('Mode: User Settings')
 
 
-class MiscHandler:  # unused
+class MiscHandler:  # @unused
     @staticmethod
     def is_view(file_or_view):
         return (type(file_or_view) is sublime.View)

@@ -21,7 +21,8 @@ class CollapseSettingSectionsCommand(sublime_plugin.TextCommand):
         except Exception as e:
             log.error('Failed to decode JSON: %s', e)
 
-    def find_formatters_region(self, content):
+    @staticmethod
+    def find_formatters_region(content):
         start = content.find('"formatters"')
         if start == -1:
             return None
@@ -82,7 +83,8 @@ class CollapseSettingSectionsCommand(sublime_plugin.TextCommand):
 
         return self.find_object_end(content, object_start, end)
 
-    def find_object_end(self, content, start_pos, end):
+    @staticmethod
+    def find_object_end(content, start_pos, end):
         depth = 1
         for i in range(start_pos + 1, end):
             if content[i] == '{':

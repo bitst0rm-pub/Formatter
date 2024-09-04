@@ -11,7 +11,8 @@ class ModulesInfoCommand(sublime_plugin.WindowCommand):
     def __init__(self, window):
         self.file_path = self.get_file_path()
 
-    def get_file_path(self):
+    @staticmethod
+    def get_file_path():
         return os.path.join(sublime.packages_path(), PACKAGE_NAME, 'modules', '_summary.txt')
 
     def is_enabled(self):

@@ -202,7 +202,8 @@ class FileFormat:
             self.temp_dir.cleanup()
             self.temp_dir = None
 
-    def on_navigate(self, href, data, dst_view):
+    @staticmethod
+    def on_navigate(href, data, dst_view):
         if href == 'zoom_image':
             dst_view.window().run_command('zoom', data)
         else:
@@ -219,7 +220,8 @@ class FileFormat:
             except Exception as e:
                 InterfaceHandler.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
-    def get_layout_and_suffix(self, uid, mode):
+    @staticmethod
+    def get_layout_and_suffix(uid, mode):
         if mode == 'qo':
             return (
                 OptionHandler.query(CONFIG, False, 'quick_options', 'layout'),

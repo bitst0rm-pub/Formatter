@@ -229,8 +229,8 @@ def _debounce_callback(func, instance, args, kwargs, view, last_event_time, dela
         last_event_time.pop(view_id, None)
 
 
-# Decorator to measure the execution time of a function
-def measure_time(func):  # unused
+# Decorator to measure the execution time of a function for test
+def measure_time(func):  # @unused
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
@@ -242,7 +242,7 @@ def measure_time(func):  # unused
 
 
 # Decorator to enforce the singleton on a class, allowing only one instance
-def singleton(cls):  # unused
+def singleton(cls):  # @unused
     _instances = {}
 
     @wraps(cls)

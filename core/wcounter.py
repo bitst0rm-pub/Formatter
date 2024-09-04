@@ -21,7 +21,8 @@ class WordCounter:
         self.total_chars = 0
         self.total_chars_with_spaces = 0
 
-    def thousands_separator(self, number):
+    @staticmethod
+    def thousands_separator(number):
         return '{:,}'.format(number).replace(',', '.')
 
     def count_characters(self, text):

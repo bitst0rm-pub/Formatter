@@ -388,7 +388,7 @@ class ActivityIndicator:
         self.start()
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, exc_traceback):
         self.stop()
 
     def __del__(self):

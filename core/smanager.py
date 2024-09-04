@@ -21,7 +21,8 @@ class SessionManager:
         self.max_database_records = max_database_records
         self.cleanup_session_file()
 
-    def read_session_file(self):
+    @staticmethod
+    def read_session_file():
         try:
             with open(SESSION_FILE, 'r', encoding='utf-8') as f:
                 return json.load(f)
@@ -31,7 +32,8 @@ class SessionManager:
         except Exception:
             return {}
 
-    def write_session_file(self, data):
+    @staticmethod
+    def write_session_file(data):
         with open(SESSION_FILE, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
 
@@ -45,7 +47,8 @@ class SessionManager:
                 del data[key]
             self.write_session_file(data)
 
-    def is_entry_old(self, entry, current_time):
+    @staticmethod
+    def is_entry_old(entry, current_time):
         last_update = datetime.strptime(entry.get('last_update', ''), '%Y-%m-%d %H:%M:%S.%f')
         return current_time - last_update > timedelta(days=MAX_AGE_DAYS)
 
@@ -115,7 +118,8 @@ class SessionManager:
 
             view.add_regions('bookmarks', bookmark_regions, 'bookmarks', 'bookmark', sublime.DRAW_OUTLINED)
 
-    def get_bookmarks(self, view):
+    @staticmethod
+    def get_bookmarks(view):
         bookmarks = []
         for region in view.get_regions('bookmarks'):
             row, _ = view.rowcol(region.begin())

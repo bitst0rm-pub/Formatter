@@ -11,10 +11,12 @@ class OpenChangelogCommand(sublime_plugin.WindowCommand):
     def __init__(self, window):
         self.file_path = self.get_file_path()
 
-    def get_file_path(self):
+    @staticmethod
+    def get_file_path():
         return os.path.join(sublime.packages_path(), PACKAGE_NAME, 'CHANGELOG.md')
 
-    def convert_markdown_file_to_html(self, filepath):
+    @staticmethod
+    def convert_markdown_file_to_html(filepath):
         try:
             with open(filepath, 'r') as f:
                 markdown = f.read()

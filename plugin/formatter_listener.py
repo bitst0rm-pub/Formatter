@@ -8,7 +8,7 @@ import sublime_plugin
 from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                     InterfaceHandler, LayoutHandler, OptionHandler,
                     SyntaxHandler, TransformHandler, log, reload_modules)
-from ..core.constants import PACKAGE_NAME
+from ..core.constants import AUTO_FORMAT_ACTION_KEY, PACKAGE_NAME
 from . import DirFormat, FileFormat
 
 
@@ -55,26 +55,26 @@ class SyncScrollManager:
 
 class SavePasteManager:
     @classmethod
-    def apply_formatting(cls, view=None, operation=None):
+    def apply_formatting(cls, view=None, action=None):
         file_path = view.file_name()
         if file_path and os.path.splitext(file_path)[1] in ['.sublime-settings']:
             return
 
-        if cls._on_auto_format(view=view, file_path=file_path, opkey=operation):
+        if cls._on_auto_format(view=view, file_path=file_path, actkey=action):
             return
 
-        cls._on_paste_or_save(view=view, opkey=operation)
+        cls._on_paste_or_save(view=view, actkey=action)
 
     @classmethod
-    def _on_auto_format(cls, view=None, file_path=None, opkey=None):
+    def _on_auto_format(cls, view=None, file_path=None, actkey=None):
         get_auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
         x = get_auto_format_args['auto_format_config']
         config = x.get('config', {})
-        if config and not cls._should_skip(config.get(opkey, False)):
-            config.update(__operation__=opkey)
+        if config and not cls._should_skip(config.get(actkey, False)):
+            config.update({AUTO_FORMAT_ACTION_KEY: actkey})
             CleanupHandler.clear_console()
 
-            log.debug('"%s" (autoformat)', opkey)
+            log.debug('"%s" (autoformat)', actkey)
             try:
                 with FileFormat(view=view, **get_auto_format_args) as file_format:
                     file_format.run()
@@ -85,18 +85,18 @@ class SavePasteManager:
         return False
 
     @classmethod
-    def _on_paste_or_save(cls, view=None, opkey=None):
-        if not opkey:
+    def _on_paste_or_save(cls, view=None, actkey=None):
+        if not actkey:
             return None
 
         unique = OptionHandler.query(CONFIG, {}, 'format_on_priority') or OptionHandler.query(CONFIG, {}, 'format_on_unique')
         if unique and isinstance(unique, dict) and unique.get('enable', False):
-            cls._on_paste_or_save__unique(view=view, unique=unique, opkey=opkey)
+            cls._on_paste_or_save__unique(view=view, unique=unique, actkey=actkey)
         else:
-            cls._on_paste_or_save__regular(view=view, opkey=opkey)
+            cls._on_paste_or_save__regular(view=view, actkey=actkey)
 
     @classmethod
-    def _on_paste_or_save__unique(cls, view=None, unique=None, opkey=None):
+    def _on_paste_or_save__unique(cls, view=None, unique=None, actkey=None):
         def are_unique_values(unique=None):
             flat_values = [value for key, values_list in unique.items() if key != 'enable' for value in values_list]
             return (len(flat_values) == len(set(flat_values)))
@@ -108,15 +108,15 @@ class SavePasteManager:
                 if uid == 'enable':
                     continue
 
-                v = OptionHandler.query(formatters, None, uid)
-                if not cls._should_skip_formatter(view=view, uid=uid, value=v, opkey=opkey):
+                val = OptionHandler.query(formatters, None, uid)
+                if not cls._should_skip_formatter(view=view, uid=uid, value=val, actkey=actkey):
                     syntax = cls._get_syntax(view=view, uid=uid)
-                    if cls._should_skip_syntaxes(value=v, opkey=opkey, syntax=syntax):
+                    if cls._should_skip_syntaxes(value=val, syntax=syntax, actkey=actkey):
                         continue
                     if syntax in value:
                         CleanupHandler.clear_console()
 
-                        log.debug('"%s" (priority)', opkey)
+                        log.debug('"%s" (priority)', actkey)
                         try:
                             with FileFormat(view=view, uid=uid, type=value.get('type', None)) as file_format:
                                 file_format.run()
@@ -128,19 +128,19 @@ class SavePasteManager:
             InterfaceHandler.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
 
     @classmethod
-    def _on_paste_or_save__regular(cls, view=None, opkey=None):
+    def _on_paste_or_save__regular(cls, view=None, actkey=None):
         seen = set()
         formatters = OptionHandler.query(CONFIG, {}, 'formatters')
 
         for uid, value in formatters.items():
-            if not cls._should_skip_formatter(view=view, uid=uid, value=value, opkey=opkey):
+            if not cls._should_skip_formatter(view=view, uid=uid, value=value, actkey=actkey):
                 syntax = cls._get_syntax(view=view, uid=uid)
-                if cls._should_skip_syntaxes(value=value, opkey=opkey, syntax=syntax):
+                if cls._should_skip_syntaxes(value=value, syntax=syntax, actkey=actkey):
                     continue
                 if syntax in value.get('syntaxes', []) and syntax not in seen:
                     CleanupHandler.clear_console()
 
-                    log.debug('"%s" (regular)', opkey)
+                    log.debug('"%s" (regular)', actkey)
                     try:
                         with FileFormat(view=view, uid=uid, type=value.get('type', None)) as file_format:
                             file_format.run()
@@ -150,14 +150,14 @@ class SavePasteManager:
                         seen.add(syntax)
 
     @staticmethod
-    def _should_skip_syntaxes(value=None, opkey=None, syntax=None):
-        opkey_value = value.get(opkey, None)
-        if isinstance(opkey_value, dict):
-            return syntax in opkey_value.get('exclude_syntaxes', [])
+    def _should_skip_syntaxes(value=None, syntax=None, actkey=None):
+        actkey_value = value.get(actkey, None)
+        if isinstance(actkey_value, dict):
+            return syntax in actkey_value.get('exclude_syntaxes', [])
         return False
 
     @classmethod
-    def _should_skip_formatter(cls, view=None, uid=None, value=None, opkey=None):
+    def _should_skip_formatter(cls, view=None, uid=None, value=None, actkey=None):
         if not isinstance(value, dict):
             return True
 
@@ -168,18 +168,18 @@ class SavePasteManager:
         is_rff_on = OptionHandler.query(CONFIG, False, 'quick_options', 'dir_format')
 
         if is_qo_mode:
-            if uid not in OptionHandler.query(CONFIG, [], 'quick_options', opkey):
+            if uid not in OptionHandler.query(CONFIG, [], 'quick_options', actkey):
                 return True
 
             if is_rff_on:
-                log.info('Quick Options mode: %s has the "%s" option enabled, which is incompatible with "dir_format" mode.', uid, opkey)
+                log.info('Quick Options mode: %s has the "%s" option enabled, which is incompatible with "dir_format" mode.', uid, actkey)
                 return True
         else:
-            if cls._should_skip(view=view, value=value.get(opkey, False)):
+            if cls._should_skip(view=view, value=value.get(actkey, False)):
                 return True
 
             if OptionHandler.query(value, False, 'dir_format', 'enable'):
-                log.info('User Settings mode: %s has the "%s" option enabled, which is incompatible with "dir_format" mode.', uid, opkey)
+                log.info('User Settings mode: %s has the "%s" option enabled, which is incompatible with "dir_format" mode.', uid, actkey)
                 return True
 
         return False
@@ -225,7 +225,7 @@ class SavePasteManager:
             # Selections: find the first non-empty region or use the first region if all are empty
             region = next((region for region in view.sel() if not region.empty()), view.sel()[0])
         else:
-            # Entire file
+            # Entire view
             region = sublime.Region(0, view.size())
 
         uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=None)
@@ -261,7 +261,8 @@ class FormatterListener(sublime_plugin.EventListener):
                 if dst_view:
                     self.sync_scroll_manager.start_sync_scroll('dst', view, dst_view)
 
-    def _find_src_view_by_dst_view(self, dst_view):
+    @staticmethod
+    def _find_src_view_by_dst_view(dst_view):
         src_view_id = dst_view.settings().get('txt_vref')
         if src_view_id:
             for window in sublime.windows():
@@ -270,7 +271,8 @@ class FormatterListener(sublime_plugin.EventListener):
                         return view
         return None
 
-    def _find_dst_view_by_src_view(self, src_view):
+    @staticmethod
+    def _find_dst_view_by_src_view(src_view):
         src_view_id = src_view.id()
         for window in sublime.windows():
             for view in window.views():
@@ -299,11 +301,11 @@ class FormatterListener(sublime_plugin.EventListener):
                 log.error('Error occurred while dir formatting: %s', e)
 
         if command_name in ['paste', 'paste_and_indent']:
-            SavePasteManager.apply_formatting(view=view, operation='format_on_paste')
+            SavePasteManager.apply_formatting(view=view, action='format_on_paste')
             return None
 
     def on_pre_save(self, view):
-        SavePasteManager.apply_formatting(view=view, operation='format_on_save')
+        SavePasteManager.apply_formatting(view=view, action='format_on_save')
 
     def on_post_save(self, view):
         if OptionHandler.query(CONFIG, False, 'debug') and OptionHandler.query(CONFIG, False, 'dev'):
