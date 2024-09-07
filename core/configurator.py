@@ -531,8 +531,8 @@ def build_formatter_sublime_settings(formatter_map):
         ('timeout', 10),
         ('__COMMENT__file_chars_limit', '''
     // Limit the total number of characters in the file.
-    // Max. 1 MB = 1024 * 1024 ≈ 1048576 chars is a reasonable value.
-    // Accepted value: int OR false'''),
+    // A max of 1 MB = 1024 * 1024 ≈ 1.048.576 chars seems reasonable.
+    // Accepted values: int OR false'''),
         ('file_chars_limit', False),
         ('__COMMENT__custom_modules_manifest', '''
     // Integrate your custom modules into the Formatter ecosystem.
@@ -563,7 +563,7 @@ def build_formatter_sublime_settings(formatter_map):
         ('__COMMENT__layout', '''
     // Configure the layout when opening new files.
     // This only takes effect if the "new_file_on_format" option is true.
-    // Accepted value: "2cols", "2rows", "single" OR false'''),
+    // Accepted values: "2cols", "2rows", "single" OR false'''),
         ('layout', OrderedDict([
             ('enable', '2cols'),
             ('sync_scroll', True)

@@ -241,7 +241,7 @@ def measure_time(func):  # @unused
     return wrapper
 
 
-# Decorator to enforce the singleton on a class, allowing only one instance
+# Decorator to enforce the singleton on a class (not method), allowing only one instance
 def singleton(cls):  # @unused
     _instances = {}
 

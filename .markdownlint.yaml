@@ -3,6 +3,9 @@ default: true
 # MD013/line-length Line length
 MD013: false
 
+# MD027/no-multiple-space-blockquote
+MD027: false
+
 # MD033/no-inline-html Inline HTML
 MD033: false
 

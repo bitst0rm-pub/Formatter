@@ -72,7 +72,7 @@ class WordCounter:
                 self.thousands_separator(current_column + 1)
             )
 
-        self.view.set_status(STATUS_KEY + '_wc', status_text)
+        self.view.set_status(STATUS_KEY + '_c', status_text)
 
     def run_on_selection_modified(self, view, ignore_whitespace_char, use_short_label):
         try:

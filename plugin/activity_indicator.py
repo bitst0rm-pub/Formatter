@@ -377,7 +377,7 @@ class ActivityIndicator:
         self.width = width if width is not None else style_defaults['width']
         self.interval = interval if interval is not None else style_defaults['interval']
         self.style = style
-        self.key = '{}_ai'.format(uuid.uuid4())
+        self.key = '{}_i'.format(uuid.uuid4())
         self._running = False
         self._tick = 0
         self._lock = Lock()

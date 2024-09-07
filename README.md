@@ -17,7 +17,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Supports [auto-detect formatting](#auto-detect-formatting).
 - Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
-  - with options to exclude files, dirs, extensions, syntaxes
+  - with options to exclude dirs, files, extensions, syntaxes
 - Capable to format on Paste.
   - dito
 - Shared config files available for each 3rd-party plugin.
@@ -26,7 +26,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Customizable and extendable through 2 methods to add **_your_** custom plugins:
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
   - Modules: Integration of your own modules. _see_ [Development](#development)
-- Zero dependencies for installation.
+- Zero dependencies to install.
 
 **Limitations:**
 
@@ -156,29 +156,111 @@ Formatter is useless without third-party plugins. It relies on external plugins 
 | YAML | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
-💡 **Tips**:
-
-- [prettier](https://github.com/prettier/prettier) and [stylelint](https://github.com/stylelint/stylelint) can collaborate to format `CSS`
-
-    <details>
-    <summary><sub>Config example</sub></summary>
-
-        stylelint_rc.json:
-        {"extends":["stylelint-config-recommended","stylelint-config-standard"],"plugins":["stylelint-group-selectors","stylelint-no-indistinguishable-colors","@double-great/stylelint-a11y","stylelint-prettier"],"rules":{"plugin/stylelint-group-selectors":true,"plugin/stylelint-no-indistinguishable-colors":true,"a11y/content-property-no-static-value":false,"a11y/font-size-is-readable":false,"a11y/line-height-is-vertical-rhythmed":[true,{"severity":"warning"}],"a11y/media-prefers-color-scheme":false,"a11y/media-prefers-reduced-motion":false,"a11y/no-display-none":false,"a11y/no-obsolete-attribute":[true,{"severity":"warning"}],"a11y/no-obsolete-element":[true,{"severity":"warning"}],"a11y/no-outline-none":false,"a11y/no-spread-text":false,"a11y/no-text-align-justify":false,"a11y/selector-pseudo-class-focus":false,"prettier/prettier":[true,{"parser":"css","printWidth":120,"semi":true,"singleQuote":false,"tabWidth":4,"useTabs":false}]}}
-
-        Then in Formatter settings > "stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }
-
-    </details>
-
-- [prettier](https://github.com/prettier/prettier) and [eslint](https://github.com/eslint/eslint) can collaborate to format `JS`
-
-    <details>
-    <summary><sub>Config example</sub></summary>
-
-        eslint_rc.json:
-        {"env":{"es2022":true,"node":true,"browser":true},"parserOptions":{"ecmaVersion":13,"sourceType":"module","ecmaFeatures":{"jsx":true}},"extends":["../javascript/node_modules/eslint-config-prettier","../javascript/node_modules/eslint-config-airbnb-base"],"plugins":["eslint-plugin-prettier"],"rules":{"prettier/prettier":["error",{"bracketSpacing":true,"jsxSingleQuote":true,"parser":"babel","printWidth":120,"semi":true,"singleQuote":true,"tabWidth":4,"useTabs":false},{"usePrettierrc":false}],"indent":["error",4]}}
-
-    </details>
+> [!TIP]
+>
+> - [Prettier](https://github.com/prettier/prettier) and [Stylelint](https://github.com/stylelint/stylelint) can collaborate to format `CSS`
+>   <details>
+>   <summary><sub>Config example</sub></summary>
+>
+>     **stylelint_rc.json:**
+>
+>     ```json
+>     {
+>       "extends": [
+>         "stylelint-config-recommended",
+>         "stylelint-config-standard"
+>       ],
+>       "plugins": [
+>         "stylelint-group-selectors",
+>         "stylelint-no-indistinguishable-colors",
+>         "@double-great/stylelint-a11y",
+>         "stylelint-prettier"
+>       ],
+>       "rules": {
+>         "plugin/stylelint-group-selectors": true,
+>         "plugin/stylelint-no-indistinguishable-colors": true,
+>         "a11y/content-property-no-static-value": false,
+>         "a11y/font-size-is-readable": false,
+>         "a11y/line-height-is-vertical-rhythmed": [true, {"severity": "warning"}],
+>         "a11y/media-prefers-color-scheme": false,
+>         "a11y/media-prefers-reduced-motion": false,
+>         "a11y/no-display-none": false,
+>         "a11y/no-obsolete-attribute": [true, {"severity": "warning"}],
+>         "a11y/no-obsolete-element": [true, {"severity": "warning"}],
+>         "a11y/no-outline-none": false,
+>         "a11y/no-spread-text": false,
+>         "a11y/no-text-align-justify": false,
+>         "a11y/selector-pseudo-class-focus": false,
+>         "prettier/prettier": [
+>           true,
+>           {
+>             "parser": "css",
+>             "printWidth": 120,
+>             "semi": true,
+>             "singleQuote": false,
+>             "tabWidth": 4,
+>             "useTabs": false
+>           }
+>         ]
+>       }
+>     }
+>     ```
+>
+>     Then in Formatter settings, configure `"stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }`
+>
+> - [Prettier](https://github.com/prettier/prettier) and [ESLint](https://github.com/eslint/eslint) can collaborate to format `JS`
+>   <details>
+>   <summary><sub>Config example</sub></summary>
+>
+>     **eslint_rc.json:**
+>
+>     ```json
+>     {
+>       "env": {
+>         "es2022": true,
+>         "node": true,
+>         "browser": true
+>       },
+>       "parserOptions": {
+>         "ecmaVersion": 13,
+>         "sourceType": "module",
+>         "ecmaFeatures": {
+>           "jsx": true
+>         }
+>       },
+>       "extends": [
+>         "../javascript/node_modules/eslint-config-prettier",
+>         "../javascript/node_modules/eslint-config-airbnb-base"
+>       ],
+>       "plugins": [
+>         "eslint-plugin-prettier"
+>       ],
+>       "rules": {
+>         "prettier/prettier": [
+>           "error",
+>           {
+>             "bracketSpacing": true,
+>             "jsxSingleQuote": true,
+>             "parser": "babel",
+>             "printWidth": 120,
+>             "semi": true,
+>             "singleQuote": true,
+>             "tabWidth": 4,
+>             "useTabs": false
+>           },
+>           {
+>             "usePrettierrc": false
+>           }
+>         ],
+>         "indent": [
+>           "error",
+>           4
+>         ]
+>       }
+>     }
+>     ```
+>
+>   </details>
 
 ## Installation
 
@@ -202,20 +284,23 @@ Sublime Text > Packages > User > formatter.assets > config
 ```
 
 - You can use these files directly or place them in a location of your choice. Formatter provides only a set of default (original) config files to illustrate how it works. You might want to tweak and refine them to fit your needs. The full list of supported options and parameters can be found on plugins dev websites.
-- You can use a different config file format than the default one provided by Formatter. For example, while Formatter typically uses JSON or YAML (`prettier_rc.json`) by default, you can write your own config in JavaScript format (`prettier_rc.js`) or any other format supported by third-party plugins.
+- You can use a different config file format than the default one provided by Formatter. For example, while Formatter typically uses JSON or YAML (`xxx_rc.json`) by default, you can write your own config in JavaScript format (`xxx_rc.mjs`) or any other format supported by third-party plugins.
 
-Note: Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates. Reason: Some exotic plugins do not support input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br />
-It is recommended to explore this folder, as it may contain additional config files for the same plugin.
+> [!NOTE]
+>
+> Do **not** use files with the suffix `.master.` as they serve as _reference_(_example_) files for your final configuration and could be overwritten by any package updates.<br />
+> Reason: Some exotic plugins do not support input config file, while others do not understand stdio. To overcome this limitation, you will need these _example_ files as reference to configure them.<br />
+> It is recommended to explore this folder, as it may contain additional config files for the same plugin.
 
 Formatter settings can be accessed from: `Preferences > Package Settings > Formatter > Settings`
 
-The following setting details - along with their default values and examples - are provided to guide you on how to set it up.
+The following setting details - along with their default values and examples - are provided to guide you on how to set it up:
 
-💡 **Tips**:
-
-- Options are _optional_: you do not need to take the whole set of options. Take only what you need, but keep the JSON structure intact.
-- You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either of these methods.
-- Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
+> [!TIP]
+>
+> - Options are _optional_: you do not need to take the whole set of options. Take only what you need, but keep the JSON structure intact.
+> - You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either generic or module methods.
+> - Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
 
 1. **Example setting options:** _Formatter.sublime-settings_
 
@@ -241,8 +326,8 @@ The following setting details - along with their default values and examples - a
         "timeout": 10,
 
         // Limit the total number of characters in the file.
-        // Max. 1 MB = 1024 * 1024 ≈ 1048576 chars is a reasonable value.
-        // Accepted value: int OR false
+        // A max of 1 MB = 1024 * 1024 ≈ 1.048.576 chars seems reasonable.
+        // Accepted values: int OR false
         "file_chars_limit": false,
 
         // Integrate your custom modules into the Formatter ecosystem.
@@ -273,7 +358,7 @@ The following setting details - along with their default values and examples - a
 
         // Configure the layout when opening new files.
         // This only takes effect if the "new_file_on_format" option is true.
-        // Accepted value: "2cols", "2rows", "single" OR false
+        // Accepted values: "2cols", "2rows", "single" OR false
         "layout": {
             "enable": "2cols",
             "sync_scroll": true
@@ -1019,12 +1104,14 @@ The structure of the metadata JSON file should follow this format:
 }
 ```
 
-- Each remote archive file (_myproject.zip_) must include at least one of the fixed folders: `config`, `libs`, `modules`
-- All files must be placed within these 3 **predefined** folders.
-- To update your code, just reset the `.custom` file in the Formatter root folder.
-- The following Formatter modules cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
-
-_Python is not JS. You are responsible for handling any operations over the internet._
+> [!IMPORTANT]
+>
+> - Each remote archive file (_myproject.zip_) must include at least one of the fixed folders: `config`, `libs`, `modules`
+> - All files must be placed within these 3 **predefined** folders.
+> - To update your code, just reset the `.custom` file in the Formatter root folder.
+> - The following Formatter libs cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
+>
+> _Python is not JS. You are responsible for handling any operations over the internet._
 
 ### 4. API
 
