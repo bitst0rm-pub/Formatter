@@ -588,16 +588,16 @@ class ArgumentHandler:
             user_files = []
 
         for user_file in user_files:
+            if FileHandler.is_executable(file=user_file):
+                log.debug('User %s: %s', what, user_file)
+                return user_file
+
             a = PathHandler.get_pathinfo(view=view, path=user_file)
             if a['path'] == a['base'] and not a['cwd']:
                 global_file = EnvironmentHandler.get_environ_path(fnames=[user_file])
                 if global_file:
                     log.debug('Global %s: %s', what, global_file)
                     return global_file
-
-            if FileHandler.is_executable(file=user_file):
-                log.debug('User %s: %s', what, user_file)
-                return user_file
 
         global_file = EnvironmentHandler.get_environ_path(fnames=fnames_list)
         if global_file:
