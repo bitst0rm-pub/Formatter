@@ -232,9 +232,9 @@ def _debounce_callback(func, instance, args, kwargs, view, last_event_time, dela
 # Decorator to measure the execution time of a function for test
 def measure_time(func):  # @unused
     def wrapper(*args, **kwargs):
-        start_time = time.time()
+        start_time = time.perf_counter()
         result = func(*args, **kwargs)
-        end_time = time.time()
+        end_time = time.perf_counter()
         elapsed_time = end_time - start_time
         log.info('Function "{}" took {:.4f} seconds to execute.'.format(func.__name__, elapsed_time))
         return result

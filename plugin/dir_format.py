@@ -89,7 +89,7 @@ class DirFormat:
     @staticmethod
     def start_timer():
         global START_TIME
-        START_TIME = time.time()
+        START_TIME = time.perf_counter()
 
     def end_timer(self):
         global START_TIME
@@ -97,7 +97,7 @@ class DirFormat:
             log.warning('Timer was not started.')
             return 'N/A'
 
-        end_time = time.time()
+        end_time = time.perf_counter()
         elapsed_time = end_time - START_TIME
         formatted_time = self.format_elapsed_time(elapsed_time)
         START_TIME = None
