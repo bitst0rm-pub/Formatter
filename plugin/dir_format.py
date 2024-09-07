@@ -107,7 +107,7 @@ class DirFormat:
         return PathHandler.get_pathinfo(view=self.view, path=self.view.file_name())['cwd']
 
     def get_recursive_files(self, cwd):
-        items = self.get_dir_format_items()
+        items = self.get_exclude_items()
         return TransformHandler.get_recursive_filelist(
             cwd,
             items.get('exclude_dirs_regex', []),
@@ -115,9 +115,12 @@ class DirFormat:
             items.get('exclude_extensions_regex', [])
         )
 
-    def get_dir_format_items(self):
+    def get_exclude_items(self):
         uid = self.kwargs.get('uid', None)
-        return OptionHandler.query(CONFIG, {}, 'formatters', uid, 'dir_format')
+        value = OptionHandler.query(CONFIG, {}, 'formatters', uid, 'dir_format')
+        if not isinstance(value, dict):
+            return {}
+        return value
 
     def prepare_context(self, cwd, filelist):
         self.CONTEXT.update({
