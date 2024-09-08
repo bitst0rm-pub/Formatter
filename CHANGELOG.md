@@ -2,6 +2,19 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.3)] - 2024-09-08
+
+### 🐛 Bug Fixes
+
+- [`16b3ece`](https://github.com/bitst0rm-pub/Formatter/commit/16b3ecee70db25a788391a901510fe650fc2a026) Fix dir format to correctly handle excluded item types
+- [`3c0a08c`](https://github.com/bitst0rm-pub/Formatter/commit/3c0a08c1a897ec7cb81d41291538e481c6d4a0f3) Resolve cursor jumping issue on save caused by `'ensure_newline_at_eof_on_save'` ST setting
+
+### ⚙️ Miscellaneous Tasks
+
+- [`f192f90`](https://github.com/bitst0rm-pub/Formatter/commit/f192f90a2a1770d06e7cb1fbb9ec5430a9a0ba28) Change to use `perf_counter()` instead of `time()` to measure time
+- [`4b59d20`](https://github.com/bitst0rm-pub/Formatter/commit/4b59d208f48cffc1e016ca4f871786d2243c543f) Minor update
+- [`c13bbd2`](https://github.com/bitst0rm-pub/Formatter/commit/c13bbd22347bc8951c6497b5b52fa3b1b977db56) Reorder of executable/interpreter detection
+
 ## [[1.6.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.2)] - 2024-09-04
 
 ### ⚙️ Miscellaneous Tasks
