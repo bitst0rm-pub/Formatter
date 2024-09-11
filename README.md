@@ -71,18 +71,19 @@ _Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bi
 
 ## Plugins
 
-Formatter is useless without third-party plugins. It relies on external plugins in order to format code. These plugins need to be installed by the end-user. This means, Formatter is not responsible for:
+Formatter requires third-party plugins to work, as it relies on external plugins to format code. Users must install these plugins themselves. This means, Formatter is not responsible for:
 
 - The quality of formatted code.
 - The speed of the formatting process.
 
-**The complete list of supported plugins:** _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
+## Table of supported plugins
 
-- If you want to keep track of the latest added plugins: [_summary.txt](https://github.com/bitst0rm-pub/Formatter/blob/master/modules/_summary.txt)
-- The following table does not contain the complete languages that each plugin does support. For example, `prettydiff` supports 45 languages, that would blow up the frame of this list here.
-- Languages such as `Svelte` or `Prisma` are not listed here, but can be used through the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
-- `build-in` = do not need to install by end-users.
-- `None` = mostly standalone binary.
+_Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
+
+- The table does not contain all supported languages. For example, `prettydiff` covers 45 languages, which would blow up the frame of this list here.
+- Languages like `Svelte` or `Prisma` are not listed, but should work via the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
+- `build-in` = No installation required.
+- `None` = mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
@@ -299,8 +300,8 @@ The following setting details - along with their default values and examples - a
 > [!TIP]
 >
 > - Options are _optional_: you do not need to take the whole set of options. Take only what you need, but keep the JSON structure intact.
-> - You are not forced to use the preset modules. Instead, you can create a new one using a different UID key through either generic or module methods.
-> - Not all syntax highlighting plugins for a specific language exist; syntaxes like `"text"` or `"plain"` work just as well as a workaround.
+> - You do not have to use the preset modules. Instead, you can create new ones with a unique UID using either generic or module methods.
+> - Not all syntax highlighting plugins exist for every language. Syntaxes like `"text"` or `"plain"` can serve as workarounds.
 
 1. **Example setting options:** _Formatter.sublime-settings_
 

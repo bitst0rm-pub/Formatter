@@ -28,7 +28,7 @@ class StandardrbFormatter(Module):
             return None
 
         base = self.get_pathinfo()['base']
-        cmd.extend(['--fix', '--stdin', base if base else 'untitled', '--stderr'])
+        cmd.extend(['--fix', '--stdin', base or 'untitled', '--stderr'])
 
         return cmd
 

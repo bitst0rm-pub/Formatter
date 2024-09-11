@@ -35,7 +35,7 @@ class ScalafmtFormatter(Module):
             cmd.extend(['--config', path])
 
         file = self.get_pathinfo()['path']
-        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        dummy = file or 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--assume-filename', dummy, '--stdin', '-'])
 
         return cmd

@@ -244,7 +244,8 @@ class FormatterListener(sublime_plugin.EventListener):
             except Exception as e:
                 log.error('Error occurred while dir formatting: %s', e)
 
-        if view.file_name() and view.file_name().endswith(PACKAGE_NAME + '.sublime-settings'):
+        file_path = view.file_name()
+        if file_path and file_path.endswith(PACKAGE_NAME + '.sublime-settings'):
             view.run_command('collapse_setting_sections')
 
     def on_activated(self, view):
@@ -292,13 +293,9 @@ class FormatterListener(sublime_plugin.EventListener):
             _set_single_layout(window, view)
 
     def on_post_text_command(self, view, command_name, args):
-        # Stop action by pressing the arrow keys on the keyboard (up, down, left, right)
+        # Stop action with arrow keys (up, down, left, right)
         if command_name == 'move' and args.get('by', None) in ['characters', 'lines']:
-            try:
-                with DirFormat(view=view) as dir_format:
-                    dir_format.stop()
-            except Exception as e:
-                log.error('Error occurred while dir formatting: %s', e)
+            DirFormat.stop()
 
         if command_name in ['paste', 'paste_and_indent']:
             SavePasteManager.apply_formatting(view=view, action='format_on_paste')

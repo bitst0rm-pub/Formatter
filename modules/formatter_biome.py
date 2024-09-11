@@ -37,7 +37,7 @@ class BiomeFormatter(Module):
             cmd.extend(['--config-path', path])
 
         file = self.get_pathinfo()['path']
-        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        dummy = file or 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--stdin-file-path', dummy])
 
         cmd.extend(['-'])

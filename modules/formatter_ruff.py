@@ -26,9 +26,7 @@ class RuffFormatter(Module):
         if not executable:
             return None
 
-        cmd = [executable]
-
-        cmd.extend(['format'])
+        cmd = [executable, 'format']
 
         cmd.extend(self.get_args())
 

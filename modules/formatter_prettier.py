@@ -43,7 +43,7 @@ class PrettierFormatter(Module):
             cmd.extend(['--no-config', '--config', path])
 
         file = self.get_pathinfo()['path']
-        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        dummy = file or 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--stdin-filepath', dummy])
 
         return cmd

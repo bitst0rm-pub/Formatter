@@ -36,7 +36,7 @@ class PrettierdFormatter(Module):
             CONFIG.get('environ').update({'PRETTIERD_DEFAULT_CONFIG': [path]})
 
         file = self.get_pathinfo()['path']
-        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        dummy = file or 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--stdin-filepath', dummy])
 
         return cmd

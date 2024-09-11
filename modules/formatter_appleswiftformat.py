@@ -26,9 +26,7 @@ class AppleswiftformatFormatter(Module):
         if not executable:
             return None
 
-        cmd = [executable]
-
-        cmd.extend(['format'])
+        cmd = [executable, 'format']
 
         cmd.extend(self.get_args())
 
@@ -37,7 +35,7 @@ class AppleswiftformatFormatter(Module):
             cmd.extend(['--configuration', path])
 
         file = self.get_pathinfo()['path']
-        dummy = file if file else 'dummy.' + self.get_assigned_syntax()
+        dummy = file or 'dummy.' + self.get_assigned_syntax()
         cmd.extend(['--assume-filename', dummy])
 
         return cmd

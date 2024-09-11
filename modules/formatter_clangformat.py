@@ -37,31 +37,14 @@ class ClangformatFormatter(Module):
 
         extmap = {
             # (sublime, clang)
-            ('c', 'c'),
-            ('cs', 'cs'),
-            ('c++', 'cpp'),
-            ('objc', 'm'),
-            ('objc++', 'mm'),
-            ('js', 'js'),
-            ('tsx', 'ts'),
-            ('jsx', 'mjs'),
-            ('json', 'json'),
-            ('java', 'java'),
-            ('proto', 'proto'),
-            ('protodevel', 'protodevel'),
-            ('td', 'td'),
-            ('textpb', 'textpb'),
-            ('pb.txt', 'pb.txt'),
-            ('textproto', 'textproto'),
-            ('asciipb', 'asciipb'),
-            ('sv', 'sv'),
-            ('svh', 'svh'),
-            ('v', 'v'),
-            ('vh', 'vh'),
-            ('glsl', 'glsl')
+            'c++': 'cpp',
+            'objc': 'm',
+            'objc++': 'mm',
+            'tsx': 'ts',
+            'jsx': 'mjs'
         }
         syntax = self.get_assigned_syntax()
-        syntax = next(value for key, value in extmap if key == syntax)
+        syntax = extmap.get(syntax, syntax)
 
         cmd.extend(['--assume-filename=dummy.' + syntax, '--'])
 
