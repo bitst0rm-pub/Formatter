@@ -1,8 +1,8 @@
 from .logger import disable_logging, enable_logging, enable_status, log
-from .decorator import (check_deprecated_api, check_deprecated_options,
-                        check_stop, debounce, retry_on_exception,
-                        sanitize_cmd_output, skip_word_counter,
-                        transform_cmd_arg, validate_cmd_arg)
+from .decorator import (bulk_operation_detector, check_deprecated_api,
+                        check_deprecated_options, check_stop, debounce,
+                        retry_on_exception, sanitize_cmd_output,
+                        skip_word_counter, transform_cmd_arg, validate_cmd_arg)
 from .common import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
                      HashHandler, InterfaceHandler, LayoutHandler,
                      MarkdownHandler, Module, OptionHandler, PathHandler,
@@ -19,7 +19,7 @@ __all__ = [
     'enable_logging',
     'enable_status',
     'log',
-    'are_all_strings_in_list',
+    'bulk_operation_detector',
     'check_deprecated_api',
     'check_deprecated_options',
     'check_stop',

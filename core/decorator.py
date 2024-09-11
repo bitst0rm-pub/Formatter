@@ -1,11 +1,18 @@
 import datetime
 import time
+from collections import deque
 from functools import partial, wraps
+from threading import Timer
 
 import sublime
 
 from . import log
 from .constants import STATUS_KEY
+
+# Constants for bulk operation guard
+BULK_OPERATION_THRESHOLD = 20  # number of file events to trigger bulk mode
+BULK_OPERATION_TIME_WINDOW = 2.0  # time window in seconds to detect bulk operation
+IDLE_RESET_TIME = 5.0  # seconds to wait before resetting bulk operation flag when idle
 
 # List of deprecated options, categorized by their status
 DEPRECATED_OPTIONS = {
@@ -18,6 +25,72 @@ DEPRECATED_OPTIONS = {
     },
     'deprecated': ['custom_modules']
 }
+
+
+class BulkOperationDetector:
+    def __init__(self, threshold=BULK_OPERATION_THRESHOLD, time_window=BULK_OPERATION_TIME_WINDOW, idle_reset_time=IDLE_RESET_TIME):
+        self.threshold = threshold
+        self.time_window = time_window
+        self.idle_reset_time = idle_reset_time
+        self.file_events = deque()
+        self.bulk_operation_in_progress = False
+        self.reset_timer = None
+
+    def record_file_event(self):
+        current_time = time.perf_counter()
+        self.file_events.append(current_time)
+
+        # Clean up old events outside the time window
+        while self.file_events and (current_time - self.file_events[0]) > self.time_window:
+            self.file_events.popleft()
+
+        # Check if we are in a bulk operation
+        if len(self.file_events) >= self.threshold:
+            if not self.bulk_operation_in_progress:
+                self.start_bulk_operation()
+        else:
+            # If a new event is detected within the idle time window, reset bulk mode
+            if self.bulk_operation_in_progress:
+                self.end_bulk_operation()  # reset bulk mode immediately
+            self.reset_idle_timer()  # start/reset the idle timer
+
+    def start_bulk_operation(self):
+        self.bulk_operation_in_progress = True
+        if self.reset_timer:
+            self.reset_timer.cancel()
+        self.reset_timer = Timer(self.idle_reset_time, self.end_bulk_operation)
+        self.reset_timer.start()
+
+    def end_bulk_operation(self):
+        self.bulk_operation_in_progress = False
+        if self.reset_timer:
+            self.reset_timer.cancel()
+            self.reset_timer = None
+
+    def reset_idle_timer(self):
+        if self.reset_timer:
+            self.reset_timer.cancel()
+        self.reset_timer = Timer(self.idle_reset_time, self.end_bulk_operation)
+        self.reset_timer.start()
+
+    # Decorator to automatically disable and re-enable function execution during bulk operations
+    def bulk_operation_guard(self, register=False):
+        def decorator(func):
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                if register:
+                    self.record_file_event()
+
+                if not self.bulk_operation_in_progress:
+                    return func(*args, **kwargs)
+                else:
+                    return None
+            return wrapper
+        return decorator
+
+
+# Create an instance of BulkOperationDetector
+bulk_operation_detector = BulkOperationDetector()
 
 
 # Decorator to check for deprecated options in settings
@@ -168,7 +241,7 @@ def check_stop(get_stop_status_func):
     return decorator
 
 
-# Decorator to clean subprocess output
+# Decorator to clean up subprocess stderr output
 def sanitize_cmd_output(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -206,7 +279,7 @@ def debounce(delay_in_ms=500):
             if not view.is_valid():
                 return
 
-            current_time = time.time() * 1000  # milliseconds
+            current_time = time.perf_counter() * 1000  # milliseconds
             view_id = view.id()
             last_event_time[view_id] = current_time
 
@@ -223,7 +296,7 @@ def debounce(delay_in_ms=500):
 
 def _debounce_callback(func, instance, args, kwargs, view, last_event_time, delay_in_ms):
     view_id = view.id()
-    if view.is_valid() and (time.time() * 1000 - last_event_time.get(view_id, 0)) >= delay_in_ms:
+    if view.is_valid() and (time.perf_counter() * 1000 - last_event_time.get(view_id, 0)) >= delay_in_ms:
         func(instance, *args, **kwargs)
         # Optionally remove the entry after execution
         last_event_time.pop(view_id, None)
@@ -241,7 +314,7 @@ def measure_time(func):  # @unused
     return wrapper
 
 
-# Decorator to enforce the singleton on a class (not method), allowing only one instance
+# Decorator to enforce the singleton on a class, ensuring only one instance ever exists
 def singleton(cls):  # @unused
     _instances = {}
 

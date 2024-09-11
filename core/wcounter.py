@@ -1,7 +1,8 @@
 import sublime
 import sublime_plugin
 
-from . import CONFIG, OptionHandler, debounce, skip_word_counter
+from . import (CONFIG, OptionHandler, bulk_operation_detector, debounce,
+               skip_word_counter)
 from .constants import STATUS_KEY
 
 CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
@@ -89,6 +90,7 @@ class WordCounterListener(sublime_plugin.EventListener):
     def __init__(self):
         self.word_counter = WordCounter()
 
+    @bulk_operation_detector.bulk_operation_guard(register=False)
     @skip_word_counter(max_size=6000000)
     @debounce(delay_in_ms=300)
     def on_selection_modified_async(self, view):
