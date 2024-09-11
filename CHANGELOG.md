@@ -2,6 +2,13 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.4)] - 2024-09-11
+
+### ⚙️ Miscellaneous Tasks
+
+- [`ff80024`](https://github.com/bitst0rm-pub/Formatter/commit/ff8002468f98296290ed66404c380d63e19d0c88) Implement bulk operation guard decorator for wcounter and smanager
+- [`8dfdf62`](https://github.com/bitst0rm-pub/Formatter/commit/8dfdf62426d95c181b0188fa32b8452f84078738) Revise code
+
 ## [[1.6.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.3)] - 2024-09-08
 
 ### 🐛 Bug Fixes
