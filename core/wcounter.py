@@ -86,10 +86,10 @@ class WordCounter:
             pass
 
 
-class WordCounterListener(sublime_plugin.EventListener):
-    def __init__(self):
-        self.word_counter = WordCounter()
+word_counter = WordCounter()
 
+
+class WordCounterListener(sublime_plugin.EventListener):
     @bulk_operation_detector.bulk_operation_guard(register=False)
     @skip_word_counter(max_size=6000000)
     @debounce(delay_in_ms=300)
@@ -99,4 +99,4 @@ class WordCounterListener(sublime_plugin.EventListener):
             ignore_whitespace_char = x.get('ignore_whitespace_char', True)
             use_short_label = x.get('use_short_label', False)
             view.settings().set('show_line_column', 'disabled')
-            self.word_counter.run_on_selection_modified(view, ignore_whitespace_char, use_short_label)
+            word_counter.run_on_selection_modified(view, ignore_whitespace_char, use_short_label)

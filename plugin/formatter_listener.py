@@ -14,9 +14,9 @@ from . import DirFormat, FileFormat
 
 class SyncScrollManager:
     def __init__(self):
-        self.lock = threading.Lock()
         self.running = False
         self.thread = None
+        self.lock = threading.Lock()
 
     def __enter__(self):
         return self
@@ -51,6 +51,9 @@ class SyncScrollManager:
             log.error('Error during sync_scroll: %s', e)
         finally:
             self.stop_sync_scroll()
+
+
+sync_scroll_manager = SyncScrollManager()
 
 
 class SavePasteManager:
@@ -233,9 +236,6 @@ class SavePasteManager:
 
 
 class FormatterListener(sublime_plugin.EventListener):
-    def __init__(self):
-        self.sync_scroll_manager = SyncScrollManager()
-
     def on_load(self, view):
         if view == DirFormat.CONTEXT['new_view']:
             try:
@@ -252,15 +252,15 @@ class FormatterListener(sublime_plugin.EventListener):
         ConfigHandler.project_config_overwrites_config()
 
         if OptionHandler.query(CONFIG, False, 'layout', 'sync_scroll') and LayoutHandler.want_layout():
-            self.sync_scroll_manager.stop_sync_scroll()
+            sync_scroll_manager.stop_sync_scroll()
 
             src_view = self._find_src_view_by_dst_view(view)
             if src_view:
-                self.sync_scroll_manager.start_sync_scroll('src', view, src_view)
+                sync_scroll_manager.start_sync_scroll('src', view, src_view)
             else:
                 dst_view = self._find_dst_view_by_src_view(view)
                 if dst_view:
-                    self.sync_scroll_manager.start_sync_scroll('dst', view, dst_view)
+                    sync_scroll_manager.start_sync_scroll('dst', view, dst_view)
 
     @staticmethod
     def _find_src_view_by_dst_view(dst_view):
@@ -307,5 +307,5 @@ class FormatterListener(sublime_plugin.EventListener):
     def on_post_save(self, view):
         if OptionHandler.query(CONFIG, False, 'debug') and OptionHandler.query(CONFIG, False, 'dev'):
             # For development only
-            self.sync_scroll_manager.stop_sync_scroll()
+            sync_scroll_manager.stop_sync_scroll()
             reload_modules(print_tree=False)
