@@ -1,6 +1,6 @@
-import time
 import uuid
 from threading import Lock
+from time import perf_counter
 
 import sublime
 
@@ -416,7 +416,7 @@ class ActivityIndicator:
         self._schedule_update()
 
     def delayed_start(self):
-        if time.perf_counter() - self._start_time >= self._delay:
+        if perf_counter() - self._start_time >= self._delay:
             with self._lock:
                 if self._running:
                     self._schedule_update()
@@ -427,7 +427,7 @@ class ActivityIndicator:
                 raise RuntimeError('Activity indicator is already running')
             self._running = True
             self._tick = 0
-            self._start_time = time.perf_counter()
+            self._start_time = perf_counter()
             if self._delay > 0:
                 sublime.set_timeout(self.delayed_start, int(self._delay * 1000))
             else:

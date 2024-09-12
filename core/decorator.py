@@ -1,8 +1,8 @@
 import datetime
-import time
 from collections import deque
 from functools import partial, wraps
 from threading import Timer
+from time import perf_counter, sleep
 
 import sublime
 
@@ -37,7 +37,7 @@ class BulkOperationDetector:
         self.reset_timer = None
 
     def record_file_event(self):
-        current_time = time.perf_counter()
+        current_time = perf_counter()
         self.file_events.append(current_time)
 
         # Clean up old events outside the time window
@@ -73,7 +73,7 @@ class BulkOperationDetector:
         self.reset_timer = Timer(self.idle_reset_time, self.end_bulk_operation)
         self.reset_timer.start()
 
-    # Decorator to automatically disable and re-enable function execution during bulk operations
+    # Decorator to disable function execution during bulk operations and auto re-enable it afterward
     def bulk_operation_guard(self, register=False):
         def decorator(func):
             @wraps(func)
@@ -89,7 +89,6 @@ class BulkOperationDetector:
         return decorator
 
 
-# Create an instance of BulkOperationDetector
 bulk_operation_detector = BulkOperationDetector()
 
 
@@ -218,7 +217,7 @@ def retry_on_exception(retries=5, delay=500):
                     if attempt == retries:
                         log.error('Function %s failed after %d retries. Execution has been stopped.', func.__name__, retries)
                         raise RuntimeError
-                    time.sleep(delay / 1000)
+                    sleep(delay / 1000)
         return wrapper
     return decorator
 
@@ -279,7 +278,7 @@ def debounce(delay_in_ms=500):
             if not view.is_valid():
                 return
 
-            current_time = time.perf_counter() * 1000  # milliseconds
+            current_time = perf_counter() * 1000  # milliseconds
             view_id = view.id()
             last_event_time[view_id] = current_time
 
@@ -296,7 +295,7 @@ def debounce(delay_in_ms=500):
 
 def _debounce_callback(func, instance, args, kwargs, view, last_event_time, delay_in_ms):
     view_id = view.id()
-    if view.is_valid() and (time.perf_counter() * 1000 - last_event_time.get(view_id, 0)) >= delay_in_ms:
+    if view.is_valid() and (perf_counter() * 1000 - last_event_time.get(view_id, 0)) >= delay_in_ms:
         func(instance, *args, **kwargs)
         # Optionally remove the entry after execution
         last_event_time.pop(view_id, None)
@@ -305,9 +304,9 @@ def _debounce_callback(func, instance, args, kwargs, view, last_event_time, dela
 # Decorator to measure the execution time of a function for test
 def measure_time(func):  # @unused
     def wrapper(*args, **kwargs):
-        start_time = time.perf_counter()
+        start_time = perf_counter()
         result = func(*args, **kwargs)
-        end_time = time.perf_counter()
+        end_time = perf_counter()
         elapsed_time = end_time - start_time
         log.info('Function "{}" took {:.4f} seconds to execute.'.format(func.__name__, elapsed_time))
         return result
