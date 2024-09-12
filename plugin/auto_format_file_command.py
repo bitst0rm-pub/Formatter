@@ -8,17 +8,14 @@ from .file_format import FileFormat
 
 
 class AutoFormatFileCommand(sublime_plugin.TextCommand):
-    _lock = threading.Lock()
-
     def run(self, edit):
         CleanupHandler.clear_console()
 
         auto_format_args = DotFileHandler.get_auto_format_args(view=self.view)
         if auto_format_args:
-            with AutoFormatFileCommand._lock:
-                log.debug('Starting auto formatting ...')
-                file_format_thread = threading.Thread(target=self._run_file_format, args=(auto_format_args,))
-                file_format_thread.start()
+            log.debug('Starting auto formatting ...')
+            file_format_thread = threading.Thread(target=self._run_file_format, args=(auto_format_args,))
+            file_format_thread.start()
 
     def _run_file_format(self, auto_format_args):
         try:

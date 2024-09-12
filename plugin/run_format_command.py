@@ -9,8 +9,6 @@ from .file_format import FileFormat
 
 
 class RunFormatCommand(sublime_plugin.TextCommand):
-    _lock = threading.Lock()
-
     def run(self, edit, **kwargs):
         CleanupHandler.clear_console()
 
@@ -60,10 +58,9 @@ class RunFormatCommand(sublime_plugin.TextCommand):
 
     def run_dir_format_thread(self, **kwargs):
         if self.view.file_name():
-            with RunFormatCommand._lock:
-                log.debug('Starting dir formatting ...')
-                dir_format_thread = threading.Thread(target=self._run_dir_format, args=(kwargs,))
-                dir_format_thread.start()
+            log.debug('Starting dir formatting ...')
+            dir_format_thread = threading.Thread(target=self._run_dir_format, args=(kwargs,))
+            dir_format_thread.start()
         else:
             InterfaceHandler.popup_message('Please save the file first. Dir formatting requires an existing file, which must be opened as the starting point.', 'ERROR')
 
@@ -75,10 +72,9 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             log.error('Error occurred in formatting thread: %s', e)
 
     def run_file_format_thread(self, **kwargs):
-        with RunFormatCommand._lock:
-            log.debug('Starting file formatting ...')
-            file_format_thread = threading.Thread(target=self._run_file_format, args=(kwargs,))
-            file_format_thread.start()
+        log.debug('Starting file formatting ...')
+        file_format_thread = threading.Thread(target=self._run_file_format, args=(kwargs,))
+        file_format_thread.start()
 
     def _run_file_format(self, kwargs):
         try:
