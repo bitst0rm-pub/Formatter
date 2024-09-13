@@ -2,6 +2,17 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.5)] - 2024-09-13
+
+### 🚜 Refactor
+
+- [`dca16d9`](https://github.com/bitst0rm-pub/Formatter/commit/dca16d9c0d4c0df1b974c4789f2f6bfed9e84a2f) Refactor import statement
+
+### ⚙️ Miscellaneous Tasks
+
+- [`5250e6e`](https://github.com/bitst0rm-pub/Formatter/commit/5250e6ece40c2fae83f6f6e0d1db61c11bc5cebe) Remove redundant threading.Lock() on TextCommand
+- [`2c9eb18`](https://github.com/bitst0rm-pub/Formatter/commit/2c9eb18020131b3fce20c96ac714c2d1b99577f7) Update to avoid using `__init__` in EventListener
+
 ## [[1.6.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.4)] - 2024-09-11
 
 ### ⚙️ Miscellaneous Tasks
