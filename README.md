@@ -36,9 +36,6 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
   - `"new_file_on_format"` will not be implemented or is disabled.
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
-- Plugins:
-  - _`eslint_d`_: Drop support for Eslint v8.57.0+ (using flat config files `eslint.config.*`) until this upstream bug is fixed: [#281](https://github.com/mantoni/eslint_d.js/issues/281)
-
 _Formatter in action: Text-to-Text..._
 
 ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
@@ -83,7 +80,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 - The table does not contain all supported languages. For example, `prettydiff` covers 45 languages, which would blow up the frame of this list here.
 - Languages like `Svelte` or `Prisma` are not listed, but should work via the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
 - `build-in` = No installation required.
-- `None` = mostly standalone binaries.
+- `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
@@ -120,7 +117,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | HCL | [hclfmt](https://github.com/hashicorp/hcl) | -- | -- | None | -- |
 | HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | Java | [google java format](https://github.com/google/google-java-format) [1], [uncrustify](https://github.com/uncrustify/uncrustify) [2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [3], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | Java [1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
-| JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js), [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] [2], [deno](https://github.com/denoland/deno) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | -- | Node.js, None [2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
+| JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js) [3], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] [2], [deno](https://github.com/denoland/deno) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | -- | 14.0+ [3], Node.js, None [2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [deno](https://github.com/denoland/deno) [2], [topiary](https://github.com/tweag/topiary) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2], jsonmax `(build-in)` | [prettydiff](https://github.com/prettydiff/prettydiff) [1], jsonmin `(build-in)` | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Julia | [juliaformatter](https://github.com/domluna/JuliaFormatter.jl) | -- | -- | Julia 0.6+ | -- |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | -- | Java | -- |

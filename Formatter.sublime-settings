@@ -732,7 +732,7 @@
             "config_path": {
                 "default": "${packages}/User/formatter.assets/config/eslintd_rc.json_(v8)_or_eslintd_config_rc.mjs_(v9)"
             }
-            /* no support for eslint v8.57.0+ using flat config files. requires node on PATH if omit interpreter_path */
+            /* min. eslint_d 14.0.0 or higher. requires node on PATH if omit interpreter_path */
         },
         "floskell": {
             "info": "https://github.com/ennocramer/floskell",

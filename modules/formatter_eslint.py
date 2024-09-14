@@ -35,7 +35,7 @@ class EslintFormatter(Module):
 
         _, version, _ = self.exec_cmd(cmd + ['--version'])
 
-        version = version.strip().split(' ')[0]
+        version = version.strip().split(' ')[-1]
         log.debug('Eslint version: %s', version)
 
         return cmd, LooseVersion(version) < LooseVersion('v8.57.0')

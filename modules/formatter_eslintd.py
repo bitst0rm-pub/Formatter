@@ -20,7 +20,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'eslintd_rc.json_(v8)_or_eslintd_config_rc.mjs_(v9)'
     },
-    'comment': 'no support for eslint v8.57.0+ using flat config files. requires node on PATH if omit interpreter_path'
+    'comment': 'min. eslint_d 14.0.0 or higher. requires node on PATH if omit interpreter_path'
 }
 
 
@@ -35,7 +35,7 @@ class EslintdFormatter(Module):
 
         _, version, _ = self.exec_cmd(cmd + ['--version'])
 
-        version = version.strip().split(' ')[0]
+        version = version.strip().split(' ')[-1]
         log.debug('Eslint version: %s', version)
 
         return cmd, LooseVersion(version) < LooseVersion('v8.57.0')
@@ -52,11 +52,6 @@ class EslintdFormatter(Module):
 
     def get_cmd(self):
         cmd, isv8 = self.compat()
-
-        if not isv8:
-            log.info('⚠️ No support for Eslint v8.57.0+ using flat config files. @see: https://github.com/mantoni/eslint_d.js/issues/281')
-            return None  # FIXME: no support for eslint v8.57.0+
-
         if not cmd:
             return None
 
