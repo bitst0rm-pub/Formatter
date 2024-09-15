@@ -5,10 +5,10 @@ import time
 import sublime
 import sublime_plugin
 
-from ..core import (CONFIG, CleanupHandler, ConfigHandler, DotFileHandler,
+from ..core import (AUTO_FORMAT_ACTION_KEY, CONFIG, PACKAGE_NAME,
+                    CleanupHandler, ConfigHandler, DotFileHandler,
                     InterfaceHandler, LayoutHandler, OptionHandler,
                     SyntaxHandler, TransformHandler, log, reload_modules)
-from ..core.constants import AUTO_FORMAT_ACTION_KEY, PACKAGE_NAME
 from . import DirFormat, FileFormat
 
 

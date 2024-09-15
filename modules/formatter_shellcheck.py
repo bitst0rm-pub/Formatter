@@ -1,5 +1,4 @@
-from .. import log
-from ..core.common import Module
+from ..core import Module, log
 
 EXECUTABLES = ['shellcheck']
 DOTFILES = ['.shellcheckrc', 'shellcheckrc']

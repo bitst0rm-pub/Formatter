@@ -1,4 +1,4 @@
-from ..core.common import Module
+from ..core import Module
 
 EXECUTABLES = ['rustfmt']
 DOTFILES = ['.rustfmt.toml', 'rustfmt.toml']

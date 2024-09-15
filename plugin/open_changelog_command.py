@@ -3,8 +3,7 @@ import os
 import sublime
 import sublime_plugin
 
-from ..core import MarkdownHandler, PhantomHandler, log
-from ..core.constants import PACKAGE_NAME
+from ..core import PACKAGE_NAME, MarkdownHandler, PhantomHandler, log
 
 
 class OpenChangelogCommand(sublime_plugin.WindowCommand):

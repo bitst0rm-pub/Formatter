@@ -1,6 +1,6 @@
 import re
 
-from ..core.common import Module
+from ..core import Module
 
 EXECUTABLES = ['R']
 DOTFILES = []

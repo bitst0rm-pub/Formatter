@@ -1,4 +1,4 @@
-from ..core.common import CONFIG, Module
+from ..core import CONFIG, Module
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettierd']

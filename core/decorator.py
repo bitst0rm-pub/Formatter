@@ -6,8 +6,7 @@ from time import perf_counter, sleep
 
 import sublime
 
-from . import log
-from .constants import STATUS_KEY
+from . import STATUS_KEY, log
 
 # Constants for bulk operation guard
 BULK_OPERATION_THRESHOLD = 20  # number of file events to trigger bulk mode

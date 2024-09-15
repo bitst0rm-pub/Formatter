@@ -1,7 +1,7 @@
 import re
 from os.path import basename
 
-from ..core.common import Module
+from ..core import Module
 
 INTERPRETERS = ['bb', 'java']
 EXECUTABLES = ['zprint-filter', 'zprintma', 'zprintm', 'zprintl', 'zprint']

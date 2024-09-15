@@ -5,10 +5,10 @@ import traceback
 
 import sublime
 
-from ..core import (CONFIG, ConfigHandler, InterfaceHandler, LayoutHandler,
+from ..core import (CONFIG, GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY,
+                    ConfigHandler, InterfaceHandler, LayoutHandler,
                     OptionHandler, PathHandler, PhantomHandler, PrintHandler,
                     TextHandler, log)
-from ..core.constants import GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 

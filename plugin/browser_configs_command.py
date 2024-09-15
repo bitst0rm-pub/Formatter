@@ -3,8 +3,7 @@ import os
 import sublime
 import sublime_plugin
 
-from ..core import CONFIG
-from ..core.constants import ASSETS_DIRECTORY
+from ..core import ASSETS_DIRECTORY, CONFIG
 
 
 class BrowserConfigsCommand(sublime_plugin.WindowCommand):

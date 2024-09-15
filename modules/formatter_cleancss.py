@@ -1,6 +1,6 @@
 import sublime
 
-from ..core.common import Module
+from ..core import Module
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['cleancss']

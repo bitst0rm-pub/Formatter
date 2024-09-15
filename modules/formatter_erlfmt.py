@@ -1,6 +1,6 @@
 from os.path import basename
 
-from ..core.common import Module
+from ..core import Module
 
 EXECUTABLES = ['rebar3', 'erlfmt']
 DOTFILES = []

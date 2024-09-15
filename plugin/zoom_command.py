@@ -4,8 +4,7 @@ import os
 import sublime
 import sublime_plugin
 
-from ..core import InterfaceHandler, PhantomHandler, log
-from ..core.constants import GFX_OUT_NAME
+from ..core import GFX_OUT_NAME, InterfaceHandler, PhantomHandler, log
 
 
 class ZoomCommand(sublime_plugin.WindowCommand):

@@ -1,9 +1,8 @@
 import sublime
 import sublime_plugin
 
-from . import (CONFIG, OptionHandler, bulk_operation_detector, debounce,
-               skip_word_counter)
-from .constants import STATUS_KEY
+from . import (CONFIG, STATUS_KEY, OptionHandler, bulk_operation_detector,
+               debounce, skip_word_counter)
 
 CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
 

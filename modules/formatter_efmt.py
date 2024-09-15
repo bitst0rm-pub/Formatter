@@ -1,4 +1,4 @@
-from ..core.common import Module
+from ..core import Module
 
 # EXECUTABLES = ['rebar3', 'efmt']  # No rebar3 support right now, @see #55
 EXECUTABLES = ['efmt']

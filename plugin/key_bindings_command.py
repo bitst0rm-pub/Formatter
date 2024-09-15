@@ -1,8 +1,7 @@
 import sublime
 import sublime_plugin
 
-from ..core import LayoutHandler
-from ..core.constants import PACKAGE_NAME
+from ..core import PACKAGE_NAME, LayoutHandler
 
 
 class KeyBindingsCommand(sublime_plugin.WindowCommand):

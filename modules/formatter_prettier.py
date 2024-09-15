@@ -1,5 +1,4 @@
-from ..core.common import Module
-from ..core.constants import IS_WINDOWS
+from ..core import IS_WINDOWS, Module
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['prettier.cmd', 'bin-prettier.js', 'prettier']

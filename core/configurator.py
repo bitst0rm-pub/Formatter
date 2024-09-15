@@ -9,9 +9,8 @@ from os.path import isfile, join
 
 import sublime
 
-from . import CONFIG, ConfigHandler, HashHandler, log
-from .constants import (ASSETS_DIRECTORY, PACKAGE_NAME,
-                        QUICK_OPTIONS_SETTING_FILE)
+from . import (ASSETS_DIRECTORY, CONFIG, PACKAGE_NAME,
+               QUICK_OPTIONS_SETTING_FILE, ConfigHandler, HashHandler, log)
 
 
 class NoIndent:

@@ -1,4 +1,4 @@
-from ..core.common import Module
+from ..core import Module
 
 INTERPRETERS = ['perl', 'perl5']
 EXECUTABLES = ['latexindent.pl', 'latexindent', 'latexindent-macos', 'latexindent-linux']

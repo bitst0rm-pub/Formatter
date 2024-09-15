@@ -1,11 +1,8 @@
-import sys
+from sys import version_info
 
 import sublime
 
-from . import (ConfigHandler, __version__, create_package_config_files,
-               import_custom_modules, log)
-from .core.constants import PACKAGE_NAME
-from .plugin import *  # noqa: F401, F403
+from .plugin import *  # noqa: F403
 
 
 def entry():
@@ -18,7 +15,7 @@ def entry():
         ConfigHandler.setup_shared_config_files()
         ConfigHandler.set_debug_mode()
 
-    log.info('%s version: %s (Python %s)', PACKAGE_NAME, __version__, '.'.join(map(str, sys.version_info[:3])))
+    log.info('%s version: %s (Python %s)', PACKAGE_NAME, __version__, '.'.join(map(str, version_info[:3])))
     log.debug('Plugin initialization ' + ('succeeded.' if ready else 'failed.'))
 
 

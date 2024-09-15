@@ -3,8 +3,7 @@ import os
 import sublime
 import sublime_plugin
 
-from ..core import log
-from ..core.constants import PACKAGE_NAME
+from ..core import PACKAGE_NAME, log
 
 
 class ModulesInfoCommand(sublime_plugin.WindowCommand):

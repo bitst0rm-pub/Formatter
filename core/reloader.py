@@ -5,8 +5,7 @@ try:  # python 3.8+
 except ImportError:  # python 3.3
     from imp import reload
 
-from . import log
-from .constants import PACKAGE_NAME
+from . import PACKAGE_NAME, log
 
 
 def reload_modules(print_tree=False):

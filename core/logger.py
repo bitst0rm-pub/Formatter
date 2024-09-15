@@ -1,6 +1,6 @@
 import logging
 
-from .constants import PACKAGE_NAME
+from . import PACKAGE_NAME
 
 # Custom level STATUS
 STATUS = 42

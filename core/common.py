@@ -16,14 +16,12 @@ from subprocess import PIPE, Popen, TimeoutExpired
 
 import sublime
 
-from . import (check_deprecated_api, check_deprecated_options, disable_logging,
+from . import (ASSETS_DIRECTORY, AUTO_FORMAT_ACTION_KEY, GFX_OUT_NAME,
+               IS_WINDOWS, LAYOUTS, PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
+               RECURSIVE_FAILURE_DIRECTORY, RECURSIVE_SUCCESS_DIRECTORY,
+               check_deprecated_api, check_deprecated_options, disable_logging,
                enable_logging, enable_status, log, retry_on_exception,
                sanitize_cmd_output, transform_cmd_arg, validate_cmd_arg)
-from .constants import (ASSETS_DIRECTORY, AUTO_FORMAT_ACTION_KEY, GFX_OUT_NAME,
-                        IS_WINDOWS, LAYOUTS, PACKAGE_NAME,
-                        QUICK_OPTIONS_SETTING_FILE,
-                        RECURSIVE_FAILURE_DIRECTORY,
-                        RECURSIVE_SUCCESS_DIRECTORY)
 
 if IS_WINDOWS:
     from subprocess import (CREATE_NEW_PROCESS_GROUP, STARTF_USESHOWWINDOW,

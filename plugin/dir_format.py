@@ -5,11 +5,11 @@ from time import perf_counter
 
 import sublime
 
-from ..core import (CONFIG, ConfigHandler, InterfaceHandler, OptionHandler,
-                    PathHandler, SyntaxHandler, TextHandler, TransformHandler,
-                    check_stop, log)
-from ..core.constants import (PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
-                              RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
+from ..core import (CONFIG, PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
+                    RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY, ConfigHandler,
+                    InterfaceHandler, OptionHandler, PathHandler,
+                    SyntaxHandler, TextHandler, TransformHandler, check_stop,
+                    log)
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 

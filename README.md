@@ -989,8 +989,8 @@ Developing a module for Formatter is straightforward. All you need to do is crea
    Details as an example:
 
    ```py
-   from .. import log                                          # optional: log to debugging this file
-   from ..core.common import Module                            # REQUIRED: a collection of APIs to assist in running this file
+   from ..core import log                                      # optional: log to debugging this file
+   from ..core import Module                                   # REQUIRED: a collection of APIs to assist in running this file
 
 
    INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
@@ -1191,7 +1191,7 @@ The following API and settings are deprecated and will be **removed** in the nex
 
 _Custom modules API (only if you wrote your own modules):_
 
-- `log = logging.getLogger(__name__)` (deprecated, in favor of `from .. import log`)
+- `log = logging.getLogger(__name__)` (deprecated, in favor of `from ..core import log`)
 - `self.is_valid_cmd(cmd)` (deprecated)
 - `self.fix_cmd(cmd)` (deprecated)
 - `self.print_oserr(cmd)` (deprecated, in favor of `self.print_oserr(cmd, e)`)

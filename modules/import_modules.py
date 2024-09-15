@@ -1,15 +1,14 @@
 import os
 import sys
 
-if sys.version_info < (3, 4):
-    import imp
-else:
+try:  # python 3.8+
     import importlib
+except ImportError:  # python 3.3
+    import imp
 
 import sublime
 
-from .. import log
-from ..core.constants import PACKAGE_NAME
+from ..core import PACKAGE_NAME, log
 
 
 def read_settings_file(settings_file):

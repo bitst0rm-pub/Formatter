@@ -1,7 +1,6 @@
 # @install      https://scrossoracle.medium.com/building-graphviz-from-source-on-macos-b6a846d73949
 
-from .. import log
-from ..core.common import Module
+from ..core import Module, log
 from ..libs import yaml
 
 EXECUTABLES = ['dot']

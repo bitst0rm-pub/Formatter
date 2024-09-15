@@ -1,7 +1,6 @@
 import json
 
-from .. import log
-from ..core.common import Module
+from ..core import Module, log
 
 DOTFILES = []
 MODULE_CONFIG = {

@@ -1,9 +1,7 @@
 import re
 from os.path import join
 
-from .. import log
-from ..core.common import Module
-from ..core.constants import GFX_OUT_NAME
+from ..core import GFX_OUT_NAME, Module, log
 
 
 class GenericFormatter(Module):

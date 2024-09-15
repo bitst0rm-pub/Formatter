@@ -1,8 +1,7 @@
 import sublime
 import sublime_plugin
 
-from ..core import CONFIG, InterfaceHandler, OptionHandler, log
-from ..core.constants import STATUS_KEY
+from ..core import CONFIG, STATUS_KEY, InterfaceHandler, OptionHandler, log
 
 
 class TransferViewContentCommand(sublime_plugin.TextCommand):
