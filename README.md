@@ -23,7 +23,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Shared config files available for each 3rd-party plugin.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
-- Customizable and extendable through 2 methods to add **_your_** custom plugins:
+- Customizable and extendable through 2 methods to add **_your_** own plugins:
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
   - Modules: Integration of your own modules. _see_ [Development](#development)
 - Zero dependencies to install.
@@ -72,6 +72,7 @@ Formatter requires third-party plugins to work, as it relies on external plugins
 
 - The quality of formatted code.
 - The speed of the formatting process.
+- Keeping third-party plugins up-to-date.
 
 ## Table of supported plugins
 

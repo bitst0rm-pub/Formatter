@@ -170,9 +170,7 @@ def build_main_sublime_menu(formatter_map):
                                     ('command', 'edit_settings'),
                                     ('args', OrderedDict([
                                         ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
-                                        ('default', '// Settings in here override those in the left-hand pane.\n'
-                                                    '// Pick up needed items while keeping the JSON structure intact.\n'
-                                                    '{\n\t$0\n}\n')
+                                        ('default', '{\n\t$0\n}\n')
                                     ]))
                                 ]),
                                 OrderedDict([
@@ -215,8 +213,8 @@ def build_main_sublime_menu(formatter_map):
                                     ('command', 'open_changelog')
                                 ]),
                                 OrderedDict([
-                                    ('caption', 'Version Info'),
-                                    ('command', 'version_info')
+                                    ('caption', 'About'),
+                                    ('command', 'about')
                                 ])
                             ])
                         ])
@@ -313,12 +311,12 @@ def build_formatter_sublime_commands(formatter_map):
             ('command', 'edit_settings'),
             ('args', OrderedDict([
                 ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
-                ('default', '// Settings in here override those in \'Formatter/Formatter.sublime-settings\'\n\n{\n\t$0\n}\n'),
+                ('default', '{\n\t$0\n}\n'),
             ])),
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Version Info'),
-            ('command', 'version_info')
+            ('caption', 'Formatter: About'),
+            ('command', 'about')
         ]),
         OrderedDict([
             ('caption', 'Formatter: Changelog'),

@@ -1,7 +1,8 @@
 from ..core import (PACKAGE_NAME, CleanupHandler, ConfigHandler,
                     SessionManagerListener, WordCounterListener,
                     create_package_config_files, import_custom_modules, log)
-from ..version import __version__
+from ..meta import __author__, __version__
+from .about_command import AboutCommand
 from .activity_indicator import ActivityIndicator
 from .auto_format_file_command import AutoFormatFileCommand
 from .backup_manager_command import BackupManagerCommand
@@ -17,7 +18,6 @@ from .quick_options_command import QuickOptionsCommand
 from .replace_view_content_command import ReplaceViewContentCommand
 from .run_format_command import RunFormatCommand
 from .transfer_view_content_command import TransferViewContentCommand
-from .version_info_command import VersionInfoCommand
 from .zoom_command import ZoomCommand
 
 __all__ = [
@@ -29,7 +29,9 @@ __all__ = [
     'create_package_config_files',
     'import_custom_modules',
     'log',
+    '__author__',
     '__version__',
+    'AboutCommand',
     'ActivityIndicator',
     'DirFormat',
     'FileFormat',
@@ -44,7 +46,6 @@ __all__ = [
     'ReplaceViewContentCommand',
     'RunFormatCommand',
     'TransferViewContentCommand',
-    'VersionInfoCommand',
     'ZoomCommand',
     'FormatterListener'
 ]

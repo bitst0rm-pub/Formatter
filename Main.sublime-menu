@@ -1024,7 +1024,7 @@
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/Formatter/Formatter.sublime-settings",
-                                    "default": "// Settings in here override those in the left-hand pane.\n// Pick up needed items while keeping the JSON structure intact.\n{\n\t$0\n}\n"
+                                    "default": "{\n\t$0\n}\n"
                                 }
                             },
                             {
@@ -1073,9 +1073,9 @@
                                 "command": "open_changelog"
                             },
                             {
-                                "caption": "Version Info",
-                                "mnemonic": "V",
-                                "command": "version_info"
+                                "caption": "About",
+                                "mnemonic": "A",
+                                "command": "about"
                             }
                         ]
                     }
