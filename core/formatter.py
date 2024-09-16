@@ -40,7 +40,7 @@ class Formatter(Module):
         self.kwargs.update(uid=self.uid)
         formatter_plugin = formatter_map.get(self.uid)
         if formatter_plugin:
-            self.kwargs.update(formatter_plugin['const'])
+            self.kwargs.update(formatter_plugin['specs'])
             self._log_debug_info('module', syntax)
         else:
             formatter_plugin = formatter_map.get('generic')

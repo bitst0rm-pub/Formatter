@@ -1398,11 +1398,11 @@ class MarkdownHandler:
             # Escape HTML characters to prevent mistakenly interpreted as an HTML tag
             line = (
                 line
-                .replace('&', '&amp;')   # Escape &
-                .replace('<', '&lt;')    # Escape <
-                .replace('>', '&gt;')    # Escape >
-                .replace('"', '&quot;')  # Escape "
-                .replace("'", '&#39;')   # Escape '
+                .replace('&', '&amp;')   # escape &
+                .replace('<', '&lt;')    # escape <
+                .replace('>', '&gt;')    # escape >
+                .replace('"', '&quot;')  # escape "
+                .replace("'", '&#39;')   # escape '
             )
 
             # Headings
@@ -1411,7 +1411,7 @@ class MarkdownHandler:
                 level = len(heading_match.group(1))
                 content = heading_match.group(2)
                 line = '<h{0}>{1}</h{0}>'.format(level, content)
-                if level <= 2:  # Only add <hr> after H1 and H2
+                if level <= 2:  # only add <hr> after H1 and H2
                     line += '<hr>'
 
             # Links

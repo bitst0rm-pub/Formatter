@@ -35,10 +35,9 @@ def import_formatter_modules():
     formatter_prefix_len = len(formatter_prefix)
     modules_dir = os.path.dirname(__file__)
 
+    original_sys_path = sys.path.copy()
     try:
-        original_sys_path = sys.path.copy()
         packages_path = sublime.packages_path()
-
         settings_file = os.path.join(packages_path, 'User', PACKAGE_NAME + '.sublime-settings')
         settings = read_settings_file(settings_file)
 
@@ -48,25 +47,30 @@ def import_formatter_modules():
         for filename in os.listdir(modules_dir):
             if filename.startswith(formatter_prefix) and filename.endswith('.py'):
                 module_name = filename[:-3]
+                module_full_name = PACKAGE_NAME + '.modules.' + module_name
                 module_path = os.path.join(modules_dir, filename)
 
                 try:
-                    if sys.version_info < (3, 4):
-                        module = imp.load_source(PACKAGE_NAME + '.modules.' + module_name, module_path)
+                    if module_full_name in sys.modules:
+                        # Use fresh version instead of cached one
+                        del sys.modules[module_full_name]
+
+                    if sys.version_info > (3, 3):
+                        module = importlib.import_module(module_full_name, package=__name__)
                     else:
-                        module = importlib.import_module(PACKAGE_NAME + '.modules.' + module_name, package=__name__)
+                        module = imp.load_source(module_full_name, module_path)
                 except Exception as e:
-                    log.error('Error importing module %s: %s', module_name, str(e))
+                    log.error('Error importing module %s from %s: %s', module_name, module_path, e)
                     continue
 
                 formatter_class_name = module_name[formatter_prefix_len:].capitalize() + PACKAGE_NAME
                 formatter_class = getattr(module, formatter_class_name, None)
-                formatter_const = {key.lower(): getattr(module, key, None) for key in ['INTERPRETERS', 'EXECUTABLES', 'DOTFILES']}
+                formatter_specs = {key.lower(): getattr(module, key, None) for key in ['INTERPRETERS', 'EXECUTABLES', 'DOTFILES']}
 
                 if formatter_class:
                     formatter_uid = module_name[formatter_prefix_len:]
                     formatter_map[formatter_uid] = {
-                        'const': formatter_const,
+                        'specs': formatter_specs,
                         'class': formatter_class,
                         'module': module
                     }

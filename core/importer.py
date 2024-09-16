@@ -367,20 +367,24 @@ def import_libs():
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
         for filename in files:
             if filename.endswith('.py'):
-                import_module(libs_dir, root, filename)
+                _import_module(libs_dir, root, filename)
 
 
-def import_module(libs_dir, root, filename):
-    module_name = filename[:-3]
+def _import_module(libs_dir, root, filename):
     module_path = os.path.join(root, filename)
     # Create the module name relative to the libs directory
     relative_path = os.path.relpath(module_path, libs_dir)
-    module_name = relative_path.replace(os.sep, '.').rsplit('.', 1)[0]
+    module_name = relative_path.replace(os.sep, '.')[:-3]
+    module_full_name = PACKAGE_NAME + '.libs.' + module_name
 
     try:
-        try:  # python 3.8+
-            importlib.import_module(PACKAGE_NAME + '.libs.' + module_name, package=PACKAGE_NAME)
-        except ImportError:  # python 3.3
-            imp.load_source(PACKAGE_NAME + '.libs.' + module_name, module_path)
+        if module_full_name in sys.modules:
+            # Use fresh version instead of cached one
+            del sys.modules[module_full_name]
+
+        if sys.version_info > (3, 3):  # python 3.8+
+            importlib.import_module(module_full_name, package=PACKAGE_NAME)
+        else:  # python 3.3
+            imp.load_source(module_full_name, module_path)
     except Exception as e:
-        log.error('Error importing module %s: %s', module_name, e)
+        log.error('Error importing libs module %s from %s: %s', module_name, module_path, e)
