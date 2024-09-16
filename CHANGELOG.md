@@ -2,6 +2,21 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.6)] - 2024-09-16
+
+### 🐛 Bug Fixes
+
+- [`1f35b92`](https://github.com/bitst0rm-pub/Formatter/commit/1f35b921f189b44736709b8f060f462311ace815) Force importing modules to load fresh version instead of cached one
+
+### 🚜 Refactor
+
+- [`73ef0d2`](https://github.com/bitst0rm-pub/Formatter/commit/73ef0d2550639e2d4ec8c7a7df25ab1d0a730427) Reorganize imports
+
+### ⚙️ Miscellaneous Tasks
+
+- [`91728dc`](https://github.com/bitst0rm-pub/Formatter/commit/91728dc07580d039f117299f0966049f93e2f798) Re-enable support for `eslint_d` as the upstream bug with ESLint v9+ seems to be fixed
+- [`df17fd7`](https://github.com/bitst0rm-pub/Formatter/commit/df17fd765d3667a145b4567dcb59cf855a9beab5) Update
+
 ## [[1.6.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.5)] - 2024-09-13
 
 ### 🚜 Refactor
