@@ -9,7 +9,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Transforms text in various ways:
   - Text-to-Text (Text diagramms, ASCII art, etc.)
   - Text-to-Image (Image diagramms, QR-code images, etc.)
-- Capable to format entire files, single or multiple selections.
+- Capable to format entire file, single or multiple selections.
 - Capable to format entire directory recursively.
 - Operates more accurately based on syntax scope, **not** file extension.
 - Works with both saved and unsaved dirty files (buffer).
@@ -396,8 +396,8 @@ The following setting details - along with their default values and examples - a
         // Configure it here and/or by using the dot files in your working folder.
         // If both methods are used, the config from the dot files will override this embedded one.
         // Advantage: The embedded one can handle both saved and unsaved files,
-        // while the dot files variant only applies to saved file, as unsaved files
-        // (puffer on view) never has an working dir to contain dot files.
+        // while the dot files variant only applies to saved files, as unsaved files
+        // (puffer on view) never have a working dir to contain dot files.
         //
         // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
         // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:
@@ -882,7 +882,8 @@ _.sublime-project_
                 },
                 "jsbeautifier": {
                     "config_path": {
-                        "default": "${HOME}/path/to/new/jsbeautify_rc.json"
+                        "js": null,  // override to invalidate
+                        "default": "${HOME}/path/to/new/jsbeautify_rc.json"  // override to update
                     }
                 }
             }

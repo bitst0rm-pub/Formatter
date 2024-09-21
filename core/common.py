@@ -464,7 +464,7 @@ class ViewHandler:
 
 
 class OptionHandler:
-    # Do NOT use 'get()' for retrieving values from CONFIG; instead, use 'query()'
+    # Do NOT use 'get()' to retrieve values from CONFIG; instead, use 'query()'!
     @staticmethod
     def query(data_dict, default=None, *keys):
         if PROJECT_CONFIG and any(key in data_dict for key in PROJECT_CONFIG):
@@ -516,13 +516,12 @@ class FolderHandler:
         parent_folders = []
 
         if active_file_path:
-            d = dirname(active_file_path)
+            current_dir = dirname(active_file_path)
 
-            for _ in range(max_depth):
-                if d == dirname(d):
-                    break
-                parent_folders.append(d)
-                d = dirname(d)
+            while max_depth > 0 and current_dir != dirname(current_dir):
+                parent_folders.append(current_dir)
+                current_dir = dirname(current_dir)
+                max_depth -= 1
 
         return parent_folders
 

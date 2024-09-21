@@ -599,8 +599,8 @@ def build_formatter_sublime_settings(formatter_map):
     // Configure it here and/or by using the dot files in your working folder.
     // If both methods are used, the config from the dot files will override this embedded one.
     // Advantage: The embedded one can handle both saved and unsaved files,
-    // while the dot files variant only applies to saved file, as unsaved files
-    // (puffer on view) never has an working dir to contain dot files.
+    // while the dot files variant only applies to saved files, as unsaved files
+    // (puffer on view) never have a working dir to contain dot files.
     //
     // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
     // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:
