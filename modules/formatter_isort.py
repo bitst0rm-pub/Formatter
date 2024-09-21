@@ -30,9 +30,9 @@ class IsortFormatter(Module):
 
         path = self.get_config_path()
         if path:
-            cmd.extend(['--sp', path])
+            cmd.extend(['--settings-path', path])
 
-        cmd.extend(['-stdout', '-'])
+        cmd.extend(['--stdout', '-'])
 
         return cmd
 
