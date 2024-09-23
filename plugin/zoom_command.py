@@ -57,7 +57,7 @@ class ZoomCommand(sublime_plugin.WindowCommand):
                 with open(save_path, 'wb') as f:
                     f.write(decoded_data)
 
-                InterfaceHandler.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
+                InterfaceHandler.popup_message('Image saved to:\n%s' % save_path, 'INFO', dialog=True)
             except Exception as e:
                 InterfaceHandler.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 

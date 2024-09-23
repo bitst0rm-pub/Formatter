@@ -44,9 +44,8 @@ class DirFormat:
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         if exc_type:
-            class_name = self.__class__.__name__
-            log.error('Error occurred in %s while exiting: %s\n%s', class_name, exc_value, ''.join(traceback.format_tb(exc_traceback)))
-        return False  # return True to suppress exceptions
+            log.error('Error in %s while exiting: %s\n%s', self.__class__.__name__, exc_value, ''.join(traceback.format_tb(exc_traceback)))
+        return False
 
     def run(self):
         self.start_timer()
@@ -61,13 +60,12 @@ class DirFormat:
                 try:
                     cwd = self.get_current_working_directory()
                     filelist = self.get_recursive_files(cwd)
-
                     self.prepare_context(cwd, filelist)
                     self.process_files()
                 except Exception as e:
                     self.handle_error(e)
         except Exception as e:
-            log.error('Error occurred during dir formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+            log.error('Error during dir formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
     @staticmethod
     def stop():
@@ -96,12 +94,9 @@ class DirFormat:
         if START_TIME is None:
             log.warning('Timer was not started.')
             return 'N/A'
-
-        end_time = perf_counter()
-        elapsed_time = end_time - START_TIME
-        formatted_time = self.format_elapsed_time(elapsed_time)
+        elapsed_time = perf_counter() - START_TIME
         START_TIME = None
-        return '{}'.format(formatted_time)
+        return self.format_elapsed_time(elapsed_time)
 
     def get_current_working_directory(self):
         return PathHandler.get_pathinfo(view=self.view, path=self.view.file_name())['cwd']
@@ -159,6 +154,7 @@ class DirFormat:
 
     def _on_format_completed(self, new_view, is_ready, is_success):
         self.post_dir_format(new_view, is_success)
+
         if is_ready and is_success:
             new_view.run_command('undo')  # entry_view
         elif self.CONTEXT['entry_view'] != new_view:
@@ -166,14 +162,13 @@ class DirFormat:
             new_view.close()
 
         if self.CONTEXT['current_index'] == self.CONTEXT['filelist_length']:
-            # Handle the last file
-            self.handle_formatting_completion()
-
-        self.open_next_file()
+            self.handle_formatting_completion()  # handle the last file
+        else:
+            self.open_next_file()
 
     def post_dir_format(self, new_view, is_success):
         new_cwd = self.get_post_format_cwd(is_success)
-        self.show_result(is_success)
+        self.update_status(is_success)
         self.save_formatted_file(new_view, new_cwd, is_success)
 
     def get_post_format_cwd(self, is_success):
@@ -181,13 +176,10 @@ class DirFormat:
         sub_directory = RECURSIVE_SUCCESS_DIRECTORY if is_success else RECURSIVE_FAILURE_DIRECTORY
         return os.path.join(base_directory, sub_directory)
 
-    def show_result(self, is_success):
-        if is_success:
-            self.CONTEXT['success_count'] += 1
-            log.status('🎉 Formatting successful. 🥳✨\n')
-        else:
-            self.CONTEXT['failure_count'] += 1
-            log.status('❌ Formatting failed. 😢💔\n')
+    def update_status(self, is_success):
+        self.CONTEXT['success_count'] += is_success
+        self.CONTEXT['failure_count'] += not is_success
+        log.status('🎉 Formatting successful. 🥳✨\n' if is_success else '❌ Formatting failed. 😢💔\n')
 
     def save_formatted_file(self, new_view, new_cwd, is_success):
         file_path = new_view.file_name()
@@ -244,8 +236,7 @@ class DirFormat:
 
     def open_console_on_failure(self):
         if OptionHandler.query(CONFIG, False, 'open_console_on_failure') and self.CONTEXT['failure_count'] > 0:
-            current_view = self.get_current_view()
-            current_view.window().run_command('show_panel', {'panel': 'console', 'toggle': True})
+            self.get_current_view().window().run_command('show_panel', {'panel': 'console', 'toggle': True})
 
     def show_completion_message(self):
         ok = self.CONTEXT['success_count']
@@ -269,36 +260,31 @@ class DirFormat:
         InterfaceHandler.popup_message(message, 'INFO', dialog=True)
 
     def reset_context(self):
-        for key, value in self.CONTEXT.items():
-            if isinstance(value, list):
-                self.CONTEXT[key] = []
-            elif isinstance(value, int):
-                self.CONTEXT[key] = 0
-            else:
-                self.CONTEXT[key] = None
+        for key in self.CONTEXT:
+            self.CONTEXT[key] = [] if isinstance(self.CONTEXT[key], list) else 0 if isinstance(self.CONTEXT[key], int) else None
         # Reset and end
         CONFIG['STOP'] = True
 
     @staticmethod
     def handle_error(error, cwd=None, file_path=None):
-        log.error('Error occurred: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
+        log.error('Error: %s\n%s', error, ''.join(traceback.format_tb(error.__traceback__)))
         if cwd and (error.errno != os.errno.EEXIST):
-            log.error('Could not create directory: %s', cwd)
-            InterfaceHandler.popup_message('Could not create directory: %s\nError mainly appears due to a lack of necessary permissions.' % cwd, 'ERROR')
+            log.error('Directory creation failed: %s', cwd)
+            InterfaceHandler.popup_message('Error creating directory: %s\nPermissions issue likely.' % cwd, 'ERROR')
         if file_path:
             log.error('Could not save file: %s', file_path)
-            InterfaceHandler.popup_message('Could not save file: %s\nError mainly appears due to a lack of necessary permissions.' % file_path, 'ERROR')
+            InterfaceHandler.popup_message('Error saving file: %s\nPermissions issue likely.' % file_path, 'ERROR')
 
 
 class SerialFormat:
     @staticmethod
     def run(view=None, callback=None, **kwargs):
-        is_success = False
         try:
             region = sublime.Region(0, view.size())
             uid = kwargs.get('uid', None)
             uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=None)
             exclude_syntaxes = OptionHandler.query(CONFIG, [], 'formatters', uid, 'dir_format', 'exclude_syntaxes')
+
             if TextHandler.is_chars_limit_exceeded(view):
                 callback(False)
             elif not syntax or syntax in exclude_syntaxes:
@@ -307,11 +293,8 @@ class SerialFormat:
                     log.warning('Syntax out of the scope. Plugin scope: %s, UID: %s, File syntax: %s, File: %s', scope, uid, syntax, view.file_name())
                 callback(False)
             else:
-                kwargs.update({
-                    'view': view,
-                    'region': region
-                })
+                kwargs.update({'view': view, 'region': region})
                 is_success = Formatter(**kwargs).run()
                 callback(is_success)
         except Exception as e:
-            log.error('Error occurred: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+            log.error('Error in SerialFormat: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))

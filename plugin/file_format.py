@@ -27,11 +27,9 @@ class FileFormat:
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         self.cleanup_temp_dir()
-
         if exc_type:
-            class_name = self.__class__.__name__
-            log.error('Error occurred in %s while exiting: %s\n%s', class_name, exc_value, ''.join(traceback.format_tb(exc_traceback)))
-        return False  # return True to suppress exceptions
+            log.error('Error in %s while exiting: %s\n%s', self.__class__.__name__, exc_value, ''.join(traceback.format_tb(exc_traceback)))
+        return False
 
     def run(self):
         if TextHandler.is_chars_limit_exceeded(self.view):
@@ -46,10 +44,12 @@ class FileFormat:
                 for region in (self.view.sel() if self.has_selection() else [sublime.Region(0, self.view.size())]):
                     self.kwargs.update(region=region)
                     is_success = Formatter(**self.kwargs).run()
+
                     if self.is_no_operation(is_success):
                         continue
+
                     self.cycles.append(is_success)
-                    self.print_status(is_success)
+                    self.update_status(is_success)
 
                 if any(self.cycles):
                     self.close_console_on_success()
@@ -57,7 +57,7 @@ class FileFormat:
                 else:
                     self.open_console_on_failure()
         except Exception as e:
-            log.error('Error occurred during file formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
+            log.error('Error during file formatting: %s\n%s', e, ''.join(traceback.format_tb(e.__traceback__)))
 
     def is_no_operation(self, is_success):
         if is_success is None:
@@ -75,13 +75,10 @@ class FileFormat:
     def has_selection(self):
         return any(not sel.empty() for sel in self.view.sel())
 
-    def print_status(self, is_success):
-        if is_success:
-            self.success += 1
-            log.status('🎉 Formatting successful. 🥳✨\n')
-        else:
-            self.failure += 1
-            log.status('❌ Formatting failed. 😢💔\n')
+    def update_status(self, is_success):
+        self.success += is_success
+        self.failure += not is_success
+        log.status('🎉 Formatting successful. 🥳✨\n' if is_success else '❌ Formatting failed. 😢💔\n')
 
         if OptionHandler.query(CONFIG, True, 'show_statusbar'):
             self.set_status_bar_text()
@@ -141,25 +138,23 @@ class FileFormat:
         if dst_view:
             dst_view.window().focus_view(dst_view)
             dst_view.set_read_only(False)
-            self.set_graphic_phantom(dst_view)
         else:
             src_window.focus_group(1)
             dst_view = src_window.new_file(flags=sublime.TRANSIENT, syntax=self.view.settings().get('syntax', None))
             dst_view.run_command('append', {'characters': ''})  # magic to assign a tab
             dst_view.settings().set('gfx_vref', gfx_vref)
-            self.set_graphic_phantom(dst_view)
             dst_view.set_scratch(True)
             if path:
                 dst_view.retarget(path)
 
+        self.set_graphic_phantom(dst_view)
         dst_view.set_read_only(True)
 
     def get_extended_data(self):
         uid = self.kwargs.get('uid', None)
 
-        if ConfigHandler.is_quick_options_mode():
-            if uid not in OptionHandler.query(CONFIG, [], 'quick_options', 'render_extended'):
-                return {}
+        if ConfigHandler.is_quick_options_mode() and uid not in OptionHandler.query(CONFIG, [], 'quick_options', 'render_extended'):
+            return {}
 
         try:
             extended_data = {}
@@ -171,7 +166,6 @@ class FileFormat:
                 if os.path.exists(image_path):
                     with open(image_path, 'rb') as image_file:
                         extended_data[ext] = base64.b64encode(image_file.read()).decode('utf-8')
-
             return extended_data
         except Exception:
             return {}
@@ -181,9 +175,9 @@ class FileFormat:
             image_path = os.path.join(self.temp_dir.name, GFX_OUT_NAME + '.png')
             with open(image_path, 'rb') as image_file:
                 data = image_file.read()
-                image_width, image_height = PhantomHandler.get_image_size(data)
-                image_data = base64.b64encode(data).decode('utf-8')
 
+            image_width, image_height = PhantomHandler.get_image_size(data)
+            image_data = base64.b64encode(data).decode('utf-8')
             fit_image_width, fit_image_height = PhantomHandler.image_scale_fit(dst_view, image_width, image_height)
             extended_data = self.get_extended_data()
 
@@ -215,23 +209,15 @@ class FileFormat:
                 decoded_data = base64.b64decode(base64_data)
                 with open(save_path, 'wb') as f:
                     f.write(decoded_data)
-
-                InterfaceHandler.popup_message('Image successfully saved to:\n%s' % save_path, 'INFO', dialog=True)
+                InterfaceHandler.popup_message('Image saved to:\n%s' % save_path, 'INFO', dialog=True)
             except Exception as e:
                 InterfaceHandler.popup_message('Could not save file:\n%s\nError: %s' % (save_path, e), 'ERROR')
 
     @staticmethod
     def get_layout_and_suffix(uid, mode):
         if mode == 'qo':
-            return (
-                OptionHandler.query(CONFIG, False, 'quick_options', 'layout'),
-                OptionHandler.query(CONFIG, False, 'quick_options', 'new_file_on_format')
-            )
-        else:
-            return (
-                OptionHandler.query(CONFIG, False, 'layout', 'enable'),
-                OptionHandler.query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
-            )
+            return OptionHandler.query(CONFIG, False, 'quick_options', 'layout'), OptionHandler.query(CONFIG, False, 'quick_options', 'new_file_on_format')
+        return OptionHandler.query(CONFIG, False, 'layout', 'enable'), OptionHandler.query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
 
     def undo_history(self):
         for _ in range(min(500, self.cycles.count(True))):

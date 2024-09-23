@@ -28,9 +28,7 @@ class SyncScrollManager:
         with self.lock:
             if not self.running:
                 self.running = True
-                self.thread = threading.Thread(
-                    target=self.sync_scroll, args=(target_type, active_view, target_view)
-                )
+                self.thread = threading.Thread(target=self.sync_scroll, args=(target_type, active_view, target_view))
                 self.thread.start()
 
     def stop_sync_scroll(self):
@@ -38,8 +36,7 @@ class SyncScrollManager:
             self.running = False
             if self.thread and self.thread.is_alive():
                 self.thread.join(timeout=0.4)
-                if self.thread.is_alive():
-                    self.thread = None
+            self.thread = None
 
     def sync_scroll(self, target_type, active_view, target_view):
         try:
@@ -71,8 +68,7 @@ class SavePasteManager:
     @classmethod
     def _on_auto_format(cls, view=None, file_path=None, actkey=None):
         get_auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
-        x = get_auto_format_args['auto_format_config']
-        config = x.get('config', {})
+        config = get_auto_format_args['auto_format_config'].get('config', {})
         if config and not cls._should_skip(config.get(actkey, False)):
             config.update({AUTO_FORMAT_ACTION_KEY: actkey})
             CleanupHandler.clear_console()
@@ -83,7 +79,7 @@ class SavePasteManager:
                     file_format.run()
                 return True
             except Exception as e:
-                log.error('Error occurred while auto formatting: %s', e)
+                log.error('Error during auto formatting: %s', e)
 
         return False
 
@@ -94,12 +90,12 @@ class SavePasteManager:
 
         unique = OptionHandler.query(CONFIG, {}, 'format_on_priority') or OptionHandler.query(CONFIG, {}, 'format_on_unique')
         if unique and isinstance(unique, dict) and unique.get('enable', False):
-            cls._on_paste_or_save__unique(view=view, unique=unique, actkey=actkey)
+            cls._handle_unique_format(view=view, unique=unique, actkey=actkey)
         else:
-            cls._on_paste_or_save__regular(view=view, actkey=actkey)
+            cls._handle_regular_format(view=view, actkey=actkey)
 
     @classmethod
-    def _on_paste_or_save__unique(cls, view=None, unique=None, actkey=None):
+    def _handle_unique_format(cls, view=None, unique=None, actkey=None):
         def are_unique_values(unique=None):
             flat_values = [value for key, values_list in unique.items() if key != 'enable' for value in values_list]
             return (len(flat_values) == len(set(flat_values)))
@@ -124,14 +120,14 @@ class SavePasteManager:
                             with FileFormat(view=view, uid=uid, type=value.get('type', None)) as file_format:
                                 file_format.run()
                         except Exception as e:
-                            log.error('Error occurred while priority formatting: %s', e)
+                            log.error('Error during priority formatting: %s', e)
                         finally:
                             break
         else:
             InterfaceHandler.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
 
     @classmethod
-    def _on_paste_or_save__regular(cls, view=None, actkey=None):
+    def _handle_regular_format(cls, view=None, actkey=None):
         seen = set()
         formatters = OptionHandler.query(CONFIG, {}, 'formatters')
 
@@ -148,7 +144,7 @@ class SavePasteManager:
                         with FileFormat(view=view, uid=uid, type=value.get('type', None)) as file_format:
                             file_format.run()
                     except Exception as e:
-                        log.error('Error occurred while regular formatting: %s', e)
+                        log.error('Error during regular formatting: %s', e)
                     finally:
                         seen.add(syntax)
 
@@ -242,7 +238,7 @@ class FormatterListener(sublime_plugin.EventListener):
                 with DirFormat(view=view) as dir_format:
                     dir_format.format_next_file(view, is_ready=False)
             except Exception as e:
-                log.error('Error occurred while dir formatting: %s', e)
+                log.error('Error during dir formatting: %s', e)
 
         file_path = view.file_name()
         if file_path and file_path.endswith(PACKAGE_NAME + '.sublime-settings'):

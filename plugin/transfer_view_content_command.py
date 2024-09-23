@@ -15,8 +15,8 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
         if path:
             self.save_dst_content(dst_view, path)
         else:
-            log.debug('The view is an unsaved buffer and must be manually saved as a file.')
-        self.show_status_on_new_file(dst_view)
+            log.debug('Unsaved buffer, manual save required.')
+        self.update_status(dst_view)
 
     @staticmethod
     def create_or_reuse_view(path, src_view):
@@ -55,17 +55,16 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
 
     @staticmethod
     def save_dst_content(view, path):
-        allcontent = view.substr(sublime.Region(0, view.size()))
         try:
             with open(path, 'w', encoding='utf-8') as file:
-                file.write(allcontent)
+                file.write(view.substr(sublime.Region(0, view.size())))
         except OSError as e:
-            log.error('Could not save file: %s\n%s', path, e)
-            InterfaceHandler.popup_message('Could not save file:\n' + path + '\nError mainly appears due to a lack of necessary permissions.', 'ERROR')
+            log.error('Error saving file: %s\n%s', path, e)
+            InterfaceHandler.popup_message('Error saving file:\n' + path + '\nPermissions issue likely.', 'ERROR')
 
-    def show_status_on_new_file(self, view):
+    def update_status(self, view):
         if view.is_loading():
-            sublime.set_timeout(lambda: self.show_status_on_new_file(view), 250)
+            sublime.set_timeout(lambda: self.update_status(view), 250)
         else:
             if OptionHandler.query(CONFIG, True, 'show_statusbar'):
                 view.window().set_status_bar_visible(True)
