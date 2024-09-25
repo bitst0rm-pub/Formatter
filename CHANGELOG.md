@@ -2,6 +2,25 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.7)] - 2024-09-25
+
+### 🚀 Features
+
+- [`48d3efa`](https://github.com/bitst0rm-pub/Formatter/commit/48d3efa6c554b4152c3ee3baaf536998200132d2) Add support for `auto-detect formatting` to chain multiple formatters in a single run
+
+### 🐛 Bug Fixes
+
+- [`6fce565`](https://github.com/bitst0rm-pub/Formatter/commit/6fce565673ea0d50184993804d78392b677d3b5b) Add the missing key-value function params to skip format_on_save and format_on_paste
+- [`eb60de2`](https://github.com/bitst0rm-pub/Formatter/commit/eb60de2992f6eedb0801e0cb41019ffa4e03ed99) Fix isort args
+
+### ⚙️ Miscellaneous Tasks
+
+- [`163af36`](https://github.com/bitst0rm-pub/Formatter/commit/163af36896175a586bc215e7d9cbadb8c2b4890f) Add .isort.cfg
+- [`c72b407`](https://github.com/bitst0rm-pub/Formatter/commit/c72b407499b6dafb7b2f4c66f6d883867ecf5d57) Minor typo
+- [`ca62492`](https://github.com/bitst0rm-pub/Formatter/commit/ca624920dc3216a95a493fad66e47a264aa73747) Minor update
+- [`26e4b6b`](https://github.com/bitst0rm-pub/Formatter/commit/26e4b6b58b6901b306b8486c350a37834ea29486) Move `AUTO_FORMAT_ACTION_KEY` to the unique dataclass `DataHandler`
+- [`132d70b`](https://github.com/bitst0rm-pub/Formatter/commit/132d70b43fb32c3505fdf3a8022a763e38bb9f3c) Tidy code
+
 ## [[1.6.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.6)] - 2024-09-16
 
 ### 🐛 Bug Fixes
