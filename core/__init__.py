@@ -1,5 +1,5 @@
-from .constants import (ASSETS_DIRECTORY, AUTO_FORMAT_ACTION_KEY, GFX_OUT_NAME,
-                        IS_WINDOWS, LAYOUTS, MAX_CHAIN_PLUGINS, PACKAGE_NAME,
+from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
+                        MAX_CHAIN_PLUGINS, PACKAGE_NAME,
                         QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
                         RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
@@ -21,7 +21,6 @@ from .wcounter import WordCounterListener
 
 __all__ = [
     'ASSETS_DIRECTORY',
-    'AUTO_FORMAT_ACTION_KEY',
     'GFX_OUT_NAME',
     'IS_WINDOWS',
     'LAYOUTS',

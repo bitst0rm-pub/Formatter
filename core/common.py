@@ -16,8 +16,8 @@ from subprocess import PIPE, Popen, TimeoutExpired
 
 import sublime
 
-from . import (ASSETS_DIRECTORY, AUTO_FORMAT_ACTION_KEY, GFX_OUT_NAME,
-               IS_WINDOWS, LAYOUTS, PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
+from . import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
+               PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                RECURSIVE_FAILURE_DIRECTORY, RECURSIVE_SUCCESS_DIRECTORY,
                check_deprecated_api, check_deprecated_options, disable_logging,
                enable_logging, enable_status, log, retry_on_exception,
@@ -747,8 +747,7 @@ class SyntaxHandler:
                 kwargs = {'is_auto_format': True, 'syntaxes': [syntax], 'exclude_syntaxes': exclude_syntaxes}
                 syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
                 if syntax:
-                    action = OptionHandler.query(auto_format_config, None, 'config', AUTO_FORMAT_ACTION_KEY)
-                    if syntax in OptionHandler.query(auto_format_config, [], 'config', action, 'exclude_syntaxes'):
+                    if syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('auto_format_action_key')[1], 'exclude_syntaxes'):
                         return '@@noop@@', None
                     else:
                         DataHandler.set('auto_format_chain_key', syntax, uid)

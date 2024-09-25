@@ -5,11 +5,10 @@ import time
 import sublime
 import sublime_plugin
 
-from ..core import (AUTO_FORMAT_ACTION_KEY, CONFIG, MAX_CHAIN_PLUGINS,
-                    PACKAGE_NAME, CleanupHandler, ConfigHandler, DataHandler,
-                    DotFileHandler, InterfaceHandler, LayoutHandler,
-                    OptionHandler, SyntaxHandler, TransformHandler, log,
-                    reload_modules)
+from ..core import (CONFIG, MAX_CHAIN_PLUGINS, PACKAGE_NAME, CleanupHandler,
+                    ConfigHandler, DataHandler, DotFileHandler,
+                    InterfaceHandler, LayoutHandler, OptionHandler,
+                    SyntaxHandler, TransformHandler, log, reload_modules)
 from . import DirFormat, FileFormat
 
 
@@ -71,7 +70,7 @@ class SavePasteManager:
         auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
         config = auto_format_args['auto_format_config'].get('config', {})
         if config and not cls._should_skip(view=view, value=config.get(actkey, False)):
-            config.update({AUTO_FORMAT_ACTION_KEY: actkey})
+            DataHandler.set('auto_format_action_key', '__action__', actkey)
             CleanupHandler.clear_console()
 
             log.debug('"%s" (autoformat)', actkey)
