@@ -70,7 +70,7 @@ class SavePasteManager:
     def _on_auto_format(cls, view=None, file_path=None, actkey=None):
         auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
         config = auto_format_args['auto_format_config'].get('config', {})
-        if config and not cls._should_skip(config.get(actkey, False)):
+        if config and not cls._should_skip(view=view, value=config.get(actkey, False)):
             config.update({AUTO_FORMAT_ACTION_KEY: actkey})
             CleanupHandler.clear_console()
 
