@@ -602,6 +602,8 @@ def build_formatter_sublime_settings(formatter_map):
     // while the dot files variant only applies to saved files, as unsaved files
     // (puffer on view) never have a working dir to contain dot files.
     //
+    // Chaining multiple formatters is limited to max. 10 items in a list for a single run.
+    //
     // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
     // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:
     // "format_on_save": {
@@ -618,9 +620,10 @@ def build_formatter_sublime_settings(formatter_map):
                 ('format_on_save', False),
                 ('format_on_paste', False)
             ])),
+            ('python', NoIndent(['isort', 'black'])),
             ('json', 'jsbeautifier'),
-            ('python', OrderedDict([
-                ('uid', 'autopep8')
+            ('php', OrderedDict([
+                ('uid', 'phpcsfixer')
             ])),
             ('html', OrderedDict([
                 ('uid', 'jsbeautifier'),

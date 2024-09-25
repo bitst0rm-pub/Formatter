@@ -10,6 +10,7 @@ QUICK_OPTIONS_SETTING_FILE = 'Formatter.quick-options'
 RECURSIVE_SUCCESS_DIRECTORY = '__format_success__'
 RECURSIVE_FAILURE_DIRECTORY = '__format_failure__'
 AUTO_FORMAT_ACTION_KEY = '__action__'
+MAX_CHAIN_PLUGINS = 10
 STATUS_KEY = '{}'.format(uuid.uuid4())
 GFX_OUT_NAME = 'out_%s' % datetime.now().strftime('%Y%m%d')
 LAYOUTS = {

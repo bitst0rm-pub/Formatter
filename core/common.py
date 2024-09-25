@@ -725,22 +725,33 @@ class SyntaxHandler:
     @classmethod
     def get_assigned_syntax(cls, view=None, uid=None, region=None, auto_format_config=None):  # return tuple
         if auto_format_config:
-            for syntax, v in auto_format_config.items():
+            for syntax, value in auto_format_config.items():
                 if syntax == 'config':
                     continue
-                v_is_dict = isinstance(v, dict)
-                uid = v.get('uid', None) if v_is_dict else v
-                kwargs = {
-                    'is_auto_format': True,
-                    'syntaxes': [syntax],
-                    'exclude_syntaxes': v.get('exclude_syntaxes', {}) if v_is_dict else None
-                }
+
+                if isinstance(value, list):  # chain list
+                    first_item = value[0]
+                    if isinstance(first_item, dict):
+                        uid = first_item.get('uid', None)
+                        exclude_syntaxes = first_item.get('exclude_syntaxes', {})
+                    else:
+                        uid = first_item
+                        exclude_syntaxes = {}
+                elif isinstance(value, dict):
+                    uid = value.get('uid', None)
+                    exclude_syntaxes = value.get('exclude_syntaxes', {})
+                else:
+                    uid = value
+                    exclude_syntaxes = {}
+
+                kwargs = {'is_auto_format': True, 'syntaxes': [syntax], 'exclude_syntaxes': exclude_syntaxes}
                 syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
                 if syntax:
                     action = OptionHandler.query(auto_format_config, None, 'config', AUTO_FORMAT_ACTION_KEY)
                     if syntax in OptionHandler.query(auto_format_config, [], 'config', action, 'exclude_syntaxes'):
                         return '@@noop@@', None
                     else:
+                        DataHandler.set('auto_format_chain_key', syntax, uid)
                         return uid, syntax
             return '@@noop@@', None
         else:
@@ -1046,6 +1057,48 @@ class CleanupHandler:
                 SUBLIME_PREFERENCES.set('console_max_history_lines', 1)
                 print('')
                 SUBLIME_PREFERENCES.set('console_max_history_lines', orig)
+
+
+class DataHandler:
+    _categories = {
+        'auto_format_chain_key': {'key': None, 'value': None},
+        'auto_format_action_key': {'key': None, 'value': None}
+    }
+
+    @classmethod
+    def set(cls, category, key, value):
+        if category in cls._categories:
+            cls._categories[category]['key'] = key
+            cls._categories[category]['value'] = value
+        else:
+            raise ValueError('Category "%s" does not exist.' % category)
+
+    @classmethod
+    def get(cls, category):
+        if category in cls._categories:
+            key = cls._categories[category]['key']
+            value = cls._categories[category]['value']
+            if key is not None and value is not None:
+                return (key, value)
+            else:
+                raise ValueError('No key-value pair is set for category "%s".' % category)
+        else:
+            raise ValueError('Category "%s" does not exist.' % category)
+
+    @classmethod
+    def add(cls, category):
+        if category not in cls._categories:
+            cls._categories[category] = {'key': None, 'value': None}
+        else:
+            raise ValueError('Category "%s" already exists.' % category)
+
+    @classmethod
+    def reset(cls, category):
+        if category in cls._categories:
+            cls._categories[category]['key'] = None
+            cls._categories[category]['value'] = None
+        else:
+            raise ValueError('Category "%s" does not exist.' % category)
 
 
 class ConfigHandler:

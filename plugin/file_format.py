@@ -12,6 +12,8 @@ from ..core import (CONFIG, GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY,
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 
+AF_SUCCESS, AF_FAILURE = 0, 0
+
 
 class FileFormat:
     def __init__(self, view=None, **kwargs):
@@ -21,6 +23,7 @@ class FileFormat:
         self.temp_dir = None
         self.success, self.failure = 0, 0
         self.cycles = []
+        self.is_auto_format_mode = 'auto_format_config' in kwargs
 
     def __enter__(self):
         return self
@@ -75,16 +78,33 @@ class FileFormat:
     def has_selection(self):
         return any(not sel.empty() for sel in self.view.sel())
 
+    @staticmethod
+    def reset_status():
+        global AF_SUCCESS, AF_FAILURE
+        AF_SUCCESS = 0
+        AF_FAILURE = 0
+
     def update_status(self, is_success):
-        self.success += is_success
-        self.failure += not is_success
+        if self.is_auto_format_mode:
+            global AF_SUCCESS, AF_FAILURE
+            AF_SUCCESS += is_success
+            AF_FAILURE += not is_success
+        else:
+            self.success += is_success
+            self.failure += not is_success
         log.status('🎉 Formatting successful. 🥳✨\n' if is_success else '❌ Formatting failed. 😢💔\n')
 
         if OptionHandler.query(CONFIG, True, 'show_statusbar'):
             self.set_status_bar_text()
 
     def set_status_bar_text(self):
-        status_text = '{}({}) [ok:{}|ko:{}]'.format(PACKAGE_NAME[0], ConfigHandler.get_mode_description(short=True), self.success, self.failure)
+        if self.is_auto_format_mode:
+            _success = AF_SUCCESS
+            _failure = AF_FAILURE
+        else:
+            _success = self.success
+            _failure = self.failure
+        status_text = '{}({}) [ok:{}|ko:{}]'.format(PACKAGE_NAME[0], ConfigHandler.get_mode_description(short=True), _success, _failure)
         self.view.set_status(STATUS_KEY, status_text)
 
     def open_console_on_failure(self):

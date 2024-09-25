@@ -5,10 +5,11 @@ import time
 import sublime
 import sublime_plugin
 
-from ..core import (AUTO_FORMAT_ACTION_KEY, CONFIG, PACKAGE_NAME,
-                    CleanupHandler, ConfigHandler, DotFileHandler,
-                    InterfaceHandler, LayoutHandler, OptionHandler,
-                    SyntaxHandler, TransformHandler, log, reload_modules)
+from ..core import (AUTO_FORMAT_ACTION_KEY, CONFIG, MAX_CHAIN_PLUGINS,
+                    PACKAGE_NAME, CleanupHandler, ConfigHandler, DataHandler,
+                    DotFileHandler, InterfaceHandler, LayoutHandler,
+                    OptionHandler, SyntaxHandler, TransformHandler, log,
+                    reload_modules)
 from . import DirFormat, FileFormat
 
 
@@ -67,21 +68,45 @@ class SavePasteManager:
 
     @classmethod
     def _on_auto_format(cls, view=None, file_path=None, actkey=None):
-        get_auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
-        config = get_auto_format_args['auto_format_config'].get('config', {})
+        auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
+        config = auto_format_args['auto_format_config'].get('config', {})
         if config and not cls._should_skip(config.get(actkey, False)):
             config.update({AUTO_FORMAT_ACTION_KEY: actkey})
             CleanupHandler.clear_console()
 
             log.debug('"%s" (autoformat)', actkey)
+            FileFormat.reset_status()
             try:
-                with FileFormat(view=view, **get_auto_format_args) as file_format:
-                    file_format.run()
+                afc = auto_format_args['auto_format_config']
+
+                for i in range(MAX_CHAIN_PLUGINS):
+                    if i > 0 and not cls._process_plugin_chain(afc):
+                        break
+
+                    with FileFormat(view=view, **auto_format_args) as file_format:
+                        file_format.run()
+
+                DataHandler.reset('auto_format_chain_key')
                 return True
             except Exception as e:
                 log.error('Error during auto formatting: %s', e)
 
         return False
+
+    @staticmethod
+    def _process_plugin_chain(afc):
+        try:
+            syntax, uid = DataHandler.get('auto_format_chain_key')
+        except ValueError:
+            return False  # no match found
+
+        if not isinstance(afc.get(syntax), list):
+            return False  # not type chain
+
+        # Remove the consumed uid until the chain list is empty
+        afc[syntax] = [item for item in afc[syntax] if item != uid]
+
+        return bool(afc[syntax])  # the chain list is now empty
 
     @classmethod
     def _on_paste_or_save(cls, view=None, actkey=None):

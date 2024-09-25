@@ -15,6 +15,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Works with both saved and unsaved dirty files (buffer).
 - Unified settings across different systems.
 - Supports [auto-detect formatting](#auto-detect-formatting).
+  - with capability to chain multiple formatters in a single run
 - Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
   - with options to exclude dirs, files, extensions, syntaxes
@@ -399,6 +400,8 @@ The following setting details - along with their default values and examples - a
         // while the dot files variant only applies to saved files, as unsaved files
         // (puffer on view) never have a working dir to contain dot files.
         //
+        // Chaining multiple formatters is limited to max. 10 items in a list for a single run.
+        //
         // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
         // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:
         // "format_on_save": {
@@ -414,11 +417,12 @@ The following setting details - along with their default values and examples - a
                 "format_on_save": false,
                 "format_on_paste": false
             },
-            "json": "jsbeautifier",  // as type string
-            "python": {              // OR as type dictionary
-                "uid": "autopep8"
+            "python": ["isort", "black"],  // chaining sequentially in a single run, type list
+            "json": "jsbeautifier",        // as type string
+            "php": {                       // OR as type dictionary
+                "uid": "phpcsfixer"
             },
-            "html": {
+            "html": {                      // dict can be used as a list item in chaining list
                 "uid": "jsbeautifier",
                 "exclude_syntaxes": {
                     "html": ["markdown"]
@@ -767,7 +771,11 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 - Using embedded settings in your User `Formatter.sublime-settings`
 - Placing dot files inside the working folder, similar to per-project basis.
 
-_Advantage:_ The embedded one can handle both saved and unsaved files, while the dot files variant only applies to saved file, as unsaved files (puffer on view) never has an working dir to be able to contain a dot file.
+**_Advantage:_** The embedded one can handle both saved and unsaved files, while the dot files variant only applies to saved file, as unsaved files (puffer on view) never have a working dir in order to contain a dot file.
+
+> [!NOTE]
+>
+> Chaining multiple formatters is limited to max. **10** items in a list for a single run.
 
 1. **The dot files variant**: will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 
@@ -776,11 +784,12 @@ _Advantage:_ The embedded one can handle both saved and unsaved files, while the
    ```js
    {
        // Comments are allowed.
-       "json": "jsbeautifier",  // as type string
-       "python": {              // OR as type dictionary
-           "uid": "autopep8"
+       "python": ["isort", "black"],  // chaining sequentially in a single run, type list
+       "json": "jsbeautifier",        // as type string
+       "php": {                       // OR as type dictionary
+           "uid": "phpcsfixer"
        },
-       "html": {
+       "html": {                      // dict can be used as a list item in chaining list
            "uid": "jsbeautifier",
            "exclude_syntaxes": {
                "html": ["markdown"]
@@ -837,14 +846,15 @@ _Advantage:_ The embedded one can handle both saved and unsaved files, while the
 
        "auto_format": {
            "config": {
-               "format_on_save": false,  // or use the dictionary format to exclude
-               "format_on_paste": false  // or use the dictionary format to exclude
+               "format_on_save": false,  // OR use the dictionary format to exclude
+               "format_on_paste": false  // OR use the dictionary format to exclude
            },
-           "json": "jsbeautifier",  // as type string
-           "python": {              // OR as type dictionary
-               "uid": "autopep8"
+           "python": ["isort", "black"],  // chaining sequentially in a single run, type list
+           "json": "jsbeautifier",        // as type string
+           "php": {                       // OR as type dictionary
+               "uid": "phpcsfixer"
            },
-           "html": {
+           "html": {                      // dict can be used as a list item in chaining list
                "uid": "jsbeautifier",
                "exclude_syntaxes": {
                    "html": ["markdown"]
@@ -882,8 +892,8 @@ _.sublime-project_
                 },
                 "jsbeautifier": {
                     "config_path": {
-                        "js": null,  // override to invalidate
-                        "default": "${HOME}/path/to/new/jsbeautify_rc.json"  // override to update
+                        "js": null,  // here, override to invalidate
+                        "default": "${HOME}/path/to/new/jsbeautify_rc.json"  // here, override to update
                     }
                 }
             }
