@@ -5,7 +5,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 
 **Key features:**
 
-- Supports more than 70 major programming languages via [plugins](#plugins).
+- Supports over 70 major programming languages via [plugins](#plugins).
 - Transforms text in various ways:
   - Text-to-Text (Text diagramms, ASCII art, etc.)
   - Text-to-Image (Image diagramms, QR-code images, etc.)
@@ -15,7 +15,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Works with both saved and unsaved dirty files (buffer).
 - Unified settings across different systems.
 - Supports [auto-detect formatting](#auto-detect-formatting).
-  - with capability to chain multiple formatters in a single run
+  - with the ability to chain multiple formatters in a single run
 - Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
   - with options to exclude dirs, files, extensions, syntaxes

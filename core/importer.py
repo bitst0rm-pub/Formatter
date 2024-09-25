@@ -78,7 +78,7 @@ def remove_dotfile(dot_path):
     except FileNotFoundError:
         log.error('File not found: %s', dot_path)
     except Exception as e:
-        log.error('An error occurred while trying to remove %s: %s', dot_path, e)
+        log.error('Error while trying to remove %s: %s', dot_path, e)
 
 
 def process_local_sources(local_sources):
@@ -220,7 +220,7 @@ def verify_signature(file_path, sig_path, public_key, gpg):
         log.info('Signature verification succeeded for %s', file_path)
         return True
     except Exception as e:
-        log.error('An error occurred while verifying the signature: %s', e)
+        log.error('Error while verifying the signature: %s', e)
     return False
 
 
@@ -300,7 +300,7 @@ def download_and_extract_archive(arch_url, sig_url=None, ca_cert=None, public_ke
             if extract_archive(download_path, extract_dir) and move_extracted_contents(extract_dir, dst_dir):
                 return dst_dir
     except Exception as e:
-        log.error('An error occurred: %s', e)
+        log.error('Error occurred: %s', e)
     finally:
         shutil.rmtree(extract_dir, ignore_errors=True)
         for path in [download_path, sig_path] if sig_path else [download_path]:

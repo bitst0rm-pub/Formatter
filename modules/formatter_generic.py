@@ -89,7 +89,7 @@ class GenericFormatter(Module):
                         try:
                             self.exec_cmd(cmd)
                         except Exception as e:
-                            log.error('An error occurred while executing extended cmd: %s', e)
+                            log.error('Error while executing extended cmd: %s', e)
 
                 return stdout
             else:

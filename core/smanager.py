@@ -27,7 +27,7 @@ class SessionManager:
             with open(SESSION_FILE, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except UnicodeDecodeError as e:
-            log.error('Unicode decoding error occurred: %s', e)
+            log.error('Unicode decoding error: %s', e)
             return {}
         except Exception:
             return {}

@@ -59,8 +59,7 @@ class RunFormatCommand(sublime_plugin.TextCommand):
     def run_dir_format_thread(self, **kwargs):
         if self.view.file_name():
             log.debug('Starting dir formatting ...')
-            dir_format_thread = threading.Thread(target=self._run_dir_format, args=(kwargs,))
-            dir_format_thread.start()
+            threading.Thread(target=self._run_dir_format, args=(kwargs,)).start()
         else:
             InterfaceHandler.popup_message('Please save the file first. Dir formatting requires an existing file, which must be opened as the starting point.', 'ERROR')
 
@@ -69,16 +68,15 @@ class RunFormatCommand(sublime_plugin.TextCommand):
             with DirFormat(view=self.view, **kwargs) as dir_format:
                 dir_format.run()
         except Exception as e:
-            log.error('Error occurred in formatting thread: %s', e)
+            log.error('Error during dir formatting: %s', e)
 
     def run_file_format_thread(self, **kwargs):
         log.debug('Starting file formatting ...')
-        file_format_thread = threading.Thread(target=self._run_file_format, args=(kwargs,))
-        file_format_thread.start()
+        threading.Thread(target=self._run_file_format, args=(kwargs,)).start()
 
     def _run_file_format(self, kwargs):
         try:
             with FileFormat(view=self.view, **kwargs) as file_format:
                 file_format.run()
         except Exception as e:
-            log.error('Error occurred in formatting thread: %s', e)
+            log.error('Error during file formatting: %s', e)

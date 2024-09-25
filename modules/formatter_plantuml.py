@@ -49,7 +49,7 @@ class PlantumlFormatter(Module):
                         exitcode, stdout, stderr = self.exec_cmd(cmd, outfile=out)
                         log.debug('Current extended arguments: %s Outfile: %s', cmd, out)
                     except Exception as e:
-                        log.error('An error occurred while executing extended cmd: %s Details: %s', cmd, e)
+                        log.error('Error while executing extended cmd: %s Details: %s', cmd, e)
 
                 return stdout
         except Exception as e:

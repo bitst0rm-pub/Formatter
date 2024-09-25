@@ -967,7 +967,7 @@ def create_package_config_files():
             with open(file, 'w', encoding='utf-8') as f:
                 f.write(text)
         except Exception as e:
-            log.error('An error occurred while saving %s: %s', file, e)
+            log.error('Error while saving %s: %s', file, e)
             return False
 
     try:
@@ -976,7 +976,7 @@ def create_package_config_files():
                 with open(file, 'w', encoding='utf-8') as f:
                     json.dump({}, f, ensure_ascii=False, indent=4)
     except Exception as e:
-        log.error('An error occurred while saving %s: %s', file, e)
+        log.error('Error while saving %s: %s', file, e)
         return False
 
     return True

@@ -70,7 +70,7 @@ class D2Formatter(Module):
                         self.exec_cmd(cmd)
                         log.debug('Current extended arguments: %s', cmd)
                     except Exception as e:
-                        log.error('An error occurred while executing extended cmd: %s Details: %s', cmd, e)
+                        log.error('Error while executing extended cmd: %s Details: %s', cmd, e)
 
                 return stdout
         except Exception as e:

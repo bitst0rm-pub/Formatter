@@ -1283,7 +1283,7 @@ class ConfigHandler:
             log.error('Error decoding JSON: %s', e)
             qo_file = None
         except Exception as e:
-            log.error('An error occurred: %s', e)
+            log.error('Error occurred: %s', e)
             qo_file = None
 
         mode_descriptions = {
