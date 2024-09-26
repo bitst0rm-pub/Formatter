@@ -747,10 +747,12 @@ class SyntaxHandler:
                 syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
                 if syntax:
                     if syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('__auto_format_action__')[1], 'exclude_syntaxes'):
+                        DataHandler.set('__auto_format_noop__', 'noop', '@@noop@@')
                         return '@@noop@@', None
                     else:
                         DataHandler.set('__auto_format_chain__', syntax, uid)
                         return uid, syntax
+            DataHandler.set('__auto_format_noop__', 'noop', '@@noop@@')
             return '@@noop@@', None
         else:
             syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region)
@@ -1063,7 +1065,8 @@ class DataHandler:
         '__sublime_preferences__': {'key': None, 'value': None},
         '__project_config__': {'key': None, 'value': None},
         '__auto_format_chain__': {'key': None, 'value': None},
-        '__auto_format_action__': {'key': None, 'value': None}
+        '__auto_format_action__': {'key': None, 'value': None},
+        '__auto_format_noop__': {'key': None, 'value': None}
     }
 
     @classmethod

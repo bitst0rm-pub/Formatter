@@ -86,10 +86,18 @@ class SavePasteManager:
                         file_format.run()
 
                 DataHandler.reset('__auto_format_chain__')
-                return True
+
+                is_noop = DataHandler.get('__auto_format_noop__')[1] == '@@noop@@'
+                DataHandler.reset('__auto_format_noop__')
+
+                if is_noop:
+                    return False
+                else:
+                    return True
             except Exception as e:
                 log.error('Error during auto formatting: %s', e)
 
+        DataHandler.reset('__auto_format_noop__')
         return False
 
     @staticmethod
