@@ -28,8 +28,6 @@ if IS_WINDOWS:
                             STARTUPINFO, SW_HIDE)
 
 CONFIG = {}
-PROJECT_CONFIG = {}
-SUBLIME_PREFERENCES = {}
 
 
 ###################################################
@@ -467,8 +465,9 @@ class OptionHandler:
     # Do NOT use 'get()' to retrieve values from CONFIG; instead, use 'query()'!
     @staticmethod
     def query(data_dict, default=None, *keys):
-        if PROJECT_CONFIG and any(key in data_dict for key in PROJECT_CONFIG):
-            data_dict = PROJECT_CONFIG
+        project_config = DataHandler.get('__project_config__')[1]
+        if project_config and any(key in data_dict for key in project_config):
+            data_dict = project_config
 
         for key in keys:
             if not isinstance(data_dict, (dict, sublime.Settings)):
@@ -747,10 +746,10 @@ class SyntaxHandler:
                 kwargs = {'is_auto_format': True, 'syntaxes': [syntax], 'exclude_syntaxes': exclude_syntaxes}
                 syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
                 if syntax:
-                    if syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('auto_format_action_key')[1], 'exclude_syntaxes'):
+                    if syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('__auto_format_action__')[1], 'exclude_syntaxes'):
                         return '@@noop@@', None
                     else:
-                        DataHandler.set('auto_format_chain_key', syntax, uid)
+                        DataHandler.set('__auto_format_chain__', syntax, uid)
                         return uid, syntax
             return '@@noop@@', None
         else:
@@ -1048,20 +1047,23 @@ class CleanupHandler:
     @staticmethod
     def clear_console():
         if OptionHandler.query(CONFIG, True, 'clear_console'):
-            if SUBLIME_PREFERENCES:
-                orig = SUBLIME_PREFERENCES.get('console_max_history_lines', None)
+            sublime_preferences = DataHandler.get('__sublime_preferences__')[1]
+            if sublime_preferences:
+                orig = sublime_preferences.get('console_max_history_lines', None)
                 if orig is None:
                     return  # not implemented in <ST4088
 
-                SUBLIME_PREFERENCES.set('console_max_history_lines', 1)
+                sublime_preferences.set('console_max_history_lines', 1)
                 print('')
-                SUBLIME_PREFERENCES.set('console_max_history_lines', orig)
+                sublime_preferences.set('console_max_history_lines', orig)
 
 
 class DataHandler:
     _categories = {
-        'auto_format_chain_key': {'key': None, 'value': None},
-        'auto_format_action_key': {'key': None, 'value': None}
+        '__sublime_preferences__': {'key': None, 'value': None},
+        '__project_config__': {'key': None, 'value': None},
+        '__auto_format_chain__': {'key': None, 'value': None},
+        '__auto_format_action__': {'key': None, 'value': None}
     }
 
     @classmethod
@@ -1080,7 +1082,7 @@ class DataHandler:
             if key is not None and value is not None:
                 return (key, value)
             else:
-                raise ValueError('No key-value pair is set for category "%s".' % category)
+                return (None, None)
         else:
             raise ValueError('Category "%s" does not exist.' % category)
 
@@ -1142,30 +1144,29 @@ class ConfigHandler:
 
     @staticmethod
     def project_config_overwrites_config():
-        global PROJECT_CONFIG
-
         project_data = sublime.active_window().project_data()
         if project_data and isinstance(project_data, dict):
             project_settings = project_data.get('settings', {}).get(PACKAGE_NAME, None)
             if project_settings:
-                PROJECT_CONFIG = deepcopy(CONFIG)
+                project_config = deepcopy(CONFIG)
                 project_settings = TransformHandler.recursive_map(TransformHandler.expand_path, project_settings)
-                StringHandler.update_json_recursive(json_data=PROJECT_CONFIG, update_data=project_settings)
+                StringHandler.update_json_recursive(json_data=project_config, update_data=project_settings)
             else:
-                PROJECT_CONFIG = {}
+                project_config = {}
         else:
-            PROJECT_CONFIG = {}
+            project_config = {}
 
+        DataHandler.set('__project_config__', 'project_config', project_config)
         ConfigHandler.set_debug_mode()  # update
 
     @classmethod
     def load_sublime_preferences(cls):
-        global SUBLIME_PREFERENCES
-
         try:
-            SUBLIME_PREFERENCES = cls.load_settings('Preferences.sublime-settings')
+            sublime_preferences = cls.load_settings('Preferences.sublime-settings')
         except Exception:
-            SUBLIME_PREFERENCES = {}
+            sublime_preferences = {}
+
+        DataHandler.set('__sublime_preferences__', 'sublime_preferences', sublime_preferences)
 
     @classmethod
     @check_deprecated_options

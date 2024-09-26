@@ -28,15 +28,14 @@ class AutoFormatFileCommand(sublime_plugin.TextCommand):
                 with FileFormat(view=self.view, **auto_format_args) as file_format:
                     file_format.run()
 
-            DataHandler.reset('auto_format_chain_key')
+            DataHandler.reset('__auto_format_chain__')
         except Exception as e:
             log.error('Error during auto formatting: %s', e)
 
     @staticmethod
     def _process_plugin_chain(afc):
-        try:
-            syntax, uid = DataHandler.get('auto_format_chain_key')
-        except ValueError:
+        syntax, uid = DataHandler.get('__auto_format_chain__')
+        if not (syntax and uid):  # De Morgan's laws
             return False  # no match found
 
         if not isinstance(afc.get(syntax), list):

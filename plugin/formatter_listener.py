@@ -70,7 +70,7 @@ class SavePasteManager:
         auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
         config = auto_format_args['auto_format_config'].get('config', {})
         if config and not cls._should_skip(view=view, value=config.get(actkey, False)):
-            DataHandler.set('auto_format_action_key', '__action__', actkey)
+            DataHandler.set('__auto_format_action__', 'action', actkey)
             CleanupHandler.clear_console()
 
             log.debug('"%s" (autoformat)', actkey)
@@ -85,7 +85,7 @@ class SavePasteManager:
                     with FileFormat(view=view, **auto_format_args) as file_format:
                         file_format.run()
 
-                DataHandler.reset('auto_format_chain_key')
+                DataHandler.reset('__auto_format_chain__')
                 return True
             except Exception as e:
                 log.error('Error during auto formatting: %s', e)
@@ -94,9 +94,8 @@ class SavePasteManager:
 
     @staticmethod
     def _process_plugin_chain(afc):
-        try:
-            syntax, uid = DataHandler.get('auto_format_chain_key')
-        except ValueError:
+        syntax, uid = DataHandler.get('__auto_format_chain__')
+        if not (syntax and uid):  # De Morgan's laws
             return False  # no match found
 
         if not isinstance(afc.get(syntax), list):
