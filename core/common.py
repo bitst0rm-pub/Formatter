@@ -16,7 +16,7 @@ from subprocess import PIPE, Popen, TimeoutExpired
 
 import sublime
 
-from . import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
+from . import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS, NOOP,
                PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                RECURSIVE_FAILURE_DIRECTORY, RECURSIVE_SUCCESS_DIRECTORY,
                check_deprecated_api, check_deprecated_options, disable_logging,
@@ -27,7 +27,53 @@ if IS_WINDOWS:
     from subprocess import (CREATE_NEW_PROCESS_GROUP, STARTF_USESHOWWINDOW,
                             STARTUPINFO, SW_HIDE)
 
-CONFIG = {}
+
+class ConfigDict(dict):
+    _bypass_restrictions = False
+    _allowed_keys_for_get = ['custom_modules', 'custom_modules_manifest', 'formatters', 'STOP', 'environ', 'quick_options']
+
+    def get(self, key, *args, **kwargs):
+        # Allow `get()` for certain keys in _allowed_keys_for_get
+        if key in ConfigDict._allowed_keys_for_get:
+            return super().get(key, *args, **kwargs)
+
+        if not ConfigDict._bypass_restrictions:
+            raise RuntimeError('Do NOT use "get()" to access values from CONFIG; use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
+        return super().get(key, *args, **kwargs)
+
+    def __getitem__(self, key):
+        if not ConfigDict._bypass_restrictions:
+            raise RuntimeError('Direct access is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
+        return super().__getitem__(key)
+
+    # Context manager to temporarily bypass restrictions
+    @classmethod
+    def allow_access(cls):
+        class BypassContext:
+            def __enter__(self):
+                cls._bypass_restrictions = True
+
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                cls._bypass_restrictions = False
+
+        return BypassContext()
+
+
+'''
+Override CONFIG to be an instance of ConfigDict
+Direct access with get() is not allowed, with exception:
+
+Temporarily allow access to CONFIG in a specific context:
+with ConfigDict.allow_access():
+    some_value = CONFIG.get('some_other_key', None)  # This will work inside the context
+
+Outside the context, restrictions apply again:
+other_value = CONFIG.get('some_other_key', None)  # Raises: RuntimeError
+
+Without direct access using get():
+other_value = OptionHandler.query(CONFIG, 'some_other_key', None)  # This will work
+'''
+CONFIG = ConfigDict()
 
 
 ###################################################
@@ -462,7 +508,7 @@ class ViewHandler:
 
 
 class OptionHandler:
-    # Do NOT use 'get()' to retrieve values from CONFIG; instead, use 'query()'!
+    ''' Do NOT use 'get()' to access values from CONFIG; instead, use 'query()'! '''
     @staticmethod
     def query(data_dict, default=None, *keys):
         project_config = DataHandler.get('__project_config__')[1]
@@ -472,7 +518,14 @@ class OptionHandler:
         for key in keys:
             if not isinstance(data_dict, (dict, sublime.Settings)):
                 return default
-            data_dict = data_dict.get(key, default)
+
+            # Use the bypass only if accessing CONFIG (which is an instance of ConfigDict)
+            if isinstance(data_dict, ConfigDict):
+                with ConfigDict.allow_access():
+                    data_dict = data_dict.get(key, default)
+            else:
+                data_dict = data_dict.get(key, default)
+
         return data_dict
 
 
@@ -723,43 +776,91 @@ class ArgumentHandler:
 class SyntaxHandler:
     @classmethod
     def get_assigned_syntax(cls, view=None, uid=None, region=None, auto_format_config=None):  # return tuple
-        if auto_format_config:
-            for syntax, value in auto_format_config.items():
-                if syntax == 'config':
-                    continue
-
-                if isinstance(value, list):  # chain list
-                    first_item = value[0]
-                    if isinstance(first_item, dict):
-                        uid = first_item.get('uid', None)
-                        exclude_syntaxes = first_item.get('exclude_syntaxes', {})
-                    else:
-                        uid = first_item
-                        exclude_syntaxes = {}
-                elif isinstance(value, dict):
-                    uid = value.get('uid', None)
-                    exclude_syntaxes = value.get('exclude_syntaxes', {})
-                else:
-                    uid = value
-                    exclude_syntaxes = {}
-
-                kwargs = {'is_auto_format': True, 'syntaxes': [syntax], 'exclude_syntaxes': exclude_syntaxes}
-                syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
-                if syntax:
-                    if syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('__auto_format_action__')[1], 'exclude_syntaxes'):
-                        DataHandler.set('__auto_format_noop__', 'noop', '@@noop@@')
-                        return '@@noop@@', None
-                    else:
-                        DataHandler.set('__auto_format_chain__', syntax, uid)
-                        return uid, syntax
-            DataHandler.set('__auto_format_noop__', 'noop', '@@noop@@')
-            return '@@noop@@', None
+        if auto_format_config:  # auto-format mode
+            return cls._get_auto_format_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
         else:
             syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region)
             return uid, syntax
 
+    @classmethod
+    def _get_auto_format_syntax(cls, view=None, uid=None, region=None, auto_format_config=None):
+        for syntax, value in auto_format_config.items():
+            if syntax == 'config':
+                continue
+
+            uid, exclude_syntaxes = cls._extract_uid_and_exclude_syntaxes(value=value)
+            kwargs = {'is_auto_format': True, 'syntaxes': [syntax], 'exclude_syntaxes': exclude_syntaxes}
+
+            syntax = cls._detect_assigned_syntax(view=view, uid=uid, region=region, **kwargs)
+            if syntax:
+                if cls._is_excluded_syntax(syntax=syntax, auto_format_config=auto_format_config):
+                    DataHandler.set('__auto_format_noop__', 'noop', NOOP)
+                    return NOOP, None
+                else:
+                    DataHandler.set('__auto_format_chain__', syntax, uid)
+                    return uid, syntax
+        DataHandler.set('__auto_format_noop__', 'noop', NOOP)
+        return NOOP, None
+
     @staticmethod
-    def _detect_assigned_syntax(view=None, uid=None, region=None, **kwargs):
+    def _extract_uid_and_exclude_syntaxes(value=None):
+        if isinstance(value, list):  # chain list
+            first_item = value[0]
+            if isinstance(first_item, dict):
+                return first_item.get('uid', None), first_item.get('exclude_syntaxes', {})
+            return first_item, {}
+        elif isinstance(value, dict):
+            return value.get('uid', None), value.get('exclude_syntaxes', {})
+        return value, {}
+
+    @staticmethod
+    def _is_excluded_syntax(syntax=None, auto_format_config=None):
+        return syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('__auto_format_action__')[1], 'exclude_syntaxes')
+
+    @classmethod
+    def _detect_assigned_syntax(cls, view=None, uid=None, region=None, **kwargs):
+        syntaxes, exclude_syntaxes = cls._get_syntax_and_exclude_syntaxes(uid=uid, kwargs=kwargs)
+
+        if syntaxes and isinstance(syntaxes, list):
+            syntaxes = [syntax.lower() for syntax in syntaxes if syntax]
+            scopes = view.scope_name(region.begin()).strip().lower().split(' ')
+
+            # Priority and order, dont change!
+            for syntax in syntaxes:
+                for scope in scopes:
+                    if any(('source.' + syntax + x) in scope for x in ['.embedded', '.sublime', '.interpolated']):
+                        if cls._should_exclude(syntax, scope, exclude_syntaxes):
+                            return None
+                        return syntax
+                    if 'source.' + syntax == scope:
+                        if cls._should_exclude(syntax, scope, exclude_syntaxes):
+                            return None
+                        return syntax
+
+            for syntax in syntaxes:
+                for scope in scopes:
+                    if scope.endswith('.' + syntax):
+                        if cls._should_exclude(syntax, scope, exclude_syntaxes):
+                            return None
+                        return syntax
+
+            for syntax in syntaxes:
+                for scope in scopes:
+                    if '.' + syntax + '.' in scope:
+                        if cls._should_exclude(syntax, scope, exclude_syntaxes):
+                            return None
+                        return syntax
+
+            for syntax in syntaxes:
+                for scope in scopes:
+                    if scope.startswith(syntax + '.'):
+                        if cls._should_exclude(syntax, scope, exclude_syntaxes):
+                            return None
+                        return syntax
+        return None
+
+    @staticmethod
+    def _get_syntax_and_exclude_syntaxes(uid=None, kwargs=None):
         if kwargs.get('is_auto_format', False):
             syntaxes = kwargs.get('syntaxes')
             exclude_syntaxes = kwargs.get('exclude_syntaxes')
@@ -767,53 +868,19 @@ class SyntaxHandler:
             syntaxes = OptionHandler.query(CONFIG, None, 'formatters', uid, 'syntaxes')
             exclude_syntaxes = OptionHandler.query(CONFIG, None, 'formatters', uid, 'exclude_syntaxes')
 
-        def should_exclude(syntax, scope):
-            return (
-                exclude_syntaxes
-                and isinstance(exclude_syntaxes, dict)  # noqa: W503
-                and any(  # noqa: W503
-                    (key.strip().lower() in ['all', syntax])
-                    and (isinstance(value, list) and any(x in scope for x in value))  # noqa: W503
-                    for key, value in exclude_syntaxes.items()
-                )
+        return syntaxes, exclude_syntaxes
+
+    @staticmethod
+    def _should_exclude(syntax, scope, exclude_syntaxes):
+        return (
+            exclude_syntaxes
+            and isinstance(exclude_syntaxes, dict)  # noqa: W503
+            and any(  # noqa: W503
+                (key.strip().lower() in ['all', syntax])
+                and (isinstance(value, list) and any(x in scope for x in value))  # noqa: W503
+                for key, value in exclude_syntaxes.items()
             )
-
-        if syntaxes and isinstance(syntaxes, list):
-            syntaxes = [syntax.lower() for syntax in syntaxes if syntax]
-            scopes = view.scope_name(region.begin()).strip().lower().split(' ')
-
-            for syntax in syntaxes:
-                for scope in scopes:
-                    if any(('source.' + syntax + x) in scope for x in ['.embedded', '.sublime', '.interpolated']):
-                        if should_exclude(syntax, scope):
-                            return None
-                        return syntax
-                    if 'source.' + syntax == scope:
-                        if should_exclude(syntax, scope):
-                            return None
-                        return syntax
-
-            for syntax in syntaxes:
-                for scope in scopes:
-                    if scope.endswith('.' + syntax):
-                        if should_exclude(syntax, scope):
-                            return None
-                        return syntax
-
-            for syntax in syntaxes:
-                for scope in scopes:
-                    if '.' + syntax + '.' in scope:
-                        if should_exclude(syntax, scope):
-                            return None
-                        return syntax
-
-            for syntax in syntaxes:
-                for scope in scopes:
-                    if scope.startswith(syntax + '.'):
-                        if should_exclude(syntax, scope):
-                            return None
-                        return syntax
-        return None
+        )
 
 
 class StringHandler:

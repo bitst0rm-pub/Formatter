@@ -1,5 +1,5 @@
 from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
-                        MAX_CHAIN_PLUGINS, PACKAGE_NAME,
+                        MAX_CHAIN_PLUGINS, NOOP, PACKAGE_NAME,
                         QUICK_OPTIONS_SETTING_FILE,
                         RECURSIVE_FAILURE_DIRECTORY,
                         RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY)
@@ -25,6 +25,7 @@ __all__ = [
     'IS_WINDOWS',
     'LAYOUTS',
     'MAX_CHAIN_PLUGINS',
+    'NOOP',
     'PACKAGE_NAME',
     'QUICK_OPTIONS_SETTING_FILE',
     'RECURSIVE_FAILURE_DIRECTORY',

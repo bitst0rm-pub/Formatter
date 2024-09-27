@@ -398,9 +398,10 @@ The following setting details - along with their default values and examples - a
         // If both methods are used, the config from the dot files will override this embedded one.
         // Advantage: The embedded one can handle both saved and unsaved files,
         // while the dot files variant only applies to saved files, as unsaved files
-        // (puffer on view) never have a working dir to contain dot files.
+        // (puffer in view) never have a working dir to contain dot files.
         //
-        // Chaining multiple formatters is limited to max. 10 items in a list for a single run.
+        // This option supports chaining multiple formatters in a single run.
+        // To chain, it always expects a list type with a maximum of 10 items in a list.
         //
         // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
         // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:
@@ -775,7 +776,8 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 
 > [!NOTE]
 >
-> Chaining multiple formatters is limited to max. **10** items in a list for a single run.
+> This option supports chaining multiple formatters in a single run.
+> Chaining multiple formatters is limited to max. **10** items in a list.
 
 1. **The dot files variant**: will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
 

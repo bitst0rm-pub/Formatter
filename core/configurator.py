@@ -9,7 +9,7 @@ from os.path import isfile, join
 
 import sublime
 
-from . import (ASSETS_DIRECTORY, CONFIG, PACKAGE_NAME,
+from . import (ASSETS_DIRECTORY, CONFIG, MAX_CHAIN_PLUGINS, PACKAGE_NAME,
                QUICK_OPTIONS_SETTING_FILE, ConfigHandler, HashHandler, log)
 
 
@@ -600,9 +600,10 @@ def build_formatter_sublime_settings(formatter_map):
     // If both methods are used, the config from the dot files will override this embedded one.
     // Advantage: The embedded one can handle both saved and unsaved files,
     // while the dot files variant only applies to saved files, as unsaved files
-    // (puffer on view) never have a working dir to contain dot files.
+    // (puffer in view) never have a working dir to contain dot files.
     //
-    // Chaining multiple formatters is limited to max. 10 items in a list for a single run.
+    // This option supports chaining multiple formatters in a single run.
+    // To chain, it always expects a list type with a maximum of ''' + str(MAX_CHAIN_PLUGINS) + ''' items in a list.
     //
     // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
     // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:

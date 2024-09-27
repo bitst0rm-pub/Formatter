@@ -1,5 +1,5 @@
 from ..modules import formatter_map
-from . import Module, log
+from . import NOOP, Module, log
 
 
 class Formatter(Module):
@@ -29,7 +29,7 @@ class Formatter(Module):
 
         syntax = self.get_assigned_syntax()
 
-        if self.uid == '@@noop@@':
+        if self.uid == NOOP:
             log.info('No operation')
             return None
 
