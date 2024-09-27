@@ -2,6 +2,23 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.8)] - 2024-09-27
+
+### 🐛 Bug Fixes
+
+- [`f582cd1`](https://github.com/bitst0rm-pub/Formatter/commit/f582cd106b6753e4202718eee1a5f7a3a8996dd6) Ensure `format_on_save` and `format_on_paste` are respected after an `auto_format` noop
+
+### 🚜 Refactor
+
+- [`496d157`](https://github.com/bitst0rm-pub/Formatter/commit/496d157b7c4fcd923918ac91da64134bf43ac031) Code enhancements
+
+### ⚙️ Miscellaneous Tasks
+
+- [`2c9ef8a`](https://github.com/bitst0rm-pub/Formatter/commit/2c9ef8abf8627b9dd34a9ef55810bb4f4ae6e63b) Minor update
+- [`b5edbd5`](https://github.com/bitst0rm-pub/Formatter/commit/b5edbd5e9957c7fc6b107719f88f4b183dc1be5b) Move `PROJECT_CONFIG` and `SUBLIME_PREFERENCES` to the unique dataclass `DataHandler`
+- [`3e5e20a`](https://github.com/bitst0rm-pub/Formatter/commit/3e5e20ad2f278cf4dbd077872bb405143ea3d803) Small logic refinement
+- [`dc39ba2`](https://github.com/bitst0rm-pub/Formatter/commit/dc39ba241ab12d0dfae2d5183856b999e44ff1dc) Update CI
+
 ## [[1.6.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.7)] - 2024-09-25
 
 ### 🚀 Features
