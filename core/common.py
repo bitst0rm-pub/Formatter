@@ -32,18 +32,17 @@ class ConfigDict(dict):
     _bypass_restrictions = False
     _allowed_keys_for_get = ['custom_modules', 'custom_modules_manifest', 'formatters', 'STOP', 'environ', 'quick_options']
 
-    def get(self, key, *args, **kwargs):
-        # Allow `get()` for certain keys in _allowed_keys_for_get
+    def get(self, key, *args, **kwargs):  # access via CONFIG.get('key')
         if key in ConfigDict._allowed_keys_for_get:
             return super().get(key, *args, **kwargs)
 
         if not ConfigDict._bypass_restrictions:
-            raise RuntimeError('Do NOT use "get()" to access values from CONFIG; use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
+            raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
         return super().get(key, *args, **kwargs)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key):  # access via CONFIG['key']
         if not ConfigDict._bypass_restrictions:
-            raise RuntimeError('Direct access is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
+            raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
         return super().__getitem__(key)
 
     # Context manager to temporarily bypass restrictions
@@ -60,18 +59,20 @@ class ConfigDict(dict):
 
 
 '''
-Override CONFIG to be an instance of ConfigDict
-Direct access with get() is not allowed, with exception:
+Direct access to CONFIG is not allowed, with exceptions:
 
-Temporarily allow access to CONFIG in a specific context:
+- The default method:
+other_value = OptionHandler.query(CONFIG, None, 'some_other_key')  # This will work
+
+- Temporarily allow access to CONFIG in a specific context:
 with ConfigDict.allow_access():
     some_value = CONFIG.get('some_other_key', None)  # This will work inside the context
 
-Outside the context, restrictions apply again:
+- Outside the context, restrictions apply again:
 other_value = CONFIG.get('some_other_key', None)  # Raises: RuntimeError
 
-Without direct access using get():
-other_value = OptionHandler.query(CONFIG, 'some_other_key', None)  # This will work
+- Outside the context, restrictions apply again:
+other_value = CONFIG['some_other_key']  # Raises: RuntimeError
 '''
 CONFIG = ConfigDict()
 

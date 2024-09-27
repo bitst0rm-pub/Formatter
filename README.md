@@ -15,10 +15,10 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Works with both saved and unsaved dirty files (buffer).
 - Unified settings across different systems.
 - Supports [auto-detect formatting](#auto-detect-formatting).
-  - with the ability to chain multiple formatters in a single run
+  - with the ability to _chain_ multiple formatters sequentially in a single run
 - Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
-  - with options to exclude dirs, files, extensions, syntaxes
+  - with options to _exclude_ dirs, files, extensions, syntaxes
 - Capable to format on Paste.
   - dito
 - Shared config files available for each 3rd-party plugin.
@@ -31,7 +31,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 
 **Limitations:**
 
-- Text-to-Image: Third-party plugins often rely on a headless browser to render images, making the process time-consuming. Consequently:
+- Text-to-Image: Third-party plugins often rely on a headless browser to render images, making the process very time-consuming. Consequently:
 
   - `"dir_format"` will not be implemented or is disabled.
   - `"new_file_on_format"` will not be implemented or is disabled.
@@ -72,7 +72,6 @@ _Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bi
 Formatter requires third-party plugins to work, as it relies on external plugins to format code. Users must install these plugins themselves. This means, Formatter is not responsible for:
 
 - The quality of formatted code.
-- The speed of the formatting process.
 - Keeping third-party plugins up-to-date.
 
 ## Table of supported plugins
@@ -160,7 +159,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 >
 > - [Prettier](https://github.com/prettier/prettier) and [Stylelint](https://github.com/stylelint/stylelint) can collaborate to format `CSS`
 >   <details>
->   <summary><sub>Config example</sub></summary>
+>   <summary><sub>Config example (obsolete)</sub></summary>
 >
 >     **stylelint_rc.json:**
 >
@@ -210,7 +209,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 >
 > - [Prettier](https://github.com/prettier/prettier) and [ESLint](https://github.com/eslint/eslint) can collaborate to format `JS`
 >   <details>
->   <summary><sub>Config example</sub></summary>
+>   <summary><sub>Config example (obsolete)</sub></summary>
 >
 >     **eslint_rc.json:**
 >
@@ -776,7 +775,7 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 
 > [!NOTE]
 >
-> This option supports chaining multiple formatters in a single run.
+> This option supports chaining multiple formatters in a single run.<br />
 > Chaining multiple formatters is limited to max. **10** items in a list.
 
 1. **The dot files variant**: will start to search up the file tree inside the working folder until a following file is found: `.sublimeformatter.json` OR `.sublimeformatter`
