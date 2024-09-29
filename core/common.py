@@ -887,11 +887,12 @@ class SyntaxHandler:
 class StringHandler:
     @classmethod
     def update_json_recursive(cls, json_data=None, update_data=None):
-        for key, value in update_data.items():
-            if key in json_data and isinstance(value, dict) and isinstance(json_data[key], dict):
-                cls.update_json_recursive(json_data=json_data[key], update_data=value)
-            else:
-                json_data[key] = value
+        with ConfigDict.allow_access():
+            for key, value in update_data.items():
+                if key in json_data and isinstance(value, dict) and isinstance(json_data[key], dict):
+                    cls.update_json_recursive(json_data=json_data[key], update_data=value)
+                else:
+                    json_data[key] = value
 
     @staticmethod
     def convert_list_items_to_string(lst=None):
