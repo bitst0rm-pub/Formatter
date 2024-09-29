@@ -2,6 +2,12 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.9)] - 2024-09-29
+
+### 🐛 Bug Fixes
+
+- [`2cba2c5`](https://github.com/bitst0rm-pub/Formatter/commit/2cba2c5e4aebd66f1f87598e6d69437413635633) Fix the RuntimeError when directly accessing CONFIG (closes [#65](https://github.com/bitst0rm-pub/Formatter/issues/65)) Thanks [@husanjun](https://github.com/husanjun)
+
 ## [[1.6.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.8)] - 2024-09-27
 
 ### 🐛 Bug Fixes
