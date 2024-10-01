@@ -9,6 +9,7 @@ class SyncScrollManager:
         self.running = False
         self.thread = None
         self.lock = threading.Lock()
+        self.last_position = None
 
     def __enter__(self):
         return self
@@ -27,15 +28,21 @@ class SyncScrollManager:
         with self.lock:
             self.running = False
             if self.thread and self.thread.is_alive():
-                self.thread.join(timeout=0.4)
+                self.thread.join(timeout=0.1)
             self.thread = None
 
     def sync_scroll(self, target_type, active_view, target_view):
         try:
             while self.running:
                 # log.debug('Sync scroll target: %s', target_type)
-                target_view.set_viewport_position(active_view.viewport_position(), False)
-                time.sleep(0.25)
+                current_position = active_view.viewport_position()
+
+                # Only update if the position has changed
+                if current_position != self.last_position:
+                    target_view.set_viewport_position(current_position, False)
+                    self.last_position = current_position
+
+                time.sleep(0.05)
         except Exception as e:
             log.error('Error during sync_scroll: %s', e)
         finally:
