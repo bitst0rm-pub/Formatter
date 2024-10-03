@@ -2,6 +2,19 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.10)] - 2024-10-03
+
+### 🐛 Bug Fixes
+
+- [`47ec88e`](https://github.com/bitst0rm-pub/Formatter/commit/47ec88e74edc2ef027db696aee763f5ae49f47fb) Fix auto format chain in new file on format mode
+- [`69b5b41`](https://github.com/bitst0rm-pub/Formatter/commit/69b5b419a014568854071f725ffb7250b5c3a52a) Fix to use buffer instead of file to work with auto format chain
+
+### ⚙️ Miscellaneous Tasks
+
+- [`64bd6f6`](https://github.com/bitst0rm-pub/Formatter/commit/64bd6f6f1a1958e7eca2cae2c6720e0a5616ac57) Enhance Quick Options logic
+- [`01f72ef`](https://github.com/bitst0rm-pub/Formatter/commit/01f72efa4c573980037b20cf8650816a73671b0f) Only update the target view when the scroll position actually changes
+- [`40fe3a5`](https://github.com/bitst0rm-pub/Formatter/commit/40fe3a594a42715da00add9b5fb4efa834cb7883) Update README.md
+
 ## [[1.6.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.9)] - 2024-09-29
 
 ### 🐛 Bug Fixes
