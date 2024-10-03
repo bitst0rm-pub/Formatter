@@ -15,10 +15,10 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Works with both saved and unsaved dirty files (buffer).
 - Unified settings across different systems.
 - Supports [auto-detect formatting](#auto-detect-formatting).
-  - with the ability to _chain_ multiple formatters sequentially in a single run
+  - with the ability to _chain_ multiple formatters sequentially in a single run.
 - Supports [per-project formatting](#per-project-formatting).
 - Capable to format on Save.
-  - with options to _exclude_ dirs, files, extensions, syntaxes
+  - with options to _exclude_ dirs, files, extensions, syntaxes.
 - Capable to format on Paste.
   - dito
 - Shared config files available for each 3rd-party plugin.
@@ -926,7 +926,7 @@ Formatting actions can be triggered in different ways:
 
 ### The Quick Options
 
-This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file.<br />
+This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file.
 It has no default values and is _primarily_ intended for temporarily toggling between File Format and Dir Format modes.<br />
 It includes 3 modes:
 
@@ -1122,7 +1122,7 @@ The structure of the metadata JSON file should follow this format:
 > - Each remote archive file (_myproject.zip_) must include at least one of the fixed folders: `config`, `libs`, `modules`
 > - All files must be placed within these 3 **predefined** folders.
 > - To update your code, just reset the `.custom` file in the Formatter root folder.
-> - The following Formatter libs cannot be exchangeable: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
+> - The following Formatter libs are not exchangeable: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 >
 > _Python is not JS. You are responsible for handling any operations over the internet._
 
@@ -1132,7 +1132,7 @@ The structure of the metadata JSON file should follow this format:
 >
 > Formatter is designed to work with input puffer of file content instead of file as file path.<br />
 > If a plugin requires a file path as input and does not support reading from `stdin`, then you must use `self.create_tmp_file(suffix=None)`
-> in place of file path to get file content as puffer. Otherwise, auto format chaining will not work with that plugin.
+> in place of file path to get file content as puffer. Otherwise, the auto format chaining will not work with that plugin.
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br />
 Responsible for interacting with plugin modules is the class: `class Module:`

@@ -533,8 +533,6 @@ class OptionHandler:
 class TempFileHandler:
     @staticmethod
     def create_tmp_file(view=None, uid=None, region=None, auto_format_config=None, suffix=None):
-        import tempfile
-
         if not suffix:
             uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
             suffix = '.' + syntax if syntax else None
