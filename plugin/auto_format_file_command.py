@@ -22,19 +22,25 @@ class AutoFormatFileCommand(sublime_plugin.TextCommand):
             afc = auto_format_args['auto_format_config']
 
             for i in range(MAX_CHAIN_PLUGINS):
-                if i > 0 and not self._process_plugin_chain(afc):
-                    break
+                is_non_empty = self._process_plugin_chain(afc)
+
+                if not is_non_empty:
+                    # For handle_text_formatting() in new_file_on_format mode
+                    FileFormat.set_auto_format_finished()
+
+                if i > 0 and not is_non_empty:  # > 0 for "plugin" or ["plugin"]
+                    break  # finished
 
                 with FileFormat(view=self.view, **auto_format_args) as file_format:
                     file_format.run()
 
-            DataHandler.reset('__auto_format_chain__')
+            DataHandler.reset('__auto_format_chain_item__')
         except Exception as e:
             log.error('Error during auto formatting: %s', e)
 
     @staticmethod
     def _process_plugin_chain(afc):
-        syntax, uid = DataHandler.get('__auto_format_chain__')
+        syntax, uid = DataHandler.get('__auto_format_chain_item__')
         if not (syntax and uid):  # De Morgan's laws
             return False  # no match found
 

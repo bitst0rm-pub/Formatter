@@ -12,12 +12,14 @@ from . import FileFormat
 class SavePasteManager:
     @classmethod
     def apply_formatting(cls, view=None, action=None):
+        DataHandler.set('__save_paste_action__', 'action', action)
         file_path = view.file_name()
+
         if file_path and splitext(file_path)[1] in ['.sublime-settings', '.sublime-keymap']:
             return  # exclude by default
 
         if cls._on_auto_format(view=view, file_path=file_path, actkey=action):
-            return  # continue if False
+            return  # fallthrough if False
 
         cls._on_paste_or_save(view=view, actkey=action)
 
@@ -26,7 +28,6 @@ class SavePasteManager:
         auto_format_args = DotFileHandler.get_auto_format_args(view=view, active_file_path=file_path)
         config = auto_format_args['auto_format_config'].get('config', {})
         if config and not cls._should_skip(view=view, value=config.get(actkey, False)):
-            DataHandler.set('__auto_format_action__', 'action', actkey)
             CleanupHandler.clear_console()
 
             log.debug('"%s" (autoformat)', actkey)
@@ -35,13 +36,19 @@ class SavePasteManager:
                 afc = auto_format_args['auto_format_config']
 
                 for i in range(MAX_CHAIN_PLUGINS):
-                    if i > 0 and not cls._process_plugin_chain(afc):
-                        break
+                    is_non_empty = cls._process_plugin_chain(afc)
+
+                    if not is_non_empty:
+                        # For handle_text_formatting() in new_file_on_format mode
+                        FileFormat.set_auto_format_finished()
+
+                    if i > 0 and not is_non_empty:  # > 0 for "plugin" or ["plugin"]
+                        break  # finished
 
                     with FileFormat(view=view, **auto_format_args) as file_format:
                         file_format.run()
 
-                DataHandler.reset('__auto_format_chain__')
+                DataHandler.reset('__auto_format_chain_item__')
 
                 is_noop = DataHandler.get('__auto_format_noop__')[1] == NOOP
                 DataHandler.reset('__auto_format_noop__')
@@ -55,7 +62,7 @@ class SavePasteManager:
 
     @staticmethod
     def _process_plugin_chain(afc):
-        syntax, uid = DataHandler.get('__auto_format_chain__')
+        syntax, uid = DataHandler.get('__auto_format_chain_item__')
         if not (syntax and uid):  # De Morgan's laws
             return False  # no match found
 

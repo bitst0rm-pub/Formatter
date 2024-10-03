@@ -798,7 +798,7 @@ class SyntaxHandler:
                     DataHandler.set('__auto_format_noop__', 'noop', NOOP)
                     return NOOP, None
                 else:
-                    DataHandler.set('__auto_format_chain__', syntax, uid)
+                    DataHandler.set('__auto_format_chain_item__', syntax, uid)
                     return uid, syntax
         DataHandler.set('__auto_format_noop__', 'noop', NOOP)
         return NOOP, None
@@ -816,7 +816,7 @@ class SyntaxHandler:
 
     @staticmethod
     def _is_excluded_syntax(syntax=None, auto_format_config=None):
-        return syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('__auto_format_action__')[1], 'exclude_syntaxes')
+        return syntax in OptionHandler.query(auto_format_config, [], 'config', DataHandler.get('__save_paste_action__')[1], 'exclude_syntaxes')
 
     @classmethod
     def _detect_assigned_syntax(cls, view=None, uid=None, region=None, **kwargs):
@@ -1133,9 +1133,9 @@ class DataHandler:
     _categories = {
         '__sublime_preferences__': {'key': None, 'value': None},
         '__project_config__': {'key': None, 'value': None},
-        '__auto_format_chain__': {'key': None, 'value': None},
-        '__auto_format_action__': {'key': None, 'value': None},
-        '__auto_format_noop__': {'key': None, 'value': None}
+        '__save_paste_action__': {'key': None, 'value': None},  # current action
+        '__auto_format_chain_item__': {'key': None, 'value': None},  # current chaining item
+        '__auto_format_noop__': {'key': None, 'value': None}  # current no operation id
     }
 
     @classmethod

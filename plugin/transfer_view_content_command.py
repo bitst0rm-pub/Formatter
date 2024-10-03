@@ -16,7 +16,9 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
             self.save_dst_content(dst_view, path)
         else:
             log.debug('Unsaved buffer, manual save required.')
+
         self.update_status(dst_view)
+        self.focus_source_view(src_view)
 
     @staticmethod
     def create_or_reuse_view(path, src_view):
@@ -69,3 +71,9 @@ class TransferViewContentCommand(sublime_plugin.TextCommand):
             if OptionHandler.query(CONFIG, True, 'show_statusbar'):
                 view.window().set_status_bar_visible(True)
                 view.set_status(STATUS_KEY, self.view.get_status(STATUS_KEY))
+
+    @staticmethod
+    def focus_source_view(src_view):
+        window = src_view.window()
+        window.focus_group(0)
+        window.focus_view(src_view)

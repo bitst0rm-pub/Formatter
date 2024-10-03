@@ -6,13 +6,17 @@ import traceback
 import sublime
 
 from ..core import (CONFIG, GFX_OUT_NAME, PACKAGE_NAME, STATUS_KEY,
-                    ConfigHandler, InterfaceHandler, LayoutHandler,
-                    OptionHandler, PathHandler, PhantomHandler, PrintHandler,
-                    TextHandler, log)
+                    ConfigHandler, DataHandler, InterfaceHandler,
+                    LayoutHandler, OptionHandler, PathHandler, PhantomHandler,
+                    PrintHandler, TextHandler, log)
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 
-AF_SUCCESS, AF_FAILURE = 0, 0
+
+class FileFormatState:
+    AF_SUCCESS = 0
+    AF_FAILURE = 0
+    IS_AUTO_FORMAT_FINISHED = False
 
 
 class FileFormat:
@@ -80,15 +84,17 @@ class FileFormat:
 
     @staticmethod
     def reset_status():
-        global AF_SUCCESS, AF_FAILURE
-        AF_SUCCESS = 0
-        AF_FAILURE = 0
+        FileFormatState.AF_SUCCESS = 0
+        FileFormatState.AF_FAILURE = 0
+
+    @staticmethod
+    def set_auto_format_finished():
+        FileFormatState.IS_AUTO_FORMAT_FINISHED = True
 
     def update_status(self, is_success):
         if self.is_auto_format_mode:
-            global AF_SUCCESS, AF_FAILURE
-            AF_SUCCESS += is_success
-            AF_FAILURE += not is_success
+            FileFormatState.AF_SUCCESS += is_success
+            FileFormatState.AF_FAILURE += not is_success
         else:
             self.success += is_success
             self.failure += not is_success
@@ -99,8 +105,8 @@ class FileFormat:
 
     def set_status_bar_text(self):
         if self.is_auto_format_mode:
-            _success = AF_SUCCESS
-            _failure = AF_FAILURE
+            _success = FileFormatState.AF_SUCCESS
+            _failure = FileFormatState.AF_FAILURE
         else:
             _success = self.success
             _failure = self.failure
@@ -119,7 +125,12 @@ class FileFormat:
         if self.kwargs.get('type', None) == 'graphic':
             self.handle_graphic_formatting()
         else:
-            self.handle_text_formatting()
+            if self.is_auto_format_mode:  # for chaining
+                if FileFormatState.IS_AUTO_FORMAT_FINISHED:
+                    self.handle_text_formatting()
+                    FileFormatState.IS_AUTO_FORMAT_FINISHED = False
+            else:
+                self.handle_text_formatting()
 
     def handle_graphic_formatting(self):
         window = self.view.window()
@@ -240,5 +251,20 @@ class FileFormat:
         return OptionHandler.query(CONFIG, False, 'layout', 'enable'), OptionHandler.query(CONFIG, False, 'formatters', uid, 'new_file_on_format')
 
     def undo_history(self):
-        for _ in range(min(500, self.cycles.count(True))):
-            self.view.run_command('undo')
+        action = DataHandler.get('__save_paste_action__')[1]
+
+        if action != 'format_on_paste':
+            for _ in range(min(500, FileFormatState.AF_SUCCESS if self.is_auto_format_mode else self.cycles.count(True))):
+                self.view.run_command('undo')
+
+        if action == 'format_on_save':
+            file_path = self.view.file_name()
+            if file_path:
+                try:
+                    self.view.set_scratch(True)
+                    with open(file_path, 'w', encoding='utf-8') as file:
+                        file.write(self.view.substr(sublime.Region(0, self.view.size())))
+                except OSError as e:
+                    log.error('Error saving file: %s\n%s', file_path, e)
+                finally:
+                    DataHandler.reset('__save_paste_action__')
