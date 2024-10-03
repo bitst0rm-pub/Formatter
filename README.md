@@ -927,7 +927,8 @@ Formatting actions can be triggered in different ways:
 ### The Quick Options
 
 This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file.<br />
-It is _primarily_ intended for toggling between File Format and Dir Format modes and includes 3 modes:
+It has no default values and is _primarily_ intended for temporarily toggling between File Format and Dir Format modes.<br />
+It includes 3 modes:
 
 - **Temporary Quick Options (TQO)**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
 - **Persistent User Settings (PUS)**: Clicking the `Reset` option will reset all current `Temporary Quick Options` and switch to using your User Settings from `Formatter.sublime-settings`.
