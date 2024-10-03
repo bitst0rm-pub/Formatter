@@ -603,7 +603,7 @@ def build_formatter_sublime_settings(formatter_map):
     // (puffer in view) never have a working dir to contain dot files.
     //
     // This option supports chaining multiple formatters in a single run.
-    // To chain, it always expects a list type with a maximum of ''' + str(MAX_CHAIN_PLUGINS) + ''' items in a list.
+    // Chaining requires a list type with a maximum of ''' + str(MAX_CHAIN_PLUGINS) + ''' items in a list.
     //
     // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
     // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:

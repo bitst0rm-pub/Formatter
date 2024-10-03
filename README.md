@@ -400,7 +400,7 @@ The following setting details - along with their default values and examples - a
         // (puffer in view) never have a working dir to contain dot files.
         //
         // This option supports chaining multiple formatters in a single run.
-        // To chain, it always expects a list type with a maximum of 10 items in a list.
+        // Chaining requires a list type with a maximum of 10 items in a list.
         //
         // By default, "format_on_save" and "format_on_paste" use a boolean value: false OR true
         // But you can use the dictionary format to exclude dirs, files, extensions and syntaxes:
@@ -1120,11 +1120,17 @@ The structure of the metadata JSON file should follow this format:
 > - Each remote archive file (_myproject.zip_) must include at least one of the fixed folders: `config`, `libs`, `modules`
 > - All files must be placed within these 3 **predefined** folders.
 > - To update your code, just reset the `.custom` file in the Formatter root folder.
-> - The following Formatter libs cannot be replaced: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
+> - The following Formatter libs cannot be exchangeable: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 >
 > _Python is not JS. You are responsible for handling any operations over the internet._
 
 ### 4. API
+
+> [!IMPORTANT]
+>
+> Formatter is designed to work with input puffer of file content instead of file as file path.<br />
+> If a plugin requires a file path as input and does not support reading from `stdin`, then you must use `self.create_tmp_file(suffix=None)`
+> in place of file path to get file content as puffer. Otherwise, auto format chaining will not work with that plugin.
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br />
 Responsible for interacting with plugin modules is the class: `class Module:`
