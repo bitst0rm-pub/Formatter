@@ -51,15 +51,8 @@ class DrawioFormatter(Module):
 
                 cmd.extend(flattened_list)
 
-        tmp_file = None
-        file = self.view.file_name()
-        if file:
-            input_file = file
-        else:
-            tmp_file = self.create_tmp_file()
-            input_file = tmp_file
-
-        cmd.extend(['--export', '--format', 'png', '--output', self.get_output_image(), input_file])
+        tmp_file = self.create_tmp_file()
+        cmd.extend(['--export', '--format', 'png', '--output', self.get_output_image(), tmp_file])
 
         return cmd, tmp_file
 

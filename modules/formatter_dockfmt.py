@@ -29,13 +29,8 @@ class DockfmtFormatter(Module):
 
         cmd.extend(self.get_args())
 
-        file = self.get_pathinfo()['path']
-        tmp_file = None
-        if file:
-            cmd.extend([file])
-        else:
-            tmp_file = self.create_tmp_file()
-            cmd.extend([tmp_file])
+        tmp_file = self.create_tmp_file()
+        cmd.extend([tmp_file])
 
         return cmd, tmp_file
 

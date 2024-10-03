@@ -34,13 +34,8 @@ class PrettydiffminFormatter(Module):
         if path:
             cmd.extend(['config', path])
 
-        file = self.get_pathinfo()['path']
-        tmp_file = None
-        if file:
-            cmd.extend(['source', file])
-        else:
-            tmp_file = self.create_tmp_file()
-            cmd.extend(['source', tmp_file])
+        tmp_file = self.create_tmp_file()
+        cmd.extend(['source', tmp_file])
 
         return cmd, tmp_file
 
