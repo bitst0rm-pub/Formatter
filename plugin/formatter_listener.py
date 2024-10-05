@@ -25,31 +25,23 @@ class FormatterListener(sublime_plugin.EventListener):
         if OptionHandler.query(CONFIG, False, 'layout', 'sync_scroll') and LayoutHandler.want_layout():
             sync_scroll_manager.stop_sync_scroll()
 
-            src_view = self._find_src_view_by_dst_view(view)
+            src_view = self._find_view_by_reference(view, lookup_src=False)
             if src_view:
                 sync_scroll_manager.start_sync_scroll('src', view, src_view)
             else:
-                dst_view = self._find_dst_view_by_src_view(view)
+                dst_view = self._find_view_by_reference(view, lookup_src=True)
                 if dst_view:
                     sync_scroll_manager.start_sync_scroll('dst', view, dst_view)
 
     @staticmethod
-    def _find_src_view_by_dst_view(dst_view):
-        src_view_id = dst_view.settings().get('txt_vref')
-        if src_view_id:
-            for window in sublime.windows():
-                for view in window.views():
-                    if view.id() == src_view_id:
-                        return view
-        return None
+    def _find_view_by_reference(view, lookup_src=True):
+        view_id = view.id() if lookup_src else view.settings().get('txt_vref')
 
-    @staticmethod
-    def _find_dst_view_by_src_view(src_view):
-        src_view_id = src_view.id()
-        for window in sublime.windows():
-            for view in window.views():
-                if view.settings().get('txt_vref') == src_view_id:
-                    return view
+        if view_id:
+            for window in sublime.windows():
+                for v in window.views():
+                    if (v.settings().get('txt_vref') == view_id) if lookup_src else (v.id() == view_id):
+                        return v
         return None
 
     def on_pre_close(self, view):

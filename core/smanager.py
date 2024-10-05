@@ -7,7 +7,7 @@ from os.path import dirname, join
 import sublime
 import sublime_plugin
 
-from . import CONFIG, OptionHandler, bulk_operation_detector, log
+from . import CONFIG, DataHandler, OptionHandler, bulk_operation_detector, log
 
 SESSION_FILE = join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
 MAX_AGE_DAYS = 180
@@ -171,10 +171,10 @@ session_manager = SessionManager(max_database_records=600)
 class SessionManagerListener(sublime_plugin.EventListener):
     @bulk_operation_detector.bulk_operation_guard(register=True)
     def on_load(self, view):
-        if OptionHandler.query(CONFIG, True, 'remember_session') and CONFIG.get('STOP', True):
+        if OptionHandler.query(CONFIG, True, 'remember_session') and (DataHandler.get('__dir_format_stop__')[1] or True):
             session_manager.run_on_load(view)
 
     @bulk_operation_detector.bulk_operation_guard(register=True)
     def on_pre_close(self, view):
-        if OptionHandler.query(CONFIG, True, 'remember_session') and CONFIG.get('STOP', True):
+        if OptionHandler.query(CONFIG, True, 'remember_session') and (DataHandler.get('__dir_format_stop__')[1] or True):
             session_manager.run_on_pre_close(view)

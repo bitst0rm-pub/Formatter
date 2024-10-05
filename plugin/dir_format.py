@@ -7,18 +7,20 @@ import sublime
 
 from ..core import (CONFIG, PACKAGE_NAME, RECURSIVE_FAILURE_DIRECTORY,
                     RECURSIVE_SUCCESS_DIRECTORY, STATUS_KEY, ConfigHandler,
-                    InterfaceHandler, OptionHandler, PathHandler,
+                    DataHandler, InterfaceHandler, OptionHandler, PathHandler,
                     SyntaxHandler, TextHandler, TransformHandler, check_stop,
                     log)
 from ..core.formatter import Formatter
 from . import ActivityIndicator
 
-STOP = False
-START_TIME = None
+
+class DirFormatState:
+    STOP = False
+    START_TIME = None
 
 
 def get_stop_status():
-    return STOP
+    return DirFormatState.STOP
 
 
 class DirFormat:
@@ -51,9 +53,8 @@ class DirFormat:
         self.start_timer()
 
         try:
-            global STOP
-            STOP = False
-            CONFIG['STOP'] = False  # pause smanager and wcounter
+            DirFormatState.STOP = False
+            DataHandler.set('__dir_format_stop__', 'STOP', False)  # pause smanager and wcounter
 
             # Show progress indicator if formatting takes longer than 1s
             with ActivityIndicator(view=self.view, label='In Progress...', delay=1000):
@@ -69,9 +70,8 @@ class DirFormat:
 
     @staticmethod
     def stop():
-        global STOP
-        STOP = True
-        CONFIG['STOP'] = True
+        DirFormatState.STOP = True
+        DataHandler.set('__dir_format_stop__', 'STOP', True)
 
     @staticmethod
     def format_elapsed_time(seconds):
@@ -86,16 +86,14 @@ class DirFormat:
 
     @staticmethod
     def start_timer():
-        global START_TIME
-        START_TIME = perf_counter()
+        DirFormatState.START_TIME = perf_counter()
 
     def end_timer(self):
-        global START_TIME
-        if START_TIME is None:
+        if DirFormatState.START_TIME is None:
             log.warning('Timer was not started.')
             return 'N/A'
-        elapsed_time = perf_counter() - START_TIME
-        START_TIME = None
+        elapsed_time = perf_counter() - DirFormatState.START_TIME
+        DirFormatState.START_TIME = None
         return self.format_elapsed_time(elapsed_time)
 
     def get_current_working_directory(self):
@@ -253,7 +251,7 @@ class DirFormat:
             'Time:  {}\n\n'
             'Please check the result in:\n{}'
         ).format(
-            'COMPLETED' if STOP is False else 'ABORTED',
+            'COMPLETED' if DirFormatState.STOP is False else 'ABORTED',
             ok, ko, total, etime, cwd
         )
 
@@ -263,7 +261,7 @@ class DirFormat:
         for key in self.CONTEXT:
             self.CONTEXT[key] = [] if isinstance(self.CONTEXT[key], list) else 0 if isinstance(self.CONTEXT[key], int) else None
         # Reset and end
-        CONFIG['STOP'] = True
+        DataHandler.set('__dir_format_stop__', 'STOP', True)
 
     @staticmethod
     def handle_error(error, cwd=None, file_path=None):

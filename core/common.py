@@ -30,7 +30,7 @@ if IS_WINDOWS:
 
 class ConfigDict(dict):
     _bypass_restrictions = False
-    _allowed_keys_for_get = ['custom_modules', 'custom_modules_manifest', 'formatters', 'STOP', 'environ', 'quick_options']
+    _allowed_keys_for_get = ['custom_modules', 'custom_modules_manifest', 'formatters', 'environ', 'quick_options']
 
     def get(self, key, *args, **kwargs):  # access via CONFIG.get('key')
         if key in ConfigDict._allowed_keys_for_get:
@@ -94,6 +94,7 @@ class ModuleMeta(abc.ABCMeta):
 class Module(metaclass=ModuleMeta):
     '''
     API solely for interacting with files located in the 'modules' folder.
+    These methods allow you to create a custom formatter adapter for your plugin.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
@@ -108,9 +109,36 @@ class Module(metaclass=ModuleMeta):
         self.auto_format_config = auto_format_config
         self.kwargs = kwargs  # @unused
 
+        # Track temp files created
+        self._tmp_files_created = {}
+
+    def __del__(self):
+        # Clean up automatically if autodel=True for any tmp files
+        for tmp_file, autodel in self._tmp_files_created.items():
+            if autodel:
+                TempFileHandler.remove_tmp_file(tmp_file)
+            else:
+                log.warning(
+                    'Temporary files were created but not removed: %s\n'
+                    'Ensure that all temporary files are manually removed by using "self.remove_tmp_file(tmp_file)"\n'
+                    'Or, create the temporary file with automatic deletion by using "self.create_tmp_file(suffix=None, autodel=True)"', tmp_file
+                )
+
     @abc.abstractmethod
     def format(self):
         raise NotImplementedError('Subclasses must implement the "format()" method.')
+
+    def create_tmp_file(self, suffix=None, autodel=False):
+        tmp_file = TempFileHandler.create_tmp_file(view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config, suffix=suffix)
+        self._tmp_files_created[tmp_file] = autodel
+        return tmp_file
+
+    def remove_tmp_file(self, tmp_file=None):
+        if tmp_file in self._tmp_files_created:
+            del self._tmp_files_created[tmp_file]
+            return TempFileHandler.remove_tmp_file(tmp_file=tmp_file)
+        else:
+            raise ValueError('Attempting to remove a temporary file that was not created by this module instance.')
 
     def is_executable(self, file=None):
         return FileHandler.is_executable(file=file)
@@ -153,12 +181,6 @@ class Module(metaclass=ModuleMeta):
 
     def query(self, data_dict, default=None, *keys):
         return OptionHandler.query(data_dict, default, *keys)
-
-    def create_tmp_file(self, suffix=None):
-        return TempFileHandler.create_tmp_file(view=self.view, uid=self.uid, region=self.region, auto_format_config=self.auto_format_config, suffix=suffix)
-
-    def remove_tmp_file(self, tmp_file=None):
-        return TempFileHandler.remove_tmp_file(tmp_file=tmp_file)
 
     def get_executable(self, runtime_type=None):
         return ArgumentHandler.get_executable(view=self.view, uid=self.uid, executables=self.executables, runtime_type=runtime_type)
@@ -214,6 +236,24 @@ class Module(metaclass=ModuleMeta):
 
 
 # === Module Supporting Classes === #
+
+class TempFileHandler:
+    @staticmethod
+    def create_tmp_file(view=None, uid=None, region=None, auto_format_config=None, suffix=None):
+        if not suffix:
+            uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
+            suffix = '.' + syntax if syntax else None
+
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=None, encoding='utf-8') as file:
+            file.write(ViewHandler.get_text_from_region(view=view, region=region))
+            file.close()
+            return file.name
+
+    @staticmethod
+    def remove_tmp_file(tmp_file=None):
+        if tmp_file and os.path.isfile(tmp_file):
+            os.unlink(tmp_file)
+
 
 class FileHandler:
     @staticmethod
@@ -528,26 +568,6 @@ class OptionHandler:
                 data_dict = data_dict.get(key, default)
 
         return data_dict
-
-
-class TempFileHandler:
-    @staticmethod
-    def create_tmp_file(view=None, uid=None, region=None, auto_format_config=None, suffix=None):
-        if not suffix:
-            uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
-            suffix = '.' + syntax if syntax else None
-
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=suffix, dir=None, encoding='utf-8') as file:
-            file.write(ViewHandler.get_text_from_region(view=view, region=region))
-            file.close()
-            return file.name
-
-        return None
-
-    @staticmethod
-    def remove_tmp_file(tmp_file=None):
-        if tmp_file and os.path.isfile(tmp_file):
-            os.unlink(tmp_file)
 
 
 class ModeHandler:
@@ -1131,9 +1151,10 @@ class DataHandler:
     _categories = {
         '__sublime_preferences__': {'key': None, 'value': None},
         '__project_config__': {'key': None, 'value': None},
-        '__save_paste_action__': {'key': None, 'value': None},  # current action
+        '__save_paste_action__': {'key': None, 'value': None},  # current action state
         '__auto_format_chain_item__': {'key': None, 'value': None},  # current chaining item
-        '__auto_format_noop__': {'key': None, 'value': None}  # current no operation id
+        '__auto_format_noop__': {'key': None, 'value': None},  # current no operation id
+        '__dir_format_stop__': {'key': None, 'value': None}  # current dir format state
     }
 
     @classmethod

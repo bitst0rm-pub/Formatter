@@ -1,8 +1,8 @@
 import sublime
 import sublime_plugin
 
-from . import (CONFIG, STATUS_KEY, OptionHandler, bulk_operation_detector,
-               debounce, skip_word_counter)
+from . import (CONFIG, STATUS_KEY, DataHandler, OptionHandler,
+               bulk_operation_detector, debounce, skip_word_counter)
 
 CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
 
@@ -94,7 +94,7 @@ class WordCounterListener(sublime_plugin.EventListener):
     @debounce(delay_in_ms=300)
     def on_selection_modified_async(self, view):
         x = OptionHandler.query(CONFIG, {}, 'show_words_count')
-        if x.get('enable', True) and CONFIG.get('STOP', True):
+        if x.get('enable', True) and (DataHandler.get('__dir_format_stop__')[1] or True):
             ignore_whitespace_char = x.get('ignore_whitespace_char', True)
             use_short_label = x.get('use_short_label', False)
             view.settings().set('show_line_column', 'disabled')
