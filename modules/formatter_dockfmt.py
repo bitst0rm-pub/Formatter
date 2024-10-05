@@ -29,7 +29,7 @@ class DockfmtFormatter(Module):
 
         cmd.extend(self.get_args())
 
-        tmp_file = self.create_tmp_file()
+        tmp_file = self.create_tmp_file(autodel=True)
         cmd.extend([tmp_file])
 
         return cmd, tmp_file
@@ -40,14 +40,11 @@ class DockfmtFormatter(Module):
         try:
             exitcode, stdout, stderr = self.exec_com(cmd)
 
-            self.remove_tmp_file(tmp_file)
-
             if exitcode > 0:
                 self.print_exiterr(exitcode, stderr)
             else:
                 return stdout
         except Exception as e:
-            self.remove_tmp_file(tmp_file)
             self.print_oserr(cmd, e)
 
         return None

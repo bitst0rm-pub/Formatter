@@ -51,7 +51,7 @@ class DrawioFormatter(Module):
 
                 cmd.extend(flattened_list)
 
-        tmp_file = self.create_tmp_file()
+        tmp_file = self.create_tmp_file(autodel=True)
         cmd.extend(['--export', '--format', 'png', '--output', self.get_output_image(), tmp_file])
 
         return cmd, tmp_file
@@ -73,10 +73,8 @@ class DrawioFormatter(Module):
                     except Exception as e:
                         log.error('Error while executing extended cmd: %s Details: %s', cmd, e)
 
-                self.remove_tmp_file(tmp_file)
                 return stdout
         except Exception as e:
             self.print_oserr(cmd, e)
 
-        self.remove_tmp_file(tmp_file)
         return None

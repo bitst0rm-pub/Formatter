@@ -1135,14 +1135,15 @@ The structure of the metadata JSON file should follow this format:
 > in place of file path to get file content as puffer. Otherwise, the auto format chaining will not work with that plugin.
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br />
-Responsible for interacting with plugin modules is the class: `class Module:`
+Responsible for interacting with plugin modules is the class: `class Module:`<br />
+There are more methods in this class you can use, but:
 
 1. Essentially for the `def get_cmd(self)` function:
 
    ```py
    # This alias method combines get_interpreter() and get_executable().
    # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
-   # Currently, only None and 'node' are functional. All others are placeholders for future use.
+   # Currently, only None and 'node' are functional. All others are placeholders for future implementation.
    cmd = self.get_iprexe_cmd(runtime_type=None)
 
    # This alias method just extends get_iprexe_cmd() with get_args().
@@ -1175,12 +1176,16 @@ Responsible for interacting with plugin modules is the class: `class Module:`
    # {'path':, 'cwd':, 'base':, 'stem':, 'suffix':, 'ext':} or None.
    components = self.get_pathinfo()
 
-   # Create and get the temp file path.
-   # Useful for plugins lacking a built-in mechanism to fix files inplace.
-   tmp_file = self.create_tmp_file(suffix=None)
+   # Create and remove temp file automatically (recommended).
+   # Useful for plugins that lack a built-in mechanism for in-place file modification.
+   tmp_file_path = self.create_tmp_file(suffix=None, autodel=True)
 
-   # Remove temp file.
-   self.remove_tmp_file(tmp_file)
+   # Create and get the temp file path.
+   # Useful for plugins that lack a built-in mechanism for in-place file modification.
+   tmp_file_path = self.create_tmp_file(suffix=None)
+
+   # Remove temp file manually.
+   self.remove_tmp_file(tmp_file_path)
    ```
 
 2. Essentially for the `def format(self)` function:

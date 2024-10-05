@@ -32,7 +32,7 @@ class PhpcsfixerFormatter(Module):
         if path:
             cmd.extend(['--config=' + path, '--allow-risky=yes'])
 
-        tmp_file = self.create_tmp_file()
+        tmp_file = self.create_tmp_file(autodel=True)
         cmd.extend(['fix', tmp_file])
 
         return cmd, tmp_file
@@ -53,7 +53,5 @@ class PhpcsfixerFormatter(Module):
                     file.close()
         except Exception as e:
             self.print_oserr(cmd, e)
-
-        self.remove_tmp_file(tmp_file)
 
         return result
