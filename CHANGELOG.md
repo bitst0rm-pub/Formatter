@@ -2,6 +2,18 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.6.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.11)] - 2024-10-06
+
+### 🎨 Styling
+
+- [`b3df71b`](https://github.com/bitst0rm-pub/Formatter/commit/b3df71bd96316e539dd80b64079f8412dd4c6502) Add traceback logs support
+
+### ⚙️ Miscellaneous Tasks
+
+- [`7307e04`](https://github.com/bitst0rm-pub/Formatter/commit/7307e0417d1fef416c2d45025c77eed7f6776ed4) Code improvements and optimizations
+- [`98c9189`](https://github.com/bitst0rm-pub/Formatter/commit/98c91897edc38e462724800ff4f9c46835ff2b33) Remove `self.remove_tmp_file(tmp_file)` in favor of the new method `self.create_tmp_file(autodel=True)`
+- [`11b8a5e`](https://github.com/bitst0rm-pub/Formatter/commit/11b8a5e8b2b7aee94a8de63bbdb152033e9060ed) Remove redundant import
+
 ## [[1.6.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.10)] - 2024-10-03
 
 ### 🐛 Bug Fixes
