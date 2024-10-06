@@ -1180,7 +1180,7 @@ There are more methods in this class you can use, but:
    # Useful for plugins that lack a built-in mechanism for in-place file modification.
    tmp_file_path = self.create_tmp_file(suffix=None, autodel=True)
 
-   # Create and get the temp file path.
+   # Create and get the temp file path for manually removing.
    # Useful for plugins that lack a built-in mechanism for in-place file modification.
    tmp_file_path = self.create_tmp_file(suffix=None)
 

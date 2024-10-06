@@ -37,6 +37,12 @@ contexts:
           scope: string.path.console
         - match: '\n'
           pop: true
+
+    # Match traceback logs
+    - match: '^Traceback \(most recent call last\):'
+      scope: keyword.control.exception.console
+      push: traceback
+
     - match: '^(={87})$'
       scope: constant.character.escape.console
       push:
@@ -69,3 +75,21 @@ contexts:
       pop: true
     - match: '\['
       push: command_arguments
+
+  traceback:
+    - match: '^\s*File "([^"]+)", line (\d+), in ([^\n]+)'
+      captures:
+        1: string.path.console            # File path
+        2: constant.numeric.line.console  # Line number
+        3: entity.name.function.console   # Function name
+    # Match the 'raise ErrorType' pattern
+    - match: '\s+raise\s+([A-Za-z_]\w*)'
+      captures:
+        1: support.class.exception.console
+    # Match the 'ErrorType:' at the end of the traceback
+    - match: '^([A-Za-z_]\w*):'
+      captures:
+        1: support.class.exception.console
+    # Exit traceback context when there is no more indentation
+    - match: '^\S'
+      pop: true
