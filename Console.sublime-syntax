@@ -26,7 +26,7 @@ contexts:
           push: command_arguments
         - match: 'Extended commands:\s*\['
           push: extended_arguments
-        - match: '(Syntax|UID|method):\s*([^\s\(\)]+)'
+        - match: '(Syntax|syntax|UID|uid|method):\s*([^\s\(\)]+)'
           captures:
             2: string.console
         - match: '(Mode|Scope|Target):\s*(.+)'
@@ -38,9 +38,17 @@ contexts:
         - match: '\n'
           pop: true
 
-    # Match traceback logs
+    # Match traceback logs with the 'Traceback' header
     - match: '^Traceback \(most recent call last\):'
       scope: keyword.control.exception.console
+      push: traceback
+
+    # Match traceback logs without the 'Traceback' header
+    - match: '^\s*File "([^"]+)", line (\d+), in ([^\n]+)'
+      captures:
+        1: string.path.console            # File path
+        2: constant.numeric.line.console  # Line number
+        3: entity.name.function.console   # Function name
       push: traceback
 
     - match: '^(={87})$'
