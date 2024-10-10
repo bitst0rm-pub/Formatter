@@ -6,7 +6,7 @@ from ..core import Module, log
 
 INTERPRETERS = ['node']
 EXECUTABLES = ['eslint_d', 'eslint_d.js']
-DOTFILES = ['eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', '.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json']
+DOTFILES = ['eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', 'eslint.config.ts', 'eslint.config.mts', 'eslint.config.cts', '.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json']
 MODULE_CONFIG = {
     'source': 'https://github.com/mantoni/eslint_d.js',
     'name': 'ESLintd',
