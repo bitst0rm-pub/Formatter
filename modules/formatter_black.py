@@ -2,7 +2,7 @@ from ..core import Module
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['black']
-DOTFILES = ['pyproject.toml', '.black']
+DOTFILES = ['.black', 'pyproject.toml']
 MODULE_CONFIG = {
     'source': 'https://github.com/psf/black',
     'name': 'Black',

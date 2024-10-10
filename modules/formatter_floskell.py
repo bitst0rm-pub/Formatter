@@ -1,7 +1,7 @@
 from ..core import Module
 
 EXECUTABLES = ['floskell']
-DOTFILES = ['floskell.json', '.floskell.json']
+DOTFILES = ['.floskell.json', 'floskell.json']
 MODULE_CONFIG = {
     'source': 'https://github.com/ennocramer/floskell',
     'name': 'Floskell',
