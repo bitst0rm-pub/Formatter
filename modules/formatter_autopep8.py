@@ -2,7 +2,7 @@ from ..core import Module
 
 INTERPRETERS = ['python3', 'python']
 EXECUTABLES = ['autopep8']
-DOTFILES = ['.pycodestyle', 'setup.cfg', 'tox.ini', '.pep8', '.flake8']
+DOTFILES = ['pyproject.toml', '.pycodestyle', 'setup.cfg', 'tox.ini', '.pep8', '.flake8']
 MODULE_CONFIG = {
     'source': 'https://github.com/hhatto/autopep8',
     'name': 'Autopep8',
