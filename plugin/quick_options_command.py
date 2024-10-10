@@ -12,7 +12,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         ('debug', 'Enable Debug'),
         ('layout', 'Choose Layout'),
         ('new_file_on_format', 'Enable New File on Format'),
-        ('ignore_config_path', 'Ignore Config Path'),
+        ('ignore_dotfiles', 'Ignore Config Dotfiles'),
         ('format_on_save', 'Enable Format on Save'),
         ('format_on_paste', 'Enable Format on Paste'),
         ('dir_format', 'Enable Dir Format'),
@@ -82,7 +82,7 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
         return {
             'debug': self.show_debug_menu,
             'layout': self.show_layout_menu,
-            'ignore_config_path': self.show_ignore_config_path_menu,
+            'ignore_dotfiles': self.show_ignore_dotfiles_menu,
             'format_on_paste': lambda: self.show_format_menu('format_on_paste'),
             'format_on_save': lambda: self.show_format_menu('format_on_save'),
             'new_file_on_format': self.show_new_file_format_input,
@@ -131,23 +131,23 @@ class QuickOptionsCommand(sublime_plugin.WindowCommand):
                 CONFIG.setdefault('quick_options', {})['layout'] = current_layout_value
                 self.run()
 
-    def show_ignore_config_path_menu(self):
+    def show_ignore_dotfiles_menu(self):
         f = CONFIG.get('formatters', {})
         uid_list = [key for key in f.keys() if 'name' not in f.get(key, {}) and 'type' not in f.get(key, {})] + [self.BACK_OPTION]  # exclude generic methods
-        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_ignore_config_path_menu_done(uid_list, uid_index))
+        self.window.show_quick_panel(uid_list, lambda uid_index: self.on_ignore_dotfiles_menu_done(uid_list, uid_index))
 
-    def on_ignore_config_path_menu_done(self, uid_list, uid_index):
+    def on_ignore_dotfiles_menu_done(self, uid_list, uid_index):
         if uid_index != -1:
             uid_value = uid_list[uid_index]
             if uid_value == self.BACK_OPTION:
                 self.show_main_menu()
             else:
-                current_ignore_config_path = CONFIG.setdefault('quick_options', {}).get('ignore_config_path', [])
-                if uid_value in current_ignore_config_path:
-                    current_ignore_config_path.remove(uid_value)
+                current_ignore_dotfiles = CONFIG.setdefault('quick_options', {}).get('ignore_dotfiles', [])
+                if uid_value in current_ignore_dotfiles:
+                    current_ignore_dotfiles.remove(uid_value)
                 else:
-                    current_ignore_config_path.append(uid_value)
-                CONFIG.setdefault('quick_options', {})['ignore_config_path'] = current_ignore_config_path
+                    current_ignore_dotfiles.append(uid_value)
+                CONFIG.setdefault('quick_options', {})['ignore_dotfiles'] = current_ignore_dotfiles
                 self.run()
 
     def show_format_menu(self, option_key):

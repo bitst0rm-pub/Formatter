@@ -484,7 +484,7 @@ The following setting details - along with their default values and examples - a
                 // to serve as the starting point.
                 // - For the sake of convenience, two new folders will be created at
                 //   the same level as the file, which will contain all failed and
-                //   successfully formatted files.
+                //   successfully formatted files. Your original files remain unchanged.
                 // - The "new_file_on_format" option can be used to rename files
                 //   at the same time if needed.
                 // - The "format_on_save" option above, which only works in the
@@ -545,27 +545,25 @@ The following setting details - along with their default values and examples - a
 
                 // Path to the config file for each individual syntaxes.
                 // Syntax keys must match those in the "syntaxes" option above.
-                // A single config file can be used to assign to all syntaxes.
-                // In this case, the key must be named: "default"
+                // A single config file can be used for all syntaxes.
+                // In that case, the key must be named: "default"
                 // - You can choose another config file format as the default one
-                //   provided by Formatter if the third-party plugin supports it.
+                //   provided by Formatter if supported by the third-party plugin.
                 // - Formatter provides a set of default config files under
-                //   "formatter.assets/config" folder for your personal use.
-                //   Do not use the reference files with suffix '.master.' directly.
-                //   These files could be overwritten by any release updates.
-                // - Options from this config file always have precedence over
-                //   the options from any local project (per-project config dotfile).
-                // - Disabling this option will force Formatter to auto resolve
-                //   the per-project config dotfile in the file tree to use.
-                // To disable this option:
-                // 1. Set the config path of this option to null, OR
-                // 2. Use the Quick Options: Ignore Config Path, OR
-                // 3. Place an '.sublimeformatter.cfgignore.json' file inside
+                //   "formatter.assets/config" folder for getting start.
+                //   Avoid using the reference files with the suffix '.master.'
+                //   directly, as they may be overwritten by future updates.
+                // - Any auto-detected local config dotfile within the file
+                //   tree always takes precedence over this option.
+                // To ignore the local config dotfile in favor of this option:
+                // 1. Set "ignore_dotfiles" to true, OR
+                // 2. Remove or rename the detected local config dotfile, OR
+                // 3. Use the Quick Options: Ignore Config Dotfiles, OR
+                // 4. Place an '.sublimeformatter.ignore.json' file inside
                 //    the working root folder. The structure of this file is
-                //    descripted in README.md > Auto-detect Formatting
-                // Formatter will start to search up the file tree until a
-                // '.sublimeformatter.cfgignore' file is found to bypass this option.
+                //    explained in README.md > Auto-detect Formatting
                 "config_path": {
+                    "ignore_dotfiles": false,
                     "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                     "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
                     "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
@@ -649,6 +647,7 @@ The following setting details - along with their default values and examples - a
                 "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
                 // Same as the one in the examplemodule.
                 "config_path": {
+                    "ignore_dotfiles": false,
                     "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                     "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
                     "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
@@ -716,6 +715,7 @@ The following setting details - along with their default values and examples - a
                 "executable_path": ["${packages}/User/myjs/node_modules/.bin/stylelint"],
                 "args": ["--config-basedir", "/path/to/js/node_modules"],
                 "config_path": {
+                    "ignore_dotfiles": false,
                     "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
                 }
             },
@@ -733,6 +733,7 @@ The following setting details - along with their default values and examples - a
                 "syntaxes": ["c", "c++", "cs", "objc", "objc++", "d", "java", "pawn", "vala"],
                 "executable_path": ["${HOME}/path/to/bin/uncrustify"],
                 "config_path": {
+                    "ignore_dotfiles": true,
                     "objc": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
                     "objc++": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
                     "java": "${packages}/User/formatter.assets/config/uncrustify_sun_java_rc.cfg",
@@ -757,6 +758,7 @@ The following setting details - along with their default values and examples - a
                 },
                 "executable_path": "/path/to/bin/d2",
                 "config_path": {
+                    "ignore_dotfiles": true,
                     "default": "${packages}/User/formatter.assets/config/d2_rc.yaml"
                 }
             }
@@ -824,14 +826,15 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
    }
    ```
 
-   - To ignore a specific syntax applied to your User `"config_path":` settings, you can use: `.sublimeformatter.cfgignore.json` OR `.sublimeformatter.cfgignore`<br />
-   For example, if you prefer to use the default .prettierrc in your working folder instead of using the custom Formatter `"config_path":`
+   - To ignore a specific syntax and its associated plugin, you can use: `.sublimeformatter.ignore.json` OR `.sublimeformatter.ignore`<br />
+   For example, if you want to ignore the local config dotfile `.prettierrc` in your working folder in favor of your own config file specified in the option `"config_path":`
 
-   _.sublimeformatter.cfgignore.json_, _.sublimeformatter.cfgignore_
+   _.sublimeformatter.ignore.json_, _.sublimeformatter.ignore_
 
    ```js
    {
-       "json": ["jsbeautifier", "deno"],
+       "ignore_dotfiles": true,           // type boolen: false OR true
+       "json": ["jsbeautifier", "deno"],  // to ignore "config_path" option
        "python": ["autopep8"],
        "default": ["scalafmt", "stylelint"]
    }

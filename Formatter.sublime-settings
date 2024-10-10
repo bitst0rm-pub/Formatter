@@ -180,7 +180,7 @@
             // to serve as the starting point.
             // - For the sake of convenience, two new folders will be created at
             //   the same level as the file, which will contain all failed and
-            //   successfully formatted files.
+            //   successfully formatted files. Your original files remain unchanged.
             // - The "new_file_on_format" option can be used to rename files
             //   at the same time if needed.
             // - The "format_on_save" option above, which only works in the
@@ -241,27 +241,25 @@
 
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
-            // A single config file can be used to assign to all syntaxes.
-            // In this case, the key must be named: "default"
+            // A single config file can be used for all syntaxes.
+            // In that case, the key must be named: "default"
             // - You can choose another config file format as the default one
-            //   provided by Formatter if the third-party plugin supports it.
+            //   provided by Formatter if supported by the third-party plugin.
             // - Formatter provides a set of default config files under
-            //   "formatter.assets/config" folder for your personal use.
-            //   Do not use the reference files with suffix '.master.' directly.
-            //   These files could be overwritten by any release updates.
-            // - Options from this config file always have precedence over
-            //   the options from any local project (per-project config dotfile).
-            // - Disabling this option will force Formatter to auto resolve
-            //   the per-project config dotfile in the file tree to use.
-            // To disable this option:
-            // 1. Set the config path of this option to null, OR
-            // 2. Use the Quick Options: Ignore Config Path, OR
-            // 3. Place an '.sublimeformatter.cfgignore.json' file inside
+            //   "formatter.assets/config" folder for getting start.
+            //   Avoid using the reference files with the suffix '.master.'
+            //   directly, as they may be overwritten by future updates.
+            // - Any auto-detected local config dotfile within the file
+            //   tree always takes precedence over this option.
+            // To ignore the local config dotfile in favor of this option:
+            // 1. Set "ignore_dotfiles" to true, OR
+            // 2. Remove or rename the detected local config dotfile, OR
+            // 3. Use the Quick Options: Ignore Config Dotfiles, OR
+            // 4. Place an '.sublimeformatter.ignore.json' file inside
             //    the working root folder. The structure of this file is
-            //    descripted in README.md > Auto-detect Formatting
-            // Formatter will start to search up the file tree until a
-            // '.sublimeformatter.cfgignore' file is found to bypass this option.
+            //    explained in README.md > Auto-detect Formatting
             "config_path": {
+                "ignore_dotfiles": false,
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
@@ -345,6 +343,7 @@
             "executable_path": ["${HOME}/example/path/to\\$my/php-cs-fixer.phar"],
             // Same as the one in the examplemodule.
             "config_path": {
+                "ignore_dotfiles": false,
                 "css": "${packages}/User/formatter.assets/config/only_css_rc.json",
                 "php": "${packages}/User/formatter.assets/config/only_php_rc.json",
                 "default": "${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json"
@@ -388,6 +387,7 @@
             "syntaxes": ["swift"],
             "executable_path": ["/path/to/bin/swift-format"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/apple_swift_format_rc.json"
             }
         },
@@ -412,6 +412,7 @@
             "syntaxes": ["c", "c++", "cs", "objc", "objc++", "java", "js"],
             "executable_path": ["/path/to/bin/astyle"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "java": "${packages}/User/formatter.assets/config/artistic_style_java_rc.ini",
                 "default": "${packages}/User/formatter.assets/config/artistic_style_astyle_rc.ini"
             }
@@ -426,6 +427,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/autopep8"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/autopep8_rc.cfg"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -440,6 +442,7 @@
             "syntaxes": ["bash"],
             "executable_path": ["/path/to/bin/beautysh"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/beautysh_rc.json"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -454,6 +457,7 @@
             "syntaxes": ["bibtex"],
             "executable_path": ["/path/to/node_modules/.bin/bibtex-tidy"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/bibtex_tidy_rc.yaml"
             }
             /* requires node on PATH if omit interpreter_path. */
@@ -468,6 +472,7 @@
             "syntaxes": ["js", "jsx", "ts", "tsx", "json"],
             "executable_path": ["/path/to/bin/biome (standalone binary) or /path/to/node_modules/.bin/biome"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/biome_rc.json"
             }
             /* interpreter_path can be set to use node, otherwise omit it to use standalone binary. */
@@ -482,6 +487,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/black"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/black_rc.toml"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -519,6 +525,7 @@
             "syntaxes": ["c", "cs", "c++", "objc", "objc++", "js", "tsx", "jsx", "json", "java", "proto", "protodevel", "td", "sv", "svh", "v", "vh", "glsl"],
             "executable_path": ["/path/to/bin/clang-format"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/clang_format_llvm_rc.yaml"
             }
             /* requires clang+llvm-14.0.0-rc1 or newer (clang-format >= 14.0.0) */
@@ -534,6 +541,7 @@
             "interpreter_path": ["/path/to/bin/java.exe or /path/to/bin/lein"],
             "executable_path": ["/path/to/bin/cljfmt"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/cljfmt_rc.edn"
             }
             /* omit interpreter_path if use cljfmt standalone version */
@@ -548,6 +556,7 @@
             "syntaxes": ["cmake"],
             "executable_path": ["/path/to/bin/cmake-format"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/cmakeformat_rc.py"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -573,6 +582,7 @@
             "syntaxes": ["css", "scss", "sass", "less"],
             "executable_path": ["/path/to/node_modules/.bin/csscomb"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/csscomb_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -609,6 +619,7 @@
             "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown", "ipynb"],
             "executable_path": ["/path/to/bin/deno"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/deno_rc.json"
             }
         },
@@ -633,6 +644,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/docformatter"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/docformatter_rc.toml"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -658,6 +670,7 @@
             "syntaxes": ["js", "jsx", "ts", "tsx", "json", "markdown", "toml"],
             "executable_path": ["/path/to/bin/dprint"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/dprint_rc.json"
             }
         },
@@ -682,6 +695,7 @@
             "syntaxes": ["elixir"],
             "executable_path": ["/path/to/elixir/bin/mix"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/elixirmix_rc.exs"
             }
             /* no interpreter_path, instead use "environ": {"PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"]} */
@@ -719,6 +733,7 @@
             "executable_path": ["/path/to/node_modules/.bin/eslint or /path/to/node_modules/.bin/eslint.js"],
             "args": ["--resolve-plugins-relative-to", "/path/to/eslintv8/javascript/node_modules"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/eslint_rc.json_(v8)_or_eslint_config_rc.mjs_(v9)"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -734,6 +749,7 @@
             "executable_path": ["/path/to/node_modules/.bin/eslint_d or /path/to/node_modules/.bin/eslint_d.js"],
             "args": ["--resolve-plugins-relative-to", "/path/to/eslintv8/javascript/node_modules"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/eslintd_rc.json_(v8)_or_eslintd_config_rc.mjs_(v9)"
             }
             /* min. eslint_d 14.0.0 or higher. requires node on PATH if omit interpreter_path */
@@ -748,6 +764,7 @@
             "syntaxes": ["haskell"],
             "executable_path": ["/path/to/.cabal/bin/floskell"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/floskell_rc.json"
             }
         },
@@ -761,6 +778,7 @@
             "syntaxes": ["r"],
             "executable_path": ["/path/to/bin/R"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/formatr_rc.cfg"
             }
         },
@@ -774,6 +792,7 @@
             "syntaxes": ["haskell"],
             "executable_path": ["/path/to/bin/fourmolu"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/fourmolu_rc.yaml"
             }
         },
@@ -787,6 +806,7 @@
             "syntaxes": ["fortran"],
             "executable_path": ["/path/to/bin/fprettify"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/fprettify_rc.cfg"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -846,6 +866,7 @@
             "interpreter_path": ["/path/to/bin/java.exe"],
             "executable_path": ["/path/to/bin/google-java-format-all-deps.jar"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/google_java_format_rc.yaml"
             }
             /* requires java on PATH if omit interpreter_path */
@@ -871,6 +892,7 @@
             "syntaxes": ["haskell"],
             "executable_path": ["/path/to/bin/hindent"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/hindent_rc.yaml"
             }
         },
@@ -884,6 +906,7 @@
             "syntaxes": ["html", "xml"],
             "executable_path": ["/path/to/bin/tidy"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "html": "${packages}/User/formatter.assets/config/htmltidy_html_rc.cfg",
                 "xml": "${packages}/User/formatter.assets/config/htmltidy_xml_rc.cfg"
             }
@@ -898,6 +921,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/isort"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/isort_rc.toml"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -915,6 +939,7 @@
             },
             "executable_path": ["/path/to/node_modules/.bin/js-beautify"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/jsbeautify_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -928,6 +953,7 @@
             "dir_format": false,
             "syntaxes": ["json"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/jsonmax_rc.json"
             }
             /* build-in, no executable. json not json5 with comments. */
@@ -942,6 +968,7 @@
             "syntaxes": ["julia"],
             "interpreter_path": ["/path/to/bin/julia.exe"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/juliaformatter_rc.toml"
             }
             /* install: julia> using Pkg; Pkg.add("JuliaFormatter"). no executable_path. no args. requires julia on PATH if omit interpreter_path */
@@ -968,6 +995,7 @@
             "syntaxes": ["tex", "latex"],
             "executable_path": ["/path/to/latexindent or /path/to/latexindent.pl"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/latexindent_rc.yaml"
             }
             /* requires perl on PATH if omit interpreter_path */
@@ -982,6 +1010,7 @@
             "syntaxes": ["lua"],
             "executable_path": ["/path/to/bin/lua-format"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/luaformatter_rc.yaml"
             }
         },
@@ -995,6 +1024,7 @@
             "syntaxes": ["asm"],
             "executable_path": ["/path/to/bin/nasmfmt"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/nasmfmt_rc.yaml"
             }
         },
@@ -1020,6 +1050,7 @@
             "syntaxes": ["ocaml", "ocamlyacc", "ocamllex"],
             "executable_path": ["/path/to/bin/ocamlformat"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/ocamlformat_rc.cfg"
             }
         },
@@ -1033,6 +1064,7 @@
             "syntaxes": ["ocaml", "ocamlyacc", "ocamllex"],
             "executable_path": ["/path/to/bin/ocp-indent"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/ocpindent_rc.cfg"
             }
         },
@@ -1057,6 +1089,7 @@
             "syntaxes": ["perl"],
             "executable_path": ["/path/to/bin/perltidy or /path/to/perltidy.pl"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/perltidy_rc.cfg"
             }
             /* requires perl on PATH if omit interpreter_path */
@@ -1072,6 +1105,7 @@
             "interpreter_path": ["/path/to/perl.exe or just omit"],
             "executable_path": ["/path/to/bin/pg_format"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/pg_format_rc.cfg"
             }
             /* requires perl on PATH if omit interpreter_path */
@@ -1086,6 +1120,7 @@
             "syntaxes": ["php"],
             "executable_path": ["/path/to/bin/phpcbf.phar"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/phpcbf_rc.xml"
             }
             /* use phpcbf.phar, not phpcs.phar. requires php on PATH if omit interpreter_path */
@@ -1100,6 +1135,7 @@
             "syntaxes": ["php"],
             "executable_path": ["/path/to/bin/php-cs-fixer.phar"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/php_cs_fixer_rc.php"
             }
             /* requires php on PATH if omit interpreter_path */
@@ -1126,6 +1162,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "ts", "tsx", "vue", "yaml"],
             "executable_path": ["/path/to/node_modules/.bin/prettier or /path/to/node_modules/.bin/bin-prettier.js"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/prettier_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1140,6 +1177,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "graphql", "markdown", "ts", "tsx", "vue", "yaml"],
             "executable_path": ["/path/to/node_modules/.bin/prettierd"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/prettierd_rc.json"
             }
             /* requires node on PATH if omit interpreter_path. use config_path instead of PRETTIERD_DEFAULT_CONFIG */
@@ -1154,6 +1192,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
             "executable_path": ["/path/to/node_modules/.bin/prettydiff"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/prettydiffmax_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1167,6 +1206,7 @@
             "dir_format": false,
             "syntaxes": ["csv", "text"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/prettytable_rc.json"
             }
             /* build-in, no executable */
@@ -1181,6 +1221,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/pyment"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/pyment_rc.cfg"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -1207,6 +1248,7 @@
             "syntaxes": ["ruby"],
             "executable_path": ["/path/to/bin/rubocop"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/rubocop_rc.yml"
             }
             /* requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. requires ruby on PATH if omit interpreter_path */
@@ -1232,6 +1274,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/ruff"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/ruff_rc.toml"
             }
         },
@@ -1256,6 +1299,7 @@
             "syntaxes": ["rust"],
             "executable_path": ["/path/to/bin/rustfmt"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/rustfmt_rc.toml"
             }
         },
@@ -1269,6 +1313,7 @@
             "syntaxes": ["scala"],
             "executable_path": ["/path/to/bin/scalafmt"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/scalafmt_rc.conf"
             }
         },
@@ -1283,6 +1328,7 @@
             "interpreter_path": ["/path/to/bin/java.exe or just omit"],
             "executable_path": ["/path/to/bin/scalariform or /path/to/bin/scalariform.jar"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/scalariform_rc.cfg"
             }
         },
@@ -1307,6 +1353,7 @@
             "syntaxes": ["bash"],
             "executable_path": ["/path/to/bin/shellcheck"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/shellcheck_rc.cfg"
             }
             /* limited autofix, no formatting capability */
@@ -1321,6 +1368,7 @@
             "syntaxes": ["bash"],
             "executable_path": ["/path/to/bin/shfmt"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/shfmt_rc.json"
             }
         },
@@ -1334,6 +1382,7 @@
             "syntaxes": ["sql"],
             "executable_path": ["/path/to/node_modules/.bin/sql-formatter"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/sql_formatter_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1348,6 +1397,7 @@
             "syntaxes": ["sql"],
             "executable_path": ["/path/to/bin/sqlformat"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/sqlparse_rc.yaml"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -1396,6 +1446,7 @@
             "executable_path": ["/path/to/node_modules/.bin/stylefmt"],
             "args": ["--config-basedir", "/path/to/javascript/node_modules"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/stylefmt_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1411,6 +1462,7 @@
             "executable_path": ["/path/to/node_modules/.bin/stylelint"],
             "args": ["--config-basedir", "/path/to/javascript/node_modules"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/stylelint_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1425,6 +1477,7 @@
             "syntaxes": ["r"],
             "executable_path": ["/path/to/bin/R"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/styler_rc.cfg"
             }
         },
@@ -1438,6 +1491,7 @@
             "syntaxes": ["haskell"],
             "executable_path": ["/path/to/bin/stylish-haskell"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/stylish_haskell_rc.yaml"
             }
         },
@@ -1451,6 +1505,7 @@
             "syntaxes": ["lua"],
             "executable_path": ["/path/to/bin/stylua"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/stylua_rc.toml"
             }
         },
@@ -1464,6 +1519,7 @@
             "syntaxes": ["svg"],
             "executable_path": ["/path/to/node_modules/.bin/svgo"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/svgomax_rc.js"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1478,6 +1534,7 @@
             "syntaxes": ["swift"],
             "executable_path": ["/path/to/bin/swiftformat"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/swiftformat_rc.cfg"
             }
         },
@@ -1491,6 +1548,7 @@
             "syntaxes": ["toml"],
             "executable_path": ["/path/to/bin/taplo"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/taplo_rc.toml"
             }
         },
@@ -1515,6 +1573,7 @@
             "syntaxes": ["json", "nickel", "ocaml", "ocamllex", "toml"],
             "executable_path": ["/path/to/bin/topiary"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/topiary_rc.toml"
             }
         },
@@ -1528,6 +1587,7 @@
             "syntaxes": ["ts", "tsx"],
             "executable_path": ["/path/to/node_modules/.bin/tsfmt"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/tsfmt.json"
             }
             /* hardcoded config file name (tsfmt.json). requires node on PATH if omit interpreter_path */
@@ -1553,6 +1613,7 @@
             "syntaxes": ["c", "c++", "cs", "d", "es", "objc", "objc++", "java", "pawn", "vala"],
             "executable_path": ["/path/to/bin/uncrustify"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "java": "${packages}/User/formatter.assets/config/uncrustify_sun_rc.cfg",
                 "objc": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
                 "objc++": "${packages}/User/formatter.assets/config/uncrustify_objc_rc.cfg",
@@ -1569,6 +1630,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/yapf"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/yapf_rc.yapf"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}, requires python on PATH if omit interpreter_path */
@@ -1595,6 +1657,7 @@
             "interpreter_path": ["/path/to/bin/java.exe if use zprint-filter OR /path/to/bin/bb if use babashka OR just omit"],
             "executable_path": ["/path/to/bin/zprint[l|m|ma|] or /path/to/bin/zprint-filter if use java"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/zprint_rc.edn"
             }
             /* requires java on PATH if use zprint-filter. macosx: a zprint already exists, avoid to use this same name */
@@ -1609,6 +1672,7 @@
             "syntaxes": ["css", "scss", "sass", "less"],
             "executable_path": ["/path/to/node_modules/.bin/cleancss"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/cleancss_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1623,6 +1687,7 @@
             "syntaxes": ["html", "xml"],
             "executable_path": ["/path/to/node_modules/.bin/html-minifier"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/htmlminifier_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1647,6 +1712,7 @@
             "syntaxes": ["css", "scss", "less", "js", "jsx", "json", "html", "asp", "xml", "tsx"],
             "executable_path": ["/path/to/node_modules/.bin/prettydiff"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/prettydiffmin_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1661,6 +1727,7 @@
             "syntaxes": ["python"],
             "executable_path": ["/path/to/bin/pyminify"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/python_minifier_rc.json"
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
@@ -1685,6 +1752,7 @@
             "dir_format": false,
             "syntaxes": ["sql"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/sqlmin_rc.json"
             }
             /* build-in, no executable */
@@ -1699,6 +1767,7 @@
             "syntaxes": ["svg"],
             "executable_path": ["/path/to/node_modules/.bin/svgo"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/svgomin_rc.js"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1713,6 +1782,7 @@
             "syntaxes": ["js"],
             "executable_path": ["/path/to/node_modules/.bin/terser"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/terser_rc.json"
             }
             /* requires node on PATH if omit interpreter_path */
@@ -1727,6 +1797,7 @@
             "render_extended": false,
             "executable_path": ["/path/to/bin/d2"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/d2_rc.yaml"
             }
             /* uses headless browser to convert images, no dark-theme for png. */
@@ -1741,6 +1812,7 @@
             "render_extended": false,
             "executable_path": ["/path/to/bin/draw.io"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/drawio_rc.yaml"
             }
             /* executable_path for macosx is /Applications/draw.io.app/Contents/MacOS/draw.io, no dark-theme for png. */
@@ -1755,6 +1827,7 @@
             "render_extended": false,
             "executable_path": ["/path/to/bin/dot"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/graphviz_rc.yaml"
             }
         },
@@ -1769,6 +1842,7 @@
             "executable_path": ["/path/to/node_modules/.bin/mmdc"],
             "args": ["--width", "800", "--height", "600", "--backgroundColor", "white"],
             "config_path": {
+                "ignore_dotfiles": false,
                 "default": "${packages}/User/formatter.assets/config/mermaid_rc.json"
             }
         },

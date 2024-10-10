@@ -491,9 +491,9 @@ def build_formatter_sublime_settings_children(formatter_map):
                 child['config_path'] = {key: join('${packages}', 'User', ASSETS_DIRECTORY, 'config', value) for key, value in config['config_path'].items()}
                 default_value = child['config_path'].pop('default', None)
                 sorted_config_path = OrderedDict(sorted(child['config_path'].items()))
+                child['config_path'] = OrderedDict([('ignore_dotfiles', False), *sorted_config_path.items()])
                 if default_value:
-                    sorted_config_path['default'] = default_value
-                child['config_path'] = sorted_config_path
+                    child['config_path']['default'] = default_value
 
             comment = config.get('comment', None)
             if comment is not None and isinstance(comment, str) and len(comment) > 0:
@@ -689,7 +689,7 @@ def build_formatter_sublime_settings(formatter_map):
             // to serve as the starting point.
             // - For the sake of convenience, two new folders will be created at
             //   the same level as the file, which will contain all failed and
-            //   successfully formatted files.
+            //   successfully formatted files. Your original files remain unchanged.
             // - The "new_file_on_format" option can be used to rename files
             //   at the same time if needed.
             // - The "format_on_save" option above, which only works in the
@@ -750,27 +750,25 @@ def build_formatter_sublime_settings(formatter_map):
                 ('__COMMENT__config_path', '''
             // Path to the config file for each individual syntaxes.
             // Syntax keys must match those in the "syntaxes" option above.
-            // A single config file can be used to assign to all syntaxes.
-            // In this case, the key must be named: "default"
+            // A single config file can be used for all syntaxes.
+            // In that case, the key must be named: "default"
             // - You can choose another config file format as the default one
-            //   provided by Formatter if the third-party plugin supports it.
+            //   provided by Formatter if supported by the third-party plugin.
             // - Formatter provides a set of default config files under
-            //   "formatter.assets/config" folder for your personal use.
-            //   Do not use the reference files with suffix '.master.' directly.
-            //   These files could be overwritten by any release updates.
-            // - Options from this config file always have precedence over
-            //   the options from any local project (per-project config dotfile).
-            // - Disabling this option will force Formatter to auto resolve
-            //   the per-project config dotfile in the file tree to use.
-            // To disable this option:
-            // 1. Set the config path of this option to null, OR
-            // 2. Use the Quick Options: Ignore Config Path, OR
-            // 3. Place an '.sublimeformatter.cfgignore.json' file inside
+            //   "formatter.assets/config" folder for getting start.
+            //   Avoid using the reference files with the suffix '.master.'
+            //   directly, as they may be overwritten by future updates.
+            // - Any auto-detected local config dotfile within the file
+            //   tree always takes precedence over this option.
+            // To ignore the local config dotfile in favor of this option:
+            // 1. Set "ignore_dotfiles" to true, OR
+            // 2. Remove or rename the detected local config dotfile, OR
+            // 3. Use the Quick Options: Ignore Config Dotfiles, OR
+            // 4. Place an '.sublimeformatter.ignore.json' file inside
             //    the working root folder. The structure of this file is
-            //    descripted in README.md > Auto-detect Formatting
-            // Formatter will start to search up the file tree until a
-            // '.sublimeformatter.cfgignore' file is found to bypass this option.'''),
+            //    explained in README.md > Auto-detect Formatting'''),
                 ('config_path', OrderedDict([
+                    ('ignore_dotfiles', False),
                     ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
                     ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
                     ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')
@@ -854,6 +852,7 @@ def build_formatter_sublime_settings(formatter_map):
                 ('executable_path', NoIndent(['${HOME}/example/path/to\\$my/php-cs-fixer.phar'])),
                 ('__COMMENT__config_path', '''// Same as the one in the examplemodule.'''),
                 ('config_path', OrderedDict([
+                    ('ignore_dotfiles', False),
                     ('css', '${packages}/User/formatter.assets/config/only_css_rc.json'),
                     ('php', '${packages}/User/formatter.assets/config/only_php_rc.json'),
                     ('default', '${packages}/User/formatter.assets/config/css_plus_js_plus_php_rc.json')

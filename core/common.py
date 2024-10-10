@@ -1,4 +1,5 @@
 import abc
+import configparser
 import hashlib
 import json
 import os
@@ -9,13 +10,13 @@ import struct
 import sys
 import tempfile
 from copy import deepcopy
-from functools import lru_cache
 from os.path import (basename, dirname, expanduser, expandvars, isdir, isfile,
                      join, normcase, normpath, pathsep, split, splitext)
 from subprocess import PIPE, Popen, TimeoutExpired
 
 import sublime
 
+from ..libs import toml
 from . import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS, NOOP,
                PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                RECURSIVE_FAILURE_DIRECTORY, RECURSIVE_SUCCESS_DIRECTORY,
@@ -258,27 +259,22 @@ class TempFileHandler:
 class FileHandler:
     @staticmethod
     def _is_valid_file(file=None):
-        return file and isinstance(file, str) and isfile(file)
+        return isinstance(file, str) and isfile(file)
 
-    @staticmethod
-    def _has_permission(file, permission, permission_name):
-        if os.access(file, permission):
-            return True
-        log.warning('File exists but cannot get permission to %s: %s', permission_name, file)
+    @classmethod
+    def _has_permission(cls, file, permission, permission_name):
+        if cls._is_valid_file(file):
+            if os.access(file, permission):
+                return True
+            log.warning('Permission denied to %s: %s', permission_name, file)
         return False
 
     @classmethod
-    @lru_cache(maxsize=128)
     def is_executable(cls, file=None):
-        if not cls._is_valid_file(file=file):
-            return False
         return cls._has_permission(file, os.X_OK, 'execute')
 
     @classmethod
-    @lru_cache(maxsize=128)
     def is_readable(cls, file=None):
-        if not cls._is_valid_file(file=file):
-            return False
         return cls._has_permission(file, os.R_OK, 'read')
 
 
@@ -715,75 +711,71 @@ class ArgumentHandler:
 
     @classmethod
     def get_config_path(cls, view=None, uid=None, region=None, dotfiles=None, auto_format_config=None):
-        ignore_config_path = OptionHandler.query(CONFIG, [], 'quick_options', 'ignore_config_path')
-        if uid in ignore_config_path:
-            return None
+        uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
+        cfgignore = DotFileHandler.get_cfgignore(view=view)
+        qo_ignore_dotfiles = OptionHandler.query(CONFIG, [], 'quick_options', 'ignore_dotfiles')
+        ignore_dotfiles = OptionHandler.query(CONFIG, False, 'formatters', uid, 'config_path', 'ignore_dotfiles')
+
+        if uid not in qo_ignore_dotfiles and not ignore_dotfiles and not cfgignore.get('ignore_dotfiles', False):
+            dotfile_path = cls._traverse_find_config_dotfile(view=view, uid=uid, dotfiles=dotfiles)
+            if dotfile_path:
+                log.debug('Config dotfile found: %s', dotfile_path)
+                return dotfile_path
 
         shared_config = OptionHandler.query(CONFIG, None, 'formatters', uid, 'config_path')
 
-        if shared_config and isinstance(shared_config, dict):
-            uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
+        if isinstance(shared_config, dict):
+            if any(uid in v for k, v in cfgignore.items() if k.strip().lower() in [syntax, 'default']):
+                log.debug('Config ignored for syntax: %s and uid: %s', syntax, uid)
+                return None
 
-            for k, v in DotFileHandler.get_cfgignore(view=view).items():
-                if (k.strip().lower() == syntax or k == 'default') and uid in v:
-                    return None
+            config_path = shared_config.get(syntax) or shared_config.get('default')
+            if config_path and FileHandler.is_readable(file=config_path):
+                log.debug('Config [%s]: %s', syntax if config_path == shared_config.get(syntax) else 'default', config_path)
+                return config_path
 
-            for key, path in shared_config.items():
-                if key.strip().lower() == syntax and PathHandler.is_valid_path(path=path):
-                    log.debug('Config [%s]: %s', syntax, path)
-                    return path
+            log.debug('No valid config file found for syntax: %s from: %s', syntax, shared_config)
+            return None
 
-            default_path = shared_config.get('default', None)
-            if PathHandler.is_valid_path(path=default_path):
-                log.debug('Config [default]: %s', default_path)
-                return default_path
-
-            log.warning('Could not obtain config file for syntax: %s', syntax)
-        else:
-            log.info('User specific "config_path" is not set: %s', shared_config)
-
-            dotfile_path = cls._traverse_find_config_dotfile(view=view, dotfiles=dotfiles)
-            if dotfile_path:
-                return dotfile_path
-
-        log.info('↳Running third-party plugin without specifying any "config_path"')
+        log.debug('No valid config file found for uid: %s', uid)
         return None
 
     @staticmethod
-    def _traverse_find_config_dotfile(view=None, dotfiles=None):
+    def _traverse_find_config_dotfile(view=None, uid=None, dotfiles=None):
         if not dotfiles:
             return None
 
         parent_folders = FolderHandler._get_active_view_parent_folders(view=view)
-        candidate_paths = []
 
-        def should_stop_search(folder):
-            return any(isdir(join(folder, vcs_dir)) for vcs_dir in ['.git', '.hg'])
+        ini_files = ['.pycodestyle', 'setup.cfg', 'tox.ini', '.pep8', '.editorconfig']
+        toml_files = ['pyproject.toml']
 
-        if parent_folders:
-            for folder in parent_folders:
-                candidate_paths.extend(join(folder, dotfile) for dotfile in dotfiles)
-                if should_stop_search(folder):
-                    break
+        home = os.path.expanduser('~')
+        is_home = home if home != '~' else None
 
-        xdg_config_home = os.getenv('XDG_CONFIG_HOME')
-        if xdg_config_home and not IS_WINDOWS:
-            candidate_paths.extend(join(xdg_config_home, dotfile) for dotfile in dotfiles)
-            for child in os.listdir(xdg_config_home):
-                candidate_paths.extend(join(xdg_config_home, child, dotfile) for dotfile in dotfiles)
-                break  # only look in the first child folder
-        else:
-            appdata = os.getenv('APPDATA')
-            if appdata:
-                candidate_paths.extend(join(appdata, dotfile) for dotfile in dotfiles)
-                for child in os.listdir(appdata):
-                    candidate_paths.extend(join(appdata, child, dotfile) for dotfile in dotfiles)
-                    break
-
-        for path in candidate_paths:
-            if FileHandler.is_readable(file=path):
-                log.debug('Auto-set "config_path" to the detected dot file: %s', path)
-                return path
+        for folder in parent_folders:
+            if folder == is_home:
+                return None
+            for dotfile in dotfiles:
+                path = join(folder, dotfile)
+                if FileHandler.is_readable(file=path):
+                    if dotfile in ini_files:
+                        cfg = configparser.RawConfigParser()
+                        try:
+                            cfg.read(path, encoding='utf-8')
+                            if uid in cfg or uid + ':local-plugins' in cfg:
+                                return path
+                        except Exception:
+                            continue
+                    elif dotfile in toml_files:
+                        try:
+                            toml_data = toml.load(path)
+                            if uid in toml_data.get('tool', {}) or uid + ':local-plugins' in toml_data.get('tool', {}):
+                                return path
+                        except Exception:
+                            continue
+                    else:
+                        return path
 
         return None
 
@@ -940,7 +932,7 @@ class DotFileHandler:
     @classmethod
     def get_cfgignore(cls, view=None, active_file_path=None):
         paths = FolderHandler._get_active_view_parent_folders(view=view, active_file_path=active_file_path)
-        return cls._read_config_file(paths, ['.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore']) or {}
+        return cls._read_config_file(paths, ['.sublimeformatter.ignore.json', '.sublimeformatter.ignore', '.sublimeformatter.cfgignore.json', '.sublimeformatter.cfgignore']) or {}
 
     @classmethod
     def get_auto_format_config(cls, view=None, active_file_path=None):
