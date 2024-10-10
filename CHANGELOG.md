@@ -2,6 +2,19 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.0)] - 2024-10-10
+
+### 🎨 Styling
+
+- [`42d710e`](https://github.com/bitst0rm-pub/Formatter/commit/42d710e4c9f5f9219d0b2a5142642429b683ec4b) *(console)* Add match traceback logs
+
+### ⚙️ Miscellaneous Tasks
+
+- [`3f73602`](https://github.com/bitst0rm-pub/Formatter/commit/3f7360222c26c3392bff3831b30aae16eced827c) *(eslint)* Add more dotfiles
+- [`9ed37eb`](https://github.com/bitst0rm-pub/Formatter/commit/9ed37ebb82be173b02c16d827521729569c7ebca) Change to prioritize local config dotfiles over user-specified `config_path`
+- [`413163e`](https://github.com/bitst0rm-pub/Formatter/commit/413163edd22448b3a4116c1cd0bbe99f9cbc9345) Re-order DOTFILES items
+- [`8e13b3d`](https://github.com/bitst0rm-pub/Formatter/commit/8e13b3da01134f62dcc310387f5166108777aee7) *(eslint)* Remove package.json from DOTFILES
+
 ## [[1.6.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.6.11)] - 2024-10-06
 
 ### 🎨 Styling
