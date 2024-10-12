@@ -91,6 +91,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Assembly | [asmfmt](https://github.com/klauspost/asmfmt), [nasmfmt](https://github.com/yamnikov-oleg/nasmfmt) | -- | -- | None | -- |
 | Astro | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
 | BibTeX | [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy) [1] | -- | -- | Node.js 12.0+ | [[1]](https://flamingtempura.github.io/bibtex-tidy/) |
+| Blade | [blade-formatter](https://github.com/shufo/blade-formatter) | -- | -- | Node.js | -- |
 | C, C++, C#, Objective-C | [uncrustify](https://github.com/uncrustify/uncrustify) [1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [2], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
 | Cabal | [cabal-fmt](https://github.com/phadej/cabal-fmt) | -- | -- | Haskell | -- |
 | Caddyfile | [caddy-fmt](https://github.com/caddyserver/caddy) | -- | -- | None | -- |
@@ -997,10 +998,10 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
 > [!IMPORTANT]
 >
-> For plugins that rely on the following special local config dotfiles:
-> `pyproject.toml`, `.pycodestyle`, `setup.cfg`, `tox.ini`, `.pep8`, `.editorconfig`
-> you should use a `uid` matching the relevant section name, such as `[tool.autopep8]`. Otherwise, Formatter won't be able to identify and apply the correct local config dotfile.
-> For example, a correct `uid` would be: `formatter_autopep8.py`
+> For plugins that rely on the following special local config dotfiles:<br />
+> `pyproject.toml`, `.pycodestyle`, `setup.cfg`, `tox.ini`, `.pep8`, `.editorconfig`<br />
+> you should use a `uid` matching the relevant section name, such as `[tool.autopep8]`. Otherwise, Formatter will not be able to identify and apply the correct local config dotfile.<br />
+> For example, a correct `uid` would be: `formatter_autopep8.py`<br />
 > Alternatively, you can achieve the same result by using the keywords identifier: `DF_IDENT = ['autopep8']`
 
 2. The content of this module file should follow the structure outlined below:
@@ -1033,7 +1034,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
    INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
    EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
-   DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the local config dotfile
+   DOTFILES = ['.terser.json']                                 # optional: to auto-detecting the local config dotfile
    DF_IDENT = []                                               # optional: a list of keywords to identify special local config dotfiles
    MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
        'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin

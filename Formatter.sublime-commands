@@ -114,6 +114,14 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with BladeFormatter",
+        "command": "run_format",
+        "args": {
+            "uid": "bladeformatter",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Cabal-fmt",
         "command": "run_format",
         "args": {

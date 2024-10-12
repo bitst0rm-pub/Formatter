@@ -79,6 +79,14 @@
                 }
             },
             {
+                "caption": "BladeFormatter",
+                "command": "run_format",
+                "args": {
+                    "uid": "bladeformatter",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Cabal-fmt",
                 "command": "run_format",
                 "args": {

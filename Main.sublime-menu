@@ -95,6 +95,15 @@
                         }
                     },
                     {
+                        "caption": "BladeFormatter",
+                        "mnemonic": "B",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "bladeformatter",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Cabal-fmt",
                         "mnemonic": "C",
                         "command": "run_format",

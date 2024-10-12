@@ -502,6 +502,21 @@
             }
             /* requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path */
         },
+        "bladeformatter": {
+            "info": "https://github.com/shufo/blade-formatter",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["blade"],
+            "executable_path": ["/path/to/node_modules/.bin/blade-formatter"],
+            "config_path": {
+                "ignore_dotfiles": false,
+                "default": "${packages}/User/formatter.assets/config/bladeformatter_rc.json"
+            }
+            /* requires node on PATH if omit interpreter_path */
+        },
         "cabalfmt": {
             "info": "https://github.com/phadej/cabal-fmt",
             "enable": false,
