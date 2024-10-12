@@ -98,13 +98,14 @@ class Module(metaclass=ModuleMeta):
     These methods allow you to create a custom formatter adapter for your plugin.
     '''
 
-    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
+    def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, df_ident=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
         self.view = view
         self.uid = uid
         self.region = region
         self.interpreters = interpreters
         self.executables = executables
         self.dotfiles = dotfiles
+        self.df_ident = df_ident
         self.temp_dir = temp_dir
         self.type = type
         self.auto_format_config = auto_format_config
@@ -199,7 +200,7 @@ class Module(metaclass=ModuleMeta):
         return ArgumentHandler.get_args(uid=self.uid)
 
     def get_config_path(self):
-        return ArgumentHandler.get_config_path(view=self.view, uid=self.uid, region=self.region, dotfiles=self.dotfiles, auto_format_config=self.auto_format_config)
+        return ArgumentHandler.get_config_path(view=self.view, uid=self.uid, region=self.region, dotfiles=self.dotfiles, df_ident=self.df_ident, auto_format_config=self.auto_format_config)
 
     @check_deprecated_api(start_date='2024-07-30', deactivate_after_days=90)
     def is_valid_cmd(self, cmd=None):  # @deprecated
@@ -710,20 +711,26 @@ class ArgumentHandler:
         return StringHandler.convert_list_items_to_string(lst=args)
 
     @classmethod
-    def get_config_path(cls, view=None, uid=None, region=None, dotfiles=None, auto_format_config=None):
+    def get_config_path(cls, view=None, uid=None, region=None, dotfiles=None, df_ident=None, auto_format_config=None):
         uid, syntax = SyntaxHandler.get_assigned_syntax(view=view, uid=uid, region=region, auto_format_config=auto_format_config)
         cfgignore = DotFileHandler.get_cfgignore(view=view)
         qo_ignore_dotfiles = OptionHandler.query(CONFIG, [], 'quick_options', 'ignore_dotfiles')
         ignore_dotfiles = OptionHandler.query(CONFIG, False, 'formatters', uid, 'config_path', 'ignore_dotfiles')
 
+        # 1. Prioritize dotfiles
         if uid not in qo_ignore_dotfiles and not ignore_dotfiles and not cfgignore.get('ignore_dotfiles', False):
-            dotfile_path = cls._traverse_find_config_dotfile(view=view, uid=uid, dotfiles=dotfiles)
+            if ModeHandler.is_generic_mode(uid=uid):
+                dotfiles = OptionHandler.query(CONFIG, None, 'formatters', uid, 'dotfiles')
+                df_ident = OptionHandler.query(CONFIG, None, 'formatters', uid, 'df_ident')
+
+            dotfile_path = cls._traverse_find_config_dotfile(view=view, uid=uid, dotfiles=dotfiles, identifier=df_ident)
             if dotfile_path:
                 log.debug('Config dotfile found: %s', dotfile_path)
                 return dotfile_path
 
         shared_config = OptionHandler.query(CONFIG, None, 'formatters', uid, 'config_path')
 
+        # 2. Fallback to "config_path"
         if isinstance(shared_config, dict):
             if any(uid in v for k, v in cfgignore.items() if k.strip().lower() in [syntax, 'default']):
                 log.debug('Config ignored for syntax: %s and uid: %s', syntax, uid)
@@ -741,17 +748,21 @@ class ArgumentHandler:
         return None
 
     @staticmethod
-    def _traverse_find_config_dotfile(view=None, uid=None, dotfiles=None):
+    def _traverse_find_config_dotfile(view=None, uid=None, dotfiles=None, identifier=None):
         if not dotfiles:
             return None
 
-        parent_folders = FolderHandler._get_active_view_parent_folders(view=view)
-
         ini_files = ['.pycodestyle', 'setup.cfg', 'tox.ini', '.pep8', '.editorconfig']
         toml_files = ['pyproject.toml']
+        identifier = (
+            [uid, uid + ':local-plugins']  # flake8 uses uid:local-plugins
+            if not identifier or not isinstance(identifier, list)
+            else [item for x in identifier for item in [x, x + ':local-plugins']]
+        )
 
-        home = os.path.expanduser('~')
+        home = expanduser('~')
         is_home = home if home != '~' else None
+        parent_folders = FolderHandler._get_active_view_parent_folders(view=view)
 
         for folder in parent_folders:
             if folder == is_home:
@@ -763,14 +774,14 @@ class ArgumentHandler:
                         cfg = configparser.RawConfigParser()
                         try:
                             cfg.read(path, encoding='utf-8')
-                            if uid in cfg or uid + ':local-plugins' in cfg:
+                            if any(key in cfg for key in identifier):
                                 return path
                         except Exception:
                             continue
                     elif dotfile in toml_files:
                         try:
                             toml_data = toml.load(path)
-                            if uid in toml_data.get('tool', {}) or uid + ':local-plugins' in toml_data.get('tool', {}):
+                            if any(key in toml_data.get('tool', {}) for key in identifier):
                                 return path
                         except Exception:
                             continue

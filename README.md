@@ -26,7 +26,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
 - Automatically remembers and restores text position.
 - Customizable and extendable through 2 methods to add **_your_** own plugins:
   - Generic: Adding a portion JSON settings (no coding needed). _see_ [Configuration](#configuration)
-  - Modules: Integration of your own modules. _see_ [Development](#development)
+  - Modules: Integration of your own modules (easy API). _see_ [Development](#development)
 - Zero dependencies to install.
 
 **Limitations:**
@@ -624,8 +624,18 @@ The following setting details - along with their default values and examples - a
                 // to generate extended files like SVG for saving.
                 "render_extended": false,
 
-                // The exit code for the third-party plugin (optional, default is 0).
+                // The exit code for the third-party plugin (optional, default to 0).
                 "success_code": 0,
+
+                // Local config dotfiles supported by your plugin (optional).
+                // These files will be auto detected and used as config file within your project.
+                "dotfiles": [".pluginrc", "pyproject.toml", ".pycodestyle", "setup.cfg", "tox.ini", ".pep8", ".editorconfig"],
+
+                // Keywords to identify special local config dotfiles (optional).
+                // Special dotfiles: "pyproject.toml", ".pycodestyle", "setup.cfg", "tox.ini", ".pep8", ".editorconfig"
+                // contain specific sections, such as "[tool.autopep8]" for identification.
+                // This is only necessary if the uid, here "examplegeneric", differs from "autopep8".
+                "df_ident": ["juliet", "romeo", "autopep8"],
 
                 // Same as the one in the examplemodule.
                 "enable": false,
@@ -723,6 +733,7 @@ The following setting details - along with their default values and examples - a
                 "name": "Uncrustify",
                 "type": "beautifier",
                 "success_code": 0,
+                "dotfiles": [".uncrusifyrc", "pyproject.toml"],
                 "args": ["{{e}}", " --style=file:{{c}} ", "--"],
 
                 "info": "https://github.com/uncrustify/uncrustify",
@@ -978,11 +989,19 @@ Developing a module for Formatter is straightforward. All you need to do is crea
      - All functions and other necessary components should reside inside this file.
    - The file name is all **lowercase** and contains only **alphanumeric** characters (no spaces or underscores):
      - Prefix: `formatter_` (indicating that it's a module for a third-party plugin)
-     - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as uid)
+     - Suffix: `thisismyfirstpluginmodule` (serving as the unique Formatter ID, also known as `uid`)
      - Extension: `.py`
    - External libraries that the third-party plugin relies on should be placed in the folder: `Formatter > libs`
      - Libraries must not contain proprietary elements, including the LICENSE file or license notices.
      - No communication over the Internet.
+
+> [!IMPORTANT]
+>
+> For plugins that rely on the following special local config dotfiles:
+> `pyproject.toml`, `.pycodestyle`, `setup.cfg`, `tox.ini`, `.pep8`, `.editorconfig`
+> you should use a `uid` matching the relevant section name, such as `[tool.autopep8]`. Otherwise, Formatter won't be able to identify and apply the correct local config dotfile.
+> For example, a correct `uid` would be: `formatter_autopep8.py`
+> Alternatively, you can achieve the same result by using the keywords identifier: `DF_IDENT = ['autopep8']`
 
 2. The content of this module file should follow the structure outlined below:
 
@@ -990,12 +1009,13 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
    ```py
    INTERPRETERS = []                                           # optional: fallback list of interpreter names
-   EXECUTABLES = []                                            # REQUIRED: fallback list of executable names
-   DOTFILES = []                                               # optional: names list of the per-project config dotfiles
+   EXECUTABLES = []                                            # optional: fallback list of executable names
+   DOTFILES = []                                               # optional: list of the local config dotfile names
+   DF_IDENT = []                                               # optional: list of keywords to identify special dotfiles
    MODULE_CONFIG = {}                                          # REQUIRED: template to create several sublime config files
 
 
-   class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized of uid and the Capitalized word "Formatter", nothing else!
+   class ThisismyfirstpluginmoduleFormatter(Module):           # REQUIRED: the Capitalized uid and the Capitalized word "Formatter", nothing else!
        def __init__(self, *args, **kwargs):
            super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
@@ -1013,7 +1033,8 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
    INTERPRETERS = ['node']                                     # optional: case-sensitive fallback names (without extension) if interpreter is not found
    EXECUTABLES = ['terser']                                    # optional: case-sensitive fallback names (without extension) if executable is not found
-   DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the per-project config dotfile if "config_path" is disabled
+   DOTFILES = ['.terser.json']                                 # optional: to auto-resolve the local config dotfile
+   DF_IDENT = []                                               # optional: a list of keywords to identify special local config dotfiles
    MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
        'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
        'name': 'My First Plugin',                              # REQUIRED: a Capitalized plugin name of your choice, preferably short and comprehensive
@@ -1163,7 +1184,7 @@ There are more methods in this class you can use, but:
    args = self.get_args()
 
    # Get the input "config_path" from the User settings or
-   # the path of the per-project config dotfile if found or None.
+   # the path to the local config dotfile if found or None.
    path = self.get_config_path()
 
    # Get the current text content in view or the current selected text.

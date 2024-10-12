@@ -829,8 +829,18 @@ def build_formatter_sublime_settings(formatter_map):
             // to generate extended files like SVG for saving.'''),
                 ('render_extended', False),
                 ('__COMMENT__success_code', '''
-            // The exit code for the third-party plugin (optional, default is 0).'''),
+            // The exit code for the third-party plugin (optional, default to 0).'''),
                 ('success_code', 0),
+                ('__COMMENT__dotfiles', '''
+            // Local config dotfiles supported by your plugin (optional).
+            // These files will be auto detected and used as config file within your project.'''),
+                ('dotfiles', NoIndent(['.pluginrc', 'pyproject.toml', '.pycodestyle', 'setup.cfg', 'tox.ini', '.pep8', '.editorconfig'])),
+                ('__COMMENT__df_ident', '''
+            // Keywords to identify special local config dotfiles (optional).
+            // Special dotfiles: "pyproject.toml", ".pycodestyle", "setup.cfg", "tox.ini", ".pep8", ".editorconfig"
+            // contain specific sections, such as "[tool.autopep8]" for identification.
+            // This is only necessary if the uid, here "examplegeneric", differs from "autopep8".'''),
+                ('df_ident', NoIndent(['juliet', 'romeo', 'autopep8'])),
                 ('__COMMENT__enable', '''
             // Same as the one in the examplemodule.'''),
                 ('enable', False),

@@ -65,7 +65,7 @@ def import_formatter_modules():
 
                 formatter_class_name = module_name[formatter_prefix_len:].capitalize() + PACKAGE_NAME
                 formatter_class = getattr(module, formatter_class_name, None)
-                formatter_specs = {key.lower(): getattr(module, key, None) for key in ['INTERPRETERS', 'EXECUTABLES', 'DOTFILES']}
+                formatter_specs = {key.lower(): getattr(module, key, None) for key in ['INTERPRETERS', 'EXECUTABLES', 'DOTFILES', 'DF_IDENT']}
 
                 if formatter_class:
                     formatter_uid = module_name[formatter_prefix_len:]
