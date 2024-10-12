@@ -4,7 +4,7 @@ EXECUTABLES = ['caddy']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/caddyserver/caddy',
-    'name': 'Caddy-fmt',
+    'name': 'CaddyFmt',
     'uid': 'caddyfmt',
     'type': 'beautifier',
     'syntaxes': ['Caddyfile'],

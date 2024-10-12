@@ -6,7 +6,7 @@ EXECUTABLES = ['bibtex-tidy']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/FlamingTempura/bibtex-tidy',
-    'name': 'BibTeX-tidy',
+    'name': 'BibTeXTidy',
     'uid': 'bibtextidy',
     'type': 'beautifier',
     'syntaxes': ['bibtex'],

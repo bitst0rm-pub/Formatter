@@ -4,7 +4,7 @@ EXECUTABLES = ['dhall']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/dhall-lang/dhall-haskell',
-    'name': 'Dhall format',
+    'name': 'DhallFormat',
     'uid': 'dhallformat',
     'type': 'beautifier',
     'syntaxes': ['dhall'],

@@ -5,7 +5,7 @@ EXECUTABLES = ['prettydiff']
 DOTFILES = ['.prettydiffrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/prettydiff/prettydiff',
-    'name': 'Pretty Diff',
+    'name': 'PrettyDiff',
     'uid': 'prettydiffmax',
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'asp', 'xml', 'tsx'],

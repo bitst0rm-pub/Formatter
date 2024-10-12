@@ -4,7 +4,7 @@ EXECUTABLES = ['ocp-indent']
 DOTFILES = ['.ocp-indent', 'ocp-indent.conf']
 MODULE_CONFIG = {
     'source': 'https://github.com/OCamlPro/ocp-indent',
-    'name': 'OCP-indent',
+    'name': 'OCPIndent',
     'uid': 'ocpindent',
     'type': 'beautifier',
     'syntaxes': ['ocaml', 'ocamlyacc', 'ocamllex'],

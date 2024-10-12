@@ -6,7 +6,7 @@ EXECUTABLES = ['rebar3', 'erlfmt']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/WhatsApp/erlfmt',
-    'name': 'Erlang erlfmt',
+    'name': 'Erlfmt',
     'uid': 'erlfmt',
     'type': 'beautifier',
     'syntaxes': ['erlang'],

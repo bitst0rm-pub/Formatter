@@ -5,7 +5,7 @@ EXECUTABLES = ['cmake-format']
 DOTFILES = ['.cmake-format.yaml', '.cmake-format.json', '.cmake-format.py']
 MODULE_CONFIG = {
     'source': 'https://github.com/cheshirekow/cmake_format',
-    'name': 'CMake-format',
+    'name': 'CMakeFormat',
     'uid': 'cmakeformat',
     'type': 'beautifier',
     'syntaxes': ['cmake'],

@@ -4,7 +4,7 @@ EXECUTABLES = ['dart']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://dart.dev/tools/dart-format',
-    'name': 'Dart Format',
+    'name': 'DartFormat',
     'uid': 'dartformat',
     'type': 'beautifier',
     'syntaxes': ['dart'],

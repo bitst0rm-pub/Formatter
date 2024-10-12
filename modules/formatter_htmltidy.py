@@ -4,7 +4,7 @@ EXECUTABLES = ['tidy']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/htacg/tidy-html5',
-    'name': 'HTML Tidy',
+    'name': 'HTMLTidy',
     'uid': 'htmltidy',
     'type': 'beautifier',
     'syntaxes': ['html', 'xml'],

@@ -4,7 +4,7 @@ EXECUTABLES = ['d2']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/terrastruct/d2',
-    'name': 'D2-fmt',
+    'name': 'D2Fmt',
     'uid': 'd2fmt',
     'type': 'beautifier',
     'syntaxes': ['d2'],

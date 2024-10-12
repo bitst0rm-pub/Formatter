@@ -7,7 +7,7 @@ EXECUTABLES = ['cleancss']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/jakubpawlowicz/clean-css-cli',
-    'name': 'Clean CSS',
+    'name': 'CleanCSS',
     'uid': 'cleancss',
     'type': 'minifier',
     'syntaxes': ['css', 'scss', 'sass', 'less'],

@@ -4,7 +4,7 @@ EXECUTABLES = ['terraform']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://developer.hashicorp.com/terraform/cli/commands/fmt',
-    'name': 'Terraform fmt',
+    'name': 'TerraformFmt',
     'uid': 'terraformfmt',
     'type': 'beautifier',
     'syntaxes': ['terraform'],

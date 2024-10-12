@@ -5,7 +5,7 @@ EXECUTABLES = ['standardrb']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standardrb/standard',
-    'name': 'Standard RB',
+    'name': 'StandardRB',
     'uid': 'standardrb',
     'type': 'beautifier',
     'syntaxes': ['ruby'],

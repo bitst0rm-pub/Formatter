@@ -5,7 +5,7 @@ EXECUTABLES = ['sql-formatter']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/sql-formatter-org/sql-formatter',
-    'name': 'SQL Formatter',
+    'name': 'SQLFormatter',
     'uid': 'sqlformatter',
     'type': 'beautifier',
     'syntaxes': ['sql'],

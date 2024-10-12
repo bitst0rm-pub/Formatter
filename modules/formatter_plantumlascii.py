@@ -5,7 +5,7 @@ EXECUTABLES = ['plantuml.jar']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/plantuml/plantuml',
-    'name': 'Plantuml ASCII',
+    'name': 'PlantumlASCII',
     'uid': 'plantumlascii',
     'type': 'beautifier',
     'syntaxes': ['plantuml'],

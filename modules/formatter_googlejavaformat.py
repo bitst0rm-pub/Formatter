@@ -6,7 +6,7 @@ EXECUTABLES = ['google-java-format-all-deps.jar']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/google/google-java-format',
-    'name': 'Google Java Format',
+    'name': 'GoogleJavaFormat',
     'uid': 'googlejavaformat',
     'type': 'beautifier',
     'syntaxes': ['java'],

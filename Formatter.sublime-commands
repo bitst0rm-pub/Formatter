@@ -50,7 +50,7 @@
         "command": "auto_format_file"
     },
     {
-        "caption": "Formatter: Beautify with Apple Swift Format",
+        "caption": "Formatter: Beautify with AppleSwiftFormat",
         "command": "run_format",
         "args": {
             "uid": "appleswiftformat",
@@ -66,7 +66,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Artistic Style",
+        "caption": "Formatter: Beautify with ArtisticStyle",
         "command": "run_format",
         "args": {
             "uid": "astyle",
@@ -90,7 +90,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with BibTeX-tidy",
+        "caption": "Formatter: Beautify with BibTeXTidy",
         "command": "run_format",
         "args": {
             "uid": "bibtextidy",
@@ -122,7 +122,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Cabal-fmt",
+        "caption": "Formatter: Beautify with CabalFmt",
         "command": "run_format",
         "args": {
             "uid": "cabalfmt",
@@ -130,7 +130,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Caddy-fmt",
+        "caption": "Formatter: Beautify with CaddyFmt",
         "command": "run_format",
         "args": {
             "uid": "caddyfmt",
@@ -154,7 +154,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with CMake-format",
+        "caption": "Formatter: Beautify with CMakeFormat",
         "command": "run_format",
         "args": {
             "uid": "cmakeformat",
@@ -178,7 +178,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with D2-fmt",
+        "caption": "Formatter: Beautify with D2Fmt",
         "command": "run_format",
         "args": {
             "uid": "d2fmt",
@@ -186,7 +186,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Dart Format",
+        "caption": "Formatter: Beautify with DartFormat",
         "command": "run_format",
         "args": {
             "uid": "dartformat",
@@ -202,7 +202,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Dhall format",
+        "caption": "Formatter: Beautify with DhallFormat",
         "command": "run_format",
         "args": {
             "uid": "dhallformat",
@@ -234,7 +234,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Erlang efmt",
+        "caption": "Formatter: Beautify with ErlangEfmt",
         "command": "run_format",
         "args": {
             "uid": "efmt",
@@ -242,7 +242,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Elixir mix",
+        "caption": "Formatter: Beautify with ElixirMix",
         "command": "run_format",
         "args": {
             "uid": "elixirmix",
@@ -250,7 +250,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Elm-format",
+        "caption": "Formatter: Beautify with ElmFormat",
         "command": "run_format",
         "args": {
             "uid": "elmformat",
@@ -258,7 +258,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Erlang erlfmt",
+        "caption": "Formatter: Beautify with Erlfmt",
         "command": "run_format",
         "args": {
             "uid": "erlfmt",
@@ -306,7 +306,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Fortran fprettify",
+        "caption": "Formatter: Beautify with Fprettify",
         "command": "run_format",
         "args": {
             "uid": "fprettify",
@@ -346,7 +346,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Google Java Format",
+        "caption": "Formatter: Beautify with GoogleJavaFormat",
         "command": "run_format",
         "args": {
             "uid": "googlejavaformat",
@@ -370,7 +370,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with HTML Tidy",
+        "caption": "Formatter: Beautify with HTMLTidy",
         "command": "run_format",
         "args": {
             "uid": "htmltidy",
@@ -386,7 +386,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with JS Beautifier",
+        "caption": "Formatter: Beautify with JSBeautifier",
         "command": "run_format",
         "args": {
             "uid": "jsbeautifier",
@@ -458,7 +458,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with OCP-indent",
+        "caption": "Formatter: Beautify with OCPIndent",
         "command": "run_format",
         "args": {
             "uid": "ocpindent",
@@ -490,7 +490,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with PHP CodeSniffer",
+        "caption": "Formatter: Beautify with PHPCodeSniffer",
         "command": "run_format",
         "args": {
             "uid": "phpcbf",
@@ -498,7 +498,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with PHP CS Fixer",
+        "caption": "Formatter: Beautify with PHPCSFixer",
         "command": "run_format",
         "args": {
             "uid": "phpcsfixer",
@@ -506,7 +506,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Plantuml ASCII",
+        "caption": "Formatter: Beautify with PlantumlASCII",
         "command": "run_format",
         "args": {
             "uid": "plantumlascii",
@@ -530,7 +530,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Pretty Diff",
+        "caption": "Formatter: Beautify with PrettyDiff",
         "command": "run_format",
         "args": {
             "uid": "prettydiffmax",
@@ -618,7 +618,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Semistandard JS",
+        "caption": "Formatter: Beautify with SemistandardJS",
         "command": "run_format",
         "args": {
             "uid": "semistandardjs",
@@ -642,7 +642,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with SQL Formatter",
+        "caption": "Formatter: Beautify with SQLFormatter",
         "command": "run_format",
         "args": {
             "uid": "sqlformatter",
@@ -658,7 +658,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Standard JS",
+        "caption": "Formatter: Beautify with StandardJS",
         "command": "run_format",
         "args": {
             "uid": "standardjs",
@@ -666,7 +666,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Standard RB",
+        "caption": "Formatter: Beautify with StandardRB",
         "command": "run_format",
         "args": {
             "uid": "standardrb",
@@ -674,7 +674,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Standardx JS",
+        "caption": "Formatter: Beautify with StandardxJS",
         "command": "run_format",
         "args": {
             "uid": "standardxjs",
@@ -706,7 +706,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Stylish Haskell",
+        "caption": "Formatter: Beautify with StylishHaskell",
         "command": "run_format",
         "args": {
             "uid": "stylishhaskell",
@@ -746,7 +746,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with Terraform fmt",
+        "caption": "Formatter: Beautify with TerraformFmt",
         "command": "run_format",
         "args": {
             "uid": "terraformfmt",
@@ -810,7 +810,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify with Clean CSS",
+        "caption": "Formatter: Minify with CleanCSS",
         "command": "run_format",
         "args": {
             "uid": "cleancss",
@@ -834,7 +834,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify with Pretty Diff",
+        "caption": "Formatter: Minify with PrettyDiff",
         "command": "run_format",
         "args": {
             "uid": "prettydiffmin",
@@ -842,7 +842,7 @@
         }
     },
     {
-        "caption": "Formatter: Minify with Python Minifier",
+        "caption": "Formatter: Minify with PythonMinifier",
         "command": "run_format",
         "args": {
             "uid": "pythonminifier",

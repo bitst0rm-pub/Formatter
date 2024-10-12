@@ -15,7 +15,7 @@
                 "caption": "-"
             },
             {
-                "caption": "Apple Swift Format",
+                "caption": "AppleSwiftFormat",
                 "command": "run_format",
                 "args": {
                     "uid": "appleswiftformat",
@@ -31,7 +31,7 @@
                 }
             },
             {
-                "caption": "Artistic Style",
+                "caption": "ArtisticStyle",
                 "command": "run_format",
                 "args": {
                     "uid": "astyle",
@@ -55,7 +55,7 @@
                 }
             },
             {
-                "caption": "BibTeX-tidy",
+                "caption": "BibTeXTidy",
                 "command": "run_format",
                 "args": {
                     "uid": "bibtextidy",
@@ -87,7 +87,7 @@
                 }
             },
             {
-                "caption": "Cabal-fmt",
+                "caption": "CabalFmt",
                 "command": "run_format",
                 "args": {
                     "uid": "cabalfmt",
@@ -95,7 +95,7 @@
                 }
             },
             {
-                "caption": "Caddy-fmt",
+                "caption": "CaddyFmt",
                 "command": "run_format",
                 "args": {
                     "uid": "caddyfmt",
@@ -119,7 +119,7 @@
                 }
             },
             {
-                "caption": "CMake-format",
+                "caption": "CMakeFormat",
                 "command": "run_format",
                 "args": {
                     "uid": "cmakeformat",
@@ -143,7 +143,7 @@
                 }
             },
             {
-                "caption": "D2-fmt",
+                "caption": "D2Fmt",
                 "command": "run_format",
                 "args": {
                     "uid": "d2fmt",
@@ -151,7 +151,7 @@
                 }
             },
             {
-                "caption": "Dart Format",
+                "caption": "DartFormat",
                 "command": "run_format",
                 "args": {
                     "uid": "dartformat",
@@ -167,7 +167,7 @@
                 }
             },
             {
-                "caption": "Dhall format",
+                "caption": "DhallFormat",
                 "command": "run_format",
                 "args": {
                     "uid": "dhallformat",
@@ -199,7 +199,7 @@
                 }
             },
             {
-                "caption": "Erlang efmt",
+                "caption": "ErlangEfmt",
                 "command": "run_format",
                 "args": {
                     "uid": "efmt",
@@ -207,7 +207,7 @@
                 }
             },
             {
-                "caption": "Elixir mix",
+                "caption": "ElixirMix",
                 "command": "run_format",
                 "args": {
                     "uid": "elixirmix",
@@ -215,7 +215,7 @@
                 }
             },
             {
-                "caption": "Elm-format",
+                "caption": "ElmFormat",
                 "command": "run_format",
                 "args": {
                     "uid": "elmformat",
@@ -223,7 +223,7 @@
                 }
             },
             {
-                "caption": "Erlang erlfmt",
+                "caption": "Erlfmt",
                 "command": "run_format",
                 "args": {
                     "uid": "erlfmt",
@@ -271,7 +271,7 @@
                 }
             },
             {
-                "caption": "Fortran fprettify",
+                "caption": "Fprettify",
                 "command": "run_format",
                 "args": {
                     "uid": "fprettify",
@@ -311,7 +311,7 @@
                 }
             },
             {
-                "caption": "Google Java Format",
+                "caption": "GoogleJavaFormat",
                 "command": "run_format",
                 "args": {
                     "uid": "googlejavaformat",
@@ -335,7 +335,7 @@
                 }
             },
             {
-                "caption": "HTML Tidy",
+                "caption": "HTMLTidy",
                 "command": "run_format",
                 "args": {
                     "uid": "htmltidy",
@@ -351,7 +351,7 @@
                 }
             },
             {
-                "caption": "JS Beautifier",
+                "caption": "JSBeautifier",
                 "command": "run_format",
                 "args": {
                     "uid": "jsbeautifier",
@@ -423,7 +423,7 @@
                 }
             },
             {
-                "caption": "OCP-indent",
+                "caption": "OCPIndent",
                 "command": "run_format",
                 "args": {
                     "uid": "ocpindent",
@@ -455,7 +455,7 @@
                 }
             },
             {
-                "caption": "PHP CodeSniffer",
+                "caption": "PHPCodeSniffer",
                 "command": "run_format",
                 "args": {
                     "uid": "phpcbf",
@@ -463,7 +463,7 @@
                 }
             },
             {
-                "caption": "PHP CS Fixer",
+                "caption": "PHPCSFixer",
                 "command": "run_format",
                 "args": {
                     "uid": "phpcsfixer",
@@ -471,7 +471,7 @@
                 }
             },
             {
-                "caption": "Plantuml ASCII",
+                "caption": "PlantumlASCII",
                 "command": "run_format",
                 "args": {
                     "uid": "plantumlascii",
@@ -495,7 +495,7 @@
                 }
             },
             {
-                "caption": "Pretty Diff",
+                "caption": "PrettyDiff",
                 "command": "run_format",
                 "args": {
                     "uid": "prettydiffmax",
@@ -583,7 +583,7 @@
                 }
             },
             {
-                "caption": "Semistandard JS",
+                "caption": "SemistandardJS",
                 "command": "run_format",
                 "args": {
                     "uid": "semistandardjs",
@@ -607,7 +607,7 @@
                 }
             },
             {
-                "caption": "SQL Formatter",
+                "caption": "SQLFormatter",
                 "command": "run_format",
                 "args": {
                     "uid": "sqlformatter",
@@ -623,7 +623,7 @@
                 }
             },
             {
-                "caption": "Standard JS",
+                "caption": "StandardJS",
                 "command": "run_format",
                 "args": {
                     "uid": "standardjs",
@@ -631,7 +631,7 @@
                 }
             },
             {
-                "caption": "Standard RB",
+                "caption": "StandardRB",
                 "command": "run_format",
                 "args": {
                     "uid": "standardrb",
@@ -639,7 +639,7 @@
                 }
             },
             {
-                "caption": "Standardx JS",
+                "caption": "StandardxJS",
                 "command": "run_format",
                 "args": {
                     "uid": "standardxjs",
@@ -671,7 +671,7 @@
                 }
             },
             {
-                "caption": "Stylish Haskell",
+                "caption": "StylishHaskell",
                 "command": "run_format",
                 "args": {
                     "uid": "stylishhaskell",
@@ -711,7 +711,7 @@
                 }
             },
             {
-                "caption": "Terraform fmt",
+                "caption": "TerraformFmt",
                 "command": "run_format",
                 "args": {
                     "uid": "terraformfmt",
@@ -778,7 +778,7 @@
                 "caption": "-"
             },
             {
-                "caption": "Clean CSS (min)",
+                "caption": "CleanCSS (min)",
                 "command": "run_format",
                 "args": {
                     "uid": "cleancss",
@@ -802,7 +802,7 @@
                 }
             },
             {
-                "caption": "Pretty Diff (min)",
+                "caption": "PrettyDiff (min)",
                 "command": "run_format",
                 "args": {
                     "uid": "prettydiffmin",
@@ -810,7 +810,7 @@
                 }
             },
             {
-                "caption": "Python Minifier (min)",
+                "caption": "PythonMinifier (min)",
                 "command": "run_format",
                 "args": {
                     "uid": "pythonminifier",

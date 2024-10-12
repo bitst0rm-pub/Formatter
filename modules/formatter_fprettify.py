@@ -5,7 +5,7 @@ EXECUTABLES = ['fprettify']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/pseewald/fprettify',
-    'name': 'Fortran fprettify',
+    'name': 'Fprettify',
     'uid': 'fprettify',
     'type': 'beautifier',
     'syntaxes': ['fortran'],

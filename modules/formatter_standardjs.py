@@ -5,7 +5,7 @@ EXECUTABLES = ['standard']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standard/standard',
-    'name': 'Standard JS',
+    'name': 'StandardJS',
     'uid': 'standardjs',
     'type': 'beautifier',
     'syntaxes': ['js'],

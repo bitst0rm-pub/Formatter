@@ -4,7 +4,7 @@ EXECUTABLES = ['AStyle', 'astyle']
 DOTFILES = ['.astylerc', '_astylerc']
 MODULE_CONFIG = {
     'source': 'https://sourceforge.net/projects/astyle',
-    'name': 'Artistic Style',
+    'name': 'ArtisticStyle',
     'uid': 'astyle',
     'type': 'beautifier',
     'syntaxes': ['c', 'c++', 'cs', 'objc', 'objc++', 'java', 'js'],

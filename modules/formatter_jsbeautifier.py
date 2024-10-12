@@ -5,7 +5,7 @@ EXECUTABLES = ['js-beautify']
 DOTFILES = ['.jsbeautifyrc']
 MODULE_CONFIG = {
     'source': 'https://github.com/beautify-web/js-beautify',
-    'name': 'JS Beautifier',
+    'name': 'JSBeautifier',
     'uid': 'jsbeautifier',
     'type': 'beautifier',
     'syntaxes': ['js', 'css', 'html', 'json', 'tsx', 'vue'],

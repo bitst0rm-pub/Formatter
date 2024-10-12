@@ -7,7 +7,7 @@ EXECUTABLES = ['pyminify']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/dflook/python-minifier',
-    'name': 'Python Minifier',
+    'name': 'PythonMinifier',
     'uid': 'pythonminifier',
     'type': 'minifier',
     'syntaxes': ['python'],

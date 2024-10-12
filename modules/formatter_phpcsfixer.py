@@ -5,7 +5,7 @@ EXECUTABLES = ['php-cs-fixer-v3.phar', 'php-cs-fixer-v3', 'phpcsfixer.phar', 'ph
 DOTFILES = ['.php-cs-fixer.php', '.php-cs-fixer.dist.php']
 MODULE_CONFIG = {
     'source': 'https://github.com/FriendsOfPHP/PHP-CS-Fixer',
-    'name': 'PHP CS Fixer',
+    'name': 'PHPCSFixer',
     'uid': 'phpcsfixer',
     'type': 'beautifier',
     'syntaxes': ['php'],

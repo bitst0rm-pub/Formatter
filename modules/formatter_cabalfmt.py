@@ -4,7 +4,7 @@ EXECUTABLES = ['cabal-fmt']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/phadej/cabal-fmt',
-    'name': 'Cabal-fmt',
+    'name': 'CabalFmt',
     'uid': 'cabalfmt',
     'type': 'beautifier',
     'syntaxes': ['cabal'],

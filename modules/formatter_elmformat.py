@@ -4,7 +4,7 @@ EXECUTABLES = ['elm-format']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/avh4/elm-format',
-    'name': 'Elm-format',
+    'name': 'ElmFormat',
     'uid': 'elmformat',
     'type': 'beautifier',
     'syntaxes': ['elm'],

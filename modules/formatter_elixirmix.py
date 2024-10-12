@@ -4,7 +4,7 @@ EXECUTABLES = ['mix']
 DOTFILES = ['.formatter.exs']
 MODULE_CONFIG = {
     'source': 'https://github.com/elixir-lang/elixir',
-    'name': 'Elixir mix',
+    'name': 'ElixirMix',
     'uid': 'elixirmix',
     'type': 'beautifier',
     'syntaxes': ['elixir'],

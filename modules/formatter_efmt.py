@@ -5,7 +5,7 @@ EXECUTABLES = ['efmt']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/sile/efmt',
-    'name': 'Erlang efmt',
+    'name': 'ErlangEfmt',
     'uid': 'efmt',
     'type': 'beautifier',
     'syntaxes': ['erlang'],

@@ -4,7 +4,7 @@ EXECUTABLES = ['stylish-haskell']
 DOTFILES = ['.stylish-haskell.yaml']
 MODULE_CONFIG = {
     'source': 'https://github.com/haskell/stylish-haskell',
-    'name': 'Stylish Haskell',
+    'name': 'StylishHaskell',
     'uid': 'stylishhaskell',
     'type': 'beautifier',
     'syntaxes': ['haskell'],

@@ -5,7 +5,7 @@ EXECUTABLES = ['phpcbf.phar']
 DOTFILES = ['.phpcs.xml', 'phpcs.xml', '.phpcs.xml.dist', 'phpcs.xml.dist']
 MODULE_CONFIG = {
     'source': 'https://github.com/squizlabs/PHP_CodeSniffer',
-    'name': 'PHP CodeSniffer',
+    'name': 'PHPCodeSniffer',
     'uid': 'phpcbf',
     'type': 'beautifier',
     'syntaxes': ['php'],

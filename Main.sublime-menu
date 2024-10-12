@@ -23,7 +23,7 @@
                         "caption": "-"
                     },
                     {
-                        "caption": "Apple Swift Format",
+                        "caption": "AppleSwiftFormat",
                         "mnemonic": "A",
                         "command": "run_format",
                         "args": {
@@ -41,7 +41,7 @@
                         }
                     },
                     {
-                        "caption": "Artistic Style",
+                        "caption": "ArtisticStyle",
                         "mnemonic": "A",
                         "command": "run_format",
                         "args": {
@@ -68,7 +68,7 @@
                         }
                     },
                     {
-                        "caption": "BibTeX-tidy",
+                        "caption": "BibTeXTidy",
                         "mnemonic": "B",
                         "command": "run_format",
                         "args": {
@@ -104,7 +104,7 @@
                         }
                     },
                     {
-                        "caption": "Cabal-fmt",
+                        "caption": "CabalFmt",
                         "mnemonic": "C",
                         "command": "run_format",
                         "args": {
@@ -113,7 +113,7 @@
                         }
                     },
                     {
-                        "caption": "Caddy-fmt",
+                        "caption": "CaddyFmt",
                         "mnemonic": "C",
                         "command": "run_format",
                         "args": {
@@ -140,7 +140,7 @@
                         }
                     },
                     {
-                        "caption": "CMake-format",
+                        "caption": "CMakeFormat",
                         "mnemonic": "C",
                         "command": "run_format",
                         "args": {
@@ -167,7 +167,7 @@
                         }
                     },
                     {
-                        "caption": "D2-fmt",
+                        "caption": "D2Fmt",
                         "mnemonic": "D",
                         "command": "run_format",
                         "args": {
@@ -176,7 +176,7 @@
                         }
                     },
                     {
-                        "caption": "Dart Format",
+                        "caption": "DartFormat",
                         "mnemonic": "D",
                         "command": "run_format",
                         "args": {
@@ -194,7 +194,7 @@
                         }
                     },
                     {
-                        "caption": "Dhall format",
+                        "caption": "DhallFormat",
                         "mnemonic": "D",
                         "command": "run_format",
                         "args": {
@@ -230,7 +230,7 @@
                         }
                     },
                     {
-                        "caption": "Erlang efmt",
+                        "caption": "ErlangEfmt",
                         "mnemonic": "E",
                         "command": "run_format",
                         "args": {
@@ -239,7 +239,7 @@
                         }
                     },
                     {
-                        "caption": "Elixir mix",
+                        "caption": "ElixirMix",
                         "mnemonic": "E",
                         "command": "run_format",
                         "args": {
@@ -248,7 +248,7 @@
                         }
                     },
                     {
-                        "caption": "Elm-format",
+                        "caption": "ElmFormat",
                         "mnemonic": "E",
                         "command": "run_format",
                         "args": {
@@ -257,7 +257,7 @@
                         }
                     },
                     {
-                        "caption": "Erlang erlfmt",
+                        "caption": "Erlfmt",
                         "mnemonic": "E",
                         "command": "run_format",
                         "args": {
@@ -311,7 +311,7 @@
                         }
                     },
                     {
-                        "caption": "Fortran fprettify",
+                        "caption": "Fprettify",
                         "mnemonic": "F",
                         "command": "run_format",
                         "args": {
@@ -356,7 +356,7 @@
                         }
                     },
                     {
-                        "caption": "Google Java Format",
+                        "caption": "GoogleJavaFormat",
                         "mnemonic": "G",
                         "command": "run_format",
                         "args": {
@@ -383,7 +383,7 @@
                         }
                     },
                     {
-                        "caption": "HTML Tidy",
+                        "caption": "HTMLTidy",
                         "mnemonic": "H",
                         "command": "run_format",
                         "args": {
@@ -401,7 +401,7 @@
                         }
                     },
                     {
-                        "caption": "JS Beautifier",
+                        "caption": "JSBeautifier",
                         "mnemonic": "J",
                         "command": "run_format",
                         "args": {
@@ -482,7 +482,7 @@
                         }
                     },
                     {
-                        "caption": "OCP-indent",
+                        "caption": "OCPIndent",
                         "mnemonic": "O",
                         "command": "run_format",
                         "args": {
@@ -518,7 +518,7 @@
                         }
                     },
                     {
-                        "caption": "PHP CodeSniffer",
+                        "caption": "PHPCodeSniffer",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {
@@ -527,7 +527,7 @@
                         }
                     },
                     {
-                        "caption": "PHP CS Fixer",
+                        "caption": "PHPCSFixer",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {
@@ -536,7 +536,7 @@
                         }
                     },
                     {
-                        "caption": "Plantuml ASCII",
+                        "caption": "PlantumlASCII",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {
@@ -563,7 +563,7 @@
                         }
                     },
                     {
-                        "caption": "Pretty Diff",
+                        "caption": "PrettyDiff",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {
@@ -662,7 +662,7 @@
                         }
                     },
                     {
-                        "caption": "Semistandard JS",
+                        "caption": "SemistandardJS",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
@@ -689,7 +689,7 @@
                         }
                     },
                     {
-                        "caption": "SQL Formatter",
+                        "caption": "SQLFormatter",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
@@ -707,7 +707,7 @@
                         }
                     },
                     {
-                        "caption": "Standard JS",
+                        "caption": "StandardJS",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
@@ -716,7 +716,7 @@
                         }
                     },
                     {
-                        "caption": "Standard RB",
+                        "caption": "StandardRB",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
@@ -725,7 +725,7 @@
                         }
                     },
                     {
-                        "caption": "Standardx JS",
+                        "caption": "StandardxJS",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
@@ -761,7 +761,7 @@
                         }
                     },
                     {
-                        "caption": "Stylish Haskell",
+                        "caption": "StylishHaskell",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
@@ -806,7 +806,7 @@
                         }
                     },
                     {
-                        "caption": "Terraform fmt",
+                        "caption": "TerraformFmt",
                         "mnemonic": "T",
                         "command": "run_format",
                         "args": {
@@ -881,7 +881,7 @@
                         "caption": "-"
                     },
                     {
-                        "caption": "Clean CSS (min)",
+                        "caption": "CleanCSS (min)",
                         "mnemonic": "C",
                         "command": "run_format",
                         "args": {
@@ -908,7 +908,7 @@
                         }
                     },
                     {
-                        "caption": "Pretty Diff (min)",
+                        "caption": "PrettyDiff (min)",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {
@@ -917,7 +917,7 @@
                         }
                     },
                     {
-                        "caption": "Python Minifier (min)",
+                        "caption": "PythonMinifier (min)",
                         "mnemonic": "P",
                         "command": "run_format",
                         "args": {

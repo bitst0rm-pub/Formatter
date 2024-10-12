@@ -5,7 +5,7 @@ EXECUTABLES = ['semistandard']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standard/semistandard',
-    'name': 'Semistandard JS',
+    'name': 'SemistandardJS',
     'uid': 'semistandardjs',
     'type': 'beautifier',
     'syntaxes': ['js'],

@@ -4,7 +4,7 @@ EXECUTABLES = ['swift-format']
 DOTFILES = ['.swift-format']
 MODULE_CONFIG = {
     'source': 'https://github.com/apple/swift-format',
-    'name': 'Apple Swift Format',
+    'name': 'AppleSwiftFormat',
     'uid': 'appleswiftformat',
     'type': 'beautifier',
     'syntaxes': ['swift'],
