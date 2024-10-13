@@ -2,6 +2,20 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.1)] - 2024-10-13
+
+### 🚀 Features
+
+- [`70eddc7`](https://github.com/bitst0rm-pub/Formatter/commit/70eddc7e9d771767a7734b6a76786cb09735ce51) Add `"dotfiles"` and `"df_ident"` options to auto detect local config dotfiles
+- [`9b77790`](https://github.com/bitst0rm-pub/Formatter/commit/9b777908d7ee14443e4b5d26cf05ab12e73fb3f3) Add `blade-formatter` module
+
+### ⚙️ Miscellaneous Tasks
+
+- [`f1a5aeb`](https://github.com/bitst0rm-pub/Formatter/commit/f1a5aeb538dea550ed9ddabdfa7c5166e84b646a) *(ci)* Add naming convention check
+- [`ec76b59`](https://github.com/bitst0rm-pub/Formatter/commit/ec76b5980af273f46899aec479287093b4630f0d) Rename modules to CamelCase
+- [`8f87f20`](https://github.com/bitst0rm-pub/Formatter/commit/8f87f20ede0e648b61e2908754aeaf28eb63df12) Update `.markdownlint.yml`
+- [`7a8a049`](https://github.com/bitst0rm-pub/Formatter/commit/7a8a049d28cb173758c977d2d2bc76ea46805eb3) Reformat ci
+
 ## [[1.7.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.0)] - 2024-10-10
 
 ### 🎨 Styling
