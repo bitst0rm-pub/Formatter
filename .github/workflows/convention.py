@@ -4,18 +4,21 @@ import sys
 # Naming convention check
 directory = './modules'
 
+
 def is_pascal_case(name):
     return name and name[0].isupper() and all(c.isalnum() for c in name)
+
 
 def is_lowercase(string):
     return string.islower()
 
+
 def is_valid_class_name(class_name):
     if class_name.endswith('Formatter'):
         name_without_formatter = class_name[:-len('Formatter')]
-        return (name_without_formatter[0].isupper() and
-                all(c.islower() or c.isdigit() for c in name_without_formatter[1:]))
+        return (name_without_formatter[0].isupper() and all(c.islower() or c.isdigit() for c in name_without_formatter[1:]))
     return False
+
 
 def check_file(file_path):
     with open(file_path, 'r') as file:
@@ -58,6 +61,7 @@ def check_file(file_path):
             error_found = True
 
         return error_found
+
 
 overall_error = False
 
