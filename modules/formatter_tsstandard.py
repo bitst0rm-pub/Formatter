@@ -5,7 +5,7 @@ EXECUTABLES = ['ts-standard']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/standard/ts-standard',
-    'name': 'TS Standard',
+    'name': 'TSStandard',
     'uid': 'tsstandard',
     'type': 'beautifier',
     'syntaxes': ['ts'],
