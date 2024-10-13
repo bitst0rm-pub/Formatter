@@ -816,9 +816,9 @@ def build_formatter_sublime_settings(formatter_map):
             // Note: The Generic method requires a Sublime Text restart after adding or changing
             // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.'''),
                 ('__COMMENT__name', '''
-            // The capitalized Plugin name (REQUIRED!)
+            // The Capitalized plugin name in PascalCase style (convention) (REQUIRED!)
             // This will appear in the Sublime menu and other commands.'''),
-                ('name', 'Example Generic'),
+                ('name', 'ExampleGeneric'),
                 ('__COMMENT__type', '''
             // The plugin type (REQUIRED!)
             // This will categorize the plugin. Accepted values:

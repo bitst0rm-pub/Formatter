@@ -735,7 +735,7 @@
                 }
             },
             {
-                "caption": "TS Standard",
+                "caption": "TSStandard",
                 "command": "run_format",
                 "args": {
                     "uid": "tsstandard",

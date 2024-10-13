@@ -612,9 +612,9 @@ The following setting details - along with their default values and examples - a
                 // Note: The Generic method requires a Sublime Text restart after adding or changing
                 // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.
 
-                // The capitalized Plugin name (REQUIRED!)
+                // The Capitalized plugin name in PascalCase style (convention) (REQUIRED!)
                 // This will appear in the Sublime menu and other commands.
-                "name": "Example Generic",
+                "name": "ExampleGeneric",
 
                 // The plugin type (REQUIRED!)
                 // This will categorize the plugin. Accepted values:
@@ -1038,7 +1038,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
    DF_IDENT = []                                               # optional: a list of keywords to identify special local config dotfiles
    MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
        'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
-       'name': 'My First Plugin',                              # REQUIRED: a Capitalized plugin name of your choice, preferably short and comprehensive
+       'name': 'MyFirstPlugin',                                # REQUIRED: a Capitalized plugin name of your choice, in PascalCase style (convention)
        'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
        'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
                                                                #           OR any string of your choice (for private purposes).

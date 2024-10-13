@@ -833,7 +833,7 @@
                         }
                     },
                     {
-                        "caption": "TS Standard",
+                        "caption": "TSStandard",
                         "mnemonic": "T",
                         "command": "run_format",
                         "args": {

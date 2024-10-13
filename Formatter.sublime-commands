@@ -770,7 +770,7 @@
         }
     },
     {
-        "caption": "Formatter: Beautify with TS Standard",
+        "caption": "Formatter: Beautify with TSStandard",
         "command": "run_format",
         "args": {
             "uid": "tsstandard",
