@@ -10,12 +10,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['blade'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/blade-formatter',
+    'executable_path': '/path/to/node_modules/.bin/blade-formatter(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'bladeformatter_rc.json'
     },
-    'comment': 'requires node on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 

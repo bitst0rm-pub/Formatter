@@ -10,12 +10,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['js', 'jsx', 'ts', 'tsx', 'json'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/bin/biome (standalone binary) or /path/to/node_modules/.bin/biome',
+    'executable_path': '/path/to/bin/biome (standalone binary) or /path/to/node_modules/.bin/biome(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'biome_rc.json'
     },
-    'comment': 'interpreter_path can be set to use node, otherwise omit it to use standalone binary.'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 

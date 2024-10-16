@@ -12,7 +12,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/bin/raco',
     'args': ['--width', '102', '--limit', '120', '--max-blank-lines', '1', '--indent', '0'],
     'config_path': '',
-    'comment': 'undocumented --config <config_path>, use args instead. config_path can be still used in place of --config'
+    'comment': 'Undocumented --config <config_path>, use "args" instead. "config_path" can be still used in place of --config.'
 }
 
 

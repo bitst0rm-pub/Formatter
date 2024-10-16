@@ -12,7 +12,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/.cabal/bin/cabal-fmt',
     'args': ['--tabular', '--indent', '4'],
     'config_path': None,
-    'comment': 'requires haskell. use args instead of config_path'
+    'comment': 'Requires haskell. Use "args" instead of "config_path".'
 }
 
 

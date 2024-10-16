@@ -19,7 +19,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'zprint_rc.edn'
     },
-    'comment': 'requires java on PATH if use zprint-filter. macosx: a zprint already exists, avoid to use this same name'
+    'comment': 'Requires java on PATH to use zprint-filter. MacOS: another zprint already exists, avoid to use this same name.'
 }
 
 

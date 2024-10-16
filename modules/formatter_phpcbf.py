@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'phpcbf_rc.xml'
     },
-    'comment': 'use phpcbf.phar, not phpcs.phar. requires php on PATH if omit interpreter_path'
+    'comment': 'Use phpcbf.phar, not phpcs.phar. Omit "interpreter_path" if php already on PATH.'
 }
 
 

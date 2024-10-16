@@ -14,7 +14,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'elixirmix_rc.exs'
     },
-    'comment': 'no interpreter_path, instead use "environ": {"PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"]}'
+    'comment': 'No "interpreter_path", instead use "environ": {"PATH": ["/path/to/erlang@22/bin:$PATH", "$PATH:/path/to/elixir/bin"]}.'
 }
 
 

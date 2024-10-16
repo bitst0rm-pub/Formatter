@@ -12,12 +12,12 @@ MODULE_CONFIG = {
     'exclude_syntaxes': {
         'html': ['markdown']
     },
-    'executable_path': '/path/to/node_modules/.bin/js-beautify',
+    'executable_path': '/path/to/node_modules/.bin/js-beautify(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'jsbeautify_rc.json'
     },
-    'comment': 'requires node on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 

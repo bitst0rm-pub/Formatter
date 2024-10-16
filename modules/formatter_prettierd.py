@@ -10,12 +10,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'ts', 'tsx', 'vue', 'yaml'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/prettierd',
+    'executable_path': '/path/to/node_modules/.bin/prettierd(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'prettierd_rc.json'
     },
-    'comment': 'requires node on PATH if omit interpreter_path. use config_path instead of PRETTIERD_DEFAULT_CONFIG'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. Use "config_path" instead of PRETTIERD_DEFAULT_CONFIG.'
 }
 
 

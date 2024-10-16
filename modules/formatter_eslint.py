@@ -5,7 +5,7 @@ import sublime
 from ..core import Module, log
 
 INTERPRETERS = ['node']
-EXECUTABLES = ['eslint', 'eslint.js']
+EXECUTABLES = ['eslint']
 DOTFILES = ['eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', 'eslint.config.ts', 'eslint.config.mts', 'eslint.config.cts', '.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json']
 MODULE_CONFIG = {
     'source': 'https://github.com/eslint/eslint',
@@ -14,12 +14,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['js'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/eslint or /path/to/node_modules/.bin/eslint.js',
+    'executable_path': '/path/to/node_modules/.bin/eslint(.cmd on windows)',
     'args': ['--resolve-plugins-relative-to', '/path/to/eslintv8/javascript/node_modules'],
     'config_path': {
         'default': 'eslint_rc.json_(v8)_or_eslint_config_rc.mjs_(v9)'
     },
-    'comment': 'requires node on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 

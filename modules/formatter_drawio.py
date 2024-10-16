@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'drawio_rc.yaml'
     },
-    'comment': 'executable_path for macosx is /Applications/draw.io.app/Contents/MacOS/draw.io, no dark-theme for png.'
+    'comment': '"executable_path" for macOS is /Applications/draw.io.app/Contents/MacOS/draw.io; no dark-theme for PNG.'
 }
 
 

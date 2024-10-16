@@ -1,12 +1,14 @@
 import datetime
+import os
 from collections import deque
 from functools import partial, wraps
+from os.path import basename, dirname, join, normpath
 from threading import Timer
 from time import perf_counter, sleep
 
 import sublime
 
-from . import STATUS_KEY, log
+from . import IS_WINDOWS, STATUS_KEY, log
 
 # Constants for bulk operation guard
 BULK_OPERATION_THRESHOLD = 20  # number of file events to trigger bulk mode
@@ -163,6 +165,24 @@ def validate_cmd_arg(func):
             if isinstance(cmd, list):
                 if _are_all_strings_in_list(cmd):
                     log.debug('Command: %s', cmd)
+
+                    if len(cmd) > 1:
+                        appdata = None
+                        if IS_WINDOWS:
+                            appdata_full = os.getenv('APPDATA')
+                            if appdata_full:
+                                # Extract the portion "AppData/Roaming"
+                                appdata = join(basename(dirname(appdata_full)), basename(appdata_full))
+
+                        normalized_exec_path = normpath(cmd[1])
+                        if (  # for runtime_type='node'
+                            cmd[0].lower().endswith(('node.exe', 'node')) and
+                            normpath('node_modules/.bin') in normalized_exec_path or  # local unix + windows
+                            (appdata and normpath(appdata + '/npm') in normalized_exec_path and  # global windows
+                             normpath(appdata + '/npm/node_modules') not in normalized_exec_path) or
+                            normpath('/usr/local/bin') in normalized_exec_path  # global unix
+                        ):
+                            raise ValueError('Misconfiguration Error: Node is set redundantly. File in "executable_path" already includes node inside to run as standalone. Please set "interpreter_path" to null or omit it to prevent this error.')
                 else:
                     raise ValueError('Validation failed: all elements of the cmd argument must be strings: %s' % cmd)
             else:

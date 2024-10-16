@@ -1,7 +1,7 @@
-from ..core import IS_WINDOWS, Module
+from ..core import Module
 
 INTERPRETERS = ['node']
-EXECUTABLES = ['prettier.cmd', 'bin-prettier.js', 'prettier']
+EXECUTABLES = ['prettier']
 DOTFILES = ['.prettierrc', '.prettierrc.json', '.prettierrc.yml', '.prettierrc.yaml', '.prettierrc.json5', '.prettierrc.js', 'prettier.config.js', '.prettierrc.mjs', 'prettier.config.mjs', '.prettierrc.cjs', 'prettier.config.cjs', '.prettierrc.toml']
 MODULE_CONFIG = {
     'source': 'https://github.com/prettier/prettier',
@@ -10,12 +10,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'less', 'js', 'jsx', 'json', 'html', 'graphql', 'markdown', 'ts', 'tsx', 'vue', 'yaml'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/prettier or /path/to/node_modules/.bin/bin-prettier.js',
+    'executable_path': '/path/to/node_modules/.bin/prettier(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'prettier_rc.json'
     },
-    'comment': 'requires node on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 
@@ -24,16 +24,9 @@ class PrettierFormatter(Module):
         super().__init__(*args, **kwargs)
 
     def get_cmd(self):
-        if IS_WINDOWS:
-            executable = self.get_executable(runtime_type='node')
-            if not executable.endswith('js'):
-                cmd = [executable]
-
-                cmd.extend(self.get_args())
-            else:
-                cmd = self.get_combo_cmd(runtime_type='node')
-        else:
-            cmd = self.get_combo_cmd(runtime_type='node')
+        cmd = self.get_combo_cmd(runtime_type='node')
+        if not cmd:
+            return None
 
         cmd.extend(['--no-color'])
 

@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'latexindent_rc.yaml'
     },
-    'comment': 'requires perl on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" if perl already on PATH.'
 }
 
 

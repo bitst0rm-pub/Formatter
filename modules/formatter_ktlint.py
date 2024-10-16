@@ -13,7 +13,7 @@ MODULE_CONFIG = {
     'interpreter_path': '/path/to/bin/java.exe',
     'executable_path': '/path/to/bin/ktlint or path/to/ktlint.bat',
     'args': None,
-    'comment': 'opinionated, no config. requires java on PATH if omit interpreter_path.'
+    'comment': 'Opinionated, no config. Omit "interpreter_path" if java already on PATH.'
 }
 
 

@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'pyment_rc.cfg'
     },
-    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. requires python on PATH if omit interpreter_path'
+    'comment': 'Requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. Omit "interpreter_path" if python already on PATH.'
 }
 
 

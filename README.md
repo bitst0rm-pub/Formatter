@@ -1053,7 +1053,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
            'js': 'my_first_plugin_js_rc.json'                  # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
            'default': 'my_first_plugin_rc.json'                # optional: a key-value pair or just omit it. See Formatter.sublime-settings for explanation
        },
-       'comment': 'build-in, no executable'                    # optional: a single short comment, limited to 200 chars or just omit it
+       'comment': 'Build-in, no executable.'                    # optional: a single short comment, limited to 200 chars or just omit it
    }
 
 
@@ -1062,7 +1062,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
            super().__init__(*args, **kwargs)                   # REQUIRED: initialize the module APIs from common.Module
 
        def get_cmd(self):                                      # optional: get commands e.g get the "config_path", "executable_path" etc...
-           cmd = self.get_combo_cmd(runtime_type='node')       # See API below
+           cmd = self.get_combo_cmd(runtime_type='node')       # See API below, with important note to use with Node.js
            if not cmd:
                return None
 
@@ -1169,12 +1169,17 @@ There are more methods in this class you can use, but:
    # This alias method combines get_interpreter() and get_executable().
    # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
    # Currently, only None and 'node' are functional. All others are placeholders for future implementation.
+   # Note: Always use this method instead of self.get_interpreter() when runtime_type='node',
+   #       as it includes a mechanism to auto detect the local executable for node.
    cmd = self.get_iprexe_cmd(runtime_type=None)
 
-   # This alias method just extends get_iprexe_cmd() with get_args().
+   # This alias method just extends get_iprexe_cmd(runtime_type=) by adding get_args().
+   # Note: Always use this method instead of self.get_interpreter() when runtime_type='node',
+   #       as it includes a mechanism to auto detect the local executable for node.
    cmd = self.get_combo_cmd(runtime_type=None)
 
    # Get the interpreter path or None.
+   # Note: Do not use this directly for runtime_type='node'
    interpreter = self.get_interpreter()
 
    # Get the executable path or None.

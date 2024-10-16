@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'd2_rc.yaml'
     },
-    'comment': 'uses headless browser to convert images, no dark-theme for png.'
+    'comment': 'Uses headless browser to convert images; no dark theme for PNG.'
 }
 
 

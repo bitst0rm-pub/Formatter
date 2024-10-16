@@ -18,7 +18,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'cljfmt_rc.edn'
     },
-    'comment': 'omit interpreter_path if use cljfmt standalone version'
+    'comment': 'Omit "interpreter_path" if "executable_path" is set to the standalone version of cljfmt.'
 }
 
 

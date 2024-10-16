@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'args': None,
     'config_path': None,
     # 'comment': 'opinionated, no config'
-    'comment': 'opinionated, no config. no rebar3 upstream support, use efmt standalone instead. requires efmt on PATH if omit interpreter_path'
+    'comment': 'Opinionated, no config. No rebar3 upstream support, use efmt standalone instead. Omit "interpreter_path" if efmt already on PATH.'
 }
 
 

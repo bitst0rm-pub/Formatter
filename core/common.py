@@ -501,7 +501,7 @@ class CommandHandler:
             text = ViewHandler.get_text_from_region(view=view, region=region)
 
             try:
-                stdout, stderr = process.communicate(text.encode('utf-8'), timeout=timeout)
+                stdout, stderr = process.communicate(input=text.encode('utf-8'), timeout=timeout)
             except TimeoutExpired:
                 return 1, None, 'Aborted due to expired timeout=%s (Tip: Increase execution timeout in Formatter settings)' % str(timeout)
             except Exception as e:
@@ -621,9 +621,7 @@ class ArgumentHandler:
             if runtime_type == 'node':
                 for folder in parent_folders:
                     for ex in executables:
-                        paths.append(join(folder, 'node_modules', '.bin', ex))
-                        paths.append(join(folder, 'node_modules', executables[0], 'bin', ex))
-                        paths.append(join(folder, 'node_modules', executables[0], ex))
+                        paths.append(join(folder, 'node_modules', '.bin', ex + '.cmd' if IS_WINDOWS else ex))
             if runtime_type == 'python':
                 pass
             if runtime_type == 'perl':
@@ -688,11 +686,34 @@ class ArgumentHandler:
 
     @classmethod
     def get_iprexe_cmd(cls, view=None, uid=None, interpreters=None, executables=None, runtime_type=None):
+        appdata = None
+        if IS_WINDOWS:
+            appdata_full = os.getenv('APPDATA')
+            if appdata_full:
+                # Extract the portion "AppData/Roaming"
+                appdata = join(basename(dirname(appdata_full)), basename(appdata_full))
+
+        executable_path = cls.get_executable(view=view, uid=uid, executables=executables, runtime_type=runtime_type)
         user_files = OptionHandler.query(CONFIG, None, 'formatters', uid, 'interpreter_path')
+
         if user_files:
-            cmd = [cls.get_interpreter(view=view, uid=uid, interpreters=interpreters), cls.get_executable(view=view, uid=uid, executables=executables, runtime_type=runtime_type)]
+            if runtime_type == 'node':
+                normalized_exec_path = normpath(executable_path)
+                if (
+                    # Locations containing shell scripts *.cmd, *.sp1
+                    # ref: https://2ality.com/2022/08/installing-nodejs-bin-scripts.html
+                    normpath('node_modules/.bin') in normalized_exec_path or  # local unix + windows
+                    (appdata and normpath(appdata + '/npm') in normalized_exec_path and  # global windows
+                     normpath(appdata + '/npm/node_modules') not in normalized_exec_path) or
+                    normpath('/usr/local/bin') in normalized_exec_path  # global unix
+                ):
+                    cmd = [executable_path]  # omit "interpreter_path" as files (*.cmd, *.sp1) already include node
+                else:
+                    cmd = [cls.get_interpreter(view=view, uid=uid, interpreters=interpreters), executable_path]
+            else:
+                cmd = [cls.get_interpreter(view=view, uid=uid, interpreters=interpreters), executable_path]
         else:
-            cmd = [cls.get_executable(view=view, uid=uid, executables=executables, runtime_type=runtime_type)]
+            cmd = [executable_path]
         return cmd if all(cmd) else None
 
     @classmethod
@@ -896,10 +917,10 @@ class SyntaxHandler:
     def _should_exclude(syntax, scope, exclude_syntaxes):
         return (
             exclude_syntaxes
-            and isinstance(exclude_syntaxes, dict)  # noqa: W503
-            and any(  # noqa: W503
+            and isinstance(exclude_syntaxes, dict)
+            and any(
                 (key.strip().lower() in ['all', syntax])
-                and (isinstance(value, list) and any(x in scope for x in value))  # noqa: W503
+                and (isinstance(value, list) and any(x in scope for x in value))
                 for key, value in exclude_syntaxes.items()
             )
         )

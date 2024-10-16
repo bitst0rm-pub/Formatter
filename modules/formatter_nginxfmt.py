@@ -13,7 +13,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/bin/nginxfmt',
     'args': ['--indent', '4'],
     'config_path': None,
-    'comment': 'requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. no config, use args instead. requires python on PATH if omit interpreter_path'
+    'comment': 'Requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. No config, use "args" instead. Omit "interpreter_path" if python already on PATH.'
 }
 
 

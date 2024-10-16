@@ -12,7 +12,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/bin/gleam',
     'args': None,
     'config_path': None,
-    'comment': 'opinionated, no config'
+    'comment': 'Opinionated, no config.'
 }
 
 

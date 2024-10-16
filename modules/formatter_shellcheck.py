@@ -14,7 +14,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'shellcheck_rc.cfg'
     },
-    'comment': 'limited autofix, no formatting capability'
+    'comment': 'Limited autofix, no formatting capability.'
 }
 
 

@@ -10,12 +10,12 @@ MODULE_CONFIG = {
     'type': 'minifier',
     'syntaxes': ['svg'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/svgo',
+    'executable_path': '/path/to/node_modules/.bin/svgo(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'svgomin_rc.js'
     },
-    'comment': 'requires node on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 

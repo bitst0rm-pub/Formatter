@@ -17,7 +17,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'google_java_format_rc.yaml'
     },
-    'comment': 'requires java on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" if java already on PATH.'
 }
 
 

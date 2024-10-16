@@ -16,7 +16,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'juliaformatter_rc.toml'
     },
-    'comment': 'install: julia> using Pkg; Pkg.add("JuliaFormatter"). no executable_path. no args. requires julia on PATH if omit interpreter_path'
+    'comment': 'Install: julia> using Pkg; Pkg.add("JuliaFormatter"). No "executable_path". No "args". Omit "interpreter_path" if julia already on PATH.'
 }
 
 

@@ -15,7 +15,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'php_cs_fixer_rc.php'
     },
-    'comment': 'requires php on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" if php already on PATH.'
 }
 
 

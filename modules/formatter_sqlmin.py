@@ -16,7 +16,7 @@ MODULE_CONFIG = {
     'config_path': {
         'default': 'sqlmin_rc.json'
     },
-    'comment': 'build-in, no executable'
+    'comment': 'Build-in, no "executable_path".'
 }
 
 

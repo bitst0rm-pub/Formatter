@@ -13,7 +13,7 @@ MODULE_CONFIG = {
     'executable_path': None,
     'args': None,
     'config_path': None,
-    'comment': 'build-in, no executable, no config. json not json5 with comments.'
+    'comment': 'Build-in, no "executable_path", no config. Standard JSON, not superset JSON5 with comments.'
 }
 
 

@@ -1,5 +1,7 @@
 [flake8]
 # E501 line too long
 # F405 name may be undefined, or defined from star imports: module
-ignore = E501, F405
+# W503 line break before binary operator
+# W504 line break after binary operator
+ignore = E501, F405, W503, W504
 exclude = .git, __pycache__, libs/*

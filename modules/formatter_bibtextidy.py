@@ -11,12 +11,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['bibtex'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/bibtex-tidy',
+    'executable_path': '/path/to/node_modules/.bin/bibtex-tidy(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'bibtex_tidy_rc.yaml'
     },
-    'comment': 'requires node on PATH if omit interpreter_path.'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 

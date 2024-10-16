@@ -10,10 +10,10 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['js'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/semistandard',
+    'executable_path': '/path/to/node_modules/.bin/semistandard(.cmd on windows)',
     'args': None,
     'config_path': None,
-    'comment': 'requires node on PATH if omit interpreter_path. opinionated, no config'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. Opinionated, no config.'
 }
 
 

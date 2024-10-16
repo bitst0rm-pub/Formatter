@@ -14,7 +14,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/erlfmt (standalone bin) or /path/to/rebar3',
     'args': None,
     'config_path': None,
-    'comment': 'opinionated, no config'
+    'comment': 'Opinionated, no config.'
 }
 
 

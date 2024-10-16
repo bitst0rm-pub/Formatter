@@ -13,7 +13,7 @@ MODULE_CONFIG = {
     'executable_path': '/path/to/bin/rufo',
     'args': None,
     'config_path': None,
-    'comment': 'requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. opinionated, no config. requires ruby on PATH if omit interpreter_path'
+    'comment': 'Requires "environ": {"GEM_PATH": ["/path/to/dir/ruby"]}. Opinionated, no config. Omit "interpreter_path" if ruby already on PATH.'
 }
 
 

@@ -10,12 +10,12 @@ MODULE_CONFIG = {
     'type': 'beautifier',
     'syntaxes': ['css', 'scss', 'sass', 'less'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/node_modules/.bin/csscomb',
+    'executable_path': '/path/to/node_modules/.bin/csscomb(.cmd on windows)',
     'args': None,
     'config_path': {
         'default': 'csscomb_rc.json'
     },
-    'comment': 'requires node on PATH if omit interpreter_path'
+    'comment': 'Omit "interpreter_path" as files in /node_modules/.bin/ already point to node.'
 }
 
 
