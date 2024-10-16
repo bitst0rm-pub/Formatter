@@ -35,6 +35,10 @@ contexts:
         # Matches paths on Windows, MacOS, and Linux
         - match: '([a-zA-Z]:\\[^*|"<>?\n\r]*|\/[^*|"<>?\n\r]*)'
           scope: string.path.console
+        # Match content inside quote ""
+        - match: '"([^"]+)"'
+          captures:
+            1: string.console
         - match: '\n'
           pop: true
 
