@@ -2,6 +2,17 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.2)] - 2024-10-16
+
+### 🐛 Bug Fixes
+
+- [`b93d14e`](https://github.com/bitst0rm-pub/Formatter/commit/b93d14e24fde0f0f8a67b792dd98d99ccb6b014e) Revert to the initial code (closes [#67](https://github.com/bitst0rm-pub/Formatter/issues/67)) Thanks [@karma-sun](https://github.com/karma-sun)
+
+### ⚙️ Miscellaneous Tasks
+
+- [`3b4cf45`](https://github.com/bitst0rm-pub/Formatter/commit/3b4cf455fb0731fa3570c78f4712ca23fffe0d18) *(console)* Add rule to match content inside double quote
+- [`686f576`](https://github.com/bitst0rm-pub/Formatter/commit/686f576dbe9402fb217e5346b4df7a154851d5db) Omit `"interpreter_path"` in cmd as files in `/node_modules/.bin/(.cmd,.sp1)` already point to node
+
 ## [[1.7.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.1)] - 2024-10-13
 
 ### 🚀 Features
