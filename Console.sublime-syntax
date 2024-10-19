@@ -22,7 +22,7 @@ contexts:
           scope: constant.character.escape.console
         - match: '\[STATUS\]'
           scope: constant.character.escape.console
-        - match: '(Command|Fixed command):\s*\['
+        - match: '(Command|Fixed command):\s*[\[{]'
           push: command_arguments
         - match: 'Extended commands:\s*\['
           push: extended_arguments
