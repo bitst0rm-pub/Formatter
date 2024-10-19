@@ -851,6 +851,15 @@
                         }
                     },
                     {
+                        "caption": "YAML",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yamlmax",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "YAPF",
                         "mnemonic": "Y",
                         "command": "run_format",

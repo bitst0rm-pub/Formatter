@@ -307,7 +307,7 @@ def build_formatter_sublime_commands_children(formatter_map):
 def build_formatter_sublime_commands(formatter_map):
     sublime_commands = [
         OrderedDict([
-            ('caption', 'Formatter: Settings'),
+            ('caption', 'Preferences: Formatter Settings'),
             ('command', 'edit_settings'),
             ('args', OrderedDict([
                 ('base_file', '${packages}/Formatter/Formatter.sublime-settings'),
@@ -315,41 +315,41 @@ def build_formatter_sublime_commands(formatter_map):
             ])),
         ]),
         OrderedDict([
-            ('caption', 'Formatter: About'),
+            ('caption', 'Preferences: Formatter About'),
             ('command', 'about')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Changelog'),
+            ('caption', 'Preferences: Formatter Changelog'),
             ('command', 'open_changelog')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Modules Info'),
+            ('caption', 'Preferences: Formatter Modules Info'),
             ('command', 'modules_info')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Browser Configs'),
+            ('caption', 'Preferences: Formatter Browser Configs'),
             ('command', 'browser_configs')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Key Bindings'),
+            ('caption', 'Preferences: Formatter Key Bindings'),
             ('command', 'key_bindings')
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Backup Settings'),
+            ('caption', 'Preferences: Formatter Backup Settings'),
             ('command', 'backup_manager'),
             ('args', OrderedDict([
                 ('type', 'backup')
             ]))
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Restore Settings'),
+            ('caption', 'Preferences: Formatter Restore Settings'),
             ('command', 'backup_manager'),
             ('args', OrderedDict([
                 ('type', 'restore')
             ]))
         ]),
         OrderedDict([
-            ('caption', 'Formatter: Quick Options'),
+            ('caption', 'Preferences: Formatter Quick Options'),
             ('command', 'quick_options')
         ]),
         OrderedDict([
@@ -491,7 +491,7 @@ def build_formatter_sublime_settings_children(formatter_map):
                 child['config_path'] = {key: join('${packages}', 'User', ASSETS_DIRECTORY, 'config', value) for key, value in config['config_path'].items()}
                 default_value = child['config_path'].pop('default', None)
                 sorted_config_path = OrderedDict(sorted(child['config_path'].items()))
-                child['config_path'] = OrderedDict([('ignore_dotfiles', False), *sorted_config_path.items()])
+                child['config_path'] = OrderedDict([('ignore_dotfiles', False)] + list(sorted_config_path.items()))
                 if default_value:
                     child['config_path']['default'] = default_value
 

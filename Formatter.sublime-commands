@@ -1,6 +1,6 @@
 [
     {
-        "caption": "Formatter: Settings",
+        "caption": "Preferences: Formatter Settings",
         "command": "edit_settings",
         "args": {
             "base_file": "${packages}/Formatter/Formatter.sublime-settings",
@@ -8,41 +8,41 @@
         }
     },
     {
-        "caption": "Formatter: About",
+        "caption": "Preferences: Formatter About",
         "command": "about"
     },
     {
-        "caption": "Formatter: Changelog",
+        "caption": "Preferences: Formatter Changelog",
         "command": "open_changelog"
     },
     {
-        "caption": "Formatter: Modules Info",
+        "caption": "Preferences: Formatter Modules Info",
         "command": "modules_info"
     },
     {
-        "caption": "Formatter: Browser Configs",
+        "caption": "Preferences: Formatter Browser Configs",
         "command": "browser_configs"
     },
     {
-        "caption": "Formatter: Key Bindings",
+        "caption": "Preferences: Formatter Key Bindings",
         "command": "key_bindings"
     },
     {
-        "caption": "Formatter: Backup Settings",
+        "caption": "Preferences: Formatter Backup Settings",
         "command": "backup_manager",
         "args": {
             "type": "backup"
         }
     },
     {
-        "caption": "Formatter: Restore Settings",
+        "caption": "Preferences: Formatter Restore Settings",
         "command": "backup_manager",
         "args": {
             "type": "restore"
         }
     },
     {
-        "caption": "Formatter: Quick Options",
+        "caption": "Preferences: Formatter Quick Options",
         "command": "quick_options"
     },
     {
@@ -782,6 +782,14 @@
         "command": "run_format",
         "args": {
             "uid": "uncrustify",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with YAML",
+        "command": "run_format",
+        "args": {
+            "uid": "yamlmax",
             "type": "beautifier"
         }
     },
