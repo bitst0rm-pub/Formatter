@@ -851,6 +851,15 @@
                         }
                     },
                     {
+                        "caption": "YAMLfmt",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yamlfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "YAML",
                         "mnemonic": "Y",
                         "command": "run_format",

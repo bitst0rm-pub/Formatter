@@ -1,26 +1,23 @@
 from ..core import Module
 
-EXECUTABLES = ['uncrustify']
-DOTFILES = ['.uncrustify.cfg', 'uncrustify.cfg']
+EXECUTABLES = ['yamlfmt']
+DOTFILES = ['.yamlfmt', '.yamlfmt.yaml', '.yamlfmt.yml', 'yamlfmt.yml', 'yamlfmt.yaml']
 MODULE_CONFIG = {
-    'source': 'https://github.com/uncrustify/uncrustify',
-    'name': 'Uncrustify',
-    'uid': 'uncrustify',
+    'source': 'https://github.com/google/yamlfmt',
+    'name': 'YAMLfmt',
+    'uid': 'yamlfmt',
     'type': 'beautifier',
-    'syntaxes': ['c', 'c++', 'cs', 'd', 'es', 'objc', 'objc++', 'java', 'pawn', 'vala'],
+    'syntaxes': ['yaml'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/bin/uncrustify',
+    'executable_path': '/path/to/bin/yamlfmt',
     'args': None,
     'config_path': {
-        'objc': 'uncrustify_objc_rc.cfg',
-        'objc++': 'uncrustify_objc_rc.cfg',
-        'java': 'uncrustify_sun_rc.cfg',
-        'default': 'uncrustify_defaults_rc.cfg'
+        'default': 'yamlfmt_rc.yaml'
     }
 }
 
 
-class UncrustifyFormatter(Module):
+class YamlfmtFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -35,13 +32,9 @@ class UncrustifyFormatter(Module):
 
         path = self.get_config_path()
         if path:
-            cmd.extend(['-c', path])
+            cmd.extend(['-conf', path])
 
-        syntax_mapping = {'c++': 'cpp', 'objc': 'oc', 'objc++': 'oc+'}
-        syntax = self.get_assigned_syntax()
-        language = syntax_mapping.get(syntax, syntax)
-
-        cmd.extend(['-l', language])
+        cmd.extend(['-no_global_conf', '-in', '--'])
 
         return cmd
 
