@@ -1,0 +1,54 @@
+{
+    "default_style": null,        // Specifies the default style of the scalar.
+                                  // Possible values: null, "", "'", "\"", "|", ">"
+                                  // If null, the YAML emitter will choose the style automatically.
+
+    "default_flow_style": false,  // Controls whether to use flow style (compact, JSON-like format) or block style.
+                                  // Possible values: null, true, false
+                                  // If false (default), block style is used (e.g., for lists and dictionaries).
+
+    "encoding": null,             // Defines the character encoding for the output.
+                                  // If null, it uses the default "utf-8" encoding.
+                                  // Can be set to "utf-16", "ascii", etc.
+                                  // Note: Setting "encoding": "utf-8" may produce Latin-encoded bytes
+                                  //       unless "allow_unicode": true is set.
+
+    "explicit_start": null,       // Whether to include the explicit YAML document start marker "---".
+                                  // If true, "---" will be added at the start of the document.
+                                  // If null or false, it's optional.
+
+    "explicit_end": null,         // Whether to include the explicit YAML document end marker "...".
+                                  // If true, the end marker will be added.
+                                  // If null or false, it won't be included.
+
+    "version": null,              // Specifies the YAML version for the output.
+                                  // If null, the default version (typically 1.1) is used.
+                                  // You can specify a version explicitly, such as [1, 1] for version 1.1.
+
+    "tags": null,                 // Custom YAML tag directives can be defined here.
+                                  // If null, default tags (e.g., !!map, !!seq) are used.
+                                  // Useful for custom serialization/deserialization rules.
+
+    "canonical": null,            // If true, forces canonical YAML output.
+                                  // Canonical format is fully explicit (e.g., tags for everything).
+                                  // Typically set to false or null for a more readable format.
+
+    "indent": null,               // Sets the indentation level for nested structures (e.g., dictionaries, lists).
+                                  // If null, defaults to 2 spaces.
+                                  // You can set a custom indent, e.g., 4 for 4 spaces.
+
+    "width": null,                // Preferred line width for block style documents.
+                                  // If null, defaults to 80 characters.
+                                  // Longer lines will wrap.
+
+    "allow_unicode": null,        // If true, allows Unicode characters in the output.
+                                  // If false, non-ASCII characters will be escaped (e.g., "\uXXXX").
+                                  // If null, Unicode is allowed by default.
+                                  // Important for correct UTF-8 behavior when "encoding" option is set.
+
+    "line_break": null,           // Defines the line break style (e.g., "\n" for Unix, "\r\n" for Windows).
+                                  // If null, defaults to the platform's line break style.
+
+    "sort_keys": true             // If true, dictionary keys are sorted alphabetically in the output.
+                                  // If false, preserves the original key order from the input.
+}
