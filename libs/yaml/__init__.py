@@ -8,7 +8,7 @@ from .nodes import *
 from .loader import *
 from .dumper import *
 
-__version__ = '6.0.1'
+__version__ = '7.0.0.dev0'
 try:
     from .cyaml import *
     __with_libyaml__ = True
@@ -344,7 +344,17 @@ def add_multi_representer(data_type, multi_representer, Dumper=Dumper):
     """
     Dumper.add_multi_representer(data_type, multi_representer)
 
+def experimental_12_Core_loader():
+    return loader._12_CoreLoader
+def experimental_12_JSON_loader():
+    return loader._12_JSONLoader
+
+def experimental_12_Core_dumper():
+    return dumper._12_CoreDumper
+def experimental_12_JSON_dumper():
+    return dumper._12_JSONDumper
 class YAMLObjectMetaclass(type):
+
     """
     The metaclass for YAMLObject.
     """
