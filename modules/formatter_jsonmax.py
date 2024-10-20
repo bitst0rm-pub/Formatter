@@ -27,11 +27,11 @@ class JsonmaxFormatter(Module):
         super().__init__(*args, **kwargs)
 
     def brace_newline(self, result):
-        brace_newline = re.compile(r'^(^([ \t]*)(\"[^\"]*\"):)\s*([{])', re.MULTILINE)  # credit to Pretty JSON
+        brace_newline = re.compile(r'^(^([ \t]*)(\"[^\"]*\"):)\s*([{])', re.MULTILINE)  # regex from Pretty JSON
         return brace_newline.sub(r'\1\n\2\4', result)
 
     def bracket_newline(self, result):
-        bracket_newline = re.compile(r'^(^([ \t]*)(\"[^\"]*\"):)\s*([\[])', re.MULTILINE)  # credit to Pretty JSON
+        bracket_newline = re.compile(r'^(^([ \t]*)(\"[^\"]*\"):)\s*([\[])', re.MULTILINE)  # regex from Pretty JSON
         return bracket_newline.sub(r'\1\n\2\4', result)
 
     def keep_arrays_single_line(self, result, max_length, array_bracket_spacing=False):
