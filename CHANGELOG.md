@@ -2,6 +2,26 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.3)] - 2024-10-20
+
+### 🚀 Features
+
+- [`bbd38b9`](https://github.com/bitst0rm-pub/Formatter/commit/bbd38b9e45126e258ff9ed22e6e341d53c3a25ef) Add `yamlmax` (build-in) to supported plugins
+- [`2c7f09c`](https://github.com/bitst0rm-pub/Formatter/commit/2c7f09c72f009202fde3aa02e24838e8d9c2d20a) Add `yq` as converter to the supported plugins for `yqxtobase64`, `yqxtocsv`, `yqxtojson`, `yqxtolua`, `yqxtoprops`, `yqxtoshell`, `yqxtotoml`, `yqxtotsv`, `yqxtouri`, `yqxtoxml`, `yqxtoyaml`
+- [`455b7f4`](https://github.com/bitst0rm-pub/Formatter/commit/455b7f4c1c1cdf09ddb04326d767cd7f38622d08) *(jsonmax)* Add new options: `"item_separator"`, `"key_separator"`, `"brace_newline"`, `"bracket_newline"`, `"array_bracket_spacing"`, `"keep_arrays_single_line"`, `"max_arrays_line_length"`
+
+### 🐛 Bug Fixes
+
+- [`debcd33`](https://github.com/bitst0rm-pub/Formatter/commit/debcd33feb9c40f0c7e9f7ab8b292376561780f9) Fix the unpacked `*` operator for ST3
+
+### ⚙️ Miscellaneous Tasks
+
+- [`da5c40f`](https://github.com/bitst0rm-pub/Formatter/commit/da5c40faac794e9d69986aa81e432abfb96f82c6) Add `yamlfmt` to the supported plugins
+- [`26b4312`](https://github.com/bitst0rm-pub/Formatter/commit/26b43128a5f0661cf76fec5c0a6904da1e41a0cd) *(console)* Add dict to command type
+- [`5cfed1f`](https://github.com/bitst0rm-pub/Formatter/commit/5cfed1f778a1be44c466bdfb3f0f3ef10d948d06) *(ci)* Disable name convention check
+- [`1aa4350`](https://github.com/bitst0rm-pub/Formatter/commit/1aa435069120623f5e075740878b4221aac06855) Remove `modules` from `.isort.cfg`
+- [`9a88d7f`](https://github.com/bitst0rm-pub/Formatter/commit/9a88d7f01238e1c60c2054bf74d4ca536e24d395) Update PyYAML to 7.0.0.dev0 with YAML 1.2 support
+
 ## [[1.7.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.2)] - 2024-10-16
 
 ### 🐛 Bug Fixes
