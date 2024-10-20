@@ -307,7 +307,7 @@
             // Note: The Generic method requires a Sublime Text restart after adding or changing
             // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.
 
-            // The Capitalized plugin name in PascalCase style (convention) (REQUIRED!)
+            // The Capitalized plugin name, preferred in PascalCase style (convention) (REQUIRED!)
             // This will appear in the Sublime menu and other commands.
             "name": "ExampleGeneric",
 
@@ -1839,6 +1839,127 @@
                 "default": "${packages}/User/formatter.assets/config/terser_rc.json"
             }
             /* Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. */
+        },
+        "yqxtobase64": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtocsv": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtojson": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtolua": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtoprops": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtoshell": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtotoml": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtotsv": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtouri": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtoxml": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
+        },
+        "yqxtoyaml": {
+            "info": "https://github.com/mikefarah/yq",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "new_file_on_format": false,
+            "dir_format": false,
+            "syntaxes": ["yaml", "json", "csv", "tsv", "xml", "toml", "lua", "text"],
+            "executable_path": ["/path/to/bin/yq"]
+            /* No "config_path", use "args" instead. */
         },
         "d2": {
             "info": "https://github.com/terrastruct/d2",

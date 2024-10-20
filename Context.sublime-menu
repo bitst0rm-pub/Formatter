@@ -869,6 +869,97 @@
                 "caption": "-"
             },
             {
+                "caption": "Yq X->BASE64",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtobase64",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->CSV",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtocsv",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->JSON",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtojson",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->LUA",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtolua",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->PROPS",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtoprops",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->SHELL",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtoshell",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->TOML",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtotoml",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->TSV",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtotsv",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->URI",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtouri",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->XML",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtoxml",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Yq X->YAML",
+                "command": "run_format",
+                "args": {
+                    "uid": "yqxtoyaml",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "-"
+            },
+            {
                 "caption": "D2",
                 "command": "run_format",
                 "args": {

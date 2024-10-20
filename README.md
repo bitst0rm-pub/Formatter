@@ -156,6 +156,12 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | YAML | yamlmax **`(build-in)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
+In addition to the **`(build-in)`** `jsonmax` and `yamlmax`, the following essential converters are recommended:
+
+| Converter | Input | Output | Req. | Config |
+| ------ | :------: | :------: | :------: | :------: |
+| [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
+
 > [!TIP]
 >
 > - [Prettier](https://github.com/prettier/prettier) and [Stylelint](https://github.com/stylelint/stylelint) can collaborate to format `CSS`
@@ -612,7 +618,7 @@ The following setting details - along with their default values and examples - a
                 // Note: The Generic method requires a Sublime Text restart after adding or changing
                 // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.
 
-                // The Capitalized plugin name in PascalCase style (convention) (REQUIRED!)
+                // The Capitalized plugin name, preferred in PascalCase style (convention) (REQUIRED!)
                 // This will appear in the Sublime menu and other commands.
                 "name": "ExampleGeneric",
 
@@ -998,6 +1004,8 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 
 > [!IMPORTANT]
 >
+> It is recommended to add an arbitrary char to your `uid` to prevent your plugin from being overwritten by future Formatter updates that may introduce new plugins with the same `uid`.<br />
+>
 > For plugins that rely on the following special local config dotfiles:<br />
 > `pyproject.toml`, `.pycodestyle`, `setup.cfg`, `tox.ini`, `.pep8`, `.editorconfig`<br />
 > you should use a `uid` matching the relevant section name, such as `[tool.autopep8]`. Otherwise, Formatter will not be able to identify and apply the correct local config dotfile.<br />
@@ -1038,7 +1046,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
    DF_IDENT = []                                               # optional: a list of keywords to identify special local config dotfiles
    MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
        'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
-       'name': 'MyFirstPlugin',                                # REQUIRED: a Capitalized plugin name of your choice, in PascalCase style (convention)
+       'name': 'MyFirstPlugin',                                # REQUIRED: a Capitalized plugin name of your choice, preferred in PascalCase style (convention)
        'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
        'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
                                                                #           OR any string of your choice (for private purposes).

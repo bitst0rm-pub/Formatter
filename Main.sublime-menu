@@ -983,6 +983,108 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Yq X->BASE64",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtobase64",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->CSV",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtocsv",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->JSON",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtojson",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->LUA",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtolua",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->PROPS",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtoprops",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->SHELL",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtoshell",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->TOML",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtotoml",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->TSV",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtotsv",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->URI",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtouri",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->XML",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtoxml",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yq X->YAML",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yqxtoyaml",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "-"
+                    },
+                    {
                         "caption": "D2",
                         "mnemonic": "D",
                         "command": "run_format",

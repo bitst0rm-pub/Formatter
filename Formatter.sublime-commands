@@ -898,6 +898,94 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Yq X->BASE64",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtobase64",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->CSV",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtocsv",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->JSON",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtojson",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->LUA",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtolua",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->PROPS",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtoprops",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->SHELL",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtoshell",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->TOML",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtotoml",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->TSV",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtotsv",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->URI",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtouri",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->XML",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtoxml",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yq X->YAML",
+        "command": "run_format",
+        "args": {
+            "uid": "yqxtoyaml",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Visualize with D2",
         "command": "run_format",
         "args": {
