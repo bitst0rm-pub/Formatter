@@ -21,7 +21,7 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
   - with options to _exclude_ dirs, files, extensions, syntaxes.
 - Capable to format on Paste.
   - dito
-- Shared config files available for each 3rd-party plugin.
+- Shared config files available to get started.
 - Displays real-time word and character counts.
 - Automatically remembers and restores text position.
 - Customizable and extendable through 2 methods to add **_your_** own plugins:
@@ -155,6 +155,8 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | -- | Node.js | -- |
 | YAML | yamlmax **`(build-in)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
+
+This might be of interest:
 
 | Converter | Input | Output | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: |
@@ -890,6 +892,24 @@ Starting from version 1.4.0, Formatter introduces a configuration mechanism to a
 This is a one-command/one-keybinding feature. Both the app and context menu will now indicate whether a current folder is ready for Formatter with a new item: `Auto Format File`
 
 ## Per-project Formatting
+
+Project-specific formatting can be configured using 3 methods in the following order:
+
+- User project config dotfile.
+- Third-party plugin project config dotfile.
+- Sublime Text project config file (`.sublime-project`)
+
+1. **User project config dotfile**:
+
+This file is actually the config file you specify in the `"config_path"` setting, but renamed and placed in the root folder of your project.<br />
+The naming pattern should follow: `.sf` + `uid` + `rc`<br />
+For example: `.sfautopep8rc` (`sf` = Sublime Formatter)
+
+2. **Third-party plugin project config dotfile**:
+
+This refers to common dotfiles used by popular plugins, such as `.prettierrc`, `.clang-format`, etc.
+
+3. **Sublime Text project config file**:
 
 Formatter is able to add and override any setting on per-project basis using `.sublime-project` files.<br />
 You might want to restart Sublime Text to apply the changes to the `.sublime-project` file.

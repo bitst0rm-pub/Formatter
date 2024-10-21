@@ -788,6 +788,11 @@ class ArgumentHandler:
         for folder in parent_folders:
             if folder == is_home:
                 return None
+
+            user_dotfile = join(folder, '.sf' + uid + 'rc')
+            if FileHandler.is_readable(file=user_dotfile):
+                return user_dotfile
+
             for dotfile in dotfiles:
                 path = join(folder, dotfile)
                 if FileHandler.is_readable(file=path):
