@@ -37,17 +37,17 @@ In _theory_, it can also serve as a platform to transform any form of text, beyo
   - `"new_file_on_format"` will not be implemented or is disabled.
   - Third-party plugins **must** support exporting `PNG` format as Sublime Text only supports `PNG`, `JPG`, and `GIF` images.
 
-_Formatter in action: Text-to-Text..._
+_**Formatter in action:**_
 
-![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png)
+| _Text-to-Text_ | _Text-to-Image_ |
+| :------------: | :------------: |
+| ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot1.png) | ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png) |
 
-_Formatter in action: Text-to-Image..._
+| _Pretty-printing..._ | _Converting..._ |
+| :------------: | :------------: |
+| ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot3.png) | ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot4.png) |
 
-![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot2.png)
-
-_Formatter in action: Pretty-printing... with [theme-dosa](https://github.com/bitst0rm-pub/theme-dosa) and [color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two)_
-
-![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot3.png)
+<sub>Theme used: **[theme-dosa](https://github.com/bitst0rm-pub/theme-dosa)** and **[color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two)**</sub>
 
 ## Guides
 
@@ -155,8 +155,6 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | -- | Node.js | -- |
 | YAML | yamlmax **`(build-in)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
-
-In addition to the **`(build-in)`** `jsonmax` and `yamlmax`, the following essential converters are recommended:
 
 | Converter | Input | Output | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: |
