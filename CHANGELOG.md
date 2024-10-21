@@ -2,6 +2,22 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.4)] - 2024-10-21
+
+### 🚀 Features
+
+- [`a939f77`](https://github.com/bitst0rm-pub/Formatter/commit/a939f77471988a952228faf58e37c90be374ca7f) Add `yj` as converter to the supported plugins for `yjxtoyaml`, `yjxtojson`, `yjxtotoml`, `yqxtohcl`
+- [`d9697c5`](https://github.com/bitst0rm-pub/Formatter/commit/d9697c5de1cc6ba8aeaf022245ad25ee7af070cd) Add support for `User Project Config Dotfile` with file pattern `.sf` + `uid` + `rc`, [@see](https://github.com/see) README.md > Per-project Formatting
+
+### 🐛 Bug Fixes
+
+- [`9ddad49`](https://github.com/bitst0rm-pub/Formatter/commit/9ddad4971c3b3eba2684e9e32e68f44ff58a3a42) Fix `jsonmax` and `yamlmax`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`9073321`](https://github.com/bitst0rm-pub/Formatter/commit/90733217c1f7f2d23e9d449e05316e8f1b546224) Update README.md
+- [`b8e6707`](https://github.com/bitst0rm-pub/Formatter/commit/b8e670704ee17f77ac1c51529e9126684eccf3f5) Update sublime-settings with category comment
+
 ## [[1.7.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.3)] - 2024-10-20
 
 ### 🚀 Features
