@@ -387,6 +387,7 @@
         },
         // -- END of explanation --
 
+        // -- BEAUTIFIERS --
         "appleswiftformat": {
             "info": "https://github.com/apple/swift-format",
             "enable": false,
@@ -1715,6 +1716,8 @@
             }
             /* Requires java on PATH to use zprint-filter. MacOS: another zprint already exists, avoid to use this same name. */
         },
+
+        // -- MINIFIERS --
         "cleancss": {
             "info": "https://github.com/jakubpawlowicz/clean-css-cli",
             "enable": false,
@@ -1840,6 +1843,8 @@
             }
             /* Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. */
         },
+
+        // -- CONVERTERS --
         "yqxtobase64": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
@@ -1961,6 +1966,8 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
+
+        // -- GRAPHICS --
         "d2": {
             "info": "https://github.com/terrastruct/d2",
             "enable": false,

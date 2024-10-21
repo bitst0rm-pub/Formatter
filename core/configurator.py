@@ -894,15 +894,22 @@ def build_formatter_sublime_settings(formatter_map):
                     ('pdf', NoIndent(['{{e}}', '--config', '{{c}}', '--blabla-format', 'pdf2001', '--output', '{{o}}']))
                 ]))
             ])),
-            ('__COMMENT__end_explanation', '''// -- END of explanation --
-            ''')
+            ('__COMMENT__end_explanation', '// -- END of explanation --')
         ]))
     ])
 
     beautifiers, minifiers, converters, graphics, custom = build_formatter_sublime_settings_children(formatter_map)
-    categories = [beautifiers, minifiers, converters, graphics, custom]
-    for category in categories:
+    categories = [
+        ('beautifiers', beautifiers),
+        ('minifiers', minifiers),
+        ('converters', converters),
+        ('graphics', graphics),
+        ('custom', custom)
+    ]
+    for category_name, category in categories:
         sorted_category = sorted(category, key=lambda x: list(x.keys())[0])
+        if category:
+            sublime_settings['formatters'].update({'__COMMENT__cat_' + category_name: '\n        // -- ' + category_name.upper() + ' --'})
         for x in sorted_category:
             sublime_settings['formatters'].update(x)
 
