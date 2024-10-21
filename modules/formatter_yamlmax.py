@@ -25,6 +25,8 @@ class YamlmaxFormatter(Module):
         super().__init__(*args, **kwargs)
 
     def format(self):
+        cmd = {}
+
         path = self.get_config_path()
         if path:
             with open(path, 'r', encoding='utf-8') as file:

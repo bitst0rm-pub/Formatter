@@ -63,6 +63,8 @@ class JsonmaxFormatter(Module):
         return result
 
     def format(self):
+        options = {'ensure_ascii': False, 'indent': 4}
+
         path = self.get_config_path()
         if path:
             with open(path, 'r', encoding='utf-8') as file:
@@ -77,7 +79,7 @@ class JsonmaxFormatter(Module):
             if 'separators' in cmd and len(cmd['separators']) == 2:
                 item_separator, key_separator = cmd['separators']
 
-            standard_options = {
+            options = {
                 'indent': cmd.get('indent', 4),
                 'sort_keys': cmd.get('sort_keys', False),
                 'skipkeys': cmd.get('skipkeys', False),
@@ -90,7 +92,7 @@ class JsonmaxFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             obj = json.loads(text)
-            result = json.dumps(obj, **standard_options)
+            result = json.dumps(obj, **options)
 
             if cmd.get('brace_newline', False):
                 result = self.brace_newline(result)
