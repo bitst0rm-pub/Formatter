@@ -898,6 +898,38 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Yj X->HCL",
+        "command": "run_format",
+        "args": {
+            "uid": "yjxtohcl",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yj X->JSON",
+        "command": "run_format",
+        "args": {
+            "uid": "yjxtojson",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yj X->TOML",
+        "command": "run_format",
+        "args": {
+            "uid": "yjxtotoml",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Yj X->YAML",
+        "command": "run_format",
+        "args": {
+            "uid": "yjxtoyaml",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Yq X->BASE64",
         "command": "run_format",
         "args": {

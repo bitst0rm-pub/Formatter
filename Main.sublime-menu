@@ -983,6 +983,42 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Yj X->HCL",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yjxtohcl",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yj X->JSON",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yjxtojson",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yj X->TOML",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yjxtotoml",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Yj X->YAML",
+                        "mnemonic": "Y",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "yjxtoyaml",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Yq X->BASE64",
                         "mnemonic": "Y",
                         "command": "run_format",
