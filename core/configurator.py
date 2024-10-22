@@ -714,17 +714,17 @@ def build_formatter_sublime_settings(formatter_map):
             // Syntax support based on the scope name, not file extension.
             // Syntax name is part of the scope name and can be retrieved from:
             // Tools > Developer > Show Scope Name
-            // End-users are advised to consult plugin manpages to add more syntaxes.'''),
+            // End-users are advised to consult plugin manpages to add more syntaxes.
+            // The wildcard syntax "*" will accept any syntax, regardless of syntax type.'''),
                 ('syntaxes', NoIndent(['css', 'html', 'js', 'php'])),
                 ('__COMMENT__exclude_syntaxes', '''
-            // Exclude a list of syntaxes for an individual syntax key.
-            // A list of excluded syntaxes can be applied to all syntax definitions.
-            // In this case, the key must be named: "all".
+            // Exclude a list of syntaxes associated with an individual syntax key.
+            // The wildcard syntax "*" will accept any key, regardless of syntax type.
             // This option is useful to exclude part of the scope selector.
             // For example: text.html.markdown, want html but wish to filter out html.markdown.'''),
                 ('exclude_syntaxes', OrderedDict([
                     ('html', NoIndent(['markdown'])),
-                    ('all', NoIndent(['markdown']))
+                    ('*', NoIndent(['markdown']))
                 ])),
                 ('__COMMENT__interpreter_path', '''
             // Path to the interpreter.

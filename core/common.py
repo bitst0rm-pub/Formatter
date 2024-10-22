@@ -905,6 +905,10 @@ class SyntaxHandler:
                         if cls._should_exclude(syntax, scope, exclude_syntaxes):
                             return None
                         return syntax
+
+            if '*' in syntaxes:
+                return '*'
+
         return None
 
     @staticmethod
@@ -924,7 +928,7 @@ class SyntaxHandler:
             exclude_syntaxes
             and isinstance(exclude_syntaxes, dict)
             and any(
-                (key.strip().lower() in ['all', syntax])
+                (key.strip().lower() in ['all', '*', syntax])  # @deprcated 'all'
                 and (isinstance(value, list) and any(x in scope for x in value))
                 for key, value in exclude_syntaxes.items()
             )
