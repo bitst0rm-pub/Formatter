@@ -119,6 +119,8 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sqlmin", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "svgomin", "type": "minifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "terser", "type": "minifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfx2base64dec", "type": "converter"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfx2base64enc", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yjx2hcl", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yjx2json", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yjx2toml", "type": "converter"}},

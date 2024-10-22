@@ -983,6 +983,24 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Sf X->BASE64 (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2base64dec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->BASE64 (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2base64enc",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Yj X->HCL",
                         "mnemonic": "Y",
                         "command": "run_format",

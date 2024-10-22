@@ -162,6 +162,8 @@ This might be of interest:
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
+| sfx2base64enc **`(build-in)`** | any | TEXT | None | -- |
+| sfx2base64dec **`(build-in)`** | any | TEXT | None | -- |
 
 > [!TIP]
 >
