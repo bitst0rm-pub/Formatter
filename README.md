@@ -158,12 +158,14 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 This might be of interest:
 
-| Converter | Input | Output | Req. | Config |
+| Converter | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
-| sfx2base64enc **`(build-in)`** | any | TEXT | None | -- |
-| sfx2base64dec **`(build-in)`** | any | TEXT | None | -- |
+| sfx2base64enc **`(build-in)`** | any | TEXT | None | b64 |
+| sfx2base64dec **`(build-in)`** | any | TEXT | None | b64 |
+| sfx2urienc **`(build-in)`** | any | TEXT | None | uri |
+| sfx2uridec **`(build-in)`** | any | TEXT | None | uri |
 
 > [!TIP]
 >
