@@ -914,6 +914,22 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf X->URI (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2uridec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->URI (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2urienc",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Yj X->HCL",
         "command": "run_format",
         "args": {

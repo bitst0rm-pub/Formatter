@@ -885,6 +885,22 @@
                 }
             },
             {
+                "caption": "Sf X->URI (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2uridec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->URI (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2urienc",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Yj X->HCL",
                 "command": "run_format",
                 "args": {

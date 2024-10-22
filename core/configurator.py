@@ -452,7 +452,7 @@ def build_formatter_sublime_settings_children(formatter_map):
                 ('enable', False),
                 ('format_on_save', False),
                 ('format_on_paste', False),
-                ('new_file_on_format', False),
+                # ('new_file_on_format', False),
                 ('dir_format', False),
                 ('syntaxes', NoIndent(config['syntaxes']))
             ])

@@ -1001,6 +1001,24 @@
                         }
                     },
                     {
+                        "caption": "Sf X->URI (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2uridec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->URI (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2urienc",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Yj X->HCL",
                         "mnemonic": "Y",
                         "command": "run_format",
