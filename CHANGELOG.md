@@ -2,6 +2,17 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.5)] - 2024-10-22
+
+### 🚀 Features
+
+- [`f9ad7c5`](https://github.com/bitst0rm-pub/Formatter/commit/f9ad7c5689ab8938845d03ac1237ca56f243afca) Add `sfx2base64enc` and `sfx2base64dec` to the supported plugins
+
+### ⚙️ Miscellaneous Tasks
+
+- [`84b9cdd`](https://github.com/bitst0rm-pub/Formatter/commit/84b9cddecb42daddc3068e0ce617711470b4bc4c) Add wildcard `"*"` to "syntaxes" and "exclude_syntaxes" options to accept any syntax
+- [`b062a91`](https://github.com/bitst0rm-pub/Formatter/commit/b062a91c55da254e695bd990264fd49b9fa5a515) Change uid pattern from `yjto...` to `yj2...` and `yqto...` to `yq2...`
+
 ## [[1.7.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.4)] - 2024-10-21
 
 ### 🚀 Features
