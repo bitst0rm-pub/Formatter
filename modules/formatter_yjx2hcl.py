@@ -1,22 +1,22 @@
 from ..core import Module
 
-EXECUTABLES = ['yq']
+EXECUTABLES = ['yj']
 DOTFILES = []
 MODULE_CONFIG = {
-    'source': 'https://github.com/mikefarah/yq',
-    'name': 'Yq X->JSON',
-    'uid': 'yqxtojson',
+    'source': 'https://github.com/sclevine/yj',
+    'name': 'Yj X->HCL',
+    'uid': 'yjx2hcl',
     'type': 'converter',
-    'syntaxes': ['yaml', 'json', 'csv', 'tsv', 'xml', 'toml', 'lua', 'text'],
+    'syntaxes': ['yaml', 'json', 'toml', 'hcl'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/bin/yq',
+    'executable_path': '/path/to/bin/yj',
     'args': None,
     'config_path': None,
     'comment': 'No "config_path", use "args" instead.'
 }
 
 
-class YqxtojsonFormatter(Module):
+class Yjx2hclFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -29,14 +29,19 @@ class YqxtojsonFormatter(Module):
 
         cmd.extend(self.get_args())
 
-        assigned_syntax = self.get_assigned_syntax()
-        syntax = assigned_syntax if assigned_syntax in ['yaml', 'json', 'csv', 'tsv', 'xml', 'toml', 'lua'] else 'auto'
-        cmd.extend(['--no-colors', '--input-format', syntax, '--output-format', 'json', '--'])
+        syntax = self.get_assigned_syntax()
+        if syntax in ['yaml', 'json', 'toml', 'hcl']:
+            char = syntax[1] if syntax == 'hcl' else syntax[0]
+            cmd.extend(['-' + char + 'c', '-'])
+        else:
+            cmd = None
 
         return cmd
 
     def format(self):
         cmd = self.get_cmd()
+        if not cmd:
+            return None
 
         try:
             exitcode, stdout, stderr = self.exec_cmd(cmd)

@@ -4,8 +4,8 @@ EXECUTABLES = ['yq']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/mikefarah/yq',
-    'name': 'Yq X->YAML',
-    'uid': 'yqxtoyaml',
+    'name': 'Yq X->TOML',
+    'uid': 'yqx2toml',
     'type': 'converter',
     'syntaxes': ['yaml', 'json', 'csv', 'tsv', 'xml', 'toml', 'lua', 'text'],
     'exclude_syntaxes': None,
@@ -16,7 +16,7 @@ MODULE_CONFIG = {
 }
 
 
-class YqxtoyamlFormatter(Module):
+class Yqx2tomlFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -31,7 +31,7 @@ class YqxtoyamlFormatter(Module):
 
         assigned_syntax = self.get_assigned_syntax()
         syntax = assigned_syntax if assigned_syntax in ['yaml', 'json', 'csv', 'tsv', 'xml', 'toml', 'lua'] else 'auto'
-        cmd.extend(['--no-colors', '--input-format', syntax, '--output-format', 'yaml', '--'])
+        cmd.extend(['--no-colors', '--input-format', syntax, '--output-format', 'toml', '--'])
 
         return cmd
 

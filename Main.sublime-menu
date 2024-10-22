@@ -987,7 +987,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yjxtohcl",
+                            "uid": "yjx2hcl",
                             "type": "converter"
                         }
                     },
@@ -996,7 +996,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yjxtojson",
+                            "uid": "yjx2json",
                             "type": "converter"
                         }
                     },
@@ -1005,7 +1005,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yjxtotoml",
+                            "uid": "yjx2toml",
                             "type": "converter"
                         }
                     },
@@ -1014,7 +1014,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yjxtoyaml",
+                            "uid": "yjx2yaml",
                             "type": "converter"
                         }
                     },
@@ -1023,7 +1023,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtobase64",
+                            "uid": "yqx2base64",
                             "type": "converter"
                         }
                     },
@@ -1032,7 +1032,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtocsv",
+                            "uid": "yqx2csv",
                             "type": "converter"
                         }
                     },
@@ -1041,7 +1041,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtojson",
+                            "uid": "yqx2json",
                             "type": "converter"
                         }
                     },
@@ -1050,7 +1050,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtolua",
+                            "uid": "yqx2lua",
                             "type": "converter"
                         }
                     },
@@ -1059,7 +1059,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtoprops",
+                            "uid": "yqx2props",
                             "type": "converter"
                         }
                     },
@@ -1068,7 +1068,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtoshell",
+                            "uid": "yqx2shell",
                             "type": "converter"
                         }
                     },
@@ -1077,7 +1077,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtotoml",
+                            "uid": "yqx2toml",
                             "type": "converter"
                         }
                     },
@@ -1086,7 +1086,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtotsv",
+                            "uid": "yqx2tsv",
                             "type": "converter"
                         }
                     },
@@ -1095,7 +1095,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtouri",
+                            "uid": "yqx2uri",
                             "type": "converter"
                         }
                     },
@@ -1104,7 +1104,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtoxml",
+                            "uid": "yqx2xml",
                             "type": "converter"
                         }
                     },
@@ -1113,7 +1113,7 @@
                         "mnemonic": "Y",
                         "command": "run_format",
                         "args": {
-                            "uid": "yqxtoyaml",
+                            "uid": "yqx2yaml",
                             "type": "converter"
                         }
                     },

@@ -872,7 +872,7 @@
                 "caption": "Yj X->HCL",
                 "command": "run_format",
                 "args": {
-                    "uid": "yjxtohcl",
+                    "uid": "yjx2hcl",
                     "type": "converter"
                 }
             },
@@ -880,7 +880,7 @@
                 "caption": "Yj X->JSON",
                 "command": "run_format",
                 "args": {
-                    "uid": "yjxtojson",
+                    "uid": "yjx2json",
                     "type": "converter"
                 }
             },
@@ -888,7 +888,7 @@
                 "caption": "Yj X->TOML",
                 "command": "run_format",
                 "args": {
-                    "uid": "yjxtotoml",
+                    "uid": "yjx2toml",
                     "type": "converter"
                 }
             },
@@ -896,7 +896,7 @@
                 "caption": "Yj X->YAML",
                 "command": "run_format",
                 "args": {
-                    "uid": "yjxtoyaml",
+                    "uid": "yjx2yaml",
                     "type": "converter"
                 }
             },
@@ -904,7 +904,7 @@
                 "caption": "Yq X->BASE64",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtobase64",
+                    "uid": "yqx2base64",
                     "type": "converter"
                 }
             },
@@ -912,7 +912,7 @@
                 "caption": "Yq X->CSV",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtocsv",
+                    "uid": "yqx2csv",
                     "type": "converter"
                 }
             },
@@ -920,7 +920,7 @@
                 "caption": "Yq X->JSON",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtojson",
+                    "uid": "yqx2json",
                     "type": "converter"
                 }
             },
@@ -928,7 +928,7 @@
                 "caption": "Yq X->LUA",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtolua",
+                    "uid": "yqx2lua",
                     "type": "converter"
                 }
             },
@@ -936,7 +936,7 @@
                 "caption": "Yq X->PROPS",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtoprops",
+                    "uid": "yqx2props",
                     "type": "converter"
                 }
             },
@@ -944,7 +944,7 @@
                 "caption": "Yq X->SHELL",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtoshell",
+                    "uid": "yqx2shell",
                     "type": "converter"
                 }
             },
@@ -952,7 +952,7 @@
                 "caption": "Yq X->TOML",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtotoml",
+                    "uid": "yqx2toml",
                     "type": "converter"
                 }
             },
@@ -960,7 +960,7 @@
                 "caption": "Yq X->TSV",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtotsv",
+                    "uid": "yqx2tsv",
                     "type": "converter"
                 }
             },
@@ -968,7 +968,7 @@
                 "caption": "Yq X->URI",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtouri",
+                    "uid": "yqx2uri",
                     "type": "converter"
                 }
             },
@@ -976,7 +976,7 @@
                 "caption": "Yq X->XML",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtoxml",
+                    "uid": "yqx2xml",
                     "type": "converter"
                 }
             },
@@ -984,7 +984,7 @@
                 "caption": "Yq X->YAML",
                 "command": "run_format",
                 "args": {
-                    "uid": "yqxtoyaml",
+                    "uid": "yqx2yaml",
                     "type": "converter"
                 }
             },

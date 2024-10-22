@@ -4,8 +4,8 @@ EXECUTABLES = ['yj']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/sclevine/yj',
-    'name': 'Yj X->JSON',
-    'uid': 'yjxtojson',
+    'name': 'Yj X->YAML',
+    'uid': 'yjx2yaml',
     'type': 'converter',
     'syntaxes': ['yaml', 'json', 'toml', 'hcl'],
     'exclude_syntaxes': None,
@@ -16,7 +16,7 @@ MODULE_CONFIG = {
 }
 
 
-class YjxtojsonFormatter(Module):
+class Yjx2yamlFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -32,7 +32,7 @@ class YjxtojsonFormatter(Module):
         syntax = self.get_assigned_syntax()
         if syntax in ['yaml', 'json', 'toml', 'hcl']:
             char = syntax[1] if syntax == 'hcl' else syntax[0]
-            cmd.extend(['-' + char + 'j', '-'])
+            cmd.extend(['-' + char + 'y', '-'])
         else:
             cmd = None
 

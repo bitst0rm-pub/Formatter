@@ -4,8 +4,8 @@ EXECUTABLES = ['yj']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'https://github.com/sclevine/yj',
-    'name': 'Yj X->HCL',
-    'uid': 'yjxtohcl',
+    'name': 'Yj X->TOML',
+    'uid': 'yjx2toml',
     'type': 'converter',
     'syntaxes': ['yaml', 'json', 'toml', 'hcl'],
     'exclude_syntaxes': None,
@@ -16,7 +16,7 @@ MODULE_CONFIG = {
 }
 
 
-class YjxtohclFormatter(Module):
+class Yjx2tomlFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -32,7 +32,7 @@ class YjxtohclFormatter(Module):
         syntax = self.get_assigned_syntax()
         if syntax in ['yaml', 'json', 'toml', 'hcl']:
             char = syntax[1] if syntax == 'hcl' else syntax[0]
-            cmd.extend(['-' + char + 'c', '-'])
+            cmd.extend(['-' + char + 't', '-'])
         else:
             cmd = None
 

@@ -1845,7 +1845,7 @@
         },
 
         // -- CONVERTERS --
-        "yjxtohcl": {
+        "yjx2hcl": {
             "info": "https://github.com/sclevine/yj",
             "enable": false,
             "format_on_save": false,
@@ -1856,7 +1856,7 @@
             "executable_path": ["/path/to/bin/yj"]
             /* No "config_path", use "args" instead. */
         },
-        "yjxtojson": {
+        "yjx2json": {
             "info": "https://github.com/sclevine/yj",
             "enable": false,
             "format_on_save": false,
@@ -1867,7 +1867,7 @@
             "executable_path": ["/path/to/bin/yj"]
             /* No "config_path", use "args" instead. */
         },
-        "yjxtotoml": {
+        "yjx2toml": {
             "info": "https://github.com/sclevine/yj",
             "enable": false,
             "format_on_save": false,
@@ -1878,7 +1878,7 @@
             "executable_path": ["/path/to/bin/yj"]
             /* No "config_path", use "args" instead. */
         },
-        "yjxtoyaml": {
+        "yjx2yaml": {
             "info": "https://github.com/sclevine/yj",
             "enable": false,
             "format_on_save": false,
@@ -1889,7 +1889,7 @@
             "executable_path": ["/path/to/bin/yj"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtobase64": {
+        "yqx2base64": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1900,7 +1900,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtocsv": {
+        "yqx2csv": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1911,7 +1911,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtojson": {
+        "yqx2json": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1922,7 +1922,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtolua": {
+        "yqx2lua": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1933,7 +1933,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtoprops": {
+        "yqx2props": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1944,7 +1944,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtoshell": {
+        "yqx2shell": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1955,7 +1955,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtotoml": {
+        "yqx2toml": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1966,7 +1966,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtotsv": {
+        "yqx2tsv": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1977,7 +1977,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtouri": {
+        "yqx2uri": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1988,7 +1988,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtoxml": {
+        "yqx2xml": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,
@@ -1999,7 +1999,7 @@
             "executable_path": ["/path/to/bin/yq"]
             /* No "config_path", use "args" instead. */
         },
-        "yqxtoyaml": {
+        "yqx2yaml": {
             "info": "https://github.com/mikefarah/yq",
             "enable": false,
             "format_on_save": false,

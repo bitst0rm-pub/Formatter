@@ -1,22 +1,22 @@
 from ..core import Module
 
-EXECUTABLES = ['yj']
+EXECUTABLES = ['yq']
 DOTFILES = []
 MODULE_CONFIG = {
-    'source': 'https://github.com/sclevine/yj',
-    'name': 'Yj X->TOML',
-    'uid': 'yjxtotoml',
+    'source': 'https://github.com/mikefarah/yq',
+    'name': 'Yq X->XML',
+    'uid': 'yqx2xml',
     'type': 'converter',
-    'syntaxes': ['yaml', 'json', 'toml', 'hcl'],
+    'syntaxes': ['yaml', 'json', 'csv', 'tsv', 'xml', 'toml', 'lua', 'text'],
     'exclude_syntaxes': None,
-    'executable_path': '/path/to/bin/yj',
+    'executable_path': '/path/to/bin/yq',
     'args': None,
     'config_path': None,
     'comment': 'No "config_path", use "args" instead.'
 }
 
 
-class YjxtotomlFormatter(Module):
+class Yqx2xmlFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -29,19 +29,14 @@ class YjxtotomlFormatter(Module):
 
         cmd.extend(self.get_args())
 
-        syntax = self.get_assigned_syntax()
-        if syntax in ['yaml', 'json', 'toml', 'hcl']:
-            char = syntax[1] if syntax == 'hcl' else syntax[0]
-            cmd.extend(['-' + char + 't', '-'])
-        else:
-            cmd = None
+        assigned_syntax = self.get_assigned_syntax()
+        syntax = assigned_syntax if assigned_syntax in ['yaml', 'json', 'csv', 'tsv', 'xml', 'toml', 'lua'] else 'auto'
+        cmd.extend(['--no-colors', '--input-format', syntax, '--output-format', 'xml', '--'])
 
         return cmd
 
     def format(self):
         cmd = self.get_cmd()
-        if not cmd:
-            return None
 
         try:
             exitcode, stdout, stderr = self.exec_cmd(cmd)
