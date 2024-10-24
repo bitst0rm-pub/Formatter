@@ -2,6 +2,20 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.6)] - 2024-10-24
+
+### 🚀 Features
+
+- [`ef1959c`](https://github.com/bitst0rm-pub/Formatter/commit/ef1959c82c8e59613657e725f8705153d2522508) Add converter `sfx2crc32` to the supported plugins
+- [`0889bda`](https://github.com/bitst0rm-pub/Formatter/commit/0889bdad1e7c46300c6a5eb0318f40a7bbd194d0) Add converter `sfx2hex`, `sfhex2str`, `sfx2md5`, `sfx2sha1`, `sfx2sha256`, `sfx2sha512`, `sfx2sha3256`, `sfx2sha3512`, `sfx2shake256`, `sfx2shake512` to the supported plugins
+
+### ⚙️ Miscellaneous Tasks
+
+- [`3aa5575`](https://github.com/bitst0rm-pub/Formatter/commit/3aa55759fbf18ac02b77a32b5a000fb319d3aa14) Add `args` option with param `lower` to converters `stx*`
+- [`b9470db`](https://github.com/bitst0rm-pub/Formatter/commit/b9470dbf793872a2718e55bd2bee9dc7b70c69b8) Add converter `sfx2urienc` and `sfx2uridec` to the supported plugins
+- [`fe2eded`](https://github.com/bitst0rm-pub/Formatter/commit/fe2eded32501c3a36ffa3c890158ce15551564f9) Change `ValueError` to `Exception`
+- [`b31ec69`](https://github.com/bitst0rm-pub/Formatter/commit/b31ec69d9b03f076fe4eb06f9e6eec5d7a0f7b5f) Update `Formatter.sublime-setting` without the "new_file_on_format" option
+
 ## [[1.7.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.5)] - 2024-10-22
 
 ### 🚀 Features
