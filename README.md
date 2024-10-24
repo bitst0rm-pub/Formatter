@@ -80,7 +80,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 - The table does not contain all supported languages. For example, `prettydiff` covers 45 languages, which would blow up the frame of this list here.
 - Languages like `Svelte` or `Prisma` are not listed, but should work via the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
-- `B-I` = `**(build-in)**` No installation required; specifically developed for Formatter.
+- `B-I` = **`(build-in)`** No installation required; specifically developed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 
@@ -168,6 +168,7 @@ This might be of interest:
 | sfx2uridec **`(B-I)`** | any | TEXT | None | uri |
 | sfx2hex **`(B-I)`** | any | TEXT | None | hex |
 | sfhex2str **`(B-I)`** | any | TEXT | None | hex |
+| sfx2crc32 **`(B-I)`** | any | TEXT | None | crc32 |
 | sfx2md5 **`(B-I)`** | any | TEXT | None | md5 |
 | sfx2sha1 **`(B-I)`** | any | TEXT | None | sha1 |
 | sfx2sha256 **`(B-I)`** | any | TEXT | None | sha256 |
