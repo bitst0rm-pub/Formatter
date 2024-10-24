@@ -1010,6 +1010,15 @@
                         }
                     },
                     {
+                        "caption": "Sf X->CRC32",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2crc32",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf X->HEX",
                         "mnemonic": "S",
                         "command": "run_format",

@@ -1766,6 +1766,16 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
+        "sfx2crc32": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+        },
         "sfx2hex": {
             "info": "build-in",
             "enable": false,
@@ -1774,7 +1784,7 @@
             "dir_format": false,
             "syntaxes": ["*"],
             "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or UPPERCASE if false. */
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2md5": {
             "info": "build-in",
@@ -1782,8 +1792,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2sha1": {
             "info": "build-in",
@@ -1791,8 +1802,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2sha256": {
             "info": "build-in",
@@ -1800,8 +1812,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2sha3256": {
             "info": "build-in",
@@ -1809,8 +1822,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2sha3512": {
             "info": "build-in",
@@ -1818,8 +1832,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2sha512": {
             "info": "build-in",
@@ -1827,8 +1842,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2shake256": {
             "info": "build-in",
@@ -1836,8 +1852,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2shake512": {
             "info": "build-in",
@@ -1845,8 +1862,9 @@
             "format_on_save": false,
             "format_on_paste": false,
             "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
+            "syntaxes": ["*"],
+            "args": ["lower", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
         },
         "sfx2uridec": {
             "info": "build-in",

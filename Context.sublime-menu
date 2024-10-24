@@ -893,6 +893,14 @@
                 }
             },
             {
+                "caption": "Sf X->CRC32",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2crc32",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf X->HEX",
                 "command": "run_format",
                 "args": {
