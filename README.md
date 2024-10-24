@@ -80,7 +80,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 - The table does not contain all supported languages. For example, `prettydiff` covers 45 languages, which would blow up the frame of this list here.
 - Languages like `Svelte` or `Prisma` are not listed, but should work via the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
-- `build-in` = No installation required.
+- `B-I` = `**(build-in)**` No installation required; specifically developed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 
@@ -99,7 +99,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | -- | None | -- |
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint) [1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [2], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff) [2] | -- | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
-| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) **`(build-in)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] [2] | -- | -- | Python, Node.js [2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) **`(B-I)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] [2] | -- | -- | Python, Node.js [2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | D2 | [d2 fmt](https://github.com/terrastruct/d2) | -- | [d2](https://github.com/terrastruct/d2) | None | -- |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | -- | Dart | -- |
@@ -120,7 +120,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | Java | [google java format](https://github.com/google/google-java-format) [1], [uncrustify](https://github.com/uncrustify/uncrustify) [2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [3], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | Java [1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
 | JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js) [3], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] [2], [deno](https://github.com/denoland/deno) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | -- | 14.0+ [3], Node.js, None [2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| JSON | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [deno](https://github.com/denoland/deno) [2], [topiary](https://github.com/tweag/topiary) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2], jsonmax **`(build-in)`** | [prettydiff](https://github.com/prettydiff/prettydiff) [1], jsonmin **`(build-in)`** | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| JSON | jsonmax **`(B-I)`**, [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [deno](https://github.com/denoland/deno) [2], [topiary](https://github.com/tweag/topiary) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | jsonmin **`(B-I)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Julia | [juliaformatter](https://github.com/domluna/JuliaFormatter.jl) | -- | -- | Julia 0.6+ | -- |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | -- | Java | -- |
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | -- | Perl, None | -- |
@@ -142,7 +142,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | -- | Rust 1.24+ | -- |
 | Scala | [scalafmt](https://github.com/scalameta/scalafmt), [scalariform](https://github.com/scala-ide/scalariform) [1] | -- | -- | None, Java [1] | -- |
 | Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh) [1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | -- | Python [1], None | -- |
-| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) [1], [pg_format](https://github.com/darold/pgFormatter) [2], [sqlparse](https://github.com/andialbrecht/sqlparse) [3] | sqlmin **`(build-in)`** | -- | Node.js [1], Perl [2], Python 3.6+ [3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
+| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) [1], [pg_format](https://github.com/darold/pgFormatter) [2], [sqlparse](https://github.com/andialbrecht/sqlparse) [3] | sqlmin **`(B-I)`** | -- | Node.js [1], Perl [2], Python 3.6+ [3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
 | Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | -- | None | -- |
 | SVG | [svgo max](https://github.com/svg/svgo) | [svgo min](https://github.com/svg/svgo) | -- | Node.js | -- |
 | TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
@@ -153,7 +153,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | VALA | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | -- | Node.js | -- |
-| YAML | yamlmax **`(build-in)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
+| YAML | yamlmax **`(B-I)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
 This might be of interest:
@@ -162,10 +162,22 @@ This might be of interest:
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
-| sfx2base64enc **`(build-in)`** | any | TEXT | None | b64 |
-| sfx2base64dec **`(build-in)`** | any | TEXT | None | b64 |
-| sfx2urienc **`(build-in)`** | any | TEXT | None | uri |
-| sfx2uridec **`(build-in)`** | any | TEXT | None | uri |
+| sfx2base64enc **`(B-I)`** | any | TEXT | None | base64 |
+| sfx2base64dec **`(B-I)`** | any | TEXT | None | base64 |
+| sfx2urienc **`(B-I)`** | any | TEXT | None | uri |
+| sfx2uridec **`(B-I)`** | any | TEXT | None | uri |
+| sfx2hex **`(B-I)`** | any | TEXT | None | hex |
+| sfhex2str **`(B-I)`** | any | TEXT | None | hex |
+| sfx2md5 **`(B-I)`** | any | TEXT | None | md5 |
+| sfx2sha1 **`(B-I)`** | any | TEXT | None | sha1 |
+| sfx2sha256 **`(B-I)`** | any | TEXT | None | sha256 |
+| sfx2sha512 **`(B-I)`** | any | TEXT | None | sha512 |
+| sfx2sha3256 **`(B-I)`** | any | TEXT | None | sha3_256 |
+| sfx2sha3512 **`(B-I)`** | any | TEXT | None | sha3_512 |
+| sfx2shake256 **`(B-I)`** | any | TEXT | None | shake_256 |
+| sfx2shake512 **`(B-I)`** | any | TEXT | None | shake_512 |
+
+<sub>`sf` = **S**ublime **F**ormatter</sub>
 
 > [!TIP]
 >

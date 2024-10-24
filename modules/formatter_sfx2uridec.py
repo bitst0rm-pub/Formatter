@@ -25,7 +25,7 @@ class Sfx2uridecFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             args = self.get_args()
-            return unquote(text) if len(args) == 2 and args[0] == 'percent' and args[1].lower() == 'true' else unquote_plus(text)
+            return unquote(text) if args and len(args) == 2 and args[0] == 'percent' and args[1].lower() == 'true' else unquote_plus(text)
         except ValueError as e:
             log.status('File not formatted due to ValueError: "%s"', e)
 

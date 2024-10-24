@@ -869,6 +869,14 @@
                 "caption": "-"
             },
             {
+                "caption": "Sf HEXSTR->STR",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfhex2str",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf X->BASE64 (decode)",
                 "command": "run_format",
                 "args": {
@@ -881,6 +889,78 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfx2base64enc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->HEX",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2hex",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->MD5",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2md5",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHA1",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2sha1",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHA256",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2sha256",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHA3_256",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2sha3256",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHA3_512",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2sha3512",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHA512",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2sha512",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHAKE256",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2shake256",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->SHAKE512",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2shake512",
                     "type": "converter"
                 }
             },
