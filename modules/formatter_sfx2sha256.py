@@ -11,9 +11,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': None,
+    'args': ['lower', True],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path", no "args".'
+    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE.'
 }
 
 
@@ -24,7 +24,9 @@ class Sfx2sha256Formatter(Module):
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            return hashlib.sha256(text.encode('utf-8')).hexdigest()
+            args = self.get_args()
+            t = hashlib.sha256(text.encode('utf-8')).hexdigest()
+            return t if args and len(args) == 2 and args[0] == 'lower' and args[1].lower() == 'true' else t.upper()
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

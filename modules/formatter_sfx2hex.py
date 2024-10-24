@@ -13,7 +13,7 @@ MODULE_CONFIG = {
     'executable_path': None,
     'args': ['lower', True],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or UPPERCASE if false.'
+    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE.'
 }
 
 
