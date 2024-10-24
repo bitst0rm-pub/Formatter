@@ -27,7 +27,7 @@ class Sfx2hexFormatter(Module):
             args = self.get_args()
             t = binascii.hexlify(text.encode('utf-8')).decode('utf-8')
             return t if args and len(args) == 2 and args[0] == 'lower' and args[1].lower() == 'true' else t.upper()
-        except ValueError as e:
-            log.status('File not formatted due to ValueError: "%s"', e)
+        except Exception as e:
+            log.status('File not formatted due to error: "%s"', e)
 
         return None

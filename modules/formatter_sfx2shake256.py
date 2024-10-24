@@ -25,7 +25,7 @@ class Sfx2shake256Formatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             return hashlib.shake_256(text.encode('utf-8')).hexdigest()
-        except ValueError as e:
-            log.status('File not formatted due to ValueError: "%s"', e)
+        except Exception as e:
+            log.status('File not formatted due to error: "%s"', e)
 
         return None

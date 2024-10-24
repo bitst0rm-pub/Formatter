@@ -25,7 +25,7 @@ class Sfx2base64decFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             return base64.b64decode(text + '=' * (-len(text) % 4)).decode('utf8')  # padding 4 chars
-        except ValueError as e:
-            log.status('File not formatted due to ValueError: "%s"', e)
+        except Exception as e:
+            log.status('File not formatted due to error: "%s"', e)
 
         return None

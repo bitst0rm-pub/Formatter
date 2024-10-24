@@ -108,7 +108,7 @@ class JsonmaxFormatter(Module):
                 )
 
             return result
-        except ValueError as e:
-            log.status('File not formatted due to ValueError: "%s"', e)
+        except Exception as e:
+            log.status('File not formatted due to error: "%s"', e)
 
         return None

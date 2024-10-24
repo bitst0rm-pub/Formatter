@@ -25,7 +25,7 @@ class Sfhex2strFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             return binascii.unhexlify(text.encode('utf-8')).decode('utf-8')
-        except ValueError as e:
-            log.status('File not formatted due to ValueError: "%s"', e)
+        except Exception as e:
+            log.status('File not formatted due to error: "%s"', e)
 
         return None
