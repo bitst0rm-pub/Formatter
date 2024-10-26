@@ -28,7 +28,7 @@ class Sfhexdump2strFormatter(Module):
             hex_pairs = re.findall(r'\b([0-9A-Fa-f]{2})\b', text)
             hex_string = ''.join(hex_pairs)
             byte_array = binascii.unhexlify(hex_string)
-            return byte_array.decode('utf-8', errors='replace')
+            return byte_array.decode('utf-8', errors='ignore')
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 
