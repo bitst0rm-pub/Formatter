@@ -1739,7 +1739,7 @@
         },
 
         // -- CONVERTERS --
-        "sfhex2str": {
+        "sfbase64dec": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1748,7 +1748,7 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
-        "sfhexdump2str": {
+        "sfbase64enc": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1757,7 +1757,7 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
-        "sfx2base64dec": {
+        "sfhexdec": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1766,7 +1766,7 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
-        "sfx2base64enc": {
+        "sfhexdumpdec": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1775,27 +1775,7 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
-        "sfx2crc32": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"],
-            "args": ["--lower", true]
-            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
-        },
-        "sfx2hex": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"],
-            "args": ["--prefix", "\\x", "--separator", " ", "--bytes_per_line", 0, "--lower", true]
-            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
-        },
-        "sfx2hexdump": {
+        "sfhexdumpenc": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1805,7 +1785,17 @@
             "args": ["--width", 16, "--unixformat", true, "--lower", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
-        "sfx2htmldeentitize": {
+        "sfhexenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--prefix", "\\x", "--separator", " ", "--bytes_per_line", 0, "--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfhtmldeentitize": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1814,7 +1804,7 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
-        "sfx2htmlentitize": {
+        "sfhtmlentitize": {
             "info": "build-in",
             "enable": false,
             "format_on_save": false,
@@ -1822,6 +1812,84 @@
             "dir_format": false,
             "syntaxes": ["*"],
             "args": ["--codename", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfloremipsum": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--length", 3, "--length_in", "paragraphs", "--begin_with_lorem", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". */
+        },
+        "sfpunycodedec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--idna", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfpunycodeenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--idna", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfunicodeescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfunicodeunescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfuridec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--percent", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false. */
+        },
+        "sfurienc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--percent", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false. */
+        },
+        "sfx2crc32": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--lower", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2md5": {
@@ -1903,44 +1971,6 @@
             "syntaxes": ["*"],
             "args": ["--lower", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
-        },
-        "sfx2unicodeescape": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
-        },
-        "sfx2unicodeunescape": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"]
-            /* Build-in, no "executable_path", no "config_path", no "args". */
-        },
-        "sfx2uridec": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"],
-            "args": ["--percent", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false. */
-        },
-        "sfx2urienc": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"],
-            "args": ["--percent", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false. */
         },
         "yjx2hcl": {
             "info": "https://github.com/sclevine/yj",

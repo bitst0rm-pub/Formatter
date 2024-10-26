@@ -1,12 +1,12 @@
-import base64
+from html.parser import HTMLParser
 
 from ..core import Module, log
 
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'Sf X->BASE64 (encode)',
-    'uid': 'sfx2base64enc',
+    'name': 'Sf HTML (deentitize)',
+    'uid': 'sfhtmldeentitize',
     'type': 'converter',
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
@@ -17,14 +17,14 @@ MODULE_CONFIG = {
 }
 
 
-class Sfx2base64encFormatter(Module):
+class SfhtmldeentitizeFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            return base64.b64encode(text.encode('utf-8')).decode('utf-8')
+            return HTMLParser().unescape(text)
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

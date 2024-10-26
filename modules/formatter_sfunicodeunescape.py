@@ -1,12 +1,10 @@
-from html.parser import HTMLParser
-
 from ..core import Module, log
 
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'Sf X->HTML (deentitize)',
-    'uid': 'sfx2htmldeentitize',
+    'name': 'Sf UNICODE (unescape)',
+    'uid': 'sfunicodeunescape',
     'type': 'converter',
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
@@ -17,14 +15,14 @@ MODULE_CONFIG = {
 }
 
 
-class Sfx2htmldeentitizeFormatter(Module):
+class SfunicodeunescapeFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            return HTMLParser().unescape(text)
+            return bytes(text, 'utf8').decode('unicode_escape')
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

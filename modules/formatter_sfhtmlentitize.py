@@ -5,8 +5,8 @@ from ..core import Module, log
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'Sf X->HTML (entitize)',
-    'uid': 'sfx2htmlentitize',
+    'name': 'Sf HTML (entitize)',
+    'uid': 'sfhtmlentitize',
     'type': 'converter',
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
@@ -17,7 +17,7 @@ MODULE_CONFIG = {
 }
 
 
-class Sfx2htmlentitizeFormatter(Module):
+class SfhtmlentitizeFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

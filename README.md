@@ -162,21 +162,21 @@ This might be of interest:
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
-| sfx2loremipsum **`(BI)`** | any | TEXT | None | lorem |
-| sfx2base64enc **`(BI)`** | any | TEXT | None | base64 |
-| sfx2base64dec **`(BI)`** | any | TEXT | None | base64 |
-| sfx2urienc **`(BI)`** | any | TEXT | None | uri |
-| sfx2uridec **`(BI)`** | any | TEXT | None | uri |
-| sfx2unicodeescape **`(BI)`** | any | TEXT | None | unicode |
-| sfx2unicodeunescape **`(BI)`** | any | TEXT | None | unicode |
-| sfx2htmlentitize **`(BI)`** | any | TEXT | None | html |
-| sfx2htmldeentitize **`(BI)`** | any | TEXT | None | html |
+| sfloremipsum **`(BI)`** | any | TEXT | None | lorem |
+| sfbase64enc **`(BI)`** | any | TEXT | None | base64 |
+| sfbase64dec **`(BI)`** | any | TEXT | None | base64 |
+| sfurienc **`(BI)`** | any | TEXT | None | uri |
+| sfuridec **`(BI)`** | any | TEXT | None | uri |
+| sfunicodeescape **`(BI)`** | any | TEXT | None | unicode |
+| sfunicodeunescape **`(BI)`** | any | TEXT | None | unicode |
+| sfhtmlentitize **`(BI)`** | any | TEXT | None | html |
+| sfhtmldeentitize **`(BI)`** | any | TEXT | None | html |
 | sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
 | sfpunycodeenc **`(BI)`** | any | TEXT | None | punycode |
-| sfx2hex **`(BI)`** | any | TEXT | None | hex |
-| sfhex2str **`(BI)`** | any | TEXT | None | hex |
-| sfx2hexdump **`(BI)`** | any | TEXT | None | hexdump |
-| sfhexdump2str **`(BI)`** | any | TEXT | None | hexdump |
+| sfhexenc **`(BI)`** | any | TEXT | None | hex |
+| sfhexdec **`(BI)`** | any | TEXT | None | hex |
+| sfhexdumpenc **`(BI)`** | any | TEXT | None | hexdump |
+| sfhexdumpdec **`(BI)`** | any | TEXT | None | hexdump |
 | sfx2crc32 **`(BI)`** | any | TEXT | None | crc32 |
 | sfx2md5 **`(BI)`** | any | TEXT | None | md5 |
 | sfx2sha1 **`(BI)`** | any | TEXT | None | sha1 |

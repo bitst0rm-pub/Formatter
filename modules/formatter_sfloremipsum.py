@@ -5,8 +5,8 @@ from ..core import Module, log
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'Sf X->LoremIpsum',
-    'uid': 'sfx2loremipsum',
+    'name': 'Sf LoremIpsum',
+    'uid': 'sfloremipsum',
     'type': 'converter',
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
@@ -17,7 +17,7 @@ MODULE_CONFIG = {
 }
 
 
-class Sfx2loremipsumFormatter(Module):
+class SfloremipsumFormatter(Module):
     word_list = ['lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'ut', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'ut', 'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'duis', 'aute', 'irure', 'dolor', 'in', 'reprehenderit', 'in', 'voluptate', 'velit', 'esse', 'cillum', 'dolore', 'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint', 'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'in', 'culpa', 'qui', 'officia', 'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum']
     AVERAGE_SENTENCE_LENGTH = 15
     SENTENCE_LENGTH_VARIATION = 9

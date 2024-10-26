@@ -898,34 +898,122 @@
         }
     },
     {
-        "caption": "Formatter: Convert with Sf HEXSTR->STR",
+        "caption": "Formatter: Convert with Sf BASE64 (decode)",
         "command": "run_format",
         "args": {
-            "uid": "sfhex2str",
+            "uid": "sfbase64dec",
             "type": "converter"
         }
     },
     {
-        "caption": "Formatter: Convert with Sf HEXDUMP->STR",
+        "caption": "Formatter: Convert with Sf BASE64 (encode)",
         "command": "run_format",
         "args": {
-            "uid": "sfhexdump2str",
+            "uid": "sfbase64enc",
             "type": "converter"
         }
     },
     {
-        "caption": "Formatter: Convert with Sf X->BASE64 (decode)",
+        "caption": "Formatter: Convert with Sf HEX (decode)",
         "command": "run_format",
         "args": {
-            "uid": "sfx2base64dec",
+            "uid": "sfhexdec",
             "type": "converter"
         }
     },
     {
-        "caption": "Formatter: Convert with Sf X->BASE64 (encode)",
+        "caption": "Formatter: Convert with Sf HEXDUMP (decode)",
         "command": "run_format",
         "args": {
-            "uid": "sfx2base64enc",
+            "uid": "sfhexdumpdec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf HEXDUMP (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfhexdumpenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf HEX (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfhexenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf HTML (deentitize)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfhtmldeentitize",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf HTML (entitize)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfhtmlentitize",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf LoremIpsum",
+        "command": "run_format",
+        "args": {
+            "uid": "sfloremipsum",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf PUNYCODE (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfpunycodedec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf PUNYCODE (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfpunycodeenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf UNICODE (escape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfunicodeescape",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf UNICODE (unescape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfunicodeunescape",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf URI (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfuridec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf URI (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfurienc",
             "type": "converter"
         }
     },
@@ -934,38 +1022,6 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2crc32",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->HEX",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2hex",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->HEXDUMP",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2hexdump",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->HTML (deentitize)",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2htmldeentitize",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->HTML (entitize)",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2htmlentitize",
             "type": "converter"
         }
     },
@@ -1030,38 +1086,6 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2shake512",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->UNICODE (escape)",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2unicodeescape",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->UNICODE (unescape)",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2unicodeunescape",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->URI (decode)",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2uridec",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf X->URI (encode)",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx2urienc",
             "type": "converter"
         }
     },

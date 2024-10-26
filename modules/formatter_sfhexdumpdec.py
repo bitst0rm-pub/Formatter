@@ -6,8 +6,8 @@ from ..core import Module, log
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'Sf HEXDUMP->STR',
-    'uid': 'sfhexdump2str',
+    'name': 'Sf HEXDUMP (decode)',
+    'uid': 'sfhexdumpdec',
     'type': 'converter',
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
@@ -18,7 +18,7 @@ MODULE_CONFIG = {
 }
 
 
-class Sfhexdump2strFormatter(Module):
+class SfhexdumpdecFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

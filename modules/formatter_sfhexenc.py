@@ -5,8 +5,8 @@ from ..core import Module, log
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'Sf X->HEX',
-    'uid': 'sfx2hex',
+    'name': 'Sf HEX (encode)',
+    'uid': 'sfhexenc',
     'type': 'converter',
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
@@ -17,7 +17,7 @@ MODULE_CONFIG = {
 }
 
 
-class Sfx2hexFormatter(Module):
+class SfhexencFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

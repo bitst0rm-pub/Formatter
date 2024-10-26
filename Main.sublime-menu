@@ -983,38 +983,137 @@
                         "caption": "-"
                     },
                     {
-                        "caption": "Sf HEXSTR->STR",
+                        "caption": "Sf BASE64 (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
-                            "uid": "sfhex2str",
+                            "uid": "sfbase64dec",
                             "type": "converter"
                         }
                     },
                     {
-                        "caption": "Sf HEXDUMP->STR",
+                        "caption": "Sf BASE64 (encode)",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
-                            "uid": "sfhexdump2str",
+                            "uid": "sfbase64enc",
                             "type": "converter"
                         }
                     },
                     {
-                        "caption": "Sf X->BASE64 (decode)",
+                        "caption": "Sf HEX (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
-                            "uid": "sfx2base64dec",
+                            "uid": "sfhexdec",
                             "type": "converter"
                         }
                     },
                     {
-                        "caption": "Sf X->BASE64 (encode)",
+                        "caption": "Sf HEXDUMP (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
-                            "uid": "sfx2base64enc",
+                            "uid": "sfhexdumpdec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf HEXDUMP (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfhexdumpenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf HEX (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfhexenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf HTML (deentitize)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfhtmldeentitize",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf HTML (entitize)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfhtmlentitize",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf LoremIpsum",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfloremipsum",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf PUNYCODE (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfpunycodedec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf PUNYCODE (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfpunycodeenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf UNICODE (escape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfunicodeescape",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf UNICODE (unescape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfunicodeunescape",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf URI (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfuridec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf URI (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfurienc",
                             "type": "converter"
                         }
                     },
@@ -1024,42 +1123,6 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2crc32",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->HEX",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2hex",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->HEXDUMP",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2hexdump",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->HTML (deentitize)",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2htmldeentitize",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->HTML (entitize)",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2htmlentitize",
                             "type": "converter"
                         }
                     },
@@ -1132,42 +1195,6 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2shake512",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->UNICODE (escape)",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2unicodeescape",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->UNICODE (unescape)",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2unicodeunescape",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->URI (decode)",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2uridec",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf X->URI (encode)",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx2urienc",
                             "type": "converter"
                         }
                     },
