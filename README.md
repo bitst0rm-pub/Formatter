@@ -171,6 +171,8 @@ This might be of interest:
 | sfx2unicodeunescape **`(BI)`** | any | TEXT | None | unicode |
 | sfx2htmlentitize **`(BI)`** | any | TEXT | None | html |
 | sfx2htmldeentitize **`(BI)`** | any | TEXT | None | html |
+| sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
+| sfpunycodeenc **`(BI)`** | any | TEXT | None | punycode |
 | sfx2hex **`(BI)`** | any | TEXT | None | hex |
 | sfhex2str **`(BI)`** | any | TEXT | None | hex |
 | sfx2hexdump **`(BI)`** | any | TEXT | None | hexdump |
