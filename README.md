@@ -171,8 +171,8 @@ This might be of interest:
 | sfunicodeunescape **`(BI)`** | any | TEXT | None | unicode |
 | sfhtmlentitize **`(BI)`** | any | TEXT | None | html |
 | sfhtmldeentitize **`(BI)`** | any | TEXT | None | html |
-| sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
 | sfpunycodeenc **`(BI)`** | any | TEXT | None | punycode |
+| sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
 | sfhexenc **`(BI)`** | any | TEXT | None | hex |
 | sfhexdec **`(BI)`** | any | TEXT | None | hex |
 | sfhexdumpenc **`(BI)`** | any | TEXT | None | hexdump |
@@ -645,7 +645,7 @@ The following setting details - along with their default values and examples - a
                 // Note: The Generic method requires a Sublime Text restart after adding or changing
                 // the "name" and "type" keys. Also, avoid reusing existing UID keys in JSON.
 
-                // The Capitalized plugin name, preferred in PascalCase style (convention) (REQUIRED!)
+                // The Capitalized plugin name, preferred in PascalCase style (REQUIRED!)
                 // This will appear in the Sublime menu and other commands.
                 "name": "ExampleGeneric",
 
@@ -1091,7 +1091,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
    DF_IDENT = []                                               # optional: a list of keywords to identify special local config dotfiles
    MODULE_CONFIG = {                                           # REQUIRED: template to create several sublime config files
        'source': 'https://thirdparty-plugin.com',              # REQUIRED: info on where the user can download the plugin
-       'name': 'MyFirstPlugin',                                # REQUIRED: a Capitalized plugin name of your choice, preferred in PascalCase style (convention)
+       'name': 'MyFirstPlugin',                                # REQUIRED: a Capitalized plugin name of your choice, preferred in PascalCase style
        'uid': 'thisismyfirstpluginmodule',                     # REQUIRED: must match the suffix of "formatter_thisismyfirstpluginmodule.py"
        'type': 'minifier',                                     # REQUIRED: "beautifier" OR "minifier" OR "converter" OR "graphic",
                                                                #           OR any string of your choice (for private purposes).
