@@ -11,9 +11,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['lower', True],
+    'args': ['--lower', True],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE.'
+    'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
 
 
@@ -24,9 +24,9 @@ class Sfx2shake512Formatter(Module):
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            args = self.get_args()
+            args = self.parse_args(convert=True)
             t = hashlib.shake_512(text.encode('utf-8')).hexdigest()
-            return t if args and len(args) == 2 and args[0] == 'lower' and args[1].lower() == 'true' else t.upper()
+            return t if args.get('--lower', True) else t.upper()
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

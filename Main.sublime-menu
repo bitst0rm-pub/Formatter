@@ -992,6 +992,15 @@
                         }
                     },
                     {
+                        "caption": "Sf HEXDUMP->STR",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfhexdump2str",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf X->BASE64 (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1024,6 +1033,33 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2hex",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->HEXDUMP",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2hexdump",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->HTML (deentitize)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2htmldeentitize",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->HTML (entitize)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2htmlentitize",
                             "type": "converter"
                         }
                     },
@@ -1096,6 +1132,24 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2shake512",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->UNICODE (escape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2unicodeescape",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->UNICODE (unescape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2unicodeunescape",
                             "type": "converter"
                         }
                     },

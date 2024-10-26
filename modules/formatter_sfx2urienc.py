@@ -11,9 +11,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['percent', True],
+    'args': ['--percent', True],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "percent" true for %20 or + if false.'
+    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false.'
 }
 
 
@@ -24,8 +24,8 @@ class Sfx2uriencFormatter(Module):
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            args = self.get_args()
-            return quote(text) if args and len(args) == 2 and args[0] == 'percent' and args[1].lower() == 'true' else quote_plus(text)
+            args = self.parse_args(convert=True)
+            return quote(text) if args.get('--percent', True) else quote_plus(text)
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

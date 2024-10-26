@@ -11,9 +11,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['lower', True],
+    'args': ['--prefix', '\\x', '--separator', ' ', '--bytes_per_line', 0, '--lower', True],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE.'
+    'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
 
 
@@ -24,9 +24,30 @@ class Sfx2hexFormatter(Module):
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            args = self.get_args()
-            t = binascii.hexlify(text.encode('utf-8')).decode('utf-8')
-            return t if args and len(args) == 2 and args[0] == 'lower' and args[1].lower() == 'true' else t.upper()
+            args = self.parse_args(convert=True)
+            prefix = args.get('--prefix', '\\x')
+            separator = args.get('--separator', ' ')
+            bytes_per_line = args.get('--bytes_per_line', 0)
+            lower_case = args.get('--lower', True)
+
+            hex_text = binascii.hexlify(text.encode('utf-8')).decode('utf-8')
+            hex_text = hex_text if lower_case else hex_text.upper()
+
+            output_lines = []
+            current_line = []
+
+            for i in range(0, len(hex_text), 2):
+                byte_hex = prefix + hex_text[i:i + 2]
+                current_line.append(byte_hex)
+
+                if len(current_line) == bytes_per_line:
+                    output_lines.append(separator.join(current_line) + separator)
+                    current_line = []
+
+            if current_line:
+                output_lines.append(separator.join(current_line) + separator)
+
+            return '\n'.join(output_lines).rstrip(separator)
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

@@ -906,6 +906,14 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf HEXDUMP->STR",
+        "command": "run_format",
+        "args": {
+            "uid": "sfhexdump2str",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf X->BASE64 (decode)",
         "command": "run_format",
         "args": {
@@ -934,6 +942,30 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2hex",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->HEXDUMP",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2hexdump",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->HTML (deentitize)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2htmldeentitize",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->HTML (entitize)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2htmlentitize",
             "type": "converter"
         }
     },
@@ -998,6 +1030,22 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2shake512",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->UNICODE (escape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2unicodeescape",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->UNICODE (unescape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2unicodeunescape",
             "type": "converter"
         }
     },

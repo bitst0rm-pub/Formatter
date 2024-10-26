@@ -166,8 +166,14 @@ This might be of interest:
 | sfx2base64dec **`(BI)`** | any | TEXT | None | base64 |
 | sfx2urienc **`(BI)`** | any | TEXT | None | uri |
 | sfx2uridec **`(BI)`** | any | TEXT | None | uri |
+| sfx2unicodeescape **`(BI)`** | any | TEXT | None | unicode |
+| sfx2unicodeunescape **`(BI)`** | any | TEXT | None | unicode |
+| sfx2htmlentitize **`(BI)`** | any | TEXT | None | html |
+| sfx2htmldeentitize **`(BI)`** | any | TEXT | None | html |
 | sfx2hex **`(BI)`** | any | TEXT | None | hex |
 | sfhex2str **`(BI)`** | any | TEXT | None | hex |
+| sfx2hexdump **`(BI)`** | any | TEXT | None | hexdump |
+| sfhexdump2str **`(BI)`** | any | TEXT | None | hexdump |
 | sfx2crc32 **`(BI)`** | any | TEXT | None | crc32 |
 | sfx2md5 **`(BI)`** | any | TEXT | None | md5 |
 | sfx2sha1 **`(BI)`** | any | TEXT | None | sha1 |
@@ -1230,8 +1236,14 @@ There are more methods in this class you can use, but:
    # Set runtime_type=(None|'node'|'python'|'perl'|'ruby') to enable local executable search.
    executable = self.get_executable(runtime_type=None)
 
-   # Get the input arguments "args" from the User settings or None.
+   # Get the input "args" option from the User settings.
+   # The returned args is a list of string items or [].
    args = self.get_args()
+
+   # Parse the input "args" option from the User settings.
+   # The returned args is a dict of string items or {}.
+   # If convert is set to True, string items will be converted to their real type.
+   parse_args = self.parse_args(convert=False)
 
    # Get the input "config_path" from the User settings or
    # the path to the local config dotfile if found or None.

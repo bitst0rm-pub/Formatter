@@ -24,7 +24,17 @@ class Sfhex2strFormatter(Module):
     def format(self):
         try:
             text = self.get_text_from_region(self.region)
-            return binascii.unhexlify(text.encode('utf-8')).decode('utf-8')
+
+            cleaned_hex = ''
+            for char in text:
+                if char in '0123456789abcdefABCDEF':
+                    cleaned_hex += char
+
+            if len(cleaned_hex) % 2 != 0:
+                log.error('Input hex string must have an even length.')
+                return None
+
+            return binascii.unhexlify(cleaned_hex).decode('utf-8')
         except Exception as e:
             log.status('File not formatted due to error: "%s"', e)
 

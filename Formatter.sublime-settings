@@ -1748,6 +1748,15 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
+        "sfhexdump2str": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
         "sfx2base64dec": {
             "info": "build-in",
             "enable": false,
@@ -1773,8 +1782,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2hex": {
             "info": "build-in",
@@ -1783,8 +1792,37 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--prefix", "\\x", "--separator", " ", "--bytes_per_line", 0, "--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfx2hexdump": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--width", 16, "--unixformat", true, "--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfx2htmldeentitize": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfx2htmlentitize": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--codename", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2md5": {
             "info": "build-in",
@@ -1793,8 +1831,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2sha1": {
             "info": "build-in",
@@ -1803,8 +1841,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2sha256": {
             "info": "build-in",
@@ -1813,8 +1851,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2sha3256": {
             "info": "build-in",
@@ -1823,8 +1861,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2sha3512": {
             "info": "build-in",
@@ -1833,8 +1871,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2sha512": {
             "info": "build-in",
@@ -1843,8 +1881,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2shake256": {
             "info": "build-in",
@@ -1853,8 +1891,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2shake512": {
             "info": "build-in",
@@ -1863,8 +1901,26 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["lower", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "lower" true for lowercase or false for UPPERCASE. */
+            "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfx2unicodeescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfx2unicodeunescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
         },
         "sfx2uridec": {
             "info": "build-in",
@@ -1873,8 +1929,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["percent", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "percent" true for %20 or + if false. */
+            "args": ["--percent", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false. */
         },
         "sfx2urienc": {
             "info": "build-in",
@@ -1883,8 +1939,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["percent", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "percent" true for %20 or + if false. */
+            "args": ["--percent", true]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "--percent" true for %20 or + if false. */
         },
         "yjx2hcl": {
             "info": "https://github.com/sclevine/yj",
