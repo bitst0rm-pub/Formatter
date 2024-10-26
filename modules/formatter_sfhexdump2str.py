@@ -1,0 +1,35 @@
+import binascii
+import re
+
+from ..core import Module, log
+
+DOTFILES = []
+MODULE_CONFIG = {
+    'source': 'build-in',
+    'name': 'Sf HEXDUMP->STR',
+    'uid': 'sfhexdump2str',
+    'type': 'converter',
+    'syntaxes': ['*'],
+    'exclude_syntaxes': None,
+    'executable_path': None,
+    'args': None,
+    'config_path': None,
+    'comment': 'Build-in, no "executable_path", no "config_path", no "args".'
+}
+
+
+class Sfhexdump2strFormatter(Module):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def format(self):
+        try:
+            text = self.get_text_from_region(self.region)
+            hex_pairs = re.findall(r'\b([0-9A-Fa-f]{2})\b', text)
+            hex_string = ''.join(hex_pairs)
+            byte_array = binascii.unhexlify(hex_string)
+            return byte_array.decode('utf-8', errors='replace')
+        except Exception as e:
+            log.status('File not formatted due to error: "%s"', e)
+
+        return None
