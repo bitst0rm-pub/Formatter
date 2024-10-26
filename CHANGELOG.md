@@ -2,6 +2,24 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.7)] - 2024-10-26
+
+### 🚀 Features
+
+- [`4c1e3ec`](https://github.com/bitst0rm-pub/Formatter/commit/4c1e3ec53d264776343563bd50d34e14df544d39) Add `sfx2loremipsum`
+- [`0d2123d`](https://github.com/bitst0rm-pub/Formatter/commit/0d2123d843d4556977aabfb1778e1b0d2fcd8f4c) Add converters `sfpunycodeenc` and `sfpunycodedec`
+- [`933c140`](https://github.com/bitst0rm-pub/Formatter/commit/933c140be6a251afe717e1d4755148c618390f48) Add converters `sfx2hexdump`, `sfhexdump2str`, `sfx2htmlentitize`, `sfx2htmldeentitize`, `sfx2unicodeescape`, `sfx2unicodeunescape`
+
+### 🐛 Bug Fixes
+
+- [`4b832fd`](https://github.com/bitst0rm-pub/Formatter/commit/4b832fdb0dacdc8dfd59e9e3d1a3484586df6126) Skip invalid characters for `sfhexdump2str`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`8fc712c`](https://github.com/bitst0rm-pub/Formatter/commit/8fc712c6cb64028ec65027fdbd43f9f7cccaed37) Add `parse_args(convert=False)`
+- [`507423e`](https://github.com/bitst0rm-pub/Formatter/commit/507423ec8411992d7649a15c7637e22baea557f0) Rename some converters `sf*`
+- [`e6c1cd0`](https://github.com/bitst0rm-pub/Formatter/commit/e6c1cd0360c153466f6367333298f0e2fbe32ece) Update `sf*` converters
+
 ## [[1.7.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.6)] - 2024-10-24
 
 ### 🚀 Features
