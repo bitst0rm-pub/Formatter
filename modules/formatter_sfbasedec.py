@@ -34,6 +34,6 @@ class SfbasedecFormatter(Module):
 
             return str(result)
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

@@ -80,7 +80,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 - The table does not contain all supported languages. For example, `prettydiff` covers 45 languages, which would blow up the frame of this list here.
 - Languages like `Svelte` or `Prisma` are not listed, but should work via the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
-- **`(BI)`** = **`(build-in)`** No installation required.
+- **`(BI)`** = **`(build-in)`** No installation required; specifically designed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 

@@ -28,6 +28,6 @@ class Sfx2sha512Formatter(Module):
             t = hashlib.sha512(text.encode('utf-8')).hexdigest()
             return t if args.get('--lower', True) else t.upper()
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

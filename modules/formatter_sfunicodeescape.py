@@ -24,6 +24,6 @@ class SfunicodeescapeFormatter(Module):
             text = self.get_text_from_region(self.region)
             return text.encode('ascii', 'backslashreplace').decode('utf-8')
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

@@ -37,11 +37,11 @@ class SfcharcodedecFormatter(Module):
                     decoded_char = chr(int(code, base))
                     decoded_chars.append(decoded_char)
                 except ValueError as e:
-                    log.status('Skipping invalid code "%s": %s', code, e)
+                    log.debug('Skipping invalid code "%s": %s', code, e)
                     continue
 
             return ''.join(decoded_chars)
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

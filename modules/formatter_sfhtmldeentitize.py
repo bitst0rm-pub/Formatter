@@ -26,6 +26,6 @@ class SfhtmldeentitizeFormatter(Module):
             text = self.get_text_from_region(self.region)
             return HTMLParser().unescape(text)
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

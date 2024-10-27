@@ -31,11 +31,10 @@ class SfhexdecFormatter(Module):
                     cleaned_hex += char
 
             if len(cleaned_hex) % 2 != 0:
-                log.error('Input hex string must have an even length.')
-                return None
+                raise ValueError('Input hex string must have an even length.')
 
             return binascii.unhexlify(cleaned_hex).decode('utf-8')
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

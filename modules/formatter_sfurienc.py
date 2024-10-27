@@ -27,6 +27,6 @@ class SfuriencFormatter(Module):
             args = self.parse_args(convert=True)
             return quote(text) if args.get('--percent', True) else quote_plus(text)
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

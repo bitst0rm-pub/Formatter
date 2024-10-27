@@ -28,6 +28,6 @@ class JsonminFormatter(Module):
             result = json.dumps(obj, ensure_ascii=False, separators=(',', ':'), indent=None)
             return result
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

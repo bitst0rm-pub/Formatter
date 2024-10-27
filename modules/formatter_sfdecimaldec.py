@@ -41,11 +41,11 @@ class SfdecimaldecFormatter(Module):
 
                     decoded_bytes.append(value)
                 except ValueError as e:
-                    log.status('Skipping invalid code "%s": %s', code, e)
+                    log.debug('Skipping invalid code "%s": %s', code, e)
                     continue
 
             return bytes(decoded_bytes).decode('utf-8', errors='replace')
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None

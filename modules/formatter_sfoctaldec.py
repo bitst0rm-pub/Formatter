@@ -33,12 +33,11 @@ class SfoctaldecFormatter(Module):
                     try:
                         byte_value = int(octal_string, 8)
                         decoded_bytes.append(byte_value)
-                    except Exception:
-                        log.error('Invalid octal value: "%s"' % octal_string)
-                        return None
+                    except ValueError:
+                        raise ValueError('Invalid octal value: "%s"' % octal_string)
 
             return decoded_bytes.decode('utf-8')
         except Exception as e:
-            log.status('File not formatted due to error: "%s"', e)
+            log.status('File not formatted due to error: %s', e)
 
         return None
