@@ -869,6 +869,38 @@
                 "caption": "-"
             },
             {
+                "caption": "Sf BASE16 (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbase16dec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BASE16 (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbase16enc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BASE32 (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbase32dec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BASE32 (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbase32enc",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf BASE64 (decode)",
                 "command": "run_format",
                 "args": {
@@ -881,6 +913,70 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfbase64enc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BASE (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbasedec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BASE (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbaseenc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BINARY (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbinarydec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BINARY (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbinaryenc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf CHARCODE (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfcharcodedec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf CHARCODE (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfcharcodeenc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf DECIMAL (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfdecimaldec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf DECIMAL (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfdecimalenc",
                     "type": "converter"
                 }
             },
@@ -937,6 +1033,22 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfloremipsum",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf OCTAL (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfoctaldec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf OCTAL (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfoctalenc",
                     "type": "converter"
                 }
             },

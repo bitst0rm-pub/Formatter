@@ -163,16 +163,30 @@ This might be of interest:
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
 | sfloremipsum **`(BI)`** | any | TEXT | None | lorem |
-| sfbase64enc **`(BI)`** | any | TEXT | None | base64 |
-| sfbase64dec **`(BI)`** | any | TEXT | None | base64 |
 | sfurienc **`(BI)`** | any | TEXT | None | uri |
 | sfuridec **`(BI)`** | any | TEXT | None | uri |
-| sfunicodeescape **`(BI)`** | any | TEXT | None | unicode |
-| sfunicodeunescape **`(BI)`** | any | TEXT | None | unicode |
 | sfhtmlentitize **`(BI)`** | any | TEXT | None | html |
 | sfhtmldeentitize **`(BI)`** | any | TEXT | None | html |
+| sfunicodeescape **`(BI)`** | any | TEXT | None | unicode |
+| sfunicodeunescape **`(BI)`** | any | TEXT | None | unicode |
+| sfcharcodeenc **`(BI)`** | any | TEXT | None | charcode |
+| sfcharcodedec **`(BI)`** | any | TEXT | None | charcode |
 | sfpunycodeenc **`(BI)`** | any | TEXT | None | punycode |
 | sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
+| sfbase16enc **`(BI)`** | any | TEXT | None | base16 |
+| sfbase16dec **`(BI)`** | any | TEXT | None | base16 |
+| sfbase32enc **`(BI)`** | any | TEXT | None | base32 |
+| sfbase32dec **`(BI)`** | any | TEXT | None | base32 |
+| sfbase64enc **`(BI)`** | any | TEXT | None | base64 |
+| sfbase64dec **`(BI)`** | any | TEXT | None | base64 |
+| sfbaseenc **`(BI)`** | any | TEXT | None | base |
+| sfbasedec **`(BI)`** | any | TEXT | None | base |
+| sfbinaryenc **`(BI)`** | any | TEXT | None | binary |
+| sfbinarydec **`(BI)`** | any | TEXT | None | binary |
+| sfdecimalenc **`(BI)`** | any | TEXT | None | decimal |
+| sfdecimaldec **`(BI)`** | any | TEXT | None | decimal |
+| sfoctalenc **`(BI)`** | any | TEXT | None | octal |
+| sfoctaldec **`(BI)`** | any | TEXT | None | octal |
 | sfhexenc **`(BI)`** | any | TEXT | None | hex |
 | sfhexdec **`(BI)`** | any | TEXT | None | hex |
 | sfhexdumpenc **`(BI)`** | any | TEXT | None | hexdump |

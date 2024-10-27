@@ -898,6 +898,38 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf BASE16 (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbase16dec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BASE16 (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbase16enc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BASE32 (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbase32dec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BASE32 (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbase32enc",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf BASE64 (decode)",
         "command": "run_format",
         "args": {
@@ -910,6 +942,70 @@
         "command": "run_format",
         "args": {
             "uid": "sfbase64enc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BASE (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbasedec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BASE (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbaseenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BINARY (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbinarydec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BINARY (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbinaryenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf CHARCODE (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfcharcodedec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf CHARCODE (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfcharcodeenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf DECIMAL (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfdecimaldec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf DECIMAL (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfdecimalenc",
             "type": "converter"
         }
     },
@@ -966,6 +1062,22 @@
         "command": "run_format",
         "args": {
             "uid": "sfloremipsum",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf OCTAL (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfoctaldec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf OCTAL (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfoctalenc",
             "type": "converter"
         }
     },

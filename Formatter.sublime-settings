@@ -1739,6 +1739,42 @@
         },
 
         // -- CONVERTERS --
+        "sfbase16dec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfbase16enc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfbase32dec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfbase32enc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
         "sfbase64dec": {
             "info": "build-in",
             "enable": false,
@@ -1756,6 +1792,86 @@
             "dir_format": false,
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfbasedec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--radix", 36]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. "--radix" must be between 2 and 36. */
+        },
+        "sfbaseenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--radix", 36]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. "--radix" must be between 2 and 36. */
+        },
+        "sfbinarydec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--byte_length", 8, "--separator", " "]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfbinaryenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--byte_length", 8, "--separator", " "]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfcharcodedec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--separator", " ", "--base", 16]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. "--base" must be between 2 and 36. */
+        },
+        "sfcharcodeenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--separator", " ", "--base", 16, "--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. "--base" must be between 2 and 36. */
+        },
+        "sfdecimaldec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--separator", " ", "--signed", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfdecimalenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--separator", " ", "--signed", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfhexdec": {
             "info": "build-in",
@@ -1823,6 +1939,26 @@
             "syntaxes": ["*"],
             "args": ["--length", 3, "--length_in", "paragraphs", "--begin_with_lorem", true]
             /* Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". */
+        },
+        "sfoctaldec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--separator", " "]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfoctalenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--separator", " "]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfpunycodedec": {
             "info": "build-in",

@@ -983,6 +983,42 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Sf BASE16 (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbase16dec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BASE16 (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbase16enc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BASE32 (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbase32dec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BASE32 (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbase32enc",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf BASE64 (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -997,6 +1033,78 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfbase64enc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BASE (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbasedec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BASE (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbaseenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BINARY (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbinarydec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BINARY (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbinaryenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf CHARCODE (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfcharcodedec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf CHARCODE (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfcharcodeenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf DECIMAL (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfdecimaldec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf DECIMAL (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfdecimalenc",
                             "type": "converter"
                         }
                     },
@@ -1060,6 +1168,24 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfloremipsum",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf OCTAL (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfoctaldec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf OCTAL (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfoctalenc",
                             "type": "converter"
                         }
                     },
