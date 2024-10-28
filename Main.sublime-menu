@@ -1073,6 +1073,24 @@
                         }
                     },
                     {
+                        "caption": "Sf BRAILLE (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbrailledec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf BRAILLE (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfbrailleenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf CHARCODE (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1105,6 +1123,24 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfdecimalenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf GZIP (compress)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfgzipcompress",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf GZIP (decompress)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfgzipdecompress",
                             "type": "converter"
                         }
                     },
@@ -1163,11 +1199,38 @@
                         }
                     },
                     {
+                        "caption": "Sf HTML (strip tags)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfhtmlstriptags",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf LoremIpsum",
                         "mnemonic": "S",
                         "command": "run_format",
                         "args": {
                             "uid": "sfloremipsum",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf LZMA (compress)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sflzmacompress",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf LZMA (decompress)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sflzmadecompress",
                             "type": "converter"
                         }
                     },
@@ -1204,6 +1267,24 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfpunycodeenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf QP (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfquotedprintabledec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf QP (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfquotedprintableenc",
                             "type": "converter"
                         }
                     },

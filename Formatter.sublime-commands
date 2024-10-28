@@ -978,6 +978,22 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf BRAILLE (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbrailledec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf BRAILLE (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfbrailleenc",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf CHARCODE (decode)",
         "command": "run_format",
         "args": {
@@ -1006,6 +1022,22 @@
         "command": "run_format",
         "args": {
             "uid": "sfdecimalenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf GZIP (compress)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfgzipcompress",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf GZIP (decompress)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfgzipdecompress",
             "type": "converter"
         }
     },
@@ -1058,10 +1090,34 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf HTML (strip tags)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfhtmlstriptags",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf LoremIpsum",
         "command": "run_format",
         "args": {
             "uid": "sfloremipsum",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf LZMA (compress)",
+        "command": "run_format",
+        "args": {
+            "uid": "sflzmacompress",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf LZMA (decompress)",
+        "command": "run_format",
+        "args": {
+            "uid": "sflzmadecompress",
             "type": "converter"
         }
     },
@@ -1094,6 +1150,22 @@
         "command": "run_format",
         "args": {
             "uid": "sfpunycodeenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf QP (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfquotedprintabledec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf QP (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfquotedprintableenc",
             "type": "converter"
         }
     },

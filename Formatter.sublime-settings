@@ -1833,6 +1833,24 @@
             "args": ["--byte_length", 8, "--separator", " "]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
+        "sfbrailledec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". For blind people with love. */
+        },
+        "sfbrailleenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". For blind people with love. */
+        },
         "sfcharcodedec": {
             "info": "build-in",
             "enable": false,
@@ -1872,6 +1890,24 @@
             "syntaxes": ["*"],
             "args": ["--separator", " ", "--signed", false]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfgzipcompress": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". Output is base64 encoded. */
+        },
+        "sfgzipdecompress": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". Input must be base64 encoded. */
         },
         "sfhexdec": {
             "info": "build-in",
@@ -1927,7 +1963,17 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--codename", true]
+            "args": ["--codename", true, "--convert_all_chars", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. "--codename" true or false for named or numeric entities. */
+        },
+        "sfhtmlstriptags": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--remove_indentation", true, "--remove_excess_line_breaks", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfloremipsum": {
@@ -1937,8 +1983,26 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--length", 3, "--length_in", "paragraphs", "--begin_with_lorem", true]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". */
+            "args": ["--length", 3, "--length_in", "paragraphs", "--begin_with_lorem", true, "--use_custom_text", false]
+            /* Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". Set "--use_custom_text" to true to use text in your language from view (e.g. Chinese... */
+        },
+        "sflzmacompress": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". Output is base64 encoded. */
+        },
+        "sflzmadecompress": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". Input must be base64 encoded. */
         },
         "sfoctaldec": {
             "info": "build-in",
@@ -1979,6 +2043,24 @@
             "syntaxes": ["*"],
             "args": ["--idna", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfquotedprintabledec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
+        },
+        "sfquotedprintableenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". */
         },
         "sfunicodeescape": {
             "info": "build-in",

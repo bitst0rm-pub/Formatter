@@ -949,6 +949,22 @@
                 }
             },
             {
+                "caption": "Sf BRAILLE (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbrailledec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf BRAILLE (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfbrailleenc",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf CHARCODE (decode)",
                 "command": "run_format",
                 "args": {
@@ -977,6 +993,22 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfdecimalenc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf GZIP (compress)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfgzipcompress",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf GZIP (decompress)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfgzipdecompress",
                     "type": "converter"
                 }
             },
@@ -1029,10 +1061,34 @@
                 }
             },
             {
+                "caption": "Sf HTML (strip tags)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfhtmlstriptags",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf LoremIpsum",
                 "command": "run_format",
                 "args": {
                     "uid": "sfloremipsum",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf LZMA (compress)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sflzmacompress",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf LZMA (decompress)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sflzmadecompress",
                     "type": "converter"
                 }
             },
@@ -1065,6 +1121,22 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfpunycodeenc",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf QP (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfquotedprintabledec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf QP (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfquotedprintableenc",
                     "type": "converter"
                 }
             },
