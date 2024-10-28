@@ -23,7 +23,7 @@ class Sfbase16decFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
             return base64.b16decode(text).decode('utf8')
         except Exception as e:
             log.status('File not formatted due to error: %s', e)

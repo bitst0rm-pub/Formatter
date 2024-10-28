@@ -24,7 +24,7 @@ class SfgzipdecompressFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
 
             decompressed_data = gzip.decompress(base64.b64decode(text + '=' * (-len(text) % 4)))  # padding 4 chars
             return decompressed_data.decode('utf-8')

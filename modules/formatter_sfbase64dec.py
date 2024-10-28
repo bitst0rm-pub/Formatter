@@ -23,7 +23,7 @@ class Sfbase64decFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
             return base64.b64decode(text + '=' * (-len(text) % 4)).decode('utf8')  # padding 4 chars
         except Exception as e:
             log.status('File not formatted due to error: %s', e)
