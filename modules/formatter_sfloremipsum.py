@@ -11,23 +11,43 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--length', 3, '--length_in', 'paragraphs', '--begin_with_lorem', True],
+    'args': ['--length', 3, '--length_in', 'paragraphs', '--begin_with_lorem', True, '--use_custom_text', False],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words".'
+    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". Set "--use_custom_text" to true to use text in your language from view (e.g. Chinese).'
 }
 
 
 class SfloremipsumFormatter(Module):
-    word_list = ['lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'ut', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'ut', 'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'duis', 'aute', 'irure', 'dolor', 'in', 'reprehenderit', 'in', 'voluptate', 'velit', 'esse', 'cillum', 'dolore', 'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint', 'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'in', 'culpa', 'qui', 'officia', 'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum']
+    word_list = [
+        'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur',
+        'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor',
+        'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna',
+        'aliqua', 'ut', 'enim', 'ad', 'minim', 'veniam',
+        'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris',
+        'nisi', 'ut', 'aliquip', 'ex', 'ea', 'commodo',
+        'consequat', 'duis', 'aute', 'irure', 'dolor', 'in',
+        'reprehenderit', 'in', 'voluptate', 'velit', 'esse',
+        'cillum', 'dolore', 'eu', 'fugiat', 'nulla', 'pariatur',
+        'excepteur', 'sint', 'occaecat', 'cupidatat', 'non',
+        'proident', 'sunt', 'in', 'culpa', 'qui', 'officia',
+        'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum'
+    ]
+
     AVERAGE_SENTENCE_LENGTH = 15
     SENTENCE_LENGTH_VARIATION = 9
     AVERAGE_PARAGRAPH_LENGTH = 5
     PARAGRAPH_LENGTH_VARIATION = 2
     COMMA_INSERTION_PROBABILITY = 0.6
     MINIMUM_WORDS_PER_SENTENCE = 4
+    MINIMUM_WORD_COUNT = 10
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def word_list_from_text(self, text):
+        words = text.lower().split()
+        unique_words_list = list(set(word for word in words if word.isalpha()))
+        return unique_words_list
 
     def generate_paragraphs(self, length, begin_with_lorem=False):
         paragraphs = []
@@ -69,28 +89,6 @@ class SfloremipsumFormatter(Module):
                 prev_word = word
         return words
 
-    def words_to_sentences(self, words):
-        sentences = []
-        while words:
-            sentence_length = self.get_random_length(self.AVERAGE_SENTENCE_LENGTH, self.SENTENCE_LENGTH_VARIATION)
-
-            while sentence_length < self.MINIMUM_WORDS_PER_SENTENCE:
-                sentence_length = self.get_random_length(self.AVERAGE_SENTENCE_LENGTH, self.SENTENCE_LENGTH_VARIATION)
-
-            sentence_words = words[:sentence_length]
-            del words[:sentence_length]
-            sentences.append(self.format_sentence(sentence_words))
-        return sentences
-
-    def sentences_to_paragraphs(self, sentences):
-        paragraphs = []
-        while sentences:
-            paragraph_length = self.get_random_length(self.AVERAGE_PARAGRAPH_LENGTH, self.PARAGRAPH_LENGTH_VARIATION)
-            paragraph_sentences = sentences[:paragraph_length]
-            del sentences[:paragraph_length]
-            paragraphs.append(self.format_paragraph(paragraph_sentences))
-        return paragraphs
-
     def format_sentence(self, words):
         if len(words) < self.MINIMUM_WORDS_PER_SENTENCE:
             return ' '.join(words).capitalize() + '.' if words else ''
@@ -121,10 +119,19 @@ class SfloremipsumFormatter(Module):
 
     def format(self):
         try:
+            text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
             length = args.get('--length', 3)
             length_in = args.get('--length_in', 'paragraphs')
             begin_with_lorem = args.get('--begin_with_lorem', False)
+            use_custom_text = args.get('--use_custom_text', False)
+
+            if use_custom_text:
+                unique_words = self.word_list_from_text(text)
+                if len(unique_words) < self.MINIMUM_WORD_COUNT:
+                    log.warning('Input text must contain at least %d unique words. Falling back to default "lorem" text.', self.MINIMUM_WORD_COUNT)
+                else:
+                    self.word_list = unique_words
 
             if length_in == 'paragraphs':
                 text = self.generate_paragraphs(length, begin_with_lorem)
