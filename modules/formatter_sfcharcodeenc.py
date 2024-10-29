@@ -39,7 +39,7 @@ class SfcharcodeencFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
-            separator = args.get('--separator', ' ') or ''
+            separator = args.get('--separator', ' ') or ' '
             base = args.get('--base', 16)
             lower_case = args.get('--lower', True)
 
