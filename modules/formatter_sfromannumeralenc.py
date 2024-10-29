@@ -14,26 +14,28 @@ MODULE_CONFIG = {
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
 
+
 class SfromannumeralencFormatter(Module):
+    roman_numerals = {
+        1: 'I',
+        4: 'IV',
+        5: 'V',
+        9: 'IX',
+        10: 'X',
+        40: 'XL',
+        50: 'L',
+        90: 'XC',
+        100: 'C',
+        400: 'CD',
+        500: 'D',
+        900: 'CM',
+        1000: 'M'
+    }
+
+    roman_values = sorted(roman_numerals.keys(), reverse=True)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.roman_numerals = {
-            1: 'I',
-            4: 'IV',
-            5: 'V',
-            9: 'IX',
-            10: 'X',
-            40: 'XL',
-            50: 'L',
-            90: 'XC',
-            100: 'C',
-            400: 'CD',
-            500: 'D',
-            900: 'CM',
-            1000: 'M'
-        }
-
-        self.roman_values = sorted(self.roman_numerals.keys(), reverse=True)
 
     def to_roman(self, decimal):
         result = ''

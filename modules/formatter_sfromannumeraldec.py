@@ -14,6 +14,7 @@ MODULE_CONFIG = {
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
 
+
 class SfromannumeraldecFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
