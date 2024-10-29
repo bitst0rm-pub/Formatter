@@ -26,7 +26,7 @@ class SfhexencFormatter(Module):
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
             prefix = args.get('--prefix', '\\x')
-            separator = args.get('--separator', ' ')
+            separator = args.get('--separator', ' ') or ''
             bytes_per_line = args.get('--bytes_per_line', 0)
             lower_case = args.get('--lower', True)
 

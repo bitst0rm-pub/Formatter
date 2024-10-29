@@ -23,7 +23,7 @@ class SfdecimaldecFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
-            separator = args.get('--separator', ' ')
+            separator = args.get('--separator', ' ') or ''
             signed = args.get('--signed', False)
 
             encoded_chars = text.split(separator)
@@ -44,7 +44,7 @@ class SfdecimaldecFormatter(Module):
                     log.debug('Skipping invalid code "%s": %s', code, e)
                     continue
 
-            return bytes(decoded_bytes).decode('utf-8', errors='replace')
+            return bytes(decoded_bytes).decode('utf-8', errors='ignore')
         except Exception as e:
             log.status('File not formatted due to error: %s', e)
 

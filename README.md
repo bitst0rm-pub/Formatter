@@ -156,7 +156,9 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | YAML | yamlmax **`(BI)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
-This might be of interest:
+> [!NOTE]
+>
+> The `sfhexenc` (Hex encoder) operation operates on bytes. To convert Decimal to Hex to get Hexadecimal value you need to use `sfbaseenc` (Base encoder) with radix `16`.
 
 | Converter | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |

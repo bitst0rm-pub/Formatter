@@ -9,7 +9,7 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--radix', 36],
+    'args': ['--radix', 16],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead. "--radix" must be between 2 and 36.'
 }

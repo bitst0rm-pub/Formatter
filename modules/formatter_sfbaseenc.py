@@ -9,9 +9,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--radix', 36],
+    'args': ['--radix', 16, '--separator', ' ', '--lower', True],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead. "--radix" must be between 2 and 36.'
+    'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead. "--radix" must be between 2 and 36. "--separator" is for input only.'
 }
 
 
@@ -19,8 +19,8 @@ class SfbaseencFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def int_to_base(self, number, base):
-        digits = "0123456789abcdefghijklmnopqrstuvwxyz"
+    def int_to_base(self, number, base, lower):
+        digits = '0123456789abcdefghijklmnopqrstuvwxyz' if lower else '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         if number == 0:
             return digits[0]
 
@@ -35,12 +35,15 @@ class SfbaseencFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
-            radix = args.get('--radix', 36)
+            radix = args.get('--radix', 16)
+            separator = args.get('--separator', ' ') or ''
+            lower = args.get('--lower', True)
 
             if not (2 <= radix <= 36):
                 raise ValueError('Invalid radix value; --radix argument must be between 2 and 36.')
 
-            return self.int_to_base(int(text), radix)
+            text = ''.join(text.split(separator))
+            return self.int_to_base(int(text), radix, lower)
         except Exception as e:
             log.status('File not formatted due to error: %s', e)
 

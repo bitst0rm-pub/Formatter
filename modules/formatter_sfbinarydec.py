@@ -24,7 +24,7 @@ class SfbinarydecFormatter(Module):
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
             byte_length = args.get('--byte_length', 8)
-            separator = args.get('--separator', ' ')
+            separator = args.get('--separator', ' ') or ''
 
             binary_strings = text.split(separator)
             decoded_bytes = []

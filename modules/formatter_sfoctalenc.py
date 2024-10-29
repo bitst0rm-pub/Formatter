@@ -23,7 +23,7 @@ class SfoctalencFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
-            separator = args.get('--separator', ' ')
+            separator = args.get('--separator', ' ') or ''
 
             octal_strings = []
             utf8_bytes = text.encode('utf-8')
