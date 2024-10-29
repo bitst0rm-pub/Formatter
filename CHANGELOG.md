@@ -2,6 +2,26 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.7.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.8)] - 2024-10-29
+
+### 🚀 Features
+
+- [`1d1da7f`](https://github.com/bitst0rm-pub/Formatter/commit/1d1da7f7d5390421e881632a0b49777408af31f9) Add a new flag `"---convert_all_chars"` to `sfhtmlentitize`
+- [`b819478`](https://github.com/bitst0rm-pub/Formatter/commit/b81947887c4429f41ea23b7c5603f23ffbca929d) Add a new flag `"--use_custom_text"` to `sfloremipsum` use text in your language from view (e.g. Chinese)
+- [`0506c0e`](https://github.com/bitst0rm-pub/Formatter/commit/0506c0ebd3c1ede5527a0222082c0094d7dd5135) Add converters `sfbaseenc`, `sfbasedec`, `sfbase16enc`, `sfbase16dec`, `sfbase32enc`, `sfbase32dec`, `sfbinaryenc`, `sfbinarydec`, `sfcharcodeenc`, `sfcharcodedec`, `sfdecimalenc`, `sfdecimaldec`, `sfoctalenc`, `sfoctaldec`
+- [`a5f0e23`](https://github.com/bitst0rm-pub/Formatter/commit/a5f0e23d033867798f726d64b8cab3c58e8f1b75) Add converters `sfhtmlstriptags`, `sfbrailleenc`, `sfbrailledec`, `sfquotedprintableenc`, `sfquotedprintabledec`, `sflzmacompress`, `sflzmadecompress`, `sfgzipcompress`, `sfgzipdecompress`
+- [`96ac9d9`](https://github.com/bitst0rm-pub/Formatter/commit/96ac9d999f1fce201471ccdee7f67861acff09ac) Add converters `sfromannumeralenc`, `sfromannumeraldec`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`5a52080`](https://github.com/bitst0rm-pub/Formatter/commit/5a5208043b070d9dece81d3ef214cbb194ea6611) Change decode `utf-8` to `ascii` for `sfbase*enc`
+- [`4e1e11d`](https://github.com/bitst0rm-pub/Formatter/commit/4e1e11d4c366abd34a74bc27fcc30e53eda6ce92) Minor log message update
+- [`eefac3d`](https://github.com/bitst0rm-pub/Formatter/commit/eefac3d1d089654fae479dcdb3c4ae388d459674) Minor update
+- [`9f5c16b`](https://github.com/bitst0rm-pub/Formatter/commit/9f5c16bfd302739cc0cd0def66d6985882879853) Move constants to class level
+- [`81849fd`](https://github.com/bitst0rm-pub/Formatter/commit/81849fd6fd3e1c3dc9626f63f210193be8cc8a1b) Set default `--separator` value if the flag is None or empty
+- [`7e41b50`](https://github.com/bitst0rm-pub/Formatter/commit/7e41b507c9284f66761ead285d152eb683f2c376) Strip whitespaces from encoded input text
+- [`661d971`](https://github.com/bitst0rm-pub/Formatter/commit/661d9718a814266e1a6306f4d083bfab11af48ca) Strip whitespaces in base encoded input
+
 ## [[1.7.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.7)] - 2024-10-26
 
 ### 🚀 Features
