@@ -158,7 +158,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 > [!NOTE]
 >
-> The `sfhexenc` (Hex encoder) operation operates on bytes. To convert Decimal to Hex to get Hexadecimal value you need to use `sfbaseenc` (Base encoder) with radix `16`.
+> The `sfhexenc` (Hex encoder) operates on bytes. To convert Decimal to Hex to get Hexadecimal value you need to use `sfbaseenc` (Base encoder) with radix `16`.
 
 | Converter | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
@@ -178,6 +178,8 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
 | sfbrailleenc **`(BI)`** | any | TEXT | None | braille |
 | sfbrailledec **`(BI)`** | any | TEXT | None | braille |
+| sfromannumeralenc **`(BI)`** | any | TEXT | None | roman |
+| sfromannumeraldec **`(BI)`** | any | TEXT | None | roman |
 | sfquotedprintableenc **`(BI)`** | any | TEXT | None | QP |
 | sfquotedprintabledec **`(BI)`** | any | TEXT | None | QP |
 | sflzmacompress **`(BI)`** | any | TEXT | None | LZMA |

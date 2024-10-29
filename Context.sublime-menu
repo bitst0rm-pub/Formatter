@@ -1141,6 +1141,22 @@
                 }
             },
             {
+                "caption": "Sf ROMAN NUM (decode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfromannumeraldec",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf ROMAN NUM (encode)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfromannumeralenc",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf UNICODE (escape)",
                 "command": "run_format",
                 "args": {

@@ -153,6 +153,8 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfpunycodeenc", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfquotedprintabledec", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfquotedprintableenc", "type": "converter"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfromannumeraldec", "type": "converter"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfromannumeralenc", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfunicodeescape", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfunicodeunescape", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfuridec", "type": "converter"}},
