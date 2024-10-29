@@ -24,7 +24,7 @@ class SfhexdumpdecFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
             hex_pairs = re.findall(r'\b([0-9A-Fa-f]{2})\b', text)
             hex_string = ''.join(hex_pairs)
             byte_array = binascii.unhexlify(hex_string)

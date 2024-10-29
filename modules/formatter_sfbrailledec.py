@@ -26,7 +26,7 @@ class SfbrailledecFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
             reverse_lookup = {braille: ascii_char for ascii_char, braille in zip(self.BRAILLE_LOOKUP['ascii'], self.BRAILLE_LOOKUP['dot6'])}
             return ''.join(reverse_lookup.get(braille_char, braille_char) for braille_char in text)
         except Exception as e:

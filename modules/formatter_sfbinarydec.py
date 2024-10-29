@@ -21,7 +21,7 @@ class SfbinarydecFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
             args = self.parse_args(convert=True)
             byte_length = args.get('--byte_length', 8)
             separator = args.get('--separator', ' ') or ''

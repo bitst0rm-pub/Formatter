@@ -21,9 +21,9 @@ class SfbasedecFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
             args = self.parse_args(convert=True)
-            radix = args.get('--radix', 36)
+            radix = args.get('--radix', 16)
 
             if not (2 <= radix <= 36):
                 raise ValueError('Invalid radix value; --radix argument must be between 2 and 36.')

@@ -23,7 +23,7 @@ class SfhexdecFormatter(Module):
 
     def format(self):
         try:
-            text = self.get_text_from_region(self.region)
+            text = self.get_text_from_region(self.region).strip()
 
             cleaned_hex = ''
             for char in text:
