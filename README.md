@@ -158,7 +158,8 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 > [!NOTE]
 >
-> The `sfhexenc` (Hex encoder) operates on bytes. To convert Decimal to Hex to get Hexadecimal value you need to use `sfbaseenc` (Base encoder) with radix `16`.
+> - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`; for Octal, set the `"--radix"` to `8`.
+> - For the best experience, use Sublime Text (multi-)selection to convert specific portions of text.
 
 | Converter | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
