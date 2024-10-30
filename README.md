@@ -78,11 +78,12 @@ Formatter requires third-party plugins to work, as it relies on external plugins
 
 _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
-- The table does not contain all supported languages. For example, `prettydiff` covers 45 languages, which would blow up the frame of this list here.
-- Languages like `Svelte` or `Prisma` are not listed, but should work via the [prettier plugin](https://github.com/sveltejs/prettier-plugin-svelte). Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
+- The table does not contain all supported languages. For example, `prettydiff` supports 45 languages, which would blow up the frame of this list here.
+- Languages like `Svelte` or `Prisma` are not listed, but should work via the Prettier plugin system. Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
 - **`(BI)`** = **`(build-in)`** No installation required; specifically designed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
+- The same list is always auto generated here: [_summary.txt](/modules/_summary.txt)
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: | :------: |
@@ -156,10 +157,10 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | YAML | yamlmax **`(BI)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
-> [!NOTE]
+> [!TIP]
 >
 > - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`; for Octal, set the `"--radix"` to `8`.
-> - For the best experience, use Sublime Text (multi-)selection to convert specific portions of text.
+> - Nothing prevents the use of Sublime Text (multi-)selection to convert specific portions of text.
 
 | Converter | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
@@ -1025,7 +1026,7 @@ Formatting actions can be triggered in different ways:
 ### The Quick Options
 
 This feature is designed to help users quickly access and switch between options, without the need to navigate the Settings file.
-It has no default values and is _primarily_ intended for temporarily toggling between File Format and Dir Format modes.<br />
+It has no default values and is _primarily_ intended for temporarily toggling between File Format and Dir Format modes, given the limited UI and API design of Sublime Text.<br />
 It includes 3 modes:
 
 - **Temporary Quick Options (TQO)**: By default, all options are temporary and only take effect during the current Sublime session. They will be automatically reset when you close Sublime.
@@ -1086,7 +1087,7 @@ Developing a module for Formatter is straightforward. All you need to do is crea
 > For plugins that rely on the following special local config dotfiles:<br />
 > `pyproject.toml`, `.pycodestyle`, `setup.cfg`, `tox.ini`, `.pep8`, `.editorconfig`<br />
 > you should use a `uid` matching the relevant section name, such as `[tool.autopep8]`. Otherwise, Formatter will not be able to identify and apply the correct local config dotfile.<br />
-> For example, a correct `uid` would be: `formatter_autopep8.py`<br />
+> For example, a correct `uid` would be: formatter_`autopep8`.py<br />
 > Alternatively, you can achieve the same result by using the keywords identifier: `DF_IDENT = ['autopep8']`
 
 2. The content of this module file should follow the structure outlined below:
