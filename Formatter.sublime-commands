@@ -1170,6 +1170,22 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf REGEX (escape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfregexescape",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf REGEX (unescape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfregexunescape",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf ROMAN NUM (decode)",
         "command": "run_format",
         "args": {
@@ -1182,6 +1198,22 @@
         "command": "run_format",
         "args": {
             "uid": "sfromannumeralenc",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf STRING (escape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfstringescape",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf STRING (unescape)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfstringunescape",
             "type": "converter"
         }
     },

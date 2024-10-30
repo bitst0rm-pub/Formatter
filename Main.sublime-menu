@@ -1289,6 +1289,24 @@
                         }
                     },
                     {
+                        "caption": "Sf REGEX (escape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfregexescape",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf REGEX (unescape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfregexunescape",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf ROMAN NUM (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1303,6 +1321,24 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfromannumeralenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf STRING (escape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfstringescape",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf STRING (unescape)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfstringunescape",
                             "type": "converter"
                         }
                     },

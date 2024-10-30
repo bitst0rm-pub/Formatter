@@ -2062,6 +2062,24 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
+        "sfregexescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". To escape special chars within regex pattern. */
+        },
+        "sfregexunescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"]
+            /* Build-in, no "executable_path", no "config_path", no "args". To unescape special chars within regex pattern. */
+        },
         "sfromannumeraldec": {
             "info": "build-in",
             "enable": false,
@@ -2081,6 +2099,26 @@
             "syntaxes": ["*"],
             "args": ["--separator", " "]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfstringescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--escape_quote", "double"]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--escape_quote" to "double" or "single". */
+        },
+        "sfstringunescape": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--escape_quote", "double"]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--escape_quote" to "double" or "single". */
         },
         "sfunicodeescape": {
             "info": "build-in",

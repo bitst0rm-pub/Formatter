@@ -171,6 +171,10 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfhtmlentitize **`(BI)`** | any | TEXT | None | html |
 | sfhtmldeentitize **`(BI)`** | any | TEXT | None | html |
 | sfhtmlstriptags **`(BI)`** | any | TEXT | None | html |
+| sfregexescape **`(BI)`** | any | TEXT | None | regex |
+| sfregexunescape **`(BI)`** | any | TEXT | None | regex |
+| sfstringescape **`(BI)`** | any | TEXT | None | string |
+| sfstringunescape **`(BI)`** | any | TEXT | None | string |
 | sfunicodeescape **`(BI)`** | any | TEXT | None | unicode |
 | sfunicodeunescape **`(BI)`** | any | TEXT | None | unicode |
 | sfcharcodeenc **`(BI)`** | any | TEXT | None | charcode |
