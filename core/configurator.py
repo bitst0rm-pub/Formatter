@@ -919,11 +919,11 @@ def build_formatter_sublime_settings(formatter_map):
     pattern_comment_linebreaks = re.compile(r'^(.*?//.*)$', re.MULTILINE)
     pattern_comma_before_comment = re.compile(r',([\s\n]+)(/\*)')
     json_text = pattern_comment_and_commas.sub(r'\1', json_text)
-    json_text = json_text.replace('\\"', '"')
+    json_text = re.sub(r'(?<!")\\\"(?!")', '"', json_text)  # replace all \" but not "\""
     json_text = pattern_comma_before_comment.sub(r'\1\2', json_text)
     matched_lines = pattern_comment_linebreaks.findall(json_text)
     for line in matched_lines:
-        modified_line = line.replace(r'\"', '"').replace('\\n', '\n')
+        modified_line = re.sub(r'(?<!")\\\"(?!")', '"', line).replace('\\n', '\n')
         json_text = json_text.replace(line, modified_line)
 
     s = [
