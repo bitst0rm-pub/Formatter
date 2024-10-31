@@ -1984,7 +1984,7 @@
             "dir_format": false,
             "syntaxes": ["*"],
             "args": ["--length", 3, "--length_in", "paragraphs", "--begin_with_lorem", true, "--use_custom_text", false]
-            /* Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". Set "--use_custom_text" to true to use text in your language from view (e.g. Chinese... */
+            /* Build-in, no "executable_path", no "config_path". Set "--length_in" to "paragraphs", "sentences", "words". Set "--use_custom_text" to true to use the current text in your language (e.g. Chinese). */
         },
         "sflzmacompress": {
             "info": "build-in",
@@ -2178,6 +2178,16 @@
             "args": ["--lower", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
+        "sfx2randpass": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--length", 18, "--separator", "-", "--separator_in_range", 5, "--format", "lower,upper,digit,special"]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
         "sfx2sha1": {
             "info": "build-in",
             "enable": false,
@@ -2247,6 +2257,16 @@
             "syntaxes": ["*"],
             "args": ["--lower", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfx2uuid": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--mode", "uuid4", "--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--mode" to "uuid1", "uuid3", "uuid4", "uuid5". Current text used as input for uuid3 and uuid5. */
         },
         "yjx2hcl": {
             "info": "https://github.com/sclevine/yj",

@@ -1266,6 +1266,14 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf X->RANDPASS",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2randpass",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf X->SHA1",
         "command": "run_format",
         "args": {
@@ -1318,6 +1326,14 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2shake512",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->UUID",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2uuid",
             "type": "converter"
         }
     },

@@ -1397,6 +1397,15 @@
                         }
                     },
                     {
+                        "caption": "Sf X->RANDPASS",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2randpass",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf X->SHA1",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1456,6 +1465,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2shake512",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->UUID",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2uuid",
                             "type": "converter"
                         }
                     },

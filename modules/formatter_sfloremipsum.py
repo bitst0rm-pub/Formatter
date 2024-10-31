@@ -13,7 +13,7 @@ MODULE_CONFIG = {
     'executable_path': None,
     'args': ['--length', 3, '--length_in', 'paragraphs', '--begin_with_lorem', True, '--use_custom_text', False],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path". Use "args" with "--length_in" "paragraphs", "sentences", "words". Set "--use_custom_text" to true to use text in your language from view (e.g. Chinese).'
+    'comment': 'Build-in, no "executable_path", no "config_path". Set "--length_in" to "paragraphs", "sentences", "words". Set "--use_custom_text" to true to use the current text in your language (e.g. Chinese).'
 }
 
 

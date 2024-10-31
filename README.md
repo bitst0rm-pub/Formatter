@@ -209,6 +209,8 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfhexdec **`(BI)`** | any | TEXT | None | hex |
 | sfhexdumpenc **`(BI)`** | any | TEXT | None | hexdump |
 | sfhexdumpdec **`(BI)`** | any | TEXT | None | hexdump |
+| sfx2uuid **`(BI)`** | any | TEXT | None | UUID |
+| sfx2randpass **`(BI)`** | any | TEXT | None | random |
 | sfx2crc32 **`(BI)`** | any | TEXT | None | crc32 |
 | sfx2md5 **`(BI)`** | any | TEXT | None | md5 |
 | sfx2sha1 **`(BI)`** | any | TEXT | None | sha1 |
