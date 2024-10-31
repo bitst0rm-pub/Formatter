@@ -21,8 +21,9 @@ from . import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS, NOOP,
                PACKAGE_NAME, QUICK_OPTIONS_SETTING_FILE,
                RECURSIVE_FAILURE_DIRECTORY, RECURSIVE_SUCCESS_DIRECTORY,
                check_deprecated_api, check_deprecated_options, disable_logging,
-               enable_logging, enable_status, log, retry_on_exception,
-               sanitize_cmd_output, transform_cmd_arg, validate_cmd_arg)
+               enable_logging, enable_status, log, print_parsed_args,
+               retry_on_exception, sanitize_cmd_output, transform_cmd_arg,
+               validate_cmd_arg)
 
 if IS_WINDOWS:
     from subprocess import (CREATE_NEW_PROCESS_GROUP, STARTF_USESHOWWINDOW,
@@ -735,6 +736,7 @@ class ArgumentHandler:
         return StringHandler.convert_list_items_to_string(lst=args)
 
     @classmethod
+    @print_parsed_args
     def parse_args(cls, uid=None, convert=False):
         args = cls.get_args(uid=uid)
 

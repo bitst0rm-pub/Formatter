@@ -83,7 +83,6 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 - **`(BI)`** = **`(build-in)`** No installation required; specifically designed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
-- The same list is always auto generated here: [_summary.txt](/modules/_summary.txt)
 
 | Languages | Beautify | Minify | Graphic | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: | :------: |
@@ -1247,7 +1246,7 @@ The structure of the metadata JSON file should follow this format:
 
 The entire set of Formatter API can be found in the file: `core > common.py`<br />
 Responsible for interacting with plugin modules is the class: `class Module:`<br />
-There are more methods in this class you can use, but:
+There are more methods in this class you can use, but Formatter only uses these:
 
 1. Essentially for the `def get_cmd(self)` function:
 

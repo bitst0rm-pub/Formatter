@@ -222,6 +222,16 @@ def transform_cmd_arg(*transformers):
     return decorator
 
 
+# Decorator to print parsed args command
+def print_parsed_args(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        parsed_args = func(*args, **kwargs)
+        log.debug('Args: %s', parsed_args)
+        return parsed_args
+    return wrapper
+
+
 # Decorator to retry a function on exception
 def retry_on_exception(retries=5, delay=500):
     def decorator(func):

@@ -6,8 +6,9 @@ from .constants import (ASSETS_DIRECTORY, GFX_OUT_NAME, IS_WINDOWS, LAYOUTS,
 from .logger import disable_logging, enable_logging, enable_status, log
 from .decorator import (bulk_operation_detector, check_deprecated_api,
                         check_deprecated_options, check_stop, debounce,
-                        retry_on_exception, sanitize_cmd_output,
-                        skip_word_counter, transform_cmd_arg, validate_cmd_arg)
+                        print_parsed_args, retry_on_exception,
+                        sanitize_cmd_output, skip_word_counter,
+                        transform_cmd_arg, validate_cmd_arg)
 from .common import (CONFIG, CleanupHandler, ConfigHandler, DataHandler,
                      DotFileHandler, HashHandler, InterfaceHandler,
                      LayoutHandler, MarkdownHandler, Module, OptionHandler,
@@ -40,6 +41,7 @@ __all__ = [
     'check_deprecated_options',
     'check_stop',
     'debounce',
+    'print_parsed_args',
     'retry_on_exception',
     'sanitize_cmd_output',
     'skip_word_counter',
