@@ -743,96 +743,28 @@ class ArgumentHandler:
         if len(args) % 2 != 0:
             raise ValueError('Invalid number of arguments. Arguments should be in pairs (key, value).')
 
-        parsed_args = {}
-        for i in range(0, len(args), 2):
-            key = args[i]
-            value = args[i + 1]
-            parsed_args[key] = cls._convert_value(value) if convert else value
+        return {args[i]: cls._convert_value(args[i + 1]) if convert else args[i + 1] for i in range(0, len(args), 2)}
 
-        return parsed_args
-
-    @classmethod
-    def _convert_value(cls, value):
+    @staticmethod
+    def _convert_value(value):
+        if value.lower() == 'none':
+            return None
+        elif value.lower() == 'true':
+            return True
+        elif value.lower() == 'false':
+            return False
+        elif value.isdigit():
+            return int(value)
         try:
-            return json.loads(value)
-        except json.JSONDecodeError:
-            # Fallback to manual conversion for simpler types
-            if value.isdigit():  # int
-                return int(value)
-            elif value.replace('.', '', 1).isdigit() and value.count('.') < 2:  # float
-                return float(value)
-            elif value.lower() in ['true', 'false']:  # bool
-                return value.lower() == 'true'
-            elif value.startswith('[') and value.endswith(']'):  # list
-                return cls._parse_list(value[1:-1])  # strip brackets
-            elif value.startswith('{') and value.endswith('}'):  # dict
-                return cls._parse_dict(value[1:-1])  # strip braces
-            else:
-                return value.strip('"')  # strip quotes for simple strings
+            return float(value)
+        except ValueError:
+            pass
+        try:  # list or dict
+            return json.loads(value.replace("'", '"'))
+        except (json.JSONDecodeError, TypeError):
+            pass
 
-    @classmethod
-    def _parse_list(cls, value):
-        items = []
-        nested_level = 0
-        current_item = []
-
-        for char in value:
-            if char in ('[', '{'):
-                nested_level += 1
-            elif char in (']', '}'):
-                nested_level -= 1
-            elif char == ',' and nested_level == 0:
-                items.append(''.join(current_item).strip().strip('"'))
-                current_item = []
-                continue
-
-            current_item.append(char)
-
-        if current_item:
-            items.append(''.join(current_item).strip().strip('"'))
-
-        if nested_level != 0:
-            raise ValueError('Malformed list: unbalanced brackets.')
-
-        return [cls._convert_value(item) for item in items]
-
-    @classmethod
-    def _parse_dict(cls, value):
-        items = {}
-        current_key = []
-        current_value = []
-        nested_level = 0
-        parsing_key = True
-
-        for char in value:
-            if char == '{':
-                nested_level += 1
-            elif char == '}':
-                nested_level -= 1
-            elif char == ':' and nested_level == 0:
-                parsing_key = False
-                continue
-            elif char == ',' and nested_level == 0:
-                if not current_key or not current_value:
-                    raise ValueError('Invalid key-value pair in dictionary.')
-                items[''.join(current_key).strip().strip('"')] = cls._convert_value(''.join(current_value).strip().strip('"'))
-                current_key = []
-                current_value = []
-                parsing_key = True
-                continue
-
-            if parsing_key:
-                current_key.append(char)
-            else:
-                current_value.append(char)
-
-        if current_key and current_value:
-            items[''.join(current_key).strip().strip('"')] = cls._convert_value(''.join(current_value).strip().strip('"'))
-
-        if nested_level != 0:
-            raise ValueError('Malformed dictionary: unbalanced braces.')
-
-        return items
+        return value  # string
 
     @classmethod
     def get_config_path(cls, view=None, uid=None, region=None, dotfiles=None, df_ident=None, auto_format_config=None):
