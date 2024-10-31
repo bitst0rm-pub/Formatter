@@ -9,7 +9,7 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--idna', True],
+    'args': ['--idna', False],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
