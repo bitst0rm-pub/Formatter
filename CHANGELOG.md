@@ -2,6 +2,19 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.0)] - 2024-10-31
+
+### 🚀 Features
+
+- [`751e73a`](https://github.com/bitst0rm-pub/Formatter/commit/751e73a2bb98318976cc057385cc17de377d3488) Add converters `sfregexescape`, `sfregexunescape`, `sfstringescape`, `sfstringunescape`
+- [`f605c46`](https://github.com/bitst0rm-pub/Formatter/commit/f605c46a9298a17bf3afd36a04057c47dc2d3f7b) Add converters `sfx2uuid`, `sfx2randpass`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`8061b23`](https://github.com/bitst0rm-pub/Formatter/commit/8061b23b0e11a1d56bf6e7d01161ca18d2f398b5) Add parsed args decorator
+- [`e5b9a37`](https://github.com/bitst0rm-pub/Formatter/commit/e5b9a3733fdc4642a412bf0c1843f4ebcc82a48a) Set punycode `--idna` flag to false
+- [`a6e9eac`](https://github.com/bitst0rm-pub/Formatter/commit/a6e9eacf8a72df4b41083b7f2353f7d998a9c6da) Update regex
+
 ## [[1.7.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.7.8)] - 2024-10-29
 
 ### 🚀 Features
