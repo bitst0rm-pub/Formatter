@@ -2185,7 +2185,7 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--length", 18, "--separator", "-", "--separator_in_range", 5, "--format", "lower,upper,digit,special"]
+            "args": ["--length", 20, "--separator", "-", "--separator_every", 6, "--format", "lower,upper,digit,special"]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2sha1": {

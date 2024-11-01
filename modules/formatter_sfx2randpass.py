@@ -12,7 +12,7 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--length', 18, '--separator', '-', '--separator_in_range', 5, '--format', 'lower,upper,digit,special'],
+    'args': ['--length', 20, '--separator', '-', '--separator_every', 6, '--format', 'lower,upper,digit,special'],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
@@ -43,18 +43,39 @@ class Sfx2randpassFormatter(Module):
         try:
             # text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
-            length = int(args.get('--length', 18))
+            length = int(args.get('--length', 20))
             if length <= 0:
                 raise ValueError('Length must be a positive integer.')
             separator = args.get('--separator', '-') or ''
-            separator_in_range = int(args.get('--separator_in_range', 5))
-            format_flags = args.get('--format', '').split(',')
+            separator_every = int(args.get('--separator_every', 6))
+            format_flags = [flag.strip().lower() for flag in args.get('--format', '').split(',')]
 
             char_set = self.build_charset(format_flags)
-            random_string = ''.join(random.choice(char_set) for _ in range(length))
+
+            # Calculate how many separators will be added
+            num_separators = (length - 1) // separator_every if separator else 0
+
+            # Adjust the length of the random string to account for separators
+            adjusted_length = length - num_separators
+
+            if adjusted_length < 0:
+                raise ValueError("Adjusted length cannot be negative. Please adjust the input parameters.")
+
+            # Generate the random string
+            random_string = ''.join(random.choice(char_set) for _ in range(adjusted_length))
+
             if not separator:
                 return random_string
-            return self.insert_separators(random_string, separator, separator_in_range)
+
+            # Insert separators into the generated random string
+            final_result = self.insert_separators(random_string, separator, separator_every)
+
+            # Ensure the final length matches the requested length
+            while len(final_result) < length:
+                # If length is still less, add random characters until it matches
+                final_result += random.choice(char_set)
+
+            return final_result[:length]
         except Exception as e:
             log.status('File not formatted due to error: %s', e)
 
