@@ -2,6 +2,22 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.1)] - 2024-11-02
+
+### 🚀 Features
+
+- [`203b347`](https://github.com/bitst0rm-pub/Formatter/commit/203b3471803f9fbf3c2c6b2d91ff1b76b0004eba) Add converter `sfextractemailaddr`, `sfextractipaddr`, `sfextractmacaddr`, `sfextracturls`, `sfextractfilepaths`, `sfextractdates`
+
+### 🐛 Bug Fixes
+
+- [`a19b3bc`](https://github.com/bitst0rm-pub/Formatter/commit/a19b3bc2ebfb0414443c8dc9333773bef392c564) Fix `parse_args()`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`c2405be`](https://github.com/bitst0rm-pub/Formatter/commit/c2405be8e37d107d1270705e931b0a8ea52cb61a) Add args flag `"--direct_encode"` to `sfromannumeralenc` and `"--direct_decode"` to `sfromannumeraldec`
+- [`2f76731`](https://github.com/bitst0rm-pub/Formatter/commit/2f7673106711895f837eab93c3c42547efc4d4f0) Change `sfx2randpass` flag `"--separator_in_range"` to `"--separator_every"`
+- [`f382d00`](https://github.com/bitst0rm-pub/Formatter/commit/f382d00ce47a9197dda69d1d2267909a11b3a80b) Update README.md
+
 ## [[1.8.0](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.0)] - 2024-10-31
 
 ### 🚀 Features
