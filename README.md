@@ -220,6 +220,12 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfx2sha3512 **`(BI)`** | any | TEXT | None | sha3_512 |
 | sfx2shake256 **`(BI)`** | any | TEXT | None | shake_256 |
 | sfx2shake512 **`(BI)`** | any | TEXT | None | shake_512 |
+| sfextractemailaddr **`(BI)`** | any | TEXT | None | email |
+| sfextractipaddr **`(BI)`** | any | TEXT | None | IPaddr |
+| sfextractmacaddr **`(BI)`** | any | TEXT | None | MACaddr |
+| sfextracturls **`(BI)`** | any | TEXT | None | URLs\|domains |
+| sfextractfilepaths **`(BI)`** | any | TEXT | None | filepaths |
+| sfextractdates **`(BI)`** | any | TEXT | None | dates |
 
 <sub>`sf` = **S**ublime **F**ormatter</sub>
 

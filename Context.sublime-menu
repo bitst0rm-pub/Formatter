@@ -997,6 +997,54 @@
                 }
             },
             {
+                "caption": "Sf DATES (extract)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfextractdates",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf EMAIL (extract)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfextractemailaddr",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf FILEPATHS (extract)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfextractfilepaths",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf IP (extract)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfextractipaddr",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf MAC (extract)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfextractmacaddr",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf URLS (extract)",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfextracturls",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf GZIP (compress)",
                 "command": "run_format",
                 "args": {

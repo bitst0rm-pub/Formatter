@@ -1891,6 +1891,66 @@
             "args": ["--separator", " ", "--signed", false]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
+        "sfextractdates": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--sort", false, "--unique", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfextractemailaddr": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--sort", false, "--unique", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfextractfilepaths": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--windows", true, "--unix", true, "--sort", false, "--unique", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. It is not possible to cover all edge cases. */
+        },
+        "sfextractipaddr": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--ipv4", true, "--ipv6", false, "--remove_local_ipv4", false, "--sort", false, "--unique", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfextractmacaddr": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--sort", false, "--unique", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfextracturls": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--url_only", true, "--domain_only", false, "--sort", false, "--unique", false]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
         "sfgzipcompress": {
             "info": "build-in",
             "enable": false,

@@ -1127,6 +1127,60 @@
                         }
                     },
                     {
+                        "caption": "Sf DATES (extract)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfextractdates",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf EMAIL (extract)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfextractemailaddr",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf FILEPATHS (extract)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfextractfilepaths",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf IP (extract)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfextractipaddr",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf MAC (extract)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfextractmacaddr",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf URLS (extract)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfextracturls",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf GZIP (compress)",
                         "mnemonic": "S",
                         "command": "run_format",

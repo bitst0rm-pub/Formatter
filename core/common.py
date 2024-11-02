@@ -237,6 +237,9 @@ class Module(metaclass=ModuleMeta):
     def get_output_image(self):
         return GraphicHandler.get_output_image(temp_dir=self.temp_dir, type=self.type)
 
+    def get_unique(self, data):
+        return TextHandler.get_unique(data)
+
     def popup_message(self, text, title=None, dialog=False):
         return InterfaceHandler.popup_message(text, title, dialog)
 
@@ -1817,24 +1820,6 @@ class TextHandler:
                 return True
         return False
 
-
-class PrintHandler:
-    @staticmethod
-    def print_sysinfo(pretty=False):
-        if OptionHandler.query(CONFIG, False, 'environ', 'print_on_console'):
-            log.info('Environments:\n%s', json.dumps(EnvironmentHandler.update_environ(), ensure_ascii=False, indent=4 if pretty else None))
-
-            if ConfigHandler.is_quick_options_mode():
-                log.info('Mode: Quick Options: \n%s', json.dumps(OptionHandler.query(CONFIG, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
-            else:
-                log.info('Mode: User Settings')
-
-
-class MiscHandler:  # @unused
-    @staticmethod
-    def is_view(file_or_view):
-        return (type(file_or_view) is sublime.View)
-
     @staticmethod
     def get_unique(data):
         if isinstance(data, list):
@@ -1855,3 +1840,15 @@ class MiscHandler:  # @unused
             return unique_dict
         else:
             raise ValueError('Input data type not supported')
+
+
+class PrintHandler:
+    @staticmethod
+    def print_sysinfo(pretty=False):
+        if OptionHandler.query(CONFIG, False, 'environ', 'print_on_console'):
+            log.info('Environments:\n%s', json.dumps(EnvironmentHandler.update_environ(), ensure_ascii=False, indent=4 if pretty else None))
+
+            if ConfigHandler.is_quick_options_mode():
+                log.info('Mode: Quick Options: \n%s', json.dumps(OptionHandler.query(CONFIG, {}, 'quick_options'), ensure_ascii=False, indent=4 if pretty else None))
+            else:
+                log.info('Mode: User Settings')

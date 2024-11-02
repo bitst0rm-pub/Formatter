@@ -1026,6 +1026,54 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf DATES (extract)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfextractdates",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf EMAIL (extract)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfextractemailaddr",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf FILEPATHS (extract)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfextractfilepaths",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf IP (extract)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfextractipaddr",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf MAC (extract)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfextractmacaddr",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf URLS (extract)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfextracturls",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf GZIP (compress)",
         "command": "run_format",
         "args": {
