@@ -78,8 +78,7 @@ Formatter requires third-party plugins to work, as it relies on external plugins
 
 _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
-- The table does not contain all supported languages. For example, `prettydiff` supports 45 languages, which would blow up the frame of this list here.
-- Languages like `Svelte` or `Prisma` are not listed, but should work via the Prettier plugin system. Plugins like [deno](https://github.com/denoland/deno) and [dprint](https://github.com/dprint/dprint) should have the similar concept.
+- The same table, auto generated: [_summary.txt](/modules/_summary.txt)
 - **`(BI)`** = **`(build-in)`** No installation required; specifically designed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
@@ -159,7 +158,6 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 > [!TIP]
 >
 > - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`; for Octal, set the `"--radix"` to `8`.
-> - Nothing prevents the use of Sublime Text (multi-)selection to convert specific portions of text.
 
 | Converter | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
@@ -228,112 +226,6 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfextractdates **`(BI)`** | any | TEXT | None | dates |
 
 <sub>`sf` = **S**ublime **F**ormatter</sub>
-
-> [!TIP]
->
-> - [Prettier](https://github.com/prettier/prettier) and [Stylelint](https://github.com/stylelint/stylelint) can collaborate to format `CSS`
->   <details>
->   <summary><sub>Config example (obsolete)</sub></summary>
->
->     **stylelint_rc.json:**
->
->     ```json
->     {
->       "extends": [
->         "stylelint-config-recommended",
->         "stylelint-config-standard"
->       ],
->       "plugins": [
->         "stylelint-group-selectors",
->         "stylelint-no-indistinguishable-colors",
->         "@double-great/stylelint-a11y",
->         "stylelint-prettier"
->       ],
->       "rules": {
->         "plugin/stylelint-group-selectors": true,
->         "plugin/stylelint-no-indistinguishable-colors": true,
->         "a11y/content-property-no-static-value": false,
->         "a11y/font-size-is-readable": false,
->         "a11y/line-height-is-vertical-rhythmed": [true, {"severity": "warning"}],
->         "a11y/media-prefers-color-scheme": false,
->         "a11y/media-prefers-reduced-motion": false,
->         "a11y/no-display-none": false,
->         "a11y/no-obsolete-attribute": [true, {"severity": "warning"}],
->         "a11y/no-obsolete-element": [true, {"severity": "warning"}],
->         "a11y/no-outline-none": false,
->         "a11y/no-spread-text": false,
->         "a11y/no-text-align-justify": false,
->         "a11y/selector-pseudo-class-focus": false,
->         "prettier/prettier": [
->           true,
->           {
->             "parser": "css",
->             "printWidth": 120,
->             "semi": true,
->             "singleQuote": false,
->             "tabWidth": 4,
->             "useTabs": false
->           }
->         ]
->       }
->     }
->     ```
->
->     Then in Formatter settings, configure `"stylelint": { ... "args": ["--config-basedir", "/absolute/path/to/javascript/node_modules"] ... }`
->
-> - [Prettier](https://github.com/prettier/prettier) and [ESLint](https://github.com/eslint/eslint) can collaborate to format `JS`
->   <details>
->   <summary><sub>Config example (obsolete)</sub></summary>
->
->     **eslint_rc.json:**
->
->     ```json
->     {
->       "env": {
->         "es2022": true,
->         "node": true,
->         "browser": true
->       },
->       "parserOptions": {
->         "ecmaVersion": 13,
->         "sourceType": "module",
->         "ecmaFeatures": {
->           "jsx": true
->         }
->       },
->       "extends": [
->         "../javascript/node_modules/eslint-config-prettier",
->         "../javascript/node_modules/eslint-config-airbnb-base"
->       ],
->       "plugins": [
->         "eslint-plugin-prettier"
->       ],
->       "rules": {
->         "prettier/prettier": [
->           "error",
->           {
->             "bracketSpacing": true,
->             "jsxSingleQuote": true,
->             "parser": "babel",
->             "printWidth": 120,
->             "semi": true,
->             "singleQuote": true,
->             "tabWidth": 4,
->             "useTabs": false
->           },
->           {
->             "usePrettierrc": false
->           }
->         ],
->         "indent": [
->           "error",
->           4
->         ]
->       }
->     }
->     ```
->
->   </details>
 
 ## Installation
 
