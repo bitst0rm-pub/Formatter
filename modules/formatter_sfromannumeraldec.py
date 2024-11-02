@@ -9,7 +9,7 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--separator', ' '],
+    'args': ['--direct_decode', True, '--separator', ' '],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
@@ -59,17 +59,27 @@ class SfromannumeraldecFormatter(Module):
         try:
             text = self.get_text_from_region(self.region).strip()
             args = self.parse_args(convert=True)
+            direct_decode = args.get('--direct_decode', True)
             separator = args.get('--separator', ' ') or ' '
 
             roman_numerals = text.split(separator)
             decimal_values = []
 
-            for numeral in roman_numerals:
-                decimal_value = self.interpret_roman(numeral)
-                if decimal_value is not None:
-                    decimal_values.append(decimal_value)
+            if direct_decode:
+                for numeral in roman_numerals:
+                    decimal_value = self.interpret_roman(numeral.strip())
+                    if decimal_value is not None:
+                        decimal_values.append(str(decimal_value))
+                    else:
+                        raise ValueError('Direct decoding failed: input is not a valid Roman numeral')
+                return separator.join(decimal_values)
+            else:
+                for numeral in roman_numerals:
+                    decimal_value = self.interpret_roman(numeral)
+                    if decimal_value is not None:
+                        decimal_values.append(decimal_value)
 
-            return ''.join(chr(value) for value in decimal_values)
+                return ''.join(chr(value) for value in decimal_values)
         except Exception as e:
             log.status('File not formatted due to error: %s', e)
             return None

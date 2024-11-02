@@ -9,7 +9,7 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--separator', ' '],
+    'args': ['--direct_encode', True, '--separator', ' '],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead.'
 }
@@ -49,15 +49,24 @@ class SfromannumeralencFormatter(Module):
         try:
             text = self.get_text_from_region(self.region)
             args = self.parse_args(convert=True)
+            direct_encode = args.get('--direct_encode', True)
             separator = args.get('--separator', ' ') or ' '
 
-            roman_numerals = []
-            for char in text:
-                ascii_value = ord(char)
-                roman_numeral = self.to_roman(ascii_value)
-                roman_numerals.append(roman_numeral)
+            if direct_encode:
+                try:
+                    decimal_values = map(int, text.split(separator))
+                    roman_numerals = [self.to_roman(decimal) for decimal in decimal_values]
+                    return separator.join(roman_numerals)
+                except ValueError:
+                    raise ValueError('Direct encoding failed: input contains non-integer values')
+            else:
+                roman_numerals = []
+                for char in text:
+                    ascii_value = ord(char)
+                    roman_numeral = self.to_roman(ascii_value)
+                    roman_numerals.append(roman_numeral)
 
-            return separator.join(roman_numerals)
+                return separator.join(roman_numerals)
         except Exception as e:
             log.status('File not formatted due to error: %s', e)
             return None
