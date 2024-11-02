@@ -155,7 +155,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | YAML | yamlmax **`(BI)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
-> [!TIP]
+> [!NOTE]
 >
 > - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`; for Octal, set the `"--radix"` to `8`.
 
