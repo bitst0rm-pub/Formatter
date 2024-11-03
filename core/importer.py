@@ -19,7 +19,7 @@ import sublime
 from . import CONFIG, PACKAGE_NAME, HashHandler, log
 
 EXPECTED_DIRS = ['config', 'libs', 'modules']
-EXCLUDE_DIRS = ['prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']
+EXCLUDE_DIRS = ['dateutil', 'prettytable', 'sqlmin', 'toml', 'wcswidth', 'yaml']
 FETCH_TIMEOUT = 3
 DOWNLOAD_TIMEOUT = 10  # sec
 

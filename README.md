@@ -1135,7 +1135,7 @@ The structure of the metadata JSON file should follow this format:
 > - Each remote archive file (_myproject.zip_) must include at least one of the fixed folders: `config`, `libs`, `modules`
 > - All files must be placed within these 3 **predefined** folders.
 > - To update your code, just reset the `.custom` file in the Formatter root folder.
-> - The following Formatter libs are not exchangeable: `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
+> - The following Formatter libs are not exchangeable: `dateutil`, `prettytable`, `sqlmin`, `toml`, `wcswidth`, `yaml`
 >
 > _Python is not JS. You are responsible for handling any operations over the internet._
 
