@@ -1282,6 +1282,22 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf TIMESTAMP (decode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfunixtimestampdec",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf TIMESTAMP (encode)",
+        "command": "run_format",
+        "args": {
+            "uid": "sfunixtimestampenc",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf URI (decode)",
         "command": "run_format",
         "args": {
@@ -1302,6 +1318,14 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2crc32",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->Diacritics",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2diacritics",
             "type": "converter"
         }
     },

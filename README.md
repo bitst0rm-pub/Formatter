@@ -181,8 +181,6 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
 | sfbrailleenc **`(BI)`** | any | TEXT | None | braille |
 | sfbrailledec **`(BI)`** | any | TEXT | None | braille |
-| sfromannumeralenc **`(BI)`** | any | TEXT | None | roman |
-| sfromannumeraldec **`(BI)`** | any | TEXT | None | roman |
 | sfquotedprintableenc **`(BI)`** | any | TEXT | None | QP |
 | sfquotedprintabledec **`(BI)`** | any | TEXT | None | QP |
 | sflzmacompress **`(BI)`** | any | TEXT | None | LZMA |
@@ -207,6 +205,9 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfhexdec **`(BI)`** | any | TEXT | None | hex |
 | sfhexdumpenc **`(BI)`** | any | TEXT | None | hexdump |
 | sfhexdumpdec **`(BI)`** | any | TEXT | None | hexdump |
+| sfromannumeralenc **`(BI)`** | any | TEXT | None | roman |
+| sfromannumeraldec **`(BI)`** | any | TEXT | None | roman |
+| sfx2diacritics **`(BI)`** | any | TEXT | None | diacritics |
 | sfx2uuid **`(BI)`** | any | TEXT | None | UUID |
 | sfx2randpass **`(BI)`** | any | TEXT | None | random |
 | sfx2crc32 **`(BI)`** | any | TEXT | None | crc32 |
@@ -221,9 +222,11 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfextractemailaddr **`(BI)`** | any | TEXT | None | email |
 | sfextractipaddr **`(BI)`** | any | TEXT | None | IPaddr |
 | sfextractmacaddr **`(BI)`** | any | TEXT | None | MACaddr |
-| sfextracturls **`(BI)`** | any | TEXT | None | URLs\|domains |
+| sfextracturls **`(BI)`** | any | TEXT | None | URLs,domains |
 | sfextractfilepaths **`(BI)`** | any | TEXT | None | filepaths |
 | sfextractdates **`(BI)`** | any | TEXT | None | dates |
+| sfunixtimestampenc **`(BI)`** | any | TEXT | None | timestamp |
+| sfunixtimestampdec **`(BI)`** | any | TEXT | None | timestamp |
 
 <sub>`sf` = **S**ublime **F**ormatter</sub>
 

@@ -2198,6 +2198,26 @@
             "syntaxes": ["*"]
             /* Build-in, no "executable_path", no "config_path", no "args". */
         },
+        "sfunixtimestampdec": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--units", "sec"]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--units" to "sec", "millisec", "microsec", "nanosec". */
+        },
+        "sfunixtimestampenc": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--units", "sec", "--utc", true, "--show_datetime", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--units" to "sec", "millisec", "microsec", "nanosec". */
+        },
         "sfuridec": {
             "info": "build-in",
             "enable": false,
@@ -2226,6 +2246,16 @@
             "dir_format": false,
             "syntaxes": ["*"],
             "args": ["--lower", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. */
+        },
+        "sfx2diacritics": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "args": ["--custom_replacements", {"ü": "ue", "Ü": "Ue", "ä": "ae", "Ä": "Ae", "ö": "oe", "Ö": "Oe", "ß": "ss"}]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
         "sfx2md5": {

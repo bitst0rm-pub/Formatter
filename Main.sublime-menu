@@ -1415,6 +1415,24 @@
                         }
                     },
                     {
+                        "caption": "Sf TIMESTAMP (decode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfunixtimestampdec",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf TIMESTAMP (encode)",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfunixtimestampenc",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf URI (decode)",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1438,6 +1456,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2crc32",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->Diacritics",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2diacritics",
                             "type": "converter"
                         }
                     },
