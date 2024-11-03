@@ -2,6 +2,18 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.2)] - 2024-11-03
+
+### 🚀 Features
+
+- [`8ce3e98`](https://github.com/bitst0rm-pub/Formatter/commit/8ce3e98e80b03f55eb05b7f39f36a22775913d09) Add converters `sfx2diacritics`, `sfunixtimestampenc`, `sfunixtimestampdec`
+
+### ⚙️ Miscellaneous Tasks
+
+- [`c4372db`](https://github.com/bitst0rm-pub/Formatter/commit/c4372db934a287bb2e09acafea42f44577f60a98) Add `dateutil` from https://labix.org/download/python-dateutil/python-dateutil-2.0.tar.gz
+- [`0411667`](https://github.com/bitst0rm-pub/Formatter/commit/04116677323f9b826c946838d2a26f6b9ec2d4ac) Improve log status message
+- [`89adb94`](https://github.com/bitst0rm-pub/Formatter/commit/89adb9415a1cfac17054524fb234af1070c98ea1) Set `dateutil` as the protected lib
+
 ## [[1.8.1](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.1)] - 2024-11-02
 
 ### 🚀 Features
