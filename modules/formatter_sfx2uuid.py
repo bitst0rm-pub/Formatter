@@ -41,6 +41,6 @@ class Sfx2uuidFormatter(Module):
 
             return result if lower else result.upper()
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

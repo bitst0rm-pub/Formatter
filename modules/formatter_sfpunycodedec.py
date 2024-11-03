@@ -27,6 +27,6 @@ class SfpunycodedecFormatter(Module):
 
             return text.encode('ascii').decode('idna' if idna else 'punycode')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

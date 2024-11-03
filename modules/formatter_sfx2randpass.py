@@ -77,6 +77,6 @@ class Sfx2randpassFormatter(Module):
 
             return final_result[:length]
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

@@ -29,6 +29,6 @@ class SfgzipcompressFormatter(Module):
             compressed_data = gzip.compress(text.encode('utf-8'))
             return base64.b64encode(compressed_data).decode('ascii')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

@@ -26,6 +26,6 @@ class Sfbase32decFormatter(Module):
             text = self.get_text_from_region(self.region).strip()
             return base64.b32decode(text + '=' * (-len(text) % 8)).decode('utf8')  # padding 8 chars
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

@@ -29,6 +29,6 @@ class SflzmadecompressFormatter(Module):
             decompressed_data = lzma.decompress(base64.b64decode(text + '=' * (-len(text) % 4)))  # padding 4 chars
             return decompressed_data.decode('utf-8')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

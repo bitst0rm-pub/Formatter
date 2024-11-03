@@ -35,6 +35,6 @@ class SfbrailleencFormatter(Module):
             text = self.get_text_from_region(self.region)
             return ''.join(self.char_to_braille(c) for c in text)
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

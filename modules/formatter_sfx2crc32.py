@@ -28,6 +28,6 @@ class Sfx2crc32Formatter(Module):
             crc = binascii.crc32(text.encode('utf-8')) & 0xffffffff
             return format(crc, '08x' if args.get('--lower', True) else '08X')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

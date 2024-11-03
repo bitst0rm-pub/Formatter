@@ -26,6 +26,6 @@ class SfquotedprintableencFormatter(Module):
             text = self.get_text_from_region(self.region)
             return quopri.encodestring(text.encode('utf-8')).decode('utf-8')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

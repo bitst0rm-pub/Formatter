@@ -68,5 +68,5 @@ class SfromannumeralencFormatter(Module):
 
                 return separator.join(roman_numerals)
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
             return None

@@ -46,6 +46,6 @@ class SfdecimaldecFormatter(Module):
 
             return bytes(decoded_bytes).decode('utf-8', errors='ignore')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

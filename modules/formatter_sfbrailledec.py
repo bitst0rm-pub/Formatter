@@ -30,6 +30,6 @@ class SfbrailledecFormatter(Module):
             reverse_lookup = {braille: ascii_char for ascii_char, braille in zip(self.BRAILLE_LOOKUP['ascii'], self.BRAILLE_LOOKUP['dot6'])}
             return ''.join(reverse_lookup.get(braille_char, braille_char) for braille_char in text)
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

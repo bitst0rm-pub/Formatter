@@ -42,6 +42,6 @@ class SfunixtimestampdecFormatter(Module):
             dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
             return dt.strftime('%a %d %B %Y %H:%M:%S UTC')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

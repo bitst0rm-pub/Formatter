@@ -24,6 +24,6 @@ class SfunicodeunescapeFormatter(Module):
             text = self.get_text_from_region(self.region).strip()
             return bytes(text, 'utf8').decode('unicode_escape')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

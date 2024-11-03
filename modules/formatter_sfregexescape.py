@@ -25,6 +25,6 @@ class SfregexescapeFormatter(Module):
             special_chars = r'^$.*\\+?{}[]|()'
             return ''.join(('\\' + char) if char in special_chars else char for char in text)
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

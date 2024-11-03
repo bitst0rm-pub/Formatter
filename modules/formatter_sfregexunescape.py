@@ -27,6 +27,6 @@ class SfregexunescapeFormatter(Module):
             special_chars = r'^$.*\\+?{}[]|()'
             return re.sub(r'\\([{}])'.format(re.escape(special_chars)), r'\1', text)
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

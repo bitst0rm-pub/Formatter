@@ -45,6 +45,6 @@ class SfbaseencFormatter(Module):
             text = ''.join(text.split(separator))
             return self.int_to_base(int(text), radix, lower)
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None

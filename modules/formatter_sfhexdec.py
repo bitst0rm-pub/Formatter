@@ -35,6 +35,6 @@ class SfhexdecFormatter(Module):
 
             return binascii.unhexlify(cleaned_hex).decode('utf-8')
         except Exception as e:
-            log.status('File not formatted due to error: %s', e)
+            log.status('Formatting failed due to error: %s', e)
 
         return None
