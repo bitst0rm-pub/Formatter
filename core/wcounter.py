@@ -94,7 +94,8 @@ class WordCounterListener(sublime_plugin.EventListener):
     @debounce(delay_in_ms=300)
     def on_selection_modified_async(self, view):
         x = OptionHandler.query(CONFIG, {}, 'show_words_count')
-        if x.get('enable', True) and (DataHandler.get('__dir_format_stop__')[1] or True):
+        dir_format_stop = DataHandler.get('__dir_format_stop__')[1]
+        if x.get('enable', True) and (dir_format_stop is True or dir_format_stop is None):
             ignore_whitespace_char = x.get('ignore_whitespace_char', True)
             use_short_label = x.get('use_short_label', False)
             view.settings().set('show_line_column', 'disabled')
