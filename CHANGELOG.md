@@ -2,6 +2,17 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.3)] - 2024-11-15
+
+### 🐛 Bug Fixes
+
+- [`7edb500`](https://github.com/bitst0rm-pub/Formatter/commit/7edb500dcaa18c2e5213b0c5a68165b589ca88a6) Fix Session Manger on ST startup
+
+### ⚙️ Miscellaneous Tasks
+
+- [`f6ff220`](https://github.com/bitst0rm-pub/Formatter/commit/f6ff22094a450282d6da17e7b90022d1d94dac8e) Add foldings to Session Manager
+- [`d6959c4`](https://github.com/bitst0rm-pub/Formatter/commit/d6959c431645c841f9561581602007c373797ffd) Improve wcounter condition check
+
 ## [[1.8.2](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.2)] - 2024-11-03
 
 ### 🚀 Features
