@@ -169,10 +169,20 @@ session_manager = SessionManager(max_database_records=600)
 
 
 class SessionManagerListener(sublime_plugin.EventListener):
+    is_initial_startup = True
+
     @bulk_operation_detector.bulk_operation_guard(register=True)
     def on_load(self, view):
         if OptionHandler.query(CONFIG, True, 'remember_session') and (DataHandler.get('__dir_format_stop__')[1] or True):
             session_manager.run_on_load(view)
+
+    def on_activated(self, view):
+        if self.is_initial_startup:
+            self.is_initial_startup = False
+            if OptionHandler.query(CONFIG, True, 'remember_session') and (DataHandler.get('__dir_format_stop__')[1] or True):
+                for window in sublime.windows():
+                    for wview in window.views():
+                        session_manager.run_on_load(wview)
 
     @bulk_operation_detector.bulk_operation_guard(register=True)
     def on_pre_close(self, view):
