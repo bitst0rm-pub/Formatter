@@ -74,7 +74,7 @@ class WordCounter:
 
         self.view.set_status(STATUS_KEY + '_c', status_text)
 
-    def run_on_selection_modified(self, view, ignore_whitespace_char, use_short_label):
+    def run(self, view, ignore_whitespace_char, use_short_label):
         try:
             self.view = view
             self.ignore_whitespace_char = ignore_whitespace_char
@@ -99,4 +99,4 @@ class WordCounterListener(sublime_plugin.EventListener):
             ignore_whitespace_char = x.get('ignore_whitespace_char', True)
             use_short_label = x.get('use_short_label', False)
             view.settings().set('show_line_column', 'disabled')
-            word_counter.run_on_selection_modified(view, ignore_whitespace_char, use_short_label)
+            word_counter.run(view, ignore_whitespace_char, use_short_label)

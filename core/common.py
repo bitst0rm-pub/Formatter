@@ -34,7 +34,7 @@ class ConfigDict(dict):
     _bypass_restrictions = False
     _allowed_keys_for_get = ['custom_modules', 'custom_modules_manifest', 'formatters', 'environ', 'quick_options']
 
-    def get(self, key, *args, **kwargs):  # access via CONFIG.get('key')
+    def get(self, key, *args, **kwargs):
         if key in ConfigDict._allowed_keys_for_get:
             return super().get(key, *args, **kwargs)
 
@@ -42,12 +42,11 @@ class ConfigDict(dict):
             raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
         return super().get(key, *args, **kwargs)
 
-    def __getitem__(self, key):  # access via CONFIG['key']
+    def __getitem__(self, key):
         if not ConfigDict._bypass_restrictions:
             raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
         return super().__getitem__(key)
 
-    # Context manager to temporarily bypass restrictions
     @classmethod
     def allow_access(cls):
         class BypassContext:
@@ -96,7 +95,7 @@ class ModuleMeta(abc.ABCMeta):
 class Module(metaclass=ModuleMeta):
     '''
     API solely for interacting with files located in the 'modules' folder.
-    These methods allow you to create a custom formatter adapter for your plugin.
+    These methods are used to develop custom formatter adapters for plugins.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, df_ident=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
@@ -564,7 +563,6 @@ class OptionHandler:
             if not isinstance(data_dict, (dict, sublime.Settings)):
                 return default
 
-            # Use the bypass only if accessing CONFIG (which is an instance of ConfigDict)
             if isinstance(data_dict, ConfigDict):
                 with ConfigDict.allow_access():
                     data_dict = data_dict.get(key, default)
@@ -1179,12 +1177,6 @@ class _Extended(Module):  # @unused
 
     def print_sysinfo(self, pretty=False):
         raise NotImplementedError('PrintHandler')
-
-    def is_view(self, file_or_view):
-        raise NotImplementedError('MiscHandler')
-
-    def get_unique(self, data):
-        raise NotImplementedError('MiscHandler')
 
 
 # === Extended Supporting Classes === #
