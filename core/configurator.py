@@ -552,8 +552,8 @@ def build_formatter_sublime_settings(formatter_map):
             ('ignore_whitespace_char', True)
         ])),
         ('__COMMENT__remember_session', '''
-    // Remember and restore cursor position, selections and bookmarks
-    // each time a file is closed and re-opened.
+    // Remember and restore cursor position, selections, bookmarks,
+    // and foldings each time a file is closed and re-opened.
     // This is helpful to resume your work from where you left off.
     // It does not remember any sublime sessions as name might suggest.'''),
         ('remember_session', True),

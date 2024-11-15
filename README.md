@@ -78,7 +78,7 @@ Formatter requires third-party plugins to work, as it relies on external plugins
 
 _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
-- The same table, auto generated: [_summary.txt](/modules/_summary.txt)
+- The same table with clear names, auto generated: [_summary.txt](/modules/_summary.txt)
 - **`(BI)`** = **`(build-in)`** No installation required; specifically designed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
@@ -219,7 +219,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfx2sha3512 **`(BI)`** | any | TEXT | None | sha3_512 |
 | sfx2shake256 **`(BI)`** | any | TEXT | None | shake_256 |
 | sfx2shake512 **`(BI)`** | any | TEXT | None | shake_512 |
-| sfextractemailaddr **`(BI)`** | any | TEXT | None | email |
+| sfextractemailaddr **`(BI)`** | any | TEXT | None | emails |
 | sfextractipaddr **`(BI)`** | any | TEXT | None | IPaddr |
 | sfextractmacaddr **`(BI)`** | any | TEXT | None | MACaddr |
 | sfextracturls **`(BI)`** | any | TEXT | None | URLs,domains |
@@ -318,8 +318,8 @@ The following setting details - along with their default values and examples - a
             "ignore_whitespace_char": true
         },
 
-        // Remember and restore cursor position, selections and bookmarks
-        // each time a file is closed and re-opened.
+        // Remember and restore cursor position, selections, bookmarks,
+        // and foldings each time a file is closed and re-opened.
         // This is helpful to resume your work from where you left off.
         // It does not remember any sublime sessions as name might suggest.
         "remember_session": true,
