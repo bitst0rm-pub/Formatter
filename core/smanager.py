@@ -7,11 +7,13 @@ from os.path import dirname, join
 import sublime
 import sublime_plugin
 
-from . import CONFIG, DataHandler, OptionHandler, bulk_operation_detector, log
+from . import (CONFIG, PACKAGE_NAME, DataHandler, OptionHandler,
+               bulk_operation_detector, log)
 
 SESSION_FILE = join(sublime.packages_path(), '..', 'Local', 'Session.formatter_session')
 MAX_AGE_DAYS = 180
 MAX_DATABASE_RECORDS = 600
+EXCLUDED_FILES = [PACKAGE_NAME + '.sublime-settings']
 
 
 class SessionManager:
@@ -20,6 +22,10 @@ class SessionManager:
         self.lock = threading.Lock()
         self.max_records = max_records
         self._remove_expired_entries()
+
+    @staticmethod
+    def _is_excluded(file_path):
+        return any(file_path.endswith(excluded) for excluded in EXCLUDED_FILES)
 
     @staticmethod
     def _read_file():
@@ -97,7 +103,7 @@ class SessionManager:
 
     def save_view_state(self, view):
         file_path = view.file_name()
-        if file_path:
+        if file_path and not self._is_excluded(file_path):
             # Save selections, bookmarks, and foldings
             data = {
                 'last_update': str(datetime.now()),
@@ -116,7 +122,7 @@ class SessionManager:
 
     def restore_view_state(self, view, is_on_startup=False):
         file_path = view.file_name()
-        if file_path:
+        if file_path and not self._is_excluded(file_path):
             with self.lock:
                 data = self._read_file().get(file_path, None)
                 if data:
