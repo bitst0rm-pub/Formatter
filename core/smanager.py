@@ -114,7 +114,7 @@ class SessionManager:
                 self._trim_database(session_data)
                 self._write_file(session_data)
 
-    def restore_view_state(self, view):
+    def restore_view_state(self, view, is_on_startup=False):
         file_path = view.file_name()
         if file_path:
             with self.lock:
@@ -125,17 +125,20 @@ class SessionManager:
                     cursor_y = max(data.get('y', 0), 0)
                     cursor_position = view.text_point(cursor_x, cursor_y)
 
+                    # Restore cursor position
+                    view.sel().clear()
+                    view.sel().add(sublime.Region(cursor_position))
+
+                    if not is_on_startup:
+                        try:
+                            view.show_at_center(cursor_position, animate=False)  # ST4
+                        except Exception:
+                            view.show_at_center(cursor_position)  # ST3
+
                     # Restore selections, bookmarks, and foldings
                     self._restore_selections(view, data.get('selections', []))
                     self._restore_bookmarks(view, data.get('bookmarks', []))
                     self._restore_foldings(view, data.get('foldings', []))
-
-                    view.sel().clear()
-                    view.sel().add(sublime.Region(cursor_position))
-                    try:
-                        view.show_at_center(cursor_position, animate=False)  # ST4
-                    except Exception:
-                        view.show_at_center(cursor_position)  # ST3
 
 
 session_manager = SessionManager(max_records=600)
@@ -159,7 +162,7 @@ class SessionManagerListener(sublime_plugin.EventListener):
             if self.should_remember_session():
                 for window in sublime.windows():
                     for wview in window.views():
-                        session_manager.restore_view_state(wview)
+                        session_manager.restore_view_state(wview, is_on_startup=True)
 
     @bulk_operation_detector.bulk_operation_guard(register=True)
     def on_pre_close(self, view):
