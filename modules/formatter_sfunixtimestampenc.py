@@ -1,4 +1,5 @@
-from datetime import timezone
+import time
+from datetime import datetime, timezone
 
 from ..core import Module, log
 from ..libs.dateutil.parser import parse
@@ -34,20 +35,24 @@ class SfunixtimestampencFormatter(Module):
 
             if utc:
                 dt = dt.replace(tzinfo=timezone.utc)
+                timestamp = dt.timestamp()
+            else:
+                timestamp = time.mktime(dt.timetuple())
 
-            timestamp = dt.timestamp()
-            if units == 'millisec':
-                timestamp *= 1_000
-            elif units == 'microsec':
-                timestamp *= 1_000_000
-            elif units == 'nanosec':
-                timestamp *= 1_000_000_000
+            x = {
+                'sec': 1,
+                'millisec': 1_000,
+                'microsec': 1_000_000,
+                'nanosec': 1_000_000_000
+            }
+            timestamp *= x.get(units, 1)
 
             timestamp_int = int(timestamp)
 
             if show_datetime:
-                formatted_dt = dt.strftime('%a %d %B %Y %H:%M:%S UTC')
-                return '%d (%s)' % (timestamp_int, formatted_dt)
+                out_dt = datetime.fromtimestamp(timestamp_int, tz=timezone.utc)
+                out_str = out_dt.strftime('%a %d %B %Y %H:%M:%S %Z')
+                return '%d (%s)' % (timestamp_int, out_str)
             else:
                 return str(timestamp_int)
         except Exception as e:
