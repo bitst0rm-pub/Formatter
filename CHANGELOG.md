@@ -2,6 +2,18 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.4)] - 2024-11-18
+
+### 🐛 Bug Fixes
+
+- [`1480a71`](https://github.com/bitst0rm-pub/Formatter/commit/1480a7180c545b330406411f5bd6b930193c7c11) Fix sfunixtimestampenc
+- [`8efc2b6`](https://github.com/bitst0rm-pub/Formatter/commit/8efc2b6e81f6261a3e63b303f05306a77035842d) Fix smanager on startup
+
+### ⚙️ Miscellaneous Tasks
+
+- [`a4e17bb`](https://github.com/bitst0rm-pub/Formatter/commit/a4e17bb4ee3c341f0b88e47314a5d1d6a308d101) Exclude files for smanager
+- [`e70739d`](https://github.com/bitst0rm-pub/Formatter/commit/e70739d0d4aa454a581d7e02444d6f6ee12366a3) Tidy code
+
 ## [[1.8.3](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.3)] - 2024-11-15
 
 ### 🐛 Bug Fixes
