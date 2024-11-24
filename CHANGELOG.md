@@ -2,6 +2,19 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.5)] - 2024-11-24
+
+### 🐛 Bug Fixes
+
+- [`b8e25b3`](https://github.com/bitst0rm-pub/Formatter/commit/b8e25b3fc088b06e55bf28124ce92ab781e4e945) Fix `stunixtimestampenc` timezone offset
+
+### ⚙️ Miscellaneous Tasks
+
+- [`a3a1fa2`](https://github.com/bitst0rm-pub/Formatter/commit/a3a1fa2abdfe6c82e2dafb0c3cf4ee9ec23c4282) Add new flags to `sfunixtimestamp` for more customizability and flexibility
+- [`6e27e95`](https://github.com/bitst0rm-pub/Formatter/commit/6e27e95570bdc75e5109833fd6eeb595a022a49a) Update README.md
+- [`64769bc`](https://github.com/bitst0rm-pub/Formatter/commit/64769bc7782fd9075d387d7172e227557bcfa3bb) Update `Formatter.sublime-settings`
+- [`fd418dc`](https://github.com/bitst0rm-pub/Formatter/commit/fd418dca24b8645aca8c8c39d97cf58c0932a675) Update `sfunixtimestamp`
+
 ## [[1.8.4](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.4)] - 2024-11-18
 
 ### 🐛 Bug Fixes
