@@ -58,12 +58,12 @@ class SfunixtimestampencFormatter(Module):
                 'microsec': 1_000_000,
                 'nanosec': 1_000_000_000
             }
-            timestamp_scaled = round(timestamp * scale.get(unit, 1))
+            timestamp *= scale.get(unit, 1)
 
             if show_datetime:
-                return '%d (%s)' % (timestamp_scaled, dt_utc.strftime('%a %d %B %Y %H:%M:%S %Z').strip())
+                return '%d (%s)' % (timestamp, dt_utc.strftime('%a %d %B %Y %H:%M:%S %Z').strip())
             else:
-                return str(timestamp_scaled)
+                return str(timestamp)
         except Exception as e:
             log.status('Formatting failed due to error: %s', e)
 

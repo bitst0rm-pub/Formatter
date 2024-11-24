@@ -2205,8 +2205,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--units", "sec"]
-            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--units" to "sec", "millisec", "microsec", "nanosec". */
+            "args": ["--unit", "sec", "--format", "%a %d %B %Y %H:%M:%S %Z"]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--unit" to "sec", "millisec", "microsec", "nanosec". */
         },
         "sfunixtimestampenc": {
             "info": "build-in",

@@ -11,9 +11,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--units', 'sec'],
+    'args': ['--unit', 'sec', '--format', '%a %d %B %Y %H:%M:%S %Z'],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead. Set "--units" to "sec", "millisec", "microsec", "nanosec".'
+    'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead. Set "--unit" to "sec", "millisec", "microsec", "nanosec".'
 }
 
 
@@ -25,22 +25,24 @@ class SfunixtimestampdecFormatter(Module):
         try:
             text = self.get_text_from_region(self.region).strip()
             args = self.parse_args(convert=True)
-            units = args.get('--units', 'sec')
+            unit = args.get('--unit', 'sec')
+            fmt = args.get('--format', '%a %d %B %Y %H:%M:%S %Z')
 
             try:
                 timestamp = int(text)
             except ValueError:
                 raise ValueError('Invalid timestamp format: %s' % text)
 
-            if units == 'millisec':
-                timestamp /= 1_000
-            elif units == 'microsec':
-                timestamp /= 1_000_000
-            elif units == 'nanosec':
-                timestamp /= 1_000_000_000
+            scale = {
+                'sec': 1,
+                'millisec': 1_000,
+                'microsec': 1_000_000,
+                'nanosec': 1_000_000_000
+            }
+            timestamp /= scale.get(unit, 1)
 
             dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
-            return dt.strftime('%a %d %B %Y %H:%M:%S UTC')
+            return dt.strftime(fmt)
         except Exception as e:
             log.status('Formatting failed due to error: %s', e)
 
