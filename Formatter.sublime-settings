@@ -2215,8 +2215,8 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--units", "sec", "--utc", true, "--show_datetime", true]
-            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--units" to "sec", "millisec", "microsec", "nanosec". */
+            "args": ["--unit", "sec", "--show_datetime", true]
+            /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--unit" to "sec", "millisec", "microsec", "nanosec". */
         },
         "sfuridec": {
             "info": "build-in",
