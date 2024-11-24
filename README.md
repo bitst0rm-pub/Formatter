@@ -83,7 +83,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 
-| Languages | Beautify | Minify | Graphic | Req. | Config |
+| Langs | Beautifiers | Minifiers | Graphics | Req. | Config |
 | ------ | :------: | :------: | :------: | :------: | :------: |
 | Angular | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
 | Arduino | [uncrustify](https://github.com/uncrustify/uncrustify) [1], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [2], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[2]](https://zed0.co.uk/clang-format-configurator) |
@@ -159,11 +159,11 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 >
 > - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`; for Octal, set the `"--radix"` to `8`.
 
-| Converter | Input | Output | Req. | Note |
+| Converters | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
-| sfloremipsum **`(BI)`** | any | TEXT | None | lorem |
+| sfloremipsum **`(BI)`** | any | TEXT | None | lorem伪 |
 | sfurienc **`(BI)`** | any | TEXT | None | uri |
 | sfuridec **`(BI)`** | any | TEXT | None | uri |
 | sfhtmlentitize **`(BI)`** | any | TEXT | None | html |
