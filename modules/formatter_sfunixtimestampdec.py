@@ -11,7 +11,7 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'exclude_syntaxes': None,
     'executable_path': None,
-    'args': ['--unit', 'sec', '--format', '%a %d %B %Y %H:%M:%S %Z'],
+    'args': ['--unit', 'sec', '--show_as_utc', True, '--format', '%a %d %B %Y %H:%M:%S %z'],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", no "config_path", use "args" instead. Set "--unit" to "sec", "millisec", "microsec", "nanosec".'
 }
@@ -26,7 +26,8 @@ class SfunixtimestampdecFormatter(Module):
             text = self.get_text_from_region(self.region).strip()
             args = self.parse_args(convert=True)
             unit = args.get('--unit', 'sec')
-            fmt = args.get('--format', '%a %d %B %Y %H:%M:%S %Z')
+            show_as_utc = args.get('--show_as_utc', True)
+            fmt = args.get('--format', '%a %d %B %Y %H:%M:%S %z')
 
             try:
                 timestamp = int(text)
@@ -42,7 +43,19 @@ class SfunixtimestampdecFormatter(Module):
             timestamp /= scale.get(unit, 1)
 
             dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
-            return dt.strftime(fmt)
+
+            if not show_as_utc:
+                local_time = datetime.now().astimezone().utcoffset()
+                local_timezone = timezone(local_time)
+                dt = dt.astimezone(local_timezone)
+
+            tz_info = dt.strftime('%z')
+            tz_info = 'UTC%s:%s' % (tz_info[:3], tz_info[3:])
+
+            if '%Z' in fmt or '%z' in fmt:
+                return dt.strftime(fmt.replace('%Z', '').replace('%z', '')) + tz_info
+            else:
+                return dt.strftime(fmt)
         except Exception as e:
             log.status('Formatting failed due to error: %s', e)
 

@@ -2205,7 +2205,7 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--unit", "sec", "--format", "%a %d %B %Y %H:%M:%S %Z"]
+            "args": ["--unit", "sec", "--show_as_utc", true, "--format", "%a %d %B %Y %H:%M:%S %z"]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--unit" to "sec", "millisec", "microsec", "nanosec". */
         },
         "sfunixtimestampenc": {
@@ -2215,7 +2215,7 @@
             "format_on_paste": false,
             "dir_format": false,
             "syntaxes": ["*"],
-            "args": ["--unit", "sec", "--show_datetime", true]
+            "args": ["--unit", "sec", "--current_time", false, "--show_datetime", true, "--show_as_utc", true]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. Set "--unit" to "sec", "millisec", "microsec", "nanosec". */
         },
         "sfuridec": {
