@@ -997,6 +997,14 @@
                 }
             },
             {
+                "caption": "Sf Disassembler",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfdisasm",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf DATES (extract)",
                 "command": "run_format",
                 "args": {

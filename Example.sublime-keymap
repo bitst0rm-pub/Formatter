@@ -135,6 +135,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfcharcodeenc", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfdecimaldec", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfdecimalenc", "type": "converter"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfdisasm", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfextractdates", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfextractemailaddr", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfextractfilepaths", "type": "converter"}},

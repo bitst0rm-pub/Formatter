@@ -1026,6 +1026,14 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf Disassembler",
+        "command": "run_format",
+        "args": {
+            "uid": "sfdisasm",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf DATES (extract)",
         "command": "run_format",
         "args": {
