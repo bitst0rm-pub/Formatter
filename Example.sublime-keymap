@@ -184,6 +184,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfx2shake256", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfx2shake512", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfx2uuid", "type": "converter"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "sfx4asm", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yjx2hcl", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yjx2json", "type": "converter"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "yjx2toml", "type": "converter"}},

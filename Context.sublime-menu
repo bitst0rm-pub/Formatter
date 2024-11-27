@@ -1389,6 +1389,14 @@
                 }
             },
             {
+                "caption": "Sf Assembler",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx4asm",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Yj X->HCL",
                 "command": "run_format",
                 "args": {

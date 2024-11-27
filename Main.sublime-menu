@@ -1568,6 +1568,15 @@
                         }
                     },
                     {
+                        "caption": "Sf Assembler",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx4asm",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Yj X->HCL",
                         "mnemonic": "Y",
                         "command": "run_format",

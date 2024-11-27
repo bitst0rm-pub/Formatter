@@ -227,7 +227,8 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | sfextractdates **`(BI)`** | any | TEXT | None | dates |
 | sfunixtimestampenc **`(BI)`** | any | TEXT | None | timestamp |
 | sfunixtimestampdec **`(BI)`** | any | TEXT | None | timestamp |
-| sfdisasm **`(BI)`** | any | TEXT | Node.js | disassembler |
+| sfx4asm **`(BI)`** | any | TEXT | Node.js | arm,x86 assembler |
+| sfdisasm **`(BI)`** | any | TEXT | Node.js | arm,x86 disassembler |
 
 <sub>`sf` = **S**ublime **F**ormatter</sub>
 

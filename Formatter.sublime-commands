@@ -1418,6 +1418,14 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf Assembler",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx4asm",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Yj X->HCL",
         "command": "run_format",
         "args": {
