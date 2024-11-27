@@ -1891,17 +1891,6 @@
             "args": ["--separator", " ", "--signed", false]
             /* Build-in, no "executable_path", no "config_path", use "args" instead. */
         },
-        "sfdisasm": {
-            "info": "build-in",
-            "enable": false,
-            "format_on_save": false,
-            "format_on_paste": false,
-            "dir_format": false,
-            "syntaxes": ["*"],
-            "interpreter_path": ["/path/to/node"],
-            "args": ["--arch", "x86", "--mode", "32", "--endian", "little", "--offset", "0x10000"]
-            /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big". */
-        },
         "sfextractdates": {
             "info": "build-in",
             "enable": false,
@@ -2378,6 +2367,17 @@
             "syntaxes": ["*"],
             "interpreter_path": ["/path/to/node"],
             "args": ["--arch", "x86", "--mode", "32", "--endian", "little", "--offset", "0x10000", "--bytes_per_line", 24, "--uppercase", true]
+            /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big". */
+        },
+        "sfx4disasm": {
+            "info": "build-in",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["*"],
+            "interpreter_path": ["/path/to/node"],
+            "args": ["--arch", "x86", "--mode", "32", "--endian", "little", "--offset", "0x10000"]
             /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big". */
         },
         "yjx2hcl": {

@@ -1,57 +1,16 @@
 var capstone$1 = (()=>{
-    var _scriptName = import.meta.url;
+    var _scriptDir = import.meta.url;
     return async function(moduleArg = {}) {
-        var moduleRtn;
-        // include: shell.js
-        // The Module object: Our interface to the outside world. We import
-        // and export values on it. There are various ways Module can be used:
-        // 1. Not defined. We create it here
-        // 2. A function parameter, function(moduleArg) => Promise<Module>
-        // 3. pre-run appended it, var Module = {}; ..generated code..
-        // 4. External script tag defines var Module.
-        // We need to check if Module already exists (e.g. case 3 above).
-        // Substitution will be replaced with actual code on later stage of the build,
-        // this way Closure Compiler will not mangle it (e.g. case 4. above).
-        // Note that if you want to run closure, and also to use Module
-        // after the generated code, you will need to define   var Module = {};
-        // before the code. Then that object will be used in the code, and you
-        // can continue to use Module afterwards as well.
         var Module = moduleArg;
-        // Set up the promise that indicates the Module is initialized
         var readyPromiseResolve, readyPromiseReject;
-        var readyPromise = new Promise((resolve, reject)=>{
+        Module["ready"] = new Promise((resolve, reject)=>{
             readyPromiseResolve = resolve;
             readyPromiseReject = reject;
         });
-        // Determine the runtime environment we are in. You can customize this by
-        // setting the ENVIRONMENT setting at compile time (see settings.js).
-        // Attempt to auto-detect the environment
-        var ENVIRONMENT_IS_WEB = typeof window == "object";
-        var ENVIRONMENT_IS_WORKER = typeof WorkerGlobalScope != "undefined";
-        // N.b. Electron.js environment is simultaneously a NODE-environment, but
-        // also a web environment.
-        var ENVIRONMENT_IS_NODE = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && process.type != "renderer";
-        if (ENVIRONMENT_IS_NODE) {
-            // `require()` is no-op in an ESM module, use `createRequire()` to construct
-            // the require()` function.  This is only necessary for multi-environment
-            // builds, `-sENVIRONMENT=node` emits a static import declaration instead.
-            // TODO: Swap all `require()`'s with `import()`'s?
-            const { createRequire } = await import('module');
-            let dirname = import.meta.url;
-            if (dirname.startsWith("data:")) {
-                dirname = "/";
-            }
-            /** @suppress{duplicate} */ var require = createRequire(dirname);
-        }
-        // --pre-jses are emitted after the Module integration code, so that they can
-        // refer to Module (if they choose; they can also define Module)
-        // Sometimes an existing Module object exists with properties
-        // meant to overwrite the default module functionality. Here
-        // we collect those properties and reapply _after_ we configure
-        // the current environment's defaults to avoid having to be so
-        // defensive during initialization.
         var moduleOverrides = Object.assign({}, Module);
-        // `/` should be present at the end if `scriptDirectory` is not empty
+        var ENVIRONMENT_IS_WEB = typeof window == "object";
+        var ENVIRONMENT_IS_WORKER = typeof importScripts == "function";
+        var ENVIRONMENT_IS_NODE = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string";
         var scriptDirectory = "";
         function locateFile(path) {
             if (Module["locateFile"]) {
@@ -59,70 +18,61 @@ var capstone$1 = (()=>{
             }
             return scriptDirectory + path;
         }
-        // Hooks that are implemented differently in different runtime environments.
-        var readAsync, readBinary;
+        var read_, readAsync, readBinary;
         if (ENVIRONMENT_IS_NODE) {
-            // These modules will usually be used on Node.js. Load them eagerly to avoid
-            // the complexity of lazy-loading.
+            const { createRequire: createRequire } = await import('module');
+            /** @suppress{duplicate} */ var require = createRequire(import.meta.url);
             var fs = require("fs");
             var nodePath = require("path");
-            // EXPORT_ES6 + ENVIRONMENT_IS_NODE always requires use of import.meta.url,
-            // since there's no way getting the current absolute path of the module when
-            // support for that is not available.
-            if (!import.meta.url.startsWith("data:")) {
-                scriptDirectory = nodePath.dirname(require("url").fileURLToPath(import.meta.url)) + "/";
+            if (ENVIRONMENT_IS_WORKER) {
+                scriptDirectory = nodePath.dirname(scriptDirectory) + "/";
+            } else {
+                scriptDirectory = require("url").fileURLToPath(new URL("./", import.meta.url));
             }
-            // include: node_shell_read.js
-            readBinary = (filename)=>{
-                // We need to re-wrap `file://` strings to URLs. Normalizing isn't
-                // necessary in that case, the path should already be absolute.
+            read_ = (filename, binary)=>{
                 filename = isFileURI(filename) ? new URL(filename) : nodePath.normalize(filename);
-                var ret = fs.readFileSync(filename);
+                return fs.readFileSync(filename, binary ? undefined : "utf8");
+            };
+            readBinary = (filename)=>{
+                var ret = read_(filename, true);
+                if (!ret.buffer) {
+                    ret = new Uint8Array(ret);
+                }
                 return ret;
             };
-            readAsync = (filename, binary = true)=>{
-                // See the comment in the `readBinary` function.
+            readAsync = (filename, onload, onerror, binary = true)=>{
                 filename = isFileURI(filename) ? new URL(filename) : nodePath.normalize(filename);
-                return new Promise((resolve, reject)=>{
-                    fs.readFile(filename, binary ? undefined : "utf8", (err, data)=>{
-                        if (err) reject(err);
-                        else resolve(binary ? data.buffer : data);
-                    });
+                fs.readFile(filename, binary ? undefined : "utf8", (err, data)=>{
+                    if (err) onerror(err);
+                    else onload(binary ? data.buffer : data);
                 });
             };
-            // end include: node_shell_read.js
             if (!Module["thisProgram"] && process.argv.length > 1) {
                 process.argv[1].replace(/\\/g, "/");
             }
             process.argv.slice(2);
-        } else // Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
-        // ENVIRONMENT_IS_NODE.
-        if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
+            Module["inspect"] = ()=>"[Emscripten Module object]";
+        } else if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
             if (ENVIRONMENT_IS_WORKER) {
-                // Check worker, not web, since window could be polyfilled
                 scriptDirectory = self.location.href;
             } else if (typeof document != "undefined" && document.currentScript) {
-                // web
                 scriptDirectory = document.currentScript.src;
             }
-            // When MODULARIZE, this JS may be executed later, after document.currentScript
-            // is gone, so we saved it, and we use it here instead of any other info.
-            if (_scriptName) {
-                scriptDirectory = _scriptName;
+            if (_scriptDir) {
+                scriptDirectory = _scriptDir;
             }
-            // blob urls look like blob:http://site.com/etc/etc and we cannot infer anything from them.
-            // otherwise, slice off the final part of the url to find the script directory.
-            // if scriptDirectory does not contain a slash, lastIndexOf will return -1,
-            // and scriptDirectory will correctly be replaced with an empty string.
-            // If scriptDirectory contains a query (starting with ?) or a fragment (starting with #),
-            // they are removed because they could contain a slash.
-            if (scriptDirectory.startsWith("blob:")) {
-                scriptDirectory = "";
-            } else {
+            if (scriptDirectory.indexOf("blob:") !== 0) {
                 scriptDirectory = scriptDirectory.substr(0, scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1);
+            } else {
+                scriptDirectory = "";
             }
             {
-                // include: web_or_worker_shell_read.js
+                read_ = (url)=>{
+                    var xhr = new XMLHttpRequest;
+                    xhr.open("GET", url, false);
+                    xhr.send(null);
+                    return xhr.responseText;
+                };
                 if (ENVIRONMENT_IS_WORKER) {
                     readBinary = (url)=>{
                         var xhr = new XMLHttpRequest;
@@ -132,76 +82,39 @@ var capstone$1 = (()=>{
                         return new Uint8Array(/** @type{!ArrayBuffer} */ xhr.response);
                     };
                 }
-                readAsync = (url)=>{
-                    // Fetch has some additional restrictions over XHR, like it can't be used on a file:// url.
-                    // See https://github.com/github/fetch/pull/92#issuecomment-140665932
-                    // Cordova or Electron apps are typically loaded from a file:// url.
-                    // So use XHR on webview if URL is a file URL.
-                    if (isFileURI(url)) {
-                        return new Promise((resolve, reject)=>{
-                            var xhr = new XMLHttpRequest;
-                            xhr.open("GET", url, true);
-                            xhr.responseType = "arraybuffer";
-                            xhr.onload = ()=>{
-                                if (xhr.status == 200 || xhr.status == 0 && xhr.response) {
-                                    // file URLs can return 0
-                                    resolve(xhr.response);
-                                    return;
-                                }
-                                reject(xhr.status);
-                            };
-                            xhr.onerror = reject;
-                            xhr.send(null);
-                        });
-                    }
-                    return fetch(url, {
-                        credentials: "same-origin"
-                    }).then((response)=>{
-                        if (response.ok) {
-                            return response.arrayBuffer();
+                readAsync = (url, onload, onerror)=>{
+                    var xhr = new XMLHttpRequest;
+                    xhr.open("GET", url, true);
+                    xhr.responseType = "arraybuffer";
+                    xhr.onload = ()=>{
+                        if (xhr.status == 200 || xhr.status == 0 && xhr.response) {
+                            onload(xhr.response);
+                            return;
                         }
-                        return Promise.reject(new Error(response.status + " : " + response.url));
-                    });
+                        onerror();
+                    };
+                    xhr.onerror = onerror;
+                    xhr.send(null);
                 };
             }
         } else ;
-        var out = Module["print"] || console.log.bind(console);
+        Module["print"] || console.log.bind(console);
         var err = Module["printErr"] || console.error.bind(console);
-        // Merge back in the overrides
         Object.assign(Module, moduleOverrides);
-        // Free the object hierarchy contained in the overrides, this lets the GC
-        // reclaim data used.
         moduleOverrides = null;
-        // Emit code to handle expected values on the Module object. This applies Module.x
-        // to the proper local x. This has two benefits: first, we only emit it if it is
-        // expected to arrive, and second, by using a local everywhere else that can be
-        // minified.
         if (Module["arguments"]) Module["arguments"];
         if (Module["thisProgram"]) Module["thisProgram"];
-        // perform assertions in shell.js after we set up out() and err(), as otherwise if an assertion fails it cannot print the message
-        // end include: shell.js
-        // include: preamble.js
-        // === Preamble library stuff ===
-        // Documentation for the public APIs defined in this file must be updated in:
-        //    site/source/docs/api_reference/preamble.js.rst
-        // A prebuilt local version of the documentation is available at:
-        //    site/build/text/docs/api_reference/preamble.js.txt
-        // You can also build docs locally as HTML or other formats in site/
-        // An online HTML version (which may be of a different version of Emscripten)
-        //    is up at http://kripken.github.io/emscripten-site/docs/api_reference/preamble.js.html
-        var wasmBinary = Module["wasmBinary"];
-        // Wasm globals
+        if (Module["quit"]) Module["quit"];
+        var wasmBinary;
+        if (Module["wasmBinary"]) wasmBinary = Module["wasmBinary"];
+        Module["noExitRuntime"] || true;
+        if (typeof WebAssembly != "object") {
+            abort("no native wasm support detected");
+        }
         var wasmMemory;
-        //========================================
-        // Runtime essentials
-        //========================================
-        // whether we are quitting the application. no code should run after this.
-        // set in exit() and abort()
         var ABORT = false;
-        // Memory management
         var /** @type {!Int8Array} */ HEAP8, /** @type {!Uint8Array} */ HEAPU8, /** @type {!Int16Array} */ HEAP16, /** @type {!Int32Array} */ HEAP32, /** @type {!Uint32Array} */ HEAPU32, /** @type {!Float32Array} */ HEAPF32, /* BigInt64Array type is not correctly defined in closure
 /** not-@type {!BigInt64Array} */ HEAP64, /** @type {!Float64Array} */ HEAPF64;
-        // include: runtime_shared.js
         function updateMemoryViews() {
             var b = wasmMemory.buffer;
             Module["HEAP8"] = HEAP8 = new Int8Array(b);
@@ -215,13 +128,8 @@ var capstone$1 = (()=>{
             Module["HEAP64"] = HEAP64 = new BigInt64Array(b);
             Module["HEAPU64"] = new BigUint64Array(b);
         }
-        // end include: runtime_shared.js
-        // include: runtime_stack_check.js
-        // end include: runtime_stack_check.js
         var __ATPRERUN__ = [];
-        // functions called before the runtime is initialized
         var __ATINIT__ = [];
-        // functions called during shutdown
         var __ATPOSTRUN__ = [];
         function preRun() {
             if (Module["preRun"]) {
@@ -257,28 +165,19 @@ var capstone$1 = (()=>{
         function addOnPostRun(cb) {
             __ATPOSTRUN__.unshift(cb);
         }
-        // include: runtime_math.js
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/fround
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/clz32
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
-        // end include: runtime_math.js
-        // A counter of dependencies for calling run(). If we need to
-        // do asynchronous work before running, increment this and
-        // decrement it. Incrementing must happen in a place like
-        // Module.preRun (used by emcc to add file preloading).
-        // Note that you can add dependencies in preRun, even though
-        // it happens right before run - run will be postponed until
-        // the dependencies are met.
         var runDependencies = 0;
         var dependenciesFulfilled = null;
         function addRunDependency(id) {
             runDependencies++;
-            Module["monitorRunDependencies"]?.(runDependencies);
+            if (Module["monitorRunDependencies"]) {
+                Module["monitorRunDependencies"](runDependencies);
+            }
         }
         function removeRunDependency(id) {
             runDependencies--;
-            Module["monitorRunDependencies"]?.(runDependencies);
+            if (Module["monitorRunDependencies"]) {
+                Module["monitorRunDependencies"](runDependencies);
+            }
             if (runDependencies == 0) {
                 if (dependenciesFulfilled) {
                     var callback = dependenciesFulfilled;
@@ -288,60 +187,33 @@ var capstone$1 = (()=>{
             }
         }
         /** @param {string|number=} what */ function abort(what) {
-            Module["onAbort"]?.(what);
+            if (Module["onAbort"]) {
+                Module["onAbort"](what);
+            }
             what = "Aborted(" + what + ")";
-            // TODO(sbc): Should we remove printing and leave it up to whoever
-            // catches the exception?
             err(what);
             ABORT = true;
             what += ". Build with -sASSERTIONS for more info.";
-            // Use a wasm runtime error, because a JS error might be seen as a foreign
-            // exception, which means we'd run destructors on it. We need the error to
-            // simply make the program stop.
-            // FIXME This approach does not work in Wasm EH because it currently does not assume
-            // all RuntimeErrors are from traps; it decides whether a RuntimeError is from
-            // a trap or not based on a hidden field within the object. So at the moment
-            // we don't have a way of throwing a wasm trap from JS. TODO Make a JS API that
-            // allows this in the wasm spec.
-            // Suppress closure compiler warning here. Closure compiler's builtin extern
-            // definition for WebAssembly.RuntimeError claims it takes no arguments even
-            // though it can.
-            // TODO(https://github.com/google/closure-compiler/pull/3913): Remove if/when upstream closure gets fixed.
             /** @suppress {checkTypes} */ var e = new WebAssembly.RuntimeError(what);
             readyPromiseReject(e);
-            // Throw the error whether or not MODULARIZE is set because abort is used
-            // in code paths apart from instantiation where an exception is expected
-            // to be thrown when abort is called.
             throw e;
         }
-        // include: memoryprofiler.js
-        // end include: memoryprofiler.js
-        // include: URIUtils.js
-        // Prefix of data URIs emitted by SINGLE_FILE and related options.
         var dataURIPrefix = "data:application/octet-stream;base64,";
-        /**
- * Indicates whether filename is a base64 data URI.
- * @noinline
- */ var isDataURI = (filename)=>filename.startsWith(dataURIPrefix);
-        /**
- * Indicates whether filename is delivered via file protocol (as opposed to http/https)
- * @noinline
- */ var isFileURI = (filename)=>filename.startsWith("file://");
-        // end include: URIUtils.js
-        // include: runtime_exceptions.js
-        // end include: runtime_exceptions.js
-        function findWasmBinary() {
-            if (Module["locateFile"]) {
-                var f = "capstone.wasm";
-                if (!isDataURI(f)) {
-                    return locateFile(f);
-                }
-                return f;
-            }
-            // Use bundler-friendly `new URL(..., import.meta.url)` pattern; works in browsers too.
-            return new URL("capstone.wasm", import.meta.url).href;
+        function isDataURI(filename) {
+            return filename.startsWith(dataURIPrefix);
+        }
+        function isFileURI(filename) {
+            return filename.startsWith("file://");
         }
         var wasmBinaryFile;
+        if (Module["locateFile"]) {
+            wasmBinaryFile = "capstone.wasm";
+            if (!isDataURI(wasmBinaryFile)) {
+                wasmBinaryFile = locateFile(wasmBinaryFile);
+            }
+        } else {
+            wasmBinaryFile = new URL("capstone.wasm", import.meta.url).href;
+        }
         function getBinarySync(file) {
             if (file == wasmBinaryFile && wasmBinary) {
                 return new Uint8Array(wasmBinary);
@@ -352,39 +224,37 @@ var capstone$1 = (()=>{
             throw "both async and sync fetching of the wasm failed";
         }
         function getBinaryPromise(binaryFile) {
-            // If we don't have the binary yet, load it asynchronously using readAsync.
-            if (!wasmBinary) {
-                // Fetch the binary using readAsync
-                return readAsync(binaryFile).then((response)=>new Uint8Array(/** @type{!ArrayBuffer} */ response), ()=>getBinarySync(binaryFile));
+            if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
+                if (typeof fetch == "function" && !isFileURI(binaryFile)) {
+                    return fetch(binaryFile, {
+                        credentials: "same-origin"
+                    }).then((response)=>{
+                        if (!response["ok"]) {
+                            throw "failed to load wasm binary file at '" + binaryFile + "'";
+                        }
+                        return response["arrayBuffer"]();
+                    }).catch(()=>getBinarySync(binaryFile));
+                } else if (readAsync) {
+                    return new Promise((resolve, reject)=>{
+                        readAsync(binaryFile, (response)=>resolve(new Uint8Array(/** @type{!ArrayBuffer} */ response)), reject);
+                    });
+                }
             }
-            // Otherwise, getBinarySync should be able to get it synchronously
             return Promise.resolve().then(()=>getBinarySync(binaryFile));
         }
         function instantiateArrayBuffer(binaryFile, imports, receiver) {
-            return getBinaryPromise(binaryFile).then((binary)=>WebAssembly.instantiate(binary, imports)).then(receiver, (reason)=>{
+            return getBinaryPromise(binaryFile).then((binary)=>WebAssembly.instantiate(binary, imports)).then((instance)=>instance).then(receiver, (reason)=>{
                 err(`failed to asynchronously prepare wasm: ${reason}`);
                 abort(reason);
             });
         }
         function instantiateAsync(binary, binaryFile, imports, callback) {
-            if (!binary && typeof WebAssembly.instantiateStreaming == "function" && !isDataURI(binaryFile) && // Don't use streaming for file:// delivered objects in a webview, fetch them synchronously.
-            !isFileURI(binaryFile) && // Avoid instantiateStreaming() on Node.js environment for now, as while
-            // Node.js v18.1.0 implements it, it does not have a full fetch()
-            // implementation yet.
-            // Reference:
-            //   https://github.com/emscripten-core/emscripten/pull/16917
-            !ENVIRONMENT_IS_NODE && typeof fetch == "function") {
+            if (!binary && typeof WebAssembly.instantiateStreaming == "function" && !isDataURI(binaryFile) && !isFileURI(binaryFile) && !ENVIRONMENT_IS_NODE && typeof fetch == "function") {
                 return fetch(binaryFile, {
                     credentials: "same-origin"
                 }).then((response)=>{
-                    // Suppress closure warning here since the upstream definition for
-                    // instantiateStreaming only allows Promise<Repsponse> rather than
-                    // an actual Response.
-                    // TODO(https://github.com/google/closure-compiler/pull/3913): Remove if/when upstream closure is fixed.
                     /** @suppress {checkTypes} */ var result = WebAssembly.instantiateStreaming(response, imports);
                     return result.then(callback, function(reason) {
-                        // We expect the most common failure cause to be a bad MIME type for the binary,
-                        // in which case falling back to ArrayBuffer instantiation should work.
                         err(`wasm streaming compile failed: ${reason}`);
                         err("falling back to ArrayBuffer instantiation");
                         return instantiateArrayBuffer(binaryFile, imports, callback);
@@ -393,60 +263,35 @@ var capstone$1 = (()=>{
             }
             return instantiateArrayBuffer(binaryFile, imports, callback);
         }
-        function getWasmImports() {
-            // prepare imports
-            return {
+        function createWasm() {
+            var info = {
                 "a": wasmImports
             };
-        }
-        // Create the wasm instance.
-        // Receives the wasm imports, returns the exports.
-        function createWasm() {
-            // Load the wasm module and create an instance of using native support in the JS engine.
-            // handle a generated wasm instance, receiving its exports and
-            // performing other necessary setup
             /** @param {WebAssembly.Module=} module*/ function receiveInstance(instance, module) {
                 wasmExports = instance.exports;
-                wasmMemory = wasmExports["e"];
+                wasmMemory = wasmExports["c"];
                 updateMemoryViews();
-                addOnInit(wasmExports["f"]);
+                addOnInit(wasmExports["d"]);
                 removeRunDependency();
                 return wasmExports;
             }
-            // wait for the pthread pool (if any)
             addRunDependency();
-            // Prefer streaming instantiation if available.
             function receiveInstantiationResult(result) {
-                // 'result' is a ResultObject object which has both the module and instance.
-                // receiveInstance() will swap in the exports (to Module.asm) so they can be called
-                // TODO: Due to Closure regression https://github.com/google/closure-compiler/issues/3193, the above line no longer optimizes out down to the following line.
-                // When the regression is fixed, can restore the above PTHREADS-enabled path.
                 receiveInstance(result["instance"]);
             }
-            var info = getWasmImports();
-            // User shell pages can write their own Module.instantiateWasm = function(imports, successCallback) callback
-            // to manually instantiate the Wasm module themselves. This allows pages to
-            // run the instantiation parallel to any other async startup actions they are
-            // performing.
-            // Also pthreads and wasm workers initialize the wasm instance through this
-            // path.
             if (Module["instantiateWasm"]) {
                 try {
                     return Module["instantiateWasm"](info, receiveInstance);
                 } catch (e) {
                     err(`Module.instantiateWasm callback failed with error: ${e}`);
-                    // If instantiation fails, reject the module ready promise.
                     readyPromiseReject(e);
                 }
             }
-            wasmBinaryFile ?? (wasmBinaryFile = findWasmBinary());
-            // If instantiation fails, reject the module ready promise.
             instantiateAsync(wasmBinary, wasmBinaryFile, info, receiveInstantiationResult).catch(readyPromiseReject);
             return {};
         }
         var callRuntimeCallbacks = (callbacks)=>{
             while(callbacks.length > 0){
-                // Pass the module as the first argument.
                 callbacks.shift()(Module);
             }
         };
@@ -457,9 +302,9 @@ var capstone$1 = (()=>{
             if (type.endsWith("*")) type = "*";
             switch(type){
                 case "i1":
-                    return HEAP8[ptr];
+                    return HEAP8[ptr >> 0];
                 case "i8":
-                    return HEAP8[ptr];
+                    return HEAP8[ptr >> 0];
                 case "i16":
                     return HEAP16[ptr >> 1];
                 case "i32":
@@ -476,9 +321,7 @@ var capstone$1 = (()=>{
                     abort(`invalid type for getValue: ${type}`);
             }
         }
-        Module["noExitRuntime"] || true;
-        var stackRestore = (val)=>__emscripten_stack_restore(val);
-        var stackSave = ()=>_emscripten_stack_get_current();
+        var _emscripten_memcpy_js = (dest, src, num)=>HEAPU8.copyWithin(dest, src, src + num);
         var abortOnCannotGrowMemory = (requestedSize)=>{
             abort("OOM");
         };
@@ -486,44 +329,88 @@ var capstone$1 = (()=>{
             HEAPU8.length;
             abortOnCannotGrowMemory();
         };
-        var _fd_close = (fd)=>52;
-        function _fd_seek(fd, offset, whence, newOffset) {
-            return 70;
-        }
-        var printCharBuffers = [
-            null,
-            [],
-            []
-        ];
-        var UTF8Decoder = typeof TextDecoder != "undefined" ? new TextDecoder : undefined;
+        var getCFunc = (ident)=>{
+            var func = Module["_" + ident];
+            return func;
+        };
+        var writeArrayToMemory = (array, buffer)=>{
+            HEAP8.set(array, buffer);
+        };
+        var lengthBytesUTF8 = (str)=>{
+            var len = 0;
+            for(var i = 0; i < str.length; ++i){
+                var c = str.charCodeAt(i);
+                if (c <= 127) {
+                    len++;
+                } else if (c <= 2047) {
+                    len += 2;
+                } else if (c >= 55296 && c <= 57343) {
+                    len += 4;
+                    ++i;
+                } else {
+                    len += 3;
+                }
+            }
+            return len;
+        };
+        var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite)=>{
+            if (!(maxBytesToWrite > 0)) return 0;
+            var startIdx = outIdx;
+            var endIdx = outIdx + maxBytesToWrite - 1;
+            for(var i = 0; i < str.length; ++i){
+                var u = str.charCodeAt(i);
+                if (u >= 55296 && u <= 57343) {
+                    var u1 = str.charCodeAt(++i);
+                    u = 65536 + ((u & 1023) << 10) | u1 & 1023;
+                }
+                if (u <= 127) {
+                    if (outIdx >= endIdx) break;
+                    heap[outIdx++] = u;
+                } else if (u <= 2047) {
+                    if (outIdx + 1 >= endIdx) break;
+                    heap[outIdx++] = 192 | u >> 6;
+                    heap[outIdx++] = 128 | u & 63;
+                } else if (u <= 65535) {
+                    if (outIdx + 2 >= endIdx) break;
+                    heap[outIdx++] = 224 | u >> 12;
+                    heap[outIdx++] = 128 | u >> 6 & 63;
+                    heap[outIdx++] = 128 | u & 63;
+                } else {
+                    if (outIdx + 3 >= endIdx) break;
+                    heap[outIdx++] = 240 | u >> 18;
+                    heap[outIdx++] = 128 | u >> 12 & 63;
+                    heap[outIdx++] = 128 | u >> 6 & 63;
+                    heap[outIdx++] = 128 | u & 63;
+                }
+            }
+            heap[outIdx] = 0;
+            return outIdx - startIdx;
+        };
+        var stringToUTF8 = (str, outPtr, maxBytesToWrite)=>stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
+        var stringToUTF8OnStack = (str)=>{
+            var size = lengthBytesUTF8(str) + 1;
+            var ret = stackAlloc(size);
+            stringToUTF8(str, ret, size);
+            return ret;
+        };
+        var UTF8Decoder = typeof TextDecoder != "undefined" ? new TextDecoder("utf8") : undefined;
         /**
      * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
      * array that contains uint8 values, returns a copy of that string as a
      * Javascript String object.
      * heapOrArray is either a regular array, or a JavaScript typed array view.
-     * @param {number=} idx
+     * @param {number} idx
      * @param {number=} maxBytesToRead
      * @return {string}
-     */ var UTF8ArrayToString = (heapOrArray, idx = 0, maxBytesToRead = NaN)=>{
+     */ var UTF8ArrayToString = (heapOrArray, idx, maxBytesToRead)=>{
             var endIdx = idx + maxBytesToRead;
             var endPtr = idx;
-            // TextDecoder needs to know the byte length in advance, it doesn't stop on
-            // null terminator by itself.  Also, use the length info to avoid running tiny
-            // strings through TextDecoder, since .subarray() allocates garbage.
-            // (As a tiny code save trick, compare endPtr against endIdx using a negation,
-            // so that undefined/NaN means Infinity)
             while(heapOrArray[endPtr] && !(endPtr >= endIdx))++endPtr;
             if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
                 return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
             }
             var str = "";
-            // If building with TextDecoder, we have already computed the string length
-            // above, so test loop end condition against that
             while(idx < endPtr){
-                // For UTF8 byte structure, see:
-                // http://en.wikipedia.org/wiki/UTF-8#Description
-                // https://www.ietf.org/rfc/rfc2279.txt
-                // https://tools.ietf.org/html/rfc3629
                 var u0 = heapOrArray[idx++];
                 if (!(u0 & 128)) {
                     str += String.fromCharCode(u0);
@@ -549,15 +436,6 @@ var capstone$1 = (()=>{
             }
             return str;
         };
-        var printChar = (stream, curr)=>{
-            var buffer = printCharBuffers[stream];
-            if (curr === 0 || curr === 10) {
-                (stream === 1 ? out : err)(UTF8ArrayToString(buffer));
-                buffer.length = 0;
-            } else {
-                buffer.push(curr);
-            }
-        };
         /**
      * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
      * emscripten HEAP, returns a copy of that string as a Javascript String object.
@@ -573,116 +451,16 @@ var capstone$1 = (()=>{
      *   JS JIT optimizations off, so it is worth to consider consistently using one
      * @return {string}
      */ var UTF8ToString = (ptr, maxBytesToRead)=>ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : "";
-        var _fd_write = (fd, iov, iovcnt, pnum)=>{
-            // hack to support printf in SYSCALLS_REQUIRE_FILESYSTEM=0
-            var num = 0;
-            for(var i = 0; i < iovcnt; i++){
-                var ptr = HEAPU32[iov >> 2];
-                var len = HEAPU32[iov + 4 >> 2];
-                iov += 8;
-                for(var j = 0; j < len; j++){
-                    printChar(fd, HEAPU8[ptr + j]);
-                }
-                num += len;
-            }
-            HEAPU32[pnum >> 2] = num;
-            return 0;
-        };
-        var getCFunc = (ident)=>{
-            var func = Module["_" + ident];
-            // closure exported function
-            return func;
-        };
-        var writeArrayToMemory = (array, buffer)=>{
-            HEAP8.set(array, buffer);
-        };
-        var lengthBytesUTF8 = (str)=>{
-            var len = 0;
-            for(var i = 0; i < str.length; ++i){
-                // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-                // unit, not a Unicode code point of the character! So decode
-                // UTF16->UTF32->UTF8.
-                // See http://unicode.org/faq/utf_bom.html#utf16-3
-                var c = str.charCodeAt(i);
-                // possibly a lead surrogate
-                if (c <= 127) {
-                    len++;
-                } else if (c <= 2047) {
-                    len += 2;
-                } else if (c >= 55296 && c <= 57343) {
-                    len += 4;
-                    ++i;
-                } else {
-                    len += 3;
-                }
-            }
-            return len;
-        };
-        var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite)=>{
-            // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
-            // undefined and false each don't write out any bytes.
-            if (!(maxBytesToWrite > 0)) return 0;
-            var startIdx = outIdx;
-            var endIdx = outIdx + maxBytesToWrite - 1;
-            // -1 for string null terminator.
-            for(var i = 0; i < str.length; ++i){
-                // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-                // unit, not a Unicode code point of the character! So decode
-                // UTF16->UTF32->UTF8.
-                // See http://unicode.org/faq/utf_bom.html#utf16-3
-                // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
-                // and https://www.ietf.org/rfc/rfc2279.txt
-                // and https://tools.ietf.org/html/rfc3629
-                var u = str.charCodeAt(i);
-                // possibly a lead surrogate
-                if (u >= 55296 && u <= 57343) {
-                    var u1 = str.charCodeAt(++i);
-                    u = 65536 + ((u & 1023) << 10) | u1 & 1023;
-                }
-                if (u <= 127) {
-                    if (outIdx >= endIdx) break;
-                    heap[outIdx++] = u;
-                } else if (u <= 2047) {
-                    if (outIdx + 1 >= endIdx) break;
-                    heap[outIdx++] = 192 | u >> 6;
-                    heap[outIdx++] = 128 | u & 63;
-                } else if (u <= 65535) {
-                    if (outIdx + 2 >= endIdx) break;
-                    heap[outIdx++] = 224 | u >> 12;
-                    heap[outIdx++] = 128 | u >> 6 & 63;
-                    heap[outIdx++] = 128 | u & 63;
-                } else {
-                    if (outIdx + 3 >= endIdx) break;
-                    heap[outIdx++] = 240 | u >> 18;
-                    heap[outIdx++] = 128 | u >> 12 & 63;
-                    heap[outIdx++] = 128 | u >> 6 & 63;
-                    heap[outIdx++] = 128 | u & 63;
-                }
-            }
-            // Null-terminate the pointer to the buffer.
-            heap[outIdx] = 0;
-            return outIdx - startIdx;
-        };
-        var stringToUTF8 = (str, outPtr, maxBytesToWrite)=>stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
-        var stackAlloc = (sz)=>__emscripten_stack_alloc(sz);
-        var stringToUTF8OnStack = (str)=>{
-            var size = lengthBytesUTF8(str) + 1;
-            var ret = stackAlloc(size);
-            stringToUTF8(str, ret, size);
-            return ret;
-        };
         /**
      * @param {string|null=} returnType
      * @param {Array=} argTypes
      * @param {Arguments|Array=} args
      * @param {Object=} opts
      */ var ccall = (ident, returnType, argTypes, args, opts)=>{
-            // For fast lookup of conversion functions
             var toC = {
                 "string": (str)=>{
                     var ret = 0;
                     if (str !== null && str !== undefined && str !== 0) {
-                        // null string
                         ret = stringToUTF8OnStack(str);
                     }
                     return ret;
@@ -714,7 +492,7 @@ var capstone$1 = (()=>{
                     }
                 }
             }
-            var ret = func(...cArgs);
+            var ret = func.apply(null, cArgs);
             function onDone(ret) {
                 if (stack !== 0) stackRestore(stack);
                 return convertReturnValue(ret);
@@ -727,84 +505,77 @@ var capstone$1 = (()=>{
      * @param {Array=} argTypes
      * @param {Object=} opts
      */ var cwrap = (ident, returnType, argTypes, opts)=>{
-            // When the function takes numbers and returns a number, we can just return
-            // the original function
             var numericArgs = !argTypes || argTypes.every((type)=>type === "number" || type === "boolean");
             var numericRet = returnType !== "string";
             if (numericRet && numericArgs && !opts) {
                 return getCFunc(ident);
             }
-            return (...args)=>ccall(ident, returnType, argTypes, args);
+            return function() {
+                return ccall(ident, returnType, argTypes, arguments);
+            };
         };
         var wasmImports = {
-            /** @export */ b: _emscripten_resize_heap,
-            /** @export */ d: _fd_close,
-            /** @export */ c: _fd_seek,
-            /** @export */ a: _fd_write
+            /** @export */ b: _emscripten_memcpy_js,
+            /** @export */ a: _emscripten_resize_heap
         };
         var wasmExports = createWasm();
-        Module["_cs_version"] = (a0, a1)=>(Module["_cs_version"] = wasmExports["g"])(a0, a1);
-        Module["_cs_support"] = (a0)=>(Module["_cs_support"] = wasmExports["h"])(a0);
-        Module["_cs_errno"] = (a0)=>(Module["_cs_errno"] = wasmExports["i"])(a0);
-        Module["_cs_strerror"] = (a0)=>(Module["_cs_strerror"] = wasmExports["j"])(a0);
-        Module["_cs_open"] = (a0, a1, a2)=>(Module["_cs_open"] = wasmExports["k"])(a0, a1, a2);
-        Module["_cs_close"] = (a0)=>(Module["_cs_close"] = wasmExports["l"])(a0);
-        Module["_cs_option"] = (a0, a1, a2)=>(Module["_cs_option"] = wasmExports["m"])(a0, a1, a2);
-        Module["_cs_disasm"] = (a0, a1, a2, a3, a4, a5)=>(Module["_cs_disasm"] = wasmExports["n"])(a0, a1, a2, a3, a4, a5);
-        Module["_cs_free"] = (a0, a1)=>(Module["_cs_free"] = wasmExports["o"])(a0, a1);
-        Module["_cs_malloc"] = (a0)=>(Module["_cs_malloc"] = wasmExports["p"])(a0);
-        Module["_cs_reg_name"] = (a0, a1)=>(Module["_cs_reg_name"] = wasmExports["q"])(a0, a1);
-        Module["_cs_insn_name"] = (a0, a1)=>(Module["_cs_insn_name"] = wasmExports["r"])(a0, a1);
-        Module["_cs_group_name"] = (a0, a1)=>(Module["_cs_group_name"] = wasmExports["s"])(a0, a1);
-        Module["_cs_insn_group"] = (a0, a1, a2)=>(Module["_cs_insn_group"] = wasmExports["t"])(a0, a1, a2);
-        Module["_cs_reg_read"] = (a0, a1, a2)=>(Module["_cs_reg_read"] = wasmExports["u"])(a0, a1, a2);
-        Module["_cs_reg_write"] = (a0, a1, a2)=>(Module["_cs_reg_write"] = wasmExports["v"])(a0, a1, a2);
-        Module["_cs_op_count"] = (a0, a1, a2)=>(Module["_cs_op_count"] = wasmExports["w"])(a0, a1, a2);
-        Module["_cs_op_index"] = (a0, a1, a2, a3)=>(Module["_cs_op_index"] = wasmExports["x"])(a0, a1, a2, a3);
-        Module["_cs_regs_access"] = (a0, a1, a2, a3, a4, a5)=>(Module["_cs_regs_access"] = wasmExports["y"])(a0, a1, a2, a3, a4, a5);
-        Module["_malloc"] = (a0)=>(Module["_malloc"] = wasmExports["z"])(a0);
-        Module["_free"] = (a0)=>(Module["_free"] = wasmExports["A"])(a0);
-        var __emscripten_stack_restore = (a0)=>(__emscripten_stack_restore = wasmExports["B"])(a0);
-        var __emscripten_stack_alloc = (a0)=>(__emscripten_stack_alloc = wasmExports["C"])(a0);
-        var _emscripten_stack_get_current = ()=>(_emscripten_stack_get_current = wasmExports["D"])();
-        // include: postamble.js
-        // === Auto-generated postamble setup entry stuff ===
+        Module["_cs_version"] = (a0, a1)=>(Module["_cs_version"] = wasmExports["e"])(a0, a1);
+        Module["_cs_support"] = (a0)=>(Module["_cs_support"] = wasmExports["f"])(a0);
+        Module["_cs_errno"] = (a0)=>(Module["_cs_errno"] = wasmExports["g"])(a0);
+        Module["_cs_strerror"] = (a0)=>(Module["_cs_strerror"] = wasmExports["h"])(a0);
+        Module["_cs_open"] = (a0, a1, a2)=>(Module["_cs_open"] = wasmExports["i"])(a0, a1, a2);
+        Module["_cs_close"] = (a0)=>(Module["_cs_close"] = wasmExports["j"])(a0);
+        Module["_cs_option"] = (a0, a1, a2)=>(Module["_cs_option"] = wasmExports["k"])(a0, a1, a2);
+        Module["_cs_disasm"] = (a0, a1, a2, a3, a4, a5)=>(Module["_cs_disasm"] = wasmExports["l"])(a0, a1, a2, a3, a4, a5);
+        Module["_cs_free"] = (a0, a1)=>(Module["_cs_free"] = wasmExports["m"])(a0, a1);
+        Module["_cs_malloc"] = (a0)=>(Module["_cs_malloc"] = wasmExports["n"])(a0);
+        Module["_cs_reg_name"] = (a0, a1)=>(Module["_cs_reg_name"] = wasmExports["o"])(a0, a1);
+        Module["_cs_insn_name"] = (a0, a1)=>(Module["_cs_insn_name"] = wasmExports["p"])(a0, a1);
+        Module["_cs_group_name"] = (a0, a1)=>(Module["_cs_group_name"] = wasmExports["q"])(a0, a1);
+        Module["_cs_insn_group"] = (a0, a1, a2)=>(Module["_cs_insn_group"] = wasmExports["r"])(a0, a1, a2);
+        Module["_cs_reg_read"] = (a0, a1, a2)=>(Module["_cs_reg_read"] = wasmExports["s"])(a0, a1, a2);
+        Module["_cs_reg_write"] = (a0, a1, a2)=>(Module["_cs_reg_write"] = wasmExports["t"])(a0, a1, a2);
+        Module["_cs_op_count"] = (a0, a1, a2)=>(Module["_cs_op_count"] = wasmExports["u"])(a0, a1, a2);
+        Module["_cs_op_index"] = (a0, a1, a2, a3)=>(Module["_cs_op_index"] = wasmExports["v"])(a0, a1, a2, a3);
+        Module["_cs_regs_access"] = (a0, a1, a2, a3, a4, a5)=>(Module["_cs_regs_access"] = wasmExports["w"])(a0, a1, a2, a3, a4, a5);
+        Module["_malloc"] = (a0)=>(Module["_malloc"] = wasmExports["x"])(a0);
+        Module["_free"] = (a0)=>(Module["_free"] = wasmExports["y"])(a0);
+        var stackSave = ()=>(stackSave = wasmExports["z"])();
+        var stackRestore = (a0)=>(stackRestore = wasmExports["A"])(a0);
+        var stackAlloc = (a0)=>(stackAlloc = wasmExports["B"])(a0);
         Module["ccall"] = ccall;
         Module["cwrap"] = cwrap;
         Module["getValue"] = getValue;
         Module["UTF8ToString"] = UTF8ToString;
         var calledRun;
         dependenciesFulfilled = function runCaller() {
-            // If run has never been called, and we should call run (INVOKE_RUN is true, and Module.noInitialRun is not false)
             if (!calledRun) run();
             if (!calledRun) dependenciesFulfilled = runCaller;
         };
-        // try this again later, after new deps are fulfilled
         function run() {
             if (runDependencies > 0) {
                 return;
             }
             preRun();
-            // a preRun added a dependency, run will be called later
             if (runDependencies > 0) {
                 return;
             }
             function doRun() {
-                // run may have just been called through dependencies being fulfilled just in this very frame,
-                // or while the async setStatus time below was happening
                 if (calledRun) return;
                 calledRun = true;
                 Module["calledRun"] = true;
                 if (ABORT) return;
                 initRuntime();
                 readyPromiseResolve(Module);
-                Module["onRuntimeInitialized"]?.();
+                if (Module["onRuntimeInitialized"]) Module["onRuntimeInitialized"]();
                 postRun();
             }
             if (Module["setStatus"]) {
                 Module["setStatus"]("Running...");
-                setTimeout(()=>{
-                    setTimeout(()=>Module["setStatus"](""), 1);
+                setTimeout(function() {
+                    setTimeout(function() {
+                        Module["setStatus"]("");
+                    }, 1);
                     doRun();
                 }, 1);
             } else {
@@ -820,14 +591,7 @@ var capstone$1 = (()=>{
             }
         }
         run();
-        // end include: postamble.js
-        // include: postamble_modularize.js
-        // In MODULARIZE mode we wrap the generated code in a factory function
-        // and return either the Module itself, or a promise of the module.
-        // We assign to the `moduleRtn` global here and configure closure to see
-        // this as and extern so it won't get minified.
-        moduleRtn = readyPromise;
-        return moduleRtn;
+        return moduleArg.ready;
     };
 })();
 
@@ -864,9 +628,6 @@ const CS_MODE_V9 = 1 << 4;
 const CS_MODE_MIPS32 = CS_MODE_32;
 const CS_MODE_MIPS64 = CS_MODE_64;
 const CS_MODE_QPX = 1 << 4;
-const CS_MODE_SPE = 1 << 5;
-const CS_MODE_BOOKE = 1 << 6;
-const CS_MODE_PS = 1 << 7;
 const CS_MODE_M680X_6301 = 1 << 1;
 const CS_MODE_M680X_6309 = 1 << 2;
 const CS_MODE_M680X_6800 = 1 << 3;
@@ -963,7 +724,6 @@ var _const = /*#__PURE__*/Object.freeze({
   CS_MODE_64: CS_MODE_64,
   CS_MODE_ARM: CS_MODE_ARM,
   CS_MODE_BIG_ENDIAN: CS_MODE_BIG_ENDIAN,
-  CS_MODE_BOOKE: CS_MODE_BOOKE,
   CS_MODE_LITTLE_ENDIAN: CS_MODE_LITTLE_ENDIAN,
   CS_MODE_M680X_6301: CS_MODE_M680X_6301,
   CS_MODE_M680X_6309: CS_MODE_M680X_6309,
@@ -982,9 +742,7 @@ var _const = /*#__PURE__*/Object.freeze({
   CS_MODE_MIPS32: CS_MODE_MIPS32,
   CS_MODE_MIPS32R6: CS_MODE_MIPS32R6,
   CS_MODE_MIPS64: CS_MODE_MIPS64,
-  CS_MODE_PS: CS_MODE_PS,
   CS_MODE_QPX: CS_MODE_QPX,
-  CS_MODE_SPE: CS_MODE_SPE,
   CS_MODE_THUMB: CS_MODE_THUMB,
   CS_MODE_V8: CS_MODE_V8,
   CS_MODE_V9: CS_MODE_V9,

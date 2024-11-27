@@ -1127,15 +1127,6 @@
                         }
                     },
                     {
-                        "caption": "Sf Disassembler",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfdisasm",
-                            "type": "converter"
-                        }
-                    },
-                    {
                         "caption": "Sf DATES (extract)",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1573,6 +1564,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx4asm",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf Disassembler",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx4disasm",
                             "type": "converter"
                         }
                     },

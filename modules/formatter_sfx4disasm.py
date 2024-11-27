@@ -7,7 +7,7 @@ DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
     'name': 'sf Disassembler',
-    'uid': 'sfdisasm',
+    'uid': 'sfx4disasm',
     'type': 'converter',
     'syntaxes': ['*'],
     'interpreter_path': ['/path/to/node'],
@@ -18,7 +18,7 @@ MODULE_CONFIG = {
 }
 
 
-class SfdisasmFormatter(Module):
+class Sfx4disasmFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
