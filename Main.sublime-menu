@@ -1451,6 +1451,15 @@
                         }
                     },
                     {
+                        "caption": "Sf X->ASM",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2asm",
+                            "type": "converter"
+                        }
+                    },
+                    {
                         "caption": "Sf X->CRC32",
                         "mnemonic": "S",
                         "command": "run_format",
@@ -1465,6 +1474,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2diacritics",
+                            "type": "converter"
+                        }
+                    },
+                    {
+                        "caption": "Sf X->DISASM",
+                        "mnemonic": "S",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "sfx2disasm",
                             "type": "converter"
                         }
                     },
@@ -1555,24 +1573,6 @@
                         "command": "run_format",
                         "args": {
                             "uid": "sfx2uuid",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf Assembler",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx4asm",
-                            "type": "converter"
-                        }
-                    },
-                    {
-                        "caption": "Sf Disassembler",
-                        "mnemonic": "S",
-                        "command": "run_format",
-                        "args": {
-                            "uid": "sfx4disasm",
                             "type": "converter"
                         }
                     },

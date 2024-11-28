@@ -1285,6 +1285,14 @@
                 }
             },
             {
+                "caption": "Sf X->ASM",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2asm",
+                    "type": "converter"
+                }
+            },
+            {
                 "caption": "Sf X->CRC32",
                 "command": "run_format",
                 "args": {
@@ -1297,6 +1305,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfx2diacritics",
+                    "type": "converter"
+                }
+            },
+            {
+                "caption": "Sf X->DISASM",
+                "command": "run_format",
+                "args": {
+                    "uid": "sfx2disasm",
                     "type": "converter"
                 }
             },
@@ -1377,22 +1393,6 @@
                 "command": "run_format",
                 "args": {
                     "uid": "sfx2uuid",
-                    "type": "converter"
-                }
-            },
-            {
-                "caption": "Sf Assembler",
-                "command": "run_format",
-                "args": {
-                    "uid": "sfx4asm",
-                    "type": "converter"
-                }
-            },
-            {
-                "caption": "Sf Disassembler",
-                "command": "run_format",
-                "args": {
-                    "uid": "sfx4disasm",
                     "type": "converter"
                 }
             },

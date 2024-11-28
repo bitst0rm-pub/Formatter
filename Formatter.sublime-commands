@@ -1314,6 +1314,14 @@
         }
     },
     {
+        "caption": "Formatter: Convert with Sf X->ASM",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2asm",
+            "type": "converter"
+        }
+    },
+    {
         "caption": "Formatter: Convert with Sf X->CRC32",
         "command": "run_format",
         "args": {
@@ -1326,6 +1334,14 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2diacritics",
+            "type": "converter"
+        }
+    },
+    {
+        "caption": "Formatter: Convert with Sf X->DISASM",
+        "command": "run_format",
+        "args": {
+            "uid": "sfx2disasm",
             "type": "converter"
         }
     },
@@ -1406,22 +1422,6 @@
         "command": "run_format",
         "args": {
             "uid": "sfx2uuid",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf Assembler",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx4asm",
-            "type": "converter"
-        }
-    },
-    {
-        "caption": "Formatter: Convert with Sf Disassembler",
-        "command": "run_format",
-        "args": {
-            "uid": "sfx4disasm",
             "type": "converter"
         }
     },

@@ -6,19 +6,19 @@ INTERPRETERS = ['node']
 DOTFILES = []
 MODULE_CONFIG = {
     'source': 'build-in',
-    'name': 'sf Disassembler',
-    'uid': 'sfx4disasm',
+    'name': 'Sf X->ASM',
+    'uid': 'sfx2asm',
     'type': 'converter',
     'syntaxes': ['*'],
     'interpreter_path': ['/path/to/node'],
     'executable_path': None,
-    'args': ['--arch', 'x86', '--mode', '32', '--endian', 'little', '--offset', '0x10000'],
+    'args': ['--arch', 'x86', '--mode', '32', '--endian', 'little', '--offset', '0x10000', '--bytes_per_line', 24, '--uppercase', True],
     'config_path': None,
     'comment': 'Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big".'
 }
 
 
-class Sfx4disasmFormatter(Module):
+class Sfx2asmFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -27,7 +27,7 @@ class Sfx4disasmFormatter(Module):
         if not interpreter:
             return None
 
-        script = join(abspath(join(__file__, '../../')), 'libs', 'stone', 'capstone', 'disasm.mjs')
+        script = join(abspath(join(__file__, '../../')), 'libs', 'stone', 'keystone', 'asm.mjs')
 
         cmd = [interpreter, script]
         cmd.extend(self.get_args())
