@@ -2,6 +2,20 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.6)] - 2024-11-28
+
+### 🚀 Features
+
+- [`1f00a04`](https://github.com/bitst0rm-pub/Formatter/commit/1f00a04a1f02ed129a83e2f38db998437bfb6b47) Add `sfdisasm` disassembler for ARM, ARM64, X86 arch
+- [`e22b6b8`](https://github.com/bitst0rm-pub/Formatter/commit/e22b6b86ddbb1fd7f4979f2bb55fb40023dbeed9) Add `sfx4asm` assembler for ARM, ARM64, X86 arch
+
+### ⚙️ Miscellaneous Tasks
+
+- [`ade7413`](https://github.com/bitst0rm-pub/Formatter/commit/ade741366f731ded01a853b4431febf3e86394ab) Add more screenshots
+- [`aae0ca0`](https://github.com/bitst0rm-pub/Formatter/commit/aae0ca03e5eaa495fd82d807b79631e98025254c) Rename `sfdisasm` to `sfx4disasm`
+- [`b016da1`](https://github.com/bitst0rm-pub/Formatter/commit/b016da15667084d52c138653a6e567d62b960424) Rename `sfx4asm` to `sfx2asm` and `sfx4disasm` to `sfx2disasm`
+- [`f64e29d`](https://github.com/bitst0rm-pub/Formatter/commit/f64e29dba88958fbc735baf967c9ebe9038c6920) Update README.md
+
 ## [[1.8.5](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.5)] - 2024-11-24
 
 ### 🐛 Bug Fixes
