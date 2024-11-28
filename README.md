@@ -47,6 +47,10 @@ _**Formatter in action:**_
 | :------------: | :------------: |
 | ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot3.png) | ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot4.png) |
 
+| _Not OllyDbg, IDA but..._ | _Assembling..._ |
+| :------------: | :------------: |
+| ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot5.png) | ![Formatter](https://raw.githubusercontent.com/bitst0rm-pub/meta/master/formatter/screenshot6.png) |
+
 <sub>Theme used: **[theme-dosa](https://github.com/bitst0rm-pub/theme-dosa)** and **[color-scheme-two](https://github.com/bitst0rm-pub/color-scheme-two)**</sub>
 
 ## Guides
