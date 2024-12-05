@@ -65,19 +65,19 @@ function parseArgs() {
 
 // Validate and map options
 function validateAndMapOptions(options) {
-    const csArch = ARCHS[options.arch];
-    if (!csArch) {
+    if (!(options.arch in ARCHS)) {
         console.error('Unsupported architecture: ' + options.arch);
         process.exit(1);
     }
+    const csArch = ARCHS[options.arch];
 
-    let csMode = Const[MODES[options.mode]];
-    if (!csMode) {
+    if (!(options.mode in MODES)) {
         console.error('Unsupported mode: ' + options.mode);
         process.exit(1);
     }
+    let csMode = Const[MODES[options.mode]];
 
-    if (ENDIANS[options.endian]) {
+    if (options.endian in ENDIANS) {
         if (['ARM', 'ARM64', 'MIPS', 'PPC'].includes(options.arch)) {
             csMode += Const[ENDIANS[options.endian]];
         } else if (options.arch === 'X86') {

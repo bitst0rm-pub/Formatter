@@ -75,20 +75,25 @@ function parseArgs() {
 
 // Helper function to validate and map the arguments
 function validateAndMapOptions(options) {
-    const ksArch = ARCHS[options.arch];
-    if (!ksArch) {
+    if (!(options.arch in ARCHS)) {
         console.error('Unsupported architecture: ' + options.arch);
         process.exit(1);
     }
+    const ksArch = ARCHS[options.arch];
 
-    let ksMode = Const[MODES[options.mode]];
-    if (!ksMode) {
-        console.error('Unsupported mode: ' + options.mode);
-        process.exit(1);
+    let ksMode = 0;
+    if (options.arch === 'ARM64') {
+        // arm64 does not have any modes
+        ksMode = 0;
+    } else {
+        if (!(options.mode in MODES)) {
+            console.error('Unsupported mode: ' + options.mode);
+            process.exit(1);
+        }
+        ksMode = Const[MODES[options.mode]];
     }
 
-    // Endian validation
-    if (ENDIANS[options.endian]) {
+    if (options.endian in ENDIANS) {
         if (['ARM', 'ARM64', 'MIPS', 'PPC'].includes(options.arch)) {
             ksMode += Const[ENDIANS[options.endian]];
         } else if (options.arch === 'X86') {
@@ -98,13 +103,11 @@ function validateAndMapOptions(options) {
         }
     }
 
-    // Offset validation
     if (isNaN(options.offset) || options.offset < 0) {
         console.error('Invalid offset. It must be a non-negative hexadecimal number.');
         process.exit(1);
     }
 
-    // Bytes per line validation
     if (isNaN(options.bytes_per_line) || options.bytes_per_line <= 0) {
         console.error('Invalid bytes_per_line. It must be a positive number.');
         process.exit(1);
@@ -146,7 +149,7 @@ function main() {
 
             // Delete encoder
             keystone.close();
-        } catch (error) {
+        } catch (e) {
             console.error('Keystone assembly error: ' + e.message);
             process.exit(1);
         }
