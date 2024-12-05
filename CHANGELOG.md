@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.7)] - 2024-12-05
+
+### 🐛 Bug Fixes
+
+- [`8812961`](https://github.com/bitst0rm-pub/Formatter/commit/881296175a88a0229b51aa3bfd729ce31580f4ce) Fix `asm.mjs` and `disasm.mjs` validation
+
+### ⚙️ Miscellaneous Tasks
+
+- [`8b7417f`](https://github.com/bitst0rm-pub/Formatter/commit/8b7417f27ddb5268045e62aa55536ee793f418e8) Update stone lib
+
 ## [[1.8.6](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.6)] - 2024-11-28
 
 ### 🚀 Features
