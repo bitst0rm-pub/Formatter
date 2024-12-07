@@ -2246,8 +2246,8 @@
             "dir_format": false,
             "syntaxes": ["*"],
             "interpreter_path": ["/path/to/node"],
-            "args": ["--arch", "x86", "--mode", "32", "--endian", "little", "--offset", "0x10000", "--bytes_per_line", 24, "--uppercase", true]
-            /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big". */
+            "args": ["--arch", "arm", "--mode", "arm,v8", "--endian", "little", "--offset", "0x10000", "--bytes_per_line", 24, "--uppercase", true]
+            /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb", "v8". Set "--endian" to "little", "big". */
         },
         "sfx2crc32": {
             "info": "build-in",
@@ -2277,8 +2277,8 @@
             "dir_format": false,
             "syntaxes": ["*"],
             "interpreter_path": ["/path/to/node"],
-            "args": ["--arch", "x86", "--mode", "32", "--endian", "little", "--offset", "0x10000"]
-            /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big". */
+            "args": ["--arch", "arm", "--mode", "arm,v8", "--endian", "little", "--offset", "0x10000"]
+            /* Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb", "v8". Set "--endian" to "little", "big". */
         },
         "sfx2md5": {
             "info": "build-in",

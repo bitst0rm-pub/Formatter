@@ -12,9 +12,9 @@ MODULE_CONFIG = {
     'syntaxes': ['*'],
     'interpreter_path': ['/path/to/node'],
     'executable_path': None,
-    'args': ['--arch', 'x86', '--mode', '32', '--endian', 'little', '--offset', '0x10000'],
+    'args': ['--arch', 'arm', '--mode', 'arm,v8', '--endian', 'little', '--offset', '0x10000'],
     'config_path': None,
-    'comment': 'Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb". Set "--endian" to "little", "big".'
+    'comment': 'Build-in, no "executable_path", requires node as "interpreter_path". Set "--arch" to "arm", "arm64", "x86". Set "--mode" to "16", "32", "64", "arm", "thumb", "v8". Set "--endian" to "little", "big".'
 }
 
 

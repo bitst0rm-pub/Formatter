@@ -83,7 +83,7 @@ Formatter requires third-party plugins to work, as it relies on external plugins
 _Need more? see:_ [Configuration](#configuration) and [Development](#development) to add your own.
 
 - The same table with clear names, auto generated: [_summary.txt](/modules/_summary.txt)
-- **`(BI)`** = **`(build-in)`** No installation required; specifically designed for Formatter.
+- **`(I)`** = **`(integrated/build-in)`** No installation required; specifically designed for Formatter.
 - `None` = Mostly standalone binaries.
 - `Req.` = Requirements might not be up-to-date.
 
@@ -102,7 +102,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | CMake | [cmake-format](https://github.com/cheshirekow/cmake_format) | -- | -- | Python | -- |
 | Crystal | [crystal tool format](https://github.com/crystal-lang/crystal) | -- | -- | None | -- |
 | CSS, SCSS, Sass, Less, SugarSS | [stylelint](https://github.com/stylelint/stylelint) [1], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [2], [csscomb](https://github.com/csscomb/csscomb.js), [stylefmt](https://github.com/masaakim/stylefmt) | [cleancss CLI](https://github.com/jakubpawlowicz/clean-css-cli), [prettydiff](https://github.com/prettydiff/prettydiff) [2] | -- | Node.js | [[1]](https://maximgatilin.github.io/stylelint-config/), [[2]](https://prettydiff.com/tool.xhtml) |
-| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) **`(BI)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] [2] | -- | -- | Python, Node.js [2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| CSV, TSV, DSV, Text | [prettytable](https://github.com/jazzband/prettytable) **`(I)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] [2] | -- | -- | Python, Node.js [2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | D | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | D2 | [d2 fmt](https://github.com/terrastruct/d2) | -- | [d2](https://github.com/terrastruct/d2) | None | -- |
 | Dart | [dart-format](https://dart.dev/tools/dart-format) | -- | -- | Dart | -- |
@@ -123,7 +123,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
 | Java | [google java format](https://github.com/google/google-java-format) [1], [uncrustify](https://github.com/uncrustify/uncrustify) [2], [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [3], [artistic style](https://sourceforge.net/projects/astyle) | -- | -- | Java [1], None | [[2]](https://cdanu.github.io/uncrustify_config_preview/index.html), [[3]](https://zed0.co.uk/clang-format-configurator) |
 | JavaScript | [eslint](https://github.com/eslint/eslint), [eslint_d](https://github.com/mantoni/eslint_d.js) [3], [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [standard js](https://github.com/standard/standard), [standardx js](https://github.com/standard/standardx), [semistandard js](https://github.com/standard/semistandard), [prettydiff](https://github.com/prettydiff/prettydiff), [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] [2], [deno](https://github.com/denoland/deno) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | [terser](https://github.com/terser-js/terser), [prettydiff](https://github.com/prettydiff/prettydiff) | -- | 14.0+ [3], Node.js, None [2] | [[1]](https://zed0.co.uk/clang-format-configurator) |
-| JSON | jsonmax **`(BI)`**, [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [deno](https://github.com/denoland/deno) [2], [topiary](https://github.com/tweag/topiary) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | jsonmin **`(BI)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
+| JSON | jsonmax **`(I)`**, [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [deno](https://github.com/denoland/deno) [2], [topiary](https://github.com/tweag/topiary) [2], [dprint](https://github.com/dprint/dprint) [2], [biome](https://github.com/biomejs/biome) [2] | jsonmin **`(I)`**, [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js, None [2] | [[1]](https://prettydiff.com/tool.xhtml) |
 | Julia | [juliaformatter](https://github.com/domluna/JuliaFormatter.jl) | -- | -- | Julia 0.6+ | -- |
 | Kotlin | [ktlint](https://github.com/pinterest/ktlint) | -- | -- | Java | -- |
 | LaTeX | [latexindent](https://github.com/cmhughes/latexindent.pl) | -- | -- | Perl, None | -- |
@@ -145,7 +145,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Rust | [rustfmt](https://github.com/rust-lang/rustfmt) | -- | -- | Rust 1.24+ | -- |
 | Scala | [scalafmt](https://github.com/scalameta/scalafmt), [scalariform](https://github.com/scala-ide/scalariform) [1] | -- | -- | None, Java [1] | -- |
 | Shell, Bash | [beautysh](https://github.com/lovesegfault/beautysh) [1], [shfmt](https://github.com/mvdan/sh), [shellcheck](https://github.com/koalaman/shellcheck) | [shfmt](https://github.com/mvdan/sh) | -- | Python [1], None | -- |
-| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) [1], [pg_format](https://github.com/darold/pgFormatter) [2], [sqlparse](https://github.com/andialbrecht/sqlparse) [3] | sqlmin **`(BI)`** | -- | Node.js [1], Perl [2], Python 3.6+ [3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
+| SQL, SQL dialects, PostgreSQL | [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) [1], [pg_format](https://github.com/darold/pgFormatter) [2], [sqlparse](https://github.com/andialbrecht/sqlparse) [3] | sqlmin **`(I)`** | -- | Node.js [1], Perl [2], Python 3.6+ [3] | [[1]](https://sql-formatter-org.github.io/sql-formatter), [[2]](https://sqlformat.darold.net) |
 | Swift | [apple swift-format](https://github.com/apple/swift-format), [swiftformat](https://github.com/nicklockwood/SwiftFormat) | -- | -- | None | -- |
 | SVG | [svgo max](https://github.com/svg/svgo) | [svgo min](https://github.com/svg/svgo) | -- | Node.js | -- |
 | TableGen | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
@@ -156,7 +156,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | VALA | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |
 | Verilog | [clang-format](https://clang.llvm.org/docs/ClangFormat.html) [1] | -- | -- | None | [[1]](https://zed0.co.uk/clang-format-configurator) |
 | Vue | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [js-beautifier](https://github.com/beautify-web/js-beautify) | -- | -- | Node.js | -- |
-| YAML | yamlmax **`(BI)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
+| YAML | yamlmax **`(I)`**, [yamlfmt](https://github.com/google/yamlfmt) [1], [prettier](https://github.com/prettier/prettier) [2], [prettierd](https://github.com/fsouza/prettierd) [2] | -- | -- | None [1], Node.js [2] | -- |
 | Zig | [zigfmt](https://github.com/ziglang/zig) | -- | -- | None | -- |
 
 > [!NOTE]
@@ -167,72 +167,72 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
-| sfloremipsum **`(BI)`** | any | TEXT | None | lorem伪 |
-| sfurienc **`(BI)`** | any | TEXT | None | uri |
-| sfuridec **`(BI)`** | any | TEXT | None | uri |
-| sfhtmlentitize **`(BI)`** | any | TEXT | None | html |
-| sfhtmldeentitize **`(BI)`** | any | TEXT | None | html |
-| sfhtmlstriptags **`(BI)`** | any | TEXT | None | html |
-| sfregexescape **`(BI)`** | any | TEXT | None | regex |
-| sfregexunescape **`(BI)`** | any | TEXT | None | regex |
-| sfstringescape **`(BI)`** | any | TEXT | None | string |
-| sfstringunescape **`(BI)`** | any | TEXT | None | string |
-| sfunicodeescape **`(BI)`** | any | TEXT | None | unicode |
-| sfunicodeunescape **`(BI)`** | any | TEXT | None | unicode |
-| sfcharcodeenc **`(BI)`** | any | TEXT | None | charcode |
-| sfcharcodedec **`(BI)`** | any | TEXT | None | charcode |
-| sfpunycodeenc **`(BI)`** | any | TEXT | None | punycode |
-| sfpunycodedec **`(BI)`** | any | TEXT | None | punycode |
-| sfbrailleenc **`(BI)`** | any | TEXT | None | braille |
-| sfbrailledec **`(BI)`** | any | TEXT | None | braille |
-| sfquotedprintableenc **`(BI)`** | any | TEXT | None | QP |
-| sfquotedprintabledec **`(BI)`** | any | TEXT | None | QP |
-| sflzmacompress **`(BI)`** | any | TEXT | None | LZMA |
-| sflzmadecompress **`(BI)`** | any | TEXT | None | LZMA |
-| sfgzipcompress **`(BI)`** | any | TEXT | None | GZIP |
-| sfgzipdecompress **`(BI)`** | any | TEXT | None | GZIP |
-| sfbase16enc **`(BI)`** | any | TEXT | None | base16 |
-| sfbase16dec **`(BI)`** | any | TEXT | None | base16 |
-| sfbase32enc **`(BI)`** | any | TEXT | None | base32 |
-| sfbase32dec **`(BI)`** | any | TEXT | None | base32 |
-| sfbase64enc **`(BI)`** | any | TEXT | None | base64 |
-| sfbase64dec **`(BI)`** | any | TEXT | None | base64 |
-| sfbaseenc **`(BI)`** | any | TEXT | None | base |
-| sfbasedec **`(BI)`** | any | TEXT | None | base |
-| sfbinaryenc **`(BI)`** | any | TEXT | None | binary |
-| sfbinarydec **`(BI)`** | any | TEXT | None | binary |
-| sfdecimalenc **`(BI)`** | any | TEXT | None | decimal |
-| sfdecimaldec **`(BI)`** | any | TEXT | None | decimal |
-| sfoctalenc **`(BI)`** | any | TEXT | None | octal |
-| sfoctaldec **`(BI)`** | any | TEXT | None | octal |
-| sfhexenc **`(BI)`** | any | TEXT | None | hex |
-| sfhexdec **`(BI)`** | any | TEXT | None | hex |
-| sfhexdumpenc **`(BI)`** | any | TEXT | None | hexdump |
-| sfhexdumpdec **`(BI)`** | any | TEXT | None | hexdump |
-| sfromannumeralenc **`(BI)`** | any | TEXT | None | roman |
-| sfromannumeraldec **`(BI)`** | any | TEXT | None | roman |
-| sfx2diacritics **`(BI)`** | any | TEXT | None | diacritics |
-| sfx2uuid **`(BI)`** | any | TEXT | None | UUID |
-| sfx2randpass **`(BI)`** | any | TEXT | None | random |
-| sfx2crc32 **`(BI)`** | any | TEXT | None | crc32 |
-| sfx2md5 **`(BI)`** | any | TEXT | None | md5 |
-| sfx2sha1 **`(BI)`** | any | TEXT | None | sha1 |
-| sfx2sha256 **`(BI)`** | any | TEXT | None | sha256 |
-| sfx2sha512 **`(BI)`** | any | TEXT | None | sha512 |
-| sfx2sha3256 **`(BI)`** | any | TEXT | None | sha3_256 |
-| sfx2sha3512 **`(BI)`** | any | TEXT | None | sha3_512 |
-| sfx2shake256 **`(BI)`** | any | TEXT | None | shake_256 |
-| sfx2shake512 **`(BI)`** | any | TEXT | None | shake_512 |
-| sfextractemailaddr **`(BI)`** | any | TEXT | None | emails |
-| sfextractipaddr **`(BI)`** | any | TEXT | None | IPaddr |
-| sfextractmacaddr **`(BI)`** | any | TEXT | None | MACaddr |
-| sfextracturls **`(BI)`** | any | TEXT | None | URLs,domains |
-| sfextractfilepaths **`(BI)`** | any | TEXT | None | filepaths |
-| sfextractdates **`(BI)`** | any | TEXT | None | dates |
-| sfunixtimestampenc **`(BI)`** | any | TEXT | None | timestamp |
-| sfunixtimestampdec **`(BI)`** | any | TEXT | None | timestamp |
-| sfx2asm **`(BI)`** | any | TEXT | Node.js | arm,x86 assembler |
-| sfx2disasm **`(BI)`** | any | TEXT | Node.js | arm,x86 disassembler |
+| sfloremipsum **`(I)`** | any | TEXT | None | lorem伪 |
+| sfurienc **`(I)`** | any | TEXT | None | uri |
+| sfuridec **`(I)`** | any | TEXT | None | uri |
+| sfhtmlentitize **`(I)`** | any | TEXT | None | html |
+| sfhtmldeentitize **`(I)`** | any | TEXT | None | html |
+| sfhtmlstriptags **`(I)`** | any | TEXT | None | html |
+| sfregexescape **`(I)`** | any | TEXT | None | regex |
+| sfregexunescape **`(I)`** | any | TEXT | None | regex |
+| sfstringescape **`(I)`** | any | TEXT | None | string |
+| sfstringunescape **`(I)`** | any | TEXT | None | string |
+| sfunicodeescape **`(I)`** | any | TEXT | None | unicode |
+| sfunicodeunescape **`(I)`** | any | TEXT | None | unicode |
+| sfcharcodeenc **`(I)`** | any | TEXT | None | charcode |
+| sfcharcodedec **`(I)`** | any | TEXT | None | charcode |
+| sfpunycodeenc **`(I)`** | any | TEXT | None | punycode |
+| sfpunycodedec **`(I)`** | any | TEXT | None | punycode |
+| sfbrailleenc **`(I)`** | any | TEXT | None | braille |
+| sfbrailledec **`(I)`** | any | TEXT | None | braille |
+| sfquotedprintableenc **`(I)`** | any | TEXT | None | QP |
+| sfquotedprintabledec **`(I)`** | any | TEXT | None | QP |
+| sflzmacompress **`(I)`** | any | TEXT | None | LZMA |
+| sflzmadecompress **`(I)`** | any | TEXT | None | LZMA |
+| sfgzipcompress **`(I)`** | any | TEXT | None | GZIP |
+| sfgzipdecompress **`(I)`** | any | TEXT | None | GZIP |
+| sfbase16enc **`(I)`** | any | TEXT | None | base16 |
+| sfbase16dec **`(I)`** | any | TEXT | None | base16 |
+| sfbase32enc **`(I)`** | any | TEXT | None | base32 |
+| sfbase32dec **`(I)`** | any | TEXT | None | base32 |
+| sfbase64enc **`(I)`** | any | TEXT | None | base64 |
+| sfbase64dec **`(I)`** | any | TEXT | None | base64 |
+| sfbaseenc **`(I)`** | any | TEXT | None | base |
+| sfbasedec **`(I)`** | any | TEXT | None | base |
+| sfbinaryenc **`(I)`** | any | TEXT | None | binary |
+| sfbinarydec **`(I)`** | any | TEXT | None | binary |
+| sfdecimalenc **`(I)`** | any | TEXT | None | decimal |
+| sfdecimaldec **`(I)`** | any | TEXT | None | decimal |
+| sfoctalenc **`(I)`** | any | TEXT | None | octal |
+| sfoctaldec **`(I)`** | any | TEXT | None | octal |
+| sfhexenc **`(I)`** | any | TEXT | None | hex |
+| sfhexdec **`(I)`** | any | TEXT | None | hex |
+| sfhexdumpenc **`(I)`** | any | TEXT | None | hexdump |
+| sfhexdumpdec **`(I)`** | any | TEXT | None | hexdump |
+| sfromannumeralenc **`(I)`** | any | TEXT | None | roman |
+| sfromannumeraldec **`(I)`** | any | TEXT | None | roman |
+| sfx2diacritics **`(I)`** | any | TEXT | None | diacritics |
+| sfx2uuid **`(I)`** | any | TEXT | None | UUID |
+| sfx2randpass **`(I)`** | any | TEXT | None | random |
+| sfx2crc32 **`(I)`** | any | TEXT | None | crc32 |
+| sfx2md5 **`(I)`** | any | TEXT | None | md5 |
+| sfx2sha1 **`(I)`** | any | TEXT | None | sha1 |
+| sfx2sha256 **`(I)`** | any | TEXT | None | sha256 |
+| sfx2sha512 **`(I)`** | any | TEXT | None | sha512 |
+| sfx2sha3256 **`(I)`** | any | TEXT | None | sha3_256 |
+| sfx2sha3512 **`(I)`** | any | TEXT | None | sha3_512 |
+| sfx2shake256 **`(I)`** | any | TEXT | None | shake_256 |
+| sfx2shake512 **`(I)`** | any | TEXT | None | shake_512 |
+| sfextractemailaddr **`(I)`** | any | TEXT | None | emails |
+| sfextractipaddr **`(I)`** | any | TEXT | None | IPaddr |
+| sfextractmacaddr **`(I)`** | any | TEXT | None | MACaddr |
+| sfextracturls **`(I)`** | any | TEXT | None | URLs,domains |
+| sfextractfilepaths **`(I)`** | any | TEXT | None | filepaths |
+| sfextractdates **`(I)`** | any | TEXT | None | dates |
+| sfunixtimestampenc **`(I)`** | any | TEXT | None | timestamp |
+| sfunixtimestampdec **`(I)`** | any | TEXT | None | timestamp |
+| sfx2asm **`(I)`** | any | TEXT | Node.js | arm,x86 32/64 assembler |
+| sfx2disasm **`(I)`** | any | TEXT | Node.js | arm,x86 32/64 disassembler |
 
 <sub>`sf` = **S**ublime **F**ormatter</sub>
 

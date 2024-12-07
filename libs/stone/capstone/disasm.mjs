@@ -6,7 +6,6 @@ import {
 
 await loadCapstone();
 
-// Supported architectures, modes, and endian
 const ARCHS = {
     ARM: 'CS_ARCH_ARM',
     ARM64: 'CS_ARCH_ARM64',
@@ -19,6 +18,7 @@ const MODES = {
     64: 'CS_MODE_64',
     ARM: 'CS_MODE_ARM',
     THUMB: 'CS_MODE_THUMB',
+    V8: 'CS_MODE_V8'
 };
 
 const ENDIANS = {
@@ -26,10 +26,9 @@ const ENDIANS = {
     BIG: 'CS_MODE_BIG_ENDIAN',
 };
 
-// Parse and validate command-line arguments
 function parseArgs() {
-    const args = process.argv.slice(2);
-    const options = { // Default
+    const args = process.argv.slice(2);  // skip node and script path
+    const options = {  // default
         arch: 'X86',
         mode: '32',
         endian: 'LITTLE',
@@ -63,7 +62,6 @@ function parseArgs() {
     return options;
 }
 
-// Validate and map options
 function validateAndMapOptions(options) {
     if (!(options.arch in ARCHS)) {
         console.error('Unsupported architecture: ' + options.arch);
@@ -71,11 +69,15 @@ function validateAndMapOptions(options) {
     }
     const csArch = ARCHS[options.arch];
 
-    if (!(options.mode in MODES)) {
-        console.error('Unsupported mode: ' + options.mode);
-        process.exit(1);
+    const modes = options.mode.split(',').map(mode => mode.trim());
+    let csMode = 0;
+    for (const mode of modes) {
+        if (!(mode in MODES)) {
+            console.error('Unsupported mode: ' + mode);
+            process.exit(1);
+        }
+        csMode += Const[MODES[mode]];
     }
-    let csMode = Const[MODES[options.mode]];
 
     if (options.endian in ENDIANS) {
         if (['ARM', 'ARM64', 'MIPS', 'PPC'].includes(options.arch)) {
@@ -105,13 +107,12 @@ function parseInput(input) {
     return cleanedInput.match(/.{2}/g).map(byte => parseInt(byte, 16));
 }
 
-// Format and print disassembly output
 function printDisassembly(insns, csOffset) {
     const maxByteLength = Math.max(...insns.map(insn => insn.bytes.length));
     const maxMnemonicLength = Math.max(...insns.map(insn => insn.mnemonic.length));
 
-    const byteColumnPadding = maxByteLength * 3 + 1; // 3 chars per byte + 1 space
-    const mnemonicColumnPadding = maxMnemonicLength + 2; // Add extra space for separation
+    const byteColumnPadding = maxByteLength * 3 + 1;  // 3 chars per byte + 1 space
+    const mnemonicColumnPadding = maxMnemonicLength + 2;  // Add extra space for separation
 
     insns.forEach(insn => {
         const address = '0x' + insn.address.toString(16).toUpperCase().padStart(8, '0');
@@ -123,8 +124,7 @@ function printDisassembly(insns, csOffset) {
     });
 }
 
-// Main function
-async function main() {
+function main() {
     const options = parseArgs();
     const { csArch, csMode, csOffset } = validateAndMapOptions(options);
 

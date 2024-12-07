@@ -6,7 +6,6 @@ import {
 
 await loadKeystone();
 
-// Supported architectures, modes, and endian
 const ARCHS = {
     ARM: 'KS_ARCH_ARM',
     ARM64: 'KS_ARCH_ARM64',
@@ -19,6 +18,7 @@ const MODES = {
     64: 'KS_MODE_64',
     ARM: 'KS_MODE_ARM',
     THUMB: 'KS_MODE_THUMB',
+    V8: 'KS_MODE_V8'
 };
 
 const ENDIANS = {
@@ -26,10 +26,9 @@ const ENDIANS = {
     BIG: 'KS_MODE_BIG_ENDIAN',
 };
 
-// Helper function to parse arguments
 function parseArgs() {
-    const args = process.argv.slice(2); // Skip node and script path
-    const options = { // Default
+    const args = process.argv.slice(2);  // skip node and script path
+    const options = {  // default
         arch: 'X86',
         mode: '32',
         endian: 'LITTLE',
@@ -73,7 +72,6 @@ function parseArgs() {
     return options;
 }
 
-// Helper function to validate and map the arguments
 function validateAndMapOptions(options) {
     if (!(options.arch in ARCHS)) {
         console.error('Unsupported architecture: ' + options.arch);
@@ -86,11 +84,14 @@ function validateAndMapOptions(options) {
         // arm64 does not have any modes
         ksMode = 0;
     } else {
-        if (!(options.mode in MODES)) {
-            console.error('Unsupported mode: ' + options.mode);
-            process.exit(1);
+        const modes = options.mode.split(',').map(mode => mode.trim());
+        for (const mode of modes) {
+            if (!(mode in MODES)) {
+                console.error('Unsupported mode: ' + mode);
+                process.exit(1);
+            }
+            ksMode += Const[MODES[mode]];
         }
-        ksMode = Const[MODES[options.mode]];
     }
 
     if (options.endian in ENDIANS) {
@@ -116,16 +117,13 @@ function validateAndMapOptions(options) {
     return { ksArch, ksMode, ksOffset: options.offset, bytesPerLine: options.bytes_per_line };
 }
 
-// Main logic
 function main() {
     const options = parseArgs();
     const { ksArch, ksMode, ksOffset, bytesPerLine } = validateAndMapOptions(options);
 
     // Read input from stdin
     let inputData = '';
-    process.stdin.on('data', (chunk) => {
-        inputData += chunk;
-    });
+    process.stdin.on('data', chunk => (inputData += chunk));
 
     process.stdin.on('end', () => {
         try {
