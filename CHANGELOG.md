@@ -2,6 +2,12 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.8)] - 2024-12-07
+
+### ⚙️ Miscellaneous Tasks
+
+- [`4d9cf87`](https://github.com/bitst0rm-pub/Formatter/commit/4d9cf8795e46fdb3a451299d4cb52112fe403a64) `"--mode"` flag of `sfx2asm` and `sfx2disasm` accepts multiple values separated by commas, e.g `"--mode", "arm,thumb"`
+
 ## [[1.8.7](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.7)] - 2024-12-05
 
 ### 🐛 Bug Fixes
