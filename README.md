@@ -118,6 +118,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Go | [gofmt](https://pkg.go.dev/cmd/gofmt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [gofumpt](https://github.com/mvdan/gofumpt) | -- | -- | None | -- |
 | GraphQL | [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd) | -- | -- | Node.js | -- |
 | Graphviz | -- | -- | [graphviz](https://gitlab.com/graphviz/graphviz) | None | -- |
+| Groovy, Gradle | [npm-groovy-lint](https://github.com/nvuillam/npm-groovy-lint) | -- | -- | Node.js 12.0+ | -- |
 | Haskell | [ormolu](https://github.com/tweag/ormolu), [fourmolu](https://github.com/fourmolu/fourmolu) [1], [hindent](https://github.com/mihaimaruseac/hindent), [stylish-haskell](https://github.com/haskell/stylish-haskell), [floskell](https://github.com/ennocramer/floskell) | -- | -- | Haskell | [[1]](https://fourmolu.github.io) |
 | HCL | [hclfmt](https://github.com/hashicorp/hcl) | -- | -- | None | -- |
 | HTML, XHTML, XML | [js-beautifier](https://github.com/beautify-web/js-beautify), [prettier](https://github.com/prettier/prettier), [prettierd](https://github.com/fsouza/prettierd), [prettydiff](https://github.com/prettydiff/prettydiff) [1], [html-tidy](https://github.com/htacg/tidy-html5) | [html-minifier](https://github.com/kangax/html-minifier), [prettydiff](https://github.com/prettydiff/prettydiff) [1] | -- | Node.js | [[1]](https://prettydiff.com/tool.xhtml) |
