@@ -32,19 +32,18 @@ if IS_WINDOWS:
 
 class ConfigDict(dict):
     _bypass_restrictions = False
-    _allowed_keys_for_get = ['custom_modules', 'custom_modules_manifest', 'formatters', 'environ', 'quick_options']
+    _allowed_keys = ['custom_modules', 'custom_modules_manifest', 'formatters', 'environ', 'quick_options']
+
+    def _check_access(self, key):
+        if not self._bypass_restrictions and key not in self._allowed_keys:
+            raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
 
     def get(self, key, *args, **kwargs):
-        if key in ConfigDict._allowed_keys_for_get:
-            return super().get(key, *args, **kwargs)
-
-        if not ConfigDict._bypass_restrictions:
-            raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
+        self._check_access(key)
         return super().get(key, *args, **kwargs)
 
     def __getitem__(self, key):
-        if not ConfigDict._bypass_restrictions:
-            raise RuntimeError('Direct access to CONFIG is not allowed. Use "OptionHandler.query(CONFIG, ...)" or "self.query(CONFIG, ...)" instead.')
+        self._check_access(key)
         return super().__getitem__(key)
 
     @classmethod
@@ -95,7 +94,7 @@ class ModuleMeta(abc.ABCMeta):
 class Module(metaclass=ModuleMeta):
     '''
     API solely for interacting with files located in the 'modules' folder.
-    These methods are used to develop custom formatter adapters for plugins.
+    These methods are used to create custom formatter adapters.
     '''
 
     def __init__(self, view=None, uid=None, region=None, interpreters=None, executables=None, dotfiles=None, df_ident=None, temp_dir=None, type=None, auto_format_config=None, **kwargs):
@@ -552,7 +551,6 @@ class ViewHandler:
 
 
 class OptionHandler:
-    ''' Do NOT use 'get()' to access values from CONFIG; instead, use 'query()'! '''
     @staticmethod
     def query(data_dict, default=None, *keys):
         project_config = DataHandler.get('__project_config__')[1]

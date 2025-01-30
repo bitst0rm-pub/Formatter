@@ -162,13 +162,13 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 
 > [!NOTE]
 >
-> - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`; for Octal, set the `"--radix"` to `8`.
+> - The `sfhexenc` (Hex encoder) operates on bytes. To convert a Decimal value to Hexadecimal you need to use `sfbaseenc` (Base encoder) with a `"--radix"` of `16`.
 
 | Converters | Input | Output | Req. | Note |
 | ------ | :------: | :------: | :------: | :------: |
 | [yq](https://github.com/mikefarah/yq) | YAML, JSON, CSV, TSV, XML, TOML, LUA, TEXT | YAML, JSON, PROPS, CSV, TSV, XML, BASE64, URI, TOML, SHELL, LUA | None | -- |
 | [yj](https://github.com/sclevine/yj) | YAML, JSON, TOML, HCL | YAML, JSON, TOML, HCL | None | -- |
-| sfloremipsum **`(I)`** | any | TEXT | None | lorem伪 |
+| sfloremipsum **`(I)`** | any | TEXT | None | lorem |
 | sfurienc **`(I)`** | any | TEXT | None | uri |
 | sfuridec **`(I)`** | any | TEXT | None | uri |
 | sfhtmlentitize **`(I)`** | any | TEXT | None | html |
