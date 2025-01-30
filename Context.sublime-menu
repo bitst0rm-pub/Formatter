@@ -415,6 +415,14 @@
                 }
             },
             {
+                "caption": "GroovyLint",
+                "command": "run_format",
+                "args": {
+                    "uid": "npmgroovylint",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "OCamlformat",
                 "command": "run_format",
                 "args": {

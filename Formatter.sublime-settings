@@ -1016,6 +1016,20 @@
             "args": ["--indent", "4"]
             /* Requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. No config, use "args" instead. Omit "interpreter_path" if python already on PATH. */
         },
+        "npmgroovylint": {
+            "info": "https://github.com/nvuillam/npm-groovy-lint",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["groovy", "gradle"],
+            "executable_path": ["/path/to/node_modules/.bin/npm-groovy-lint(.cmd on windows)"],
+            "config_path": {
+                "ignore_dotfiles": false,
+                "default": "${packages}/User/formatter.assets/config/groovylint_rc.json"
+            }
+            /* Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. If "--fix" param is needed, use "fix_commands": [["--format", "--fix", 3, 0, 3]] */
+        },
         "ocamlformat": {
             "info": "https://github.com/ocaml-ppx/ocamlformat",
             "enable": false,

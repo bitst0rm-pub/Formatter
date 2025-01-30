@@ -473,6 +473,15 @@
                         }
                     },
                     {
+                        "caption": "GroovyLint",
+                        "mnemonic": "G",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "npmgroovylint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "OCamlformat",
                         "mnemonic": "O",
                         "command": "run_format",
