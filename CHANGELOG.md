@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.9)] - 2025-01-30
+
+### 🚜 Refactor
+
+- [`637c998`](https://github.com/bitst0rm-pub/Formatter/commit/637c998ebf887f5610f932edef416bf72ed3dace) Minor improvements
+
+### ⚙️ Miscellaneous Tasks
+
+- [`647692c`](https://github.com/bitst0rm-pub/Formatter/commit/647692cc431a51fc5a82a2cb0c130e54b93b378d) Add `npm-groovy-lint` to support Groovy and Gradle (closes [#68](https://github.com/bitst0rm-pub/Formatter/issues/68) Thanks [@karma-sun](https://github.com/karma-sun))
+
 ## [[1.8.8](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.8)] - 2024-12-07
 
 ### ⚙️ Miscellaneous Tasks
