@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.10)] - 2025-04-22
+
+### 🐛 Bug Fixes
+
+- [`5577cdd`](https://github.com/bitst0rm-pub/Formatter/commit/5577cdd7037cfb30e84cd4d61c13794ddd87ca1c) Fix NoneType UID error when syntax is unknown (closes [#69](https://github.com/bitst0rm-pub/Formatter/issues/69) Thanks [@Maple38](https://github.com/Maple38))
+
+### ⚙️ Miscellaneous Tasks
+
+- [`b714be2`](https://github.com/bitst0rm-pub/Formatter/commit/b714be290c147661dd91d4a1f284eb17b94eea45) Remove obsolete github action file
+
 ## [[1.8.9](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.9)] - 2025-01-30
 
 ### 🚜 Refactor
