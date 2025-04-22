@@ -34,7 +34,7 @@ class Formatter(Module):
             return None
 
         if not syntax:
-            self.popup_message('Syntax out of the scope', 'UID:' + self.uid)
+            self.popup_message('Syntax out of the scope', 'UID:' + (self.uid if self.uid is not None else 'Unknown'))
             return False
 
         self.kwargs.update(uid=self.uid)
