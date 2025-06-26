@@ -32,7 +32,9 @@ class PrettierFormatter(Module):
 
         path = self.get_config_path()
         if path:
-            cmd.extend(['--no-config', '--config', path])
+            cmd.extend(['--config', path])
+        else:
+            cmd.extend(['--no-config'])
 
         file = self.get_pathinfo()['path']
         dummy = file or 'dummy.' + self.get_assigned_syntax()
