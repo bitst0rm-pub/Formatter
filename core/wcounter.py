@@ -1,9 +1,11 @@
 import sublime
 import sublime_plugin
+import locale
 
 from . import (CONFIG, STATUS_KEY, DataHandler, OptionHandler,
                bulk_operation_detector, debounce, skip_word_counter)
 
+locale.setlocale(locale.LC_ALL, '')  # system's locale settings
 CHUNK_SIZE = 1024 * 1024  # ≈ 1048576 chars (1MB)
 
 
@@ -23,7 +25,7 @@ class WordCounter:
 
     @staticmethod
     def thousands_separator(number):
-        return '{:,}'.format(number).replace(',', '.')
+        return locale.format_string('%d', number, grouping=True)
 
     def count_characters(self, text):
         if self.ignore_whitespace_char:
