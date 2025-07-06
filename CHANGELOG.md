@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.11)] - 2025-07-06
+
+### 🐛 Bug Fixes
+
+- [`b18405e`](https://github.com/bitst0rm-pub/Formatter/commit/b18405e2def54c6dd13822a46f2f0a4677a2c4ef) Merge pull request [#74](https://github.com/bitst0rm-pub/Formatter/issues/74) from nexusgoblin/prettier-config-fix
+
+### ⚙️ Miscellaneous Tasks
+
+- [`bef72f2`](https://github.com/bitst0rm-pub/Formatter/commit/bef72f26e597e38a8b5d47da5c25c56c7accc2c8) Use user's locale setting for thousands separator in wcounter (closes [#72](https://github.com/bitst0rm-pub/Formatter/issues/72) Thanks [@davidmarble](https://github.com/davidmarble))
+
 ## [[1.8.10](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.10)] - 2025-04-22
 
 ### 🐛 Bug Fixes
