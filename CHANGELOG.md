@@ -2,6 +2,12 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.12](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.12)] - 2025-07-09
+
+### 🐛 Bug Fixes
+
+- [`d51d91e`](https://github.com/bitst0rm-pub/Formatter/commit/d51d91e7649e3b1cd9dbb1b86742a7d1eb8c29e2) Remove the auto-switch to single layout when the last view is closed (closes [#71](https://github.com/bitst0rm-pub/Formatter/issues/71) Thanks [@ivanionut](https://github.com/ivanionut))
+
 ## [[1.8.11](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.11)] - 2025-07-06
 
 ### 🐛 Bug Fixes
