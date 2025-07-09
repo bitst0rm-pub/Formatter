@@ -44,17 +44,6 @@ class FormatterListener(sublime_plugin.EventListener):
                         return v
         return None
 
-    def on_pre_close(self, view):
-        def _set_single_layout(window, view):
-            # Auto-switch to single layout upon closing the latest view
-            group, _ = window.get_view_index(view)
-            if len(window.views_in_group(group)) == 1:
-                sublime.set_timeout(lambda: window.set_layout(LayoutHandler.assign_layout('single')), 0)
-
-        window = view.window()
-        if window and LayoutHandler.want_layout() and window.num_groups() == 2:
-            _set_single_layout(window, view)
-
     def on_post_text_command(self, view, command_name, args):
         # Stop action with arrow keys (up, down, left, right)
         if command_name == 'move' and args.get('by', None) in ['characters', 'lines']:
