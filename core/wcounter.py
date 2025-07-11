@@ -1,6 +1,7 @@
+import locale
+
 import sublime
 import sublime_plugin
-import locale
 
 from . import (CONFIG, STATUS_KEY, DataHandler, OptionHandler,
                bulk_operation_detector, debounce, skip_word_counter)
