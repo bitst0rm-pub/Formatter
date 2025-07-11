@@ -1353,6 +1353,7 @@ class ConfigHandler:
             'format_on_priority': settings.get('format_on_priority', {}),
             'format_on_unique': settings.get('format_on_unique', {}),  # @deprecated
             'auto_format': settings.get('auto_format', {}),
+            'selection_formatting': settings.get('selection_formatting', True),
             'formatters': settings.get('formatters', {})
         }
         c['formatters'].pop('examplegeneric', None)

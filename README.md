@@ -406,6 +406,11 @@ The following setting details - along with their default values and examples - a
             }
         },
 
+        // By default, selection formatting is enabled.
+        // If set to false, the entire file will be formatted instead.
+        // Accepted values: true OR false
+        "selection_formatting": true,
+
         // THIRD-PARTY PLUGINS LEVEL
         // Info: Preferences > Package Settings > Formatter > Modules Info
         "formatters": {

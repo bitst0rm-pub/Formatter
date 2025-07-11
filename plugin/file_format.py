@@ -80,7 +80,7 @@ class FileFormat:
             self.kwargs.update(temp_dir=self.temp_dir.name)
 
     def has_selection(self):
-        return any(not sel.empty() for sel in self.view.sel())
+        return OptionHandler.query(CONFIG, True, 'selection_formatting') and any(not sel.empty() for sel in self.view.sel())
 
     @staticmethod
     def reset_status():

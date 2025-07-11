@@ -634,6 +634,11 @@ def build_formatter_sublime_settings(formatter_map):
             ])),
             ('__COMMENT__auto_format_b', '*/')
         ])),
+        ('__COMMENT__selection_formatting', '''
+    // By default, selection formatting is enabled.
+    // If set to false, the entire file will be formatted instead.
+    // Accepted values: true OR false'''),
+        ('selection_formatting', True),
         ('__COMMENT__formatters', '''
     // THIRD-PARTY PLUGINS LEVEL
     // Info: Preferences > Package Settings > Formatter > Modules Info'''),
