@@ -2,6 +2,16 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.13](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.13)] - 2025-07-11
+
+### 🚀 Features
+
+- [`0fe9dea`](https://github.com/bitst0rm-pub/Formatter/commit/0fe9dea707143c786b7fd3ce79d97af7ebce53ae) Add setting option `"selection_formatting" ` to ignore selections (closes [#75](https://github.com/bitst0rm-pub/Formatter/issues/75) Thanks [@schwartzman](https://github.com/schwartzman))
+
+### ⚙️ Miscellaneous Tasks
+
+- [`b9e3024`](https://github.com/bitst0rm-pub/Formatter/commit/b9e30248b5fc9f598e046f61b1177fa3e6407ca3) Minor import reordering
+
 ## [[1.8.12](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.12)] - 2025-07-09
 
 ### 🐛 Bug Fixes
