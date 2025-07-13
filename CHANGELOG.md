@@ -2,6 +2,12 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.14](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.14)] - 2025-07-13
+
+### 🚀 Features
+
+- [`ec534ab`](https://github.com/bitst0rm-pub/Formatter/commit/ec534ab9e97622fc36c25e22e3784afc5192d3ae) Ignore selection formatting for events: `format_on_save` and `format_on_paste` (ref: https://github.com/bitst0rm-pub/Formatter/issues/75)
+
 ## [[1.8.13](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.13)] - 2025-07-11
 
 ### 🚀 Features
