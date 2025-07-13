@@ -45,7 +45,7 @@ class SavePasteManager:
                     if i > 0 and not is_non_empty:  # > 0 for "plugin" or ["plugin"]
                         break  # finished
 
-                    with FileFormat(view=view, **auto_format_args) as file_format:
+                    with FileFormat(view=view, actkey=actkey, **auto_format_args) as file_format:
                         file_format.run()
 
                 DataHandler.reset('__auto_format_chain_item__')
@@ -108,7 +108,7 @@ class SavePasteManager:
 
                         log.debug('"%s" (priority)', actkey)
                         try:
-                            with FileFormat(view=view, uid=uid, type=value.get('type', None)) as file_format:
+                            with FileFormat(view=view, uid=uid, type=value.get('type', None), actkey=actkey) as file_format:
                                 file_format.run()
                         except Exception as e:
                             log.error('Error during priority formatting: %s', e)
@@ -132,7 +132,7 @@ class SavePasteManager:
 
                     log.debug('"%s" (regular)', actkey)
                     try:
-                        with FileFormat(view=view, uid=uid, type=value.get('type', None)) as file_format:
+                        with FileFormat(view=view, uid=uid, type=value.get('type', None), actkey=actkey) as file_format:
                             file_format.run()
                     except Exception as e:
                         log.error('Error during regular formatting: %s', e)

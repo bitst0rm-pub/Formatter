@@ -80,6 +80,8 @@ class FileFormat:
             self.kwargs.update(temp_dir=self.temp_dir.name)
 
     def has_selection(self):
+        if self.kwargs.get('actkey') in ['format_on_save', 'format_on_paste']:
+            return False
         return OptionHandler.query(CONFIG, True, 'selection_formatting') and any(not sel.empty() for sel in self.view.sel())
 
     @staticmethod
