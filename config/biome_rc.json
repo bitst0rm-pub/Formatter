@@ -2,27 +2,89 @@
     "formatter": {
         "enabled": true,
         "formatWithErrors": false,
-        "ignore": [],
-        "attributePosition": "auto",
         "indentStyle": "tab",
         "indentWidth": 2,
         "lineEnding": "lf",
-        "lineWidth": 80
+        "lineWidth": 80,
+        "attributePosition": "auto",
+        "bracketSpacing": true,
+        "expand": "auto",
+        "useEditorconfig": false
     },
     "javascript": {
         "formatter": {
-            "arrowParentheses": "always",
-            "bracketSameLine": false,
-            "bracketSpacing": true,
+            "enabled": true,
+            "quoteStyle": "double",
             "jsxQuoteStyle": "double",
             "quoteProperties": "asNeeded",
+            "trailingCommas": "all",
             "semicolons": "always",
-            "trailingComma": "all"
+            "arrowParentheses": "always",
+            "indentStyle": "tab",
+            "indentWidth": 2,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "bracketSameLine": false,
+            "bracketSpacing": true,
+            "attributePosition": "auto",
+            "expand": "auto",
+            "operatorLinebreak": "after"
         }
     },
     "json": {
         "formatter": {
-            "trailingCommas": "none"
+            "enabled": true,
+            "indentStyle": "tab",
+            "indentWidth": 2,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "trailingCommas": "none",
+            "bracketSpacing": true,
+            "expand": "auto",
+        }
+    },
+    "css": {
+        "formatter": {
+            "enabled": false,
+            "indentStyle": "tab",
+            "indentWidth": 2,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "quoteStyle": "double"
+        }
+    },
+    "graphql": {
+        "formatter": {
+            "enabled": false,
+            "indentStyle": "tab",
+            "indentWidth": 2,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "quoteStyle": "double"
+        }
+    },
+    "grit": {
+        "formatter": {
+            "enabled": false,
+            "indentStyle": "tab",
+            "indentWidth": 2,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "quoteStyle": "double"
+        }
+    },
+    "html": {
+        "formatter": {
+            "enabled": false,
+            "indentStyle": "tab",
+            "indentWidth": 2,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "attributePosition": "auto",
+            "bracketSameLine": false,
+            "whitespacesSensitivity": "css",
+            "indentScriptAndStyle": true,
+            "selfCloseVoidElements": "never"
         }
     }
 }
