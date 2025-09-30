@@ -2,6 +2,12 @@
 
 All notable changes to this project will be automatically documented in this file.
 
+## [[1.8.15](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.15)] - 2025-09-30
+
+### 🐛 Bug Fixes
+
+- [`cccfe90`](https://github.com/bitst0rm-pub/Formatter/commit/cccfe90217bfcee0118be563b9097f6eb14ec03e) Update outdated `biome_rc.json` (closes [#77](https://github.com/bitst0rm-pub/Formatter/issues/77) Thanks [@MatthiasPortzel](https://github.com/MatthiasPortzel))
+
 ## [[1.8.14](https://github.com/bitst0rm-pub/Formatter/releases/tag/1.8.14)] - 2025-07-13
 
 ### 🚀 Features
