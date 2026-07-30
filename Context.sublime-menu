@@ -23,6 +23,14 @@
                 }
             },
             {
+                "caption": "Ardent",
+                "command": "run_format",
+                "args": {
+                    "uid": "ardent",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "ASMfmt",
                 "command": "run_format",
                 "args": {

@@ -401,6 +401,16 @@
                 "default": "${packages}/User/formatter.assets/config/apple_swift_format_rc.json"
             }
         },
+        "ardent": {
+            "info": "https://github.com/idleberg/ardent",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["nsis"],
+            "executable_path": ["/path/to/bin/ardent"]
+            /* Opinionated, no config. */
+        },
         "asmfmt": {
             "info": "https://github.com/klauspost/asmfmt",
             "enable": false,

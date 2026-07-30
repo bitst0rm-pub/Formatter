@@ -32,6 +32,15 @@
                         }
                     },
                     {
+                        "caption": "Ardent",
+                        "mnemonic": "A",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "ardent",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "ASMfmt",
                         "mnemonic": "A",
                         "command": "run_format",
