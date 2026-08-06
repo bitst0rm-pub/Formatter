@@ -447,6 +447,22 @@
                 }
             },
             {
+                "caption": "Oxfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "oxfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Oxlint",
+                "command": "run_format",
+                "args": {
+                    "uid": "oxlint",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "Perltidy",
                 "command": "run_format",
                 "args": {

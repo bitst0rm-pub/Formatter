@@ -1,0 +1,28 @@
+{
+    "plugins": [
+        "typescript",
+        "unicorn",
+        "oxc"
+    ],
+    "categories": {
+        "correctness": "error"
+    },
+    "env": {
+        "builtin": true,
+        "es2024": true,
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "eqeqeq": "error",
+        "no-debugger": "error",
+        "no-else-return": "error",
+        "no-useless-concat": "error",
+        "no-var": "error",
+        "prefer-arrow-callback": "error",
+        "prefer-template": "error",
+        "unicorn/prefer-string-raw": "off",
+        "unicorn/filename-case": "off"
+    },
+    "ignorePatterns": []
+}

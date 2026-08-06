@@ -1066,6 +1066,34 @@
             "executable_path": ["/path/to/bin/ormolu"]
             /* Opinionated, no config. */
         },
+        "oxfmt": {
+            "info": "https://github.com/oxc-project/oxc",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["js", "jsx", "ts", "tsx", "json", "css", "scss", "less", "graphql", "toml", "html", "vue", "markdown", "yaml"],
+            "executable_path": ["/path/to/bin/oxfmt (standalone binary) or /path/to/node_modules/.bin/oxfmt(.cmd on windows)"],
+            "config_path": {
+                "ignore_dotfiles": false,
+                "default": "${packages}/User/formatter.assets/config/oxfmt_rc.json"
+            }
+            /* Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. */
+        },
+        "oxlint": {
+            "info": "https://github.com/oxc-project/oxc",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["js", "jsx", "ts", "tsx", "vue"],
+            "executable_path": ["/path/to/bin/oxlint (standalone binary) or /path/to/node_modules/.bin/oxlint(.cmd on windows)"],
+            "config_path": {
+                "ignore_dotfiles": false,
+                "default": "${packages}/User/formatter.assets/config/oxlint_rc.json"
+            }
+            /* Omit "interpreter_path" as files in /node_modules/.bin/ already point to node. Limited autofix, no formatting capability. */
+        },
         "perltidy": {
             "info": "https://github.com/perltidy/perltidy",
             "enable": false,

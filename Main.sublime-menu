@@ -509,6 +509,24 @@
                         }
                     },
                     {
+                        "caption": "Oxfmt",
+                        "mnemonic": "O",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "oxfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Oxlint",
+                        "mnemonic": "O",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "oxlint",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "Perltidy",
                         "mnemonic": "P",
                         "command": "run_format",
