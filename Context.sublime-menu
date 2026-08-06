@@ -15,6 +15,14 @@
                 "caption": "-"
             },
             {
+                "caption": "Alejandra",
+                "command": "run_format",
+                "args": {
+                    "uid": "alejandra",
+                    "type": "beautifier"
+                }
+            },
+            {
                 "caption": "AppleSwiftFormat",
                 "command": "run_format",
                 "args": {
@@ -411,6 +419,14 @@
                 "command": "run_format",
                 "args": {
                     "uid": "nginxfmt",
+                    "type": "beautifier"
+                }
+            },
+            {
+                "caption": "Nixfmt",
+                "command": "run_format",
+                "args": {
+                    "uid": "nixfmt",
                     "type": "beautifier"
                 }
             },

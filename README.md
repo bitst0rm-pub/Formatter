@@ -133,6 +133,7 @@ _Need more? see:_ [Configuration](#configuration) and [Development](#development
 | Mermaid | -- | -- | [mermaid](https://github.com/mermaid-js/mermaid-cli) [1] | Node.js | [[1]](https://mermaid.live) |
 | Nginx | [nginxfmt](https://github.com/slomkowski/nginx-config-formatter) | -- | -- | Python 3.4+ | -- |
 | Nickel | [topiary](https://github.com/tweag/topiary) | -- | -- | None | -- |
+| Nix | [nixfmt](https://github.com/NixOS/nixfmt), [alejandra](https://github.com/kamadorueda/alejandra) | -- | -- | None | -- |
 | OCaml | [ocamlformat](https://github.com/ocaml-ppx/ocamlformat), [ocp-indent](https://github.com/OCamlPro/ocp-indent), [topiary](https://github.com/tweag/topiary) | -- | -- | None | -- |
 | Perl | [perltidy](https://github.com/perltidy/perltidy) | -- | -- | Perl | -- |
 | Pawn | [uncrustify](https://github.com/uncrustify/uncrustify) [1] | -- | -- | None | [[1]](https://cdanu.github.io/uncrustify_config_preview/index.html) |

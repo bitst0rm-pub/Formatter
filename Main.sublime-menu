@@ -23,6 +23,15 @@
                         "caption": "-"
                     },
                     {
+                        "caption": "Alejandra",
+                        "mnemonic": "A",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "alejandra",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
                         "caption": "AppleSwiftFormat",
                         "mnemonic": "A",
                         "command": "run_format",
@@ -469,6 +478,15 @@
                         "command": "run_format",
                         "args": {
                             "uid": "nginxfmt",
+                            "type": "beautifier"
+                        }
+                    },
+                    {
+                        "caption": "Nixfmt",
+                        "mnemonic": "N",
+                        "command": "run_format",
+                        "args": {
+                            "uid": "nixfmt",
                             "type": "beautifier"
                         }
                     },

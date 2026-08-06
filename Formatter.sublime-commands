@@ -50,6 +50,14 @@
         "command": "auto_format_file"
     },
     {
+        "caption": "Formatter: Beautify with Alejandra",
+        "command": "run_format",
+        "args": {
+            "uid": "alejandra",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with AppleSwiftFormat",
         "command": "run_format",
         "args": {
@@ -446,6 +454,14 @@
         "command": "run_format",
         "args": {
             "uid": "nginxfmt",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Nixfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "nixfmt",
             "type": "beautifier"
         }
     },

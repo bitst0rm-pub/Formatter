@@ -13,6 +13,7 @@
 [
     {"keys": ["ctrl+super+?"], "command": "quick_options"},
     {"keys": ["ctrl+super+?"], "command": "auto_format_file"},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "alejandra", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "appleswiftformat", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "asmfmt", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "astyle", "type": "beautifier"}},
@@ -63,6 +64,7 @@
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "luaformatter", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "nasmfmt", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "nginxfmt", "type": "beautifier"}},
+    {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "nixfmt", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "npmgroovylint", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "ocamlformat", "type": "beautifier"}},
     {"keys": ["ctrl+super+?"], "command": "run_format", "args": {"uid": "ocpindent", "type": "beautifier"}},
