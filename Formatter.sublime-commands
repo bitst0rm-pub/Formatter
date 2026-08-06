@@ -482,6 +482,22 @@
         }
     },
     {
+        "caption": "Formatter: Beautify with Oxfmt",
+        "command": "run_format",
+        "args": {
+            "uid": "oxfmt",
+            "type": "beautifier"
+        }
+    },
+    {
+        "caption": "Formatter: Beautify with Oxlint",
+        "command": "run_format",
+        "args": {
+            "uid": "oxlint",
+            "type": "beautifier"
+        }
+    },
+    {
         "caption": "Formatter: Beautify with Perltidy",
         "command": "run_format",
         "args": {
