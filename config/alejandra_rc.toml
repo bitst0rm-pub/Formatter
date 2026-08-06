@@ -1,0 +1,9 @@
+# https://github.com/kamadorueda/alejandra
+# Update: 2026-07-27
+
+# (experimental) Configuration options for Alejandra.
+# Unknown options are rejected, so only add keys supported by your version.
+
+# The indentation to use
+# [possible values: TwoSpaces, FourSpaces, Tabs]
+indentation = "TwoSpaces"
