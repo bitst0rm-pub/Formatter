@@ -388,6 +388,20 @@
         // -- END of explanation --
 
         // -- BEAUTIFIERS --
+        "alejandra": {
+            "info": "https://github.com/kamadorueda/alejandra",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["nix"],
+            "executable_path": ["/path/to/bin/alejandra"],
+            "config_path": {
+                "ignore_dotfiles": false,
+                "default": "${packages}/User/formatter.assets/config/alejandra_rc.toml"
+            }
+            /* Requires alejandra 4.0.0 or newer for "config_path", which is experimental and limited to "indentation". */
+        },
         "appleswiftformat": {
             "info": "https://github.com/apple/swift-format",
             "enable": false,
@@ -1015,6 +1029,16 @@
             "executable_path": ["/path/to/bin/nginxfmt"],
             "args": ["--indent", "4"]
             /* Requires "environ": {"PYTHONPATH": ["/lib/python3.7/site-packages"]}. No config, use "args" instead. Omit "interpreter_path" if python already on PATH. */
+        },
+        "nixfmt": {
+            "info": "https://github.com/NixOS/nixfmt",
+            "enable": false,
+            "format_on_save": false,
+            "format_on_paste": false,
+            "dir_format": false,
+            "syntaxes": ["nix"],
+            "executable_path": ["/path/to/bin/nixfmt"]
+            /* Requires nixfmt 0.6.0 or newer. No config, use "args" instead, e.g. ["--width", "100", "--indent", "2", "--strict"]. */
         },
         "npmgroovylint": {
             "info": "https://github.com/nvuillam/npm-groovy-lint",
