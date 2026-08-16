@@ -1,5 +1,3 @@
-from distutils.version import LooseVersion
-
 import sublime
 
 from ..core import Module, log
@@ -37,7 +35,8 @@ class EslintdFormatter(Module):
         version = version.strip().split(' ')[-1]
         log.debug('Eslint version: %s', version)
 
-        return cmd, LooseVersion(version) < LooseVersion('v8.57.0')
+        version = tuple(map(int, version.lstrip('v').split('.')))
+        return cmd, version < (8, 57, 0)
 
     def remove_deprecated_flag_and_next(self, cmd):
         for flag in ['--resolve-plugins-relative-to', '--rulesdir', '--ext']:
