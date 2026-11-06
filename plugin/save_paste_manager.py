@@ -112,8 +112,7 @@ class SavePasteManager:
                                 file_format.run()
                         except Exception as e:
                             log.error('Error during priority formatting: %s', e)
-                        finally:
-                            break
+                        return
         else:
             InterfaceHandler.popup_message('There are duplicate syntaxes in your "format_on_priority" option. Please sort them out.', 'ERROR')
 
