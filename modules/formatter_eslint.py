@@ -1,4 +1,4 @@
-from distutils.version import LooseVersion
+import re
 
 import sublime
 
@@ -23,6 +23,19 @@ MODULE_CONFIG = {
 }
 
 
+def version_key(version):
+    return tuple(int(x) for x in re.findall(r'\d+', version))
+
+
+def is_version_less_than(a, b):
+    a_key = version_key(a)
+    b_key = version_key(b)
+    length = max(len(a_key), len(b_key))
+    a_key += (0,) * (length - len(a_key))
+    b_key += (0,) * (length - len(b_key))
+    return a_key < b_key
+
+
 class EslintFormatter(Module):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,7 +50,7 @@ class EslintFormatter(Module):
         version = version.strip().split(' ')[-1]
         log.debug('Eslint version: %s', version)
 
-        return cmd, LooseVersion(version) < LooseVersion('v8.57.0')
+        return cmd, is_version_less_than(version, 'v8.57.0')
 
     def remove_deprecated_flag_and_next(self, cmd):
         for flag in ['--resolve-plugins-relative-to', '--rulesdir', '--ext']:
